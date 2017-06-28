@@ -1,0 +1,142 @@
+﻿/*设备检查管理模块*/
+#cycle {
+    width:52.3333%;
+}
+
+.toright {
+    text-align:right;
+    margin:0;
+    white-space:nowrap;
+}
+
+#sure {
+    margin-top: 4px;
+}
+.todown {
+    margin-top:10px;
+}
+
+.inputText {
+    float:right;
+    padding: 2px 4px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border-top-right-radius:0px;
+    border-bottom-right-radius:0px;
+    display:table-cell;
+}
+
+.disableInput {
+    background-color: #eee;
+    opacity: 1;
+}
+.addSpan {
+    padding: 2px 4px;
+}
+.floatRight {
+    float:right;
+}
+.clearTBPadding {
+    padding-top:1px;
+    padding-bottom:1px;
+}
+
+.minw {
+    min-width:1324px;
+}
+
+#sureChange,#cannel {
+    display:none;
+}
+
+input.invalid {
+    border: 2px inset red;
+    background-color: #FF0;
+}
+
+#middleArea {
+    opacity:0.44;
+    filter:alpha(Opacity=44);
+    -moz-opacity:0.44;
+    z-index:1;
+    background-color:#000;
+    position:absolute;
+    left:0px;
+    top:0px;
+    height:100%;
+    width:100%;
+    display:none;
+    min-height:923px;
+}
+#topArea {
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    z-index:12;
+    background-color:#fff;
+    margin:0 auto;
+    padding:1px;
+    width:29.6666%;
+    margin-top:10%;
+    display:none;
+}
+.tableWidth {
+    margin:0 auto;
+}
+
+label.height {
+    padding-top:5px;
+}
+
+.controlHeight {
+    height:30px;
+}
+
+.noborder {
+    border:0px;
+}
+
+.tohidden {
+    display:none;
+}
+.hidePart {
+    display:none;
+    margin-left:33.333%;
+    text-align:left;
+}
+.buttonMar {
+    margin-right:5%;
+}
+
+.error {
+    margin-left:16%;
+}
+
+/*设备检查*/
+#sureFill {
+    display:none;
+}
+
+.fillText {
+    float: right;
+    padding: 2px 4px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: table-cell;
+    width:7.5em;
+}
+
+.minwid {
+    min-width:1424px;
+}

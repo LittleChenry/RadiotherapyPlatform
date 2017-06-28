@@ -1,0 +1,42 @@
+﻿#gridContent {
+    margin-top:6px;
+}
+
+#searchButton {
+    margin-left:33.333%;
+}
+#middleArea {
+    opacity:0.44;
+    filter:alpha(Opacity=44);
+    -moz-opacity:0.44;
+    z-index:1;
+    background-color:#000;
+    position:absolute;
+    left:0px;
+    top:0px;
+    height:100%;
+    width:100%;
+    display:none;
+}
+#topArea {
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    z-index:12;
+    background-color:#fff;
+    margin:0 auto;
+    padding:1px;
+    width:29.6666%;
+    margin-top:10%;
+    display:none;
+}
+
+.toDivRight {
+    text-align:center;
+    margin:0 auto;
+    margin-top:6px;
+    margin-left:66.66666%;
+    padding-left:16.6666667%;
+    
+}

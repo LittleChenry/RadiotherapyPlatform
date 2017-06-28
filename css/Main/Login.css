@@ -1,0 +1,41 @@
+﻿input.invalid {
+    border: 2px inset red;
+    background-color: #FF0;
+}
+
+#error {
+    margin-bottom:0px;
+    margin-top: 0.45em;
+    display: none;
+}
+
+.toCenter {
+    width:26.666%;
+    margin: 0 auto;
+}
+
+.toDown {
+    margin-top:2.666em;
+}
+
+#chooseRole {
+    display: none;
+}
+
+.slim {
+    padding-left:4em;
+    padding-right:4em;
+}
+
+.short {
+    padding-top:0.23em;
+    padding-bottom:0.23em;
+}
+
+.form-input {
+    height:25px;
+}
+
+.word-left {
+    padding-left:3.5px;
+}

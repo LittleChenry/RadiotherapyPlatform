@@ -1,0 +1,104 @@
+﻿.search {
+    margin:15px;
+    text-align:center;
+}
+.informationTable {
+    width:95%;
+    text-align:center;
+    margin-top:2%;
+    margin-left:2.5%;
+    margin-right:2.5%;
+    border:solid;
+    border-color:#ddd;
+    border-bottom:1px;
+    border-left:1px;
+    border-right:1px;
+}
+.informationTh {
+    text-align:center;
+    height:50px;
+    font-size:larger;
+}
+th {
+    text-align:center;
+}
+.informationRow {
+    text-align:center;
+    margin:0 auto;
+    height:40px;
+    font-size:medium;
+    border:solid;
+    border-color:#ddd;
+    border-right:1px;
+
+}
+.radioList {
+    margin-right:3px;
+}
+input.text {
+    background-color:#979899;
+}
+
+input.invalid,select.invalid {
+    border: 2px inset red;
+    background-color: #FF0;
+}
+.edit {
+    text-align:center;
+}
+
+.center {
+    margin:0 auto;
+    text-align:center;
+    align-content:center;
+}
+
+.newUser {
+    float:right;
+    width:auto;
+    margin-right:5%;
+    margin-top:1%;
+}
+.detailView {
+    width:100%;
+    height:auto;
+}
+.tableWidth {
+    width:70%;
+    margin:0 auto;
+}
+
+label.height {
+    padding-top:5px;
+}
+
+.controlHeight {
+    height:30px;
+}
+
+.noborder {
+    border:0px;
+}
+
+.tohidden {
+    display:none;
+}
+.hidePart {
+    display:none;
+    margin-left:33.333%;
+    text-align:left;
+}
+.buttonMar {
+    margin-left:17.5%;
+    margin-right:5%;
+}
+
+td > table {
+    margin: 0 auto;
+    text-align:center;
+    height:35px;
+}
+
+.error {
+    margin-left:16%;
+}

@@ -1,0 +1,292 @@
+﻿hr {
+    margin-top:5px;
+    margin-bottom:5px;
+}
+li {
+    width:100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 16px;
+}
+span.time {
+    float:right;
+}
+h1.title {
+    margin-left:2%;
+}
+
+div.notice {
+    width:60%;
+    margin-left:20%;
+}
+.welcome-title {
+    text-align:center;
+    font-weight:600;
+}
+
+.welcome-span  {
+    font-size:20px;
+}
+
+.toCenter {
+    margin:0 auto;
+    text-align:center;
+}
+
+.itemTime {
+    padding-top:24px;
+    margin-left:2.6667%;
+}
+
+.table-center {
+    margin:0 auto;
+    text-align:center;
+}
+
+th {
+    text-align:center;
+}
+*{margin: 0}
+.step-body{
+	position: relative;
+	
+	
+}
+.step-header{
+	width: 100%;
+	margin: 0 auto;
+	display: none;
+}
+.step-header ul{
+		padding: 0;
+}
+.step-header li{
+	list-style-type:none;
+	text-align: center;
+	float: left;
+	position: relative;
+}
+.step-header li p{
+	margin-top: 30px;
+	margin-bottom: 5px;
+	font-size: 14px;
+	font-family:  微软雅黑;
+	color: #625454;
+}
+.step-header li span{
+	position: relative;
+	margin: 0 auto;
+	font-size: 18px;
+	font-family: Arial;
+	color: #625454;
+	height: 25px;
+	line-height: 25px;
+	background: url(../../img/cell.png) center top no-repeat;
+	display: block;
+}
+.step-header li.step-active span{
+	background: url(../../img/cell-active.png) center top  no-repeat ;
+	color: white;
+}
+.step-header li.step-active p{
+	color: #466faa;
+}
+.step-bar,.step-bar-active{
+	height: 13px;
+	border-radius: 12px;
+}
+.step-bar{
+	width:100%;
+	background: url(../../img/bar-bg.png) ;
+	position: relative;
+	border-radius: 12px;
+	z-index: 0;
+	height: 5px;
+	top: 70px;
+}
+.step-bar-active{
+	width: 0px;
+	background: url(../../img/bar-bg-active.png) ;
+	height: 5px;
+
+}
+/*设备检查管理模块*/
+#cycle {
+    width:52.3333%;
+}
+
+.toright {
+    text-align:right;
+    margin:0;
+    white-space:nowrap;
+}
+
+#sure {
+    margin-top: 4px;
+}
+.todown {
+    margin-top:10px;
+}
+
+.inputText {
+    float:right;
+    padding: 2px 4px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border-top-right-radius:0px;
+    border-bottom-right-radius:0px;
+    display:table-cell;
+}
+
+.disableInput {
+    background-color: #eee;
+    opacity: 1;
+}
+.addSpan {
+    padding: 2px 4px;
+}
+.floatRight {
+    float:right;
+}
+.clearTBPadding {
+    padding-top:1px;
+    padding-bottom:1px;
+}
+
+.minw {
+    min-width:1324px;
+}
+
+#sureChange,#cannel {
+    display:none;
+}
+
+input.invalid {
+    border: 2px inset red;
+    background-color: #FF0;
+}
+
+#middleArea {
+    opacity:0.44;
+    filter:alpha(Opacity=44);
+    -moz-opacity:0.44;
+    z-index:1;
+    background-color:#000;
+    position:absolute;
+    left:0px;
+    top:0px;
+    height:100%;
+    width:100%;
+    display:none;
+    min-height:923px;
+}
+#topArea {
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    z-index:12;
+    background-color:#fff;
+    margin:0 auto;
+    padding:1px;
+    width:29.6666%;
+    margin-top:10%;
+    display:none;
+}
+.tableWidth {
+    margin:0 auto;
+}
+
+label.height {
+    padding-top:5px;
+}
+
+.controlHeight {
+    height:30px;
+}
+
+.noborder {
+    border:0px;
+}
+
+.tohidden {
+    display:none;
+}
+.hidePart {
+    display:none;
+    margin-left:33.333%;
+    text-align:left;
+}
+.buttonMar {
+    margin-right:5%;
+}
+
+.error {
+    margin-left:16%;
+}
+
+/*设备检查*/
+#sureFill {
+    display:none;
+}
+
+.fillText {
+    float: right;
+    padding: 2px 4px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: table-cell;
+    width:7.5em;
+}
+
+.minwid {
+    min-width:1424px;
+}
+
+/*Group样式*/
+.tableInterval {
+    width: 5.666667em;
+}
+
+.buttonToLeft {
+    margin-left: 0.666em;
+}
+
+.buttonToSmall {
+    padding: 2.5px 10px;
+}
+
+.tdth {
+    padding:2em 3em;
+}
+
+.mytable {
+    width:100%;
+    max-width:100%;
+}
+
+#myModal .modal-body,#editTable.modal-body
+{
+  height:300px;
+  overflow:auto;
+}
+
+select.warning {
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+.mintablewidth {
+    min-width:1000px;
+}

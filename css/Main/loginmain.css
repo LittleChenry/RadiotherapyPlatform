@@ -1,0 +1,232 @@
+.background-img-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.title-logo {
+    position:fixed;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.row-up {
+    margin-left:10px;
+    width:703px;
+}
+
+.img-logo {
+    width:600px;
+}
+
+.line {
+    width:673px;
+    border-bottom:1px solid;
+    margin-top:-60px;
+}
+
+.name-logo {
+    font-weight:400;
+    font-family:Microsoft YaHei;
+    color: #ffffff;
+    padding-left: 2px;
+    padding-top: 25px;
+}
+
+.letter {
+    text-align: justify;
+    font-size:10px;
+    margin-top: -25px;
+}
+
+.character {
+    text-align: justify;
+    font-size:16px;
+    margin-bottom: -25px;
+    margin-top: -25px;
+}
+
+.text-short {
+    text-align:justify;
+}
+
+.frame {
+	min-width: 1000px;
+}
+
+.frame-list {
+    font-size:18px;
+    font-weight:400;
+}
+
+.user-panel>.image>img {
+    width: 100%;
+    max-width: 60px;
+    height: auto;
+}
+
+.user-panel {
+	height:10px;
+	border: 2px;
+}
+
+.self-img {
+	padding-left: 30px;
+	padding-top: 10px;
+}
+
+.pull-left {
+	padding-left: 20px;
+	padding-top: 10px;
+}
+
+.user-panel>.info>p {
+    margin: 0px;
+    padding: 3px;
+}
+
+.user-panel>.info {
+	font-size: 18px;
+}
+
+.header {
+	height:100px;
+	background-image: url('../img/green.png');
+}
+
+.header-h1 {
+	margin: 0px;
+	padding-top: 20px;
+	font-size: 50px;
+	text-align: center;
+}
+
+.login-span {
+    margin-left:5px;
+    font-size:16px;
+}
+
+.login-font {
+    margin-left:10px;
+    font-size:16px;
+}
+
+.login-title {
+    font-size:20px;
+    margin:0px;
+    font-weight:800;
+    text-align:center;
+}
+
+.container {
+    margin-top:-70px;
+}
+
+.form-group {
+    margin-top: 25px;
+}
+
+.regedit-input {
+    height:25px;
+    padding-left:40px;
+}
+
+.panel-self {
+    margin-top:-10px;
+}
+
+.regedit-button {
+    margin-top: 20px;
+    margin-left:47px;
+}
+.regedit-label {
+    font-weight:400;
+    padding-top:6px;
+}
+.login-label {
+    font-weight:400;
+    padding-top:6px;
+    margin-left: 146px;
+}
+.login-select {
+    text-align:center;
+    margin-left: 31px;
+}
+
+#move-left {
+    margin-left:-30px;
+    position:absolute;
+    height:40px;
+    padding-top:5px;
+    padding-top: 10px;
+    padding-left: 4px;
+    font-size: 18px;
+}
+
+#move-right {
+    margin-right:0px;
+    position:absolute;
+    height:40px;
+    padding-top:5px;
+    padding-top: 10px;
+    padding-left: 4px;
+    font-size: 18px;
+    right: 0px;
+}
+
+.self-frame {
+    margin-bottom: 0px;
+}
+
+.module-title {
+    font-size:16px;
+}
+
+.table-button {
+    margin:0px 15px 0px 15px;
+    text-align: center;
+}
+.info-option {
+    padding-left:20px;
+}
+.option-title {
+    font-size:16px;
+}
+.options {
+    padding-left:10px;
+}
+.filepath {
+    width: 182px;
+    height: 142px;
+    position: absolute;
+    opacity: 0;
+}
+.boxes {
+    float: left;
+    margin: 8px;
+    position: relative;
+    width: 182px;
+    height: 142px;
+    border: 1px solid #D7D7D7;
+    overflow: hidden;
+}
+.imgbox {
+    left: 0px;
+    top: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+.camera {
+    margin-top: 20px;
+}
+.closecamera {
+    margin-left: 148px;
+    position:absolute;
+}
+.img {
+    width:100%;
+    height:100%;
+}

@@ -1,0 +1,48 @@
+﻿#container_page {
+	width: 1002px;
+	text-align: left;
+	min-height: 100%; /* For IE */
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 0;
+	margin-left: auto;
+	background-color: #FFFFFF;
+	
+}
+#container_content {
+	width: 1002px;
+	background-color: #FFFFFF;
+    margin:0 auto;
+    padding-top:5px;
+    padding-bottom:5px;
+    font-size:large;
+}
+#head {
+    width: 1002px;
+}
+.headNode {
+    width:100%;
+    border:none;
+}
+td.image {
+    height:130px;
+    background-image:url(../images/logo.gif);
+    filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+    -moz-background-size:100% 100%;
+    background-size:100% 100%;
+}
+#title {
+    margin:0 auto;
+    text-align:center;
+}
+
+#describe {
+    margin:0 auto;
+    text-align:center;
+    padding-top:1%;
+    font-size:14px;
+}
+
+#describe {
+    margin-bottom:20px;
+}

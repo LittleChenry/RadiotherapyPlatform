@@ -1,0 +1,131 @@
+.layout-main-tab {
+    border-bottom: 1px solid #ccc;
+    background: #FFFFFF;
+    height: 50px;
+    line-height: 39px;
+    position: relative;
+}
+
+.tab-nav {
+    margin-left: 0px;
+    padding-top: 6px;
+    padding-left: 30px;
+    border-left: 1px solid #DDDDDD;
+    height: 50px;
+    line-height: 40px;
+    position: relative;
+    z-index: 0;
+}
+
+.tab-btn {
+	top: 0;
+	border-color: #DDDDDD;
+	color: #222D32;
+	position: absolute;
+	width: 30px;
+	background-color: #ecf0f5;
+    z-index: 1;
+}
+
+.tab-btn:hover{
+	color: #222D32;
+}
+
+.tab-btn:link{
+	color: #222D32;
+}
+
+.btn-right {
+	right:0px;
+	padding-left: 10px;
+	border-left: 1px solid #DDDDDD;
+}
+
+.btn-left {
+	left: 0px;
+	padding-left: 7px;
+	border-right: 1px solid #DDDDDD;
+}
+
+.first-tab {
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 10px;
+    padding-bottom: 8px;
+	border-right: 1px solid #DDDDDD;
+	font-size: 16px;
+    background-color: white;
+}
+
+.first-tab:hover{
+	color: #222D32;
+}
+
+.first-tab:link{
+	color: #222D32;
+}
+
+.content-tab {
+	padding-left: 15px;
+	padding-right: 20px;
+	padding-top: 10px;
+    padding-bottom: 8px;
+	border-right: 1px solid #DDDDDD;
+	font-size: 16px;
+    background-color: white;
+}
+
+.content-tab:hover{
+	color: #222D32;
+}
+
+.content-tab:link{
+	color: #222D32;
+}
+
+.tab-nav-content {
+	float: left;
+}
+
+.close {
+	position: absolute;
+	margin-left: 7px;
+    margin-top: -4px;
+}
+
+.frame-content {
+    padding: 0px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border: 0px;
+    border-left: 1px solid #DDDDDD;
+}
+
+#ul-progress > a > li {
+	text-align: center;
+    padding-top: 8px;
+	font-size: 18px;
+    border-bottom: 1px solid #ECF0F5;
+	min-height: 40px;
+}
+
+.progress-finished {
+	background-color: #F39C12;
+	color: #FFFFFF;
+}
+
+.progress-active {
+	background-color: #00A65A;
+	color: #FFFFFF;
+}
+
+.progress-unfinished {
+	background-color: #C1C1C1;
+	color: #2C3B41;
+
+}
+
+.chose {
+	background-color: #3177BC;
+	color: #FFFFFF;
+}
