@@ -197,76 +197,52 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
+        <li>
+          <a href="pages/calendar.html">
+            <i class="fa fa-calendar"></i>
+            <span>科室概况</span>
+          </a>
+        </li>
         <li class="active treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i>
-            <span>患者登记</span>
+            <span>患者汇总</span>
           </a>
         </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
-            <span>计划</span>
+            <span>患者登记</span>
           </a>
         </li>
         <li>
           <a href="pages/widgets.html">
             <i class="fa fa-th"></i>
-            <span>Widgets</span>
+            <span>计划</span>
           </a>
         </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-pie-chart"></i>
-            <span>Charts</span>
+            <span>收费</span>
           </a>
         </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-laptop"></i>
-            <span>UI Elements</span>
+            <span>任务管理</span>
           </a>
         </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i>
-            <span>Forms</span>
+            <span>信息统计</span>
           </a>
         </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-table"></i>
-            <span>Tables</span>
-          </a>
-        </li>
-        <li>
-          <a href="pages/calendar.html">
-            <i class="fa fa-calendar"></i>
-            <span>Calendar</span>
-          </a>
-        </li>
-        <li>
-          <a href="pages/mailbox/mailbox.html">
-            <i class="fa fa-envelope"></i>
-            <span>Mailbox</span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i>
-            <span>Examples</span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-share"></i>
-            <span>Multilevel</span>
-          </a>
-        </li>
-        <li>
-          <a href="documentation/index.html">
-            <i class="fa fa-book"></i>
-            <span>Documentation</span>
+            <span>排队叫号</span>
           </a>
         </li>
       </ul>
