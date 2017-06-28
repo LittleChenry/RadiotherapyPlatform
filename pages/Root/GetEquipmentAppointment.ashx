@@ -66,7 +66,7 @@ public class GetEquipmentAppointment : IHttpHandler {
         while (reader.Read())
         {
             backString.Append("{\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\""
-                    + reader["End"].ToString() + "\",\"EuqipmentID\":\"" + s + "\",\"ID\":\"" + reader["ID"].ToString() + "\",\"State\":\"" + reader["State"].ToString()
+                    + reader["End"].ToString() + "\",\"EuqipmentID\":\"" + equipmentID + "\",\"ID\":\"" + reader["ID"].ToString() + "\",\"State\":\"" + reader["State"].ToString()
                  + "\",\"Euqipment\":\"");
             string sqlCommand2 = "SELECT Name FROM equipment WHERE ID=@id";
             DataLayer sqlOperation2 = new DataLayer("sqlStr");

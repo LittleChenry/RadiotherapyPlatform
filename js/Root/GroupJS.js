@@ -303,7 +303,7 @@ function CreateOneGroup(charger, index, currentID) {
 function GetUserInformation() {
     $.ajax({
         type: "GET",
-        url: "GetUserInformation.ashx",
+        url: "../../pages/Root/GetUserInformation.ashx",
         dateType: "text",
         async: false,
         success: function (data) {
@@ -339,7 +339,7 @@ function checkWasInGroup(id, $select) {
     var $error = $("#error");
     $.ajax({
         type: "GET",
-        url: "CheckWasInGroup.ashx?id=" + id,
+        url: "../../pages/Root/CheckWasInGroup.ashx?id=" + id,
         dateType: "text",
         success: function (data) {
             if (data == "true") {
