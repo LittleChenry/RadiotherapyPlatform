@@ -11,7 +11,7 @@
     <meta name="author" content=""/>
 
     <title></title>
-    <script src="../../../js/Main/PatientRegister.js" ></script>
+ 
  <style type="text/css">
         .auto-style1 {
             height: 45px;
@@ -161,5 +161,7 @@
                 </div>
             </div>
         </div>
+       
 </body>
+    <script src="../../../js/Main/PatientRegister.js" ></script>
 </html>

@@ -24,6 +24,14 @@ public partial class pages_Main_Records_PatientRegister : System.Web.UI.Page
         {
             if (RecordPatientInformation())
             {
+                sqlOperation.Close();
+                sqlOperation.Dispose();
+                sqlOperation1.Close();
+                sqlOperation1.Dispose();
+                sqlOperation3.Close();
+                sqlOperation3.Dispose();
+                sqlOperation5.Close();
+                sqlOperation5.Dispose();
                 MessageBox.Message("更新成功");
             }
             else
@@ -49,7 +57,7 @@ public partial class pages_Main_Records_PatientRegister : System.Web.UI.Page
             savepath1 = "../../upload/Patient/" + DateTime.Now.ToString("yyyyMMdd") + FileUpload.FileName;
             FileUpload.SaveAs(savePath);
         }
-        MessageBox.Message(Request.Form["Sub"]);
+        
         int doctorid = Convert.ToInt32(Request.Form["docter"]);
         string strSqlCommand = "UPDATE patient SET IdentificationNumber=@IdentificationNumber,Hospital=@Hospital,RecordNumber=@RecordNumber,Picture=@Picture,Name=@Name,Gender=@Gender,Age=@Age,Birthday=@Birthday,Nation=@Nation,Address=@Address,Contact1=@Contact1,Contact2=@Contact2,Height=@Height,Weight=@Weight,SickPart=@SickPart,RegisterDoctor=@doctorid where ID=@patientID";
         //各参数赋予实际值
@@ -76,9 +84,11 @@ public partial class pages_Main_Records_PatientRegister : System.Web.UI.Page
         sqlOperation5.AddParameterWithValue("@doctor", doctorid);
         int groupID = int.Parse(sqlOperation5.ExecuteScalar(groupid));
         int treatid=Convert.ToInt32(Request.Form["treatID"]);
-        string str1 = "UPDATE  diagnosisrecord SET SubCenterPrincipal_ID=@SubCenterPrincipal_ID and Principal_User_ID=@Principal_User_ID where Treatment_ID=@treatID";
+        int subid = Convert.ToInt32(Request.Form["Sub"]);
+       
+        string str1 = "UPDATE  diagnosisrecord SET SubCenterPrincipal_ID=@SubCenterPrincipal, Principal_User_ID=@Principal_User_ID where Treatment_ID=@treatID";
 
-            sqlOperation3.AddParameterWithValue("@SubCenterPrincipal_ID", Convert.ToInt32(Request.Form["Sub"]));
+            sqlOperation3.AddParameterWithValue("@SubCenterPrincipal", subid);
             sqlOperation3.AddParameterWithValue("@Principal_User_ID", 1);
             sqlOperation3.AddParameterWithValue("@treatID", treatid);
             int Success1 = sqlOperation3.ExecuteNonQuery(str1);
