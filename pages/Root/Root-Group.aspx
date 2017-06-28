@@ -418,7 +418,31 @@
                         <input type="button" class="tohidden" id="EditGroup" data-toggle="modal" data-target="#editModal" />
                     </div>
                     <div id="tableArea" class="panel-body mintablewidth">
-                        
+                        <table class="table table-striped table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>组名</th>
+                                    <th>组长</th>
+                                    <th colspan="6">组员</th>
+                                </tr>
+                            </thead>
+                            <tbody id="groupArea">
+
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-sm-6">&nbsp;</div>
+                            <div class="col-sm-6">
+                                <input id="currentPage" type="hidden" value="1" />
+                                <input id="sumPage" type="hidden" value="0" />
+                                <div id="pageButton" class="toright" style="display: block;">
+                                    <button type="button" id="firstPage" class="btn btn-primary btn-sm disabled">首页</button>
+                                    <button type="button" id="prePage" class="btn btn-primary btn-sm disabled">上一页</button>
+                                    <button type="button" id="nextPage" class="btn btn-primary btn-sm disabled">下一页</button>
+                                    <button type="button" id="lastPage" class="btn btn-primary btn-sm disabled">末页</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -535,6 +559,6 @@
 <!-- Main js-->
 <script src="../../js/Root/RootMainJS.js"></script>
 <!-- Main JavaScript -->
-<script src="../../js/Root/GroupJS.js"></script>
+<script src="../../js/Root/Group.js"></script>
 </body>
 </html>

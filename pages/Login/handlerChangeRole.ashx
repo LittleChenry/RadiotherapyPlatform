@@ -41,6 +41,10 @@ public class handlerChangeRole : IHttpHandler, IRequiresSessionState
         }
         result.Remove(result.Length - 1, 1);
         result.Append("]");
+        reader.Close();
+        sqlOperater.Close();
+        sqlOperater.Dispose();
+        sqlOperater = null;
         return result.ToString();
     }
 }
