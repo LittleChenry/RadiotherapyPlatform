@@ -17,4 +17,9 @@ public class MessageBox
     {
         System.Web.HttpContext.Current.Response.Write("<script language=javascript>alert('" + MessageInformation + "');</script>");
     }
+
+    public static void Message(int p)
+    {
+        throw new NotImplementedException();
+    }
 }
