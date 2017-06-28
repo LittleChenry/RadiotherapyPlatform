@@ -212,12 +212,12 @@ function CreateTable(start, end, patient) {
                         break;
                     case 3:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/FixedApply.aspx?TreatmentID=" + e.data.ID);
+                            $("#record-iframe").attr('src', "Records/FixedApply.aspx?TreatmentID=" + e.data.ID  +"TreatmentItem=体位固定");
                         });
                         break;
                     case 4:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/LocationApply.aspx?TreatmentID=" + e.data.ID);
+                            $("#record-iframe").attr('src', "Records/LocationApply.aspx?TreatmentID=" + e.data.ID  +"TreatmentItem=模拟定位");
                         });
                         break;
                     case 5:
@@ -257,7 +257,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 12:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/FirstAccelerator.aspx?TreatmentID=" + e.data.ID);
+                            $("#record-iframe").attr('src', "Records/FirstAccelerator.aspx?TreatmentID=" + e.data.ID  +"TreatmentItem=加速器");
                         });
                         break;
                     case 13:
@@ -267,7 +267,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 14:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/ReplacementApply.aspx?TreatmentID=" + e.data.ID);
+                            $("#record-iframe").attr('src', "Records/ReplacementApply.aspx?TreatmentID=" + e.data.ID  +"TreatmentItem=复位模拟");
                         });
                         break;
                     case 15:
