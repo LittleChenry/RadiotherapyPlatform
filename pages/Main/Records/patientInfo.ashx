@@ -13,8 +13,10 @@ public class patientInfo : IHttpHandler
         try
         {
             string json = getfixrecordinfo(context);
+            
             sqlOperation2.Close();
             sqlOperation2.Dispose();
+            sqlOperation2=null;
             context.Response.Write(json);
         }
         catch (Exception ex)
@@ -52,6 +54,7 @@ public class patientInfo : IHttpHandler
            
         }
         backText.Append("]}");
+        reader.Close();
         return backText.ToString();
     }
 }

@@ -26,12 +26,16 @@ public partial class pages_Main_Records_PatientRegister : System.Web.UI.Page
             {
                 sqlOperation.Close();
                 sqlOperation.Dispose();
+                sqlOperation = null;
                 sqlOperation1.Close();
                 sqlOperation1.Dispose();
+                sqlOperation1 = null;
                 sqlOperation3.Close();
                 sqlOperation3.Dispose();
+                sqlOperation3 = null;
                 sqlOperation5.Close();
                 sqlOperation5.Dispose();
+                sqlOperation5 = null;
                 MessageBox.Message("更新成功");
             }
             else
