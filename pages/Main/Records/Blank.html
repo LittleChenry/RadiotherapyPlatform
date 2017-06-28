@@ -1,9 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Blank.aspx.cs" Inherits="pages_Main_Records_Blank" %>
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
+<head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>BLANK</title>
     <!-- css -->
@@ -59,7 +57,7 @@
                         </select>
                     </span>
                     <span class="item col-xs-4">
-                        设备与时间：
+                        设备：
                         <input type="text" class="form-item">
                     </span>
                     <span class="item col-xs-4">
@@ -73,18 +71,16 @@
                 </div>
                 <div class="single-row">
                     <span class="item col-xs-4">
-                        设备与时间：
+                        日期：
                         <input type="text" class="form-item" id="datepicker">
                     </span>
-                    <!-- <span class="item col-xs-4">联系方式1：<span class="underline">189-2001-0020</span></span>
-                    <span class="item col-xs-4">联系方式2：<span class="underline">182-1212-1224</span></span> -->
-                </div><!-- 
+                </div>
                 <div class="single-row">
                     <span class="item col-xs-12">
                         备注：
-                        <textarea rows="3"></textarea>
+                        <textarea class="form-area"></textarea>
                     </span>
-                </div> -->
+                </div>
             </div>
             <div class="paper-footer">
                 <div class="single-row">
@@ -115,7 +111,7 @@
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <!-- Page script -->
     <script type="text/javascript">
-        $("#datepicker").datepicker({ autoclose: true });
+        $("#datepicker").datepicker({autoclose:true});
     </script>
 </body>
 </html>
