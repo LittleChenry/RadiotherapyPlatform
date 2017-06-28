@@ -11,6 +11,11 @@ public partial class Root_Root_equipment : System.Web.UI.Page
     private int deleteIndex;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["loginUser"] == null)
+        {
+            MessageBox.Message("请先登陆");
+            Response.Write("<script language=javascript>window.location.replace('../Login/Login.aspx');</script>");
+        }
         string ispostback = Request.Form["ispostback"];
         if (ispostback != null && ispostback == "true")
         {

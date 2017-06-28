@@ -9,7 +9,7 @@ $(function () {
         var selectRole = $("#userRole").val();
         updateSession(selectRole);
         if(selectRole == "Root"){
-            window.location.href = "../../pages/RootMain.aspx";
+            window.location.href = "../../pages/Root/RootMain.aspx";
         }else{
             window.location.href="../../pages/Main/Main.aspx";
         }

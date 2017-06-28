@@ -10,7 +10,11 @@ public partial class Root_Root_function : System.Web.UI.Page
     private int deleteRow;
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Session["loginUser"] == null)
+        {
+            MessageBox.Message("请先登陆");
+            Response.Write("<script language=javascript>window.location.replace('../Login/Login.aspx');</script>");
+        }
     }
     protected void functionObjectDataSource_Deleting(object sender, ObjectDataSourceMethodEventArgs e)
     {

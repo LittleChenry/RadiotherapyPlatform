@@ -32,7 +32,7 @@ public partial class Root_Root_InfoManage : System.Web.UI.Page
          if (Session["loginUser"] == null)
          {
              MessageBox.Message("请先登陆");
-             Response.Write("<script language=javascript>window.location.replace('../Main/Login.aspx');</script>");
+             Response.Write("<script language=javascript>window.location.replace('../Login/Login.aspx');</script>");
          }
     }
     public void delete(String  id)

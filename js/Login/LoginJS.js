@@ -150,11 +150,23 @@ function TransferMain() {
     var index = sel.selectedIndex;
     var url = sel.options[index].value;
     var name = sel.options[index].innerHTML;
-    window.location.replace("../../pages/" + url + "/RootMain.aspx?role=" + name);
+    setSessionRole(name);
+    if (url == "Root") {
+        window.location.replace("../../pages/Root/RootMain.aspx?role" + name);
+    } else {
+        window.location.replace("../../pages/Main/Main.aspx");
+    }
+}
+
+function setSessionRole(name) {
+    xmlHttp = new XMLHttpRequest();
+    var url = "handlerSetRole.ashx?role=" + name;
+    xmlHttp.open("GET", url, true);
+    xmlHttp.send();
 }
 
 function postToCs() {
-    xmlHttp = new XMLHttpRequest;
+    xmlHttp = new XMLHttpRequest();
     var userName = document.getElementById("userNumber").value;
     var url = "Login.aspx?userID=" + userName + "&ispostback=true";
     xmlHttp.open("GET", url, false);
