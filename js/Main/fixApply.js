@@ -4,9 +4,9 @@ var userID;
 var number = 0;
 var obj = [];
 function Init(evt) {
-    var treatmentID= window.location.search.split("=")[1];//?后第一个变量信息
+    var treatmentID = window.location.search.split("=")[1];//?后第一个变量信息
     //调取后台所有等待就诊的疗程号及其对应的病人
-    var patient=getfixPatientInfo(treatmentID);
+    var patient = getfixPatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
     document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
@@ -20,32 +20,77 @@ function Init(evt) {
     createmodelselectItem(document.getElementById("modelselect"));
     createspecialrequestItem(document.getElementById("specialrequest"));
     createfixEquipItem(document.getElementById("fixEquip"));
+    if (patient.Progress>= 4) {
+        var info = getfixInfomation(treatmentID);
+        document.getElementById("modelselect").value = info.materialName;
+        document.getElementById("modelselect").disabled = "true";
+        document.getElementById("specialrequest").value = info.require;
+        document.getElementById("specialrequest").disabled = "true";
+        document.getElementById("fixEquip").value = info.fixedequipname;
+        document.getElementById("fixEquip").disabled = "true";
+        document.getElementById("bodyPost").value = info.BodyPosition;
+        document.getElementById("bodyPost").disabled="true"; 
+        document.getElementById("appointtime").value = info.equipname + " " + info.Date + " " + toTime(info.Begin) + "-" + toTime(info.End);
+        document.getElementById("chooseappoint").disabled = "disabled";
+        document.getElementById("applyuser").value = info.username;
+        document.getElementById("time").value = info.ApplicationTime;
+
+    } else {
+    
+    createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
     var date = new Date();
     document.getElementById("time").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    showApply(patient);
-}
-//根据今天日期创建预约表
-function CreateAppiontTable(patient, basefixinfo) {
-    var equimentSelect = document.getElementById("equipmentName");
-    var item = window.location.search.split("=")[2];//?后第一个变量信息
-    var date = new Date();
-    var dateString = (1900 + date.getYear()) + "-" + (1 + date.getMonth()) + "-" + date.getDate();
-    GetItemInformation(item, dateString);//获取该项目所有设备
-    if (obj.Equiment1[0].Equipment == "false")
-        return;
- 
-    var count = 0;
-    for (var o in obj) {//o是其中一个对象的对象名
-        var equiment = obj[o];//获取当前对象名的json数组
-        equimentSelect.options[count] = new Option(equiment[0].Euqipment);
-        equimentSelect.options[count].value = equiment[0].EuqipmentID;
-        ++count;
+    document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    document.getElementById("chooseappoint").addEventListener("click", function () {
+        CreateNewAppiontTable(event);
+    }, false);
+    document.getElementById("chooseProject").addEventListener("click", function () {
+        CreateNewAppiontTable(event);
+    }, false);//根据条件创建预约表
+    document.getElementById("sure").addEventListener("click", checkAllTable, false);
     }
-    CreateCurrentEquipmentTbale(obj.Equiment1, dateString, patient, basefixinfo);//创建第一个设备的表
+}
+//设备下拉菜单
+function createfixEquipmachine(thiselement,item) {
+    var machineItem = JSON.parse(getmachineItem(item)).Item;
+    thiselement.options.length = 0;
+    for (var i = 0; i < machineItem.length; i++) {
+        if (machineItem[i] != "") {
+            thiselement.options[i] = new Option(machineItem[i].Name);
+            thiselement.options[i].value = parseInt(machineItem[i].ID);
+        }
+    }
+}
+function getmachineItem(item) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getfixmachine.ashx?item="+item;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+//调取数据库申请信息
+function getfixInfomation(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "Getfinishedfix.ashx?treatmentID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var obj1 = eval("(" + json + ")");
+    return obj1.info[0];
+}
+function postfix() {
+    var basefixinfo = [];
+    basefixinfo[0] = document.getElementById("modelselect").value;
+    basefixinfo[1] = document.getElementById("specialrequest").value;
+    basefixinfo[2] = userID;
+    basefixinfo[3] = document.getElementById("time").value;
+    basefixinfo[4] = document.getElementById("bodyPost").value;
+    basefixinfo[5] = document.getElementById("fixEquip").value;
 }
 
 //创建某设备某天的预约表
-function CreateCurrentEquipmentTbale(equiment, dateString, patient, basefixinfo) {
+function CreateCurrentEquipmentTbale(equiment, dateString) {
     var table = document.getElementById("apptiontTable");
     RemoveAllChild(table);
     var thead = document.createElement("THEAD");
@@ -99,18 +144,9 @@ function RemoveAllChild(area) {
             area.removeChild(first);
     }
 }
-//获取项目预约表信息
-function GetItemInformation(item, dateString) {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "GetAppointment.ashx?item=" + item + "&date=" + dateString;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-    var json = xmlHttp.responseText;
-    obj = eval("(" + json + ")");
 
-}
 //根据日期创建新表
-function CreateNewAppiontTable(evt, patient, basefixinfo) {
+function CreateNewAppiontTable(evt) {
     evt.preventDefault();
     var equipmentName = document.getElementById("equipmentName");
     var currentIndex = equipmentName.selectedIndex;
@@ -123,7 +159,7 @@ function CreateNewAppiontTable(evt, patient, basefixinfo) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     thisObj = eval("(" + json + ")");
-    CreateCurrentEquipmentTbale(thisObj, date, patient, basefixinfo);
+    CreateCurrentEquipmentTbale(thisObj, date);
 }
 //获取所有待等待体位固定申请疗程号以及所属患者ID与其他信息
 function getfixPatientInfo(treatmentID) {
@@ -150,27 +186,7 @@ function sex(evt) {
         return "男";
 }
 
-//展示具体患者上下步的固定申请网页的前两页
-function showApply(patient) {
-    var basefixinfo = [];
-    basefixinfo[0] = document.getElementById("modelselect").value;
-    basefixinfo[1] = document.getElementById("specialrequest").value;
-    basefixinfo[2] = userID;
-    basefixinfo[3] = document.getElementById("time").value;
-    basefixinfo[4] = document.getElementById("bodyPost").value;
-    basefixinfo[5] = document.getElementById("fixEquip").value;
-    var date = new Date();
-    document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    CreateAppiontTable(patient, basefixinfo);
-    document.getElementById("chooseappoint").addEventListener("click", function () {
-        CreateNewAppiontTable(event, patient, basefixinfo);
-    }, false);
-    document.getElementById("chooseProject").addEventListener("click", function () {
-        CreateNewAppiontTable(event, patient, basefixinfo);
-    }, false);//根据条件创建预约表
-    document.getElementById("sure").addEventListener("click", checkAllTable, false);
 
-}
 function checkAllTable() {
     var temp = 1;
     var total = 0;

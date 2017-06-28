@@ -6,8 +6,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-     <script src="../../../plugin/laydate/laydate.js"></script>
-     <script src="../../../js/Main/fixApply.js" type="text/javascript"></script>
+     
      <!-- css -->
       <link rel="stylesheet" href="../../../css/Main/main.css"/>
       <!-- Bootstrap 3.3.6 -->
@@ -181,6 +180,10 @@
                                 </div>
                     <!-- /.row -->
                                 </div>
-                               
+     <script src="../../../js/Main/fixApply.js" type="text/javascript"></script>
+     <script src="../../../plugin/laydate/laydate.js"></script>
+    
+                             
 </body>
+   
 </html>

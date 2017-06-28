@@ -28,20 +28,22 @@ public class patientInfoForFix : IHttpHandler {
             return "{\"patient\":false}";
         }
         sqlOperation.Close();
-        
+        sqlOperation.Dispose();
+        sqlOperation = null;
+
         DataLayer sqlOperation2 = new DataLayer("sqlStr");
         StringBuilder backText = new StringBuilder("{\"patient\":[");
-        string sqlCommand2 = "select treatment.ID as treatid,patient.* from treatment,patient where treatment.Patient_ID=patient.ID and treatment.ID=@id";
+        string sqlCommand2 = "select treatment.ID as treatid,Progress,patient.* from treatment,patient where treatment.Patient_ID=patient.ID and treatment.ID=@id";
         sqlOperation2.AddParameterWithValue("@id", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         int i = 1;
         while (reader.Read())
         {
             backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"IdentificationNumber\":\"" + reader["IdentificationNumber"] +
-                 "\",\"Hospital\":\"" + reader["Hospital"].ToString() + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString() + "\",\"Picture\":\"" + reader["Picture"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() +
-                 "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"Birthday\":\"" + reader["Birthday"].ToString() +
+                 "\",\"Hospital\":\"" + reader["Hospital"].ToString() + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString()  + "\",\"Name\":\"" + reader["Name"].ToString() +
+                 "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() +
                  "\",\"Nation\":\"" + reader["Nation"].ToString() + "\",\"Address\":\"" + reader["Address"].ToString() + "\",\"Contact1\":\"" + reader["Contact1"].ToString() +
-                 "\",\"Contact2\":\"" + reader["Contact2"].ToString() + "\",\"Height\":\"" + reader["Height"].ToString() + "\",\"Weight\":\"" + reader["Weight"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\"}");
+                 "\",\"Contact2\":\"" + reader["Contact2"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");
@@ -50,7 +52,11 @@ public class patientInfoForFix : IHttpHandler {
         }
       
         backText.Append("]}");
+        reader.Close();
+        sqlOperation2.Close();
+        sqlOperation2.Dispose();
+        sqlOperation2 = null;
         return backText.ToString();
-    }
+     }
 
 }
