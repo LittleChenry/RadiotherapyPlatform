@@ -153,7 +153,7 @@ $(function () {
         }
         changeObj.push({ "GroupID": groupID });
         var xmlHttp = new XMLHttpRequest();
-        var url = "../../roles/Root/UpdateGroup.ashx";
+        var url = "../../pages/Root/UpdateGroup.ashx";
         xmlHttp.open("POST", url, false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var content = "data=" + toJsonString(changeObj)+"&delete="+ removeObj;
@@ -170,7 +170,7 @@ $(function () {
     $("#deleteGroup").bind("click", function () {
         var gid = $("#editTable td:eq(0)").text();
         var xmlHttp = new XMLHttpRequest();
-        var url = "../../roles/Root/DeleteGroup.ashx";
+        var url = "../../pages/Root/DeleteGroup.ashx";
         xmlHttp.open("POST", url, false);
         xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var content = "data=" + gid + "&delete=" + removeObj;
@@ -258,7 +258,7 @@ function CreateAllGroup(which) {
 function GetGroupInformation() {
     $.ajax({
         type: "GET",
-        url: "../../roles/Root/GetGroupInformation.ashx",
+        url: "../../pages/Root/GetGroupInformation.ashx",
         dateType: "text",
         success: function (date) {
             obj = $.parseJSON(date);
@@ -382,13 +382,13 @@ function cutSelected($select, name, preID) {
 
 function postNewGroup(postAdd) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "../../roles/Root/AddNewGroup.ashx";
+    var url = "../../pages/Root/AddNewGroup.ashx";
     xmlHttp.open("POST", url, true);
     xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var content = "data=" + toJsonString(postAdd);
     xmlHttp.onreadystatechange = function () {
         if(xmlHttp.readyState == 4 && xmlHttp.status == 200)
-        window.location = '../../roles/Root/Root-Group.aspx';
+        window.location = '../../pages/Root/Root-Group.aspx';
     }
     xmlHttp.send(content);
 }
@@ -423,7 +423,7 @@ function findThisName(text,newSelect) {
 function isCharger(postAdd) {
     $.ajax({
         type: "GET",
-        url: "../../roles/Root/isCharger.ashx?data=" + postAdd,
+        url: "../../pages/Root/isCharger.ashx?data=" + postAdd,
         dateType: "text",
         async: false,
         success: function (data) {

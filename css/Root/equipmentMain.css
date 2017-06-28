@@ -140,3 +140,41 @@ label.height {
 .minwid {
     min-width:1424px;
 }
+
+/*Group样式*/
+.tableInterval {
+    width: 5.666667em;
+}
+
+.buttonToLeft {
+    margin-left: 0.666em;
+}
+
+.buttonToSmall {
+    padding: 2.5px 10px;
+}
+
+.tdth {
+    padding:2em 3em;
+}
+
+.mytable {
+    width:100%;
+    max-width:100%;
+}
+
+#myModal .modal-body,#editTable.modal-body
+{
+  height:300px;
+  overflow:auto;
+}
+
+select.warning {
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+.mintablewidth {
+    min-width:1000px;
+}

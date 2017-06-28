@@ -2,8 +2,10 @@
 
 using System;
 using System.Web;
+using System.Web.SessionState;
 
-public class removeSession : IHttpHandler {
+public class removeSession : IHttpHandler, IRequiresSessionState
+{
     
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";

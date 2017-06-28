@@ -2,13 +2,15 @@
 
 using System;
 using System.Web;
+using System.Web.SessionState;
 
-public class handlerUpdateSession : IHttpHandler {
+public class handlerUpdateSession : IHttpHandler, IRequiresSessionState
+{
     
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
         updateSession(context);
-        context.Response.Write("Hello World");
+        context.Response.Write("");
     }
  
     public bool IsReusable {

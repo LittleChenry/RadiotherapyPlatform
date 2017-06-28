@@ -323,7 +323,7 @@ function RemoveAllChild(area) {
 //获取数据库设备检查表数据
 function GetCurrentInformation(cycle) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "../../roles/Root/GetInspection.ashx?cycle=" + cycle;
+    var url = "../../pages/Root/GetInspection.ashx?cycle=" + cycle;
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     var json = xmlHttp.responseText;
@@ -689,7 +689,7 @@ function postDate(jsonStr) {
     }
 
     var xmlHttp = new XMLHttpRequest();
-    var url = "../../roles/Root/RecordEquipmentCheck.ashx";
+    var url = "../../pages/Root/RecordEquipmentCheck.ashx";
     xmlHttp.open("POST", url, true);
     xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var content = "date=" + jsonStr + "&cycle=" + cycName + "&equipment=" + equipmentID + "&functionState=" + choosed;
@@ -699,7 +699,7 @@ function postDate(jsonStr) {
 function CreateEquipment() {
     var select = document.getElementById("equipment");
     var xmlHttp = new XMLHttpRequest();
-    var url = "../../roles/Root/GetEquipment.ashx";
+    var url = "../../pages/Root/GetEquipment.ashx";
     xmlHttp.open("GET", url, true);
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {

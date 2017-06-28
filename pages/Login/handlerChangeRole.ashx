@@ -3,8 +3,10 @@
 using System;
 using System.Web;
 using System.Text;
+using System.Web.SessionState;
 
-public class handlerChangeRole : IHttpHandler {
+public class handlerChangeRole : IHttpHandler, IRequiresSessionState
+{
     
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
@@ -23,7 +25,7 @@ public class handlerChangeRole : IHttpHandler {
         DataLayer sqlOperater = new DataLayer("sqlStr");
         UserInformation user = (UserInformation)context.Session["loginUser"];
         int id = user.GetUserID();
-        string sqlCommand = "SELECT role.Name,role.Description FROM user JOIN LEFT user2role On "
+        string sqlCommand = "SELECT role.Name,role.Description FROM user LEFT JOIN user2role On "
                             + "user.ID=user2role.User_ID LEFT JOIN role ON user2role.Role_ID=role.ID "
                             + "WHERE user.ID=@userID";
         sqlOperater.AddParameterWithValue("@userID", id);

@@ -510,6 +510,6 @@
 <!-- Main js-->
 <script src="../../js/Root/RootMainJS.js"></script>
 <!-- Main JavaScript -->
-    <script src="../../js/Root/EquipmentRecordJS.js" type="text/javascript"></script>
+<script src="../../js/Root/EquipmentRecordJS.js" type="text/javascript"></script>
 </body>
 </html>

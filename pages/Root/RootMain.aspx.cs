@@ -12,7 +12,7 @@ public partial class pages_Root_RootMain : System.Web.UI.Page
         if (Session["loginUser"] == null)
         {
             MessageBox.Message("请先登陆");
-            Response.Write("<script language=javascript>window.location.replace('../Login/Login.aspx');</script>");
+            Response.Write("<script language=javascript>window.location.replace('../Login/Login.aspx');</script>");    
         }
     }
 }
