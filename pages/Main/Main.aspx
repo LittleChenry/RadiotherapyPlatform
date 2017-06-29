@@ -394,8 +394,14 @@
         $("#printIframe").bind("click", function () {
             $("#record-iframe")[0].contentWindow.print();
         });
-        $("#save").bind("click",function(){
-            window.frames["record-iframe"].document.forms["frmRegist"].submit();
+        $("#save").bind("click", function () {
+                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 1) {
+                         window.frames["record-iframe"].document.forms["frmRegist"].submit();
+                }
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 2) {
+                        $("#record-iframe")[0].contentWindow.postfix();
+                    }
+
         });
     })
 </script>
