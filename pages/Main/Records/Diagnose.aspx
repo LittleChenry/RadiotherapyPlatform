@@ -33,9 +33,12 @@
                                       
                                      <div id="complete" style="position:relative;top:10px;text-align:center">
                                          
-                                    
+                                     <input type="hidden" id="progress" name="progress" />
                                          <table class="table table-bordered table-striped tableWidth" style="border:solid thin;margin-left:10%;width:80%">
                                              <tbody>
+                                                  <tr class="warning">
+                                                    <td colspan="6" style="border-bottom:#000 solid 1px;height:50px;font-weight:bolder;font-size:large;text-align:center">病人信息</td>
+                                                  </tr>
                                                   <tr style="height:30px">
                                                     <td style="width:10%;">姓名:</td>
                                                     <td id="username" style="width:10%;"></td>
@@ -60,13 +63,13 @@
                                                     <td style="width:15%;">联系方式2:</td>
                                                     <td id="contact2" style="width:25%;"> </td>
                                                </tr>
-                                               <tr>
-                                                    <th style="height:35px"><label for="treatID" class="height">疗程号</label></th>
-                                                   <td>
-                                                       <input id="treatID" name="treatID" type="text" readonly="true" style="border:none;float:left;margin-top:10px"   />
-                                                    </td> 
+                                               <tr style="height:30px">
+                                                    <td style="width:10%;">疗程号:</td>
+                                                    <td id="treatID" style="width:15%;"></td> 
                                                </tr>
-                                               
+                                     <tr class="info">
+                                        <td colspan="6" style="border-top:#000 solid 1px; border-bottom:#000 solid 1px;height:50px;font-weight:bolder;font-size:large;text-align:center">病情诊断</td>
+                                    </tr>           
                                   <tr>
                                   <th style="height:35px"><label for="part" class="height">部位</label></th>
                                   <td>

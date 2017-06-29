@@ -395,12 +395,18 @@
             $("#record-iframe")[0].contentWindow.print();
         });
         $("#save").bind("click", function () {
-                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 1) {
+                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 0) {
                          window.frames["record-iframe"].document.forms["frmRegist"].submit();
+                }
+                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 1) {
+                    $("#record-iframe")[0].contentWindow.checkAll();
                 }
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 2) {
                         $("#record-iframe")[0].contentWindow.postfix();
-                    }
+               }
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 4) {
+                   window.frames["record-iframe"].document.forms["saveFixRecord"].submit();
+               }
 
         });
     })

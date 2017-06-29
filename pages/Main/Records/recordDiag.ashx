@@ -48,7 +48,7 @@ public class recordDiag : IHttpHandler {
          }
          string strSqlCommand1 = "update treatment set Progress=@Progress where ID=@treatid";
          sqlOperation2.AddParameterWithValue("@treatid", treatID);
-         sqlOperation2.AddParameterWithValue("@Progress", 3);
+         sqlOperation2.AddParameterWithValue("@Progress", 2);
          int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
       
 

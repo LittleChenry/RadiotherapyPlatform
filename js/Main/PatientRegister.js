@@ -17,7 +17,7 @@ function Init(evt) {
     document.forms[0].addEventListener("reset", resetForm, false);//添加表单rest事件函数
     document.getElementById("Number1").addEventListener("change", phoneFormat, false);//电话号码格式化
     document.getElementById("Number2").addEventListener("change", phoneFormat, false);//电话号码格式化
-   
+    document.getElementById("progress").value = 0;
     var select3 = document.getElementById("SickPart");
     createPartItem(select3);
     var select4 = document.getElementById("docter");
@@ -68,7 +68,8 @@ function writePatientInfo(PatientInfo) {
     Subid = PatientInfo.patientInfo[0].SubID;
     doctor = PatientInfo.patientInfo[0].doctor;
     doctorname = PatientInfo.patientInfo[0].doctorname;
-    document.getElementById("date").value =  PatientInfo.patientInfo[0].date;
+    document.getElementById("date").value = PatientInfo.patientInfo[0].date;
+    document.getElementById("date").disabled = "true";
    // document.getElementById("userID").value = userID;
    // addDosagePriority( PatientInfo.patientInfo[0].DosagePriority);
 

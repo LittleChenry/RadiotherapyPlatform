@@ -32,7 +32,7 @@
                         <div class="row" style="height:1000px">
                             <form id="frmRegist" name="frmRegist" method="post" runat="server">
                                 <input type="hidden" name="ispostback" value="true" />
-
+                                <input type="hidden" id="progress" name="progress"  />
                                 <div class="container">
                                     <div class="row">
                                         <input id="patientID" type="hidden" name="patientID"    />

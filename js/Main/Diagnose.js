@@ -12,7 +12,7 @@ function createPatient(evt) {
     getUserID();
     
     var treatID = window.location.search.split("=")[1];
-    document.getElementById("treatID").value = treatID;
+    document.getElementById("treatID").innerHTML = treatID;
     var patient = getPatientInfo(treatID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
@@ -23,13 +23,14 @@ function createPatient(evt) {
     document.getElementById("hospital").innerHTML = patient.Hospital;
     document.getElementById("contact").innerHTML = patient.Contact1;
     document.getElementById("contact2").innerHTML = patient.Contact2;
+    document.getElementById("progress").value = patient.Progress;
     //调取后台所有等待就诊的疗程号及其对应的病人
 
     var select3 = document.getElementById("part");
     createPartItem(select3);
     var select4 = document.getElementById("diagresult");
     createDiagResultItem(select4);
-    if (patient.Progress >= 3) {
+    if (patient.Progress >= 2) {
         var diagnosisInfo = getDignoseInfo(treatID);
         document.getElementById("diaguser").value = diagnosisInfo.username;
         document.getElementById("remark").value = diagnosisInfo.Remarks;
@@ -43,10 +44,10 @@ function createPatient(evt) {
         //doctor = DiagnoseInfo.DiagnoseInfo[0].doctor;
 
         document.getElementById("time").value = diagnosisInfo.Time;
-
+            
     } else {
         document.getElementById("diaguserid").value = userID;
-        document.getElementById("postdiag").addEventListener("click", checkAll, false);
+        
     }
 }
 function getDignoseInfo(treatID) {
@@ -131,7 +132,7 @@ function getDiagResultItem() {
     var Items = xmlHttp.responseText;
     return Items;
 }
-function checkAll(evt) {
+function checkAll() {
     var treatid = document.getElementById("treatID");
     var time = document.getElementById("time");
     var diaguserid = document.getElementById("diaguserid");
