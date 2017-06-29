@@ -21,7 +21,7 @@ public class GetUserInformation : IHttpHandler {
     private string getInformation()
     {
         DataLayer sqlOperation = new DataLayer("sqlStr");
-        string sqlCommand = "SELECT `user`.ID uid,Name FROM user2role,`user` WHERE `user`.ID=user2role.User_ID AND Role_ID=2 AND `user`.Activate=1";
+        string sqlCommand = "SELECT `user`.ID uid,`user`.Name FROM `user` LEFT JOIN user2role ON `user`.ID=user2role.User_ID WHERE user2role.Role_ID=2 AND `user`.Activate=1 ORDER BY `user`.Name";
         StringBuilder backString = new StringBuilder("[");
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         if (!reader.Read())

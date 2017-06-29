@@ -441,6 +441,9 @@
                                     <button type="button" id="nextPage" class="btn btn-primary btn-sm disabled">下一页</button>
                                     <button type="button" id="lastPage" class="btn btn-primary btn-sm disabled">末页</button>
                                 </div>
+                                <div id="searchRecover" class="toright tohidden">
+                                    <input type="button" id="refresh" class="btn btn-primary btn-sm" value="显示全部" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -459,6 +462,12 @@
                             <label id="error" class="tohidden"></label>
                             <table id="addGroup" class="mytable table-bordered table-center">
                                 <tbody>
+                                    <tr>
+                                        <th>组名</th>
+                                        <td>
+                                            <input id="groupName" type="text" class="form-control" style="margin-right:0.8em" value="" />
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <th>组长</th>
                                         <td>
@@ -493,8 +502,12 @@
                         <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
                         <h4 class="modal-title">修改分组</h4>                     
                     </div>
-                        <div id="editTable" class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
-                            
+                        <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
+                            <table class="mytable table-bordered table-center">
+                                <tbody id="editArea">
+                                    
+                                </tbody>
+                            </table>
                         </div>
                         <div class="modal-footer">
                             <button id="cannelEdit" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
