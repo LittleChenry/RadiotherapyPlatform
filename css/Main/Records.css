@@ -1,4 +1,10 @@
-﻿.paper {
+﻿body{
+    overflow-x: scroll;
+    overflow-y: auto;
+    margin: auto;
+}
+
+.paper {
     padding:25px 15px 25px 15px;
     min-width:756px;
     border:1px solid #000000;

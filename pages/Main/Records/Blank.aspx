@@ -18,13 +18,11 @@
     <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
     <!-- Ionicons -->
     <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/dist/css/AdminLTE.min.css"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
 </head>
-<body>
+<body style="width:1000px;margin:auto;">
     <section class="content">
         <div class="paper">
             <div class="paper-title">
@@ -123,6 +121,38 @@
                         <textarea class="form-area" placeholder="textarea最好不使用row属性，直接设置高度"></textarea>
                     </span>
                 </div>
+                <div class="single-row">
+                    <span class="item col-xs-12">
+                        单图片上传：
+                        <div class="imgbox">
+                            <div class="boxes">
+                                <div class="imgnum">
+                                    <input type="file" name="avatar" class="singlefilepath filepath" />
+                                    <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
+                                    <img src="../../../img/avatar.jpg" class="camera-picture">
+                                    <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
+                                    <img class="img" />
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+                <div class="single-row">
+                    <span class="item col-xs-12">
+                        多图片上传：
+                        <div class="imgbox multifile">
+                            <div class="boxes">
+                                <div class="imgnum">
+                                    <input type="file" name="avatar" class="multifilepath filepath" />
+                                    <span class="closecamera closearea"><i class="fa fa-times"></i></span>
+                                    <img src="../../../img/camera.png" class="camera-picture">
+                                    <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
+                                    <img class="img" />
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </div>
             </div>
             <div class="paper-footer">
                 <div class="single-row">
@@ -169,7 +199,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <!-- javascript -->
-
+    <script src="../../../js/Main/addimgs.js"></script>
     <!-- Page script -->
     <script type="text/javascript">
         $("#datepicker").datepicker({ autoclose: true });

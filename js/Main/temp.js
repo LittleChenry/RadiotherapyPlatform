@@ -15,22 +15,22 @@ function change() {
     $(this).nextAll(".img").show();  //fireBUg查看第二次换图片不起做用*/
     var htmlImg = '<div class="boxes">' +
               '<div class="imgnum">' +
-              '<input type="file" name="img' + Date.parse(new Date()) + '"  class="filepath" />' +
+              '<input type="file" name="img' + Date.parse(new Date()) + '"  class="singlefilepath" />' +
               '<i class="closecamera fa fa-times" style="font-size:35px;display:none;"></i>' +
-              '<i class="camera fa fa-camera" style="font-size:110px;"></i>' +
+              '<i class="camera-picture fa fa-camera" style="font-size:110px;"></i>' +
               '<img src=" " class="img" />' +
               '</div>' +
               '</div>';
 
 
     $(this).parent().parent().before(htmlImg);
-    $(this).parent().parent().find(".camera").hide();   //this指的是input
+    $(this).parent().parent().find(".camera-picture").hide();   //this指的是input
     $(this).parent().parent().find('.closecamera').show();
-    $(this).parent().parent().prev().find('.filepath').on("change", change);
+    $(this).parent().parent().prev().find('.singlefilepath').on("change", change);
     $(".closecamera").on("click", function () {
         $(this).hide();     //this指的是span
         $(this).nextAll(".img").hide();
-        $(this).nextAll(".camera").show();
+        $(this).nextAll(".camera-picture").show();
         if ($('.boxes').length > 1) {
             $(this).parent().parent().remove();
         }
@@ -39,7 +39,7 @@ function change() {
 };
 
 $(function () {
-    $(".filepath").on("change", function(){
+    $(".singlefilepath").on("change", function(){
         //alert($('.boxes').length);
         var srcs = getObjectURL(this.files[0]);   //获取路径
         //this指的是input
@@ -47,22 +47,22 @@ $(function () {
         $(this).nextAll(".img").show();  //fireBUg查看第二次换图片不起做用*/
         var htmlImg = '<div class="boxes">' +
                   '<div class="imgnum">' +
-	              '<input type="file" name="img'+Date.parse(new Date())+'" class="filepath" />' +
+	              '<input type="file" name="img'+Date.parse(new Date())+'" class="singlefilepath" />' +
 	              '<i class="closecamera fa fa-times" style="font-size:35px;display:none;"></i>' +
-	              '<i class="camera fa fa-camera" style="font-size:110px;"></i>' +
+	              '<i class="camera-picture fa fa-camera" style="font-size:110px;"></i>' +
 	              '<img src=" " class="img" />' +
                   '</div>' +
                   '</div>';
     
 
         $(this).parent().parent().before(htmlImg);
-        $(this).parent().parent().find(".camera").hide();   //this指的是input
+        $(this).parent().parent().find(".camera-picture").hide();   //this指的是input
         $(this).parent().parent().find('.closecamera').show();
-        $(this).parent().parent().prev().find('.filepath').on("change", change);
+        $(this).parent().parent().prev().find('.singlefilepath').on("change", change);
         $(".closecamera").on("click", function () {
             $(this).hide();     //this指的是span
             $(this).nextAll(".img").hide();
-            $(this).nextAll(".camera").show();
+            $(this).nextAll(".camera-picture").show();
             if ($('.boxes').length > 1) {
                 $(this).parent().parent().remove();
             }
