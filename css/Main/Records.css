@@ -78,25 +78,37 @@
     float: left;
     margin: 8px;
     position: relative;
-    width: 182px;
-    height: 142px;
+    width: 120px;
+    height: 140px;
     border: 1px solid #D7D7D7;
     overflow: hidden;
 }
 
 .filepath {
-    width: 182px;
-    height: 142px;
+    width: 120px;
+    height: 140px;
     position: absolute;
     opacity: 0;
 }
 
 .img {
-    width: 100%;
-    height: 100%;
+    width: 120px;
+    height: 140px;
+    display: none;
 }
 
 .closecamera {
-    margin-left: 148px;
+    margin-left: 96px;
     position: absolute;
+    font-size: 20px;
+    display: none;
+}
+
+.imgbox {
+	display: inline-flex;
+}
+
+.camera-picture {
+	width: 100%;
+	padding-top: 22px;
 }

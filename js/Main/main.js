@@ -15,9 +15,9 @@ $(document).ready(function () {
     Paging(patient);
 })
 
-window.onresize=function(){
+/*window.onresize=function(){
     document.location.reload();
-}
+}*/
 
 function Recover(){
     if(currentID != "0"){
@@ -178,6 +178,10 @@ function CreateTable(start, end, patient) {
     for (var i = start; i < end; i++) {
         $("#" + patient.PatientInfo[i].treatID + "").click({ ID: patient.PatientInfo[i].treatID, count: patient.PatientInfo[i].Progress, state: state }, function (e) {
             currentID = e.data.ID;
+            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+            ul.each(function (index, element) {
+                $(this).find('span').removeClass();
+            });
             $("#record-iframe").attr('src', "Records/Blank.aspx");
             $("#patient-status").text(e.data.state);
             var tr = $("#patient-table-body tr");
@@ -190,7 +194,7 @@ function CreateTable(start, end, patient) {
             var ul = $("#progress-iframe").contents().find("#ul-progress a");
             ul.each(function (index, element) {
                 if (index < e.data.count) {
-                    $(this).find('li').removeClass().addClass("progress-finished");//fa fa-arrow-circle-right
+                    $(this).find('li').removeClass().addClass("progress-finished");
                     $(this).find('i').removeClass().addClass("fa fa-fw fa-check");
                 } else if (index == e.data.count) {
                     $(this).find('li').removeClass().addClass("progress-active");
