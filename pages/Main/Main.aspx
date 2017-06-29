@@ -347,12 +347,12 @@
                 <li><a href="#">Something else here</a></li>
               </ul>
             </div>
-            <button class="btn btn-success"><i class="fa fa-fw fa-save"></i>保存</button>
+            <button id="save" class="btn btn-success"><i class="fa fa-fw fa-save"></i>保存</button>
             <button id="printIframe" class="btn btn-success"><i class="fa fa-fw fa-print"></i>打印</button>
           </div>
         </nav>
       </div>
-      <iframe id="record-iframe" class="frame-content" src="Records/Blank.aspx"></iframe>
+      <iframe id="record-iframe" name="record-iframe" class="frame-content" src="Records/Blank.aspx"></iframe>
     </section>
   </div>
   <!-- /.content-wrapper -->
@@ -393,6 +393,9 @@
     $(function () {
         $("#printIframe").bind("click", function () {
             $("#record-iframe")[0].contentWindow.print();
+        });
+        $("#save").bind("click",function(){
+            window.frames["record-iframe"].document.forms["frmRegist"].submit();
         });
     })
 </script>

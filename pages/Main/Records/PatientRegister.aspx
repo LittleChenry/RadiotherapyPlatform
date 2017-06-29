@@ -30,7 +30,7 @@
                 <div class="panel panel-default"> 
                     <div class="panel-body" id="mainpanelbody">
                         <div class="row" style="height:1000px">
-                            <form id="frmRegist" method="post" runat="server">
+                            <form id="frmRegist" name="frmRegist" method="post" runat="server">
                                 <input type="hidden" name="ispostback" value="true" />
 
                                 <div class="container">

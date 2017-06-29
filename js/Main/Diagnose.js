@@ -3,24 +3,51 @@ var SickPart;
 var SickPartid;
 var diagnosisresultname;
 var diagnosisresultID;
-
+var userID;
 //JS入口主函数
 function createPatient(evt) {
     //获取入口患者信息界面的div
- 
+
     //获得当前执行人姓名与ID
-   
+    getUserID();
+    
     var treatID = window.location.search.split("=")[1];
     document.getElementById("treatID").value = treatID;
-    getDignoseInfo(treatID);
-    
+    var patient = getPatientInfo(treatID);
+    document.getElementById("username").innerHTML = patient.Name;
+    document.getElementById("sex").innerHTML = sex(patient.Gender);
+    document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
+    document.getElementById("nation").innerHTML = patient.Nation;
+    document.getElementById("age").innerHTML = patient.Age;
+    document.getElementById("address").innerHTML = patient.Address;
+    document.getElementById("hospital").innerHTML = patient.Hospital;
+    document.getElementById("contact").innerHTML = patient.Contact1;
+    document.getElementById("contact2").innerHTML = patient.Contact2;
     //调取后台所有等待就诊的疗程号及其对应的病人
-    
+
     var select3 = document.getElementById("part");
     createPartItem(select3);
     var select4 = document.getElementById("diagresult");
     createDiagResultItem(select4);
-  
+    if (patient.Progress >= 3) {
+        var diagnosisInfo = getDignoseInfo(treatID);
+        document.getElementById("diaguser").value = diagnosisInfo.username;
+        document.getElementById("remark").value = diagnosisInfo.Remarks;
+        document.getElementById("remark").disabled = "true";
+        document.getElementById("part").value = diagnosisInfo.partID;
+        document.getElementById("part").disabled = "true";
+        //SickPartid = DiagnoseInfo.diagnosisInfo.partID;
+        document.getElementById("diagresult").value = diagnosisInfo.diagnosisresultID;
+        document.getElementById("diagresult").disabled = "true";
+        // diagnosisresultID = DiagnoseInfo.diagnosisInfo[0].diagnosisresultID;
+        //doctor = DiagnoseInfo.DiagnoseInfo[0].doctor;
+
+        document.getElementById("time").value = diagnosisInfo.Time;
+
+    } else {
+        document.getElementById("diaguserid").value = userID;
+        document.getElementById("postdiag").addEventListener("click", checkAll, false);
+    }
 }
 function getDignoseInfo(treatID) {
 
@@ -29,36 +56,28 @@ function getDignoseInfo(treatID) {
     var url = "diagnoseInfo.ashx?treatID=" + treatID;
 
     xmlHttp.open("GET", url, false);
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.status == 200 && xmlHttp.readyState == 4) {
-            var getString = xmlHttp.responseText;
-            diagnoseInfo = eval("(" + getString + ")");
-        }
-    }
-
-    xmlHttp.send();
-    
-    writeDiagnoseInfo(diagnoseInfo);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var obj1 = eval("(" + json + ")");
+    return obj1.diagnosisInfo[0];
 }
-function writeDiagnoseInfo(DiagnoseInfo) {
 
-    
-    document.getElementById("diaguser").value = DiagnoseInfo.diagnosisInfo[0].username;
-    document.getElementById("remark").value = DiagnoseInfo.diagnosisInfo[0].Remarks;
-    SickPart = DiagnoseInfo.diagnosisInfo[0].partname;
-    SickPartid = DiagnoseInfo.diagnosisInfo[0].partID;
-    diagnosisresultname = DiagnoseInfo.diagnosisInfo[0].diagnosisresultname;
-    diagnosisresultID = DiagnoseInfo.diagnosisInfo[0].diagnosisresultID;
-    //doctor = DiagnoseInfo.DiagnoseInfo[0].doctor;
-    
-    document.getElementById("time").value = DiagnoseInfo.diagnosisInfo[0].Time;
-    // document.getElementById("userID").value = userID;
-    // addDosagePriority( DiagnoseInfo.DiagnoseInfo[0].DosagePriority);
-
-
+//获取病人基本信息
+function getPatientInfo(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "patientInfoForFix.ashx?treatmentID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var obj1 = eval("(" + json + ")");
+    return obj1.patient[0];
 }
-//获取所有待就诊疗程号以及所属患者ID与其他信息
-
+function sex(evt) {
+    if (evt == "F")
+        return "女";
+    else
+        return "男";
+}
 
 //首页判断
 
@@ -68,8 +87,8 @@ function writeDiagnoseInfo(DiagnoseInfo) {
 function createPartItem(thiselement) {
     var PartItem = JSON.parse(getPartItem()).Item;
     thiselement.options.length = 0;
-    thiselement.options[0] = new Option(SickPart);
-    thiselement.options[0].value = SickPartid;
+    thiselement.options[0] = new Option("-----部位选择-----");
+    thiselement.options[0].value = "allItem";
     for (var i = 0; i < PartItem.length; i++) {
         if (PartItem[i] != "") {
             thiselement.options[i + 1] = new Option(PartItem[i].Name);
@@ -92,8 +111,8 @@ function getPartItem() {
 function createDiagResultItem(thiselement) {
     var DiagResultItem = JSON.parse(getDiagResultItem()).Item;
     thiselement.options.length = 0;
-    thiselement.options[0] = new Option(diagnosisresultname);
-    thiselement.options[0].value = diagnosisresultID;
+    thiselement.options[0] = new Option("-----结果选择-----");
+    thiselement.options[0].value = "allItem";
     for (var i = 0; i < DiagResultItem.length; i++) {
         if (DiagResultItem[i] != "") {
             thiselement.options[i + 1] = new Option(DiagResultItem[i].Name);
@@ -112,6 +131,40 @@ function getDiagResultItem() {
     var Items = xmlHttp.responseText;
     return Items;
 }
+function checkAll(evt) {
+    var treatid = document.getElementById("treatID");
+    var time = document.getElementById("time");
+    var diaguserid = document.getElementById("diaguserid");
+    var remark = document.getElementById("remark");
+    var select3 = document.getElementById("part");
+    var select4 = document.getElementById("diagresult");
+
+    if (select3.value == "allItem") {
+        window.alert("请选择部位");
+        return;
+    }
+    if (select4.value == "allItem") {
+        window.alert("请选择诊断结果");
+        return;
+    }
+    var xmlHttp = new XMLHttpRequest();
+    var url = "recordDiag.ashx?treatid=" + treatid.value + "&diaguserid=" + diaguserid.value + "&remark=" + remark.value;
+    url = url + "&part=" + select3.value + "&diagresult=" + select4.value;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    if (Items == "success") {
+        window.alert("诊断成功");
+        askForBack();
+        return;
+
+    }
+    else {
+        window.alert("诊断失败");
+        return;
+    }
+}
+
 //检查填写情况
 /*
 function getUserName() {
@@ -126,7 +179,7 @@ function getUserName() {
         }
     }
     xmlHttp.send();
-}
+}*/
 function getUserID() {
     var xmlHttp = new XMLHttpRequest();
     var url = "GetUserID.ashx";
@@ -143,6 +196,8 @@ function getUserID() {
 //下面是jquery流程条实现代码
 
 
+function askForBack() {
+    document.location.reload();
 
+}
 
-*/

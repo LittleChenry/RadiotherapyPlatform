@@ -17,7 +17,7 @@
 </head>
 <body>
     <input id="type" type="hidden" value="YS" />
-    <div style="min-height:556px;">
+    <div style="min-height:556px;background-color:#fff;">
         <h1 class="page-header title">疗程诊断</h1>
           <div class="row">
              
@@ -34,12 +34,36 @@
                                      <div id="complete" style="position:relative;top:10px;text-align:center">
                                          
                                     
-                                         <table class="table table-bordered table-striped tableWidth" style="border:solid thin;margin-left:33%;width:35%">
+                                         <table class="table table-bordered table-striped tableWidth" style="border:solid thin;margin-left:10%;width:80%">
                                              <tbody>
+                                                  <tr style="height:30px">
+                                                    <td style="width:10%;">姓名:</td>
+                                                    <td id="username" style="width:10%;"></td>
+                                                    <td style="width:10%;">性别:</td>
+                                                    <td id="sex" style="width:10%;"> </td>
+                                                    <td style="width:15%;">身份证号:</td>
+                                                    <td id="idnumber" style="width:20%;"> </td>
+                                                 </tr>
+                                                  <tr style="height:30px">
+                                                    <td style="width:10%;">民族:</td>
+                                                    <td id="nation" style="width:10%;"></td> 
+                                                    <td style="width:15%;">年龄:</td>
+                                                    <td id="age" style="width:20%;"> </td>
+                                                    <td style="width:15%;">住址:</td>
+                                                    <td id="address" style="width:20%;"> </td>
+                                                 </tr>
+                                                 <tr style="height:30px">
+                                                    <td style="width:10%;">就诊单位:</td>
+                                                    <td id="hospital" style="width:15%;"></td> 
+                                                     <td style="width:15%;">联系方式1:</td>
+                                                    <td id="contact" style="width:15%;"> </td>
+                                                    <td style="width:15%;">联系方式2:</td>
+                                                    <td id="contact2" style="width:25%;"> </td>
+                                               </tr>
                                                <tr>
                                                     <th style="height:35px"><label for="treatID" class="height">疗程号</label></th>
                                                    <td>
-                                                       <input id="treatID" name="treatID" type="text" readonly="true" class="form-control controlHeight IsEmpty"  />
+                                                       <input id="treatID" name="treatID" type="text" readonly="true" style="border:none;float:left;margin-top:10px"   />
                                                     </td> 
                                                </tr>
                                                
@@ -60,14 +84,14 @@
                              <tr>
                                   <th style="height:35px"><label for="diaguser" class="height">诊断人</label></th>
                              <td>
-                            <input type="text" id="diaguser" name="diaguser" readonly="true" class="form-control controlHeight" />
+                            <input type="text" id="diaguser" name="diaguser" readonly="true" style="border:none;float:left;margin-top:10px" />
                               <input type="hidden" id="diaguserid" name="diaguserid" />
                           </td>
                              </tr>
                         <tr>
                              <th style="height:35px"><label for="time" class="height">诊断时间</label></th>
                         <td>
-                           <input type="text" id="time" name="time" readonly="true" class="form-control controlHeight" />
+                           <input type="text" id="time" name="time" readonly="true" style="border:none;float:left;margin-top:10px" />
                         </td>
                        </tr>
                          <tr>
