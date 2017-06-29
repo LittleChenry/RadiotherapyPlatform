@@ -50,41 +50,79 @@
             <div class="paper-content">
                 <div class="single-row">
                     <span class="item col-xs-4">
-                        选择模具：
+                        select：
                         <select class="form-item">
-                            <option>模具一</option>
-                            <option>模具二</option>
-                            <option>模具三</option>
-                            <option>模具四</option>
+                            <option>select 1</option>
+                            <option>select 2</option>
+                            <option>select 3</option>
+                            <option>select 4</option>
                         </select>
                     </span>
                     <span class="item col-xs-4">
-                        设备与时间：
+                        input：
                         <input type="text" class="form-item">
                     </span>
                     <span class="item col-xs-4">
-                        特殊要求：
-                        <select class="form-item">
-                            <option>要求一</option>
-                            <option>要求二</option>
-                            <option>要求三</option>
-                        </select>
+                        Date：
+                        <input type="text" class="form-item" id="datepicker" placeholder="选择日期">
                     </span>
                 </div>
                 <div class="single-row">
                     <span class="item col-xs-4">
-                        设备与时间：
-                        <input type="text" class="form-item" id="datepicker">
+                        单选框：
+                        <span>
+                            <input type="radio" name="radio" id="radio1" value="value1" checked="">
+                            Option1
+                            <input type="radio" name="radio" id="radio2" value="value2">
+                            Option2
+                        </span>
                     </span>
-                    <!-- <span class="item col-xs-4">联系方式1：<span class="underline">189-2001-0020</span></span>
-                    <span class="item col-xs-4">联系方式2：<span class="underline">182-1212-1224</span></span> -->
-                </div><!-- 
+                    <span class="item col-xs-4">
+                        复选框：
+                        <span>
+                            <input type="checkbox" name="radio" id="checkbox1" value="value1">
+                            Option1
+                            <input type="checkbox" name="radio" id="checkbox2" value="value2">
+                            Option2
+                            <input type="checkbox" name="radio" id="checkbox3" value="value3">
+                            Option3
+                        </span>
+                    </span>
+                    <span class="item col-xs-4">
+                        Modal：
+                        <button class="btn btn-default" data-toggle="modal" data-target="#myModal">Modal</button>
+                    </span>
+                </div>
                 <div class="single-row">
-                    <span class="item col-xs-12">
-                        备注：
-                        <textarea rows="3"></textarea>
+                    <span class="item col-xs-4">
+                        前缀：
+                        <div class="group-item">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control">
+                        </div>
                     </span>
-                </div> -->
+                    <span class="item col-xs-4">
+                        单位后缀：
+                        <div class="group-item">
+                            <input type="text" class="form-control">
+                            <span class="input-group-addon">.00</span>
+                        </div>
+                    </span>
+                    <span class="item col-xs-4">
+                        前后缀：
+                        <div class="group-item">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control">
+                            <span class="input-group-addon">.00</span>
+                        </div>
+                    </span>
+                </div>
+                <div class="single-row">
+                    <span class="item area-group col-xs-12">
+                        备注：
+                        <textarea class="form-area" placeholder="textarea最好不使用row属性，直接设置高度"></textarea>
+                    </span>
+                </div>
             </div>
             <div class="paper-footer">
                 <div class="single-row">
@@ -93,6 +131,23 @@
                 </div>
             </div>
         </div>
+        <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>One fine body&hellip;</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </section>
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
@@ -113,6 +168,8 @@
     <script src="../../../plugin/AdminLTE/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
+    <!-- javascript -->
+
     <!-- Page script -->
     <script type="text/javascript">
         $("#datepicker").datepicker({ autoclose: true });
