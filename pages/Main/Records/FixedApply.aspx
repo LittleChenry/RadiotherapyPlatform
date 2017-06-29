@@ -56,6 +56,7 @@
                      <div class="panel-body" id="otherpanelbody" style="height:800px">
                          <div class="row"> 
                                     <div id="recordbase" style="position:relative;top:100px">
+                                         <input type="hidden" id="progress" />
                                             <table style="border: solid thin;margin:auto;width:100%;">
                                                 <tr>
                                                       <td colspan="6" style="border-bottom:#000 solid 1px;height:50px;font-weight:bolder;font-size:large;text-align:center">体位固定申请表</td>

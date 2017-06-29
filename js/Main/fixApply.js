@@ -6,6 +6,8 @@ var obj = [];
 function Init(evt) {
     var treatmentID = window.location.search.split("=")[1];//?后第一个变量信息
     //调取后台所有等待就诊的疗程号及其对应的病人
+    getUserID();
+    getUserName();
     var patient = getfixPatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
@@ -17,10 +19,11 @@ function Init(evt) {
     document.getElementById("contact").innerHTML = patient.Contact1;
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("treatID").value = patient.treatID;
+    document.getElementById("progress").value = patient.Progress;
     createmodelselectItem(document.getElementById("modelselect"));
     createspecialrequestItem(document.getElementById("specialrequest"));
     createfixEquipItem(document.getElementById("fixEquip"));
-    if (patient.Progress>= 4) {
+    if (patient.Progress>= 3) {
         var info = getfixInfomation(treatmentID);
         document.getElementById("modelselect").value = info.materialName;
         document.getElementById("modelselect").disabled = "true";
@@ -36,18 +39,19 @@ function Init(evt) {
         document.getElementById("time").value = info.ApplicationTime;
 
     } else {
-    
-    createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
-    var date = new Date();
-    document.getElementById("time").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    document.getElementById("chooseappoint").addEventListener("click", function () {
-        CreateNewAppiontTable(event);
-    }, false);
-    document.getElementById("chooseProject").addEventListener("click", function () {
-        CreateNewAppiontTable(event);
-    }, false);//根据条件创建预约表
-    document.getElementById("sure").addEventListener("click", checkAllTable, false);
+        createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
+        var date = new Date();
+        document.getElementById("time").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        document.getElementById("applyuser").value = userName;
+        document.getElementById("chooseappoint").addEventListener("click", function () {
+            CreateNewAppiontTable(event);
+        }, false);
+        document.getElementById("chooseProject").addEventListener("click", function () {
+            CreateNewAppiontTable(event);
+        }, false);//根据条件创建预约表
+        document.getElementById("sure").addEventListener("click", checkAllTable, false);
+      
     }
 }
 //设备下拉菜单
@@ -80,13 +84,48 @@ function getfixInfomation(treatmentID) {
     return obj1.info[0];
 }
 function postfix() {
-    var basefixinfo = [];
-    basefixinfo[0] = document.getElementById("modelselect").value;
-    basefixinfo[1] = document.getElementById("specialrequest").value;
-    basefixinfo[2] = userID;
-    basefixinfo[3] = document.getElementById("time").value;
-    basefixinfo[4] = document.getElementById("bodyPost").value;
-    basefixinfo[5] = document.getElementById("fixEquip").value;
+    var treatmentid = document.getElementById("treatID").value;
+    var model = document.getElementById("modelselect").value;
+    var special=document.getElementById("specialrequest").value;
+    var time=document.getElementById("time").value;
+    var bodypost= document.getElementById("bodyPost").value;
+    var fixequip = document.getElementById("fixEquip").value;
+    var appointid = document.getElementById("idforappoint").value;
+    if (document.getElementById("modelselect").value == "allItem") {
+        window.alert("模具没有选择");
+        return;
+    }
+    if (document.getElementById("specialrequest").value == "allItem") {
+        window.alert("特殊要求没有选择");
+        return;
+    }
+    if (document.getElementById("bodyPost").value == "allItem") {
+        window.alert("体位没有选择");
+        return;
+    }
+    if (document.getElementById("fixEquip").value == "allItem") {
+        window.alert("固定装置没有选择");
+        return;
+    }
+    if (document.getElementById("idforappoint").value == "allItem") {
+        window.alert("设备没有预约");
+        return;
+    }
+    var xmlHttp = new XMLHttpRequest();
+    var url = "fixedApplyRecord.ashx?id=" + appointid + "&treatid=" + treatmentid + "&model=" + model + "&fixreq=" + special + "&user=" + userID + "&fixequip=" + fixequip + "&bodypost=" + bodypost;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var result = xmlHttp.responseText;
+    if (result == "success") {
+        window.alert("申请成功");
+        window.location.Reload();
+    }
+    if (result == "busy") {
+        window.alert("预约时间被占,需要重新预约");
+    }
+    if (result == "failure") {
+        window.alert("申请失败");
+    }
 }
 
 //创建某设备某天的预约表
@@ -143,6 +182,32 @@ function RemoveAllChild(area) {
         if (first != null && first != undefined)
             area.removeChild(first);
     }
+}
+function getUserName() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "GetUserName.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4) {//正常响应
+            if (xmlHttp.status == 200) {//正确接受响应数据
+                userName = xmlHttp.responseText;
+            }
+        }
+    }
+    xmlHttp.send();
+}
+function getUserID() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "GetUserID.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4) {//正常响应
+            if (xmlHttp.status == 200) {//正确接受响应数据
+                userID = xmlHttp.responseText;
+            }
+        }
+    }
+    xmlHttp.send();
 }
 
 //根据日期创建新表

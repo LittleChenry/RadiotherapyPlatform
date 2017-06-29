@@ -12,14 +12,15 @@
 
 using System;
 using System.Web;
+using System.Text;
 using System.Web.SessionState;
 
 public class GetUserName : IHttpHandler, IRequiresSessionState {
     
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
-        UserInformation loginUser = (context.Session["loginUser"] as UserInformation);
-        string name = loginUser.GetUserName();
+        UserInformation user = (UserInformation)context.Session["loginUser"];
+        string name = user.GetUserName();
         context.Response.Write(name);
     }
  
