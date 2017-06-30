@@ -483,6 +483,7 @@ function countMax() {
  */
 
 var $currentTr = null;
+var idStr = ""//记录该组当前所有角色id
 
 /**
  * 点击编辑进入编辑状态
@@ -550,6 +551,12 @@ function editGroup($tr) {
         $editArea.append($grouptr);
     }
 
+    var ids = $("#editArea").find("input[type=hidden]");
+    idStr = "";
+    for (var i = 0; i < ids.length; ++i) {
+        idStr += ids[i].value + " ";
+    }
+
     $editArea.find(".close").bind("click", function () {
         $(this).closest("tr").remove();
     });
@@ -566,11 +573,7 @@ function editGroup($tr) {
 $(function () {
     $("#deleteGroup").bind("click", function () {
         //var groupID = $("#editArea").find("td:first").find(":hidden").val();
-        var ids = $("#editArea").find("input[type=hidden]");
-        var idStr = "";
-        for (var i = 0; i < ids.length; ++i) {
-            idStr += ids[i].value + " ";
-        }
+
         $.ajax({
             type: "post",
             url: "../../pages/Root/DeleteGroup.ashx",
@@ -579,6 +582,32 @@ $(function () {
                 alert("删除成功");
                 $currentTr.remove();
                 $("#cannelEdit").trigger("click");i
+            }
+        });
+    });
+});
+
+/**
+ * 修改组
+ */
+$(function () {
+    $("#sureEdit").bind("click", function () {
+        var str = "";
+        var $editArea = $("#editArea");
+        var groupName = $editArea.find("input[type=text]").val();
+        var members = $editArea.find(":selected");
+        for (var i = 0; i < members.length; ++i) {
+            str += members[i].value + " ";
+        }
+        var chargerName = $currentTr.find("td:eq(1)").text();
+
+        $.ajax({
+            type: "post",
+            url: "../../pages/Root/UpdateGroup.ashx",
+            data: { "pre": idStr, "now": str, "name":groupName, "chargerName":members[0].innerText },
+            success: function () {
+                alert("修改成功");
+                window.location.href = "../../pages/Root/Root-Group.aspx";
             }
         });
     });
