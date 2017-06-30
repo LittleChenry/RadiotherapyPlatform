@@ -7,6 +7,7 @@ $(document).ready(function () {
     $("#progress-iframe").width($("#progress-content").width());
     $("#patient-content").height($(document).height() - 151);
     $("#record-iframe").width($("#record-content").width());
+
     var patient = getPatient();
     $("#patient-search").bind('input propertychange', function() {
         var Searchedpatients = Search($("#patient-search").val(),patient);
@@ -386,14 +387,14 @@ function CreateTable(start, end, patient) {
 
 function getPatient(){
     var xmlHttp = new XMLHttpRequest();
-    var xmlHttp = new XMLHttpRequest();
     var url = "Records/GetPatientInfo.ashx";
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    var patient = eval("(" + json + ")");
+    var patient = eval("(" + json + ")");   
     return patient;
 }
+
 
 function Paging(patient) {
     if (patient.PatientInfo != "") {

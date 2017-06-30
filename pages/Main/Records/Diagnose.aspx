@@ -34,6 +34,7 @@
                                      <div id="complete" style="position:relative;top:10px;text-align:center">
                                          
                                      <input type="hidden" id="progress" name="progress" />
+                                         
                                          <table class="table table-bordered table-striped tableWidth" style="border:solid thin;margin-left:10%;width:80%">
                                              <tbody>
                                                   <tr class="warning">

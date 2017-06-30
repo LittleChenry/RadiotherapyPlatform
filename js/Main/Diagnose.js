@@ -4,6 +4,7 @@ var SickPartid;
 var diagnosisresultname;
 var diagnosisresultID;
 var userID;
+var treatID
 //JS入口主函数
 function createPatient(evt) {
     //获取入口患者信息界面的div
@@ -11,7 +12,7 @@ function createPatient(evt) {
     //获得当前执行人姓名与ID
     getUserID();
     
-    var treatID = window.location.search.split("=")[1];
+    treatID = window.location.search.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
     var patient = getPatientInfo(treatID);
     document.getElementById("username").innerHTML = patient.Name;
@@ -133,7 +134,7 @@ function getDiagResultItem() {
     return Items;
 }
 function checkAll() {
-    var treatid = document.getElementById("treatID");
+    
     var time = document.getElementById("time");
     var diaguserid = document.getElementById("diaguserid");
     var remark = document.getElementById("remark");
@@ -149,7 +150,7 @@ function checkAll() {
         return;
     }
     var xmlHttp = new XMLHttpRequest();
-    var url = "recordDiag.ashx?treatid=" + treatid.value + "&diaguserid=" + diaguserid.value + "&remark=" + remark.value;
+    var url = "recordDiag.ashx?treatid=" + treatID + "&diaguserid=" + diaguserid.value + "&remark=" + remark.value;
     url = url + "&part=" + select3.value + "&diagresult=" + select4.value;
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
