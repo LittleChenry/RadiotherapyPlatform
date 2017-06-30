@@ -1,10 +1,10 @@
-﻿jidnfuwiwjr 。 <%@ WebHandler Language="C#" Class="getdocter" %>
+﻿jidnfuwiwjr 。 <%@ WebHandler Language="C#" Class="getdoctor" %>
 
 using System;
 using System.Web;
 using System.Text;
 /* ***********************************************************
- * FileName:getdocter.ashx
+ * FileName:getdoctor.ashx
  * Writer: xubxiao
  * create Date: 2017-5-24
  * ReWriter:
@@ -13,12 +13,12 @@ using System.Text;
  * 获取数据库中医生列表
  * **********************************************************/
 
-public class getdocter : IHttpHandler {
+public class getdoctor : IHttpHandler {
     DataLayer sqlOperation = new DataLayer("sqlStr");
     public void ProcessRequest(HttpContext context)
     {
         context.Response.ContentType = "text/plain";
-        string backString = getdocterItem();
+        string backString = getdoctorItem();
         sqlOperation.Close();
         sqlOperation.Dispose();
         context.Response.Write(backString);
@@ -31,7 +31,7 @@ public class getdocter : IHttpHandler {
             return false;
         }
     }
-    private string getdocterItem()
+    private string getdoctorItem()
     {
 
 

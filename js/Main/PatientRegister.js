@@ -20,8 +20,8 @@ function Init(evt) {
     document.getElementById("progress").value = 0;
     var select3 = document.getElementById("SickPart");
     createPartItem(select3);
-    var select4 = document.getElementById("docter");
-    createdocterItem(select4);
+    var select4 = document.getElementById("doctor");
+    createdoctorItem(select4);
     var select5 = document.getElementById("Sub");
     createSubcenterItem(select5);
     
@@ -48,14 +48,17 @@ function writePatientInfo(PatientInfo) {
     
     document.getElementById("RecordNumber").value = PatientInfo.patientInfo[0].RecordNumber;
    
-    document.getElementById("userName").value =  PatientInfo.patientInfo[0].Name;
-    document.getElementById("Gender").value = sex( PatientInfo.patientInfo[0].Gender);
+    document.getElementById("userName").value = PatientInfo.patientInfo[0].Name;
+    //alert(sex(PatientInfo.patientInfo[0].Gender));
+    //alert(document.getElementById("female").value);
+    document.getElementById(sex(PatientInfo.patientInfo[0].Gender)).checked = true;
+    //document.getElementById("Gender").value = PatientInfo.patientInfo[0].Gender;
     document.getElementById("IDcardNumber").value =  PatientInfo.patientInfo[0].IDcardNumber;
     document.getElementById("Address").value =  PatientInfo.patientInfo[0].Address;   
     document.getElementById("Number1").value =  PatientInfo.patientInfo[0].Contact1;
     document.getElementById("Number2").value =  PatientInfo.patientInfo[0].Contact2;
     document.getElementById("patientID").value =  PatientInfo.patientInfo[0].ID;
-   // document.getElementById("diagnosisresult").value =  PatientInfo.patientInfo[0].diagnosisresult;
+    //document.getElementById("diagnosisresult").value =  PatientInfo.patientInfo[0].diagnosisresult;
     //document.getElementById("doctor").value =  PatientInfo.patientInfo[0].doctor;
     document.getElementById("Hospital").value =  PatientInfo.patientInfo[0].Hospital;
     document.getElementById("Nation").value =  PatientInfo.patientInfo[0].Nation;
@@ -70,16 +73,16 @@ function writePatientInfo(PatientInfo) {
     doctorname = PatientInfo.patientInfo[0].doctorname;
     document.getElementById("date").value = PatientInfo.patientInfo[0].date;
     document.getElementById("date").disabled = "true";
-   // document.getElementById("userID").value = userID;
-   // addDosagePriority( PatientInfo.patientInfo[0].DosagePriority);
+    //document.getElementById("userID").value = userID;
+    //addDosagePriority( PatientInfo.patientInfo[0].DosagePriority);
 
 
 }
 function sex(evt) {
     if (evt == "F")
-        return "女";
+        return "female";
     else
-        return "男";
+        return "male";
 }
 //第二步诊断单中的分中心负责人选择项建立
 function createSubcenterItem(thiselement) {
@@ -105,21 +108,21 @@ function getsubcenterItem() {
     var Items = xmlHttp.responseText;
     return Items;
 }
-function createdocterItem(thiselement) {
-    var docterItem = JSON.parse(getdocterItem()).Item;
+function createdoctorItem(thiselement) {
+    var doctorItem = JSON.parse(getdoctorItem()).Item;
     thiselement.options.length = 0;
     thiselement.options[0] = new Option(doctorname);
     thiselement.options[0].value = doctor;
-    for (var i = 0; i < docterItem.length; i++) {
-        if (docterItem[i] != "") {
-            thiselement.options[i + 1] = new Option(docterItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(docterItem[i].ID);
+    for (var i = 0; i < doctorItem.length; i++) {
+        if (doctorItem[i] != "") {
+            thiselement.options[i + 1] = new Option(doctorItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(doctorItem[i].ID);
         }
     }
 }
-function getdocterItem() {
+function getdoctorItem() {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getdocter.ashx";
+    var url = "getdoctor.ashx";
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     var Items = xmlHttp.responseText;
@@ -237,7 +240,7 @@ function CheckEmpty(thisElement) {
             if (thisElement.className.indexOf("Sub") > -1) {
                 document.getElementById("error").innerHTML = "请选择分中心负责人";
             }
-            if (thisElement.className.indexOf("docter") > -1) {
+            if (thisElement.className.indexOf("doctor") > -1) {
                 document.getElementById("error").innerHTML = "请选择医生";
             }
         }
@@ -273,8 +276,8 @@ function CheckClassName(thisClassName, thisElement) {
             }
             returnClassName += thisClassName;
             break;
-        case "docter":
-            var docSelect = document.getElementById("docter");
+        case "doctor":
+            var docSelect = document.getElementById("doctor");
             if (isAllGood && docSelect.selectedIndex == 0) {
                 returnClassName += "invalid ";
             }

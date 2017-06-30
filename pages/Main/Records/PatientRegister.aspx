@@ -4,164 +4,179 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-<meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-
-    <title></title>
- 
- <style type="text/css">
-        .auto-style1 {
-            height: 45px;
-        }
-    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>患者信息登记</title>
+    <!-- css -->
+    <link rel="stylesheet" href="../../../css/Main/Records.css"/>
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="../../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css"/>
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datepicker/datepicker3.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+    folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="../../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
 </head>
-<body>
-    <div id="page-wrapper" style="border:0px;margin:0px; min-height: 923px;background:#f8f8f8;">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header  title" id="itemName">患者基本信息录入</h1>
+<body style="width:auto;min-width:900px;margin:auto;">
+    <section class="content">
+        <div class="paper">
+            <div class="paper-title">
+                患者信息登记
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default"> 
-                    <div class="panel-body" id="mainpanelbody">
-                        <div class="row" style="height:1000px">
-                            <form id="frmRegist" name="frmRegist" method="post" runat="server">
-                                <input type="hidden" name="ispostback" value="true" />
-                                <input type="hidden" id="progress" name="progress"  />
-                                <div class="container">
-                                    <div class="row">
-                                        <input id="patientID" type="hidden" name="patientID"    />
-                                        <input id="treatID" type="hidden" name="treatID" />
-                                           <table  class="table table-bordered table-hover" style="border:solid thin;width:80%;margin-top:100px;margin-left:10%">
-                                           
-                                               <tr class="warning" >
-                                                   <td colspan="6" style="border:solid thin;height:45px;font-weight:bolder;font-size:large;text-align:center">注册新患者基本信息</td>
-                                                 </tr>
-                                               <tr>
-                                                    <td style="width:15%;height:35px">姓名：</td>
-                                                    <td style="width:20%;"> 
-                                                    <input id="userName" type="text" size="28" name="userName" class="form-control isEmpty userName"  />
-                                                    </td>
-                                                    <td style="width:15%;">身份证号：</td>
-                                                    <td style="width:20%;"> <input id="IDcardNumber" type="text" name="IDcardNumber" size="28" class="form-control isEmpty IDcardNumber"  />
-                                                    </td>
-                                                    </tr>
-                                             <tr>
-                                                    <td style="width:15%;height:35px">性别：</td>
-                                                    <td > 
-                                                        <input id="Gender" type="text" name="Gender"  class="form-control isEmpty Gender"   />
-                                                   </td>
-                                           
-                                                   
-                                                    <td >病案号：</td>
-                                                      <td >
-                                                     <input id="RecordNumber" type="text" name="RecordNumber" size="28" class="form-control isEmpty RecordNumber"  />
-                                                    </td>
-                                                 </tr>
-                                            
-                                             <tr>
-                                                    <td style="width:15%;height:35px">民族：</td>
-                                                    <td >  <input id="Nation" type="text" name="Nation" size="28"   class="form-control isEmpty Nation"  />
-                                                     </td>
-
-                                             
-                                                   <td >出生日期：</td>
-                                                     <td> 
-                                                         <input id="Birthday" type="text" name="Birthday" size="28" onclick="laydate()"  class="form-control isEmpty Birthday"  />
-                                                       </td>
-                                                 </tr>
-                                                <tr>
-                                                    <td style="width:15%;height:35px">就诊医院：</td>
-                                                    <td colspan="5"> 
-                                                    <input id="Hospital" type="text" name="Hospital" size="80" class="form-control isEmpty Hospital"  />
-                                                    </td>
-                                                 </tr>
-                                             <tr>
-                                                   <td style="width:15%;height:35px">地址：</td>
-                                                   <td colspan="5">
-                                                        <input id="Address" type="text" name="Address" size="80"   class="form-control isEmpty Address"  />
-                                                     </td>
-                                                   
-                                               </tr>
-                                               <tr>
-                                                   <td style="width:15%;height:35px">电话1：</td>
-                                                    <td >
-                                                         <input id="Number1" type="text" name="Number1" size="28"   class="form-control  Number1" />
-                                                     </td>
-                                                   <td >电话2：</td>
-                                                   <td >
-                                                        <input id="Number2" type="text" name="Number2" size="28"   class="form-control  Number2"  />
-                                                   </td>
-                                                    
-                                               </tr>
-                                               <tr>
-                                                   <td style="width:15%;height:35px">身高：</td>
-                                                    <td >
-                                                         <input id="height" type="number" name="height" size="28"  class="form-control isEmpty height"  />
-                                                     </td>
-                                                   <td >体重：</td>
-                                                   <td >
-                                                        <input id="weight" type="number" name="weight"  size="28" class="form-control isEmpty weight"  />
-                                                    </td>
-                                                   </tr>
-                                             <tr>
-                                                   <td style="width:15%;height:35px">照片：</td>
-                                                   <td >
-                                                     <asp:FileUpload ID="FileUpload" runat="server" />
-                                                   </td>
-                                               </tr>
-                                                <tr class="info" style="border:solid thin">
-                                                   <td colspan="6" style="font-weight:bolder;font-size:large;text-align:center" class="auto-style1">注册新患者管理信息</td>
-                                                 </tr>
-                                               <tr>
-                                              <td style="width:15%;height:35px">患病部位：</td>
-                                                   <td >
-                                                        <select id="SickPart" name="SickPart" style="width:200px;" class="form-control SickPart">                
-                                                        </select>
-                                                   </td>  
-                                                   <td >选择医生：</td>
-                                                   <td >
-                                                        <select id="docter" name="docter" style="width:200px;" class="form-control docter">                
-                                                        </select>
-                                                   </td>
-                                               </tr>
-                                             <tr>
-                                                   <td style="width:15%;height:35px">选择分中心负责人：</td>
-                                                     <td >
-                                                        <select id="Sub" name="Sub" style="width:200px;" class="form-control Sub">                
-                                                        </select>
-                                                     </td>
-                                                    <td >登记时间：</td>
-                                                      <td >
-                                                     <input id="date" type="text" name="date" size="28" class="form-control isEmpty RecordNumber"  />
-                                                    </td>
-                                                 </tr>
-
-                                               <tr>
-                                                  <td colspan="6" style="text-align:center">
-                                                     <input type="submit" value="确定" class="regedit-button btn btn-success btn-lg" />
-                                                     <input type="reset" value="重置" class="regedit-button  btn btn-success btn-lg" />
-                                                    </td>
-                                               </tr>
-                                                 
-                                           </table>
-                                            <label id="error" style="margin-left:54px;"></label>
-                                        </div>
-                                    </div>
-                                  </form>
+            <form id="frmRegist" name="frmRegist" method="post" runat="server">
+                <input type="hidden" name="ispostback" value="true" />
+                <input type="hidden" id="progress" name="progress" />
+                <input id="patientID" type="hidden" name="patientID" />
+                <input id="treatID" type="hidden" name="treatID" />
+                <div class="paper-content">
+                    <div class="head-picture">
+                        <div class="imgbox">
+                            <div class="boxes">
+                                <div class="imgnum">
+                                    <input type="file" id="FileUpload" name="FileUpload" class="singlefilepath filepath" />
+                                    <!-- <asp:FileUpload id="FileUpload1" name="FileUpload" class="singlefilepath filepath" runat="server" /> -->
+                                    <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
+                                    <img src="../../../img/avatar.jpg" class="camera-picture" />
+                                    <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
+                                    <img class="img" />
                                 </div>
-                           
+                            </div>
+                        </div>
+                        <div class="picture-remark">
+                            <p>上传头像</p>
+                            <p style="font-size:10px;">图片大小：120*140像素</p>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item col-xs-5">
+                            姓名：
+                            <input id="userName" name="userName" type="text" class="form-item" />
+                        </div>
+                        <div class="item col-xs-5" style="padding-top:5px;">
+                            <span class="col-xs-3" style="padding-left:0px;">性别：</span>
+                            <span class="col-xs-3" style="padding-left:0px;">
+                                <input type="radio" name="Gender" id="male" value="M" />
+                                男
+                            </span>
+                            <span class="col-xs-3" style="padding-left:0px;">
+                                <input type="radio" name="Gender" id="female" value="F" />
+                                女
+                            </span>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item col-xs-5">
+                            民族：
+                            <input id="Nation" name="Nation" type="text" class="form-item" />
+                        </div>
+                        <div class="item col-xs-7">
+                            身份证号：
+                            <input id="IDcardNumber"  name="IDcardNumber" type="text" class="form-item" />
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item col-xs-5">
+                            出生日期：
+                            <input type="text" class="form-item" id="Birthday" name="Birthday" placeholder="选择日期" />
+                        </div>
+                        <div class="item col-xs-7">
+                            地址：
+                            <input id="Address"  name="Address" type="text" class="form-item" />
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item col-xs-5">
+                            联系电话1：
+                            <input id="Number1" name="Number1" type="text" class="form-item" />
+                        </div>
+                        <div class="item col-xs-5">
+                            联系电话2：
+                            <input id="Number2"  name="Number2" type="text" class="form-item" />
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item col-xs-5">
+                            身高：
+                            <div class="group-item">
+                                <input type="number" id="height" name="height" class="form-group-input" />
+                                <span class="input-group-addon">cm</span>
+                            </div>
+                        </div>
+                        <div class="item col-xs-5">
+                            体重：
+                            <div class="group-item">
+                                <input type="number" id="weight" name="weight" class="form-group-input" />
+                                <span class="input-group-addon">kg</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="paper-content">
+                    <div class="single-row">
+                        <div class="item col-xs-4">
+                            病案号：
+                            <input id="RecordNumber" name="RecordNumber" type="text" class="form-item" />
+                        </div>
+                        <div class="item col-xs-4">
+                            患病部位：
+                            <select id="SickPart" name="SickPart" class="form-item"></select>
+                        </div>
+                        <div class="item col-xs-4">
+                            所属医生：
+                            <select id="doctor" name="doctor" class="form-item"></select>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item col-xs-4">
+                            分中心医院：
+                            <input id="Hospital" name="Hospital" type="text" class="form-item" />
+                        </div>
+                        <div class="item col-xs-4">
+                            分中心负责人：
+                            <select id="Sub" name="Sub" class="form-item"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="paper-footer">
+                    <div class="single-row">
+                        <div class="item col-xs-6">医生签字：<span id="operator" class="underline">王医生</span></div>
+                        <div class="item col-xs-6">日期：<span id="date" class="underline">2017年6月28日</span></div>
+                    </div>
+                </div>
+            </form>
         </div>
-       
-</body>
+    </section>
+    <!-- jQuery 2.2.3 -->
+    <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="../../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
+    <!-- DataTables -->
+    <script src="../../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!-- bootstrap datepicker -->
+    <script src="../../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <!-- SlimScroll -->
+    <script src="../../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="../../../plugin/AdminLTE/plugins/fastclick/fastclick.js"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="../../../plugin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../../plugin/AdminLTE/dist/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
+    <!-- javascript -->
+    <script src="../../../js/Main/addimgs.js"></script>
     <script src="../../../js/Main/PatientRegister.js" ></script>
+    <!-- Page script -->
+    <script type="text/javascript">
+        $("#datepicker").datepicker({ autoclose: true });
+        $("#Birthday").datepicker({ autoclose: true });
+    </script>
+</body>
 </html>

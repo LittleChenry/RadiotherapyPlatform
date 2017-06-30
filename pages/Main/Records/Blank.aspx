@@ -22,7 +22,7 @@
     folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
 </head>
-<body style="width:1000px;margin:auto;">
+<body style="width:auto;min-width:900px;margin:auto;">
     <section class="content">
         <div class="paper">
             <div class="paper-title">
@@ -30,24 +30,24 @@
             </div>
             <div class="paper-content">
                 <div class="single-row">
-                    <span class="item col-xs-4">姓名：<span class="underline">赵一</span></span>
-                    <span class="item col-xs-4">性别：<span class="underline">男</span></span>
-                    <span class="item col-xs-4">身份证号：<span class="underline">320624196506251100</span></span>
+                    <div class="item col-xs-4">姓名：<span class="underline">赵一</span></div>
+                    <div class="item col-xs-4">性别：<span class="underline">男</span></div>
+                    <div class="item col-xs-4">身份证号：<span class="underline">320624196506251100</span></div>
                 </div>
                 <div class="single-row">
-                    <span class="item col-xs-4">民族：<span class="underline">汉族</span></span>
-                    <span class="item col-xs-4">年龄：<span class="underline"> 72</span></span>
-                    <span class="item col-xs-4">地址：<span class="underline">安徽省滁州市人民大道12号</span></span>
+                    <div class="item col-xs-4">民族：<span class="underline">汉族</span></div>
+                    <div class="item col-xs-4">年龄：<span class="underline"> 72</span></div>
+                    <div class="item col-xs-4">地址：<span class="underline">安徽省滁州市人民大道12号</span></div>
                 </div>
                 <div class="single-row">
-                    <span class="item col-xs-4">分中心医院：<span class="underline">滁州市中西医结合医院</span></span>
-                    <span class="item col-xs-4">联系方式1：<span class="underline">189-2001-0020</span></span>
-                    <span class="item col-xs-4">联系方式2：<span class="underline">182-1212-1224</span></span>
+                    <div class="item col-xs-4">分中心医院：<span class="underline">滁州市中西医结合医院</span></div>
+                    <div class="item col-xs-4">联系方式1：<span class="underline">189-2001-0020</span></div>
+                    <div class="item col-xs-4">联系方式2：<span class="underline">182-1212-1224</span></div>
                 </div>
             </div>
             <div class="paper-content">
                 <div class="single-row">
-                    <span class="item col-xs-4">
+                    <div class="item col-xs-4">
                         select：
                         <select class="form-item">
                             <option>select 1</option>
@@ -55,109 +55,251 @@
                             <option>select 3</option>
                             <option>select 4</option>
                         </select>
-                    </span>
-                    <span class="item col-xs-4">
+                    </div>
+                    <div class="item col-xs-4">
                         input：
-                        <input type="text" class="form-item">
-                    </span>
-                    <span class="item col-xs-4">
+                        <input type="text" class="form-item" />
+                    </div>
+                    <div class="item col-xs-4">
                         Date：
-                        <input type="text" class="form-item" id="datepicker" placeholder="选择日期">
-                    </span>
+                        <input type="text" class="form-item" id="datepicker" placeholder="选择日期" />
+                    </div>
                 </div>
                 <div class="single-row">
-                    <span class="item col-xs-4">
+                    <div class="item col-xs-4">
                         单选框：
                         <span>
-                            <input type="radio" name="radio" id="radio1" value="value1" checked="">
+                            <input type="radio" name="radio" id="radio1" value="value1" checked="" />
                             Option1
-                            <input type="radio" name="radio" id="radio2" value="value2">
+                            <input type="radio" name="radio" id="radio2" value="value2" />
                             Option2
                         </span>
-                    </span>
-                    <span class="item col-xs-4">
+                    </div>
+                    <div class="item col-xs-4">
                         复选框：
                         <span>
-                            <input type="checkbox" name="radio" id="checkbox1" value="value1">
+                            <input type="checkbox" name="radio" id="checkbox1" value="value1" />
                             Option1
-                            <input type="checkbox" name="radio" id="checkbox2" value="value2">
+                            <input type="checkbox" name="radio" id="checkbox2" value="value2" />
                             Option2
-                            <input type="checkbox" name="radio" id="checkbox3" value="value3">
+                            <input type="checkbox" name="radio" id="checkbox3" value="value3" />
                             Option3
                         </span>
-                    </span>
-                    <span class="item col-xs-4">
+                    </div>
+                    <div class="item col-xs-4">
                         Modal：
                         <button class="btn btn-default" data-toggle="modal" data-target="#myModal">Modal</button>
-                    </span>
+                    </div>
                 </div>
                 <div class="single-row">
-                    <span class="item col-xs-4">
+                    <div class="item col-xs-4">
                         前缀：
                         <div class="group-item">
                             <span class="input-group-addon">$</span>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-group-input" />
                         </div>
-                    </span>
-                    <span class="item col-xs-4">
+                    </div>
+                    <div class="item col-xs-4">
                         单位后缀：
                         <div class="group-item">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-group-input" />
                             <span class="input-group-addon">.00</span>
                         </div>
-                    </span>
-                    <span class="item col-xs-4">
+                    </div>
+                    <div class="item col-xs-4">
                         前后缀：
                         <div class="group-item">
                             <span class="input-group-addon">$</span>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-group-input" />
                             <span class="input-group-addon">.00</span>
                         </div>
-                    </span>
+                    </div>
                 </div>
                 <div class="single-row">
-                    <span class="item area-group col-xs-12">
+                    <div class="item area-group col-xs-12">
                         备注：
                         <textarea class="form-area" placeholder="textarea最好不使用row属性，直接设置高度"></textarea>
-                    </span>
+                    </div>
                 </div>
                 <div class="single-row">
-                    <span class="item col-xs-12">
+                    <div class="item col-xs-12">
                         单图片上传：
                         <div class="imgbox">
                             <div class="boxes">
                                 <div class="imgnum">
                                     <input type="file" name="avatar" class="singlefilepath filepath" />
                                     <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
-                                    <img src="../../../img/avatar.jpg" class="camera-picture">
+                                    <img src="../../../img/avatar.jpg" class="camera-picture" />
                                     <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
                                     <img class="img" />
                                 </div>
                             </div>
                         </div>
-                    </span>
+                    </div>
                 </div>
                 <div class="single-row">
-                    <span class="item col-xs-12">
+                    <div class="item col-xs-12">
                         多图片上传：
                         <div class="imgbox multifile">
                             <div class="boxes">
                                 <div class="imgnum">
                                     <input type="file" name="avatar" class="multifilepath filepath" />
                                     <span class="closecamera closearea"><i class="fa fa-times"></i></span>
-                                    <img src="../../../img/camera.png" class="camera-picture">
+                                    <img src="../../../img/camera.png" class="camera-picture" />
                                     <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
                                     <img class="img" />
                                 </div>
                             </div>
                         </div>
-                    </span>
+                    </div>
                 </div>
             </div>
             <div class="paper-footer">
                 <div class="single-row">
-                    <span class="item col-xs-6">医生签字：<span class="underline">王医生</span></span>
-                    <span class="item col-xs-6">日期：<span class="underline">2017年6月28日</span></span>
+                    <div class="item col-xs-6">医生签字：<span class="underline">王医生</span></div>
+                    <div class="item col-xs-6">日期：<span class="underline">2017年6月28日</span></div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="paper" style="display:none;">
+            <div class="paper-title">
+                EXAMPLE表单
+            </div>
+            <div class="paper-content">
+                <div class="single-row">
+                    <div class="item col-xs-4">姓名：<span class="underline">赵一</span></div>
+                    <div class="item col-xs-4">性别：<span class="underline">男</span></div>
+                    <div class="item col-xs-4">身份证号：<span class="underline">320624196506251100</span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">民族：<span class="underline">汉族</span></div>
+                    <div class="item col-xs-4">年龄：<span class="underline"> 72</span></div>
+                    <div class="item col-xs-4">地址：<span class="underline">安徽省滁州市人民大道12号</span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">分中心医院：<span class="underline">滁州市中西医结合医院</span></div>
+                    <div class="item col-xs-4">联系方式1：<span class="underline">189-2001-0020</span></div>
+                    <div class="item col-xs-4">联系方式2：<span class="underline">182-1212-1224</span></div>
+                </div>
+            </div>
+            <div class="paper-content">
+                <div class="single-row">
+                    <div class="item col-xs-4">
+                        select：
+                        <select class="form-item">
+                            <option>select 1</option>
+                            <option>select 2</option>
+                            <option>select 3</option>
+                            <option>select 4</option>
+                        </select>
+                    </div>
+                    <div class="item col-xs-4">
+                        input：
+                        <input type="text" class="form-item" />
+                    </div>
+                    <div class="item col-xs-4">
+                        Date：
+                        <input type="text" class="form-item" id="Text1" placeholder="选择日期" />
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">
+                        单选框：
+                        <span>
+                            <input type="radio" name="radio" id="radio3" value="value1" checked="" />
+                            Option1
+                            <input type="radio" name="radio" id="radio4" value="value2" />
+                            Option2
+                        </span>
+                    </div>
+                    <div class="item col-xs-4">
+                        复选框：
+                        <span>
+                            <input type="checkbox" name="radio" id="checkbox4" value="value1" />
+                            Option1
+                            <input type="checkbox" name="radio" id="checkbox5" value="value2" />
+                            Option2
+                            <input type="checkbox" name="radio" id="checkbox6" value="value3" />
+                            Option3
+                        </span>
+                    </div>
+                    <div class="item col-xs-4">
+                        Modal：
+                        <button class="btn btn-default" data-toggle="modal" data-target="#myModal">Modal</button>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">
+                        前缀：
+                        <div class="group-item">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-group-input" />
+                        </div>
+                    </div>
+                    <div class="item col-xs-4">
+                        单位后缀：
+                        <div class="group-item">
+                            <input type="text" class="form-group-input" />
+                            <span class="input-group-addon">.00</span>
+                        </div>
+                    </div>
+                    <div class="item col-xs-4">
+                        前后缀：
+                        <div class="group-item">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-group-input" />
+                            <span class="input-group-addon">.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        备注：
+                        <textarea class="form-area" placeholder="textarea最好不使用row属性，直接设置高度"></textarea>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">
+                        单图片上传：
+                        <div class="imgbox">
+                            <div class="boxes">
+                                <div class="imgnum">
+                                    <input type="file" name="avatar" class="singlefilepath filepath" />
+                                    <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
+                                    <img src="../../../img/avatar.jpg" class="camera-picture" />
+                                    <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
+                                    <img class="img" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">
+                        多图片上传：
+                        <div class="imgbox multifile">
+                            <div class="boxes">
+                                <div class="imgnum">
+                                    <input type="file" name="avatar" class="multifilepath filepath" />
+                                    <span class="closecamera closearea"><i class="fa fa-times"></i></span>
+                                    <img src="../../../img/camera.png" class="camera-picture" />
+                                    <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
+                                    <img class="img" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="paper-footer">
+                <div class="single-row">
+                    <div class="item col-xs-6">医生签字：<span class="underline">王医生</span></div>
+                    <div class="item col-xs-6">日期：<span class="underline">2017年6月28日</span></div>
                 </div>
             </div>
         </div>
