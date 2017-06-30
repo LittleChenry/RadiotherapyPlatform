@@ -35,6 +35,9 @@
                 <input id="patientID" type="hidden" name="patientID" />
                 <input id="treatID" type="hidden" name="treatID" />
                 <div class="paper-content">
+                    <div class="content-title">
+                        <span>基本信息：</span>
+                    </div>
                     <div class="head-picture">
                         <div class="imgbox">
                             <div class="boxes">
@@ -118,6 +121,9 @@
                     </div>
                 </div>
                 <div class="paper-content">
+                    <div class="content-title">
+                        <span>病案信息：</span>
+                    </div>
                     <div class="single-row">
                         <div class="item col-xs-4">
                             病案号：
@@ -146,7 +152,7 @@
                 <div class="paper-footer">
                     <div class="single-row">
                         <div class="item col-xs-6">医生签字：<span id="operator" class="underline">王医生</span></div>
-                        <div class="item col-xs-6">日期：<span id="date" class="underline">2017年6月28日</span></div>
+                        <div class="item col-xs-6">登记时间：<span id="date" class="underline">2017年6月28日</span></div>
                     </div>
                 </div>
             </form>

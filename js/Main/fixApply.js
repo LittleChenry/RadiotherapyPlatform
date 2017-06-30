@@ -18,7 +18,7 @@ function Init(evt) {
     document.getElementById("hospital").innerHTML = patient.Hospital;
     document.getElementById("contact").innerHTML = patient.Contact1;
     document.getElementById("contact2").innerHTML = patient.Contact2;
-    document.getElementById("treatID").value = patient.treatID;
+    document.getElementById("treatID").innerHTML = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
     createmodelselectItem(document.getElementById("modelselect"));
     createspecialrequestItem(document.getElementById("specialrequest"));
@@ -41,9 +41,9 @@ function Init(evt) {
     } else {
         createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
         var date = new Date();
-        document.getElementById("time").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        document.getElementById("time").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        document.getElementById("applyuser").value = userName;
+        document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("chooseappoint").addEventListener("click", function () {
             CreateNewAppiontTable(event);
         }, false);

@@ -30,7 +30,7 @@
             </div>
             <div class="paper-content">
                 <div class="content-title">
-                    <span>患者基本信息：</span>
+                    <span>基本信息：</span>
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-4">姓名：<span class="underline">赵一</span></div>
