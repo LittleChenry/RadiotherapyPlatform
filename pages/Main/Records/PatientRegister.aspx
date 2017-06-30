@@ -41,7 +41,7 @@
                                     <input type="file" id="FileUpload" name="FileUpload" class="singlefilepath filepath" />
                                     <!-- <asp:FileUpload id="FileUpload1" name="FileUpload" class="singlefilepath filepath" runat="server" /> -->
                                     <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
-                                    <img src="../../../img/avatar.jpg" class="camera-picture" />
+                                    <img id="background-photo" src="../../../img/avatar.jpg" class="camera-picture" />
                                     <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
                                     <img id="photo" class="img" />
                                 </div>

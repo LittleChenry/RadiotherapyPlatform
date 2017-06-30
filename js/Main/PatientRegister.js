@@ -63,8 +63,12 @@ function writePatientInfo(PatientInfo) {
     document.getElementById("Birthday").value =  PatientInfo.patientInfo[0].Birthday;
     document.getElementById("height").value =  PatientInfo.patientInfo[0].Height;
     document.getElementById("weight").value = PatientInfo.patientInfo[0].Weight;
+    if (PatientInfo.patientInfo[0].Picture != "") {
+        document.getElementById("background-photo").style.display = "none";
+        document.getElementById("photo").style.display = "inline";
+        document.getElementById("photo").src = PatientInfo.patientInfo[0].Picture;
+    }
     
-    document.getElementById("photo").src = PatientInfo.patientInfo[0].Picture;
     //doctor = PatientInfo.patientInfo[0].doctor;
     document.getElementById("operator").innerHTML = PatientInfo.patientInfo[0].Registeruser;
     document.getElementById("date").innerHTML = PatientInfo.patientInfo[0].date;
