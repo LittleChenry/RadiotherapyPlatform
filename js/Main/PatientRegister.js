@@ -1,12 +1,8 @@
 ﻿var isAllGood;//所有检查是否通过
-var SickPart;
-var Sub;
+
 window.addEventListener("load", Init, false);
 //初始化 
-var SickPartid;
-var Subid;
-var doctor;
-var doctorname;
+
 function Init(evt) {
     
     var treatID = window.location.search.split("=")[1];
@@ -18,12 +14,7 @@ function Init(evt) {
     document.getElementById("Number1").addEventListener("change", phoneFormat, false);//电话号码格式化
     document.getElementById("Number2").addEventListener("change", phoneFormat, false);//电话号码格式化
     document.getElementById("progress").value = 0;
-    var select3 = document.getElementById("SickPart");
-    createPartItem(select3);
-    var select4 = document.getElementById("doctor");
-    createdoctorItem(select4);
-    var select5 = document.getElementById("Sub");
-    createSubcenterItem(select5);
+   
     
 }
 function getPatientInfo(treatID) {
@@ -45,7 +36,12 @@ function getPatientInfo(treatID) {
     writePatientInfo(patientInfo);
 }
 function writePatientInfo(PatientInfo) {
-    
+    var select3 = document.getElementById("SickPart");
+    createPartItem(select3);
+    var select4 = document.getElementById("doctor");
+    createdoctorItem(select4);
+    var select5 = document.getElementById("Sub");
+    createSubcenterItem(select5);
     document.getElementById("RecordNumber").value = PatientInfo.patientInfo[0].RecordNumber;
    
     document.getElementById("userName").value = PatientInfo.patientInfo[0].Name;
@@ -59,19 +55,19 @@ function writePatientInfo(PatientInfo) {
     document.getElementById("Number2").value =  PatientInfo.patientInfo[0].Contact2;
     document.getElementById("patientID").value =  PatientInfo.patientInfo[0].ID;
     //document.getElementById("diagnosisresult").value =  PatientInfo.patientInfo[0].diagnosisresult;
-    //document.getElementById("doctor").value =  PatientInfo.patientInfo[0].doctor;
+    document.getElementById("doctor").value = PatientInfo.patientInfo[0].doctor;
+    document.getElementById("SickPart").value = PatientInfo.patientInfo[0].SickPartID;
+    document.getElementById("Sub").value = PatientInfo.patientInfo[0].SubID;;
     document.getElementById("Hospital").value =  PatientInfo.patientInfo[0].Hospital;
     document.getElementById("Nation").value =  PatientInfo.patientInfo[0].Nation;
     document.getElementById("Birthday").value =  PatientInfo.patientInfo[0].Birthday;
     document.getElementById("height").value =  PatientInfo.patientInfo[0].Height;
-    document.getElementById("weight").value =  PatientInfo.patientInfo[0].Weight;
-    SickPart = PatientInfo.patientInfo[0].SickPart;
-    SickPartid = PatientInfo.patientInfo[0].SickPartID;
-    Sub = PatientInfo.patientInfo[0].Sub;
-    Subid = PatientInfo.patientInfo[0].SubID;
-    doctor = PatientInfo.patientInfo[0].doctor;
-    doctorname = PatientInfo.patientInfo[0].doctorname;
-    document.getElementById("date").value = PatientInfo.patientInfo[0].date;
+    document.getElementById("weight").value = PatientInfo.patientInfo[0].Weight;
+    
+    document.getElementById("photo").src = PatientInfo.patientInfo[0].Picture;
+    //doctor = PatientInfo.patientInfo[0].doctor;
+    document.getElementById("operator").innerHTML = PatientInfo.patientInfo[0].Registeruser;
+    document.getElementById("date").innerHTML = PatientInfo.patientInfo[0].date;
     document.getElementById("date").disabled = "true";
     //document.getElementById("userID").value = userID;
     //addDosagePriority( PatientInfo.patientInfo[0].DosagePriority);
@@ -88,8 +84,8 @@ function sex(evt) {
 function createSubcenterItem(thiselement) {
     var subcenterItem = JSON.parse(getsubcenterItem()).Item;
     thiselement.options.length = 0;
-    thiselement.options[0] = new Option(Sub);
-    thiselement.options[0].value = Subid;
+    thiselement.options[0] = new Option("-----负责人选择-----");
+    thiselement.options[0].value = "allItem";
     for (var i = 0; i < subcenterItem.length; i++) {
         if (subcenterItem[i] != "") {
             thiselement.options[i + 1] = new Option(subcenterItem[i].Name);
@@ -111,8 +107,8 @@ function getsubcenterItem() {
 function createdoctorItem(thiselement) {
     var doctorItem = JSON.parse(getdoctorItem()).Item;
     thiselement.options.length = 0;
-    thiselement.options[0] = new Option(doctorname);
-    thiselement.options[0].value = doctor;
+    thiselement.options[0] = new Option("-----医生选择-----");
+    thiselement.options[0].value = "allItem";
     for (var i = 0; i < doctorItem.length; i++) {
         if (doctorItem[i] != "") {
             thiselement.options[i + 1] = new Option(doctorItem[i].Name);
@@ -146,8 +142,8 @@ function resetForm(evt) {
 function createPartItem(thiselement) {
     var PartItem = JSON.parse(getPartItem()).Item;
     thiselement.options.length = 0;
-    thiselement.options[0] = new Option(SickPart);
-    thiselement.options[0].value = SickPartid;
+    thiselement.options[0] = new Option("-----部位选择-----");
+    thiselement.options[0].value = "allItem";
     for (var i = 0; i < PartItem.length; i++) {
         if (PartItem[i] != "") {
             thiselement.options[i + 1] = new Option(PartItem[i].Name);

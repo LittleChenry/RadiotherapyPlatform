@@ -58,20 +58,14 @@ public partial class pages_Main_Records_PatientRegister : System.Web.UI.Page
         savePath = savePath + "\\";
         try
         {
-            for (int i = 0; i < files.Count; i++)
-            {
-                System.Web.HttpPostedFile postedFile = files[i];
+
+                System.Web.HttpPostedFile postedFile = files[0];
                 string fileName = postedFile.FileName;//完整的路径
                 fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
                 string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
                 string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
-                if (files[i].ContentLength > 0)
-                {
-                    files[i].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
-                    savepath1 = savepath1 + "," + "../upload/PatientPicture/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
-
-                }
-            }
+                files[0].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
+                savepath1 = "../../../upload/PatientPicture/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
         }
         catch (System.Exception Ex)
         {

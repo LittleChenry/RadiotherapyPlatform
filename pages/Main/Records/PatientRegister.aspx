@@ -43,7 +43,7 @@
                                     <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
                                     <img src="../../../img/avatar.jpg" class="camera-picture" />
                                     <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
-                                    <img class="img" />
+                                    <img id="photo" class="img" />
                                 </div>
                             </div>
                         </div>
@@ -132,11 +132,11 @@
                         </div>
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-4">
+                        <div class="item col-xs-6">
                             分中心医院：
                             <input id="Hospital" name="Hospital" type="text" class="form-item" />
                         </div>
-                        <div class="item col-xs-4">
+                        <div class="item col-xs-6">
                             分中心负责人：
                             <select id="Sub" name="Sub" class="form-item"></select>
                         </div>
