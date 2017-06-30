@@ -4,7 +4,8 @@ var userID;
 var number = 0;
 var obj = [];
 function Init(evt) {
-    var treatmentID = window.location.search.split("=")[1];//?后第一个变量信息
+    var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
+    var treatmentID = treatmentgroup.split("=")[1];
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
     getUserName();
@@ -20,6 +21,9 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("treatID").value = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
+    document.getElementById("treatID").innerHTML = treatmentID;
+    document.getElementById("part").innerHTML = patient.partname;
+    document.getElementById("diaguser").innerHTML = patient.RegisterDoctor;
     var select1 = document.getElementById("scanpart");
     createscanpartItem(select1);
     var select2 = document.getElementById("scanmethod");

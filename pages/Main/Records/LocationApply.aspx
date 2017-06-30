@@ -27,81 +27,94 @@
         <div class="paper">
              <input type="hidden" id="progress" />
             <div class="paper-title">
-                模拟定位申请表
+                模拟定位申请
             </div>
             <div class="paper-content">
-                <div class="single-row">
-                    <span class="item col-xs-4">姓名：<span id="username" class="underline"></span></span>
-                    <span class="item col-xs-4">性别：<span id="sex" class="underline"></span></span>
-                    <span class="item col-xs-4">身份证号：<span id="idnumber" class="underline"></span></span>
+                <div class="content-title">
+                    <span>基本信息：</span>
                 </div>
                 <div class="single-row">
-                    <span class="item col-xs-4">民族：<span id="nation" class="underline"></span></span>
-                    <span class="item col-xs-4">年龄：<span id="age" class="underline"> </span></span>
-                    <span class="item col-xs-4">地址：<span id="address" class="underline"></span></span>
+                    <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
+                    <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
+                    <div class="item col-xs-4">年龄：<span id="age" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <span class="item col-xs-4">分中心医院：<span id="hospital" class="underline"></span></span>
-                    <span class="item col-xs-4">联系方式1：<span id="contact" class="underline"></span></span>
-                    <span class="item col-xs-4">联系方式2：<span id="contact2" class="underline"></span></span>
+                    <div class="item col-xs-4">民族：<span id="nation" class="underline"></span></div>
+                    <div class="item col-xs-4">身份证号：<span id="idnumber" class="underline"></span></div>
+                    <div class="item col-xs-4">地址：<span id="address" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">联系方式1：<span id="contact" class="underline"></span></div>
+                    <div class="item col-xs-4">联系方式2：<span id="contact2" class="underline"></span></div>
+                    <div class="item col-xs-4">分中心医院：<span id="hospital" class="underline"></span></div>
                 </div>
             </div>
             <div class="paper-content">
+                <div class="content-title">
+                    <span>病案信息：</span>
+                </div>
                 <div class="single-row">
-                     <span class="item col-xs-4">疗程号：
-                          <input id="treatID"  name="treatID" class="form-item" type="text" readonly="true"   />
-                     </span>
-                    <span class="item col-xs-4">扫描部位：
+                    <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
+                    <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
+                    <div class="item col-xs-4">所属医生：<span id="diaguser" class="underline"></span></div>
+                </div>
+            </div>
+            <div class="paper-content">
+                <div class="content-title">
+                    <span>填写申请信息：</span>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">扫描部位：
                            <select id="scanpart" name="scanpart" class="form-item">                
                            </select>
-                     </span>
-                    <span class="item col-xs-4">扫描方式：
+                     </div>
+                    <div class="item col-xs-4">扫描方式：
                            <select id="scanmethod" name="scanmethod" class="form-item">                
                           </select>
-                     </span>
+                     </div>
+                      <div class="item col-xs-4">特殊要求：
+                           <select id="special" name="special" class="form-item">                
+                          </select>
+                     </div>
                  </div> 
                   <div class="single-row">
-                     <span class="item col-xs-4">上界：
+                     <div class="item col-xs-4">上界：
                            <input id="up" name="up" type="text"  class="form-item"  />
-                     </span>
-                    <span class="item col-xs-4">下界：
+                     </div>
+                    <div class="item col-xs-4">下界：
                             <input id="down" name="down" type="text"  class="form-item"  />
-                     </span>
-                     <span class="item col-xs-4">是否增强：
+                     </div>
+                     <div class="item col-xs-4">是否增强：
                         <span>
                             <input  id="yes" type="radio" name="add" checked="true" style="width:20pt" onclick="forchange()" value="1"/>
                              是
                             <input id="No" type="radio" name="add"  style="width:20pt" onclick="forchange()" value="0"/>
                              否
                         </span>
-                        </span>
+                        </div>
                      </div>
                    <div class="single-row">
-                          <span class="item col-xs-4">增强方式：
+                          <div class="item col-xs-4">增强方式：
                            <select id="addmethod" name="addmethod" class="form-item">                
                          </select> 
-                          </span>
-                          <span class="item col-xs-4">特殊要求：
-                           <select id="special" name="special" class="form-item">                
-                          </select>
-                         </span>
-                        <span class="item col-xs-4">设备与时间：
+                          </div>  
+                        <div class="item col-xs-8">设备与时间：
                             <input id="appointtime" name="appoint" type="text" readonly="true" class="form-item"  />
                              <input id="idforappoint"  value="0" type="hidden" />
-                             <input id="chooseappoint" type="button" value="预约"  data-toggle="modal" data-target="#appoint" style="margin:15px;float:right;margin-top:20px;" />
-                       </span>
+                             <input id="chooseappoint" type="button" class="btn btn-default" value="预约"  data-toggle="modal" data-target="#appoint" />
+                       </div>
                  </div> 
                  <div class="single-row">
-                    <span class="item area-group col-xs-12">
+                    <div class="item area-group col-xs-12">
                         备注：
                         <textarea id="remark" class="form-area" style="height:50px"></textarea>
-                    </span>
+                    </div>
                 </div>
             </div>
             <div class="paper-footer">
                 <div class="single-row">
-                    <span class="item col-xs-6">医生签字：<span id="applyuser" class="underline"></span></span>
-                    <span class="item col-xs-6">日期：<span  id="time" class="underline"></span></span>
+                    <div class="item col-xs-6">医生签字：<span id="applyuser" class="underline"></span></div>
+                    <div class="item col-xs-6">日期：<span  id="time" class="underline"></span></div>
                 </div>
             </div>
         </div>

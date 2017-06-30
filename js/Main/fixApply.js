@@ -4,7 +4,8 @@ var userID;
 var number = 0;
 var obj = [];
 function Init(evt) {
-    var treatmentID = window.location.search.split("=")[1];//?后第一个变量信息
+    var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
+    var treatmentID = treatmentgroup.split("=")[1];
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
     getUserName();
@@ -20,6 +21,10 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("treatID").innerHTML = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
+    document.getElementById("treatID").innerHTML = treatmentID;
+    document.getElementById("part").innerHTML = patient.partname;
+    document.getElementById("diaguser").innerHTML = patient.RegisterDoctor;
+
     createmodelselectItem(document.getElementById("modelselect"));
     createspecialrequestItem(document.getElementById("specialrequest"));
     createfixEquipItem(document.getElementById("fixEquip"));
@@ -35,8 +40,8 @@ function Init(evt) {
         document.getElementById("bodyPost").disabled="true"; 
         document.getElementById("appointtime").value = info.equipname + " " + info.Date + " " + toTime(info.Begin) + "-" + toTime(info.End);
         document.getElementById("chooseappoint").disabled = "disabled";
-        document.getElementById("applyuser").value = info.username;
-        document.getElementById("time").value = info.ApplicationTime;
+        document.getElementById("applyuser").innerHTML = info.username;
+        document.getElementById("time").innerHTML = info.ApplicationTime;
 
     } else {
         createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);

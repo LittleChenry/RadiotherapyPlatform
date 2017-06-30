@@ -56,7 +56,7 @@
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
-                    <div class="item col-xs-4">疗程号：<span id="part" class="underline"></span></div>
+                    <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
                     <div class="item col-xs-4">所属医生：<span id="diaguser" class="underline"></span></div>
                 </div>
             </div>
