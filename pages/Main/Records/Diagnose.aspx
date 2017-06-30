@@ -31,6 +31,9 @@
                 病情诊断
             </div>
             <div class="paper-content">
+                <div class="content-title">
+                    <span>基本信息：</span>
+                </div>
                 <div class="single-row">
                     <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
                     <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
@@ -48,6 +51,9 @@
                 </div>
             </div>
             <div class="paper-content">
+                <div class="content-title">
+                    <span>病案信息：</span>
+                </div>
                 <div class="single-row">
                     <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
                     <div class="item col-xs-4">患病部位：<select id="part" name="part" class="form-item"></select></div>
@@ -55,6 +61,9 @@
                 </div>
             </div>
             <div class="paper-content">
+                <div class="content-title">
+                    <span>诊断：</span>
+                </div>
                 <div class="single-row">
                     <div class="item col-xs-6">
                         诊断结果：

@@ -56,7 +56,7 @@
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
-                    <div class="item col-xs-4">患病部位：<select id="part" name="part" class="form-item"></select></div>
+                    <div class="item col-xs-4">疗程号：<span id="part" class="underline"></span></div>
                     <div class="item col-xs-4">所属医生：<span id="diaguser" class="underline"></span></div>
                 </div>
             </div>
@@ -102,36 +102,30 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="appoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top:100px;">  
+        <div class="modal fade" id="appoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;margin:150px auto auto auto;">
             <div class="panel panel-default" style="max-width:1000px;margin:auto;">
-                <div class="panel-heading" style="text-align:center">
-                    预约设备与时间窗口         
+                <div class="panel-heading">
+                    <h4 class="modal-title">预约设备与时间窗口</h4>
                 </div>
                 <div class="panel-body">
-                    <table class="table table-striped table-bordered table-hover" style="float:left;border: solid thin;width:38%;">
-                        <tr style="height:30px;text-align:center">
-                            <td style="width:45%;">选择设备:</td>
-                            <td>
-                                <select style="width:150px;height:40px" id="equipmentName">
-                                </select>
-                            </td>
-                        </tr>
-                        <tr style="height:30px;text-align:center">
-                            <td style="width:45%">预约时间:</td>
-                            <td>
-                                <input id="AppiontDate" style="width:150px;height:40px" placeholder="请输入时间" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="text-align:center">
-                                <input type="button" class="btn btn-default" id="chooseProject" value="查询该项" />
-                                <input class="btn btn-default" style="margin-left:40px;" id="cannel" type="button" value="取消" data-dismiss="modal" aria-label="Close" />
-                                <input class="btn btn-default" id="sure" type="button" value="确定" data-dismiss="modal" />
-                            </td>
-                        </tr>
-                    </table>
-                    <table class="table table-striped table-bordered table-hover" style="margin-top:0px;width:60%;float:right" id="apptiontTable">
-                    </table>
+                    <div class="panel-row">
+                        <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
+                        <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                        <div class="col-xs-2">
+                            <button id="chooseProject" class="btn btn-default" data-toggle="modal" data-target="#appoint">查询该项</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <table id="apptiontTable" class="table table-bordered"></table>
+                    </div>
+                    <div class="panel-row">
+                        <div class="col-xs-6">
+                            <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal" aria-label="Close" >取消</button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button class="btn btn-default" id="sure" type="button" data-dismiss="modal">确定</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
