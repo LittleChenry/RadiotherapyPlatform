@@ -1,8 +1,5 @@
 ﻿window.addEventListener("load", createPatient, false)
-var SickPart;
-var SickPartid;
-var diagnosisresultname;
-var diagnosisresultID;
+
 var userID;
 var treatID
 //JS入口主函数
@@ -11,7 +8,7 @@ function createPatient(evt) {
 
     //获得当前执行人姓名与ID
     getUserID();
-    
+
     treatID = window.location.search.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
     var patient = getPatientInfo(treatID);
@@ -25,31 +22,37 @@ function createPatient(evt) {
     document.getElementById("contact").innerHTML = patient.Contact1;
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
+    document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     //调取后台所有等待就诊的疗程号及其对应的病人
 
     var select3 = document.getElementById("part");
     createPartItem(select3);
     var select4 = document.getElementById("diagresult");
     createDiagResultItem(select4);
-    if (patient.Progress >= 2) {
-        var diagnosisInfo = getDignoseInfo(treatID);
-        document.getElementById("diaguser").value = diagnosisInfo.username;
-        document.getElementById("remark").value = diagnosisInfo.Remarks;
-        document.getElementById("remark").disabled = "true";
-        document.getElementById("part").value = diagnosisInfo.partID;
-        document.getElementById("part").disabled = "true";
-        //SickPartid = DiagnoseInfo.diagnosisInfo.partID;
-        document.getElementById("diagresult").value = diagnosisInfo.diagnosisresultID;
-        document.getElementById("diagresult").disabled = "true";
-        // diagnosisresultID = DiagnoseInfo.diagnosisInfo[0].diagnosisresultID;
-        //doctor = DiagnoseInfo.DiagnoseInfo[0].doctor;
 
-        document.getElementById("time").value = diagnosisInfo.Time;
-            
-    } else {
-        document.getElementById("diaguserid").value = userID;
+    
+        var diagnosisInfo = getDignoseInfo(treatID);
         
-    }
+        document.getElementById("part").value = patient.partID;
+        if (patient.Progress >= 2) {
+            document.getElementById("operator").innerHTML = diagnosisInfo.username;
+            document.getElementById("remark").value = diagnosisInfo.Remarks;
+            document.getElementById("remark").disabled = "true";
+
+            document.getElementById("part").disabled = "true";
+            //SickPartid = DiagnoseInfo.diagnosisInfo.partID;
+            document.getElementById("diagresult").value = diagnosisInfo.diagnosisresultID;
+            document.getElementById("diagresult").disabled = "true";
+            // diagnosisresultID = DiagnoseInfo.diagnosisInfo[0].diagnosisresultID;
+            //doctor = DiagnoseInfo.DiagnoseInfo[0].doctor;
+
+            document.getElementById("date").innerHTML = diagnosisInfo.Time;
+
+        } else {
+            document.getElementById("diaguserid").value = userID;
+
+        }
+    
 }
 function getDignoseInfo(treatID) {
 

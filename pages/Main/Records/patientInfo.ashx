@@ -48,7 +48,7 @@ public class patientInfo : IHttpHandler
             string date1 = dt1.ToString("yyyy-MM-dd");
             string date2 = reader["RegisterTime"].ToString();
             DateTime dt2 = Convert.ToDateTime(date2);
-            string date3 = dt1.ToString("yyyy-MM-dd HH:MM");
+            string date3 = dt1.ToString("yyyy-MM-dd HH:mm");
             backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"IDcardNumber\":\"" + reader["IdentificationNumber"] + "\",\"Hospital\":\"" + reader["Hospital"] +
                  "\",\"Sub\":\"" + reader["subname"].ToString() + " " + reader["hos"].ToString() + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString() + "\",\"Picture\":\"" + reader["Picture"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() +
                  "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"Birthday\":\"" + date1 + "\",\"SubID\":\"" + reader["subid"].ToString() +

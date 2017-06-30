@@ -36,7 +36,7 @@ public class diagnoseInfo : IHttpHandler {
         int treatid = Convert.ToInt32(context.Request.QueryString["treatID"]);
 
 
-        string sqlCommand = "select diagnosisrecord.*,part.Name as partname,diagnosisresult.TumorName as diagnosisresultname,user.Name as username from user,part,diagnosisrecord,diagnosisresult where diagnosisrecord.Diagnosis_User_ID=user.ID and diagnosisrecord.DiagnosisResult_ID=diagnosisresult.ID and diagnosisrecord.Part_ID=part.ID and  diagnosisrecord.Treatment_ID=@treatID";
+        string sqlCommand = "select diagnosisrecord.*,part.Name as partname,user.Name as username from user,part,diagnosisrecord where diagnosisrecord.Diagnosis_User_ID=user.ID and diagnosisrecord.Part_ID=part.ID and  diagnosisrecord.Treatment_ID=@treatID";
         sqlOperation2.AddParameterWithValue("@treatID", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"diagnosisInfo\":[");
@@ -44,9 +44,9 @@ public class diagnoseInfo : IHttpHandler {
         {
             string date = reader["Time"].ToString();
             DateTime dt1 = Convert.ToDateTime(date);
-            string date1 = dt1.ToString("yyyy-MM-dd HH:MM");
+            string date1 = dt1.ToString("yyyy-MM-dd HH:mm");
             backText.Append("{\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"partname\":\"" + reader["partname"] + "\",\"partID\":\"" + reader["Part_ID"] +
-                 "\",\"diagnosisresultname\":\"" + reader["diagnosisresultname"].ToString() + "\",\"diagnosisresultID\":\"" + reader["DiagnosisResult_ID"].ToString() + "\",\"username\":\"" + reader["username"].ToString() + "\",\"userID\":\"" + reader["Diagnosis_User_ID"].ToString() +
+                 "\",\"diagnosisresultID\":\"" + reader["DiagnosisResult_ID"].ToString() + "\",\"username\":\"" + reader["username"].ToString() + "\",\"userID\":\"" + reader["Diagnosis_User_ID"].ToString() +
                  "\",\"Time\":\"" + date1 + "\"}");
 
         }

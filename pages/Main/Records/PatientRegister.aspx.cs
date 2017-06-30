@@ -106,13 +106,13 @@ public partial class pages_Main_Records_PatientRegister : System.Web.UI.Page
         int groupID = int.Parse(sqlOperation5.ExecuteScalar(groupid));
         int treatid=Convert.ToInt32(Request.Form["treatID"]);
         int subid = Convert.ToInt32(Request.Form["Sub"]);
-       
-        string str1 = "UPDATE  diagnosisrecord SET SubCenterPrincipal_ID=@SubCenterPrincipal, Principal_User_ID=@Principal_User_ID where Treatment_ID=@treatID";
 
-            sqlOperation3.AddParameterWithValue("@SubCenterPrincipal", subid);
-            sqlOperation3.AddParameterWithValue("@Principal_User_ID", 1);
-            sqlOperation3.AddParameterWithValue("@treatID", treatid);
-            int Success1 = sqlOperation3.ExecuteNonQuery(str1);
+        string str1 = "UPDATE  diagnosisrecord SET SubCenterPrincipal_ID=@SubCenterPrincipal,Part_ID=@SickPart, Principal_User_ID=@Principal_User_ID where Treatment_ID=@treatID";
+        sqlOperation3.AddParameterWithValue("@SickPart", Convert.ToInt32(Request.Form["SickPart"]));
+        sqlOperation3.AddParameterWithValue("@SubCenterPrincipal", subid);
+        sqlOperation3.AddParameterWithValue("@Principal_User_ID", 1);
+        sqlOperation3.AddParameterWithValue("@treatID", treatid);
+        int Success1 = sqlOperation3.ExecuteNonQuery(str1);
            
                 string treatupdate = " update treatment set Group_ID=@Group_ID where ID=@Treatment_ID";
 
