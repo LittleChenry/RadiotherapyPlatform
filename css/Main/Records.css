@@ -40,6 +40,14 @@
 	margin-bottom: 40px;
 }
 
+.content-title {
+	margin-top: -20px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-left: 12px;
+    font-weight: 600;
+}
+
 .paper-footer {
 
 }
