@@ -7,7 +7,6 @@ $(document).ready(function () {
     $("#progress-iframe").width($("#progress-content").width());
     $("#patient-content").height($(document).height() - 151);
     $("#record-iframe").width($("#record-content").width());
-
     var patient = getPatient();
     $("#patient-search").bind('input propertychange', function() {
         var Searchedpatients = Search($("#patient-search").val(),patient);
@@ -387,14 +386,14 @@ function CreateTable(start, end, patient) {
 
 function getPatient(){
     var xmlHttp = new XMLHttpRequest();
+    var xmlHttp = new XMLHttpRequest();
     var url = "Records/GetPatientInfo.ashx";
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    var patient = eval("(" + json + ")");   
+    var patient = eval("(" + json + ")");
     return patient;
 }
-
 
 function Paging(patient) {
     if (patient.PatientInfo != "") {
@@ -438,7 +437,7 @@ function Paging(patient) {
         }*/
         var ul = $("#page-index-content");
         var ul_content = "<li class='paginate_button previous' id='table_previous'><a href='javascript:;'><i class='fa fa-fw fa-arrow-left'></i></a></li><li class='paginate_button previous disabled' id='table_previous_prevent' style='display:none;'><a href='javascript:;'><i class='fa fa-fw fa-arrow-left'></i></a></li>";
-        var omitted_previous = "<li class='paginate_button' id='table_omitted_previous'><a><i>···</i></a></li>";
+        var omitted_previous = "<li class='paginate_button previous' id='table_omitted_previous'><a><i>···</i></a></li>";
         var omitted_next = "<li class='paginate_button' id='table_omitted_next'><a><i>···</i></a></li>";
         ul_content = ul_content + omitted_previous;
         for (var i = 0; i < pageindex.length; i++) {
