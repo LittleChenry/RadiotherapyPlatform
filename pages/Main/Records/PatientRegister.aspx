@@ -31,6 +31,7 @@
             <form id="frmRegist" name="frmRegist" method="post" runat="server">
                 <input type="hidden" name="ispostback" value="true" />
                 <input type="hidden" id="progress" name="progress" />
+                <input type="hidden" id="picture1" name="picture1" />
                 <input id="patientID" type="hidden" name="patientID" />
                 <input id="treatID" type="hidden" name="treatID" />
                 <div class="paper-content">

@@ -56,6 +56,7 @@ function writePatientInfo(PatientInfo) {
     document.getElementById("patientID").value =  PatientInfo.patientInfo[0].ID;
     //document.getElementById("diagnosisresult").value =  PatientInfo.patientInfo[0].diagnosisresult;
     document.getElementById("doctor").value = PatientInfo.patientInfo[0].doctor;
+    document.getElementById("picture1").value = PatientInfo.patientInfo[0].Picture;
     document.getElementById("SickPart").value = PatientInfo.patientInfo[0].SickPartID;
     document.getElementById("Sub").value = PatientInfo.patientInfo[0].SubID;;
     document.getElementById("Hospital").value =  PatientInfo.patientInfo[0].Hospital;

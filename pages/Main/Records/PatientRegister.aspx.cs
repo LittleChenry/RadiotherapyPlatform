@@ -46,7 +46,7 @@ public partial class pages_Main_Records_PatientRegister : System.Web.UI.Page
 
     }
     private bool RecordPatientInformation()
-    {
+    {        
         string savePath = "";
         string savepath1 = "";
         HttpFileCollection files = HttpContext.Current.Request.Files;
@@ -61,11 +61,18 @@ public partial class pages_Main_Records_PatientRegister : System.Web.UI.Page
 
                 System.Web.HttpPostedFile postedFile = files[0];
                 string fileName = postedFile.FileName;//完整的路径
-                fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
-                string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
-                string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
-                files[0].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
-                savepath1 = "../../../upload/PatientPicture/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
+                if (fileName == "")
+                {
+                    savepath1 = Request.Form["picture1"];
+                }
+                else
+                {
+                    fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
+                    string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
+                    string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
+                    files[0].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
+                    savepath1 = "../../../upload/PatientPicture/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
+                }
         }
         catch (System.Exception Ex)
         {
