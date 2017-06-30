@@ -407,6 +407,9 @@
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 4) {
                    window.frames["record-iframe"].document.forms["saveFixRecord"].submit();
                }
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 3) {
+                   $("#record-iframe")[0].contentWindow.postlocation();
+               }
 
         });
     })
