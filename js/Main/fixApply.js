@@ -89,7 +89,7 @@ function getfixInfomation(treatmentID) {
     return obj1.info[0];
 }
 function postfix() {
-    var treatmentid = document.getElementById("treatID").value;
+    var treatmentid = document.getElementById("treatID").innerHTML;
     var model = document.getElementById("modelselect").value;
     var special=document.getElementById("specialrequest").value;
     var time=document.getElementById("time").value;
