@@ -410,7 +410,9 @@
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 3) {
                    $("#record-iframe")[0].contentWindow.postlocation();
                }
-
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 5) {
+                   window.frames["record-iframe"].document.forms["frmlocation"].submit();
+               }
         });
     })
 </script>
