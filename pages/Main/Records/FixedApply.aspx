@@ -102,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="appoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;margin:150px auto auto auto;">
+        <div class="modal fade" id="appoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:700px;margin:50px auto;">
             <div class="panel panel-default" style="max-width:1000px;margin:auto;">
                 <div class="panel-heading">
                     <h4 class="modal-title">预约设备与时间窗口</h4>
@@ -112,11 +112,11 @@
                         <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
                         <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
                         <div class="col-xs-2">
-                            <button id="chooseProject" class="btn btn-default" data-toggle="modal" data-target="#appoint">查询该项</button>
+                            <button id="chooseProject" class="btn btn-default">查询该项</button>
                         </div>
                     </div>
-                    <div class="row">
-                        <table id="apptiontTable" class="table table-bordered"></table>
+                    <div class="panel-row">
+                        <table id="apptiontTable" class="table table-bordered col-xs-12"></table>
                     </div>
                     <div class="panel-row">
                         <div class="col-xs-6">

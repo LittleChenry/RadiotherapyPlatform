@@ -137,44 +137,73 @@ function postfix() {
 function CreateCurrentEquipmentTbale(equiment, dateString) {
     var table = document.getElementById("apptiontTable");
     RemoveAllChild(table);
-    var thead = document.createElement("THEAD");
-    var headRow = document.createElement("TR");
-    thead.appendChild(headRow);
-    table.appendChild(thead);
-    var tbody = document.createElement("TBODY");
-    var bodyRow1 = document.createElement("TR");
-    tbody.appendChild(bodyRow1);
-    table.appendChild(tbody);
-    var cols = 0;//该行有几列了
+    var tbody = document.createElement("tbody");
     for (var i = 0; i < equiment.length; i++) {
-        var beg = equiment[i].Begin;
-        var end = equiment[i].End;
-        var state = equiment[i].State;
-        var id = equiment[i].ID;
-        if (state == 0) {
-            var timeText = document.createTextNode(toTime(beg) + " - " + toTime(end));
-            var th = document.createElement("TH");
-            var check = document.createElement("INPUT");
-            check.setAttribute("type", "checkbox");
-            check.setAttribute("id", id + "_" + dateString + "_" + toTime(beg) + "-" + toTime(end) + "_" + equiment[i].Euqipment);
-            th.appendChild(check);
-            th.appendChild(timeText);
-            if (cols < 5) {
-                headRow.appendChild(th);
-                ++cols;
-            } else {
-                cols = 1;
-                var newHead = document.createElement("THEAD");
-                headRow = document.createElement("TR");
-                newHead.appendChild(headRow);
-                table.appendChild(newHead);
-                var newBody = document.createElement("TBODY");
-                table.appendChild(newBody);
-                headRow.appendChild(th);
+        var count = i % 5;
+        var tr;
+        if (count == 0) {
+            tr = document.createElement("tr");
+        }
+        var td = document.createElement("td");
+        var sign = document.createElement("i");
+        td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+        if (equiment[i].State == "0") {
+            sign.className = "";
+            td.addEventListener("click", chooseItem, false);
+        }else{
+            td.style.backgroundColor = "#C1C1C1";
+            sign.className = "fa fa-fw fa-ban td-sign";
+            td.addEventListener("click", hasChosen, false);
+        }
+        var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+        td.append(text);
+        td.append(sign);
+        tr.append(td);
+        if (count == 4) {
+            tbody.append(tr);
+        }
+    }
+    table.append(tbody);
+}
+
+function chooseItem(){
+    if (ChoseID() == null) {
+        if (this.lastChild.className) {
+            this.className = "";
+            this.lastChild.className = "";
+        }else{
+            this.className = "chosen";
+            this.lastChild.className = "fa fa-fw fa-check td-sign";
+        }
+    }else{
+        if (this.lastChild.className) {
+            this.className = "";
+            this.lastChild.className = "";
+        }else{
+            alert("只能选择一个时间段！");
+        }
+    }
+    
+}
+
+function ChoseID(){
+    var td_id = null;
+    var table = document.getElementById("apptiontTable");
+    for (var i = 0; i < table.rows.length; i++) {
+        for (var j = 0; j < table.rows[i].cells.length; j++) {
+            var cell = table.rows[i].cells[j];
+            if (cell.className != "") {
+                td_id = cell.id;
             }
         }
     }
+    return td_id;
 }
+
+function hasChosen(){
+    alert("该时间段已被预约！");
+}
+
 function toTime(minute) {
     var hour = parseInt(parseInt(minute) / 60);
     var min = parseInt(minute) - hour * 60;
@@ -258,34 +287,10 @@ function sex(evt) {
 
 
 function checkAllTable() {
-    var temp = 1;
-    var total = 0;
-    var id;
-    var domList = document.getElementsByTagName("input");
-    var checkBoxList = [];
-    var len = domList.length;
-    while (len--) {
-        if (domList[len].type == "checkbox") {
-            checkBoxList.push(domList[len]);
-        }
-    }
-    for (temp = 0; temp < checkBoxList.length; temp++) {
-        if (checkBoxList[temp].checked == true) {
-            id = checkBoxList[temp].id;
-            total++;
-        }
-    }
-    if (total >= 2) {
-        window.alert("只能选择一个时间段");
-    }
-    if (total == 0) {
-        window.alert("尚未预约时间");
-    }
-    if (total == 1) {
-        var appoint = id.split("_");
-        document.getElementById("idforappoint").value = appoint[0];
-        document.getElementById("appointtime").value = appoint[3] + " " + appoint[1] + " " + appoint[2];
-    }
+    var choseid =  ChoseID();
+    var appoint = choseid.split("_");
+    document.getElementById("idforappoint").value = appoint[0];
+    document.getElementById("appointtime").value = appoint[3] + " " + appoint[1] + " " + appoint[2];
 }
 //第二页的模具选择下拉菜单
 function createmodelselectItem(thiselement) {
