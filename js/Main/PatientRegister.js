@@ -184,151 +184,108 @@ function CheckInput(evt) {
     }
 }
 //检查是否为空
-function CheckEmpty(thisElement) {
-    var strOutClassName = "";//检查后返回CSS
-    var thisClassName = thisElement.className.split(" ");//提取classname中每个class
-    for (var i = 0; i < thisClassName.length; i++) {
-        strOutClassName += CheckClassName(thisClassName[i], thisElement) + " ";//验证并返回验证后classname
+function CheckEmpty() {   
+    var check =1;
+    if (document.getElementById("userName").value=="") {
+        window.alert("姓名不能为空");
+        check=0; 
+    }
+    if (document.getElementById("IDcardNumber").value=="") {
+        window.alert("身份证不能为空");
+        check=0;            
+    }
+    if (document.getElementById("RecordNumber").value=="") {
+        window.alert("病案号不能为空");
+        check=0;           
+    }
+    if (document.getElementById("userName").value=="") {
+        window.alert("姓名不能为空");
+        check=0;   
+    }
+    if (document.getElementById("Hospital").value=="") {
+        window.alert("就诊医院不能为空");
+        check=0;   
+                
+    }         
+    if (document.getElementById("Birthday").value=="") {
+        window.alert("出生日期不能为空");
+        check=0;   
+               
+    }
+    if (document.getElementById("Nation").value=="") {
+        window.alert("民族不能为空");
+        check=0;                  
+    }
+    if (document.getElementById("Address").value=="") {
+        window.alert("地址不能为空");
+        check=0;                
+    }
+    if (document.getElementById("Number1").value=="") {
+        window.alert("电话1不能为空");
+        check=0;                  
+    }
+    if (checkPhone()) {
+        window.alert("电话1格式不正确");
+        check = 0;
+    }
+    if (isCardNo()) {
+        window.alert("身份证格式不正确");
+        check = 0;
+    }   
+    if (checkPhone2()) {
+        window.alert("电话2格式不正确");
+        check = 0;
+    }
+    if (document.getElementById("Number2").value=="") {
+        window.alert("电话2不能为空");
+        check=0;                  
+    }
+    if (document.getElementById("height").value=="") {
+        window.alert("身高不能为空");
+        check=0;                  
+    }
+    if (document.getElementById("weight").value=="") {
+        window.alert("体重不能为空");
+        check=0;                 
     }
 
-    thisElement.className = strOutClassName;
-    //验证后classname包含invalid说明验证不通过
-    if (strOutClassName.indexOf("invalid") > -1) {
-        AlertLabel(thisElement.parentNode);//对应元素父节点（Label）红色加粗提示
-        if (thisElement.nodeName == "INPUT") {
-            thisElement.select();
-            if (thisElement.className.indexOf("userName") > -1) {
-                document.getElementById("error").innerHTML = "姓名不能为空";
-            }
-            if (thisElement.className.indexOf("IDcardNumber") > -1) {
-                if (document.getElementById("error").innerHTML == "") {
-                    document.getElementById("error").innerHTML = "身份证不能为空";
-                }
-            }
-            if (thisElement.className.indexOf("name") > -1) {
-                document.getElementById("error").innerHTML = "姓名不能为空";
-            }
-            if (thisElement.className.indexOf("Hospital") > -1) {
-                document.getElementById("error").innerHTML = "就诊医院不能为空";
-            }
-          
-            if (thisElement.className.indexOf("Birthday") > -1) {
-                document.getElementById("error").innerHTML = "出生日期不能为空";
-            }
-            if (thisElement.className.indexOf("Nation") > -1) {
-                document.getElementById("error").innerHTML = "民族不能为空";
-            }
-            if (thisElement.className.indexOf("Address") > -1) {
-                document.getElementById("error").innerHTML = "地址不能为空";
-            }
-            if (thisElement.className.indexOf("Number1") > -1) {
-                document.getElementById("error").innerHTML = "电话1格式不正确";
-            }
-            if (thisElement.className.indexOf("Number2") > -1) {
-                document.getElementById("error").innerHTML = "电话2格式不正确";
-            }
-            if (thisElement.className.indexOf("height") > -1) {
-                document.getElementById("error").innerHTML = "身高不能为空";
-            }
-            if (thisElement.className.indexOf("weight") > -1) {
-                document.getElementById("error").innerHTML = "体重不能为空";
-            }
-
-        } else if (thisElement.nodeName == "SELECT") {
-            if (thisElement.className.indexOf("SickPart") > -1) {
-                document.getElementById("error").innerHTML = "请选择患病部位";
-            }
-            if (thisElement.className.indexOf("Sub") > -1) {
-                document.getElementById("error").innerHTML = "请选择分中心负责人";
-            }
-            if (thisElement.className.indexOf("doctor") > -1) {
-                document.getElementById("error").innerHTML = "请选择医生";
-            }
-        }
-        return false;
+    if (document.getElementById("SickPart").value == "allItem") {
+        window.alert("请选择患病部位"); 
+        check=0;   
     }
-    return true;
+    if (document.getElementById("Sub").value == "allItem") {
+        window.alert("请选择分中心负责人"); 
+        check=0;   
+    }
+    if (document.getElementById("doctor").value == "allItem") {
+        window.alert("请选择医生");        
+        check=0;   
+    }
+    document.getElementById("check").value = check;
 }
+    
 //根据classname做对应的各项检查
-function CheckClassName(thisClassName, thisElement) {
-    var returnClassName = "";
-    switch (thisClassName) {
-        case "":
-            break;
-        case "invalid":
-            break;
-        case "isEmpty"://判空
-            if (isAllGood && (thisElement.value == "" || thisElement.value == "请输入身份证号" || thisElement.value == "请输入姓名" || thisElement.value == "请输入就诊医院" || thisElement.value == "请输入病案号" || thisElement.value == "请选择出生日期" || thisElement.value == "请填写民族" || thisElement.value == "请填写地址" || thisElement.value == "请填写联系方式1" || thisElement.value == "请填写联系方式2" || thisElement.value == "请填写身高" || thisElement.value == "请填写体重")) {
-                returnClassName += "invalid ";
-            }
-            returnClassName += thisClassName;
-            break;
-        case "checkSex"://性别radio是否选择
-            var sexRadios = document.getElementsByName("sex");
-            if (isAllGood && !sexRadios[0].checked && !sexRadios[1].checked) {
-                returnClassName += "invalid ";
-            }
-            returnClassName += thisClassName;
-            break;
-        case "SickPart":
-            var sickSelect = document.getElementById("SickPart");
-            if (isAllGood && sickSelect.selectedIndex == 0) {
-                returnClassName += "invalid ";
-            }
-            returnClassName += thisClassName;
-            break;
-        case "doctor":
-            var docSelect = document.getElementById("doctor");
-            if (isAllGood && docSelect.selectedIndex == 0) {
-                returnClassName += "invalid ";
-            }
-            returnClassName += thisClassName;
-            break;
-        case "Sub":
-            var subSelect = document.getElementById("Sub");
-            if (isAllGood && subSelect.selectedIndex == 0) {
-                returnClassName += "invalid ";
-            }
-            returnClassName += thisClassName;
-            break;
-        case "Number1"://验证电话号码
-            if (isAllGood && !checkPhone(thisElement)) {
-                returnClassName += "invalid ";
-            }
-            returnClassName += thisClassName;
-            break;
-        case "Number2"://验证电话号码
-            if (isAllGood && !checkPhone2(thisElement)) {
-                returnClassName += "invalid ";
-            }
-            returnClassName += thisClassName;
-            break;
-        default:
-            returnClassName += thisClassName;
-            break;
-    }
-    return returnClassName;
-}
+
 function AlertLabel(thisNode) {
     if (thisNode.nodeName == "LABEL")
         thisNode.className += "invalid ";
 }
 //电话号码验证
-function checkPhone(thisElement) {
+function checkPhone() {
     var strPhoneNumber = document.getElementById("Number1").value;
     var rep = /^(\d{3})\-?(\d{4})\-?(\d{4})$/;
     if (!rep.test(strPhoneNumber)) {
-        return false;
+        return true;
     }
-    return true;
+    return false;
 }
-function checkPhone2(thisElement) {
+function checkPhone2() {
     var strPhoneNumber = document.getElementById("Number2").value;
     var rep = /^(\d{3})\-?(\d{4})\-?(\d{4})$/;
     if (!rep.test(strPhoneNumber)) {
-        return false;
+        return true;
     }
-    return true;
+    return false;
 }
 //电话号码格式规范
 function phoneFormat() {
@@ -339,6 +296,15 @@ function phoneFormat() {
         this.value = RegExp.$1 + "-" + RegExp.$2 + "-" + RegExp.$3;
     }
 }
+function isCardNo() {
+    // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X  
+    var card = document.getElementById("IDcardNumber").value;
+    var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+    if (!reg.test(card)) {
+        return true;
+    }
+    return false;
+} 
 //reset时Input样式恢复
 function resetInput(thisElement) {
     var allClassName = thisElement.className.split(" ");

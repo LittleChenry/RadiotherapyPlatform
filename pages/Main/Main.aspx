@@ -395,8 +395,11 @@
             $("#record-iframe")[0].contentWindow.print();
         });
         $("#save").bind("click", function () {
-                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 0) {
-                         window.frames["record-iframe"].document.forms["frmRegist"].submit();
+            if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 0) {
+                         $("#record-iframe")[0].contentWindow.CheckEmpty();
+                         if (document.getElementById('record-iframe').contentWindow.document.getElementById('check').value == 1) {
+                             window.frames["record-iframe"].document.forms["frmRegist"].submit();
+                         }
                 }
                 if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 1) {
                     $("#record-iframe")[0].contentWindow.checkAll();
