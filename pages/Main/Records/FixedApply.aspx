@@ -90,7 +90,7 @@
                     </div>
                     <div class="item col-xs-8">
                         设备与时间：
-                        <input id="appointtime"  name="appointtime" type="text" class="form-item" />
+                        <input id="appointtime"  name="appointtime" type="text" class="form-item" readonly="true" />
                         <button id="chooseappoint" class="btn btn-default" data-toggle="modal" data-target="#appoint">预约</button>
                     </div>
                 </div>

@@ -116,7 +116,7 @@ function getLocationInfomation(treatmentID) {
     return obj1.info[0];
 }
 function postlocation() {
-    var treatmentid = document.getElementById("treatID").value;
+    var treatmentid = document.getElementById("treatID").innerHTML;
     var scanpart = document.getElementById("scanpart").value;
     var scanmethod = document.getElementById("scanmethod").value;
     var special = document.getElementById("special").value;
@@ -185,55 +185,93 @@ function postlocation() {
 function CreateCurrentEquipmentTbale(equiment, dateString) {
     var table = document.getElementById("apptiontTable");
     RemoveAllChild(table);
-    var thead = document.createElement("THEAD");
-    var headRow = document.createElement("TR");
-    thead.appendChild(headRow);
-    table.appendChild(thead);
-    var tbody = document.createElement("TBODY");
-    var bodyRow1 = document.createElement("TR");
-    tbody.appendChild(bodyRow1);
-    table.appendChild(tbody);
-    var cols = 0;//该行有几列了
+    var tbody = document.createElement("tbody");
+    for (var i = 0; i < equiment.length; i++) {
+        var count = i % 5;
+        var tr;
+        if (count == 0) {
+            tr = document.createElement("tr");
+        }
+        var td = document.createElement("td");
+        var sign = document.createElement("i");
+        td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+        if (equiment[i].State == "0") {
+            if (getFixApplyTime(equiment[i], dateString)) {
+                sign.className = "";
+                td.addEventListener("click", chooseItem, false);
+            }else{
+                td.style.backgroundColor = "#C1C1C1";
+                sign.className = "fa fa-fw fa-exclamation-circle";
+                td.addEventListener("click", hasChosen, false);
+            }
+        }else{
+            td.style.backgroundColor = "#C1C1C1";
+            sign.className = "fa fa-fw fa-ban td-sign";
+            td.addEventListener("click", hasChosen, false);
+        }
+        var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+        td.append(text);
+        td.append(sign);
+        tr.append(td);
+        if (count == 4) {
+            tbody.append(tr);
+        }
+    }
+    table.append(tbody);
+}
+
+function getFixApplyTime(equiment, dateString){
     var treatid = window.location.search.split("=")[1];
     var fixtime = getfixtime(treatid);
     var fixtime = JSON.parse(fixtime).fixtime;
     var begintime = toTime(fixtime[0].Begin);
     var endtime = toTime(fixtime[0].End);
     var fixtimebiaozhun = fixtime[0].Date.split(" ")[0] + " " + begintime + "-" + endtime;
-    for (var i = 0; i < equiment.length; i++) {
-        var beg = equiment[i].Begin;
-        var end = equiment[i].End;
-        var state = equiment[i].State;
-        var id = equiment[i].ID;
-        var datedate = dateString.split("-");
-        var groupstring = "-" + datedate[1] + "-" + datedate[2] + "-" + beg + "-" + end;
-        var group = groupstring.split("-");
-        var flag = compare(fixtimebiaozhun, group);
-        if (state == 0 && flag) {
-            var timeText = document.createTextNode(toTime(beg) + " - " + toTime(end));
-            var th = document.createElement("TH");
-            var check = document.createElement("INPUT");
-            check.setAttribute("type", "radio");
-            check.setAttribute("name", "app");
-            check.setAttribute("id", id + "_" + dateString + "_" + toTime(beg) + "-" + toTime(end) + "_" + equiment[i].Euqipment);
-            th.appendChild(check);
-            th.appendChild(timeText);
-            if (cols < 5) {
-                headRow.appendChild(th);
-                ++cols;
-            } else {
-                cols = 1;
-                var newHead = document.createElement("THEAD");
-                headRow = document.createElement("TR");
-                newHead.appendChild(headRow);
-                table.appendChild(newHead);
-                var newBody = document.createElement("TBODY");
-                table.appendChild(newBody);
-                headRow.appendChild(th);
+
+    var datedate = dateString.split("-");
+    var groupstring = "-" + datedate[1] + "-" + datedate[2] + "-" + equiment.Begin + "-" + equiment.End;
+    var group = groupstring.split("-");
+    return compare(fixtimebiaozhun, group);
+}
+
+function chooseItem(){
+    if (ChoseID() == null) {
+        if (this.lastChild.className) {
+            this.className = "";
+            this.lastChild.className = "";
+        }else{
+            this.className = "chosen";
+            this.lastChild.className = "fa fa-fw fa-check td-sign";
+        }
+    }else{
+        if (this.lastChild.className) {
+            this.className = "";
+            this.lastChild.className = "";
+        }else{
+            alert("只能选择一个时间段！");
+        }
+    }
+    
+}
+
+function ChoseID(){
+    var td_id = null;
+    var table = document.getElementById("apptiontTable");
+    for (var i = 0; i < table.rows.length; i++) {
+        for (var j = 0; j < table.rows[i].cells.length; j++) {
+            var cell = table.rows[i].cells[j];
+            if (cell.className != "") {
+                td_id = cell.id;
             }
         }
     }
+    return td_id;
 }
+
+function hasChosen(){
+    alert("该时间段不能预约！");
+}
+
 function toTime(minute) {
     var hour = parseInt(parseInt(minute) / 60);
     var min = parseInt(minute) - hour * 60;
@@ -315,31 +353,13 @@ function sex(evt) {
         return "男";
 }
 
-
 function checkAllTable() {
-    var temp = 1;
-    var total = 0;
-    var id;
-    var domList = document.getElementsByName("app");
-    var len = domList.length;
-    for (temp = 0; temp < domList.length; temp++) {
-        if (domList[temp].checked == true) {
-            id = domList[temp].id;
-            total++;
-        }
-    }
-
-    if (total == 0) {
-        window.alert("尚未预约时间");
-        document.getElementById("appointtime").value = "";
-        document.getElementById("idforappoint").value = 0;
-    }
-    if (total == 1) {
-        var appoint = id.split("_");
-        document.getElementById("idforappoint").value = appoint[0];
-        document.getElementById("appointtime").value = appoint[3] + " " + appoint[1] + " " + appoint[2];
-    }
+    var choseid =  ChoseID();
+    var appoint = choseid.split("_");
+    document.getElementById("idforappoint").value = appoint[0];
+    document.getElementById("appointtime").value = appoint[3] + " " + appoint[1] + " " + appoint[2];
 }
+
 function getfixtime(treatid) {
     var xmlHttp = new XMLHttpRequest();
     var url = "GetFixtime.ashx?treatid=" + treatid;
@@ -349,6 +369,7 @@ function getfixtime(treatid) {
     return json;
 
 }
+
 //扫描部位
 function createscanpartItem(thiselement) {
     var scanpartItem = JSON.parse(getscanpartItem()).Item;
@@ -362,6 +383,7 @@ function createscanpartItem(thiselement) {
         }
     }
 }
+
 function getscanpartItem() {
     var xmlHttp = new XMLHttpRequest();
     var url = "getscanpart.ashx";

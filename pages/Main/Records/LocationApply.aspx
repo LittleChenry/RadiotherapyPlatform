@@ -131,8 +131,8 @@
                                     <button id="chooseProject" class="btn btn-default" data-toggle="modal" data-target="#appoint">查询该项</button>
                                 </div>
                             </div>
-                            <div class="row">
-                                <table id="apptiontTable" class="table table-bordered"></table>
+                            <div class="panel-row">
+                                <table id="apptiontTable" class="table table-bordered col-xs-12"></table>
                             </div>
                             <div class="panel-row">
                                 <div class="col-xs-6">

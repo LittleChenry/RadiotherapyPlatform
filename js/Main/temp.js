@@ -9,7 +9,7 @@ function Init(evt) {
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
     getUserName();
-    var patient = getfixPatientInfo(treatmentID);
+    var patient = getLocationPatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
     document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
@@ -19,25 +19,52 @@ function Init(evt) {
     document.getElementById("hospital").innerHTML = patient.Hospital;
     document.getElementById("contact").innerHTML = patient.Contact1;
     document.getElementById("contact2").innerHTML = patient.Contact2;
-    document.getElementById("treatID").innerHTML = patient.treatID;
+    document.getElementById("treatID").value = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("treatID").innerHTML = treatmentID;
     document.getElementById("part").innerHTML = patient.partname;
     document.getElementById("diaguser").innerHTML = patient.RegisterDoctor;
+    var select1 = document.getElementById("scanpart");
+    createscanpartItem(select1);
+    var select2 = document.getElementById("scanmethod");
+    createscanmethodItem(select2);
+    var select3 = document.getElementById("special");
+    createspecialItem(select3);
+    var add = document.getElementsByName("add");
+    if (add[0].checked) {
+        var select4 = document.getElementById("addmethod");
+        createaddmethodItem(select4);
+    } else {
+        document.getElementById("addmethod").disabled = "true";
 
-    createmodelselectItem(document.getElementById("modelselect"));
-    createspecialrequestItem(document.getElementById("specialrequest"));
-    createfixEquipItem(document.getElementById("fixEquip"));
-    if (patient.Progress>= 3) {
-        var info = getfixInfomation(treatmentID);
-        document.getElementById("modelselect").value = info.materialName;
-        document.getElementById("modelselect").disabled = "true";
-        document.getElementById("specialrequest").value = info.require;
-        document.getElementById("specialrequest").disabled = "true";
-        document.getElementById("fixEquip").value = info.fixedequipname;
-        document.getElementById("fixEquip").disabled = "true";
-        document.getElementById("bodyPost").value = info.BodyPosition;
-        document.getElementById("bodyPost").disabled="true"; 
+    }
+    if (patient.Progress >= 4) {
+        
+        var info = getLocationInfomation(treatmentID);
+        document.getElementById("scanmethod").value = info.scanmethod;
+        document.getElementById("scanmethod").disabled = "true";
+        document.getElementById("scanpart").value = info.scanpartname;
+        document.getElementById("scanpart").disabled = "true";
+        document.getElementById("up").value = info.UpperBound;
+        document.getElementById("up").disabled = "true";
+        document.getElementById("down").value = info.LowerBound;
+        document.getElementById("down").disabled = "true";
+        document.getElementById("special").value = info.locationrequire;
+        document.getElementById("special").disabled = "true";
+        document.getElementById("remark").value = info.Remarks;
+        document.getElementById("remark").disabled = "true";
+        var add = document.getElementsByName("add");
+        document.getElementById("yes").disabled = "disabled";
+        document.getElementById("No").disabled = "disabled";
+        if (info.Enhance == "1") {
+            add[0].checked = "true";
+            document.getElementById("addmethod").value = info.enhancemethod;
+            document.getElementById("addmethod").disabled = "disabled";
+        } else {
+            add[1].checked = "true";
+            document.getElementById("addmethod").value = "allItem";
+            document.getElementById("addmethod").disabled = "true";
+        }
         document.getElementById("appointtime").value = info.equipname + " " + info.Date + " " + toTime(info.Begin) + "-" + toTime(info.End);
         document.getElementById("chooseappoint").disabled = "disabled";
         document.getElementById("applyuser").innerHTML = info.username;
@@ -46,9 +73,9 @@ function Init(evt) {
     } else {
         createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
         var date = new Date();
-        document.getElementById("time").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         document.getElementById("applyuser").innerHTML = userName;
+        document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+        document.getElementById("time").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         document.getElementById("chooseappoint").addEventListener("click", function () {
             CreateNewAppiontTable(event);
         }, false);
@@ -56,11 +83,11 @@ function Init(evt) {
             CreateNewAppiontTable(event);
         }, false);//根据条件创建预约表
         document.getElementById("sure").addEventListener("click", checkAllTable, false);
-      
+
     }
 }
 //设备下拉菜单
-function createfixEquipmachine(thiselement,item) {
+function createfixEquipmachine(thiselement, item) {
     var machineItem = JSON.parse(getmachineItem(item)).Item;
     thiselement.options.length = 0;
     for (var i = 0; i < machineItem.length; i++) {
@@ -72,54 +99,75 @@ function createfixEquipmachine(thiselement,item) {
 }
 function getmachineItem(item) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getfixmachine.ashx?item="+item;
+    var url = "getfixmachine.ashx?item=" + item;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var Items = xmlHttp.responseText;
     return Items;
 }
 //调取数据库申请信息
-function getfixInfomation(treatmentID) {
+function getLocationInfomation(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "Getfinishedfix.ashx?treatmentID=" + treatmentID;
+    var url = "Getfinishedlocation.ashx?treatmentID=" + treatmentID;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var obj1 = eval("(" + json + ")");
     return obj1.info[0];
 }
-function postfix() {
+function postlocation() {
     var treatmentid = document.getElementById("treatID").value;
-    var model = document.getElementById("modelselect").value;
-    var special=document.getElementById("specialrequest").value;
-    var time=document.getElementById("time").value;
-    var bodypost= document.getElementById("bodyPost").value;
-    var fixequip = document.getElementById("fixEquip").value;
+    var scanpart = document.getElementById("scanpart").value;
+    var scanmethod = document.getElementById("scanmethod").value;
+    var special = document.getElementById("special").value;
+    var addgroup = document.getElementsByName("add");
+    var add;
+    if (addgroup[0].checked = "true") {
+        add = addgroup[0].value;
+    } else {
+        add = addgroup[1].value;
+    }
+    var up = document.getElementById("up").value;
+    var down = document.getElementById("down").value;
+    var addmethod = document.getElementById("addmethod").value;
     var appointid = document.getElementById("idforappoint").value;
-    if (document.getElementById("modelselect").value == "allItem") {
-        window.alert("模具没有选择");
+    var remark = document.getElementById("remark").value;
+    if (document.getElementById("scanpart").value == "allItem") {
+        window.alert("请选择扫描部位");
         return;
     }
-    if (document.getElementById("specialrequest").value == "allItem") {
-        window.alert("特殊要求没有选择");
+    if (document.getElementById("scanmethod").value == "allItem") {
+        window.alert("请选择扫描方式");
         return;
     }
-    if (document.getElementById("bodyPost").value == "allItem") {
-        window.alert("体位没有选择");
+    if (document.getElementById("up").value == "") {
+        window.alert("请填写上界");
         return;
     }
-    if (document.getElementById("fixEquip").value == "allItem") {
-        window.alert("固定装置没有选择");
+    if (document.getElementById("down").value == "") {
+        window.alert("请填写下界");
         return;
     }
-    if (document.getElementById("idforappoint").value == "allItem") {
-        window.alert("设备没有预约");
+    if (add== "1") {
+        if (document.getElementById("addmethod").value == "allItem") {
+            window.alert("请选择增强方式");
+            return;
+        }
+    }
+    if (special == "allItem") {
+        window.alert("请选择特殊要求");
+        return;
+    }
+    if (document.getElementById("idforappoint").value == "0") {
+        window.alert("请预约时间与设备");
         return;
     }
     var xmlHttp = new XMLHttpRequest();
-    var url = "fixedApplyRecord.ashx?id=" + appointid + "&treatid=" + treatmentid + "&model=" + model + "&fixreq=" + special + "&user=" + userID + "&fixequip=" + fixequip + "&bodypost=" + bodypost;
+    var url = "LocationApplyRecord.ashx?id=" + appointid + "&treatid=" + treatmentid + "&scanpart=" + scanpart + "&scanmethod=" + scanmethod + "&user=" + userID + "&add=" + add + "&addmethod=" + addmethod + "&up=" + up + "&down=" + down + "&remark=" + remark + "&requirement=" + special;
+ 
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
+    
     var result = xmlHttp.responseText;
     if (result == "success") {
         window.alert("申请成功");
@@ -146,16 +194,27 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
     tbody.appendChild(bodyRow1);
     table.appendChild(tbody);
     var cols = 0;//该行有几列了
+    var treatid = window.location.search.split("=")[1];
+    var fixtime = getfixtime(treatid);
+    var fixtime = JSON.parse(fixtime).fixtime;
+    var begintime = toTime(fixtime[0].Begin);
+    var endtime = toTime(fixtime[0].End);
+    var fixtimebiaozhun = fixtime[0].Date.split(" ")[0] + " " + begintime + "-" + endtime;
     for (var i = 0; i < equiment.length; i++) {
         var beg = equiment[i].Begin;
         var end = equiment[i].End;
         var state = equiment[i].State;
         var id = equiment[i].ID;
-        if (state == 0) {
+        var datedate = dateString.split("-");
+        var groupstring = "-" + datedate[1] + "-" + datedate[2] + "-" + beg + "-" + end;
+        var group = groupstring.split("-");
+        var flag = compare(fixtimebiaozhun, group);
+        if (state == 0 && flag) {
             var timeText = document.createTextNode(toTime(beg) + " - " + toTime(end));
             var th = document.createElement("TH");
             var check = document.createElement("INPUT");
-            check.setAttribute("type", "checkbox");
+            check.setAttribute("type", "radio");
+            check.setAttribute("name", "app");
             check.setAttribute("id", id + "_" + dateString + "_" + toTime(beg) + "-" + toTime(end) + "_" + equiment[i].Euqipment);
             th.appendChild(check);
             th.appendChild(timeText);
@@ -232,9 +291,9 @@ function CreateNewAppiontTable(evt) {
     CreateCurrentEquipmentTbale(thisObj, date);
 }
 //获取所有待等待体位固定申请疗程号以及所属患者ID与其他信息
-function getfixPatientInfo(treatmentID) {
+function getLocationPatientInfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "patientInfoForFix.ashx?treatmentID="+treatmentID;
+    var url = "patientInfoForFix.ashx?treatmentID=" + treatmentID;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -261,25 +320,19 @@ function checkAllTable() {
     var temp = 1;
     var total = 0;
     var id;
-    var domList = document.getElementsByTagName("input");
-    var checkBoxList = [];
+    var domList = document.getElementsByName("app");
     var len = domList.length;
-    while (len--) {
-        if (domList[len].type == "checkbox") {
-            checkBoxList.push(domList[len]);
-        }
-    }
-    for (temp = 0; temp < checkBoxList.length; temp++) {
-        if (checkBoxList[temp].checked == true) {
-            id = checkBoxList[temp].id;
+    for (temp = 0; temp < domList.length; temp++) {
+        if (domList[temp].checked == true) {
+            id = domList[temp].id;
             total++;
         }
     }
-    if (total >= 2) {
-        window.alert("只能选择一个时间段");
-    }
+
     if (total == 0) {
         window.alert("尚未预约时间");
+        document.getElementById("appointtime").value = "";
+        document.getElementById("idforappoint").value = 0;
     }
     if (total == 1) {
         var appoint = id.split("_");
@@ -287,33 +340,62 @@ function checkAllTable() {
         document.getElementById("appointtime").value = appoint[3] + " " + appoint[1] + " " + appoint[2];
     }
 }
-//第二页的模具选择下拉菜单
-function createmodelselectItem(thiselement) {
-    var modelItem = JSON.parse(getmodelItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-------模具选择-------");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < modelItem.length; i++) {
-        if (modelItem[i] != "") {
-            thiselement.options[i + 1] = new Option(modelItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(modelItem[i].ID);
-        }
-    }
+function getfixtime(treatid) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "GetFixtime.ashx?treatid=" + treatid;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    return json;
 
 }
-function getmodelItem() {
+//扫描部位
+function createscanpartItem(thiselement) {
+    var scanpartItem = JSON.parse(getscanpartItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--扫描部位--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < scanpartItem.length; i++) {
+        if (scanpartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(scanpartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(scanpartItem[i].ID);
+        }
+    }
+}
+function getscanpartItem() {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getmodel.ashx";
+    var url = "getscanpart.ashx";
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     var Items = xmlHttp.responseText;
     return Items;
 }
-//第二页的特殊要求下拉菜单
-function createspecialrequestItem(thiselement) {
+//扫描部位
+function createscanmethodItem(thiselement) {
+    var scanmethodItem = JSON.parse(getscanmethodItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--扫描方式--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < scanmethodItem.length; i++) {
+        if (scanmethodItem[i] != "") {
+            thiselement.options[i + 1] = new Option(scanmethodItem[i].Method);
+            thiselement.options[i + 1].value = parseInt(scanmethodItem[i].ID);
+        }
+    }
+}
+function getscanmethodItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getscanmethod.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+//扫描特殊要求
+function createspecialItem(thiselement) {
     var specialItem = JSON.parse(getspecialItem()).Item;
     thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-------特殊要求-------");
+    thiselement.options[0] = new Option("--特殊要求--");
     thiselement.options[0].value = "allItem";
     for (var i = 0; i < specialItem.length; i++) {
         if (specialItem[i] != "") {
@@ -321,35 +403,74 @@ function createspecialrequestItem(thiselement) {
             thiselement.options[i + 1].value = parseInt(specialItem[i].ID);
         }
     }
-
 }
 function getspecialItem() {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getspecial.ashx";
+    var url = "getscanspecial.ashx";
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     var Items = xmlHttp.responseText;
     return Items;
 }
-//第二页获取固定装置下拉菜单
-function createfixEquipItem(thiselement) {
-    var fixequipItem = JSON.parse(getfixequipItem()).Item;
+//增强方式
+function createaddmethodItem(thiselement) {
+    var addmethodItem = JSON.parse(getaddmethodItem()).Item;
     thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-------固定装置-------");
+    thiselement.options[0] = new Option("--增强方式--");
     thiselement.options[0].value = "allItem";
-    for (var i = 0; i < fixequipItem.length; i++) {
-        if (fixequipItem[i] != "") {
-            thiselement.options[i + 1] = new Option(fixequipItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(fixequipItem[i].ID);
+    for (var i = 0; i < addmethodItem.length; i++) {
+        if (addmethodItem[i] != "") {
+            thiselement.options[i + 1] = new Option(addmethodItem[i].Method);
+            thiselement.options[i + 1].value = parseInt(addmethodItem[i].ID);
         }
     }
-
 }
-function getfixequipItem() {
+function getaddmethodItem() {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getfixequip.ashx";
+    var url = "getaddmethod.ashx";
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     var Items = xmlHttp.responseText;
     return Items;
+}
+function forchange() {
+    var add = document.getElementsByName("add");
+    if (add[0].checked) {
+        var select4 = document.getElementById("addmethod");
+        select4.removeAttribute("disabled");
+        createaddmethodItem(select4);
+    }
+    if (add[1].checked) {
+        document.getElementById("addmethod").disabled = "true";
+
+    }
+}
+//比较体位固定与模拟定位申请时间
+function compare(evt1, evt2) {
+    var year = evt1.split(" ")[0];
+    var hour = evt1.split(" ")[1];
+    var begin = hour.split("-")[0];
+    var minute = begin.split(":")[0];
+    var minute2 = begin.split(":")[1];
+    Min = parseInt(minute) * 60 + parseInt(minute2);
+    var month = year.split("/")[1];
+    var day = year.split("/")[2];
+    if (parseInt(month) > parseInt(evt2[1])) {
+
+        return false;
+    }
+    if (parseInt(month) == parseInt(evt2[1]) && parseInt(day) > parseInt(evt2[2])) {
+        return false;
+    }
+    if (parseInt(month) == parseInt(evt2[1]) && parseInt(day) == parseInt(evt2[2])) {
+        if ((parseInt(evt2[3]) - Min) >= 120) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+    return true;
+
 }
