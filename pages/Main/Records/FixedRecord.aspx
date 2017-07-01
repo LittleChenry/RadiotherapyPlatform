@@ -30,11 +30,14 @@
             <div class="paper-title">
                 体位固定记录
             </div>
-            <form id="saveFixRecord" name="saveFixRecord" method="post" runat="server">
+            <form id="saveFixRecord" name="saveFixRecord" method="post" runat="server" enctype="multipart/form-data">
                 <input type="hidden" name="ispostback" value="true" />
                 <input type="hidden"  id="hidetreatID" name="hidetreatID" />
                 <input type="hidden"  id="userID" name="userID" />
             <div class="paper-content">
+                <div class="content-title">
+                    <span>基本信息：</span>
+                </div>
                 <div class="single-row">
                     <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
                     <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
@@ -52,69 +55,80 @@
                 </div>
             </div>
             <div class="paper-content">
+                 <div class="content-title">
+                    <span>病案信息：</span>
+                </div>
                 <div class="single-row">
                     <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
                     <div class="item col-xs-4">患病部位：<span id="part"  class="underline"></span></div>
                     <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
-                 <div class="single-row">
+            </div>  
+             <div class="paper-content"> 
+                 <div class="content-title">
+                    <span>体位固定申请信息：</span>
+                </div>
+                   <div class="single-row">
                     <div class="item col-xs-4">固定装置：<span id="fixedEquipment" class="underline"></span></div>
                     <div class="item col-xs-4">固定模具：<span id="modelID" class="underline"></span></div> 
                     <div class="item col-xs-4">体位：<span id="body" class="underline"></span></div>  
                 </div>               
-                
-            
-          
                 <div class="single-row">
                     <div class="item col-xs-4">特殊要求：<span id="requireID" class="underline"></span></div>
                     <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
                     <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>   
-                </div>      
-            </div>                
+                </div>     
+              </div>               
             <div class="paper-content">
-                    <div class="single-row">
-                        <div class="item col-xs-5">
+                    <div class="content-title">
+                        <span>记录信息填写：</span>
+                    </div>  
+                  <div class="single-row">
+                        <div class="item col-xs-2">
                             体位详细描述：
-                             <textarea id="BodyPositionDetail" class="form-control" name="BodyPositionDetail" rows="3"></textarea>
                         </div>
+                       <div class="item col-xs-10">
+                             <textarea id="BodyPositionDetail" class="form-item"  style="height:100px" name="BodyPositionDetail" ></textarea>
+                        </div>
+                  </div>
+                    <div class="single-row">
+                        <div class="item col-xs-2">
+                           附件描述：
+                        </div>
+                        <div class="item col-xs-10">
+                            <textarea id="AnnexDescription" style="height:100px" class="form-item" name="AnnexDescription" ></textarea>
+                          </div>
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-5">
-                            附件描述：
-                             <textarea id="AnnexDescription" class="form-control" name="AnnexDescription" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-5">
-                            备注：
-                           <textarea id="Remarks" name="Remarks" class="form-control" rows="2"></textarea>
+                        <div class="item col-xs-2">
+                           备注：
+                         </div> 
+                        <div class="item col-xs-10">
+                           <textarea id="Remarks" style="height:100px"  name="Remarks" class="form-item" ></textarea>
                         </div>                                                                           
                     </div>
                 <div class="single-row">
                     <div class="item col-xs-12">
                         多图片上传：
-                        <div class="imgbox multifile">
+                        <div id="multipic" class="imgbox multifile">
                             <div class="boxes">
                                 <div class="imgnum">
                                     <input type="file" name="f1"  class="multifilepath filepath" />
                                     <span class="closecamera closearea"><i class="fa fa-times"></i></span>
                                     <img src="../../../img/camera.png" class="camera-picture" />
-                                    <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
-                                    <img class="img" />
+                                    <img class="img"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="paper-footer">
-                
-            </div>
-               
             </div> 
+              <div class="paper-footer">
                  <div class="single-row">
                     <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
                     <div class="item col-xs-6">日期：<span id="date" class="underline"></span></div>
-                </div>               
+                </div> 
+               </div>             
             </form>
         </div>
     </section>

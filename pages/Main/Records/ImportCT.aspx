@@ -65,40 +65,59 @@
                     <input type="hidden"  id="treatmentID" name="treatmentID" />
                    <input type="hidden"  id="userID" name="userID" />
                 <div class="content-title">
-                    <span>CT图像信息：</span>
+                    <span>CT图像信息填写：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-6">CT-电子密度转换：
-                           <select id="DensityConversion" name="DensityConversion" class="form-item">                
+                    <div class="item col-xs-2">
+                        CT-电子密度转换：
+                     </div>
+                     <div class="item col-xs-4">
+                         <select id="DensityConversion" name="DensityConversion" class="form-item">                
                            </select>
+                         </div>
+                    <div class="item col-xs-2">
+                        CT序列命名：        
                      </div>
-                    <div class="item col-xs-6">CT序列命名：
-                           <input id="SequenceNaming" name="SequenceNaming" class="form-item"/>                
-                     </div>
+                    <div class="item col-xs-4">
+                         <input id="SequenceNaming" name="SequenceNaming" class="form-item"/>       
+                        </div>
                  </div> 
                   <div class="single-row">
-                     <div class="item col-xs-6">层厚：
+                     <div class="item col-xs-2">
+                         层厚：
+                     </div>
+                       <div class="item col-xs-4">
                            <input id="Thickness" name="Thickness" type="number"  class="form-item"  />
+                      </div>
+
+                    <div class="item col-xs-2">
+                        层数：
                      </div>
-                    <div class="item col-xs-6">层数：
-                            <input id="Number" name="Number" type="number"  class="form-item"  />
-                     </div>
+                      <div class="item col-xs-4"> 
+                          <input id="Number" name="Number" type="number"  class="form-item"  />
+                          </div>
                      
                   </div>
                   <div class="single-row">
-                      <div class="item col-xs-6">参考中心层面：
-                           <input id="ReferenceScale" class="form-item" type="number" name="ReferenceScale"/>
+                      <div class="item col-xs-2">
+                          参考中心层面：
                      </div>
-                      <div class="item col-xs-6">多模态图像：
+                      <div class="item col-xs-4"> 
+                          <input id="ReferenceScale" class="form-item" type="number" name="ReferenceScale"/>
+                       </div>
+                      <div class="item col-xs-2">
+                          多模态图像：
+                      </div>
+                      <div class="item col-xs-4">
                         <span>
                             <select id="MultimodalImage" name="MultimodalImage" class="form-item">
-                                                <option value="allItem" >--选择多模态图像--</option>
-                                                <option value="MRI">MRI</option>
-                                                <option value="PET">PET</option>
-                                                <option value="Other">Other</option>
+                                  <option value="allItem" >--选择多模态图像--</option>
+                                   <option value="MRI">MRI</option>
+                                 <option value="PET">PET</option>
+                                <option value="Other">Other</option>
                             </select>
                         </span>
-                      </div>
+                 </div>
                  </div> 
                  <div class="single-row">
                     <div class="item area-group col-xs-12">

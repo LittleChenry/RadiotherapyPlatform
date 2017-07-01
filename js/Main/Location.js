@@ -1,14 +1,11 @@
 ﻿window.addEventListener("load", Init, false);
-
-
-
 var userName;
 var userID;
 
 function Init(evt) {
 
     getUserID();
-
+    getUserName();
     var treatID = window.location.search.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
 
@@ -59,19 +56,40 @@ function Init(evt) {
             document.getElementById("ReferenceScale").disabled = "true";
             document.getElementById("operator").innerHTML = locationInfo.operate;
             document.getElementById("date").innerHTML = locationInfo.OperateTime;
+            var boxesgroup = document.getElementsByClassName("boxes");
+            boxesgroup[0].style.display = "none";
+            var boxes = document.getElementById("multipic");
+            var pictures = locationInfo.CTPictures.split(",");
+            if (locationInfo.CTPictures == "") {
+                boxes.innerHTML = "无";
+            } else {
+                for (var i = 1; i < pictures.length; i++) {
+                    var div = document.createElement("DIV");
+                    div.className = "boxes";
+                    var div1 = document.createElement("DIV");
+                    div1.className = "imgnum";
+                    var img = document.createElement("IMG");
+                    img.className = "img";
+                    img.src = pictures[i];
+                    img.style.display = "block";
+                    div1.appendChild(img);
+                    div.appendChild(div1);
+                    boxes.appendChild(div);
+                }
+            }
         }
         else {
             document.getElementById("userID").value = userID;
+            document.getElementById("operator").innerHTML = userName;
+            var date = new Date();
+            document.getElementById("date").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
             document.getElementById("hidetreatID").value = treatID;
         }
     }
 }
 function getDignoseInfo(treatID) {
-
     var xmlHttp = new XMLHttpRequest();
-
     var url = "LocationInfo.ashx?treatID=" + treatID;
-
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -117,42 +135,11 @@ function getUserID() {
     xmlHttp.send();
 }
 
-//建立入口病患表
-
-
-
-//请求固定记录
-function askForLocation(LocationID) {
-    var panel = document.getElementById("patientspanelbody");
-    var paneltemp = document.getElementById("singlepatientpanelbody");
-    panel.style.display = "none";
-    paneltemp.style.display = "block";
-    var xmlHttp = new XMLHttpRequest();
-    var url = "LocationInfo.ashx?LocationID=" + LocationID;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.status == 200 && xmlHttp.readyState == 4) {
-            var getString = xmlHttp.responseText;
-            LocationPatientChosen = eval("(" + getString + ")");
-        }
-    }
-    xmlHttp.send();
-    writeLocationInfo(LocationPatientChosen);
-}
-
-
-
 function sex(evt) {
     if (evt == "F")
         return "女";
     else
         return "男";
-}
-
-//回退按钮
-function askForBack() {
-    document.location.reload();
-
 }
 
 

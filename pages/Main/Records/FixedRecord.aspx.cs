@@ -68,7 +68,7 @@ public partial class pages_Main_Records_FixedRecord : System.Web.UI.Page
                 if (files[i].ContentLength > 0)
                 {
                     files[i].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
-                    savepath1 = savepath1 + "," + "../upload/FixRecord/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
+                    savepath1 = savepath1 + "," + "../../../upload/FixRecord/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
 
                 }
             }
@@ -82,9 +82,6 @@ public partial class pages_Main_Records_FixedRecord : System.Web.UI.Page
         string fixedid = "select Fixed_ID from treatment where treatment.ID=@treatid";
         sqlOperation1.AddParameterWithValue("@treatid", treatID);
         int FixedID = int.Parse(sqlOperation1.ExecuteScalar(fixedid));
-
-
-        //string userID = "1";
         string userID = Request.Form["userID"];
         int userid = Convert.ToInt32(userID);
         DateTime datetime = DateTime.Now;
@@ -101,36 +98,11 @@ public partial class pages_Main_Records_FixedRecord : System.Web.UI.Page
         sqlOperation.AddParameterWithValue("@userid", userid);
         sqlOperation.AddParameterWithValue("@picture", savepath1);
         int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-
-
-        //string doctor = "select count(ID) from doctortemplate where User_ID=@userid";
-       // sqlOperation4.AddParameterWithValue("@userid", userid);
-        //int DoctorID = int.Parse(sqlOperation4.ExecuteScalar(doctor));
         string strSqlCommand1 = "UPDATE  appointment  SET State=@state where Treatment_ID=@treatid and Task='体位固定'";
         sqlOperation3.AddParameterWithValue("@state", state);
         sqlOperation3.AddParameterWithValue("@treatid", treatID);
 
         int ss = sqlOperation3.ExecuteNonQuery(strSqlCommand1);
-        /*
-        int success;
-        if (DoctorID == 0)
-        {
-            string maxnumber = "select max(ID) from doctortemplate";
-            string count = sqlOperation1.ExecuteScalar(maxnumber);
-            int Count = Convert.ToInt32(count) + 1;
-            string strSqlCommand2 = "INSERT INTO doctortemplate(ID,User_ID) " +
-                                        "VALUES(@ID,@userID)";
-            sqlOperation1.AddParameterWithValue("@ID", Count);
-            sqlOperation1.AddParameterWithValue("@userID", userid);
-            success = sqlOperation1.ExecuteNonQuery(strSqlCommand2);
-        }
-        string fID = "UPDATE doctortemplate SET Fixed_ID=@fixedID where User_ID=@userid";
-
-        sqlOperation2.AddParameterWithValue("@userid", userid);
-
-        sqlOperation2.AddParameterWithValue("@fixedID", FixedID);
-        int Success = sqlOperation2.ExecuteNonQuery(fID);
-        */
         string fID = "UPDATE treatment SET Progress=@fixedID where ID=@treatid";
 
         sqlOperation2.AddParameterWithValue("@treatid", treatID);

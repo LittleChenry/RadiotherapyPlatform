@@ -11,6 +11,7 @@ function Init(evt) {
     //xubixiao
     //获取入口患者信息界面的div
     getUserID();
+    getUserName();
 
     var treatID = window.location.search.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
@@ -33,7 +34,6 @@ function Init(evt) {
         var fixedInfo = getDignoseInfo(treatID);
         document.getElementById("body").innerHTML = fixedInfo.body;
         document.getElementById("requireID").innerHTML = fixedInfo.requireID;
-        
         document.getElementById("modelID").innerHTML = fixedInfo.modelID;
         document.getElementById("fixedEquipment").innerHTML = fixedInfo.fixedEquipment;
         document.getElementById("ApplicationUser").innerHTML = fixedInfo.ApplicationUser;
@@ -47,19 +47,40 @@ function Init(evt) {
             document.getElementById("Remarks").disabled = "true";
             document.getElementById("operator").innerHTML = fixedInfo.operate;
             document.getElementById("date").innerHTML = fixedInfo.OperateTime;
+            var boxesgroup = document.getElementsByClassName("boxes");
+            boxesgroup[0].style.display = "none";
+            var boxes = document.getElementById("multipic");
+            var pictures = fixedInfo.Pictures.split(",");
+            if (fixedInfo.Pictures == "") {
+                boxes.innerHTML = "无";
+            } else {
+                for (var i = 1; i < pictures.length; i++) {
+                    var div = document.createElement("DIV");
+                    div.className = "boxes";
+                    var div1 = document.createElement("DIV");
+                    div1.className = "imgnum";
+                    var img = document.createElement("IMG");
+                    img.className = "img";
+                    img.src = pictures[i];
+                    img.style.display = "block";
+                    div1.appendChild(img);
+                    div.appendChild(div1);
+                    boxes.appendChild(div);
+                }
+            }
         }
         else {
             document.getElementById("userID").value = userID;
+            document.getElementById("operator").innerHTML = userName;
+            var date = new Date();
+            document.getElementById("date").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
             document.getElementById("hidetreatID").value = treatID;
         }
     }
 }
 function getDignoseInfo(treatID) {
-
     var xmlHttp = new XMLHttpRequest();
-
     var url = "fixInfo.ashx?treatID=" + treatID;
-
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -101,8 +122,7 @@ function getUserID() {
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4) {//正常响应
             if (xmlHttp.status == 200) {//正确接受响应数据
-                userID = xmlHttp.responseText;
-                //alert(userID);                
+                userID = xmlHttp.responseText;          
             }
 
         }
@@ -110,79 +130,22 @@ function getUserID() {
     
     xmlHttp.send();
 }
-
-//建立入口病患表
-
-
-
-
-/*
-//请求固定记录
-function askForFix(FixedID) {
-    var panel = document.getElementById("patientspanelbody");
-    var paneltemp = document.getElementById("singlepatientpanelbody");
-    panel.style.display = "none";
-    paneltemp.style.display = "block";
+function getUserName() {
     var xmlHttp = new XMLHttpRequest();
-    var url = "FixInfo.ashx?FixedID=" + FixedID;
+    var url = "GetUserName.ashx";
     xmlHttp.open("GET", url, false);
     xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.status == 200 && xmlHttp.readyState == 4) {
-            var getString = xmlHttp.responseText;
-            FixPatientChosen = eval("(" + getString + ")");
+        if (xmlHttp.readyState == 4) {//正常响应
+            if (xmlHttp.status == 200) {//正确接受响应数据
+                userName = xmlHttp.responseText;
+            }
         }
     }
     xmlHttp.send();
-    
-    writeFixInfo(FixPatientChosen);
-    askFor();
 }
-function askFor() {   
-    var xmlHttp = new XMLHttpRequest();
-    var url = "template.ashx?userID="+userID;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.status == 200 && xmlHttp.readyState == 4) {
-            var getString = xmlHttp.responseText;
-            FixTemplateChosen = eval("(" + getString + ")");
-        }
-    }
-    
-    xmlHttp.send();   
-    writetemplateInfo(FixTemplateChosen);
-}
-function writetemplateInfo(FixTemplateChosen) {
-    
-    document.getElementById("BodyPositionDetail").value = FixTemplateChosen.templateInfo[0].BodyPositionDetail;
-    document.getElementById("AnnexDescription").value = FixTemplateChosen.templateInfo[0].AnnexDescription;
-    document.getElementById("Remarks").value = FixTemplateChosen.templateInfo[0].Remarks;
-}
-function writeFixInfo(FixPatientChosen) {
-    
-    document.getElementById("hidetreatID").value = FixPatientChosen.fixedInfo[0].treatID;
-    document.getElementById("Name").innerHTML = FixPatientChosen.fixedInfo[0].Name;
-    document.getElementById("Gender").innerHTML = sex(FixPatientChosen.fixedInfo[0].Gender);
-    document.getElementById("Age").innerHTML = FixPatientChosen.fixedInfo[0].Age;
-    document.getElementById("Address").innerHTML = FixPatientChosen.fixedInfo[0].Address;
-    var Contact = "";
-    if (FixPatientChosen.fixedInfo[0].Contact1 != "" && FixPatientChosen.fixedInfo[0].Contact2 != "") {
-        Contact = FixPatientChosen.fixedInfo[0].Contact1 + "、" + FixPatientChosen.fixedInfo[0].Contact2;
-    } else {
-        Contact = FixPatientChosen.fixedInfo[0].Contact1 + FixPatientChosen.fixedInfo[0].Contact2;
-    }
-    document.getElementById("Contact").innerHTML = Contact;
-    document.getElementById("treatID").innerHTML = FixPatientChosen.fixedInfo[0].treatID;
-    document.getElementById("modelID").innerHTML = FixPatientChosen.fixedInfo[0].modelID;
-    document.getElementById("requireID").innerHTML = FixPatientChosen.fixedInfo[0].requireID;
-    document.getElementById("diagnosisresult").innerHTML = FixPatientChosen.fixedInfo[0].diagnosisresult;
-    document.getElementById("doctor").innerHTML = FixPatientChosen.fixedInfo[0].doctor;
-    document.getElementById("body").innerHTML = FixPatientChosen.fixedInfo[0].body;
-    document.getElementById("fixedEquipment").innerHTML = FixPatientChosen.fixedInfo[0].fixedEquipment;
-    document.getElementById("ApplicationUser").innerHTML = FixPatientChosen.fixedInfo[0].ApplicationUser;
-    document.getElementById("ApplicationTime").innerHTML = FixPatientChosen.fixedInfo[0].ApplicationTime;
-    document.getElementById("userID").value = userID;
-}
-*/
+
+//建立入口病患表
+
 function sex(evt) {
     if (evt == "F")
         return "女";
@@ -190,11 +153,6 @@ function sex(evt) {
         return "男";
 }
 
-//回退按钮
-function askForBack() {
-    document.location.reload();
-
-}
 
 
 function dateformat(format) {

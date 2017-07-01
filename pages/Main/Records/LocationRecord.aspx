@@ -31,11 +31,14 @@
             <div class="paper-title">
                 模拟定位记录
             </div>
-            <form id="frmlocation" name="frmlocation" method="post" runat="server">
+            <form id="frmlocation" name="frmlocation" method="post" runat="server" enctype="multipart/form-data">
                 <input type="hidden" name="ispostback" value="true" />
                 <input type="hidden"  id="hidetreatID" name="hidetreatID" />
                 <input type="hidden"  id="userID" name="userID" />
             <div class="paper-content">
+                <div class="content-title">
+                    <span>基本信息：</span>
+                </div>
                 <div class="single-row">
                     <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
                     <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
@@ -53,85 +56,99 @@
                 </div>
             </div>
             <div class="paper-content">
+                <div class="content-title">
+                    <span>病案信息：</span>
+                </div>
                 <div class="single-row">
                     <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
                     <div class="item col-xs-4">患病部位：<span id="part"  class="underline"></span></div>
                     <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
-                 <div class="single-row">
-                    <div class="item col-xs-4">固定装置：<span id="fixedEquipment" class="underline"></span></div>
-                    <div class="item col-xs-4">固定模具：<span id="modelID" class="underline"></span></div>   
+            </div>
+            <div class="paper-content">
+                <div class="content-title">
+                    <span>申请信息：</span>
                 </div>
-                 <div class="single-row">
-                    <div class="item col-xs-4">体位：<span id="body" class="underline"></span></div>
+                <div class="single-row">
+                    <div class="item col-xs-4">固定装置：<span id="fixedEquipment" class="underline"></span></div>
+                    <div class="item col-xs-4">固定模具：<span id="modelID" class="underline"></span></div>
+                    <div class="item col-xs-4">体位：<span id="body" class="underline"></span></div>   
                 </div>
                  <div class="single-row">
                     <div class="item col-xs-4">附件：<span id="AnnexDescription" class="underline"></span></div>
-                </div>
-            </div>
-            <div class="paper-content">
-                <div class="single-row">
-                    <div class="item col-xs-4">扫描部位：<span id="ScanPart" class="underline"></span></div>
+                     <div class="item col-xs-4">扫描部位：<span id="ScanPart" class="underline"></span></div>
                     <div class="item col-xs-4">扫描方式：<span id="ScanMethod"  class="underline"></span></div>
-                    <div class="item col-xs-4">特殊要求：<span id="requireID" class="underline"></span></div>
                 </div>
                  <div class="single-row">
-                    <div class="item col-xs-4">上界：<span id="UpperBound" class="underline"></span></div>
+                     <div class="item col-xs-4">特殊要求：<span id="requireID" class="underline"></span></div>
+                     <div class="item col-xs-4">上界：<span id="UpperBound" class="underline"></span></div>
                     <div class="item col-xs-4">下界：<span id="LowerBound" class="underline"></span></div>
-                    <div class="item col-xs-4">增强：<span id="Enhance" class="underline"></span></div>   
                 </div>
                 <div class="single-row">
+                    <div class="item col-xs-4">增强：<span id="Enhance" class="underline"></span></div>  
                     <div class="item col-xs-4">备注：<span id="Remarks" class="underline"></span></div>
                     <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
-                    <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>   
+                </div>
+                 <div class="single-row">
+                     <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>   
                 </div>
             </div>
             <div class="paper-content">
+                <div class="content-title">
+                    <span>定位记录部分：</span>
+                </div>
                     <div class="single-row">
-                        <div class="item col-xs-5">
+                        <div class="item col-xs-2">
                             层厚：
+                        </div>
+                        <div class="item col-xs-4">
                             <input id="Thickness" class="form-item" type="number" name="Thickness"/>
-                        </div>
-                        <div class="item col-xs-5">
+                            </div>
+                        <div class="item col-xs-2">
                             层数：
-                            <input id="Number" class="form-item" type="number" name="Number"/>
+                            
                         </div>
+                        <div class="item col-xs-4">
+                            <input id="Number" class="form-item" type="number" name="Number"/>
+                         </div>
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-5">
-                            参考中心层面：
-                           <input id="ReferenceNumber" class="form-item" type="number" name="ReferenceNumber"/>
-                        </div>                                     
-                        <div class="item col-xs-5">
+                        <div class="item col-xs-2">
+                            参考中心层面：       
+                        </div>     
+                        <div class="item col-xs-4"> 
+                            <input id="ReferenceNumber" class="form-item" type="number" name="ReferenceNumber"/>  
+                        </div>                              
+                        <div class="item col-xs-2">
                             体表参考刻度：
-                            <input id="ReferenceScale" class="form-item" type="number" name="ReferenceScale"/>
-                        </div>                       
+                        </div>  
+                         <div class="item col-xs-4"> 
+                             <input id="ReferenceScale" class="form-item" type="number" name="ReferenceScale"/> 
+                          </div>                     
                     </div>
                 <div class="single-row">
                     <div class="item col-xs-12">
                         多图片上传：
-                        <div class="imgbox multifile">
+                        <div id="multipic" class="imgbox multifile">
                             <div class="boxes">
                                 <div class="imgnum">
                                     <input type="file" name="avatar" class="multifilepath filepath" />
                                     <span class="closecamera closearea"><i class="fa fa-times"></i></span>
                                     <img src="../../../img/camera.png" class="camera-picture" />
-                                    <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
                                     <img class="img" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>  
                 <div class="paper-footer">
-                
-            </div>
-               
-            </div> 
-                 <div class="single-row">
+                  <div class="single-row">
                     <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
                     <div class="item col-xs-6">日期：<span id="date" class="underline"></span></div>
-                </div>               
+                </div>   
+                </div>
+                         
             </form>
         </div>
     </section>
