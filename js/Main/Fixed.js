@@ -1,14 +1,10 @@
 ﻿window.addEventListener("load", Init, false);
 
 
-var pageCurrent;
-var patientGroup;
-var lastPageNumber;
+
 var userName;
 var userID;
-var Patientforfix;
-var FixPatientChosen;
-var obj = [];
+
 
 function Init(evt) {
 
@@ -30,6 +26,8 @@ function Init(evt) {
     document.getElementById("contact").innerHTML = patient.Contact1;
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
+    document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
+    document.getElementById("part").innerHTML = patient.partname;
     
     if (patient.Progress >= 3) {
         var fixedInfo = getDignoseInfo(treatID);
@@ -47,6 +45,8 @@ function Init(evt) {
             document.getElementById("AnnexDescription").disabled = "true";
             document.getElementById("Remarks").value = fixedInfo.Remarks;
             document.getElementById("Remarks").disabled = "true";
+            document.getElementById("operator").innerHTML = fixedInfo.operate;
+            document.getElementById("date").innerHTML = fixedInfo.OperateTime;
         }
         else {
             document.getElementById("userID").value = userID;
