@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RootMain.aspx.cs" Inherits="pages_Root_RootMain" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Root-parameterSetting.aspx.cs" Inherits="pages_Root_Root_parameterSetting" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
-    <meta charset="utf-8" />
+<head runat="server">
+ <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!--Tell the brower to be responsive to screen width -->
     <meta content="Width=device-width, initial-scale=1, maxmum-scale=1, user-scalable=no" name="viewport" />
@@ -18,10 +18,11 @@
     <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css" />
     <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce -->
     <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css" />
+    <title>基本信息管理</title>
 
-    <!-- Main Css -->
-    <link rel="stylesheet" href="../../css/Root/rootMain.css" />
-    <title>放疗同质化平台</title>
+    <!-- Main CSS -->
+    <link href="../../css/Main/main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/Root/equipmentMain.css" />
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -240,7 +241,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
+              <span class="hidden-xs"><%=((UserInformation)Session["loginUser"]).GetUserName() %></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -248,21 +249,39 @@
                 <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  <span class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
-                  <small id="role">管理员</small>
+                  Alexander Pierce - Web Developer
+                  <small>Member since Nov. 2012</small>
                 </p>
               </li>
               <!-- Menu Body -->
+              <li class="user-body">
+                <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Sales</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Friends</a>
+                  </div>
+                </div>
+                <!-- /.row -->
+              </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="../Login/changeRole.aspx" class="btn btn-default btn-flat">切换角色</a>
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a id="signOut" href="#" class="btn btn-default btn-flat">注销</a>
+                  <a id="signOut" href="#" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
           </li>
         </ul>
       </div>
@@ -278,7 +297,7 @@
           <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-           <p id="user-name"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName()%></p>
+           <p id="user-name"><%=((UserInformation)Session["loginUser"]).GetUserName() %></p>
           <a href="#" id="user-role">管理员</a>
         </div>
       </div>
@@ -296,7 +315,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul id="menu" class="sidebar-menu">
         <li class="header">管理员导航</li>
-        <li class="active">
+        <li>
           <a href="RootMain.aspx" target="iframepage">
             <i class="fa fa-coffee fa-fw"></i> <span>主页</span>
             <span class="pull-right-container">
@@ -352,8 +371,8 @@
           <ul class="treeview-menu">
             <li><a href="Root-equipment.aspx"><i class="fa fa-circle-o"></i> 设备管理</a></li>
             <li><a href="Root-EquipmentInspectionManage.aspx"><i class="fa fa-circle-o"></i> 设备检查管理</a></li>
-            <li><a href="Root_EquipmentInspection.aspx"><i class="fa fa-circle-o"></i> 设备检查</a></li>
-            <li><a href="Root-EquipmentInspectionResult.aspx"><i class="fa fa-circle-o"></i> 设备检查结果</a></li>
+            <li><a href="InspectionResult.aspx"><i class="fa fa-circle-o"></i> 设备检查</a></li>
+            <li><a href="Root-EquipmentInspection.aspx"><i class="fa fa-circle-o"></i> 设备检查结果</a></li>
           </ul>
         </li>
 
@@ -371,7 +390,7 @@
             </span>
           </a>
         </li>
-        <li>
+        <li class="active">
             <a href="Root-parameterSetting.aspx">
                 <i class="fa fa-group"></i> <span>基本信息管理</span>
                 <span class="pull-right-container">
@@ -388,144 +407,145 @@
 
 
     <!-- Main content -->
-      <section class="content">
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="page-header">基本信息管理</h1>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
-                <h1 class="page-header">欢迎使用本系统</h1>
+                <div class="col-md-3">&nbsp;</div>
+                <div class="col-md-4">
+                    <div class="form-group input-group">
+                        <select id="tableSelect" class="form-control">
+                            <option value="part">患病部位</option>
+                            <option value="DiagnosisResult">诊断结果</option>
+                            <option value="FixedEquipment">固定装置</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" style="height:34px" type="button" id="sureTable">
+                                确定
+                            </button>
+                        </span>
+                    </div>
+                </div>
             </div>
-            <!-- /.col-md-12 -->
+            <div class="col-md-12">
+                <div class="panel panel-default mintablewidth">
+                    <div class="panel-heading mintablewidth">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        <span class="panel-title">患病部位表</span>
+                         <input type="button" class="btn btn-primary btn-sm buttonToLeft floatRight" id="newGroup" data-toggle="modal" data-target="#myModal" value="新增" style="padding: 2.5px 10px;" />
+                        <input type="button" class="btn btn-primary btn-sm floatRight" id="changeGroup" value="编辑" style="padding: 2.5px 10px;" />
+                        <input type="button" class="btn btn-primary btn-sm floatRight" id="closeEdite" value="结束编辑" style="padding: 2.5px 10px;display:none" />
+                        <input type="button" class="tohidden" id="EditGroup" data-toggle="modal" data-target="#editModal" />
+                    </div>
+                    <div id="tableArea" class="panel-body mintablewidth">
+                        <table id="parameterTable" class="table table-striped table-hover" style="width:100%">
+                            <thead id="thead">
+
+                            </thead>
+                            <tbody id="tbody">
+
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-sm-6">&nbsp;</div>
+                            <div class="col-sm-6">
+                                <input id="currentPage" type="hidden" value="1" />
+                                <input id="sumPage" type="hidden" value="0" />
+                                <div id="pageButton" class="toright" style="display: block;">
+                                    <button type="button" id="firstPage" class="btn btn-primary btn-sm disabled">首页</button>
+                                    <button type="button" id="prePage" class="btn btn-primary btn-sm disabled">上一页</button>
+                                    <button type="button" id="nextPage" class="btn btn-primary btn-sm disabled">下一页</button>
+                                    <button type="button" id="lastPage" class="btn btn-primary btn-sm disabled">末页</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
+                                        <h4 class="modal-title" id="myModalLabel">新增分组</h4>
+                        
+                                    </div>
+                                    <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
+                                        <label id="error" class="tohidden"></label>
+                                        <table class="mytable table-bordered table-center">
+                                            <tbody id="addrow">
+                                                <tr>
+                                                    <th>部位编码</th>
+                                                    <td>
+                                                        <input type="text" class="form-control" style="margin-right:0.8em" value="" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>部位名称</th>
+                                                    <td>
+                                                        <input type="text" class="form-control" style="margin-right:0.8em" value="" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>部位编码</th>
+                                                    <td>
+                                                        <input type="text" class="form-control" style="margin-right:0.8em" value="" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button id="cannelButton" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                                        <input id="sureAdd" type="submit" class="btn btn-primary" value="确认" />
+                                    </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                     </div>
+
+         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
+                        <h4 class="modal-title">修改分组</h4>                     
+                    </div>
+                        <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
+                            <input id="editID" type="hidden" value="" />
+                            <table class="mytable table-bordered table-center">
+                                <tbody id="editArea">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cannelEdit" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                            <input id="sureEdit" type="submit" class="btn btn-primary" value="确认" />
+                        </div>
+                </div>
+                                    <!-- /.modal-content -->
+            </div>
+                                <!-- /.modal-dialog -->
         </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <span class="module-title">消息模块</span>
-                    </div>
-                    <div class="panel-body">
-                        <p><a href="#">消息标题1</a></p>
-                        <p><a href="#">消息标题2</a></p>
-                        <p><a href="#">消息标题3</a></p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
                     </div>
                 </div>
             </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <span class="module-title">账号申请</span>
-                    </div>
-                    <div class="panel-body">
-                        <p>姓名1</p>
-                        <p>姓名2</p>
-                        <p>姓名3</p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <span class="module-title">设备状态</span>
-                    </div>
-                    <div class="panel-body">
-                        <p>设备1状态</p>
-                        <p>设备2状态</p>
-                        <p>设备3状态</p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
+            <!-- body col-md-12-->
         </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <span class="module-title">科室工作</span>
-                    </div>
-                    <div class="panel-body">
-                        <p>登记处</p>
-                        <p>医师</p>
-                        <p>模拟技师</p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <span class="module-title">违规操作</span>
-                    </div>
-                    <div class="panel-body">
-                        <p>违规操作1</p>
-                        <p>违规操作2</p>
-                        <p>违规操作3</p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <span class="module-title">操作指南</span>
-                    </div>
-                    <div class="panel-body">
-                        <p><a href="#">操作1</a></p>
-                        <p><a href="#">操作2</a></p>
-                        <p><a href="#">操作3</a></p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-        </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        <span class="module-title">友情链接</span>
-                    </div>
-                    <div class="panel-body">
-                        <p><a href="#">链接1</a></p>
-                        <p><a href="#">链接2</a></p>
-                        <p><a href="#">链接3</a></p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-        </div>
-        <!-- /.row -->
-          </section>
-    </div>
+    </section>
+  </div>
 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 2.0
+      <b>Version</b> 2.3.12
     </div>
-    <strong>Copyright &copy; 2017-2017 <a href="http://www.jsph.org.cn/"> 江苏省人民医院</a> .</strong> 保留所有权利
+    <strong>Copyright © 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+    reserved.
   </footer>
 
   <!-- Control Sidebar -->
@@ -569,6 +589,7 @@
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- Main js-->
 <script src="../../js/Root/RootMainJS.js"></script>
-
+<!-- Main JavaScript -->
+<script src="../../js/Root/parameterSettingJS.js"></script>
 </body>
 </html>
