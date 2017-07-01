@@ -422,6 +422,18 @@
                             <option value="part">患病部位</option>
                             <option value="DiagnosisResult">诊断结果</option>
                             <option value="FixedEquipment">固定装置</option>
+                            <option value="FixedRequirements">固定要求</option>
+                            <option value="ScanPart">扫描部位</option>
+                            <option value="ScanMethod">扫描方式</option>
+                            <option value="EnhanceMethod">增强方式</option>
+                            <option value="LocationRequirements">模拟定位特殊要求</option>
+                            <option value="DensityConversion">CT-电子密度转换</option>
+                            <option value="EndangeredOrgan">危及器官</option>
+                            <option value="Technology">治疗技术</option>
+                            <option value="PlanSystem">计划系统</option>
+                            <option value="Grid">计算网格</option>
+                            <option value="Algorithm">优化算法</option>
+                            <option value="ReplacementRequirements">复位要求</option>
                         </select>
                         <span class="input-group-btn">
                             <button class="btn btn-default" style="height:34px" type="button" id="sureTable">

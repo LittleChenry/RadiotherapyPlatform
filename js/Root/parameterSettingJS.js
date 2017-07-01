@@ -59,6 +59,42 @@ function selectCreate(type,page) {
         case "FixedEquipment":
             createFixedEquipment(page);
             break;
+        case "FixedRequirements":
+            createFixedRequirements(page);
+            break;
+        case "ScanPart":
+            createScanPart(page);
+            break;
+        case "ScanMethod":
+            createScanMethod(page);
+            break;
+        case "EnhanceMethod":
+            createEnhanceMethod(page);
+            break;
+        case "LocationRequirements":
+            createLocationRequirements(page);
+            break;
+        case "DensityConversion":
+            createDensityConversion(page);
+            break;
+        case "EndangeredOrgan":
+            createEndangeredOrgan(page);
+            break;
+        case "Technology":
+            createTechnology(page);
+            break;
+        case "PlanSystem":
+            createPlanSystem(page);
+            break;
+        case "Grid":
+            createGrid(page);
+            break;
+        case "Algorithm":
+            createAlgorithm(page);
+            break;
+        case "ReplacementRequirements":
+            createReplacementRequirements(page);
+            break;
         default:
             break;
     }
@@ -88,6 +124,42 @@ function createPage(page) {
             break;
         case "FixedEquipment":
             createFixedEquipmentTable(page);
+            break;
+        case "FixedRequirements":
+            createFixedRequirementsTable(page);
+            break;
+        case "ScanPart":
+            createScanPartTable(page);
+            break;
+        case "ScanMethod":
+            createScanMethodTable(page);
+            break;
+        case "EnhanceMethod":
+            createEnhanceMethodTable(page);
+            break;
+        case "LocationRequirements":
+            createLocationRequirementsTable(page);
+            break;
+        case "DensityConversion":
+            createDensityConversionTable(page);
+            break;
+        case "EndangeredOrgan":
+            createEndangeredOrganTable(page);
+            break;
+        case "Technology":
+            createTechnologyTable(page);
+            break;
+        case "PlanSystem":
+            createPlanSystemTable(page);
+            break;
+        case "Grid":
+            createGridTable(page);
+            break;
+        case "Algorithm":
+            createAlgorithmTable(page);
+            break;
+        case "ReplacementRequirements":
+            createReplacementRequirementsTable(page);
             break;
         default:
             break;
@@ -517,6 +589,655 @@ function createFixedEquipmentTable(page) {
 
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
         tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ * FixedEquipment  ->1
+ */
+function createFixedRequirements(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>固定要求</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddFixedRequirements();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "FixedRequirements" },
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createFixedRequirementsTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+//2
+function initAddFixedRequirements() {
+    $("#addrow").empty()
+                .append("<tr><th>固定要求</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createFixedRequirementsTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Requirements + "<input type=hidden value=" + jsonObj[i].id
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ * FixedEquipment  ->1
+ */
+function createScanPart(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>部位名称</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddScanPart();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "ScanPart" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createScanPartTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+//2
+function initAddScanPart() {
+    $("#addrow").empty()
+                .append("<tr><th>部位名称</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createScanPartTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ * FixedEquipment  ->1
+ */
+function createScanMethod(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>扫描方式</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddScanMethod();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "ScanMethod" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createScanMethodTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+//2
+function initAddScanMethod() {
+    $("#addrow").empty()
+                .append("<tr><th>扫描方式</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createScanMethodTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Method + "<input type=hidden value=" + jsonObj[i].id
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ * FixedEquipment  ->1
+ */
+function createEnhanceMethod(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>增强方式</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddEnhanceMethod();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "EnhanceMethod" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createEnhanceMethodTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+//2
+function initAddEnhanceMethod() {
+    $("#addrow").empty()
+                .append("<tr><th>增强方式</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createEnhanceMethodTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Method + "<input type=hidden value=" + jsonObj[i].id
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+
+/**
+ * FixedEquipment  ->1
+ */
+function createLocationRequirements(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>模拟定位特殊要求</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddLocationRequirements();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "LocationRequirements" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createLocationRequirementsTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+//2
+function initAddLocationRequirements() {
+    $("#addrow").empty()
+                .append("<tr><th>模拟定位特殊要求</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createLocationRequirementsTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Requirements + "<input type=hidden value=" + jsonObj[i].id
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ * FixedEquipment  ->1
+ */
+function createDensityConversion(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>转换名称</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddDensityConversion();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "DensityConversion" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createDensityConversionTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+//2
+function initAddDensityConversion() {
+    $("#addrow").empty()
+                .append("<tr><th>转换名称</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createDensityConversionTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ * EndangeredOrgan  ->1
+ */
+function createEndangeredOrgan(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>器官名称</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddEndangeredOrgan();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "EndangeredOrgan" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createEndangeredOrganTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+//2
+function initAddEndangeredOrgan() {
+    $("#addrow").empty()
+                .append("<tr><th>器官名称</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createEndangeredOrganTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ * Technology  ->1
+ */
+function createTechnology(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>技术名称</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddTechnology();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "Technology" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createTechnologyTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+//2
+function initAddTechnology() {
+    $("#addrow").empty()
+                .append("<tr><th>技术名称</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createTechnologyTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ * PlanSystem  ->1
+ */
+function createPlanSystem(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>系统名称</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddPlanSystem();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "PlanSystem" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createPlanSystemTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+//2
+function initAddPlanSystem() {
+    $("#addrow").empty()
+                .append("<tr><th>系统名称</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createPlanSystemTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ * Grid  ->1
+ */
+function createGrid(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>网络名称</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddGrid();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "Grid" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createGridTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+//2
+function initAddGrid() {
+    $("#addrow").empty()
+                .append("<tr><th>网络名称</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createGridTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ * Algorithm  ->1
+ */
+function createAlgorithm(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>算法名称</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddAlgorithm();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "Algorithm" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createAlgorithmTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+//2
+function initAddAlgorithm() {
+    $("#addrow").empty()
+                .append("<tr><th>算法名称</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createAlgorithmTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ * ReplacementRequirements  ->1
+ */
+function createReplacementRequirements(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>复位要求</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddReplacementRequirements();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "ReplacementRequirements" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createReplacementRequirementsTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+//2
+function initAddReplacementRequirements() {
+    $("#addrow").empty()
+                .append("<tr><th>复位要求</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createReplacementRequirementsTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Requirements + "<input type=hidden value=" + jsonObj[i].id
            + " />"
            + "</td></tr>";
     }

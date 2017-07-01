@@ -32,6 +32,42 @@ public class addParameter : IHttpHandler {
             case "FixedEquipment":
                 addFixedEquipment(value);
                 break;
+            case "FixedRequirements":
+                addFixedRequirements(value);
+                break;
+            case "ScanPart":
+                addScanPart(value);
+                break;
+            case "ScanMethod":
+                addScanMethod(value);
+                break;
+            case "EnhanceMethod":
+                addEnhanceMethod(value);
+                break;
+            case "LocationRequirements":
+                addLocationRequirements(value);
+                break;
+            case "DensityConversion":
+                addDensityConversion(value);
+                break;
+            case "EndangeredOrgan":
+                addEndangeredOrgan(value);
+                break;
+            case "Technology":
+                addTechnology(value);
+                break;
+            case "PlanSystem":
+                addPlanSystem(value);
+                break;
+            case "Grid":
+                addGrid(value);
+                break;
+            case "Algorithm":
+                addAlgorithm(value);
+                break;
+            case "ReplacementRequirements":
+                addReplacementRequirements(value);
+                break;
             default:
                 break;
         }
@@ -64,6 +100,112 @@ public class addParameter : IHttpHandler {
         string sqlCommand = "INSERT INTO FixedEquipment(Name) VALUES(@name)";
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addFixedRequirements(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO FixedRequirements(Requirements) VALUES(@Requirements)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Requirements", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addScanPart(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO ScanPart(Name) VALUES(@name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+    
+    private void addScanMethod(string value){
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO ScanMethod(Method) VALUES(@method)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@method", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addEnhanceMethod(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO EnhanceMethod(Method) VALUES(@method)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@method", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addLocationRequirements(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO LocationRequirements(Requirements) VALUES(@Requirements)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Requirements", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addDensityConversion(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO DensityConversion(Name) VALUES(@name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addEndangeredOrgan(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO EndangeredOrgan(Name) VALUES(@name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addTechnology(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO Technology(Name) VALUES(@name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+    
+    private void addPlanSystem(string value){
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO PlanSystem(Name) VALUES(@name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addGrid(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO Grid(Name) VALUES(@name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addAlgorithm(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO Algorithm(Name) VALUES(@name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addReplacementRequirements(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO ReplacementRequirements(Requirements) VALUES(@Requirements)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Requirements", values[0]);
         sqlOperation.ExecuteNonQuery(sqlCommand);
     }
 }
