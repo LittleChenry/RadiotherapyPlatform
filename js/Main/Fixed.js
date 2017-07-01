@@ -167,3 +167,23 @@ function dateformat(format) {
     var time = year + "年" + month + "月" + day + "日 " + hour + "：" + minute;
     return time;
 }
+function postimportFIX() {
+    
+    if (document.getElementById("BodyPositionDetail").value == "") {
+        alert("请填写体位详细描述");
+        return;
+    }
+    if (document.getElementById("AnnexDescription").value == "") {
+        alert("请填写附件描述");
+        return;
+    }
+    if (document.getElementById("Remarks").value == "") {
+        alert("请填写备注");
+        return;
+    }
+    if (document.getElementById("Remarks").value == "") {
+        alert("请填写备注");
+        return;
+    }
+    document.getElementById("saveFixRecord").submit();
+}

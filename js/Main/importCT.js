@@ -179,8 +179,4 @@ function postimportCT() {
         return;
     }
     document.getElementById("saveImportCT").submit();
-
-
-
-
 }

@@ -396,10 +396,7 @@
         });
         $("#save").bind("click", function () {
             if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 0) {
-                         $("#record-iframe")[0].contentWindow.CheckEmpty();
-                         if (document.getElementById('record-iframe').contentWindow.document.getElementById('check').value == 1) {
-                             window.frames["record-iframe"].document.forms["frmRegist"].submit();
-                         }
+                    $("#record-iframe")[0].contentWindow.CheckEmpty();                      
                 }
                 if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 1) {
                     $("#record-iframe")[0].contentWindow.checkAll();
@@ -408,13 +405,13 @@
                         $("#record-iframe")[0].contentWindow.postfix();
                }
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 4) {
-                   window.frames["record-iframe"].document.forms["saveFixRecord"].submit();
+                   $("#record-iframe")[0].contentWindow.postimportFIX();
                }
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 3) {
                    $("#record-iframe")[0].contentWindow.postlocation();
                }
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 5) {
-                   window.frames["record-iframe"].document.forms["frmlocation"].submit();
+                   $("#record-iframe")[0].contentWindow.postimportlocation();
                }
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 6) {
                    $("#record-iframe")[0].contentWindow.postimportCT();

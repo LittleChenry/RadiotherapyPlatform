@@ -185,83 +185,83 @@ function CheckInput(evt) {
 }
 //检查是否为空
 function CheckEmpty() {   
-    var check =1;
+   
     if (document.getElementById("userName").value=="") {
         window.alert("姓名不能为空");
-        check=0; 
+        return; 
     }
     if (document.getElementById("IDcardNumber").value=="") {
         window.alert("身份证不能为空");
-        check=0;            
+        return;            
     }
     if (document.getElementById("RecordNumber").value=="") {
         window.alert("病案号不能为空");
-        check=0;           
+        return;           
     }
     if (document.getElementById("userName").value=="") {
         window.alert("姓名不能为空");
-        check=0;   
+        return;   
     }
     if (document.getElementById("Hospital").value=="") {
         window.alert("就诊医院不能为空");
-        check=0;   
+        return;   
                 
     }         
     if (document.getElementById("Birthday").value=="") {
         window.alert("出生日期不能为空");
-        check=0;   
+        return;   
                
     }
     if (document.getElementById("Nation").value=="") {
         window.alert("民族不能为空");
-        check=0;                  
+        return;                  
     }
     if (document.getElementById("Address").value=="") {
         window.alert("地址不能为空");
-        check=0;                
+        return;                
     }
     if (document.getElementById("Number1").value=="") {
         window.alert("电话1不能为空");
-        check=0;                  
+        return;                  
     }
     if (checkPhone()) {
         window.alert("电话1格式不正确");
-        check = 0;
+        return;
     }
     if (isCardNo()) {
         window.alert("身份证格式不正确");
-        check = 0;
+        return;
     }   
     if (checkPhone2()) {
         window.alert("电话2格式不正确");
-        check = 0;
+        return;
     }
     if (document.getElementById("Number2").value=="") {
         window.alert("电话2不能为空");
-        check=0;                  
+        return;                  
     }
     if (document.getElementById("height").value=="") {
         window.alert("身高不能为空");
-        check=0;                  
+        return;                  
     }
     if (document.getElementById("weight").value=="") {
         window.alert("体重不能为空");
-        check=0;                 
+        return;                 
     }
 
     if (document.getElementById("SickPart").value == "allItem") {
         window.alert("请选择患病部位"); 
-        check=0;   
+        return;   
     }
     if (document.getElementById("Sub").value == "allItem") {
         window.alert("请选择分中心负责人"); 
-        check=0;   
+        return;   
     }
     if (document.getElementById("doctor").value == "allItem") {
         window.alert("请选择医生");        
-        check=0;   
+        return;   
     }
-    document.getElementById("check").value = check;
+    document.getElementById("frmRegist").submit();
 }
     
 //根据classname做对应的各项检查

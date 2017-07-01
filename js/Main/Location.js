@@ -155,3 +155,23 @@ function dateformat(format) {
     var time = year + "年" + month + "月" + day + "日 " + hour + "：" + minute;
     return time;
 }
+function postimportlocation() {
+
+    if (document.getElementById("Thickness").value == "") {
+        alert("请填写层厚");
+        return;
+    }
+    if (document.getElementById("Number").value == "") {
+        alert("请填写层数");
+        return;
+    }
+    if (document.getElementById("ReferenceNumber").value == "") {
+        alert("请填写参考中心层面");
+        return;
+    }
+    if (document.getElementById("ReferenceScale").value == "") {
+        alert("请填写体表参考刻度");
+        return;
+    }
+    document.getElementById("frmlocation").submit();
+}
