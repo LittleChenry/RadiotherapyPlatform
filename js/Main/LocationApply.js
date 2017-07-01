@@ -169,7 +169,6 @@ function postlocation() {
     xmlHttp.send();
     
     var result = xmlHttp.responseText;
-    window.alert(result);
     if (result == "success") {
         window.alert("申请成功");
         window.location.Reload();

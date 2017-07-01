@@ -413,6 +413,9 @@
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 5) {
                    window.frames["record-iframe"].document.forms["frmlocation"].submit();
                }
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 6) {
+                   $("#record-iframe")[0].contentWindow.postimportCT();
+               }
         });
     })
 </script>
