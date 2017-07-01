@@ -22,7 +22,7 @@
     folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
 </head>
-<body style="width:auto;min-width:900px;margin:auto;">
+<body style="width:auto;width:900px;margin:auto;">
     <section class="content">
         <div class="paper">
             <div class="paper-title">
