@@ -71,6 +71,7 @@
     box-shadow: none;
     border-color: #d2d6de;
     width: 90%;
+    height: 80px;
     padding: 4px 12px;
     line-height: 1.42857143;
     color: #555;
@@ -79,8 +80,12 @@
     border: 1px solid #ccc;
 }
 
+.form-text {
+	padding-top: 4px;
+} 
+
 .area-group {
-	line-height: 4;
+	line-height: 6;
 }
 
 .group-item {
@@ -103,7 +108,7 @@
 
 .boxes {
     float: left;
-    margin: 8px;
+    margin: 0px 16px 16px 0px;
     position: relative;
     width: 120px;
     height: 140px;

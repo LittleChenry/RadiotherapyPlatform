@@ -65,22 +65,18 @@
                     <span>填写申请信息：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">
-                        模具：
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4" style="padding-left:0px;">模具：</span>
                         <select id="modelselect" name="modelselect" class="form-item"></select>
                     </div>
-                    <div class="item col-xs-4">
-                        固定装置：
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4">固定装置：</span>
                         <select id="fixEquip" name="fixEquip" class="form-item"></select>
-                    </div>
-                    <div class="item col-xs-4">
-                        特殊要求：
-                        <select id="specialrequest" name="specialrequest" class="form-item"></select>
                     </div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">
-                        体位：
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4" style="padding-left:0px;">体位：</span>
                         <select id="bodyPost" name="bodyPost" class="form-item">
                             <option value="allItem">----选择体位-----</option>
                             <option value="仰卧">仰卧</option>
@@ -88,8 +84,14 @@
                             <option value="侧卧">侧卧</option>
                         </select>
                     </div>
-                    <div class="item col-xs-8">
-                        设备与时间：
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4">特殊要求：</span>
+                        <select id="specialrequest" name="specialrequest" class="form-item"></select>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-8">
+                        <span class="form-text col-xs-3" style="padding-left:0px;">设备与时间：</span>
                         <input id="appointtime"  name="appointtime" type="text" class="form-item" readonly="true" />
                         <button id="chooseappoint" class="btn btn-default" data-toggle="modal" data-target="#appoint">预约</button>
                     </div>

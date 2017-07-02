@@ -25,9 +25,9 @@
 <body style="width:auto;min-width:900px;margin:auto;">
    <section class="content">
         <div class="paper">
-             <input type="hidden" id="progress" />
+            <input type="hidden" id="progress" />
             <div class="paper-title">
-                     CT图像导入
+                 CT图像导入
             </div>
             <div class="paper-content">
                 <div class="content-title">
@@ -63,68 +63,51 @@
                 <form id="saveImportCT" method="post" runat="server">
                     <input type="hidden" name="ispostback" value="true" />
                     <input type="hidden"  id="treatmentID" name="treatmentID" />
-                   <input type="hidden"  id="userID" name="userID" />
-                <div class="content-title">
-                    <span>CT图像信息填写：</span>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-2">
-                        CT-电子密度转换：
-                     </div>
-                     <div class="item col-xs-4">
-                         <select id="DensityConversion" name="DensityConversion" class="form-item">                
-                           </select>
-                         </div>
-                    <div class="item col-xs-2">
-                        CT序列命名：        
-                     </div>
-                    <div class="item col-xs-4">
-                         <input id="SequenceNaming" name="SequenceNaming" class="form-item"/>       
+                    <input type="hidden"  id="userID" name="userID" />
+                    <div class="content-title">
+                        <span>CT图像信息填写：</span>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">CT-电子密度转换：</span>
+                            <select id="DensityConversion" name="DensityConversion" class="form-item"></select>
                         </div>
-                 </div> 
-                  <div class="single-row">
-                     <div class="item col-xs-2">
-                         层厚：
-                     </div>
-                       <div class="item col-xs-4">
-                           <input id="Thickness" name="Thickness" type="number"  class="form-item"  />
-                      </div>
-
-                    <div class="item col-xs-2">
-                        层数：
-                     </div>
-                      <div class="item col-xs-4"> 
-                          <input id="Number" name="Number" type="number"  class="form-item"  />
-                          </div>
-                     
-                  </div>
-                  <div class="single-row">
-                      <div class="item col-xs-2">
-                          参考中心层面：
-                     </div>
-                      <div class="item col-xs-4"> 
-                          <input id="ReferenceScale" class="form-item" type="number" name="ReferenceScale"/>
-                       </div>
-                      <div class="item col-xs-2">
-                          多模态图像：
-                      </div>
-                      <div class="item col-xs-4">
-                        <span>
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4">CT序列命名：</span>
+                            <input id="SequenceNaming" name="SequenceNaming" class="form-item"/>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">层厚：</span>
+                            <input id="Thickness" name="Thickness" type="number"  class="form-item" />
+                        </div>
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4">层数：</span>
+                            <input id="Number" name="Number" type="number"  class="form-item" />
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">参考中心层面：</span>
+                            <input id="ReferenceScale" class="form-item" type="number" name="ReferenceScale"/>
+                        </div>
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4">多模态图像：</span>
                             <select id="MultimodalImage" name="MultimodalImage" class="form-item">
-                                  <option value="allItem" >--选择多模态图像--</option>
-                                   <option value="MRI">MRI</option>
-                                 <option value="PET">PET</option>
+                                <option value="allItem" >--选择多模态图像--</option>
+                                <option value="MRI">MRI</option>
+                                <option value="PET">PET</option>
                                 <option value="Other">Other</option>
                             </select>
-                        </span>
-                 </div>
-                 </div> 
-                 <div class="single-row">
-                    <div class="item area-group col-xs-12">
-                        备注：
-                        <textarea id="Remarks" class="form-area" style="height:50px"></textarea>
+                        </div>
+                    </div> 
+                    <div class="single-row">
+                        <div class="item area-group col-xs-12">
+                            备注：
+                            <textarea id="Remarks" class="form-area"></textarea>
+                        </div>
                     </div>
-                </div>
                 </form>
             </div>
             <div class="paper-footer">

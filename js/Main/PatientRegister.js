@@ -62,6 +62,7 @@ function writePatientInfo(PatientInfo) {
     document.getElementById("Hospital").value =  PatientInfo.patientInfo[0].Hospital;
     document.getElementById("Nation").value =  PatientInfo.patientInfo[0].Nation;
     document.getElementById("Birthday").value =  PatientInfo.patientInfo[0].Birthday;
+    document.getElementById("Birthday").placeholder = PatientInfo.patientInfo[0].Birthday;
     document.getElementById("height").value =  PatientInfo.patientInfo[0].Height;
     document.getElementById("weight").value = PatientInfo.patientInfo[0].Weight;
     if (PatientInfo.patientInfo[0].Picture != "") {

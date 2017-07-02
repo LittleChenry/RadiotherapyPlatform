@@ -69,6 +69,7 @@ function Init(evt) {
                     var div1 = document.createElement("DIV");
                     div1.className = "imgnum";
                     var img = document.createElement("IMG");
+                    img.addEventListener("click",showPicture,false);
                     img.className = "img";
                     img.src = pictures[i];
                     img.style.display = "block";
@@ -87,6 +88,12 @@ function Init(evt) {
         }
     }
 }
+
+function showPicture(){
+    $("#showPic").click();
+    $("#pic").attr("src",this.src);
+}
+
 function getDignoseInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "LocationInfo.ashx?treatID=" + treatID;
