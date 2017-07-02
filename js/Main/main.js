@@ -1,12 +1,11 @@
-﻿var currentID = 0;
+var currentID = 0;
 var currentpage = 1;
 
 $(document).ready(function () {
-    //$("body").removeClass("skin-purple").addClass("skin-blue");
     $(".frame-content").height($(document).height() - 151);
-    $("#progress-iframe").width($("#progress-content").width());
     $("#patient-content").height($(document).height() - 151);
     $("#record-iframe").width($("#record-content").width());
+    $("#progress-iframe").width($("#progress-content").width());
     var patient = getPatient();
     $("#patient-search").bind('input propertychange', function() {
         var Searchedpatients = Search($("#patient-search").val(),patient);
@@ -437,7 +436,7 @@ function Paging(patient) {
         }*/
         var ul = $("#page-index-content");
         var ul_content = "<li class='paginate_button previous' id='table_previous'><a href='javascript:;'><i class='fa fa-fw fa-arrow-left'></i></a></li><li class='paginate_button previous disabled' id='table_previous_prevent' style='display:none;'><a href='javascript:;'><i class='fa fa-fw fa-arrow-left'></i></a></li>";
-        var omitted_previous = "<li class='paginate_button previous' id='table_omitted_previous'><a><i>···</i></a></li>";
+        var omitted_previous = "<li class='paginate_button' id='table_omitted_previous'><a><i>···</i></a></li>";
         var omitted_next = "<li class='paginate_button' id='table_omitted_next'><a><i>···</i></a></li>";
         ul_content = ul_content + omitted_previous;
         for (var i = 0; i < pageindex.length; i++) {

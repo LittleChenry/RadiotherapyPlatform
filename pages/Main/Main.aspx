@@ -252,7 +252,7 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <section class="col-xs-4" style="padding:0px;">
+    <section id="main-content" class="col-xs-4" style="padding:0px;">
       <div class="layout-main-tab">
         <nav class="tab-nav">
           <div class="col-xs-4">
