@@ -13,7 +13,7 @@
     <!-- DataTables -->
     <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
     <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datepicker/datepicker3.css"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
     <!-- Ionicons -->
@@ -48,13 +48,13 @@
                                     <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
                                     <img id="background-photo" src="../../../img/avatar.jpg" class="camera-picture" />
                                     <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
-                                    <img id="photo" class="img" />
+                                    <img src="" id="photo" class="img" />
                                 </div>
                             </div>
                         </div>
                         <div class="picture-remark">
                             <p>上传头像</p>
-                            <p style="font-size:10px;">图片大小：120*140像素</p>
+                            <p style="font-size:10px;">120*140像素</p>
                         </div>
                     </div>
                     <div class="single-row">

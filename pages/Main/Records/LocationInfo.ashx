@@ -40,7 +40,6 @@ public class LocationInfo : IHttpHandler
     private string getfixrecordinfo(HttpContext context)
     {
             String locationID = context.Request.QueryString["treatID"];
-            int i = 1;
             int treatID = Convert.ToInt32(locationID);
             string sqlCommand1 = "select CTPictures,location.ApplicationTime as apptime,fixed.*,material.Name as mname,scanpart.Name as partname,scanmethod.*,enhancemethod.Method as enmethod,locationrequirements.*,user.Name as doctor,fixedequipment.Name as fename,location.Operate_User_ID as opid,location.OperateTime as optime,location.* from locationrequirements,scanpart,scanmethod,enhancemethod,location,fixedequipment,user,material,treatment,fixed where enhancemethod.ID=location.EnhanceMethod_ID and scanmethod.ID=location.ScanMethod_ID and scanpart.ID=location.ScanPart_ID and locationrequirements.ID=location.LocationRequirements_ID and location.ID=treatment.Location_ID and fixedequipment.ID=fixed.FixedEquipment_ID and  fixed.Model_ID=material.ID and  treatment.Fixed_ID=fixed.ID and location.Application_User_ID =user.ID and treatment.ID = @treatid";
             sqlOperation1.AddParameterWithValue("@treatid", treatID);

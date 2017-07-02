@@ -156,14 +156,14 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
             td.addEventListener("click", hasChosen, false);
         }
         var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
-        td.append(text);
-        td.append(sign);
-        tr.append(td);
+        td.appendChild(text);
+        td.appendChild(sign);
+        tr.appendChild(td);
         if (count == 4) {
-            tbody.append(tr);
+            tbody.appendChild(tr);
         }
     }
-    table.append(tbody);
+    table.appendChild(tbody);
 }
 
 function chooseItem(){

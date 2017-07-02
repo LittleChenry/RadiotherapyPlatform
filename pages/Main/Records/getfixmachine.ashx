@@ -25,7 +25,30 @@ public class getfixmachine : IHttpHandler {
    public string getFixmachine(HttpContext context)
     {
         string item = context.Request["item"];
-        
+        string taskitem;
+        switch (item)
+        {
+            case "fixed":
+                taskitem = "体位固定";
+                break;
+            
+            case "location":
+                taskitem = "模拟定位";
+                break;
+            default:
+                taskitem = "";
+            
+            
+            
+            
+            
+            
+            
+            
+        }
+       
+            
+            
         string countItem = "SELECT count(*) FROM equipment where TreatmentItem=@item";
         sqlOperation.AddParameterWithValue("@item", item);
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));

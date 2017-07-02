@@ -357,7 +357,7 @@ function checkAllTable() {
     var choseid =  ChoseID();
     var appoint = choseid.split("_");
     document.getElementById("idforappoint").value = appoint[0];
-    document.getElementById("appointtime").value = appoint[3] + " " + appoint[1] + " " + appoint[2];
+    document.getElementById("appointtime").value = appoint[3] + " " + appoint[1].split(" ")[0] + " " + appoint[2];
 }
 
 function getfixtime(treatid) {
