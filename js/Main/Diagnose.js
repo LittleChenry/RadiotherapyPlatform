@@ -1,14 +1,15 @@
 ﻿window.addEventListener("load", createPatient, false)
 
 var userID;
-var treatID
+var treatID;
+var userName;
 //JS入口主函数
 function createPatient(evt) {
     //获取入口患者信息界面的div
 
     //获得当前执行人姓名与ID
     getUserID();
-
+    getUserName();
     treatID = window.location.search.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
     var patient = getPatientInfo(treatID);
@@ -49,10 +50,30 @@ function createPatient(evt) {
             document.getElementById("date").innerHTML = diagnosisInfo.Time;
 
         } else {
+            document.getElementById("date").innerHTML = getNowFormatDate();
+            document.getElementById("operator").innerHTML = userName;
             document.getElementById("diaguserid").value = userID;
+            
 
         }
     
+}
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes();
+           
+    return currentdate;
 }
 function getDignoseInfo(treatID) {
 
@@ -200,7 +221,19 @@ function getUserID() {
 }
 //下面是jquery流程条实现代码
 
-
+function getUserName() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "GetUserName.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4) {//正常响应
+            if (xmlHttp.status == 200) {//正确接受响应数据
+                userName = xmlHttp.responseText;
+            }
+        }
+    }
+    xmlHttp.send();
+}
 function askForBack() {
     document.location.reload();
 
