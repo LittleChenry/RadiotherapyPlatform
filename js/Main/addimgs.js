@@ -23,19 +23,17 @@
         var htmlImg = "<div class='boxes'><div class='imgnum'>"+
         "<input type='file' name='img"+ Date.parse(new Date()) +"' class='multifilepath filepath'/>" +
         "<span class='closecamera closearea'><i class='fa fa-times'></i></span>" +
-        "<img src='../../../img/camera.png' class='camera-picture'><img class='img'/></div></div>";//src='"+ srcs +"' 
+        "<img src='../../../img/camera.png' class='camera-picture'><img class='img'/></div></div>";
         $(this).parent().parent().before(htmlImg);
+        $(this).parent().parent().find(".img").click(function(){
+            $("#showPic").click();
+            $("#pic").attr("src",this.src);
+        })
         $(this).parent().parent().find(".camera-picture").hide();   //this指的是input
         $(this).parent().parent().find('.closecamera').show();
         $(this).parent().parent().prev().find('.multifilepath').on("change", change);
         $(".closearea").on("click", function () {
-            $(this).hide();     //this指的是span
-            $(this).nextAll(".img").hide();
-            $(this).nextAll(".camera-picture").show();
-            if ($('.boxes').length > 1) {
-                $(this).parent().parent().remove();
-            }
-
+            $(this).parent().parent().remove();
         });
     });
 })
@@ -50,17 +48,15 @@ function change() {
         "<span class='closecamera closearea'><i class='fa fa-times'></i></span>" +
         "<img src='../../../img/camera.png' class='camera-picture'><img class='img'/></div></div>";
     $(this).parent().parent().before(htmlImg);
+    $(this).parent().parent().find(".img").click(function(){
+        $("#showPic").click();
+        $("#pic").attr("src",this.src);
+    })
     $(this).parent().parent().find(".camera-picture").hide();   //this指的是input
     $(this).parent().parent().find('.closecamera').show();
     $(this).parent().parent().prev().find('.multifilepath').on("change", change);
     $(".closearea").on("click", function () {
-        $(this).hide();     //this指的是span
-        $(this).nextAll(".img").hide();
-        $(this).nextAll(".camera-picture").show();
-        if ($('.boxes').length > 1) {
-            $(this).parent().parent().remove();
-        }
-
+        $(this).parent().parent().remove();
     });
 };
 
