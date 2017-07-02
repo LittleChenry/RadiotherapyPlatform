@@ -225,7 +225,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 3:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/FixedApply.aspx?TreatmentID=" + e.data.ID  +"&TreatmentItem=体位固定");
+                            $("#record-iframe").attr('src', "Records/FixedApply.aspx?TreatmentID=" + e.data.ID  +"&TreatmentItem=Fixed");
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -235,7 +235,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 4:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/LocationApply.aspx?TreatmentID=" + e.data.ID  +"&TreatmentItem=模拟定位");
+                            $("#record-iframe").attr('src', "Records/LocationApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location");
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -315,7 +315,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 12:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/FirstAccelerator.aspx?TreatmentID=" + e.data.ID  +"&TreatmentItem=加速器");
+                            $("#record-iframe").attr('src', "Records/FirstAccelerator.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Accelerator");
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -335,7 +335,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 14:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/ReplacementApply.aspx?TreatmentID=" + e.data.ID  +"&TreatmentItem=复位模拟");
+                            $("#record-iframe").attr('src', "Records/ReplacementApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Replacement");
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();

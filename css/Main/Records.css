@@ -175,3 +175,16 @@
 .showPicture {
 	width: 100%;
 }
+
+.td-input {
+    border-radius: 0;
+    box-shadow: none;
+    border-color: #d2d6de;
+    padding: 4px 2px;
+    width: 100%;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 0px;
+}

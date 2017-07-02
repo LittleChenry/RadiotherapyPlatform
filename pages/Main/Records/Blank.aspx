@@ -128,6 +128,46 @@
                     </div>
                 </div>
                 <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>靶区</th>
+                                    <th>外放</th>
+                                    <th>PTV</th>
+                                    <th>单次量</th>
+                                    <th>次数</th>
+                                    <th>总剂量</th>
+                                    <th>备注</th>
+                                    <th>优先级</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                    <td><input type="text" class="td-input" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="single-row">
                     <div class="item col-xs-12">
                         单图片上传：
                         <div class="imgbox">

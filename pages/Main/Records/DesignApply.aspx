@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
+    <title>治疗计划申请</title>
     <!-- css -->
     <link rel="stylesheet" href="../../../css/Main/Records.css"/>
     <!-- Bootstrap 3.3.6 -->
@@ -27,7 +27,7 @@
         <div class="paper">
             <input type="hidden" id="progress" />
             <div class="paper-title">
-                 CT图像导入
+                 治疗计划申请
             </div>
             <div class="paper-content">
                 <div class="content-title">

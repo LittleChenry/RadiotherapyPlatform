@@ -24,27 +24,22 @@ public class getfixmachine : IHttpHandler {
     }
    public string getFixmachine(HttpContext context)
     {
-        string item = context.Request["item"];
-        string taskitem;
-        switch (item)
+        string taskitem = context.Request["item"];
+        string item = "";
+        switch (taskitem)
         {
-            case "fixed":
-                taskitem = "体位固定";
+            case "Fixed":
+                item = "体位固定";
                 break;
-            
-            case "location":
-                taskitem = "模拟定位";
+            case "Location":
+                item = "模拟定位";
                 break;
-            default:
-                taskitem = "";
-            
-            
-            
-            
-            
-            
-            
-            
+            case "Accelerator":
+                item = "加速器";
+                break;
+            case "Replacement":
+                item = "复位模拟";
+                break;
         }
        
             
