@@ -99,6 +99,7 @@
     margin-bottom: auto;
     border: 0px;
     border-left: 1px solid #DDDDDD;
+    height: 0px;
 }
 
 #ul-progress > a > li {
