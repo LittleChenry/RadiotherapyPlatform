@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Main.aspx.cs" Inherits="pages_Main_Main" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AddPatient.aspx.cs" Inherits="pages_Main_AddPatient" %>
 
 <!DOCTYPE html>
 <html>
@@ -10,6 +10,7 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- css -->
   <link rel="stylesheet" href="../../css/Main/main.css">
+    <link rel="stylesheet" href="../../css/Main/Records.css">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css">
   <!-- DataTables -->
@@ -198,25 +199,25 @@
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li>
-          <a href="#">
+          <a href="pages/calendar.html">
             <i class="fa fa-calendar"></i>
             <span>科室概况</span>
           </a>
         </li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="Main.aspx">
             <i class="fa fa-dashboard"></i>
             <span>患者汇总</span>
           </a>
         </li>
-        <li class="treeview">
+        <li class="active treeview">
           <a href="AddPatient.aspx">
             <i class="fa fa-files-o"></i>
             <span>患者登记</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="pages/widgets.html">
             <i class="fa fa-th"></i>
             <span>计划</span>
           </a>
@@ -251,108 +252,146 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
+  <!--  style="background-image:url(../../img/hospital.png)" -->
   <div class="content-wrapper">
-    <section id="main-content" class="col-xs-4" style="padding:0px;">
-      <div class="layout-main-tab">
-        <nav class="tab-nav">
-          <div class="col-xs-4">
-            <a href="javascript:;">
-              <i class="fa fa-fw fa-exclamation"></i>
-                加急
-            </a>
-          </div>
-          <div class="col-xs-4">
-            <a href="javascript:;">
-              <i class="fa fa-fw fa-pause"></i>
-                暂停治疗
-            </a>
-          </div>
-          <div class="col-xs-4">
-            <a href="javascript:;">
-              <i class="fa fa-fw fa-times"></i>
-                结束治疗
-            </a>
-          </div>
-        </nav>
-      </div>
-      <div id="patient-content" class="box" style="border-top:0px;">
-        <div class="box-header col-xs-8" style="padding-top: 15px;text-align: center;">
-          <h3 class="box-title">患者汇总</h3>
-        </div>
-        <div class="input-group input-group-sm col-xs-4" style="padding-right: 10px;padding-top: 8px;max-width: 180px;">
-          <input id="patient-search" type="search" class="form-control input-sm">
-          <span class="input-group-btn">
-            <button class="btn btn-primary btn-flat">
-              <i class="fa fa-fw fa-search"></i>
-            </button>
-          </span>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <table class="table table-bordered">
-            <thead>
-            <tr>
-              <th>疗程号</th>
-              <th>姓名</th>
-              <th>诊断</th>
-              <th>状态</th>
-              <th>主治医生</th>
-              <!-- <th>登记日期</th>
-              <th>年龄</th> -->
-            </tr>
-            </thead>
-            <tbody id="patient-table-body">
-            </tbody>
-          </table>
-          <div class="row">
-            <div class="col-sm-3">
-              <div class="dataTables_info" id="patient_info" role="status" aria-live="polite"></div>
+    <section id="addpatient-content" class="content" style="background-color:#fff;width:1000px;">
+        <form id="frmRegist" name="frmRegist" method="post" runat="server">
+            <div class="paper">
+                <div class="paper-title">
+                    患者信息登记
+                </div>
+                <input type="hidden" name="ispostback" value="true" />
+                <input type="hidden" id="progress" name="progress" />
+                <input type="hidden" id="picture1" name="picture1" />
+               
+                <input id="patientID" type="hidden" name="patientID" />
+                <input id="treatID" type="hidden" name="treatID" />
+                <div class="paper-content">
+                    <div class="content-title">
+                        <span>基本信息：</span>
+                    </div>
+                    <div class="head-picture" style="margin-left:800px;top:175px;">
+                        <div class="imgbox">
+                            <div class="boxes">
+                                <div class="imgnum">
+                                    <input type="file" id="FileUpload" name="FileUpload" class="singlefilepath filepath" />
+                                    <!-- <asp:FileUpload id="FileUpload1" name="FileUpload" class="singlefilepath filepath" runat="server" /> -->
+                                    <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
+                                    <img id="background-photo" src="../../img/avatar.jpg" class="camera-picture" />
+                                    <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
+                                    <img src="" id="photo" class="img" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="picture-remark">
+                            <p>上传头像</p>
+                            <p style="font-size:10px;">120*140像素</p>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-4">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">姓名：</span>
+                            <input id="userName" name="userName" class="form-item col-xs-8" type="text"/>
+                        </div>
+                        <div class="item col-xs-6" style="padding-top:5px;">
+                            <span class="col-xs-3">性别：</span>
+                            <span class="col-xs-3" style="padding-left:0px;">
+                                <input type="radio" name="Gender" id="male" value="M" />
+                                男
+                            </span>
+                            <span class="col-xs-3" style="padding-left:0px;">
+                                <input type="radio" name="Gender" id="female" value="F" />
+                                女
+                            </span>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-4">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">民族：</span>
+                            <input id="Nation" name="Nation" class="form-item col-xs-8" type="text"/>
+                        </div>
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-3">身份证号：</span>
+                            <input id="IDcardNumber" name="Nation" class="form-item col-xs-9" type="text"/>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-4">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">出生日期：</span>
+                            <input class="form-item col-xs-8" id="Birthday" name="Birthday"type="text"  placeholder="选择日期" />
+                        </div>
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-3">地址：</span>
+                            <input id="Address" name="Address" class="form-item col-xs-9" type="text"/>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-4">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">联系电话1：</span>
+                            <input id="Number1" name="Number1" class="form-item col-xs-8" type="text"/>
+                        </div>
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-3">联系电话2：</span>
+                            <input id="Number2" name="Number2" class="form-item col-xs-5" type="text"/>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-4">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">身高：</span>
+                            <div class="group-item col-xs-8" style="padding:0px;">
+                                <input type="number" id="height" name="height" class="form-group-input" />
+                                <span class="input-group-addon">cm</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-3">体重：</span>
+                            <div class="group-item col-xs-5" style="padding:0px;">
+                                <input type="number" id="weight" name="weight" class="form-group-input" />
+                                <span class="input-group-addon">kg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="paper-content">
+                    <div class="content-title">
+                        <span>病案信息：</span>
+                    </div>
+                    <div class="single-row">
+                        <div class="item col-xs-4">
+                            病案号：
+                            <input id="RecordNumber" name="RecordNumber" type="text" class="form-item" />
+                        </div>
+                        <div class="item col-xs-4">
+                            患病部位：
+                            <select id="SickPart" name="SickPart" class="form-item"></select>
+                        </div>
+                        <div class="item col-xs-4">
+                            所属医生：
+                            <select id="doctor" name="doctor" class="form-item"></select>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item col-xs-6">
+                            分中心医院：
+                            <input id="Hospital" name="Hospital" type="text" class="form-item" />
+                        </div>
+                        <div class="item col-xs-6">
+                            分中心负责人：
+                            <select id="Sub" name="Sub" class="form-item"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="paper-footer">
+                    <div class="single-row">
+                        <div class="item col-xs-6">登记人：<span id="Span1" class="underline"></span></div>
+                        <div class="item col-xs-6">登记时间：<span id="date" class="underline"></span></div>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-9">
-              <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                <ul id="page-index-content" class="pagination">
-                </ul>
-              </div>
+            <div class="row" style="text-align:center;margin-top:20px;">
+                <button class="btn btn-block btn-success" style="margin:auto;width:20%;">保存</button>
             </div>
-          </div>
-        </div>
-        <!-- /.box-body -->
-      </div>
-    </section>
-    <section id="progress-content" class="col-xs-2" style="padding:0px;">
-      <div class="layout-main-tab">
-        <nav class="tab-nav" style="padding-left: 0px;">
-          <div style="text-align: center;">
-            状态：
-            <span id="patient-status"></span>
-          </div>
-        </nav>
-      </div>
-      <iframe id="progress-iframe" class="frame-content" src="Records/progress.html"></iframe>
-      
-    </section>
-    <section id="record-content" class="col-xs-6" style="padding:0px;">
-      <div class="layout-main-tab">
-        <nav class="tab-nav" style="padding-top:3px;">
-          <div>
-            <button class="btn btn-success"><i class="fa fa-fw fa-edit"></i>编辑</button>
-            <div class="btn-group">
-              <button type="button" class="btn btn-success" data-toggle="dropdown"><i class="fa fa-fw fa-send"></i>选择模板</button>
-              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-              </ul>
-            </div>
-            <button id="save" class="btn btn-success"><i class="fa fa-fw fa-save"></i>保存</button>
-            <button id="printIframe" class="btn btn-success"><i class="fa fa-fw fa-print"></i>打印</button>
-          </div>
-        </nav>
-      </div>
-      <iframe id="record-iframe" name="record-iframe" class="frame-content" src="Records/Blank.aspx"></iframe>
+        </form>
     </section>
   </div>
   <!-- /.content-wrapper -->
@@ -388,39 +427,8 @@
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- js -->
 <script src="../../js/Main/main.js"></script>
-
-<script type="text/javascript">
-    $(function () {
-        $("#printIframe").bind("click", function () {
-            $("#record-iframe")[0].contentWindow.print();
-        });
-        $("#save").bind("click", function () {
-            if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 0) {
-                    $("#record-iframe")[0].contentWindow.CheckEmpty();                      
-                }
-                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 1) {
-                    $("#record-iframe")[0].contentWindow.checkAll();
-                }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 2) {
-                        $("#record-iframe")[0].contentWindow.postfix();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 4) {
-                   $("#record-iframe")[0].contentWindow.postimportFIX();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 3) {
-                   $("#record-iframe")[0].contentWindow.postlocation();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 5) {
-                   $("#record-iframe")[0].contentWindow.postimportlocation();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 6) {
-                   $("#record-iframe")[0].contentWindow.postimportCT();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 7) {
-                   $("#record-iframe")[0].contentWindow.saveDesignApplyRecord();
-               }
-        });
-    })
+<script>
+    $("#addpatient-content").css("minHeight", $(document).height() - 101);
 </script>
 </body>
 </html>
