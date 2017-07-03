@@ -25,11 +25,20 @@
 <body style="width:auto;min-width:900px;margin:auto;">
    <section class="content">
         <div class="paper">
-            <input type="hidden" id="progress" />
+            <form id="savedesign" name="savedesign" method="post" runat="server" >
+                    <input type="hidden" name="ispostback" value="true" />             
+                    <input type="hidden"  id="hidetreatID" name="hidetreatID" />
+                    <input type="hidden"  id="userID" name="userID" />
+                    <input type="hidden" id="diaguserid" name="diaguserid" />
+                    <input type="hidden"  id="aa" name="aa" />
+                    <input type="hidden"  id="bb" name="bb" />
+                 <input id="save" class="btn btn-success" type="submit" value="保存" />
+            <input type="hidden" id="progress" name="progress"/>
             <div class="paper-title">
                  治疗计划申请
             </div>
             <div class="paper-content">
+               
                 <div class="content-title">
                     <span>基本信息：</span>
                 </div>
@@ -56,18 +65,19 @@
                 <div class="single-row">
                     <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
                     <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
-                    <div class="item col-xs-4">所属医生：<span id="diaguser" class="underline"></span></div>
+                    <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
             </div>
             <div class="paper-content"> 
-                <form id="saveImportCT" method="post" runat="server">
+               
+                  
                     <div class="content-title">
                         <span>填写计划申请信息：</span>
                     </div>
                     <div class="single-row">
                         <div class="item area-group col-xs-12">
                             特殊情况(放疗史)：
-                            <textarea id="Remarks" class="form-area" style="width:80%;"></textarea>
+                            <textarea id="Remarks" name="Remarks" class="form-area" style="width:80%;"></textarea>
                         </div>
                     </div>
                     <div class="single-row">
@@ -77,7 +87,7 @@
                     </div>
                     <div class="single-row">
                         <div class="item area-group col-xs-12">
-                            <table class="table table-bordered">
+                            <table id="Priority" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>靶区</th>
@@ -89,38 +99,38 @@
                                         <th>备注</th>
                                         <th>优先级</th>
                                         <th style="text-align: center;">
-                                            <a href="javascript:;"><i class="fa fa-fw fa-plus-circle"></i></a>
+                                            <a href="javascript:addDosagePriority();"><i class="fa fa-fw fa-plus-circle"></i></a>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td style="padding:0px;">
-                                            <input type="text" class="td-input" />
+                                            <input id="Prioritytype0" name="Prioritytype0" type="text" class="td-input" />
                                         </td>
                                         <td style="padding:0px;">
-                                            <input type="text" class="td-input" />
+                                            <input id="Priorityout0" name="Priorityout0" type="text" class="td-input" />
                                         </td>
                                         <td style="padding:0px;">
-                                            <input type="text" class="td-input" />
+                                            <input id="Prioritptv0" name="Prioritptv0" type="text" class="td-input" />
                                         </td>
                                         <td style="padding:0px;">
-                                            <input type="number" class="td-input" />
+                                            <input id="Prioritcgy0" name="Prioritcgy0" type="number" class="td-input" />
                                         </td>
                                         <td style="padding:0px;">
-                                            <input type="number" class="td-input" />
+                                            <input id="Priorittime0" name="Priorittime0" type="number" class="td-input" />
                                         </td>
                                         <td style="padding:0px;">
-                                            <input type="number" class="td-input" />
+                                            <input id="Prioritsum0" name="Prioritsum0" type="number" class="td-input" />
                                         </td>
                                         <td style="padding:0px;">
-                                            <input type="text" class="td-input" />
+                                            <input id="Prioritremark0" name="Prioritremark0" type="text" class="td-input" />
                                         </td>
                                         <td style="padding:0px;">
-                                            <input type="number" class="td-input" />
+                                            <input id="Priorit0" name="Priorit0" type="number" class="td-input" />
                                         </td>
-                                        <td style="text-align: center;padding:0px;vertical-align: middle;">
-                                            <a href="javascript:;"><i class="fa fa-fw fa-minus-circle"></i></a>
+                                        <td id="delete0" style="text-align: center;padding:0px;vertical-align: middle;">
+                                            <a  href="javascript:deleteDosagePriority(0);"><i class="fa fa-fw fa-minus-circle"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -134,7 +144,7 @@
                     </div>
                     <div class="single-row">
                         <div class="item area-group col-xs-12">
-                            <table class="table table-bordered">
+                            <table id="Dosage" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>危及器官</th>
@@ -146,38 +156,38 @@
                                         <th>数值</th>
                                         <th>优先级</th>
                                         <th style="text-align: center;">
-                                            <a href="javascript:;"><i class="fa fa-fw fa-plus-circle"></i></a>
+                                            <a href="javascript:addDosage();"><i class="fa fa-fw fa-plus-circle"></i></a>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td style="padding:0px;">
-                                            <input type="text" class="td-input" />
+                                            <input id="type0" name="type0" type="text" class="td-input" />
                                         </td>
                                         <td style="padding:0px;">
-                                            <input type="text" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input type="text" class="td-input" value="<" readonly="true" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input type="number" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input type="text" class="td-input" />
+                                            <input id="dv0" name="dv0" type="text" class="td-input" />
                                         </td>
                                         <td style="padding:0px;">
                                             <input type="text" class="td-input" value="<" readonly="true" />
                                         </td>
                                         <td style="padding:0px;">
-                                            <input type="number" class="td-input" />
+                                            <input id="number0" name="number0" type="number" class="td-input" />
                                         </td>
                                         <td style="padding:0px;">
-                                            <input type="number" class="td-input" />
+                                            <input id="prv0" name="prv0" type="text" class="td-input" />
                                         </td>
-                                        <td style="text-align: center;padding:0px;vertical-align: middle;">
-                                            <a href="javascript:;"><i class="fa fa-fw fa-minus-circle"></i></a>
+                                        <td style="padding:0px;">
+                                            <input type="text" class="td-input" value="<" readonly="true" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="numbers0" name="numbers0" type="number" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="pp0" name="pp0" type="number" class="td-input" />
+                                        </td>
+                                        <td id="deletes0" style="text-align: center;padding:0px;vertical-align: middle;">
+                                            <a href="javascript:deleteDosage(0);"><i class="fa fa-fw fa-minus-circle"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -187,14 +197,14 @@
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">治疗技术：</span>
-                            <select id="" name="" class="form-item"></select>
+                            <select id="technology" name="technology" class="form-item"></select>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">放疗设备：</span>
-                            <select id="" name="" class="form-item"></select>
+                            <select id="equipment" name="equipment" class="form-item"></select>
                         </div>
                     </div>
-                </form>
+               
             </div>
             <div class="paper-footer">
                 <div class="single-row">
@@ -202,6 +212,7 @@
                     <div class="item col-xs-6">日期：<span  id="time" class="underline"></span></div>
                 </div>
             </div>
+        </form>
         </div>
          
     </section>
@@ -225,7 +236,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <!-- javascript -->
-    
+    <script src="../../../js/Main/DesignApply.js" type="text/javascript"></script>
     <!-- Page script -->
     <script type="text/javascript">
         $("#AppiontDate").datepicker({ autoclose: true });

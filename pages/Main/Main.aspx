@@ -416,6 +416,9 @@
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 6) {
                    $("#record-iframe")[0].contentWindow.postimportCT();
                }
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 7) {
+                   $("#record-iframe")[0].contentWindow.saveDesignApplyRecord();
+               }
         });
     })
 </script>
