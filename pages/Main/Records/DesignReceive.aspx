@@ -56,7 +56,7 @@
                 <div class="single-row">
                     <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
                     <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
-                    <div class="item col-xs-4">所属医生：<span id="diaguser" class="underline"></span></div>
+                    <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
             </div>
             <div class="paper-content">
@@ -64,7 +64,7 @@
                     <span>领取计划：</span>
                 </div>
                 <div class="single-row" style="text-align:center;">
-                    <button class="btn btn-default">领取该计划</button>
+                    <button id="receive" class="btn btn-default">领取该计划</button>
                 </div>
             </div>
             <div class="paper-footer">
@@ -95,7 +95,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <!-- javascript -->
-    
+    <script src="../../../js/Main/DesignReceive.js" type="text/javascript"></script>
     <!-- Page script -->
     <script type="text/javascript">
         $("#AppiontDate").datepicker({ autoclose: true });

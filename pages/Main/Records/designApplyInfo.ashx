@@ -1,10 +1,10 @@
-﻿<%@ WebHandler Language="C#" Class="SubmitInfo" %>
+﻿<%@ WebHandler Language="C#" Class="designApplyInfo" %>
 
 using System;
 using System.Web;
 using System.Text;
 using System.Collections.Generic;
-public class SubmitInfo : IHttpHandler {
+public class designApplyInfo : IHttpHandler {
 
     private DataLayer sqlOperation = new DataLayer("sqlStr");
     public void ProcessRequest(HttpContext context)
@@ -47,10 +47,13 @@ public class SubmitInfo : IHttpHandler {
         
         while (reader.Read())
         {
+            string date = reader["ApplicationTime"].ToString();
+            DateTime dt1 = Convert.ToDateTime(date);
+            string date1 = dt1.ToString("yyyy-MM-dd HH:mm");
             string Do = reader["DosagePriority"].ToString();
             string Priority = Do.Split(new char[1] {'&'})[0];
             string Dosage = Do.Split(new char[1] { '&' })[1];
-            backText.Append("{\"apptime\":\"" + reader["ApplicationTime"].ToString() +
+            backText.Append("{\"apptime\":\"" + date1 +
                  "\",\"doctor\":\"" + reader["doctor"].ToString() +
                   "\",\"technology\":\"" + reader["tname"].ToString() + "\",\"equipment\":\"" + reader["eqname"].ToString() +
                   "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\"}");

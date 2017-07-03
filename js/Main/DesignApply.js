@@ -51,9 +51,9 @@ function Init(evt) {
         document.getElementById("equipment").value = designInfo.equipment;
         document.getElementById("equipment").disabled = "equipment";
         document.getElementById("applyuser").innerHTML = designInfo.doctor;
-        document.getElementById("time").innerHTML = designInfo.ApplicationTime;
+        document.getElementById("time").innerHTML = designInfo.apptime;
     }
-    if (patient.Progress = 7) {
+    if (patient.Progress == 7) {
         document.getElementById("userID").value = userID;
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("time").innerHTML = getNowFormatDate();
@@ -436,7 +436,14 @@ function getUserID() {
 
 
 function saveDesignApplyRecord() {
-
+    if (document.getElementById("technology").value == "allItem") {
+        window.alert("治疗技术没有选择");
+        return;
+    }
+    if (document.getElementById("equipment").value == "allItem") {
+        window.alert("放疗设备没有选择");
+        return;
+    }
     document.getElementById("savedesign").submit();
   
 }

@@ -56,7 +56,7 @@
                 <div class="single-row">
                     <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
                     <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
-                    <div class="item col-xs-4">所属医生：<span id="diaguser" class="underline"></span></div>
+                    <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
             </div>
             <div class="paper-content">
@@ -66,7 +66,7 @@
                 <div class="single-row">
                     <div class="item col-xs-12">
                         <span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>
-                        <span id="" class="col-xs-10"></span>
+                        <span id="Remarks" class="col-xs-10"></span>
                     </div>
                 </div>
                 <div class="single-row">
@@ -76,7 +76,7 @@
                 </div>
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
-                        <table class="table table-bordered">
+                        <table id="Priority" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>靶区</th>
@@ -99,7 +99,7 @@
                 </div>
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
-                        <table class="table table-bordered">
+                        <table id="Dosage" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>危及器官</th>
@@ -116,14 +116,14 @@
                     </div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">治疗技术：<span id="Span2" class="underline"></span></div>
-                    <div class="item col-xs-4">放疗设备：<span id="Span3" class="underline"></span></div>
+                    <div class="item col-xs-4">治疗技术：<span id="technology" class="underline"></span></div>
+                    <div class="item col-xs-4">放疗设备：<span id="equipment" class="underline"></span></div>
                     <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>
-                    <div class="item col-xs-4">领取医生：<span id="Span1" class="underline"></span></div>
-                    <div class="item col-xs-4">领取时间：<span id="Span4" class="underline"></span></div>
+                    <div class="item col-xs-4">领取医生：<span id="receiveUser" class="underline"></span></div>
+                    <div class="item col-xs-4">领取时间：<span id="receiveTime" class="underline"></span></div>
                 </div>
             </div>
             <div class="paper-content"> 
@@ -134,46 +134,46 @@
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">计划系统：</span>
-                            <select id="" name="" class="form-item"></select>
+                            <select id="PlanSystem" name="PlanSystem" class="form-item"></select>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">射野数量：</span>
-                            <input id="" name="" type="number" class="form-item"/>
+                            <input id="IlluminatedNumber" name="IlluminatedNumber" type="number" class="form-item"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">非共面照射：</span>
-                            <select id="Select1" name="" class="form-item">
-                                <option value="">是</option>
-                                <option value="">否</option>
+                            <select id="Coplanar" name="Coplanar" class="form-item">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
                             </select>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">机器跳数：</span>
-                            <input id="" name="" type="number" class="form-item"/>
+                            <input id="MachineNumbe" name="MachineNumbe" type="number" class="form-item"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">控制点数量：</span>
-                            <input id="Number1" name="" type="number" class="form-item"/>
+                            <input id="ControlPoint" name="ControlPoint" type="number" class="form-item"/>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">计算网络：</span>
-                            <select id="Select2" name="" class="form-item"></select>
+                            <select id="Grid" name="Grid" class="form-item"></select>
                         </div>
                     </div> 
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">优化算法：</span>
-                            <select id="Select3" name="" class="form-item"></select>
+                            <select id="Algorithm" name="Algorithm" class="form-item"></select>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">计划可执行度：</span>
-                            <select id="Select4" name="" class="form-item">
-                                <option value="">可执行</option>
-                                <option value="">不可执行</option>
+                            <select id="Feasibility" name="Feasibility" class="form-item">
+                                <option value="1">可执行</option>
+                                <option value="0">不可执行</option>
                             </select>
                         </div>
                     </div> 
@@ -207,7 +207,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <!-- javascript -->
-    
+    <script src="../../../js/Main/DesignSubmit.js" type="text/javascript"></script>
     <!-- Page script -->
     <script type="text/javascript">
         $("#AppiontDate").datepicker({ autoclose: true });
