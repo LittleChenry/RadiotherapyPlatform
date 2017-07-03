@@ -301,7 +301,7 @@
       <ul id="menu" class="sidebar-menu">
         <li class="header">管理员导航</li>
         <li>
-          <a href="RootMain.aspx" target="iframepage">
+          <a href="RootMain.aspx">
             <i class="fa fa-coffee fa-fw"></i> <span>主页</span>
             <span class="pull-right-container">
             </span>
@@ -375,7 +375,13 @@
             </span>
           </a>
         </li>
-        
+        <li>
+            <a href="Root-parameterSetting.aspx">
+                <i class="fa fa-group"></i> <span>基本信息管理</span>
+                <span class="pull-right-container">
+                </span>
+            </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -469,6 +475,7 @@
                                     <asp:Label ID="Label5" runat="server" Text='<%# GetTime(Eval("EndTimeTPM"))%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:BoundField DataField="Type" HeaderText="设备类型" />
                             <asp:BoundField DataField="TreatmentItem" HeaderText="隶属治疗项目" />
                             <asp:TemplateField HeaderText="移除设备" ShowHeader="False">
                                 <ItemTemplate>
@@ -483,6 +490,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
+                        <RowStyle HorizontalAlign="Center" />
                     </asp:GridView>
                 </div>
             </form>
@@ -549,6 +557,12 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <th class="noborder"><label for="equipementType" class="height">设备类型</label></th>
+                                            <td>
+                                                <select id="equipmentType" class="form-control" name="equipmentType"></select>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <th class="noborder"><label for="changeTreatmentItem" class="height">隶属项目</label></th>
                                             <td>
                                                 <select id="changeTreatmentItem" name="changeTreatmentItem" class="form-control treatItem">                
@@ -582,27 +596,6 @@
     <strong>Copyright &copy; 2017-2017 <a href="http://www.jsph.org.cn/"> 江苏省人民医院</a> .</strong> 保留所有权利
   </footer>
   <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
-    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-    </ul>
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <!-- Home tab content -->
-      <div class="tab-pane" id="control-sidebar-home-tab">
-
-      </div>
-      <!-- Stats tab content -->
-      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-      <!-- Settings tab content -->
-      <div class="tab-pane" id="control-sidebar-settings-tab">
-        
-      </div>
-      <!-- /.tab-pane -->
-    </div>
-  </aside>
   <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
