@@ -19,7 +19,8 @@ public partial class pages_Main_Records_DesignApply : System.Web.UI.Page
         //不是第一次加载页面进行录入
 
         if (myispostback != null && myispostback == "true")
-        {          
+        {
+
             if (RecordPatientInformation())
             {
                 sqlOperation.Close();
@@ -52,10 +53,10 @@ public partial class pages_Main_Records_DesignApply : System.Web.UI.Page
         string userID = Request.Form["userID"];
         int userid = Convert.ToInt32(userID);
         DateTime datetime = DateTime.Now;
-        string aa = Request.Form["aa"];
-        string maxnumber = "select max(ID) from design";
+        string aa = Request.Form["aa"]; 
         string bb = Request.Form["bb"];
-        string count = sqlOperation1.ExecuteScalar(maxnumber);
+        string maxnumber = "select max(ID) from design";
+         string count = sqlOperation1.ExecuteScalar(maxnumber);
         int Count;
         if (count == "")
         {
@@ -68,7 +69,6 @@ public partial class pages_Main_Records_DesignApply : System.Web.UI.Page
         string DosagePriority = "";
         int a1 = Convert.ToInt32(aa);
         int i = 0;
-        
         while (i <= a1)
         {
             string ii = Convert.ToString(i);
@@ -80,7 +80,7 @@ public partial class pages_Main_Records_DesignApply : System.Web.UI.Page
             string Prioritsum = Request.Form["Prioritsum" + ii];
             string Prioritremark = Request.Form["Prioritremark" + ii];
             string Priorit = Request.Form["Priorit" + ii];
-            DosagePriority = DosagePriority +Prioritytype + "," + Priorityout + "," + Prioritptv + "," + Prioritcgy + "," + Priorittime + "," + Prioritsum + "," + Prioritremark + "," + Priorit + ";";
+            DosagePriority = DosagePriority + Prioritytype + "," + Priorityout + "," + Prioritptv + "," + Prioritcgy + "," + Priorittime + "," + Prioritsum + "," + Prioritremark + "," + Priorit + ";";
             i++;
         }
         int b1 = Convert.ToInt32(bb);
@@ -93,10 +93,10 @@ public partial class pages_Main_Records_DesignApply : System.Web.UI.Page
             string dv = Request.Form["dv" + jj];
             string number = Request.Form["number" + jj];
             string prv = Request.Form["prv" + jj];
-            string numbers = Request.Form["numbers" + jj];           
+            string numbers = Request.Form["numbers" + jj];
             string pp = Request.Form["pp" + jj];
-            DosagePriority = DosagePriority +  type + "," + dv + "," + number + "," + prv + "," + numbers + "," + pp + ";";
-            i++;
+            DosagePriority = DosagePriority + type + "," + dv + "," + number + "," + prv + "," + numbers + "," + pp + ";";
+            j++;
         }
         string strSqlCommand = "INSERT INTO Design(ID,RadiotherapyHistory,DosagePriority,Technology_ID,Equipment_ID,Application_User_ID,ApplicationTime) " +
                                 "VALUES(@ID,@RadiotherapyHistory,@DosagePriority,@Technology_ID,@Equipment_ID,@Application_User_ID,@ApplicationTime)";
@@ -104,7 +104,7 @@ public partial class pages_Main_Records_DesignApply : System.Web.UI.Page
         sqlOperation.AddParameterWithValue("@RadiotherapyHistory", Request.Form["Remarks"]);
         sqlOperation.AddParameterWithValue("@Technology_ID", Convert.ToInt32(Request.Form["technology"]));
         sqlOperation.AddParameterWithValue("@Equipment_ID", Convert.ToInt32(Request.Form["equipment"]));
-        sqlOperation.AddParameterWithValue("@@DosagePriority", DosagePriority);
+        sqlOperation.AddParameterWithValue("@DosagePriority", DosagePriority);
         sqlOperation.AddParameterWithValue("@ApplicationTime", datetime);
         sqlOperation.AddParameterWithValue("@Application_User_ID", userid);
 
@@ -113,12 +113,11 @@ public partial class pages_Main_Records_DesignApply : System.Web.UI.Page
 
 
 
-        string inserttreat = "update treatment set Design_ID=@Design_ID,Progress=@progress where ID=@treat";
+        string inserttreat = "update treatment set Design_ID=@Design_ID,Progress=8 where ID=@treat";
         sqlOperation2.AddParameterWithValue("@Design_ID", Count);
         sqlOperation2.AddParameterWithValue("@treat", treatID);
-        sqlOperation2.AddParameterWithValue("@progerss", 8);
         int Success = sqlOperation2.ExecuteNonQuery(inserttreat);
-        
+
         if (intSuccess > 0 && Success > 0)
         {
 
