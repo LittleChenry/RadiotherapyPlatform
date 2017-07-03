@@ -303,7 +303,7 @@
      <ul id="menu" class="sidebar-menu">
         <li class="header">管理员导航</li>
         <li>
-          <a href="RootMain.aspx" target="iframepage">
+          <a href="RootMain.aspx">
             <i class="fa fa-coffee fa-fw"></i> <span>主页</span>
             <span class="pull-right-container">
             </span>
