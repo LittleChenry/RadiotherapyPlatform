@@ -118,6 +118,12 @@
                 <div class="single-row">
                     <div class="item col-xs-4">治疗技术：<span id="Span2" class="underline"></span></div>
                     <div class="item col-xs-4">放疗设备：<span id="Span3" class="underline"></span></div>
+                    <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>
+                    <div class="item col-xs-4">领取医生：<span id="Span1" class="underline"></span></div>
+                    <div class="item col-xs-4">领取时间：<span id="Span4" class="underline"></span></div>
                 </div>
             </div>
             <div class="paper-content"> 

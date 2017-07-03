@@ -132,6 +132,16 @@
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-4">计划可执行度：<span id="Span10" class="underline"></span></div>
+                    <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
+                    <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">领取医生：<span id="Span13" class="underline"></span></div>
+                    <div class="item col-xs-4">领取时间：<span id="Span14" class="underline"></span></div>
+                    <div class="item col-xs-4">填写医生：<span id="Span11" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">填写时间：<span id="Span12" class="underline"></span></div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-4">
@@ -141,6 +151,12 @@
                     <div class="col-xs-3">
                         <button class="btn btn-warning" >不合格</button>
                         <button class="btn btn-success" >确认通过</button>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        审核意见：
+                        <textarea id="" class="form-area" style="width:80%;"></textarea>
                     </div>
                 </div>
                 <div class="single-row">
