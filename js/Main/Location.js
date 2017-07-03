@@ -99,8 +99,12 @@ function getNowFormatDate() {
     if (strDate >= 0 && strDate <= 9) {
         strDate = "0" + strDate;
     }
+    var min = date.getMinutes();
+    if (min < 10) {
+        min = "0" + min;
+    }
     var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-            + " " + date.getHours() + seperator2 + date.getMinutes();
+            + " " + date.getHours() + seperator2 + min;
 
     return currentdate;
 }
