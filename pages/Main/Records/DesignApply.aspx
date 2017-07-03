@@ -67,7 +67,131 @@
                     <div class="single-row">
                         <div class="item area-group col-xs-12">
                             特殊情况(放疗史)：
-                            <textarea id="Remarks" class="form-area"></textarea>
+                            <textarea id="Remarks" class="form-area" style="width:80%;"></textarea>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-6" style="padding-left:0px;">
+                            <span class="form-text col-xs-4">靶区处方剂量：</span>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item area-group col-xs-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>靶区</th>
+                                        <th>外放</th>
+                                        <th>PTV</th>
+                                        <th>单次量cGy</th>
+                                        <th>次数</th>
+                                        <th>总剂量cGy</th>
+                                        <th>备注</th>
+                                        <th>优先级</th>
+                                        <th style="text-align: center;">
+                                            <a href="javascript:;"><i class="fa fa-fw fa-plus-circle"></i></a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding:0px;">
+                                            <input type="text" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="text" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="text" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="number" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="number" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="number" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="text" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="number" class="td-input" />
+                                        </td>
+                                        <td style="text-align: center;padding:0px;vertical-align: middle;">
+                                            <a href="javascript:;"><i class="fa fa-fw fa-minus-circle"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-6" style="padding-left:0px;">
+                            <span class="form-text col-xs-4">危及器官限量：</span>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item area-group col-xs-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>危及器官</th>
+                                        <th>D/V</th>
+                                        <th>限制</th>
+                                        <th>数值</th>
+                                        <th>PRV/V</th>
+                                        <th>限制</th>
+                                        <th>数值</th>
+                                        <th>优先级</th>
+                                        <th style="text-align: center;">
+                                            <a href="javascript:;"><i class="fa fa-fw fa-plus-circle"></i></a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding:0px;">
+                                            <input type="text" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="text" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="text" class="td-input" value="<" readonly="true" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="number" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="text" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="text" class="td-input" value="<" readonly="true" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="number" class="td-input" />
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input type="number" class="td-input" />
+                                        </td>
+                                        <td style="text-align: center;padding:0px;vertical-align: middle;">
+                                            <a href="javascript:;"><i class="fa fa-fw fa-minus-circle"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">治疗技术：</span>
+                            <select id="" name="" class="form-item"></select>
+                        </div>
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">放疗设备：</span>
+                            <select id="" name="" class="form-item"></select>
                         </div>
                     </div>
                 </form>
