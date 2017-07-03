@@ -16,24 +16,17 @@ public class equipment
 
     public DataSet Select(string state, string item)
     {
-        string sqlCommand = "SELECT * FROM Equipment";
+        string sqlCommand = "SELECT * FROM Equipment,equipmenttype WHERE Equipment.EquipmentType=equipmenttype.ID";
         string addString = "";
         if (state != "allEquipment")
         {
             int stateInt = int.Parse(state);
-            addString += " WHERE State=@state";
+            addString += " AND State=@state";
             sqlOperation.AddParameterWithValue("@state", stateInt);
         }
         if (item != "allItem")
         {
-            if (addString == "")
-            {
-                addString += " WHERE TreatmentItem=@item";
-            }
-            else
-            {
-                addString += " AND TreatmentItem=@item";
-            }
+            addString += " AND TreatmentItem=@item";
             sqlOperation.AddParameterWithValue("@item", item);
         }
 

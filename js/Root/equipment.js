@@ -3,12 +3,20 @@
 var obj = [];
 var Items = "";
 var isAllGood = true;
+window.onbeforeunload = function () {
+    var thisType = document.getElementById("formType");
+    thisType.value = "";
+    window.location.href = "../../pages/Root/Root-equipment.aspx";
+    return false;
+}
 
 function Init() {
     var ItemSelect = document.getElementById("TreatmentItem");
     var changeItem = document.getElementById("changeTreatmentItem");
     createItemSelect(ItemSelect);//创建设备隶属治疗项目下拉菜单
     createItemSelect(changeItem);
+    createEquipmentType();//设备类型菜单
+    document.getElementById("insert").addEventListener("click", setInsert, false);
     var allLink = document.getElementsByClassName("selectedUpdate");
     for (var i = 0; i < allLink.length; i++) {
         allLink[i].addEventListener("click", EditEquipment, false);
@@ -22,6 +30,23 @@ function Init() {
         }
     }
     document.getElementById("onceTime").addEventListener("blur", checkOnceTreat, false);
+}
+
+function createEquipmentType() {
+    var select = document.getElementById("equipmentType");
+    var xmlHttp = new XMLHttpRequest();
+    var url = "../../pages/Root/getEquipmentType.ashx";
+    xmlHttp.open("get", url, true);
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            var json = xmlHttp.responseText;
+            var jsonObj = eval("(" + json + ")");
+            for (var i = 0; i < jsonObj.length; ++i) {
+                select.options[i] = new Option(jsonObj[i].type, jsonObj[i].id);
+            }
+        }
+    }
+    xmlHttp.send();
 }
 
 function Refresh(evt) {
@@ -138,7 +163,24 @@ function checkAll(evt) {
     }
     if (isAllGood == false) {
         evt.preventDefault();
-    } 
+    } else {
+        evt.preventDefault();
+        var datas = $("#changefrm").serialize();
+        var type = $("#formType").val();
+        $.ajax({
+            type: "post",
+            url: "../../pages/Root/handlerEquipment.ashx",
+            data: datas,
+            success: function () {
+                if (type == "insert") {
+                    alert("插入成功");
+                } else {
+                    alert("更新成功");
+                }
+                window.location.href = "../../pages/Root/Root-equipment.aspx";
+            }
+        });
+    }
 }
 
 function checkElement(thisElement) {
@@ -310,12 +352,7 @@ function checkOnceTreat() {
     }
 }
 
-function addEquipment(evt) {
-    evt.preventDefault();
-    var middleArea = document.getElementById("middleArea");
-    var topArea = document.getElementById("topArea");
-    middleArea.style.display = "block";
-    topArea.style.display = "block";
+function setInsert() {
     var thisType = document.getElementById("formType");
     thisType.value = "insert";
 }

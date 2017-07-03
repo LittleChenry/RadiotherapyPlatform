@@ -475,6 +475,7 @@
                                     <asp:Label ID="Label5" runat="server" Text='<%# GetTime(Eval("EndTimeTPM"))%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:BoundField DataField="Type" HeaderText="设备类型" />
                             <asp:BoundField DataField="TreatmentItem" HeaderText="隶属治疗项目" />
                             <asp:TemplateField HeaderText="移除设备" ShowHeader="False">
                                 <ItemTemplate>
@@ -489,6 +490,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
+                        <RowStyle HorizontalAlign="Center" />
                     </asp:GridView>
                 </div>
             </form>
@@ -552,6 +554,12 @@
                                             <th class="noborder"><label for="PMEnd" class="height">下午结束时间</label></th>
                                             <td>
                                                 <input type="text" id="PMEnd" name="PMEnd" class="form-control controlHeight Time PMEnd" placeholder="请输入下午结束使用设备时间" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="noborder"><label for="equipementType" class="height">设备类型</label></th>
+                                            <td>
+                                                <select id="equipmentType" class="form-control" name="equipmentType"></select>
                                             </td>
                                         </tr>
                                         <tr>
