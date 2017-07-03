@@ -315,7 +315,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 12:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/FirstAccelerator.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Accelerator");
+                            $("#record-iframe").attr('src', "Records/ReplacementApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Replacement");
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -325,7 +325,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 13:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/DesignReview.aspx?TreatmentID=" + e.data.ID);
+                            $("#record-iframe").attr('src', "Records/FirstAccelerator.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Accelerator");
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -335,7 +335,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 14:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/ReplacementApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Replacement");
+                            $("#record-iframe").attr('src', "Records/DesignReview.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
