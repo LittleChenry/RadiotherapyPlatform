@@ -245,17 +245,17 @@
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">x</span>
                             <input id="ReferenceCenterX" name="ReferenceCenterX" type="number" class="form-group-input" />
-                            <span class="input-group-addon">mm</span>
+                            <span class="input-group-addon">cm</span>
                         </div>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">y</span>
                              <input id="ReferenceCenterY" name="ReferenceCenterY" type="number" class="form-group-input" />
-                            <span class="input-group-addon">mm</span>
+                            <span class="input-group-addon">cm</span>
                         </div>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">z</span>
                              <input id="ReferenceCenterZ" name="ReferenceCenterZ" type="number" class="form-group-input" />
-                            <span class="input-group-addon">mm</span>
+                            <span class="input-group-addon">cm</span>
                         </div>
                     </div>
                 </div>

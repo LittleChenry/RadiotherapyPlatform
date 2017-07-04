@@ -389,7 +389,7 @@
                 </div>
             </div>
             <div class="row" style="text-align:center;margin-top:20px;">
-                <button class="btn btn-block btn-success" style="margin:auto;width:20%;">保存</button>
+                <button type="button" class="btn btn-block btn-success" style="margin:auto;width:20%;">保存</button>
             </div>
         </form>
     </section>

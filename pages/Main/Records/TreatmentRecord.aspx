@@ -74,6 +74,8 @@
                 <div class="single-row">
                     <div class="col-xs-6" style="padding-left:0px;">
                         <span class="form-text col-xs-4">IGRT记录：</span>
+                        <button type="button" class="btn btn-success" >编辑</button>
+                        <button type="button" class="btn btn-info" >完成</button>
                     </div>
                 </div>
                 <div class="single-row">
@@ -87,7 +89,7 @@
                                     <th>实际(cm)</th>
                                     <th>移床(cm)</th>
                                     <th>
-                                        <a href="javascript:;"><i class="fa fa-fw fa-plus-circle"></i></a>
+                                        <a href="javascript:;"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
                                     </th>
                                 </tr>
                             </thead>
@@ -99,9 +101,9 @@
                                     <td style="padding:0px;">
                                         <input id="" name="" type="number" class="td-input" />
                                     </td>
-                                    <td></td>
+                                    <td>auto</td>
                                     <td rowspan="3">
-                                        <a  href="javascript:;"><i class="fa fa-fw fa-minus-circle"></i></a>
+                                        <a  href="javascript:;"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -110,7 +112,7 @@
                                     <td style="padding:0px;">
                                         <input id="Number1" name="" type="number" class="td-input" />
                                     </td>
-                                    <td></td>
+                                    <td>auto</td>
                                 </tr>
                                 <tr>
                                     <td>z</td>
@@ -118,7 +120,7 @@
                                     <td style="padding:0px;">
                                         <input id="Number2" name="" type="number" class="td-input" />
                                     </td>
-                                    <td></td>
+                                    <td>auto</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -139,8 +141,8 @@
                                     <th>放疗次数</th>
                                     <th>射野数(V)</th>
                                     <th>机器跳数</th>
-                                    <th>单次量cGy</th>
-                                    <th>累计剂量cGy</th>
+                                    <th>单次量(cGy)</th>
+                                    <th>累计剂量(cGy)</th>
                                     <th>IGRT次数</th>
                                     <th>RL(cm)</th>
                                     <th>AP(cm)</th>

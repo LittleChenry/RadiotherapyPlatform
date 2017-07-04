@@ -104,29 +104,29 @@ function getNowFormatDate() {
 
 function readDosagePriority(DosagePriority) {
     var table = document.getElementById("Priority");
-    //RemoveAllChild(table);
     var tbody = document.createElement("tbody");
-    for (var i = rows - 1; i > 1; i--) {
+    for (var i = table.rows.length - 1; i > 0; i--) {
         table.deleteRow(i);
     }
-    //alert(tbody.innerHTML);
-    //tbody.html = "";
     DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
     var lists = new Array();
     lists = DosagePriority.split(";");
     for (var i = 0; i < lists.length; i++) {
         var list = new Array();
-        alert(lists[i]);
         list = lists[i].split(",");
         var tr = document.createElement("tr");
-        for (var j; j < list.length; j++) {
+        for (var j = 0; j < list.length; j++) {
             var td = document.createElement("td");
             var textNode = document.createTextNode(list[j]);
             td.appendChild(textNode);
             tr.appendChild(td);
         }
+        var extraTD = document.createElement("td");
+        tr.appendChild(extraTD);
         tbody.appendChild(tr);
     }
+    table.rows[0].cells[table.rows[0].cells.length - 1].children[0].href = "javascript:;";
+    tbody.style.textAlign = "center";
     table.appendChild(tbody);
 }
 
@@ -140,41 +140,38 @@ function RemoveAllChild(area) {
 
 function readDosage(DosagePriority) {
     var table = document.getElementById("Dosage");
-    var rows = table.rows.length;
-    for (var i = rows - 1; i > 0; i--) {
+    var tbody = document.createElement("tbody");
+    for (var i = table.rows.length - 1; i > 0; i--) {
         table.deleteRow(i);
     }
-
     DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
     var lists = new Array();
     lists = DosagePriority.split(";");
     for (var i = 0; i < lists.length; i++) {
         var list = new Array();
         list = lists[i].split(",");
-        var count = 0;
-        var row = table.insertRow(1);
-
-        var t1 = row.insertCell(0);
-        var t2 = row.insertCell(1);
-        var t3 = row.insertCell(2);
-        var t4 = row.insertCell(3);
-        var t5 = row.insertCell(4);
-        var t6 = row.insertCell(5);
-        var t7 = row.insertCell(6);
-        var t8 = row.insertCell(7);
-        var t9 = row.insertCell(8);
-        t1.innerHTML = list[count++];
-        t2.innerHTML = list[count++];
-        t3.innerHTML = "<";
-        t4.innerHTML = list[count++];
-        t5.innerHTML = list[count++];
-        t6.innerHTML = "<";
-        t7.innerHTML = list[count++];
-        t8.innerHTML = list[count++];
-
-        rows++;
+        var tr = document.createElement("tr");
+        for (var j = 0; j < list.length; j++) {
+            var td = document.createElement("td");
+            if (j == 2) {
+                var textNode = document.createTextNode("<");
+                td.appendChild(textNode);
+                tr.appendChild(td);
+            }else{
+                var textNode = document.createTextNode(list[j]);
+            }
+            td.appendChild(textNode);
+            tr.appendChild(td);
+        }
+        var extraTD = document.createElement("td");
+        tr.appendChild(extraTD);
+        tbody.appendChild(tr);
     }
+    table.rows[0].cells[table.rows[0].cells.length - 1].children[0].href = "javascript:;";
+    tbody.style.textAlign = "center";
+    table.appendChild(tbody);
 }
+
 function createTechnologyItem(thiselement) {
     var PartItem = JSON.parse(getPartItem1()).Item;
     thiselement.options.length = 0;
@@ -254,7 +251,7 @@ function addDosagePriority() {
     t6.innerHTML = '<input id="Prioritsum' + rows + '" name="Prioritsum' + rows + '" type="number" class="td-input" />';
     t7.innerHTML = '<input id="Prioritremark' + rows + '" name="Prioritremark' + rows + '" type="text" class="td-input" />';
     t8.innerHTML = '<input id="Priorit' + rows + '" name="Priorit' + rows + '" type="number" class="td-input" />';
-    t9.innerHTML = '<a href="javascript:deleteDosagePriority(' + rows + ');"><i class="fa fa-fw fa-minus-circle"></i></a>';
+    t9.innerHTML = '<a href="javascript:deleteDosagePriority(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
     aa = rows;
     document.getElementById("aa").value = aa;
 }
@@ -290,7 +287,7 @@ function addDosage() {
     t6.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
     t7.innerHTML = '<input id="numbers' + rows + '" name="numbers' + rows + '" type="text" class="td-input" />';
     t8.innerHTML = '<input id="pp' + rows + '" name="pp' + rows + '" type="number" class="td-input" />';
-    t9.innerHTML = '<a href="javascript:deleteDosage(' + rows + ');"><i class="fa fa-fw fa-minus-circle"></i></a>';
+    t9.innerHTML = '<a href="javascript:deleteDosage(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
     bb = rows;
     document.getElementById("bb").value =bb;
 }
@@ -327,7 +324,7 @@ function deleteDosagePriority(row) {
         td8.name = "Priorit" + j;        
         var td9 = document.getElementById("delete" + i);
         td9.id = "delete" + j;
-        td9.innerHTML = '<a  href="javascript:deleteDosagePriority(' + j + ');"><i class="fa fa-fw fa-minus-circle"></i></a>';;
+        td9.innerHTML = '<a  href="javascript:deleteDosagePriority(' + j + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';;
     }
     table.deleteRow(row + 1);
     aa--;
@@ -368,7 +365,7 @@ function deleteDosage(row) {
         td8.name = "pp" + j;        
         var td9 = document.getElementById("deletes" + i);
         td9.id = "deletes" + j;
-        td9.innerHTML = '<a  href="javascript:deleteDosage(' + j + ');"><i class="fa fa-fw fa-minus-circle"></i></a>';;
+        td9.innerHTML = '<a  href="javascript:deleteDosage(' + j + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';;
     }
     table.deleteRow(row + 1);
     bb--;

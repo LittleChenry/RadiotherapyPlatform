@@ -95,7 +95,7 @@ public partial class pages_Main_Records_DesignApply : System.Web.UI.Page
             string prv = Request.Form["prv" + jj];
             string numbers = Request.Form["numbers" + jj];
             string pp = Request.Form["pp" + jj];
-            DosagePriority = DosagePriority + type + "," + dv + "," + number + "," + prv + "," + numbers + "," + pp + ";";
+            DosagePriority = DosagePriority + type + "," + dv + ",<," + number + "," + prv + ",<," + numbers + "," + pp + ";";
             j++;
         }
         string strSqlCommand = "INSERT INTO Design(ID,RadiotherapyHistory,DosagePriority,Technology_ID,Equipment_ID,Application_User_ID,ApplicationTime) " +

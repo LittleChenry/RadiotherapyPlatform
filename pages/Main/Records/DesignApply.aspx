@@ -98,7 +98,7 @@
                                         <th>备注</th>
                                         <th>优先级</th>
                                         <th style="text-align: center;">
-                                            <a href="javascript:addDosagePriority();"><i class="fa fa-fw fa-plus-circle"></i></a>
+                                            <a href="javascript:addDosagePriority();"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
                                         </th>
                                     </tr>
                                 </thead>
@@ -129,7 +129,7 @@
                                             <input id="Priorit0" name="Priorit0" type="number" class="td-input" />
                                         </td>
                                         <td id="delete0" style="text-align: center;padding:0px;vertical-align: middle;">
-                                            <a  href="javascript:deleteDosagePriority(0);"><i class="fa fa-fw fa-minus-circle"></i></a>
+                                            <a  href="javascript:deleteDosagePriority(0);"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -155,7 +155,7 @@
                                         <th>数值</th>
                                         <th>优先级</th>
                                         <th style="text-align: center;">
-                                            <a href="javascript:addDosage();"><i class="fa fa-fw fa-plus-circle"></i></a>
+                                            <a href="javascript:addDosage();"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
                                         </th>
                                     </tr>
                                 </thead>
@@ -186,7 +186,7 @@
                                             <input id="pp0" name="pp0" type="number" class="td-input" />
                                         </td>
                                         <td id="deletes0" style="text-align: center;padding:0px;vertical-align: middle;">
-                                            <a href="javascript:deleteDosage(0);"><i class="fa fa-fw fa-minus-circle"></i></a>
+                                            <a href="javascript:deleteDosage(0);"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
