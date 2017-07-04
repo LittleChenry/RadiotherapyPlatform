@@ -425,6 +425,9 @@
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 11) {
                    $("#record-iframe")[0].contentWindow.postreplace();
                }
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 12) {
+                   $("#record-iframe")[0].contentWindow.postfirstaccelerate();
+               }
         });
     })
 </script>
