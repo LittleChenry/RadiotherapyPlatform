@@ -189,6 +189,8 @@
     border: 0px;
 }
 
-.form-file {
-	
+.single-record {
+	border: 1px solid #000;
+    margin: 0px 20px 10px 20px;
+    padding-top: 10px;
 }
