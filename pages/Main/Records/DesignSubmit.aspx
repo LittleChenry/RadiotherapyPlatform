@@ -127,7 +127,11 @@
                 </div>
             </div>
             <div class="paper-content"> 
-                <form id="saveImportCT" method="post" runat="server">
+                <form id="saveDesignSubmit" method="post" runat="server">
+                    <input type="hidden" name="ispostback" value="true" />             
+                    <input type="hidden"  id="hidetreatID" name="hidetreatID" />
+                    <input type="hidden"  id="userID" name="userID" />
+                    <input type="hidden" id="diaguserid" name="diaguserid" />
                     <div class="content-title">
                         <span>填写计划申请信息：</span>
                     </div>

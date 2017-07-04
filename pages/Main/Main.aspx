@@ -418,7 +418,11 @@
                }
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 7) {
                    $("#record-iframe")[0].contentWindow.saveDesignApplyRecord();
-               } if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 11) {
+               }
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 9) {
+                   $("#record-iframe")[0].contentWindow.saveDesignSubmit();
+               }
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 11) {
                    $("#record-iframe")[0].contentWindow.postreplace();
                }
         });

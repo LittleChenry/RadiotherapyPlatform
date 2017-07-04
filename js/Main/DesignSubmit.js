@@ -52,13 +52,21 @@ function Init(evt) {
     }
     if (patient.Progress >=10) {
         document.getElementById("PlanSystem").value = designInfo.PlanSystem;
+        document.getElementById("PlanSystem").disabled = true;
         document.getElementById("IlluminatedNumber").value = designInfo.IlluminatedNumber;
+        document.getElementById("IlluminatedNumber").disabled = true;
         document.getElementById("Coplanar").value = designInfo.Coplanar;
+        document.getElementById("Coplanar").disabled = true;
         document.getElementById("MachineNumbe").value = designInfo.MachineNumbe;
+        document.getElementById("MachineNumbe").disabled = true;
         document.getElementById("ControlPoint").value = designInfo.ControlPoint;
-        document.getElementById("Grid").value = designInfo.Grid_ID; 
+        document.getElementById("ControlPoint").disabled = true;
+        document.getElementById("Grid").value = designInfo.Grid_ID;
+        document.getElementById("Grid").disabled = true;
         document.getElementById("Algorithm").value = designInfo.Algorithm_ID;
+        document.getElementById("Algorithm").disabled = true;
         document.getElementById("Feasibility").value = designInfo.Feasibility;
+        document.getElementById("Feasibility").disabled = true;
         document.getElementById("applyuser").innerHTML = designInfo.SubmitUser;
         document.getElementById("time").innerHTML = designInfo.SubmitTime;
     }
@@ -282,4 +290,33 @@ function sex(evt) {
         return "女";
     else
         return "男";
+}
+function saveDesignSubmit() {
+    if (document.getElementById("PlanSystem").value == "allItem") {
+        window.alert("计划系统没有选择");
+        return;
+    }
+    if (document.getElementById("Grid").value == "allItem") {
+        window.alert("计算网格没有选择");
+        return;
+    }
+    if (document.getElementById("Algorithm").value == "allItem") {
+        window.alert("优化算法没有选择");
+        return;
+    }
+    if (document.getElementById("IlluminatedNumber").value == "") {
+        window.alert("请填写射野数量");
+        return;
+    }
+    if (document.getElementById("MachineNumbe").value == "") {
+        window.alert("请填写机器跳数");
+        return;
+    }
+    if (document.getElementById("ControlPoint").value == "") {
+        window.alert("请填写控制点数量");
+        return;
+    }
+   
+    document.getElementById("saveDesignSubmit").submit();
+
 }

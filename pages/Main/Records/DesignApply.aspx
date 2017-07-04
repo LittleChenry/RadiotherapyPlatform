@@ -31,8 +31,7 @@
                     <input type="hidden"  id="userID" name="userID" />
                     <input type="hidden" id="diaguserid" name="diaguserid" />
                     <input type="hidden"  id="aa" name="aa" />
-                    <input type="hidden"  id="bb" name="bb" />
-                 <input id="save" class="btn btn-success" type="submit" value="保存" />
+                    <input type="hidden"  id="bb" name="bb" />              
             <input type="hidden" id="progress" name="progress"/>
             <div class="paper-title">
                  治疗计划申请
