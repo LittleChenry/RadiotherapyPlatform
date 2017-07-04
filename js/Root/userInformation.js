@@ -4,7 +4,7 @@ var obj;
 var isAllGood;
 
 function Init() {
-    ChangePagestoButton();
+    //ChangePagestoButton();
     addAaction();
     var phone = document.getElementById("contact");
     if (phone != null) {

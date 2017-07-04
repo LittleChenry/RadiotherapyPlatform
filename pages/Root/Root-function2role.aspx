@@ -398,9 +398,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <h1 class="page-header">功能绑定</h1>
-                <button class="btn btn-info" id="refresh">
-                    刷新<i class="fa fa-repeat"></i>
-                </button>
+                
             </div>
         </div>
         <div class="row" style="margin-top:10px;">
