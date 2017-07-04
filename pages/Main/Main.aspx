@@ -422,6 +422,9 @@
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 9) {
                    $("#record-iframe")[0].contentWindow.saveDesignSubmit();
                }
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 10) {
+                   $("#record-iframe")[0].contentWindow.saveDesignConfirm();
+               }
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 11) {
                    $("#record-iframe")[0].contentWindow.postreplace();
                }

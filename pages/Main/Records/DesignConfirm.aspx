@@ -25,6 +25,11 @@
 <body style="width:auto;min-width:900px;margin:auto;">
    <section class="content">
         <div class="paper">
+            <form id="saveDesignConfirm" method="post" runat="server">
+                    <input type="hidden" name="ispostback" value="true" />             
+                    <input type="hidden"  id="hidetreatID" name="hidetreatID" />
+                    <input type="hidden"  id="userID" name="userID" />
+                    <input type="hidden" id="diaguserid" name="diaguserid" />
             <input type="hidden" id="progress" />
             <div class="paper-title">
                  治疗计划确认
@@ -56,7 +61,7 @@
                 <div class="single-row">
                     <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
                     <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
-                    <div class="item col-xs-4">所属医生：<span id="diaguser" class="underline"></span></div>
+                    <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
             </div>
             <div class="paper-content">
@@ -66,7 +71,7 @@
                 <div class="single-row">
                     <div class="item col-xs-12">
                         <span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>
-                        <span id="" class="col-xs-10"></span>
+                        <span id="Remarks" class="col-xs-10"></span>
                     </div>
                 </div>
                 <div class="single-row">
@@ -76,7 +81,7 @@
                 </div>
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
-                        <table class="table table-bordered">
+                        <table id="Priority" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>靶区</th>
@@ -99,7 +104,7 @@
                 </div>
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
-                        <table class="table table-bordered">
+                        <table id="Dosage" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>危及器官</th>
@@ -116,47 +121,47 @@
                     </div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">治疗技术：<span id="Span2" class="underline"></span></div>
-                    <div class="item col-xs-4">放疗设备：<span id="Span3" class="underline"></span></div>
-                    <div class="item col-xs-4">计划系统：<span id="Span1" class="underline"></span></div>
+                    <div class="item col-xs-4">治疗技术：<span id="technology" class="underline"></span></div>
+                    <div class="item col-xs-4">放疗设备：<span id="equipment" class="underline"></span></div>
+                    <div class="item col-xs-4">计划系统：<span id="PlanSystem" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">射野数量：<span id="Span4" class="underline"></span></div>
-                    <div class="item col-xs-4">非共面照射：<span id="Span5" class="underline"></span></div>
-                    <div class="item col-xs-4">机器跳数：<span id="Span6" class="underline"></span></div>
+                    <div class="item col-xs-4">射野数量：<span id="IlluminatedNumber" class="underline"></span></div>
+                    <div class="item col-xs-4">非共面照射：<span id="Coplanar" class="underline"></span></div>
+                    <div class="item col-xs-4">机器跳数：<span id="MachineNumbe" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">控制点数量：<span id="Span7" class="underline"></span></div>
-                    <div class="item col-xs-4">计算网络：<span id="Span8" class="underline"></span></div>
-                    <div class="item col-xs-4">优化算法：<span id="Span9" class="underline"></span></div>
+                    <div class="item col-xs-4">控制点数量：<span id="ControlPoint" class="underline"></span></div>
+                    <div class="item col-xs-4">计算网络：<span id="Grid" class="underline"></span></div>
+                    <div class="item col-xs-4">优化算法：<span id="Algorithm" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">计划可执行度：<span id="Span10" class="underline"></span></div>
+                    <div class="item col-xs-4">计划可执行度：<span id="Feasibility" class="underline"></span></div>
                     <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
                     <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">领取医生：<span id="Span13" class="underline"></span></div>
-                    <div class="item col-xs-4">领取时间：<span id="Span14" class="underline"></span></div>
-                    <div class="item col-xs-4">填写医生：<span id="Span11" class="underline"></span></div>
+                    <div class="item col-xs-4">领取医生：<span id="receiveUser" class="underline"></span></div>
+                    <div class="item col-xs-4">领取时间：<span id="receiveTime" class="underline"></span></div>
+                    <div class="item col-xs-4">填写医生：<span id="Submituser" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">填写时间：<span id="Span12" class="underline"></span></div>
+                    <div class="item col-xs-4">填写时间：<span id="Submittime" class="underline"></span></div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-4">
                         <span class="form-text" style="padding-left:0px;">审核状态：</span>
-                        <input id="" name="" type="text" value="未审核" readonly="true" class="form-item"  />
+                        <input id="state" name="state" type="text" value="未审核" readonly="true" class="form-item"  />
                     </div>
                     <div class="col-xs-3">
-                        <button class="btn btn-warning" >不合格</button>
-                        <button class="btn btn-success" >确认通过</button>
+                        <button id="unconfirm" class="btn btn-warning" type="button">不合格</button>
+                        <button id="confirm" class="btn btn-success" type="button" >确认通过</button>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
                         审核意见：
-                        <textarea id="" class="form-area" style="width:80%;"></textarea>
+                        <textarea id="advice" name="advice" class="form-area" style="width:80%;"></textarea>
                     </div>
                 </div>
                 <div class="single-row">
@@ -165,7 +170,7 @@
                             <span class="form-text" style="padding-left:0px;">上传计划文件：</span>
                         </div>
                         <div class="col-xs-10">
-                            <input id="" name="" type="file" />
+                             <asp:FileUpload ID="fp_upload" runat="server" />
                         </div>
                     </div>
                 </div>
@@ -176,6 +181,7 @@
                     <div class="item col-xs-6">日期：<span  id="time" class="underline"></span></div>
                 </div>
             </div>
+                </form>
         </div>
     </section>
     <!-- jQuery 2.2.3 -->
@@ -198,7 +204,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <!-- javascript -->
-    
+     <script src="../../../js/Main/DesignConfirm.js" type="text/javascript"></script>
     <!-- Page script -->
     <script type="text/javascript">
         $("#AppiontDate").datepicker({ autoclose: true });

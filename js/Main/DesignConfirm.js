@@ -27,127 +27,57 @@ function Init(evt) {
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     document.getElementById("part").innerHTML = patient.partname;
-
-    var select1 = document.getElementById("PlanSystem");
-    createPlanSystemItem(select1);
-    var select2 = document.getElementById("Grid");
-    createGridItem(select2);
-    var select3 = document.getElementById("Algorithm");
-    createAlgorithmItem(select3);
-    if (patient.Progress >= 9) {
+    
+    
+    if (patient.Progress >= 10) {
         var designInfo = getDesignInfo(treatID);
-        document.getElementById("Remarks").innerHTML = designInfo.RadiotherapyHistory;      
-        readDosagePriority(designInfo.DosagePriority);       
-        readDosage(designInfo.Dosage);      
-        document.getElementById("technology").innerHTML = designInfo.technology;      
+        document.getElementById("Remarks").innerHTML = designInfo.RadiotherapyHistory;
+        readDosagePriority(designInfo.DosagePriority);
+        readDosage(designInfo.Dosage);
+        document.getElementById("technology").innerHTML = designInfo.technology;
         document.getElementById("equipment").innerHTML = designInfo.equipment;
         document.getElementById("ApplicationUser").innerHTML = designInfo.doctor;
         document.getElementById("ApplicationTime").innerHTML = designInfo.apptime;
         document.getElementById("receiveUser").innerHTML = designInfo.ReceiveUser;
         document.getElementById("receiveTime").innerHTML = designInfo.ReceiveTime;
+        document.getElementById("PlanSystem").innerHTML = designInfo.PlanSystem;
+        document.getElementById("IlluminatedNumber").innerHTML = designInfo.IlluminatedNumber;
+        document.getElementById("Coplanar").innerHTML = charge1(designInfo.Coplanar);
+        document.getElementById("MachineNumbe").innerHTML = designInfo.MachineNumbe;
+        document.getElementById("ControlPoint").innerHTML = designInfo.ControlPoint;
+        document.getElementById("Grid").innerHTML = designInfo.Grid_ID;
+        document.getElementById("Algorithm").innerHTML = designInfo.Algorithm_ID;
+        document.getElementById("Feasibility").innerHTML = charge(designInfo.Feasibility);
+        document.getElementById("Submituser").innerHTML = designInfo.SubmitUser;
+        document.getElementById("Submittime").innerHTML = designInfo.SubmitTime;
         document.getElementById("userID").value = userID;
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("time").innerHTML = getNowFormatDate();
         document.getElementById("hidetreatID").value = treatID;
-    
-        if (patient.Progress >=10) {
-            document.getElementById("PlanSystem").value = designInfo.PlanSystem;
-            document.getElementById("PlanSystem").disabled = true;
-            document.getElementById("IlluminatedNumber").value = designInfo.IlluminatedNumber;
-            document.getElementById("IlluminatedNumber").disabled = true;
-            document.getElementById("Coplanar").value = designInfo.Coplanar;
-            document.getElementById("Coplanar").disabled = true;
-            document.getElementById("MachineNumbe").value = designInfo.MachineNumbe;
-            document.getElementById("MachineNumbe").disabled = true;
-            document.getElementById("ControlPoint").value = designInfo.ControlPoint;
-            document.getElementById("ControlPoint").disabled = true;
-            document.getElementById("Grid").value = designInfo.Grid_ID;
-            document.getElementById("Grid").disabled = true;
-            document.getElementById("Algorithm").value = designInfo.Algorithm_ID;
-            document.getElementById("Algorithm").disabled = true;
-            document.getElementById("Feasibility").value = designInfo.Feasibility;
-            document.getElementById("Feasibility").disabled = true;
-            document.getElementById("applyuser").innerHTML = designInfo.SubmitUser;
-            document.getElementById("time").innerHTML = designInfo.SubmitTime;
+        document.getElementById("confirm").addEventListener("click", function (evt) {
+            document.getElementById("state").value = "审核通过";
+        }, false);
+        document.getElementById("unconfirm").addEventListener("click", function (evt) {
+            document.getElementById("state").value = "审核不通过";
+        }, false);
+        if (patient.Progress >= 11) {
+            document.getElementById("advice").value = designInfo.advice;
+            document.getElementById("advice").disabled = true;
+            document.getElementById("state").value = charge2(designInfo.State);
+            document.getElementById("state").disabled = true;
+            document.getElementById("confirm").disabled = true;
+            document.getElementById("unconfirm").disabled = true;
+            document.getElementById("applyuser").innerHTML = designInfo.ConfirmUser;
+            document.getElementById("time").innerHTML = designInfo.ConfirmTime;
         }
-   }
+     }
 
 }
 
-function createGridItem(thiselement) {
-    var PartItem = JSON.parse(getPartItem3()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--计算网格选择--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
-        }
-    }
 
-
-}
-//第二步部位项数据库调取
-function getPartItem3() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "getGrid.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
-}
-
-function createPlanSystemItem(thiselement) {
-    var PartItem = JSON.parse(getPartItem2()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--计划系统选择--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
-        }
-    }
-
-
-}
-//第二步部位项数据库调取
-function getPartItem2() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "PlanSystem.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
-}
-
-function createAlgorithmItem(thiselement) {
-    var PartItem = JSON.parse(getPartItem1()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--优化算法选择--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
-        }
-    }
-
-
-}
-//第二步部位项数据库调取
-function getPartItem1() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "getAlgorithm.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
-}
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "designSubmitInfo.ashx?treatID=" + treatID;
+    var url = "designConfirmInfo.ashx?treatID=" + treatID;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -291,32 +221,33 @@ function sex(evt) {
     else
         return "男";
 }
-function saveDesignSubmit() {
-    if (document.getElementById("PlanSystem").value == "allItem") {
-        window.alert("计划系统没有选择");
+function charge(evt) {
+    if (evt == "0")
+        return "不可行";
+    else
+        return "可行";
+}
+function charge1(evt) {
+    if (evt == "0")
+        return "不是";
+    else
+        return "是";
+}
+function charge2(evt) {
+    if (evt == "0")
+        return "审核不通过";
+    else
+        return "审核通过";
+}
+function saveDesignConfirm() {
+    if (document.getElementById("state").value == "未审核") {
+        window.alert("请审核计划");
         return;
     }
-    if (document.getElementById("Grid").value == "allItem") {
-        window.alert("计算网格没有选择");
+    if (document.getElementById("advice").value == "") {
+        window.alert("请填写审核意见");
         return;
-    }
-    if (document.getElementById("Algorithm").value == "allItem") {
-        window.alert("优化算法没有选择");
-        return;
-    }
-    if (document.getElementById("IlluminatedNumber").value == "") {
-        window.alert("请填写射野数量");
-        return;
-    }
-    if (document.getElementById("MachineNumbe").value == "") {
-        window.alert("请填写机器跳数");
-        return;
-    }
-    if (document.getElementById("ControlPoint").value == "") {
-        window.alert("请填写控制点数量");
-        return;
-    }
-   
-    document.getElementById("saveDesignSubmit").submit();
+    }  
+    document.getElementById("saveDesignConfirm").submit();
 
 }
