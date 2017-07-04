@@ -112,7 +112,6 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
         var td = document.createElement("td");
         var sign = document.createElement("i");
         if (i <= equiment.length - 1) {
-          
             td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
             if (equiment[i].State == "0") {
                 if (getReplace(equiment[i], dateString)) {

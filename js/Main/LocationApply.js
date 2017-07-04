@@ -198,11 +198,17 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
             td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
             if (equiment[i].State == "0") {
                 if (getFixApplyTime(equiment[i], dateString)) {
-                    sign.className = "";
-                    td.addEventListener("click", chooseItem, false);
+                    if (compareWithToday(dateString)) {
+                        sign.className = "";
+                        td.addEventListener("click", chooseItem, false);
+                    } else {
+                        td.style.backgroundColor = "#C1C1C1";
+                        sign.className = "fa fa-fw fa-ban td-sign";
+                        td.addEventListener("click", hasChosen, false);
+                    }
                 } else {
                     td.style.backgroundColor = "#C1C1C1";
-                    sign.className = "fa fa-fw fa-exclamation-circle";
+                    sign.className = "fa fa-fw fa-ban td-sign";
                     td.addEventListener("click", hasChosen, false);
                 }
             } else {
@@ -237,7 +243,6 @@ function getFixApplyTime(equiment, dateString){
     var begintime = toTime(fixtime[0].Begin);
     var endtime = toTime(fixtime[0].End);
     var fixtimebiaozhun = fixtime[0].Date.split(" ")[0] + " " + begintime + "-" + endtime;
-
     var datedate = dateString.split("-");
     var groupstring = "-" + datedate[1] + "-" + datedate[2] + "-" + equiment.Begin + "-" + equiment.End;
     var group = groupstring.split("-");
@@ -348,12 +353,7 @@ function getLocationPatientInfo(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.patient[0];
 }
-//删除某节点的所有子节点
-function removeUlAllChild(evt) {
-    while (evt.hasChildNodes()) {
-        evt.removeChild(evt.firstChild);
-    }
-}
+
 
 //性别换算
 function sex(evt) {
@@ -505,4 +505,23 @@ function compare(evt1, evt2) {
     }
     return true;
 
+}
+function compareWithToday(time) {
+    var year = time.split("-")[0];
+    var month = time.split("-")[1];
+    var day = time.split("-")[2];
+    var date = new Date();
+    if (parseInt(year) < parseInt(date.getFullYear())) {
+        return false;
+    } else {
+        if (parseInt(month) < parseInt(date.getMonth() + 1)) {
+            return false;
+        } else {
+            if (parseInt(day) < parseInt(date.getDate())) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
 }

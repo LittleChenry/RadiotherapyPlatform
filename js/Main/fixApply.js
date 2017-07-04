@@ -149,8 +149,14 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
             var sign = document.createElement("i");
             td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
             if (equiment[i].State == "0") {
-                sign.className = "";
-                td.addEventListener("click", chooseItem, false);
+                if (compareWithToday(dateString)) {
+                    sign.className = "";
+                    td.addEventListener("click", chooseItem, false);
+                } else {
+                    td.style.backgroundColor = "#C1C1C1";
+                    sign.className = "fa fa-fw fa-ban td-sign";
+                    td.addEventListener("click", hasChosen, false);
+                }
             } else {
                 td.style.backgroundColor = "#C1C1C1";
                 sign.className = "fa fa-fw fa-ban td-sign";
@@ -367,4 +373,23 @@ function getfixequipItem() {
     xmlHttp.send();
     var Items = xmlHttp.responseText;
     return Items;
+}
+function compareWithToday(time) {
+    var year = time.split("-")[0];
+    var month = time.split("-")[1];
+    var day = time.split("-")[2];
+    var date = new Date();
+    if (parseInt(year) < parseInt(date.getFullYear())) {
+        return false;
+    } else {
+        if (parseInt(month) < parseInt(date.getMonth() + 1)) {
+            return false;
+        } else {
+            if (parseInt(day) < parseInt(date.getDate())) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
 }
