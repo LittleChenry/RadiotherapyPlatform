@@ -24,7 +24,7 @@
 </head>
 <body style="width:auto;min-width:900px;margin:auto;">
     <section class="content">
-        <div class="paper">
+        <div class="paper" id="needPrint">
             <input type="hidden" id="progress" name="progress" />
             <input type="hidden" id="diaguserid" name="diaguserid" />
             <div class="paper-title">
@@ -144,10 +144,17 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </section>
+
+    <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">
+
+    </section>
+    
      <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="../../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
+    <!-- JQuery PrintArea -->
+    <script src="../../../plugin/AdminLTE/jquery.PrintArea.js"></script>
     <!-- DataTables -->
     <script src="../../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
@@ -171,6 +178,6 @@
         $("#datepicker").datepicker({ autoclose: true });
         $("#Birthday").datepicker({ autoclose: true });
     </script>                                          
-    
+    <script src="../../../js/Main/FixedRecordPrint.js"></script>
 </body>
 </html>

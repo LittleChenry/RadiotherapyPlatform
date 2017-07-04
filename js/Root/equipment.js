@@ -3,12 +3,6 @@
 var obj = [];
 var Items = "";
 var isAllGood = true;
-window.onbeforeunload = function () {
-    var thisType = document.getElementById("formType");
-    thisType.value = "";
-    window.location.href = "../../pages/Root/Root-equipment.aspx";
-    return false;
-}
 
 function Init() {
     var ItemSelect = document.getElementById("TreatmentItem");

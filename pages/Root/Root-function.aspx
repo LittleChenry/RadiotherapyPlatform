@@ -421,6 +421,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
+                        <RowStyle HorizontalAlign="Center" />
                     </asp:GridView>
                     </ContentTemplate>
                 </asp:UpdatePanel>
