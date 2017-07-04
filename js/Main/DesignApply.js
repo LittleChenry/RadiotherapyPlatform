@@ -101,43 +101,43 @@ function getNowFormatDate() {
 
     return currentdate;
 }
+
 function readDosagePriority(DosagePriority) {
     var table = document.getElementById("Priority");
-    var rows = table.rows.length;
-    for (var i = rows-1; i > 0; i--) {
+    //RemoveAllChild(table);
+    var tbody = document.createElement("tbody");
+    for (var i = rows - 1; i > 1; i--) {
         table.deleteRow(i);
     }
-
+    //alert(tbody.innerHTML);
+    //tbody.html = "";
     DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
     var lists = new Array();
     lists = DosagePriority.split(";");
     for (var i = 0; i < lists.length; i++) {
         var list = new Array();
+        alert(lists[i]);
         list = lists[i].split(",");
-        var count = 0;
-        var row = table.insertRow(1);
+        var tr = document.createElement("tr");
+        for (var j; j < list.length; j++) {
+            var td = document.createElement("td");
+            var textNode = document.createTextNode(list[j]);
+            td.appendChild(textNode);
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+}
 
-        var t1 = row.insertCell(0);
-        var t2 = row.insertCell(1);
-        var t3 = row.insertCell(2);
-        var t4 = row.insertCell(3);
-        var t5 = row.insertCell(4);
-        var t6 = row.insertCell(5);
-        var t7 = row.insertCell(6);
-        var t8 = row.insertCell(7);
-        var t9 = row.insertCell(8);
-        t1.innerHTML = list[count++];
-        t2.innerHTML = list[count++];
-        t3.innerHTML = list[count++];
-        t4.innerHTML = list[count++];
-        t5.innerHTML = list[count++];
-        t6.innerHTML = list[count++];
-        t7.innerHTML = list[count++];
-        t8.innerHTML = list[count++];
-
-        rows++;
+function RemoveAllChild(area) {
+    while (area.hasChildNodes()) {
+        var first = area.firstChild;
+        if (first != null && first != undefined)
+            area.removeChild(first);
     }
 }
+
 function readDosage(DosagePriority) {
     var table = document.getElementById("Dosage");
     var rows = table.rows.length;

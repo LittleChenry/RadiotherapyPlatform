@@ -86,7 +86,7 @@
                     </div>
                     <div class="single-row">
                         <div class="item area-group col-xs-12">
-                            <table id="Priority" class="table table-bordered">
+                            <table id="Priority" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
                                 <thead>
                                     <tr>
                                         <th>靶区</th>
@@ -102,7 +102,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody style="text-align:center;">
                                     <tr>
                                         <td style="padding:0px;">
                                             <input id="Prioritytype0" name="Prioritytype0" type="text" class="td-input" />
@@ -143,7 +143,7 @@
                     </div>
                     <div class="single-row">
                         <div class="item area-group col-xs-12">
-                            <table id="Dosage" class="table table-bordered">
+                            <table id="Dosage" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
                                 <thead>
                                     <tr>
                                         <th>危及器官</th>
