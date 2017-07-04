@@ -21,7 +21,7 @@
 
     <!-- Main Css -->
     <link rel="stylesheet" href="../../css/Root/rootMain.css" />
-    <title></title>
+    <title>设备管理</title>
 
     <!-- Main CSS -->
     <link href="../../css/Root/Root-userInformation.css" rel="stylesheet" type="text/css" />
