@@ -149,35 +149,34 @@
                 
     </section>
     
-     <!-- jQuery 2.2.3 -->
-    <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="../../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
-    <!-- JQuery PrintArea -->
-    <script src="../../../plugin/AdminLTE/jquery.PrintArea.js"></script>
-    <!-- DataTables -->
-    <script src="../../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
-    <!-- bootstrap datepicker -->
-    <script src="../../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
-    <!-- SlimScroll -->
-    <script src="../../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="../../../plugin/AdminLTE/plugins/fastclick/fastclick.js"></script>
-    <!-- Bootstrap 3.3.6 -->
-    <script src="../../../plugin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../../../plugin/AdminLTE/dist/js/app.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
-    <!-- javascript -->
-    <script src="../../../js/Main/addimgs.js"></script> 
-    <script src="../../../js/Main/Fixed.js" type="text/javascript"></script>
-    <!-- Page script -->
-    <script type="text/javascript">
-        $("#datepicker").datepicker({ autoclose: true });
-        $("#Birthday").datepicker({ autoclose: true });
-    </script>                                          
-    <script src="../../../js/Main/FixedRecordPrint.js"></script>
+<!-- jQuery 2.2.3 -->
+<script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="../../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
+<!-- JQuery PrintArea -->
+<script src="../../../plugin/AdminLTE/jquery.PrintArea.js"></script>
+<!-- DataTables -->
+<script src="../../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="../../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
+<!-- SlimScroll -->
+<script src="../../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../../../plugin/AdminLTE/plugins/fastclick/fastclick.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="../../../plugin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../../plugin/AdminLTE/dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
+<!-- javascript -->
+<script src="../../../js/Main/addimgs.js"></script> 
+<script src="../../../js/Main/FixedRecordPrint.js"></script>
+<!-- Page script -->
+<script type="text/javascript">
+    $("#datepicker").datepicker({ autoclose: true });
+    $("#Birthday").datepicker({ autoclose: true });
+</script>
 </body>
 </html>
