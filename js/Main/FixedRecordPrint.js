@@ -31,6 +31,6 @@ function print() {
     $(".area-group").removeClass("area-group");
 
     $printArea.show();
-    $printArea.printArea({"mode":"popup","popClose":false});
+    $printArea.printArea({"mode":"popup","popClose":true});
     $printArea.hide();
 }
