@@ -2675,6 +2675,7 @@ a:focus {
 }
 .table-bordered {
   border: 1px solid #f4f4f4;
+  text-align: center;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
