@@ -256,15 +256,15 @@
   <!--  style="background-image:url(../../img/hospital.png)" -->
   <div class="content-wrapper">
     <section id="addpatient-content" class="content" style="background-color:#fff;width:1000px;">
-        <form id="frmRegist" name="frmRegist" method="post" runat="server">
+        <form id="frmaddpatient" name="frmaddpatient" method="post" runat="server">
             <div class="paper">
                 <div class="paper-title">
                     患者信息登记
                 </div>
                 <input type="hidden" name="ispostback" value="true" />
                 <input type="hidden" id="progress" name="progress" />
-                <input type="hidden" id="picture1" name="picture1" />
-               
+                <input type="hidden" id="userID" name="userID" />
+                <input type="hidden" id="regdoctor" name="regdoctor" />
                 <input id="patientID" type="hidden" name="patientID" />
                 <input id="treatID" type="hidden" name="treatID" />
                 <div class="paper-content">
@@ -314,7 +314,7 @@
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-3">身份证号：</span>
-                            <input id="IDcardNumber" name="Nation" class="form-item col-xs-9" type="text" AUTOCOMPLETE="OFF"/>
+                            <input id="IDcardNumber" name="IDcardNumber" class="form-item col-xs-9" type="text" AUTOCOMPLETE="OFF"/>
                         </div>
                     </div>
                     <div class="single-row">
@@ -385,13 +385,13 @@
                 </div>
                 <div class="paper-footer">
                     <div class="single-row">
-                        <div class="item col-xs-6">登记人：<span id="Span1" class="underline"></span></div>
+                        <div class="item col-xs-6">登记人：<span id="operate" class="underline"></span></div>
                         <div class="item col-xs-6">登记时间：<span id="date" class="underline"></span></div>
                     </div>
                 </div>
-            </div>
+            </div>          
             <div class="row" style="text-align:center;margin-top:20px;">
-                <button type="button" class="btn btn-block btn-success" style="margin:auto;width:20%;">保存</button>
+                <button id="save" type="button" class="btn btn-block btn-success" style="margin:auto;width:20%;">保存</button>
             </div>
 
         </form>
