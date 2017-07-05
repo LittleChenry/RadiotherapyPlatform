@@ -173,6 +173,7 @@
 <!-- javascript -->
 <script src="../../../js/Main/addimgs.js"></script> 
 <script src="../../../js/Main/FixedRecordPrint.js"></script>
+<script src="../../../js/Main/Fixed.js"></script>
 <!-- Page script -->
 <script type="text/javascript">
     $("#datepicker").datepicker({ autoclose: true });

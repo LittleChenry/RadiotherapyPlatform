@@ -29,14 +29,13 @@ function Init(evt) {
         var info = getReplaceInfomation(treatmentID);
         document.getElementById("replacementrequire").value = info.require;
         document.getElementById("replacementrequire").disabled = "true";
-        alert(info.Date.split(" ")[0]);
         document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
         document.getElementById("chooseappoint").disabled = "disabled";
         document.getElementById("applyuser").innerHTML = info.username;
         document.getElementById("time").innerHTML = info.ApplicationTime;
 
     } else {
-         createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
+        createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
         var date = new Date();
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
