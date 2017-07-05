@@ -1,19 +1,10 @@
-﻿jidnfuwiwjr 。 <%@ WebHandler Language="C#" Class="getdoctor" %>
+﻿<%@ WebHandler Language="C#" Class="getoperator" %>
 
 using System;
 using System.Web;
 using System.Text;
-/* ***********************************************************
- * FileName:getdoctor.ashx
- * Writer: xubxiao
- * create Date: 2017-5-24
- * ReWriter:
- * Rewrite Date:
- * impact :
- * 获取数据库中医生列表
- * **********************************************************/
+public class getoperator : IHttpHandler {
 
-public class getdoctor : IHttpHandler {
     DataLayer sqlOperation = new DataLayer("sqlStr");
     public void ProcessRequest(HttpContext context)
     {
@@ -34,21 +25,18 @@ public class getdoctor : IHttpHandler {
     }
     private string getdoctorItem()
     {
-
-
-        string countItem = "SELECT count(*) FROM user,user2role where user.ID=user2role.User_ID and user2role.Role_ID=2";
+        string countItem = "SELECT count(*) FROM user,user2role where user.ID=user2role.User_ID and user2role.Role_ID=5";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
 
-        string sqlCommand = "SELECT user.ID as ID,Name FROM user,user2role where user.ID=user2role.User_ID and user2role.Role_ID=2";
+        string sqlCommand = "SELECT user.ID as ID,Name FROM user,user2role where user.ID=user2role.User_ID and user2role.Role_ID=5";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
-        StringBuilder backText = new StringBuilder("{\"Item\":[");
+        StringBuilder backText = new StringBuilder("{\"operator\":[");
         int i = 1;
         while (reader.Read())
         {
             backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() + "\"}");
             if (i < count)
             {
-
                 backText.Append(",");
             }
             i++;
