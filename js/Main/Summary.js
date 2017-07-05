@@ -28,7 +28,7 @@ function Init(evt) {
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     document.getElementById("part").innerHTML = patient.partname;
-    if (patient.Progress = 16) {
+    if (patient.Progress == 16) {
         getSummaryInfo(treatID);
         var summaryinfo = SummaryInfo.summaryInfo;
         var length = summaryinfo.length;
