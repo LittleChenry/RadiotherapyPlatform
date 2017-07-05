@@ -11,7 +11,8 @@ public class handlerSetRole : IHttpHandler, IRequiresSessionState
         context.Response.ContentType = "text/plain";
         UserInformation user = (UserInformation)(context.Session["loginUser"]);
         user.setUserRole(context.Request.QueryString["role"]);
-        context.Response.Write("Hello World");
+        context.Session["loginUser"] = user;
+        context.Response.Write("");
     }
  
     public bool IsReusable {
