@@ -79,6 +79,34 @@
                     </div>
                 </div>
                 <div class="single-row">
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4" style="padding-left:0px;">工具：</span>
+                        <select id="" name="" class="form-item">
+                            <option>2D-MV</option>
+                            <option>2D-KV</option>
+                            <option>3D-KV</option>
+                            <option>US</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4" style="padding-left:0px;">配准算法：</span>
+                        <select id="" name="" class="form-item">
+                            <option>骨配准</option>
+                            <option>灰度配准</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4" style="padding-left:0px;">配准范围：</span>
+                        <select id="" name="" class="form-item">
+                            <option>20cm x 20cm</option>
+                            <option>10cm x 10cm</option>
+                            <option>PTV+5cm</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="single-row">
                     <div class="item area-group col-xs-12">
                         <table class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
                             <thead>

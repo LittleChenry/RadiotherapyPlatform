@@ -72,7 +72,7 @@
                     </div>  
                     <div class="single-row">
                      <div class="col-xs-12" style="padding-left:40%;" >
-                          <button id="viewpdf" class="btn btn-default" data-toggle="modal" data-target="#viewpdfwindow">查看计划PDF文档</button>
+                          <a id="viewpdf" href="../../../upload/PDF/20170704景宇 1216073606.pdf" target="_blank" class="btn btn-default">查看计划PDF文档</a>
                      </div>
                     </div>
                 </div>
@@ -80,55 +80,85 @@
                 <input type="hidden" name="ispostback" value="true" />
                 <input type="hidden"  id="hidetreatID" name="hidetreatID" />
                 <input type="hidden"  id="userID" name="userID" />
-                  <input type="hidden" id="progress" name="progress" />
+                <input type="hidden" id="progress" name="progress" />
                 <div class="paper-content">
                     <div class="content-title">
                         <span>复位记录填写：</span>
-                    </div>  
-                <div class="single-row">
-                    <div class="col-xs-12">
-                         <span class="col-xs-2" style="padding-left:0px;padding-top:60px">参数变化<br />(按照PDF填写)：</span>
-                         <div class="col-xs-10" style="padding-left:0px;">
-                        <table class="table table-bordered ">
-                           <tr style="text-align:center">
-                               <td style="width:12%"></td>
-                               <td style="width:22%">原始中心</td>
-                               <td style="width:22%">计划中心</td>
-                               <td style="width:22%">移床参数</td>
-                               <td style="width:22%">复位结果</td>
-                           </tr>
-                            <tr style="text-align:center">
-                                <td>x方向:</td>
-                               <td><input id="OriginCenter1" class="form-item" type="number" name="OriginCenter1"/></td>
-                               <td><input id="PlanCenter1" class="form-item" type="number" name="PlanCenter1"/></td>
-                               <td><input id="Movement1" class="form-item" type="number" name="Movement1"/></td>
-                               <td> <input id="Result1" class="form-item" type="number" name="Result1"/></td>
-                            </tr>
-                               <tr style="text-align:center">
-                                <td>y方向:</td>
-                               <td><input id="OriginCenter2" class="form-item" type="number" name="OriginCenter2"/></td>
-                               <td><input id="PlanCenter2" class="form-item" type="number" name="PlanCenter2"/></td>
-                               <td><input id="Movement2" class="form-item" type="number" name="Movement2"/></td>
-                                <td><input id="Result2" class="form-item" type="number" name="Result2"/></td>
-                            </tr>
-                                <tr style="text-align:center">
-                                <td>z方向:</td>
-                               <td><input id="OriginCenter3" class="form-item" type="number" name="OriginCenter3"/></td>
-                               <td><input id="PlanCenter3" class="form-item" type="number" name="PlanCenter3"/></td>
-                               <td><input id="Movement3" class="form-item" type="number" name="Movement3"/></td>
-                                <td> <input id="Result3" class="form-item" type="number" name="Result3"/></td>
-                            </tr>
-                        </table>          
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-6" style="padding-left:0px;">
+                            <span class="form-text col-xs-12">参数变化(按照PDF填写)：</span>
                         </div>
-                     </div>
-                 </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item area-group col-xs-12">
+                            <table id="ReplacementRecord" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
+                                <thead>
+                                    <tr>
+                                        <th>方向</th>
+                                        <th>原始中心(cm)</th>
+                                        <th>计划中心(cm)</th>
+                                        <th>移床参数(cm)</th>
+                                        <th>复位结果(cm)</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="text-align:center;">
+                                    <tr>
+                                        <td>x</td>
+                                        <td style="padding:0px;">
+                                            <input id="OriginCenter1" class="td-input" type="number" name="OriginCenter1"/>
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="PlanCenter1" class="td-input" type="number" name="PlanCenter1"/>
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="Movement1" class="td-input" type="number" name="Movement1"/>
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="Result1" class="td-input" type="number" name="Result1"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>y</td>
+                                        <td style="padding:0px;">
+                                            <input id="OriginCenter2" class="td-input" type="number" name="OriginCenter2"/>
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="PlanCenter2" class="td-input" type="number" name="PlanCenter2"/>
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="Movement2" class="td-input" type="number" name="Movement2"/>
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="Result2" class="td-input" type="number" name="Result2"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>z</td>
+                                        <td style="padding:0px;">
+                                            <input id="OriginCenter3" class="td-input" type="number" name="OriginCenter3"/>
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="PlanCenter3" class="td-input" type="number" name="PlanCenter3"/>
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="Movement3" class="td-input" type="number" name="Movement3"/>
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="Result3" class="td-input" type="number" name="Result3"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div class="single-row">
                         <input type="hidden" id="cankaodrr" name="cankaodrr" value="0" />
                         <div class="item col-xs-12">
                             <span class="col-xs-2" style="padding-left:0px;">参考DRR：</span>
                         </div>
                     </div>
-                       <div class="single-row">
+                    <div class="single-row">
                         <div class="item col-xs-12">
                             <div id="multipic_DRR" class="imgbox multifile">
                                 <div id="firstdrr" class="boxes">
@@ -142,13 +172,13 @@
                             </div>
                         </div>
                     </div>
-                <div class="single-row">
+                    <div class="single-row">
                         <input type="hidden" id="yanzheng" name="yanzheng" value="0" />
                         <div class="item col-xs-12">
                             <span class="col-xs-2" style="padding-left:0px;">验证图像：</span>
                         </div>
                     </div>
-                       <div class="single-row">
+                    <div class="single-row">
                         <div class="item col-xs-12">
                             <div id="multipic_yanzheng" class="imgbox multifile">
                                 <div id="firstyanzheng" class="boxes">
@@ -170,10 +200,10 @@
                     </div>
                  </div>
                 <div class="paper-footer">
-                    <div class="single-row">
-                        <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
-                        <div class="item col-xs-6">日期：<span id="date" class="underline"></span></div>
-                    </div> 
+                <div class="single-row">
+                <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
+                <div class="item col-xs-6">日期：<span id="date" class="underline"></span></div>
+                </div> 
                 </div> 
             </form> 
      </div>
@@ -222,7 +252,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <!-- javascript -->
-     <script src="../../../js/Main/replacerecord.js" type="text/javascript"></script>     
-        <script src="../../../js/Main/addimgs2.js"></script>                                  
+    <script src="../../../js/Main/replacerecord.js" type="text/javascript"></script>     
+    <script src="../../../js/Main/addimgs2.js"></script>                                  
 </body>
 </html>

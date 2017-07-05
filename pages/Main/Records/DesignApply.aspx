@@ -68,142 +68,139 @@
                 </div>
             </div>
             <div class="paper-content"> 
-               
-                  
-                    <div class="content-title">
-                        <span>填写计划申请信息：</span>
+                <div class="content-title">
+                    <span>填写计划申请信息：</span>
+                </div>
+                <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        特殊情况(放疗史)：
+                        <textarea id="Remarks" name="Remarks" class="form-area" style="width:80%;"></textarea>
                     </div>
-                    <div class="single-row">
-                        <div class="item area-group col-xs-12">
-                            特殊情况(放疗史)：
-                            <textarea id="Remarks" name="Remarks" class="form-area" style="width:80%;"></textarea>
-                        </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-6" style="padding-left:0px;">
+                        <span class="form-text col-xs-4">靶区处方剂量：</span>
                     </div>
-                    <div class="single-row">
-                        <div class="col-xs-6" style="padding-left:0px;">
-                            <span class="form-text col-xs-4">靶区处方剂量：</span>
-                        </div>
+                </div>
+                <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        <table id="Priority" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
+                            <thead>
+                                <tr>
+                                    <th>靶区</th>
+                                    <th>外放</th>
+                                    <th>PTV</th>
+                                    <th>单次量cGy</th>
+                                    <th>次数</th>
+                                    <th>总剂量cGy</th>
+                                    <th>备注</th>
+                                    <th>优先级</th>
+                                    <th style="text-align: center;">
+                                        <a href="javascript:addDosagePriority();"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align:center;">
+                                <tr>
+                                    <td style="padding:0px;">
+                                        <input id="Prioritytype0" name="Prioritytype0" type="text" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="Priorityout0" name="Priorityout0" type="text" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="Prioritptv0" name="Prioritptv0" type="text" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="Prioritcgy0" name="Prioritcgy0" type="number" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="Priorittime0" name="Priorittime0" type="number" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="Prioritsum0" name="Prioritsum0" type="number" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="Prioritremark0" name="Prioritremark0" type="text" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="Priorit0" name="Priorit0" type="number" class="td-input" />
+                                    </td>
+                                    <td id="delete0" style="text-align: center;padding:0px;vertical-align: middle;">
+                                        <a  href="javascript:deleteDosagePriority(0);"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="single-row">
-                        <div class="item area-group col-xs-12">
-                            <table id="Priority" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
-                                <thead>
-                                    <tr>
-                                        <th>靶区</th>
-                                        <th>外放</th>
-                                        <th>PTV</th>
-                                        <th>单次量cGy</th>
-                                        <th>次数</th>
-                                        <th>总剂量cGy</th>
-                                        <th>备注</th>
-                                        <th>优先级</th>
-                                        <th style="text-align: center;">
-                                            <a href="javascript:addDosagePriority();"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody style="text-align:center;">
-                                    <tr>
-                                        <td style="padding:0px;">
-                                            <input id="Prioritytype0" name="Prioritytype0" type="text" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input id="Priorityout0" name="Priorityout0" type="text" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input id="Prioritptv0" name="Prioritptv0" type="text" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input id="Prioritcgy0" name="Prioritcgy0" type="number" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input id="Priorittime0" name="Priorittime0" type="number" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input id="Prioritsum0" name="Prioritsum0" type="number" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input id="Prioritremark0" name="Prioritremark0" type="text" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input id="Priorit0" name="Priorit0" type="number" class="td-input" />
-                                        </td>
-                                        <td id="delete0" style="text-align: center;padding:0px;vertical-align: middle;">
-                                            <a  href="javascript:deleteDosagePriority(0);"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-6" style="padding-left:0px;">
+                        <span class="form-text col-xs-4">危及器官限量：</span>
                     </div>
-                    <div class="single-row">
-                        <div class="col-xs-6" style="padding-left:0px;">
-                            <span class="form-text col-xs-4">危及器官限量：</span>
-                        </div>
+                </div>
+                <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        <table id="Dosage" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
+                            <thead>
+                                <tr>
+                                    <th>危及器官</th>
+                                    <th>D/V</th>
+                                    <th>限制</th>
+                                    <th>数值</th>
+                                    <th>PRV/V</th>
+                                    <th>限制</th>
+                                    <th>数值</th>
+                                    <th>优先级</th>
+                                    <th style="text-align: center;">
+                                        <a href="javascript:addDosage();"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding:0px;">
+                                        <input id="type0" name="type0" type="text" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="dv0" name="dv0" type="text" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input type="text" class="td-input" value="<" readonly="true" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="number0" name="number0" type="number" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="prv0" name="prv0" type="text" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input type="text" class="td-input" value="<" readonly="true" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="numbers0" name="numbers0" type="number" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="pp0" name="pp0" type="number" class="td-input" />
+                                    </td>
+                                    <td id="deletes0" style="text-align: center;padding:0px;vertical-align: middle;">
+                                        <a href="javascript:deleteDosage(0);"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="single-row">
-                        <div class="item area-group col-xs-12">
-                            <table id="Dosage" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
-                                <thead>
-                                    <tr>
-                                        <th>危及器官</th>
-                                        <th>D/V</th>
-                                        <th>限制</th>
-                                        <th>数值</th>
-                                        <th>PRV/V</th>
-                                        <th>限制</th>
-                                        <th>数值</th>
-                                        <th>优先级</th>
-                                        <th style="text-align: center;">
-                                            <a href="javascript:addDosage();"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="padding:0px;">
-                                            <input id="type0" name="type0" type="text" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input id="dv0" name="dv0" type="text" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input type="text" class="td-input" value="<" readonly="true" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input id="number0" name="number0" type="number" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input id="prv0" name="prv0" type="text" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input type="text" class="td-input" value="<" readonly="true" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input id="numbers0" name="numbers0" type="number" class="td-input" />
-                                        </td>
-                                        <td style="padding:0px;">
-                                            <input id="pp0" name="pp0" type="number" class="td-input" />
-                                        </td>
-                                        <td id="deletes0" style="text-align: center;padding:0px;vertical-align: middle;">
-                                            <a href="javascript:deleteDosage(0);"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4" style="padding-left:0px;">治疗技术：</span>
+                        <select id="technology" name="technology" class="form-item"></select>
                     </div>
-                    <div class="single-row">
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">治疗技术：</span>
-                            <select id="technology" name="technology" class="form-item"></select>
-                        </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">放疗设备：</span>
-                            <select id="equipment" name="equipment" class="form-item"></select>
-                        </div>
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4" style="padding-left:0px;">放疗设备：</span>
+                        <select id="equipment" name="equipment" class="form-item"></select>
                     </div>
-               
+                </div>
             </div>
             <div class="paper-footer">
                 <div class="single-row">

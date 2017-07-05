@@ -12,6 +12,7 @@ public class UserInformation
     private string userNumber;
     private string userName;
     private string userRole;
+    private string assistant;
 
     /// <summary>
     /// 构造函数
@@ -61,6 +62,16 @@ public class UserInformation
     public void setUserRole(string role)
     {
         userRole = role;
+    }
+
+    public void setAssistant(string assistant)
+    {
+        this.assistant = assistant;
+    }
+
+    public string getAssistant()
+    {
+        return this.assistant;
     }
 
     public static Dictionary<string,string> GetRoleName()
