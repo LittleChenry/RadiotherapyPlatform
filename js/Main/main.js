@@ -12,11 +12,40 @@ $(document).ready(function () {
         Paging(Searchedpatients);
     });
     Paging(patient);
+    $("#signOut").bind("click", function () {
+        removeSession();//ajax 注销用户Session
+        window.location.replace("../Login/Login.aspx");
+    });
+    setAssistant();
 })
 
 /*window.onresize=function(){
     document.location.reload();
 }*/
+
+function setAssistant() {
+    $.ajax({
+        type: "GET",
+        url: "../../pages/Main/Records/getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            obj = $.parseJSON(data);
+            if (obj.assistant == "") {
+                $('#chooseOperator').modal({ backdrop: 'static', keyboard: false });
+            }
+        }
+    });
+
+    
+}
+
+function removeSession() {
+    $.ajax({
+        type: "GET",
+        url: "../../Root/removeSession.ashx"
+    });
+}
 
 function Recover(){
     if(currentID != "0"){

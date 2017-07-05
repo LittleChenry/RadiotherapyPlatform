@@ -133,15 +133,15 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span id="out-name" class="hidden-xs">Chenry</span>
+              <span id="out-name" class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 <p>
-                  <span id="in-name">Chenry</span>
-                  <small id="role">医师</small>
+                  <span id="in-name"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
+                  <small id="role"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserRole() %></small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -149,7 +149,7 @@
                 <div class="row">
                   <div class="text-center">
                     <span>操作成员:</span>
-                    <span id="operator">Peach、Chenry、jy</span>
+                    <span id="operator"></span>
                   </div>
                 </div>
                 <!-- /.row -->
@@ -157,10 +157,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="javascript:;" class="btn btn-default btn-flat">切换角色</a>
+                  <a href="../Login/changeRole.aspx" class="btn btn-default btn-flat">切换角色</a>
                 </div>
                 <div class="pull-right">
-                  <a href="javascript:;" class="btn btn-default btn-flat">注销</a>
+                  <a id="signOut" href="javascript:;" class="btn btn-default btn-flat">注销</a>
                 </div>
               </li>
             </ul>
@@ -368,6 +368,51 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
+<div id="chooseOperator" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">选择操作成员</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>成员1</label>
+                    <select class="form-control">
+                        <option>option 1</option>
+                        <option>option 2</option>
+                        <option>option 3</option>
+                        <option>option 4</option>
+                        <option>option 5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>成员2</label>
+                    <select class="form-control">
+                        <option>option 1</option>
+                        <option>option 2</option>
+                        <option>option 3</option>
+                        <option>option 4</option>
+                        <option>option 5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>成员3</label>
+                    <select class="form-control">
+                        <option>option 1</option>
+                        <option>option 2</option>
+                        <option>option 3</option>
+                        <option>option 4</option>
+                        <option>option 5</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="saveOperator" class="btn btn-primary" data-dismiss="modal">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
