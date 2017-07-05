@@ -30,6 +30,6 @@ function print() {
     $("#printArea .boxes").removeClass("boxes").css("margin", "0px 16px 16px 0px");
 
     $printArea.show();
-    $printArea.printArea();
+    $printArea.printArea({"mode":"popup"});
     $printArea.hide();
 }

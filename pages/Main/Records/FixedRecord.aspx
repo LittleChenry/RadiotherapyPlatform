@@ -7,20 +7,20 @@
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>病情诊断</title>
     <!-- css -->
-    <link rel="stylesheet" href="../../../css/Main/Records.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/css/Main/Records.css"/>
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/bootstrap/css/bootstrap.min.css"/>
     <!-- DataTables -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
     <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datepicker/datepicker3.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
     <!-- Ionicons -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
 </head>
 <body style="width:auto;min-width:900px;margin:auto;">
     <section class="content">
@@ -146,7 +146,21 @@
     </section>
 
     <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">
-
+                 <!-- css -->
+    <link rel="stylesheet" href="/RadiotherapyPlatform/css/Main/Records.css" media="print"/>
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/bootstrap/css/bootstrap.min.css" media="print"/>
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css" media="print"/>
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datepicker/datepicker3.css" media="print" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css" media="print"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css" media="print"/>
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+    folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/dist/css/skins/_all-skins.min.css" media="print"/>
     </section>
     
      <!-- jQuery 2.2.3 -->
