@@ -217,6 +217,12 @@
             <span>患者登记</span>
           </a>
         </li>
+        <li class="treeview">
+          <a href="AppointmentView.aspx">
+            <i class="fa fa-list-alt"></i>
+            <span>预约视图</span>
+          </a>
+        </li>
         <li>
           <a href="pages/widgets.html">
             <i class="fa fa-th"></i>
