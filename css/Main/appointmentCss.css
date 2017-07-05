@@ -1,0 +1,4 @@
+﻿#appointTable > thead > tr > th, #appointTable > tbody > tr > th, #appointTable > tfoot > tr > th, #appointTable > thead > tr > td, #appointTable > tbody > tr > td, #appointTable > tfoot > tr > td {
+ border:1px solid #656161 ;
+ border-bottom-width:2px;
+}
