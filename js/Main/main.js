@@ -19,14 +19,17 @@ $(document).ready(function () {
     $("#changeOperator").bind("click", function () {
         changeAssistant();
     });
-    setAssistant();
+    $("#saveOperator").bind("click",function(){
+        setAssistant();
+    });
+    chooseAssistant();
 })
 
 /*window.onresize=function(){
     document.location.reload();
 }*/
 
-function setAssistant() {
+function chooseAssistant() {
     var operator1 = $("#operator1");
     var operator2 = $("#operator2");
     var operator3 = $("#operator3");
@@ -48,8 +51,12 @@ function setAssistant() {
                         operator1.empty();
                         operator2.empty();
                         operator3.empty();
-                        var option_empty = "<option>----选择操作成员1----</option>";
-                        operator1.append(option_empty);
+                        var option_empty_1 = "<option value=''>----选择操作成员1----</option>";
+                        var option_empty_2 = "<option value=''>----选择操作成员2----</option>";
+                        var option_empty_3 = "<option value=''>----选择操作成员3----</option>";
+                        operator1.append(option_empty_1);
+                        operator2.append(option_empty_2);
+                        operator3.append(option_empty_3);
                         for (var i = 0; i < operatorUsers.operator.length; i++) {
                             if(obj.userID != operatorUsers.operator[i].ID){
                                 var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
@@ -59,8 +66,10 @@ function setAssistant() {
                         operator1.change(function(){
                             operator2.empty();
                             operator3.empty();
-                            var option_empty = "<option>----选择操作成员2----</option>";
-                            operator2.append(option_empty);
+                            var option_empty_2 = "<option value=''>----选择操作成员2----</option>";
+                            var option_empty_3 = "<option value=''>----选择操作成员3----</option>";
+                            operator2.append(option_empty_2);
+                            operator3.append(option_empty_3);
                             for (var i = 0; i < operatorUsers.operator.length; i++) {
                                 if(this.value != operatorUsers.operator[i].ID && obj.userID != operatorUsers.operator[i].ID){
                                     var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
@@ -69,8 +78,8 @@ function setAssistant() {
                             }
                             operator2.change({operator2:this.value},function(e){
                                 operator3.empty();
-                                var option_empty = "<option>----选择操作成员3----</option>";
-                                operator3.append(option_empty);
+                                var option_empty_3 = "<option value=''>----选择操作成员3----</option>";
+                                operator3.append(option_empty_3);
                                 for (var i = 0; i < operatorUsers.operator.length; i++) {
                                     if(e.data.operator2 != operatorUsers.operator[i].ID && this.value != operatorUsers.operator[i].ID && obj.userID != operatorUsers.operator[i].ID){
                                         var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
@@ -85,6 +94,8 @@ function setAssistant() {
                     }
                 });
                 $('#chooseOperator').modal({ backdrop: 'static', keyboard: false });
+            }else{
+                $("#operator").html(obj.assistant);
             }
         },
         error: function(){
@@ -114,8 +125,12 @@ function changeAssistant(){
                     operator1.empty();
                     operator2.empty();
                     operator3.empty();
-                    var option_empty = "<option>----选择操作成员1----</option>";
-                    operator1.append(option_empty);
+                    var option_empty_1 = "<option value=''>----选择操作成员1----</option>";
+                    var option_empty_2 = "<option value=''>----选择操作成员2----</option>";
+                    var option_empty_3 = "<option value=''>----选择操作成员3----</option>";
+                    operator1.append(option_empty_1);
+                    operator2.append(option_empty_2);
+                    operator3.append(option_empty_3);
                     for (var i = 0; i < operatorUsers.operator.length; i++) {
                         if(obj.userID != operatorUsers.operator[i].ID){
                             var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
@@ -125,8 +140,10 @@ function changeAssistant(){
                     operator1.change(function(){
                         operator2.empty();
                         operator3.empty();
-                        var option_empty = "<option>----选择操作成员2----</option>";
-                        operator2.append(option_empty);
+                        var option_empty_2 = "<option value=''>----选择操作成员2----</option>";
+                        var option_empty_3 = "<option value=''>----选择操作成员3----</option>";
+                        operator2.append(option_empty_2);
+                        operator3.append(option_empty_3);
                         for (var i = 0; i < operatorUsers.operator.length; i++) {
                             if(this.value != operatorUsers.operator[i].ID && obj.userID != operatorUsers.operator[i].ID){
                                 var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
@@ -135,8 +152,8 @@ function changeAssistant(){
                         }
                         operator2.change({operator2:this.value},function(e){
                             operator3.empty();
-                            var option_empty = "<option>----选择操作成员3----</option>";
-                            operator3.append(option_empty);
+                            var option_empty_3 = "<option value=''>----选择操作成员3----</option>";
+                            operator3.append(option_empty_3);
                             for (var i = 0; i < operatorUsers.operator.length; i++) {
                                 if(e.data.operator2 != operatorUsers.operator[i].ID && this.value != operatorUsers.operator[i].ID && obj.userID != operatorUsers.operator[i].ID){
                                     var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
@@ -153,6 +170,35 @@ function changeAssistant(){
             $('#chooseOperator').modal({ backdrop: 'static', keyboard: false });
         },
         error: function(){
+            alert("error");
+        }
+    });
+}
+
+function setAssistant(){
+    var operators = "";
+    for (var i = 1; i < 4; i++) {
+        if($("#operator"+ i +" option:selected").val() != ""){
+            operators += $("#operator"+ i +" option:selected").html();
+            var next = i + 1;
+            if ($("#operator" + next).val() != "" && $("#operator" + next).length != 0) {
+                operators += ","
+            }else{
+                break;
+            }
+        }else{
+            break;
+        } 
+    }
+    if (operators == "") {
+        operators = "无";
+    }
+    $("#operator").html(operators);
+    $.ajax({
+        type: "POST",
+        url: "../../pages/Main/Records/setAssistant.ashx",
+        data:{assistant : operators},
+        error:function(){
             alert("error");
         }
     });
