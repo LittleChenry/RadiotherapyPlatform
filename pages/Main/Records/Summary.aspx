@@ -57,7 +57,7 @@
                 <div class="single-row">
                     <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
                     <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
-                    <div class="item col-xs-4">所属医生：<span id="diaguser" class="underline"></span></div>
+                    <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
             </div>
             <div class="paper-content">
@@ -67,40 +67,15 @@
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
                         随访内容：
-                        <textarea id="" name="" class="form-area" style="width:80%;"></textarea>
+                        <textarea id="content" name="content" class="form-area" style="width:80%;"></textarea>
                     </div>
                 </div>
             </div>
-            <div class="paper-content">
+            <div id="summarycontent" class="paper-content">
                 <div class="content-title">
                     <span>随访历史：</span>
                 </div>
-                <div class="single-record">
-                    <div class="single-row">
-                        <div class="item col-xs-4"><span>2017年3月2日</span></div>
-                    </div>
-                    <div class="single-row">
-                        <span class="col-xs-2">随访内容：</span>
-                        <span class="col-xs-10">2017年3月2日内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</span>
-                    </div>
-                    <div class="single-row">
-                        <span class="col-xs-2">随访医生：</span>
-                        <span class="col-xs-4">王医生</span>
-                    </div>
-                </div>
-                <div class="single-record">
-                    <div class="single-row">
-                        <div class="item col-xs-4"><span>2017年2月2日</span></div>
-                    </div>
-                    <div class="single-row">
-                        <span class="col-xs-2">随访内容：</span>
-                        <span class="col-xs-10">2017年2月2日内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</span>
-                    </div>
-                    <div class="single-row">
-                        <span class="col-xs-2">随访医生：</span>
-                        <span class="col-xs-4">王医生</span>
-                    </div>
-                </div>
+                
             </div>
             <div class="paper-footer">
                 <div class="single-row">
@@ -130,7 +105,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <!-- javascript -->
-    <script src="../../../js/Main/fixApply.js" type="text/javascript"></script>
+    <script src="../../../js/Main/Summary.js" type="text/javascript"></script>
     <!-- Page script -->
     <script type="text/javascript">
         $("#AppiontDate").datepicker({ autoclose: true });

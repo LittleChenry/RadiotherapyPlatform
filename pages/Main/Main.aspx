@@ -436,7 +436,10 @@
                }
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 14) {
                    $("#record-iframe")[0].contentWindow.postimportReplaceRecord();
-               }
+               } 
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 16) {
+                   $("#record-iframe")[0].contentWindow.putIn();
+               } 
         });
     })
 </script>
