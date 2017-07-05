@@ -29,6 +29,7 @@ function Init(evt) {
         var info = getReplaceInfomation(treatmentID);
         document.getElementById("replacementrequire").value = info.require;
         document.getElementById("replacementrequire").disabled = "true";
+        alert(info.Date.split(" ")[0]);
         document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
         document.getElementById("chooseappoint").disabled = "disabled";
         document.getElementById("applyuser").innerHTML = info.username;

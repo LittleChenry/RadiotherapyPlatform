@@ -26,7 +26,7 @@ public class Getfinishedreplace : IHttpHandler {
         DataLayer sqlOperation = new DataLayer("sqlStr");
         DataLayer sqlOperation1 = new DataLayer("sqlStr");
         StringBuilder backText = new StringBuilder("{\"info\":[");
-        string sqlCommand = "select replacement.ReplacementRequirements_ID as requirement,appointment.ID as appointid,equipment.Name as equipname,Begin,End,Date,ApplicationTime,user.Name as username from treatment,user,replacement,appointment,equipment where treatment.Replacement_ID=replacement.ID and replacement.Appointment_ID=appointment.ID and appointment.Equipment_ID=equipment.ID and replacement.Application_User_ID=user.ID";
+        string sqlCommand = "select replacement.ReplacementRequirements_ID as requirement,appointment.ID as appointid,equipment.Name as equipname,Begin,End,Date,ApplicationTime,user.Name as username from treatment,user,replacement,appointment,equipment where treatment.Replacement_ID=replacement.ID and replacement.Appointment_ID=appointment.ID and appointment.Equipment_ID=equipment.ID and replacement.Application_User_ID=user.ID and treatment.ID=@treat";
         sqlOperation.AddParameterWithValue("@treat", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
