@@ -149,7 +149,7 @@
                 <div class="row">
                   <div class="text-center">
                     <span>操作成员:</span>
-                    <span id="operator"></span>
+                    <a id="changeOperator" href="javascript:;"><span id="operator"></span></a>
                   </div>
                 </div>
                 <!-- /.row -->
@@ -378,33 +378,15 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label>成员1</label>
-                    <select class="form-control">
-                        <option>option 1</option>
-                        <option>option 2</option>
-                        <option>option 3</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
-                    </select>
+                    <select id="operator1" class="form-control"></select>
                 </div>
                 <div class="form-group">
                     <label>成员2</label>
-                    <select class="form-control">
-                        <option>option 1</option>
-                        <option>option 2</option>
-                        <option>option 3</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
-                    </select>
+                    <select id="operator2" class="form-control"></select>
                 </div>
                 <div class="form-group">
                     <label>成员3</label>
-                    <select class="form-control">
-                        <option>option 1</option>
-                        <option>option 2</option>
-                        <option>option 3</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
-                    </select>
+                    <select id="operator3" class="form-control"></select>
                 </div>
             </div>
             <div class="modal-footer">

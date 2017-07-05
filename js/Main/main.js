@@ -16,6 +16,9 @@ $(document).ready(function () {
         removeSession();//ajax 注销用户Session
         window.location.replace("../Login/Login.aspx");
     });
+    $("#changeOperator").bind("click", function () {
+        changeAssistant();
+    });
     setAssistant();
 })
 
@@ -24,6 +27,9 @@ $(document).ready(function () {
 }*/
 
 function setAssistant() {
+    var operator1 = $("#operator1");
+    var operator2 = $("#operator2");
+    var operator3 = $("#operator3");
     $.ajax({
         type: "GET",
         url: "../../pages/Main/Records/getSession.ashx",
@@ -32,12 +38,124 @@ function setAssistant() {
         success: function (data) {
             obj = $.parseJSON(data);
             if (obj.assistant == "") {
+                $.ajax({
+                    type: "GET",
+                    url: "../../pages/Main/Records/getoperator.ashx",
+                    async: false,
+                    dateType: "text",
+                    success: function (data) {
+                        operatorUsers = $.parseJSON(data);
+                        operator1.empty();
+                        operator2.empty();
+                        operator3.empty();
+                        var option_empty = "<option>----选择操作成员1----</option>";
+                        operator1.append(option_empty);
+                        for (var i = 0; i < operatorUsers.operator.length; i++) {
+                            if(obj.userID != operatorUsers.operator[i].ID){
+                                var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
+                                operator1.append(option);
+                            }
+                        }
+                        operator1.change(function(){
+                            operator2.empty();
+                            operator3.empty();
+                            var option_empty = "<option>----选择操作成员2----</option>";
+                            operator2.append(option_empty);
+                            for (var i = 0; i < operatorUsers.operator.length; i++) {
+                                if(this.value != operatorUsers.operator[i].ID && obj.userID != operatorUsers.operator[i].ID){
+                                    var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
+                                    operator2.append(option);
+                                }
+                            }
+                            operator2.change({operator2:this.value},function(e){
+                                operator3.empty();
+                                var option_empty = "<option>----选择操作成员3----</option>";
+                                operator3.append(option_empty);
+                                for (var i = 0; i < operatorUsers.operator.length; i++) {
+                                    if(e.data.operator2 != operatorUsers.operator[i].ID && this.value != operatorUsers.operator[i].ID && obj.userID != operatorUsers.operator[i].ID){
+                                        var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
+                                        operator3.append(option);
+                                    }
+                                }
+                            });
+                        });
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
                 $('#chooseOperator').modal({ backdrop: 'static', keyboard: false });
             }
+        },
+        error: function(){
+            alert("error");
         }
     });
+}
 
-    
+function changeAssistant(){
+    var operator1 = $("#operator1");
+    var operator2 = $("#operator2");
+    var operator3 = $("#operator3");
+    $.ajax({
+        type: "GET",
+        url: "../../pages/Main/Records/getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            obj = $.parseJSON(data);
+            $.ajax({
+                type: "GET",
+                url: "../../pages/Main/Records/getoperator.ashx",
+                async: false,
+                dateType: "text",
+                success: function (data) {
+                    operatorUsers = $.parseJSON(data);
+                    operator1.empty();
+                    operator2.empty();
+                    operator3.empty();
+                    var option_empty = "<option>----选择操作成员1----</option>";
+                    operator1.append(option_empty);
+                    for (var i = 0; i < operatorUsers.operator.length; i++) {
+                        if(obj.userID != operatorUsers.operator[i].ID){
+                            var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
+                            operator1.append(option);
+                        }
+                    }
+                    operator1.change(function(){
+                        operator2.empty();
+                        operator3.empty();
+                        var option_empty = "<option>----选择操作成员2----</option>";
+                        operator2.append(option_empty);
+                        for (var i = 0; i < operatorUsers.operator.length; i++) {
+                            if(this.value != operatorUsers.operator[i].ID && obj.userID != operatorUsers.operator[i].ID){
+                                var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
+                                operator2.append(option);
+                            }
+                        }
+                        operator2.change({operator2:this.value},function(e){
+                            operator3.empty();
+                            var option_empty = "<option>----选择操作成员3----</option>";
+                            operator3.append(option_empty);
+                            for (var i = 0; i < operatorUsers.operator.length; i++) {
+                                if(e.data.operator2 != operatorUsers.operator[i].ID && this.value != operatorUsers.operator[i].ID && obj.userID != operatorUsers.operator[i].ID){
+                                    var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
+                                    operator3.append(option);
+                                }
+                            }
+                        });
+                    });
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+            $('#chooseOperator').modal({ backdrop: 'static', keyboard: false });
+        },
+        error: function(){
+            alert("error");
+        }
+    });
 }
 
 function removeSession() {
