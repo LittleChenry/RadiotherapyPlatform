@@ -87,7 +87,7 @@
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6" style="padding-left:0px;">
-                            <span class="form-text">参数变化(按照PDF填写)：</span>
+                            <span class="form-text col-xs-12">参数变化(按照PDF填写)：</span>
                         </div>
                     </div>
                     <div class="single-row">

@@ -72,24 +72,27 @@
                     <div class="single-row">
                         <div class="item col-xs-4">固定装置：<span id="fixedEquipment" class="underline"></span></div>
                         <div class="item col-xs-4">固定模具：<span id="modelID" class="underline"></span></div>
-                        <div class="item col-xs-4">体位：<span id="body" class="underline"></span></div>   
-                    </div>
-                     <div class="single-row">
-                        <div class="item col-xs-4">附件：<span id="AnnexDescription" class="underline"></span></div>
-                         <div class="item col-xs-4">扫描部位：<span id="ScanPart" class="underline"></span></div>
-                        <div class="item col-xs-4">扫描方式：<span id="ScanMethod"  class="underline"></span></div>
-                    </div>
-                     <div class="single-row">
-                         <div class="item col-xs-4">特殊要求：<span id="requireID" class="underline"></span></div>
-                         <div class="item col-xs-4">上界：<span id="UpperBound" class="underline"></span></div>
-                        <div class="item col-xs-4">下界：<span id="LowerBound" class="underline"></span></div>
+                        <div class="item col-xs-4">特殊要求：<span id="requireID" class="underline"></span></div>
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-4">增强：<span id="Enhance" class="underline"></span></div>  
-                        <div class="item col-xs-4">备注：<span id="Remarks" class="underline"></span></div>
-                        <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
+                        <div class="item col-xs-12">体位：<span id="body" class="underline"></span></div>   
+                    </div>
+                    <div class="single-row">
+                        <div class="item col-xs-12">附件：<span id="AnnexDescription" class="underline"></span></div>
                     </div>
                      <div class="single-row">
+                        
+                        <div class="item col-xs-4">扫描部位：<span id="ScanPart" class="underline"></span></div>
+                        <div class="item col-xs-4">扫描方式：<span id="ScanMethod"  class="underline"></span></div>
+                         <div class="item col-xs-4">上界：<span id="UpperBound" class="underline"></span></div>
+                    </div>
+                     <div class="single-row">
+                        <div class="item col-xs-4">下界：<span id="LowerBound" class="underline"></span></div>
+                        <div class="item col-xs-4">增强：<span id="Enhance" class="underline"></span></div>  
+                        <div class="item col-xs-4">备注：<span id="Remarks" class="underline"></span></div>
+                    </div>
+                     <div class="single-row">
+                         <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
                          <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>   
                     </div>
                 </div>
