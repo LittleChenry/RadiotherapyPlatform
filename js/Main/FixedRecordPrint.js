@@ -21,15 +21,16 @@ function print() {
                .replace(reg2, "<br />")
                .replace(reg3, "<br />");
 
-        var $p = $("<span>" + content + "</span>");
+        var $p = $("<span class=col-xs-10>" + content + "</span>");
         $($text[i]).replaceWith($p);
     }
 
     $("#printArea .paper").css("border", "0px");
     $("#printArea .img").removeClass("img").css("height","140px");
     $("#printArea .boxes").removeClass("boxes").css("margin", "0px 16px 16px 0px");
+    $(".area-group").removeClass("area-group");
 
     $printArea.show();
-    $printArea.printArea({"mode":"popup"});
+    $printArea.printArea({"mode":"popup","popClose":false});
     $printArea.hide();
 }
