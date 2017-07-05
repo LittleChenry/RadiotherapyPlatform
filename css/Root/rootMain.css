@@ -1,1 +1,7 @@
-﻿
+﻿#tableArea > table {
+    text-align:center;
+}
+
+#addGroup > tbody > tr > th, #editArea > tr > th {
+    width:20%;
+}

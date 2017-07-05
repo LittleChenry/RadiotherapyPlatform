@@ -23,6 +23,7 @@
     <!-- Main CSS -->
     <link href="../../css/Main/main.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../css/Root/equipmentMain.css" />
+    <link href="../../css/Root/rootMain.css" rel="stylesheet" />
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
