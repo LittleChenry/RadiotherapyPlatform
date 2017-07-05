@@ -9,10 +9,11 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- css -->
-  <link rel="stylesheet" href="../../css/Main/main.css">
     <link rel="stylesheet" href="../../css/Main/Records.css">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css">
+      <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css" />
   <!-- DataTables -->
   <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
   <!-- Font Awesome -->
@@ -291,9 +292,9 @@
                     <div class="single-row">
                         <div class="col-xs-4">
                             <span class="form-text col-xs-4" style="padding-left:0px;">姓名：</span>
-                            <input id="userName" name="userName" class="form-item col-xs-8" type="text"/>
+                            <input id="userName" name="userName" class="form-item col-xs-8" type="text"  AUTOCOMPLETE="OFF"/>
                         </div>
-                        <div class="item col-xs-6" style="padding-top:5px;">
+                        <div class="item col-xs-6" style="padding-top:5px;"> 
                             <span class="col-xs-3">性别：</span>
                             <span class="col-xs-3" style="padding-left:0px;">
                                 <input type="radio" name="Gender" id="male" value="M" />
@@ -308,21 +309,22 @@
                     <div class="single-row">
                         <div class="col-xs-4">
                             <span class="form-text col-xs-4" style="padding-left:0px;">民族：</span>
-                            <input id="Nation" name="Nation" class="form-item col-xs-8" type="text"/>
+                            <input id="Nation" name="Nation"  class="form-item col-xs-8" type="text"  AUTOCOMPLETE="OFF" />
+  
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-3">身份证号：</span>
-                            <input id="IDcardNumber" name="Nation" class="form-item col-xs-9" type="text"/>
+                            <input id="IDcardNumber" name="Nation" class="form-item col-xs-9" type="text" AUTOCOMPLETE="OFF"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-4">
                             <span class="form-text col-xs-4" style="padding-left:0px;">出生日期：</span>
-                            <input class="form-item col-xs-8" id="Birthday" name="Birthday"type="text"  placeholder="选择日期" />
+                            <input class="form-item col-xs-8" id="Birthday" name="Birthday"type="text"  placeholder="选择日期"   AUTOCOMPLETE="OFF"/>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-3">地址：</span>
-                            <input id="Address" name="Address" class="form-item col-xs-9" type="text"/>
+                            <input id="Address" name="Address" class="form-item col-xs-9" AUTOCOMPLETE="OFF" type="text"/>
                         </div>
                     </div>
                     <div class="single-row">
@@ -391,6 +393,7 @@
             <div class="row" style="text-align:center;margin-top:20px;">
                 <button type="button" class="btn btn-block btn-success" style="margin:auto;width:20%;">保存</button>
             </div>
+
         </form>
     </section>
   </div>
@@ -412,6 +415,8 @@
 <script src="../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
+      <!-- bootstrap datepicker -->
+    <script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- DataTables -->
 <script src="../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
@@ -426,9 +431,11 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- js -->
-<script src="../../js/Main/main.js"></script>
+<script src="../../js/Main/AddPatient.js"></script>
+    <script src="../../js/Main/addimgs.js"></script>
 <script>
     $("#addpatient-content").css("minHeight", $(document).height() - 101);
+    $("#Birthday").datepicker({ autoclose: true });
 </script>
 </body>
 </html>
