@@ -81,7 +81,6 @@ function postfirstaccelerate() {
     }
     var xmlHttp = new XMLHttpRequest();
     var url = "FirstAcclerateRecord.ashx?id=" + appointid + "&treatid=" + treatmentid;
-    alert(url);
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     var result = xmlHttp.responseText;
