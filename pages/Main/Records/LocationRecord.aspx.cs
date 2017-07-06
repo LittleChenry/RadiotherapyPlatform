@@ -90,8 +90,8 @@ public partial class pages_Main_Records_LocationRecord : System.Web.UI.Page
         sqlOperation.AddParameterWithValue("@userid", userid);
         sqlOperation.AddParameterWithValue("@picture", savepath1);
         int intSuccess1 = sqlOperation.ExecuteNonQuery(strSqlCommand);
-        string strSqlCommand1 = "UPDATE  appointment  SET State=@state where Treatment_ID=@treat and Task='模拟定位'";
-        sqlOperation1.AddParameterWithValue("@state", 0);
+        string strSqlCommand1 = "UPDATE  appointment  SET Completed=@state where Treatment_ID=@treat and Task='模拟定位'";
+        sqlOperation1.AddParameterWithValue("@state", 1);
         sqlOperation1.AddParameterWithValue("@treat", treatID);
         int intSuccess2 = sqlOperation1.ExecuteNonQuery(strSqlCommand1);
         string strSqlCommand2 = "INSERT INTO ct(ID) VALUES(@loc)";
