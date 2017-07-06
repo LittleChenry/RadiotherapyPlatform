@@ -52,12 +52,19 @@ public partial class pages_Main_Records_DesignConfirm : System.Web.UI.Page
         try
         {
             System.Web.HttpPostedFile postedFile = files[0];
-            string fileName = postedFile.FileName;//完整的路径         
-            fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
-            string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
-            string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
-            files[0].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
-            savepath1 = "../../../upload/PDF/" + DateTime.Now.ToString("yyyyMMdd") + fileName;            
+            string fileName = postedFile.FileName;//完整的路径 
+            if (fileName == "")
+            {
+                savepath1 = "";
+            }
+            else
+            {
+                fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
+                string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
+                string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
+                files[0].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
+                savepath1 = "../../../upload/PDF/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
+            }       
         }
         catch (System.Exception Ex)
         {

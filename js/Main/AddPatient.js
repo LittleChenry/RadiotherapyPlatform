@@ -10,8 +10,8 @@ function Init() {
     getUserID();
     getUserName();
     document.getElementById("save").addEventListener("click", CheckEmpty, false);
-    document.getElementById("Number1").addEventListener("change", phoneFormat, false);//电话号码格式化
-    document.getElementById("Number2").addEventListener("change", phoneFormat, false);//电话号码格式化
+    //document.getElementById("Number1").addEventListener("change", phoneFormat, false);//电话号码格式化
+    //document.getElementById("Number2").addEventListener("change", phoneFormat, false);//电话号码格式化
     var select3 = document.getElementById("SickPart");
     createPartItem(select3);
     var select4 = document.getElementById("doctor");
@@ -158,19 +158,7 @@ function CheckEmpty() {
     if (document.getElementById("Number1").value == "") {
         window.alert("电话1不能为空");
         return;
-    }
-    if (checkPhone()) {
-        window.alert("电话1格式不正确");
-        return;
-    }
-    if (document.getElementById("Number2").value == "") {
-        window.alert("电话2不能为空");
-        return;
-    }
-    if (checkPhone2()) {
-        window.alert("电话2格式不正确");
-        return;
-    }
+    }    
     if (document.getElementById("height").value == "") {
         window.alert("身高不能为空");
         return;
