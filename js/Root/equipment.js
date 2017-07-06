@@ -88,6 +88,11 @@ function EditEquipment(evt) {
     equipID.value = id;
     document.getElementById("currentPage").value = hidden[1].value;
     getEquipmentInformation(id);
+
+    var type = hidden[2].value;
+
+    $("#equipmentType").val(type);
+
     FillForm();
 }
 

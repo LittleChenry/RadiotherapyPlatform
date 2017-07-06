@@ -399,10 +399,7 @@
         <input id="type" type="hidden" value="Root" />
         <div class="row">
             <div class="col-xs-12">
-                <h1 class="page-header">角色绑定</h1>
-                <button class="btn btn-info" id="refresh">
-                    刷新<i class="fa fa-repeat"></i>
-                </button>
+                <h1 class="page-header">角色绑定</h1>              
             </div>
         </div>
         <div class="row" style="margin-top:10px;">

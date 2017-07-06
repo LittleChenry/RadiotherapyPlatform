@@ -395,7 +395,7 @@
 
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content" style="overflow-x:auto;">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">设备检查管理</h1>
@@ -406,8 +406,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-3">&nbsp;</div>
-                <div class="col-md-4 toCenter">
-                    <label for="cycle">检查周期:</label>
+                <div class="col-md-6 toCenter">
+                    <label for="cycle" style="margin-top:0.46em;float:left;">检查周期:</label>
                         <select id="cycle" class="form-control">
                             <option value="">请选择检查周期</option>
                             <option value="day">日检</option>

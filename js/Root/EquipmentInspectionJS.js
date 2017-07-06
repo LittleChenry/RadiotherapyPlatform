@@ -118,6 +118,7 @@ function CreateTable(cycle) {
             document.getElementById("lastPage").className += " disabled";
         }
     }
+    document.getElementById("currentPage").value = 0;
 }
 
 //根据数据具体创建该表
@@ -349,7 +350,7 @@ function transToPre(evt) {
     evt.preventDefault();
     var current = document.getElementById("table" + currentPage.value);
     current.style.display = "none";
-    currentPage.value = parseInt(currentPage.value - 1);
+    currentPage.value = parseInt(parseInt(currentPage.value) - 1);
     document.getElementById("table" + currentPage.value).style.display = "table";
     if (currentPage.value == "0") {
         document.getElementById("firstPage").className += " disabled";
@@ -371,7 +372,7 @@ function transToNext(evt) {
     evt.preventDefault();
     var current = document.getElementById("table" + currentPage.value);
     current.style.display = "none";
-    currentPage.value = parseInt(currentPage.value + 1);
+    currentPage.value = parseInt(parseInt(currentPage.value) + 1);
     document.getElementById("table" + currentPage.value).style.display = "table";
     if (parseInt(currentPage.value) == (parseInt(sumPage.value) - 1)) {
         document.getElementById("nexrPage").className += " disabled";

@@ -119,7 +119,7 @@ function Refresh(evt) {
     //ajax请求后端返回存在的所有角色
     function getAllRole() {
         var xmlHttp = new XMLHttpRequest();
-        var url = "getAllRole.ashx";
+        var url = "/RadiotherapyPlatform/pages/Root/getAllRole.ashx";
         xmlHttp.open("GET", url, false);
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.status == 200 && xmlHttp.readyState == 4) {
@@ -338,7 +338,7 @@ function Refresh(evt) {
             return false;
         }
         var xmlHttp = new XMLHttpRequest();
-        var url = "../Main/CHeckRegeditUserName.ashx?userName=" + id;
+        var url = "../../pages/Root/checkNumberReapt.ashx?userName=" + id;
         xmlHttp.open("GET", url, true);
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.status == 200 && xmlHttp.readyState == 4) {

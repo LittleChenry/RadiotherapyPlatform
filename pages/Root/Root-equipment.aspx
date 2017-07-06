@@ -476,7 +476,14 @@
                                     <asp:Label ID="Label5" runat="server" Text='<%# GetTime(Eval("EndTimeTPM"))%>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="Type" HeaderText="设备类型" />
+                            <asp:TemplateField HeaderText="设备类型">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="TextBox6" runat="server" Text='<%# Bind("Type") %>'></asp:TextBox>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="Label6" runat="server" Text='<%# Bind("Type") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:BoundField DataField="TreatmentItem" HeaderText="隶属治疗项目" />
                             <asp:TemplateField HeaderText="移除设备" ShowHeader="False">
                                 <ItemTemplate>
@@ -488,6 +495,7 @@
                                     <a href="#" class="selectedUpdate btn btn-default" data-toggle="modal" data-target="#addEquipment">选择</a>
                                     <input type="hidden" value='<%# Eval("ID") %>' />
                                     <input type="hidden" value='<%# equipmentGridView.PageIndex %>' />
+                                    <input type="hidden" value='<%# Eval("EquipmentType") %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
