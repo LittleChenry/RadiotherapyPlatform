@@ -34,7 +34,7 @@ public class GetPatientInfo : IHttpHandler
         sqlOperation.Dispose();
         DataLayer sqlOperation2 = new DataLayer("sqlStr");
         StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
-        string sqlCommand2 = "select treatment.ID as treatid,patient.*,State,Progress,DiagnosisResult_ID,user.Name as doctor from treatment,patient,diagnosisrecord,user where patient.ID=treatment.Patient_ID and treatment.DiagnosisRecord_ID=diagnosisrecord.ID and patient.RegisterDoctor=user.ID ";
+        string sqlCommand2 = "select treatment.ID as treatid,patient.*,State,Progress,DiagnosisResult_ID,user.Name as doctor from treatment,patient,diagnosisrecord,user where patient.ID=treatment.Patient_ID and treatment.DiagnosisRecord_ID=diagnosisrecord.ID and patient.RegisterDoctor=user.ID order by patient.ID desc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         int i = 1;
       
