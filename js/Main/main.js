@@ -40,7 +40,11 @@ function addProgress(patient){
         if($(this).find('li').hasClass("progress-active")){
             if(index < 14){
                 $(this).find('li').removeClass("progress-active").addClass("progress-finished");
+                $(this).find('i').removeClass().addClass("fa fa-fw fa-check");
+                $(this).find('span').removeClass();
                 $(this).find('li').parent().next().find('li').removeClass("progress-unfinished").addClass("progress-active");
+                $(this).find('li').parent().next().find('i').removeClass().addClass("fa fa-fw fa-edit");
+                $(this).find('li').parent().next().find('span').removeClass().addClass("fa fa-arrow-circle-right");
                 return false;
             }
         }
