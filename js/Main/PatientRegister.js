@@ -11,8 +11,8 @@ function Init(evt) {
     document.getElementById("treatID").value = treatID;
     //document.forms[0].addEventListener("submit", CheckInput, false);//添加表单提交事件处理函数
     document.forms[0].addEventListener("reset", resetForm, false);//添加表单rest事件函数
-    document.getElementById("Number1").addEventListener("change", phoneFormat, false);//电话号码格式化
-    document.getElementById("Number2").addEventListener("change", phoneFormat, false);//电话号码格式化
+    //document.getElementById("Number1").addEventListener("change", phoneFormat, false);//电话号码格式化
+   // document.getElementById("Number2").addEventListener("change", phoneFormat, false);//电话号码格式化
     document.getElementById("progress").value = 0;
    
     
@@ -224,23 +224,11 @@ function CheckEmpty() {
     if (document.getElementById("Number1").value=="") {
         window.alert("电话1不能为空");
         return;                  
-    }
-    if (checkPhone()) {
-        window.alert("电话1格式不正确");
-        return;
-    }
+    } 
     if (isCardNo()) {
         window.alert("身份证格式不正确");
         return;
-    }   
-    if (checkPhone2()) {
-        window.alert("电话2格式不正确");
-        return;
-    }
-    if (document.getElementById("Number2").value=="") {
-        window.alert("电话2不能为空");
-        return;                  
-    }
+    }      
     if (document.getElementById("height").value=="") {
         window.alert("身高不能为空");
         return;                  
