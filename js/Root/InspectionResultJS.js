@@ -29,7 +29,7 @@ function GetInformation(ID,date,people) {
 
 function CreateTable(date) {
     $("div > span.panel-title").text("检查日期:" + date + "  检查人:" + obj[0].name);
-    $("div > span.panel-title").after("<span style=float:right class=panel-title>功能状态:" + (obj[1].FunctionalStatus == 1 ? "正常" : "不正常") + "</h3>");
+    $("div > span.panel-title").after("<span style=float:right class=panel-title>功能状态:" + (obj[0].functionAll == 1 ? "正常" : "不正常") + "</h3>");
     var currentRows = 0;
     var currentPage = 0;
     var $currentTable = CreateNewTable(0);
@@ -47,7 +47,7 @@ function CreateTable(date) {
             ++currentRows;
         }
         
-        var $tr = ("<tr><td colspan=2>" + obj[i].ChildItem + "</td><td>" + obj[i].UIMRTRealValue + "</td><td>" + isOk(obj[i].UIMRTState) + "</td><td>" + obj[i].IMRTRealValue + "</td><td>" + isOk(obj[i].IMRTState) + "</td><td>" + obj[i].SRSRealValue + "</td><td>" + isOk(obj[i].SRSState) + "</td></tr>");
+        var $tr = ("<tr><td colspan=2>" + obj[i].ChildItem + "</td><td>" + obj[i].UIMRTRealValue + "</td><td>" + isOk(obj[i].UIMRTState) + "</td><td>" + obj[i].IMRTRealValue + "</td><td>" + isOk(obj[i].IMRTState) + "</td><td>" + obj[i].SRSRealValue + "</td><td>" + isOk(obj[i].SRSState) + "</td><td>" + functionIsOk(obj[i].FunctionalStatus) + "</td></tr>");
         $currentTable.children("tbody").append($tr);
         ++currentRows;    
     }
@@ -62,10 +62,17 @@ function CreateTable(date) {
     }
 }
 
+function functionIsOk(str) {
+    if(str == ""){
+        return "";
+    }
+    return str == "1" ? "正常" : "不正常";
+}
+
 function CreateNewTable(page) {
     var table = $("<table id=table" + page + "></table>");
     table.addClass("table table-bordered table-center table-hover");
-    var thead = $("<thead><tr><th colspan=2>检查项目名</th><th>无调强检查值</th><th>无调强状态值</th><th>调强检查值</th><th>调强状态值</th><th>SRS/SBRT检查值</th><th>SRS/SBRT状态值</th></tr></thead>");
+    var thead = $("<thead><tr><th colspan=2>检查项目名</th><th>无调强检查值</th><th>无调强状态值</th><th>调强检查值</th><th>调强状态值</th><th>SRS/SBRT检查值</th><th>SRS/SBRT状态值</th><th>状态</th></tr></thead>");
     var tbody = $("<tbody id=body" + page + "></tbody>");
     table.append(thead).append(tbody);
     if (page > 0)

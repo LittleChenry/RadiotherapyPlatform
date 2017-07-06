@@ -23,9 +23,12 @@ public class GetConcreteInspectionResult : IHttpHandler {
         DataLayer sqlOperation = new DataLayer("sqlStr");
         DataLayer sqlOperation2 = new DataLayer("sqlStr");
         string id = context.Request.QueryString["id"];
+        
         string sqlCommand = "SELECT COUNT(ID) FROM checkresult WHERE Record_ID=@id";
         string sqlCommand2 = "";
+        string temp = "SELECT result FROM checkrecord WHERE ID=@id";
         sqlOperation.AddParameterWithValue("@id", id);
+        string functionAll = sqlOperation.ExecuteScalar(temp);
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
         if (count == 0)
             return "[{\"MainItem\":\"null\"}]";
@@ -37,7 +40,7 @@ public class GetConcreteInspectionResult : IHttpHandler {
         sqlOperation2.AddParameterWithValue("@uid", context.Request.QueryString["people"]);
         backString.Append("{\"name\":\"");        
         string name = sqlOperation2.ExecuteScalar(sqlCommand2);
-        backString.Append(name + "\"},");
+        backString.Append(name + "\"").Append(",\"functionAll\":\"").Append(functionAll).Append("\"},"); 
         int n = 1;
         while (reader.Read())
         {

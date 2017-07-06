@@ -455,12 +455,15 @@ function FillInTable(evt) {
                 if (allTD[i - 2].innerHTML == "NA")
                     break;
                 var select = document.createElement("SELECT");
-                select.options[0] = new Option("正常");
-                select.options[0].value = 1;
-                select.options[1] = new Option("一般");
-                select.options[1].value = 2;
-                select.options[2] = new Option("不正常");
-                select.options[2].value = 3;
+                select.options[0] = new Option("请选择");
+                select.options[0].value = 0;
+                select.options[1] = new Option("正常");
+                select.options[1].value = 1;
+                select.options[2] = new Option("一般");
+                select.options[2].value = 2;
+                select.options[3] = new Option("不正常");
+                select.options[3].value = 3;
+                
                 allTD[i].appendChild(select);
                 break;
             case "functionState":
@@ -549,7 +552,8 @@ function sureFill(evt) {
             } else if (tds[1].innerHTML == "NA") {
                 content.UIMRTRealValue = "NA";
             } else if (tds[1].innerHTML == "功能是否正常") {
-                content.UIMRTRealValue = tds[4].firstChild.options[tds[4].firstChild.selectedIndex].value;
+                //content.UIMRTRealValue = tds[4].firstChild.options[tds[4].firstChild.selectedIndex].value;
+                content.UIMRTRealValue = "";
             }
 
             if (tds[1].innerHTML != "NA") {
@@ -563,7 +567,7 @@ function sureFill(evt) {
             } else if (tds[5].innerHTML == "NA") {
                 content.IMRTRealValue = "NA";
             } else if (tds[5].innerHTML == "功能是否正常") {
-                content.IMRTRealValue = tds[8].firstChild.options[tds[8].firstChild.selectedIndex].value;
+                content.IMRTRealValue = "";
             }
 
             if (tds[5].innerHTML != "NA") {
@@ -577,7 +581,8 @@ function sureFill(evt) {
             } else if (tds[9].innerHTML == "NA") {
                 content.SRSRealValue = "NA";
             } else if (tds[9].innerHTML == "功能是否正常") {
-                content.SRSRealValue = tds[12].firstChild.options[tds[12].firstChild.selectedIndex].value;
+                //content.SRSRealValue = tds[12].firstChild.options[tds[12].firstChild.selectedIndex].value;
+                content.SRSRealValue = "";
             }
 
             if (tds[9].innerHTML != "NA") {
@@ -591,6 +596,8 @@ function sureFill(evt) {
                 content.FunctionalStatus = 1;
             } else if (radios[1].checked == true) {
                 content.FunctionalStatus = 0;
+            } else {
+                content.FunctionalStatus = -1;
             }
             obj.push(content);
             content = { "ID": "", "UIMRTRealValue": "", "UIMRTState": "", "IMRTRealValue": "", "IMRTState": "", "SRSRealValue": "", "SRSState": "", "FunctionalStatus": "" };
