@@ -37,8 +37,8 @@ function Init(evt) {
         document.getElementById("fixEquip").value = info.fixedequipname;
         document.getElementById("fixEquip").disabled = "true";
         document.getElementById("bodyPost").value = info.BodyPosition;
-        document.getElementById("bodyPost").disabled="true"; 
-        document.getElementById("appointtime").value = info.equipname + " " + info.Date + " " + toTime(info.Begin) + "-" + toTime(info.End);
+        document.getElementById("bodyPost").disabled = "true";       
+        document.getElementById("appointtime").value = info.equipname + " " + info.Date+ " " + toTime(info.Begin) + "-" + toTime(info.End);
         document.getElementById("chooseappoint").disabled = "disabled";
         document.getElementById("applyuser").innerHTML = info.username;
         document.getElementById("time").innerHTML = info.ApplicationTime;
@@ -46,7 +46,7 @@ function Init(evt) {
     } else {
         createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
         var date = new Date();
-        document.getElementById("time").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        document.getElementById("time").innerHTML = getNowFormatDate();
         document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("chooseappoint").addEventListener("click", function () {
@@ -60,6 +60,28 @@ function Init(evt) {
     }
 }
 //设备下拉菜单
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var min = date.getMinutes();
+    if (min < 10) {
+        min = "0" + min;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + min;
+
+    return currentdate;
+}
+
 function createfixEquipmachine(thiselement,item) {
     var machineItem = JSON.parse(getmachineItem(item)).Item;
     thiselement.options.length = 0;

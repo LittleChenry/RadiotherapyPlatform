@@ -27,10 +27,16 @@ public class Getfinishedfix : IHttpHandler {
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
+            string date = reader["Date"].ToString();
+            DateTime dt1 = Convert.ToDateTime(date);
+            string date1 = dt1.ToString("yyyy-MM-dd");
+            string date2 = reader["ApplicationTime"].ToString();
+            DateTime dt2 = Convert.ToDateTime(date2);
+            string date3 = dt2.ToString("yyyy-MM-dd HH:mm");
             backText.Append("{\"materialName\":\"" + reader["materialName"].ToString() + "\",\"require\":\"" + reader["Requirements"] +
                  "\",\"fixedequipname\":\"" + reader["fixedequipname"].ToString() + "\",\"BodyPosition\":\"" + reader["BodyPosition"].ToString() + "\",\"equipname\":\"" + reader["equipname"].ToString() +
                  "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() +
-                 "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"ApplicationTime\":\"" + reader["ApplicationTime"].ToString() + "\",\"username\":\"" + reader["username"].ToString() + "\"}");
+                 "\",\"Date\":\"" + date1 + "\",\"ApplicationTime\":\"" + date3 + "\",\"username\":\"" + reader["username"].ToString() + "\"}");
                 backText.Append(",");
         }
         backText.Append("]}");

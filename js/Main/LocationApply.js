@@ -75,7 +75,7 @@ function Init(evt) {
         var date = new Date();
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-        document.getElementById("time").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        document.getElementById("time").innerHTML = getNowFormatDate();
         document.getElementById("chooseappoint").addEventListener("click", function () {
             CreateNewAppiontTable(event);
         }, false);
@@ -85,6 +85,27 @@ function Init(evt) {
         document.getElementById("sure").addEventListener("click", checkAllTable, false);
 
     }
+}
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var min = date.getMinutes();
+    if (min < 10) {
+        min = "0" + min;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + min;
+
+    return currentdate;
 }
 //设备下拉菜单
 function createfixEquipmachine(thiselement, item) {

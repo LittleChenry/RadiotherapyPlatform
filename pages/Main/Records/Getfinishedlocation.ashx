@@ -26,10 +26,16 @@ public class Getfinishedlocation : IHttpHandler {
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
+            string date = reader["Date"].ToString();
+            DateTime dt1 = Convert.ToDateTime(date);
+            string date1 = dt1.ToString("yyyy-MM-dd");
+            string date2 = reader["ApplicationTime"].ToString();
+            DateTime dt2 = Convert.ToDateTime(date2);
+            string date3 = dt2.ToString("yyyy-MM-dd HH:mm");
             backText.Append("{\"scanmethod\":\"" + reader["scanmethod"].ToString() + "\",\"scanpartname\":\"" + reader["scanpartname"] +
                  "\",\"UpperBound\":\"" + reader["UpperBound"].ToString() + "\",\"LowerBound\":\"" + reader["LowerBound"].ToString() + "\",\"equipname\":\"" + reader["equipname"].ToString() +
                  "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() +
-                 "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"locationrequire\":\"" + reader["locationrequire"].ToString() + "\",\"Enhance\":\"" + reader["Enhance"].ToString() + "\",\"enhancemethod\":\"" + reader["enhancemethod"].ToString() + "\",\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"ApplicationTime\":\"" + reader["ApplicationTime"].ToString() + "\",\"username\":\"" + reader["username"].ToString() + "\"}");
+                 "\",\"Date\":\"" + date1 + "\",\"locationrequire\":\"" + reader["locationrequire"].ToString() + "\",\"Enhance\":\"" + reader["Enhance"].ToString() + "\",\"enhancemethod\":\"" + reader["enhancemethod"].ToString() + "\",\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"ApplicationTime\":\"" + date3 + "\",\"username\":\"" + reader["username"].ToString() + "\"}");
             backText.Append(",");
         }
         backText.Append("]}");
