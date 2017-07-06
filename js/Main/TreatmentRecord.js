@@ -94,9 +94,11 @@ function createtreatrecordtable(treatID) {
               if (isSameWeek(infomation[k].TreatTime, infomation[k + 1].TreatTime)==0) {
                   shuzu.push(k);
                   shuzu.push(k + 1);
+
               }
           }
           shuzu.push(length - 1);
+          alert(shuzu);
           shuzu.splice(0, 1);
           var first = shuzu[0];
           var treat = document.getElementById("treatmentrecord");
@@ -155,7 +157,7 @@ function createtreatrecordtable(treatID) {
                       var temp = shuzu[1];
                       var rows = (temp - i) + 1;
                       var td14 = document.createElement("TD");
-                      td14.rowSpan = temp;
+                      td14.rowSpan = rows;
                       td14.style.padding = "0px";
                       td14.style.verticalAlign = "middle";
                       var button = document.createElement("Button");
