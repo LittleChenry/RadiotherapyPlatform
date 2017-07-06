@@ -472,7 +472,10 @@
                } 
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 16) {
                    $("#record-iframe")[0].contentWindow.putIn();
-               } 
+               }
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 15) {
+                   $("#record-iframe")[0].contentWindow.posttreatmentrecord();
+               }
         });
     })
 </script>

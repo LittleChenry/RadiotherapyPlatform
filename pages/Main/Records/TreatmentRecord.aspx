@@ -25,13 +25,17 @@
 <body style="width:auto;min-width:900px;margin:auto;">
    <section class="content">
         <div class="paper">
-            <form id="savedesign" name="savedesign" method="post" runat="server" >
+            <form id="savetreatrecord" name="savetreatrecord" method="post" runat="server"  enctype="multipart/form-data" >
                     <input type="hidden" name="ispostback" value="true" />             
                     <input type="hidden"  id="hidetreatID" name="hidetreatID" />
                     <input type="hidden"  id="userID" name="userID" />
-                    <input type="hidden" id="diaguserid" name="diaguserid" />
-                    <input type="hidden"  id="aa" name="aa" />
-                    <input type="hidden"  id="bb" name="bb" />              
+                     <input type="hidden"  id="treatdatetime1" name="treatdatetime1" /> 
+                     <input type="hidden"  id="treateddays1" name="treateddays1" />
+                    <input type="hidden"  id="RLcount1" name="RLcount1" />
+                    <input type="hidden"  id="APcount1" name="APcount1" />
+                 <input type="hidden"  id="SIcount1" name="SIcount1" />
+                     <input type="hidden"  id="live" name="live" value="" />
+                    <input type="hidden"  id="assistoperator1" name="assistoperator1" />
             <input type="hidden" id="progress" name="progress"/>
             <div class="paper-title">
                  放射治疗记录
@@ -74,41 +78,43 @@
                 <div class="single-row">
                     <div class="col-xs-6" style="padding-left:0px;">
                         <span class="form-text col-xs-4">IGRT记录：</span>
-                        <button type="button" class="btn btn-success" >编辑</button>
-                        <button type="button" class="btn btn-info" >完成</button>
+                        <button id="edit" type="button" class="btn btn-success" >编辑</button>
+                        <button id="finish" type="button" class="btn btn-info" >完成</button>
+                        <button id="finishtreat" type="button" class="btn btn-warning" >结束疗程</button>
+                        <input type="hidden"  id="complete" name="complete" value="0"/>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4" style="padding-left:0px;">工具：</span>
-                        <select id="" name="" class="form-item">
-                            <option>2D-MV</option>
-                            <option>2D-KV</option>
-                            <option>3D-KV</option>
+                        <select id="equip" name="equip" class="form-item">
+                            <option value="2D-MV">2D-MV</option>
+                            <option value="2D-KV">2D-KV</option>
+                            <option value="3D-KV">3D-KV</option>
                             <option>US</option>
                         </select>
                     </div>
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4" style="padding-left:0px;">配准算法：</span>
-                        <select id="" name="" class="form-item">
-                            <option>骨配准</option>
-                            <option>灰度配准</option>
+                        <select id="peizhun" name="peizhun" class="form-item">
+                            <option value="骨配准">骨配准</option>
+                            <option value="灰度配准">灰度配准</option>
                         </select>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4" style="padding-left:0px;">配准范围：</span>
-                        <select id="" name="" class="form-item">
-                            <option>20cm x 20cm</option>
-                            <option>10cm x 10cm</option>
-                            <option>PTV+5cm</option>
+                        <select id="range" name="range" class="form-item">
+                            <option value="20cm x 20cm">20cm x 20cm</option>
+                            <option value="10cm x 10cm">10cm x 10cm</option>
+                            <option value="PTV+5cm">PTV+5cm</option>
                         </select>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
-                        <table class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
+                        <table id="igrttable" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
                             <thead>
                                 <tr>
                                     <th>次数</th>
@@ -117,38 +123,38 @@
                                     <th>实际(cm)</th>
                                     <th>移床(cm)</th>
                                     <th>
-                                        <a href="javascript:;"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
+                                        <a href="javascript:addigrt();"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody style="text-align:center;">
-                                <tr>
-                                    <td rowspan="3">1</td>
+                            <tbody id="igrttbody" style="text-align:center;">
+                                <tr id="tr11">
+                                    <td class="rowclass" rowspan="3">1</td>
                                     <td>x</td>
-                                    <td>5</td>
+                                    <td style="padding:0px;"><input id="require11" name="require11" type="number" class="td-input" /></td>
                                     <td style="padding:0px;">
-                                        <input id="" name="" type="number" class="td-input" />
+                                        <input id="Number11" name="Number11" type="number" class="td-input" />
                                     </td>
-                                    <td>auto</td>
+                                    <td id="auto11">auto</td>
                                     <td rowspan="3">
-                                        <a  href="javascript:;"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>
+                                        <a  href="javascript:deleteigrt(1);"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr id="tr12">
                                     <td>y</td>
-                                    <td>4</td>
+                                    <td style="padding:0px;"><input id="require12" name="require12" type="number" class="td-input" /></td>
                                     <td style="padding:0px;">
-                                        <input id="Number1" name="" type="number" class="td-input" />
+                                        <input id="Number12" name="Number12" type="number" class="td-input" />
                                     </td>
-                                    <td>auto</td>
+                                    <td id="auto12">auto</td>
                                 </tr>
-                                <tr>
+                                <tr id="tr13">
                                     <td>z</td>
-                                    <td>5</td>
+                                   <td style="padding:0px;"><input id="require13" name="require13" type="number" class="td-input" /></td>
                                     <td style="padding:0px;">
-                                        <input id="Number2" name="" type="number" class="td-input" />
+                                        <input id="Number13" name="Number13" type="number" class="td-input" />
                                     </td>
-                                    <td>auto</td>
+                                    <td id="auto13">auto</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -180,91 +186,28 @@
                                     <th>周剂量核对</th>
                                 </tr>
                             </thead>
-                            <tbody style="text-align:center;">
+                            <tbody id="treatmentrecord" style="text-align:center;">
                                 <tr>
-                                    <td>auto</td>
-                                    <td>auto</td>
-                                    <td>auto</td>
+                                    <td id="treatdatetime">auto</td>
+                                    <td id="treateddays">auto</td>
+                                    <td id="treatedtimes">auto</td>
                                     <td style="padding:0px;">
-                                        <input id="Number3" name="" type="number" class="td-input" />
+                                        <input id="Number3" name="Number3" type="number" class="td-input" />
                                     </td>
                                     <td style="padding:0px;">
-                                        <input id="Number4" name="" type="number" class="td-input" />
+                                        <input id="Number4" name="Number4" type="number" class="td-input" />
                                     </td>
                                     <td style="padding:0px;">
-                                        <input id="Number5" name="" type="number" class="td-input" />
+                                        <input id="Number5" name="Number5" type="number" class="td-input" />
                                     </td>
-                                    <td>auto</td>
-                                    <td>auto</td>
-                                    <td>auto</td>
-                                    <td>auto</td>
-                                    <td>auto</td>
-                                    <td>auto</td>
-                                    <td>auto</td>
+                                    <td id="sum">auto</td>
+                                    <td id="igrttimes">auto</td>
+                                    <td id="RLcount">auto</td>
+                                    <td id="APcount">auto</td>
+                                    <td id="SIcount">auto</td>
+                                    <td id="firstoperator">auto</td>
+                                    <td id="assistoperator">auto</td>
                                     <td></td>
-                                </tr>
-                                <tr>
-                                    <td>6-14</td>
-                                    <td>23</td>
-                                    <td>16</td>
-                                    <td>3</td>
-                                    <td>912.6</td>
-                                    <td>180</td>
-                                    <td>2880</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>1</td>
-                                    <td>0</td>
-                                    <td>王医生</td>
-                                    <td>张医生</td>
-                                    <td rowspan="4" style="padding:0px;vertical-align:middle;">
-                                        <button type="button" class="btn btn-success btn-sm" >确认</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>6-13</td>
-                                    <td>22</td>
-                                    <td>15</td>
-                                    <td>3</td>
-                                    <td>912.6</td>
-                                    <td>180</td>
-                                    <td>2700</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>1</td>
-                                    <td>0</td>
-                                    <td>王医生</td>
-                                    <td>张医生</td>
-                                </tr>
-                                <tr>
-                                    <td>6-12</td>
-                                    <td>21</td>
-                                    <td>14</td>
-                                    <td>3</td>
-                                    <td>912.6</td>
-                                    <td>180</td>
-                                    <td>2520</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>1</td>
-                                    <td>0</td>
-                                    <td>王医生</td>
-                                    <td>张医生</td>
-                                </tr>
-                                <tr>
-                                    <td>6-11</td>
-                                    <td>20</td>
-                                    <td>13</td>
-                                    <td>3</td>
-                                    <td>912.6</td>
-                                    <td>180</td>
-                                    <td>2340</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>1</td>
-                                    <td>0</td>
-                                    <td>王医生</td>
-                                    <td>张医生</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -279,7 +222,7 @@
             </div>
         </form>
         </div>
-       <button type="button" id="showIGRT" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="display:none;">Show</button>
+       <button type="button" id="showIGRT" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="display:none">Show</button>
         <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -350,7 +293,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <!-- javascript -->
-    <script src="../../../js/Main/DesignApply.js" type="text/javascript"></script>
+    <script src="../../../js/Main/TreatmentRecord.js" type="text/javascript"></script>
     <!-- Page script -->
     <script type="text/javascript">
         $("#AppiontDate").datepicker({ autoclose: true });
