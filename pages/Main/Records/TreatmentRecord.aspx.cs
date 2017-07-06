@@ -65,24 +65,23 @@ public partial class pages_Main_Records_TreatmentRecord : System.Web.UI.Page
             sqlOperation.AddParameterWithValue("@Operate_User_ID", Convert.ToInt32(Request.Form["userID"]));
             sqlOperation.AddParameterWithValue("@OperateTime", DateTime.Now);
             int success = sqlOperation.ExecuteNonQuery(sqlcommand3);
-            //string sqlcommand4 = "select max(id) from igrt where Operate_User_ID=@Operate_User_ID and OperateTime=@OperateTime";
-            //string igrtid = sqlOperation.ExecuteScalar(sqlcommand4);
-            //string x = Request.Form["live"];
-            //string[] group = x.Split(new Char[] { ',' });
-            //foreach (string i in group)
-            //{
-            //    int temp = Convert.ToInt32(i);
-            //    string xvalue = Request.Form["Number" + temp + "1"];
-            //    string yvalue = Request.Form["Number" + temp + "2"];
-            //    string zvalue = Request.Form["Number" + temp + "3"];
-            //    string sqlcommandtemp = "insert into locaterecord(X,Y,Z,Igrt_ID) values(@X,@Y,@Z,@Igrt_ID)";
-            //    sqlOperation.AddParameterWithValue("@X", Convert.ToDouble(xvalue));
-            //    sqlOperation.AddParameterWithValue("@Y", Convert.ToDouble(yvalue));
-            //    sqlOperation.AddParameterWithValue("@Z", Convert.ToDouble(zvalue));
-            //    sqlOperation.AddParameterWithValue("@Igrt_ID", Convert.ToInt32(igrtid));
-            //    sqlOperation.ExecuteNonQuery(sqlcommandtemp);
+            string x = Request.Form["live"];
+            string[] group = x.Split(new Char[] { ',' });
+            int k = 1;
+            for (; k <= group.Length-1;k++)
+            {
+                string temp = group[k];
+                string xvalue = Request.Form["Number" + temp + "1"];
+                string yvalue = Request.Form["Number" + temp + "2"];
+                string zvalue = Request.Form["Number" + temp + "3"];
+                string sqlcommandtemp = "insert into locaterecord(X,Y,Z,TreatmentRecord_ID) values(@X,@Y,@Z,@TreatmentRecord_ID)";
+                sqlOperation.AddParameterWithValue("@X", Convert.ToDouble(xvalue));
+                sqlOperation.AddParameterWithValue("@Y", Convert.ToDouble(yvalue));
+                sqlOperation.AddParameterWithValue("@Z", Convert.ToDouble(zvalue));
+                sqlOperation.AddParameterWithValue("@TreatmentRecord_ID", Convert.ToInt32(id));
+                sqlOperation.ExecuteNonQuery(sqlcommandtemp);
 
-            //}
+            }
 
         }
 
@@ -114,25 +113,23 @@ public partial class pages_Main_Records_TreatmentRecord : System.Web.UI.Page
             sqlOperation.AddParameterWithValue("@OperateTime", DateTime.Now);
             sqlOperation.AddParameterWithValue("@id", Convert.ToInt32(treatrecord));
             int success = sqlOperation.ExecuteNonQuery(sqlcommand3);
-            //string sqlcommand4 = "select max(id) from igrt where Operate_User_ID=@Operate_User_ID and OperateTime=@OperateTime";
-            //string igrtid = sqlOperation.ExecuteScalar(sqlcommand4);
-            //string x = Request.Form["live"];
-            //string[] group = x.Split(new Char[] { ',' });
-            //foreach (string i in group)
-            //{
-            //    int temp = int.Parse(i);
-            //    string xvalue = Request.Form["Number" + temp + "1"];
-            //    string yvalue = Request.Form["Number" + temp + "2"];
-            //    string zvalue = Request.Form["Number" + temp + "3"];
-            //    string sqlcommandtemp = "insert into locaterecord(X,Y,Z,Igrt_ID) values(@X,@Y,@Z,@Igrt_ID)";
-            //    sqlOperation.AddParameterWithValue("@X", Convert.ToDouble(xvalue));
-            //    sqlOperation.AddParameterWithValue("@Y", Convert.ToDouble(yvalue));
-            //    sqlOperation.AddParameterWithValue("@Z", Convert.ToDouble(zvalue));
-            //    sqlOperation.AddParameterWithValue("@Igrt_ID", Convert.ToInt32(igrtid));
-            //    sqlOperation.ExecuteNonQuery(sqlcommandtemp);
+            string x = Request.Form["live"];
+            string[] group = x.Split(new Char[] { ',' });
+            int k = 1;
+            for (; k <= group.Length - 1; k++)
+            {
+                string temp = group[k];
+                string xvalue = Request.Form["Number" + temp + "1"];
+                string yvalue = Request.Form["Number" + temp + "2"];
+                string zvalue = Request.Form["Number" + temp + "3"];
+                string sqlcommandtemp = "insert into locaterecord(X,Y,Z,TreatmentRecord_ID) values(@X,@Y,@Z,@TreatmentRecord_ID)";
+                sqlOperation.AddParameterWithValue("@X", Convert.ToDouble(xvalue));
+                sqlOperation.AddParameterWithValue("@Y", Convert.ToDouble(yvalue));
+                sqlOperation.AddParameterWithValue("@Z", Convert.ToDouble(zvalue));
+                sqlOperation.AddParameterWithValue("@TreatmentRecord_ID", Convert.ToInt32(treatrecord));
+                sqlOperation.ExecuteNonQuery(sqlcommandtemp);
 
-            //}
-
+            }
 
         }
         if (Request.Form["complete"] =="1")

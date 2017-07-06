@@ -98,7 +98,6 @@ function createtreatrecordtable(treatID) {
               }
           }
           shuzu.push(length - 1);
-          alert(shuzu);
           shuzu.splice(0, 1);
           var first = shuzu[0];
           var treat = document.getElementById("treatmentrecord");
