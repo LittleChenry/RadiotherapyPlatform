@@ -135,7 +135,7 @@
                                     <td style="padding:0px;">
                                         <input id="Number11" name="Number11" type="number" class="td-input" />
                                     </td>
-                                    <td id="auto11">auto</td>
+                                    <td id="auto11"></td>
                                     <td rowspan="3">
                                         <a  href="javascript:deleteigrt(1);"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>
                                     </td>
@@ -146,7 +146,7 @@
                                     <td style="padding:0px;">
                                         <input id="Number12" name="Number12" type="number" class="td-input" />
                                     </td>
-                                    <td id="auto12">auto</td>
+                                    <td id="auto12"></td>
                                 </tr>
                                 <tr id="tr13">
                                     <td>z</td>
@@ -154,7 +154,7 @@
                                     <td style="padding:0px;">
                                         <input id="Number13" name="Number13" type="number" class="td-input" />
                                     </td>
-                                    <td id="auto13">auto</td>
+                                    <td id="auto13"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -188,9 +188,9 @@
                             </thead>
                             <tbody id="treatmentrecord" style="text-align:center;">
                                 <tr>
-                                    <td id="treatdatetime">auto</td>
-                                    <td id="treateddays">auto</td>
-                                    <td id="treatedtimes">auto</td>
+                                    <td id="treatdatetime"></td>
+                                    <td id="treateddays"></td>
+                                    <td id="treatedtimes"></td>
                                     <td style="padding:0px;">
                                         <input id="Number3" name="Number3" type="number" class="td-input" />
                                     </td>

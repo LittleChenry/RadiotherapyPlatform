@@ -61,7 +61,7 @@ function createtreatrecordtable(treatID) {
     var info = getdesign(treatID);
     var date = new Date();
     var shuzu = [];
-    document.getElementById("treatdatetime").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    document.getElementById("treatdatetime").innerHTML =  (date.getMonth() + 1) + "-" + date.getDate();
     var datestring = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     document.getElementById("Number3").value = info.IlluminatedNumber;
     document.getElementById("Number4").value = info.MachineNumbe;
@@ -73,25 +73,31 @@ function createtreatrecordtable(treatID) {
         document.getElementById("Number5").addEventListener("change", function () {
               document.getElementById("sum").innerHTML = document.getElementById("Number5").value;
           }, false);
-        document.getElementById("treateddays").innerHTML = "0";
-        document.getElementById("treateddays1").value ="0";
+        document.getElementById("treateddays").innerHTML = "1";
+        document.getElementById("treateddays1").value ="1";
         document.getElementById("treatedtimes").innerHTML = "1";
         document.getElementById("treatdatetime1").value = "1";
           
       } else {
           var length = infomation.length;
-          document.getElementById("treateddays").innerHTML = GetDateDiff(infomation[length - 1].TreatTime, datestring);
-          document.getElementById("treateddays1").value = GetDateDiff(infomation[length - 1].TreatTime, datestring);
+          document.getElementById("treateddays").innerHTML = GetDateDiff(infomation[length - 1].TreatTime, datestring)+1;
+          document.getElementById("treateddays1").value = GetDateDiff(infomation[length - 1].TreatTime, datestring)+1;
           document.getElementById("treatedtimes").innerHTML = parseInt(infomation[0].TreatedTimes) + 1;
           document.getElementById("treatdatetime1").value = parseInt(infomation[0].TreatedTimes) + 1;
-
-          document.getElementById("Number5").addEventListener("change", function () {
-              var sum = 0;
-              for (var j = 0; j <= length - 1; j++) {
-                  sum = sum+ parseInt(infomation[j].Singlenumber);
-              }
-              document.getElementById("sum").innerHTML = parseInt(document.getElementById("Number5").value)+sum;
-          }, false);
+          $(function () {
+              $('#Number5').bind('input propertychange', function () {
+                  var sum = 0;
+                  for (var j = 0; j <= length - 1; j++) {
+                      sum = sum + parseInt(infomation[j].Singlenumber);
+                  }
+                  if (this.value == "") {
+                      document.getElementById("sum").innerHTML = "";
+                  } else {
+                      document.getElementById("sum").innerHTML = parseInt(document.getElementById("Number5").value) + sum;
+                  }
+  
+              });
+          })
           for (var k = 0; k < infomation.length-2; k++) {
               if (isSameWeek(infomation[k].TreatTime, infomation[k + 1].TreatTime)==0) {
                   shuzu.push(k);
@@ -100,14 +106,18 @@ function createtreatrecordtable(treatID) {
               }
           }
           shuzu.push(length - 1);
-          shuzu.splice(0, 1);
-          var first = shuzu[0];
+          if(shuzu.length>1)
+          {
+              shuzu.splice(0, 1);
+          }
+          var first=shuzu[0];
+
           var treat = document.getElementById("treatmentrecord");
           for (var i = 0; i <= length - 1; i++) {
               var igrtnumber=getigrtnumber(infomation[i].ID);
               var tr = document.createElement("TR");
               var td1 = document.createElement("TD");
-              td1.innerHTML = infomation[i].TreatTime;
+              td1.innerHTML = replace(infomation[i].TreatTime);
               var td2 = document.createElement("TD");
               td2.innerHTML = infomation[i].TreatedDays;
               var td3 = document.createElement("TD");
@@ -136,7 +146,7 @@ function createtreatrecordtable(treatID) {
               td12.innerHTML = infomation[i].Treat_User_ID;
               var td13 = document.createElement("TD");
               td13.innerHTML = infomation[i].Assist_User_ID;
-              if (i < first) {
+              if (i < first || first == length - 1) {
                   var td14 = document.createElement("TD");
                   tr.appendChild(td1);
                   tr.appendChild(td2);
@@ -204,6 +214,19 @@ function createtreatrecordtable(treatID) {
       }
 
 }
+function replace(date) {
+    var s = date.split("-")[1];
+    var k = date.split("-")[2];
+    if (s.substring(0, 1)=="0") {
+        s=s.substring(1, 2);
+    }
+    if (k.substring(0, 1)== "0") {
+        k = k.substring(1, 2);
+    }
+    return s + "-" + k;
+
+}
+
 function getigrtnumber(id)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -267,6 +290,44 @@ function getdesign(treatID)
     var obj1 = eval("(" + json + ")");
     return obj1.info[0];
 }
+//function bangding() {
+//    $(function () {
+//        var k = 1;
+//        for (k = 1; k <= 3 * rowcount; k++) {
+//            if (document.getElementById("require" + k + "1") != undefined) {
+//                $('#require' + k + '1').bind('input propertychange', function () {
+//                    if ($('#require' + k + '1').val != "" || $('#Number' + k + '1').val != "") {
+//                        document.getElementById("auto" + k + "1").innerHTML = $('#require' + k + '1').val - $('#Number' + k + '1').val;
+//                    } else {
+//                        document.getElementById("auto" + k + "1").innerHTML = "";
+//                    }
+
+//                });
+//            }
+//            if (document.getElementById("require" + k + "2") != undefined) {
+//                $('#require' + k + '2').bind('input propertychange', function () {
+//                    if (this.value != "") {
+//                        document.getElementById("auto" + k + "2").innerHTML = document.getElementById("require" + k + "2").value - document.getElementById("Number" + k + "2").value;
+//                    } else {
+//                        document.getElementById("auto" + k + "2").innerHTML = "";
+//                    }
+
+//                });
+//            }
+//            if (document.getElementById("require" + k + "3") != undefined) {
+//                $('#require' + k + '3').bind('input propertychange', function () {
+//                    if (this.value != "") {
+//                        document.getElementById("auto" + k + "3").innerHTML = document.getElementById("require" + k + "3").value - document.getElementById("Number" + k + "3").value;
+//                    } else {
+//                        document.getElementById("auto" + k + "3").innerHTML = "";
+//                    }
+
+//                });
+//            }
+
+//        }
+//    });
+// }
 function finishigrt() {
     var k = 1;
     document.getElementById("live").value ="";
@@ -364,8 +425,6 @@ function getPatientInfo(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.patient[0];
 }
-function getigrtrequire() {
-}
 
 function getNowFormatDate() {
     var date = new Date();
@@ -399,10 +458,10 @@ function addigrt() {
     tr2.setAttribute("id", "tr" + rowcount + "2");
     var tr3 = document.createElement("TR");
     tr3.setAttribute("id", "tr" + rowcount + "3");
-    tr1.innerHTML = '<td class="rowclass" rowspan="3">' + rowcount + '</td><td>x</td><td style="padding:0px;"><input id="require' + rowcount + '1" name="require' + rowcount + '1" type="number" class="td-input" /></td><td style="padding:0px;"><input id="Number' + rowcount + '1" name="Number' + rowcount + '1" type="number" class="td-input"/></td><td id="auto' + rowcount + '1">auto</td><td rowspan="3">' +
+    tr1.innerHTML = '<td class="rowclass" rowspan="3">' + rowcount + '</td><td>x</td><td style="padding:0px;"><input id="require' + rowcount + '1" name="require' + rowcount + '1" type="number" class="td-input" /></td><td style="padding:0px;"><input id="Number' + rowcount + '1" name="Number' + rowcount + '1" type="number" class="td-input"/></td><td id="auto' + rowcount + '1"></td><td rowspan="3">' +
                    '<a  href="javascript:deleteigrt(' + rowcount + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a></td>';
-    tr2.innerHTML = "<td>y</td><td style='padding:0px;'><input id='require"+rowcount+"2' name='require"+rowcount+"2' type='number' class='td-input' /></td><td style='padding:0px;'><input id='Number" + rowcount + "2' name='Number" + rowcount + "2' type='number' class='td-input'/></td><td id='auto" + rowcount + "2'>auto</td>";
-    tr3.innerHTML = "<td>z</td><td style='padding:0px;'><input id='require" + rowcount + "3' name='require" + rowcount + "3' type='number' class='td-input' /></td><td style='padding:0px;'><input id='Number" + rowcount + "3' name='Number" + rowcount + "3' type='number' class='td-input'/></td><td id='auto" + rowcount + "3'>auto</td>";
+    tr2.innerHTML = "<td>y</td><td style='padding:0px;'><input id='require"+rowcount+"2' name='require"+rowcount+"2' type='number' class='td-input' /></td><td style='padding:0px;'><input id='Number" + rowcount + "2' name='Number" + rowcount + "2' type='number' class='td-input'/></td><td id='auto" + rowcount + "2'></td>";
+    tr3.innerHTML = "<td>z</td><td style='padding:0px;'><input id='require" + rowcount + "3' name='require" + rowcount + "3' type='number' class='td-input' /></td><td style='padding:0px;'><input id='Number" + rowcount + "3' name='Number" + rowcount + "3' type='number' class='td-input'/></td><td id='auto" + rowcount + "3'></td>";
     igrttbody.appendChild(tr1);
     igrttbody.appendChild(tr2);
     igrttbody.appendChild(tr3);
@@ -410,6 +469,7 @@ function addigrt() {
     for (var k = 0; k < rowclass.length; k++) {
         rowclass[k].innerHTML = k + 1;
     }
+
 }
 function deleteigrt(row) {
     var igrttbody = document.getElementById("igrttbody");
@@ -542,6 +602,4 @@ function posttreatmentrecord() {
         return;
     }
     document.getElementById("savetreatrecord").submit();
-    
-
 }
