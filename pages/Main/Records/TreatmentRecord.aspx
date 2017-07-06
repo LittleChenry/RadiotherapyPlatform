@@ -200,13 +200,13 @@
                                     <td style="padding:0px;">
                                         <input id="Number5" name="Number5" type="number" class="td-input" />
                                     </td>
-                                    <td id="sum">auto</td>
-                                    <td id="igrttimes">auto</td>
-                                    <td id="RLcount">auto</td>
-                                    <td id="APcount">auto</td>
-                                    <td id="SIcount">auto</td>
-                                    <td id="firstoperator">auto</td>
-                                    <td id="assistoperator">auto</td>
+                                    <td id="sum"></td>
+                                    <td id="igrttimes"></td>
+                                    <td id="RLcount"></td>
+                                    <td id="APcount"></td>
+                                    <td id="SIcount"></td>
+                                    <td id="firstoperator"></td>
+                                    <td id="assistoperator"></td>
                                     <td></td>
                                 </tr>
                             </tbody>

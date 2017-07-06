@@ -73,8 +73,10 @@ function createtreatrecordtable(treatID) {
         document.getElementById("Number5").addEventListener("change", function () {
               document.getElementById("sum").innerHTML = document.getElementById("Number5").value;
           }, false);
-          document.getElementById("treateddays").innerHTML = "0";
-          document.getElementById("treatedtimes").innerHTML = "1";
+        document.getElementById("treateddays").innerHTML = "0";
+        document.getElementById("treateddays1").value ="0";
+        document.getElementById("treatedtimes").innerHTML = "1";
+        document.getElementById("treatdatetime1").value = "1";
           
       } else {
           var length = infomation.length;

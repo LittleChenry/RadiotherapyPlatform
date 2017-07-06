@@ -58,7 +58,7 @@ public partial class pages_Main_Records_TreatmentRecord : System.Web.UI.Page
             sqlOperation.AddParameterWithValue("@treattime", DateTime.Now);
             sqlOperation.AddParameterWithValue("@TreatedTimes", Convert.ToInt32(Request.Form["treatdatetime1"]));
             intSuccess = sqlOperation.ExecuteNonQuery(sqlcommand1);
-            string sqlcommand3 = "insert into igrt(Tool,Algorithm,Range,Operate_User_ID,OperateTime,TreatmentRecord_ID) values(@Tool,@Algorithm,@Range,@Operate_User_ID,@OperateTime,@id)";
+            string sqlcommand3 = "insert into igrt(Tool,Algorithm,IGRTRange,Operate_User_ID,OperateTime,TreatmentRecord_ID) values(@Tool,@Algorithm,@Range,@Operate_User_ID,@OperateTime,@id)";
             sqlOperation.AddParameterWithValue("@Tool", Request.Form["equip"]);
             sqlOperation.AddParameterWithValue("@Algorithm", Request.Form["peizhun"]);
             sqlOperation.AddParameterWithValue("@Range", Request.Form["range"]);
