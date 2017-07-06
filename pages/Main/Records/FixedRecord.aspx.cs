@@ -85,7 +85,7 @@ public partial class pages_Main_Records_FixedRecord : System.Web.UI.Page
         string userID = Request.Form["userID"];
         int userid = Convert.ToInt32(userID);
         DateTime datetime = DateTime.Now;
-        bool state = false;
+        bool state = true;
 
 
         string strSqlCommand = "UPDATE  fixed  SET Pictures=@picture,BodyPositionDetail=@detail,AnnexDescription=@description,Remarks=@remarks,OperateTime=@datetime,Operate_User_ID=@userid where fixed.ID=@fixedID";
@@ -98,7 +98,7 @@ public partial class pages_Main_Records_FixedRecord : System.Web.UI.Page
         sqlOperation.AddParameterWithValue("@userid", userid);
         sqlOperation.AddParameterWithValue("@picture", savepath1);
         int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-        string strSqlCommand1 = "UPDATE  appointment  SET State=@state where Treatment_ID=@treatid and Task='体位固定'";
+        string strSqlCommand1 = "UPDATE  appointment  SET Completed=@state where Treatment_ID=@treatid and Task='体位固定'";
         sqlOperation3.AddParameterWithValue("@state", state);
         sqlOperation3.AddParameterWithValue("@treatid", treatID);
 

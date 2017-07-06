@@ -145,7 +145,7 @@ function postfix() {
     var result = xmlHttp.responseText;
     if (result == "success") {
         window.alert("申请成功");
-        window.location.Reload();
+        window.location.reload();
     }
     if (result == "busy") {
         window.alert("预约时间被占,需要重新预约");
