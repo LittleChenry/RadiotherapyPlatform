@@ -17,7 +17,8 @@ $(document).ready(function () {
         window.location.replace("../Login/Login.aspx");
     });
     $("#save").click(function(){
-        addProgress();
+        addProgress(patient);
+        Paging(patient);
     })
     $("#changeOperator").bind("click", function () {
         changeAssistant();
@@ -32,18 +33,23 @@ $(document).ready(function () {
     document.location.reload();
 }*/
 
-function addProgress(){
+function addProgress(patient){
     var ul = $("#progress-iframe").contents().find("#ul-progress a");
     var sign = 0;
     ul.each(function (index, element) {
         if($(this).find('li').hasClass("progress-active")){
-            if(index < 15){
+            if(index < 14){
                 $(this).find('li').removeClass("progress-active").addClass("progress-finished");
                 $(this).find('li').parent().next().find('li').removeClass("progress-unfinished").addClass("progress-active");
                 return false;
             }
         }
     });
+    for (var i = 0; i < patient.PatientInfo.length; i++) {
+        if (patient.PatientInfo[i].treatID  == currentID) {
+            patient.PatientInfo[i].Progress = parseInt(patient.PatientInfo[i].Progress) + 1;
+        }
+    }
 }
 
 function chooseAssistant() {
