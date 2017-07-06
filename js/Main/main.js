@@ -16,6 +16,9 @@ $(document).ready(function () {
         removeSession();//ajax 注销用户Session
         window.location.replace("../Login/Login.aspx");
     });
+    $("#save").click(function(){
+        addProgress();
+    })
     $("#changeOperator").bind("click", function () {
         changeAssistant();
     });
@@ -28,6 +31,20 @@ $(document).ready(function () {
 /*window.onresize=function(){
     document.location.reload();
 }*/
+
+function addProgress(){
+    var ul = $("#progress-iframe").contents().find("#ul-progress a");
+    var sign = 0;
+    ul.each(function (index, element) {
+        if($(this).find('li').hasClass("progress-active")){
+            if(index < 15){
+                $(this).find('li').removeClass("progress-active").addClass("progress-finished");
+                $(this).find('li').parent().next().find('li').removeClass("progress-unfinished").addClass("progress-active");
+                return false;
+            }
+        }
+    });
+}
 
 function chooseAssistant() {
     var operator1 = $("#operator1");
