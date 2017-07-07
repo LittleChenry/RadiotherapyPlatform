@@ -30,6 +30,7 @@ function Init(evt) {
     document.getElementById("requireID").innerHTML = replacerecordinfo.replacerequire;
     document.getElementById("ApplicationUser").innerHTML = replacerecordinfo.ApplicationUser;
     document.getElementById("ApplicationTime").innerHTML = replacerecordinfo.ApplicationTime;
+    document.getElementById("viewpdf").href = replacerecordinfo.pdf;
     if (patient.Progress >= 15) {
         var info = getreplacerecordInfomation(treatmentID);
         var ReplacementRecord = document.getElementById("ReplacementRecord")

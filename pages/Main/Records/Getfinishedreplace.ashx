@@ -34,9 +34,12 @@ public class Getfinishedreplace : IHttpHandler {
             string sqlCommand2 = "select End from appointment where ID=@appoint";
             sqlOperation1.AddParameterWithValue("@appoint", Convert.ToInt32(reader["appointid"].ToString()) + 1);
             string count = sqlOperation1.ExecuteScalar(sqlCommand2);
+            string desgin = "select PDF from design,treatment where treatment.Design_ID=design.ID and treatment.ID=@treatid";
+            sqlOperation1.AddParameterWithValue("@treatid", treatid);
+            string pdf = sqlOperation1.ExecuteScalar(desgin);
             backText.Append("{\"require\":\"" + reader["requirement"].ToString() + "\",\"equipname\":\"" + reader["equipname"].ToString() +
                  "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + count +
-                 "\",\"Date\":\"" + reader["Date"].ToString()   + "\",\"ApplicationTime\":\"" + reader["ApplicationTime"].ToString() + "\",\"username\":\"" + reader["username"].ToString() + "\"}");
+                 "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"ApplicationTime\":\"" + reader["ApplicationTime"].ToString() + "\",\"pdf\":\"" + pdf.ToString() + "\",\"username\":\"" + reader["username"].ToString() + "\"}");
             backText.Append(",");
         }
         backText.Append("]}");
