@@ -39,7 +39,6 @@ function Init(evt) {
 
     }
     if (patient.Progress >= 4) {
-        
         var info = getLocationInfomation(treatmentID);
         document.getElementById("scanmethod").value = info.scanmethod;
         document.getElementById("scanmethod").disabled = "true";
@@ -62,8 +61,7 @@ function Init(evt) {
             document.getElementById("addmethod").disabled = "disabled";
         } else {
             add[1].checked = "true";
-            document.getElementById("addmethod").value = "allItem";
-            document.getElementById("addmethod").disabled = "true";
+            document.getElementById("enhancemethod").style.display = "none";
         }
         document.getElementById("appointtime").value = info.equipname + " " + info.Date + " " + toTime(info.Begin) + "-" + toTime(info.End);
         document.getElementById("chooseappoint").disabled = "disabled";
@@ -143,7 +141,7 @@ function postlocation() {
     var special = document.getElementById("special").value;
     var addgroup = document.getElementsByName("add");
     var add;
-    if (addgroup[0].checked = "true") {
+    if (addgroup[0].checked == "true") {
         add = addgroup[0].value;
     } else {
         add = addgroup[1].value;

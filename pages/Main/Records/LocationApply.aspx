@@ -93,7 +93,7 @@
                             否
                         </span>
                     </div>
-                    <div class="col-xs-6">
+                    <div  id="enhancemethod" class="col-xs-6">
                         <span class="form-text col-xs-4">增强方式：</span>
                         <select id="addmethod" name="addmethod" class="form-item"></select>
                     </div>
