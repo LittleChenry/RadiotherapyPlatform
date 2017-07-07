@@ -136,7 +136,7 @@ public partial class pages_Main_AddPatient : System.Web.UI.Page
 
             if (reader1.Read())
             {
-                string treatupdate = " update treatment set DiagnosisRecord_ID=@DiagnosisRecord_ID,Group_ID=@Group_ID,Progress=1 where ID=@Treatment_ID";
+                string treatupdate = " update treatment set DiagnosisRecord_ID=@DiagnosisRecord_ID,Group_ID=@Group_ID,Progress=1,State=1 where ID=@Treatment_ID";
                 sqlOperation5.AddParameterWithValue("@DiagnosisRecord_ID", Convert.ToInt32(reader1["ID"].ToString()));
                 sqlOperation5.AddParameterWithValue("@Group_ID", groupID);
                 sqlOperation5.AddParameterWithValue("@Treatment_ID", treatID);
