@@ -25,7 +25,7 @@ function createPatient(evt) {
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     //调取后台所有等待就诊的疗程号及其对应的病人
-
+    document.getElementById("test").addEventListener("click", removeDisabled, false);
     var select3 = document.getElementById("part");
     createPartItem(select3);
     var select4 = document.getElementById("diagresult");
@@ -38,12 +38,9 @@ function createPatient(evt) {
         if (patient.Progress >= 2) {
             document.getElementById("operator").innerHTML = diagnosisInfo.username;
             document.getElementById("remark").value = diagnosisInfo.Remarks;
-            document.getElementById("remark").disabled = "true";
-
-            document.getElementById("part").disabled = "true";
+           
             //SickPartid = DiagnoseInfo.diagnosisInfo.partID;
             document.getElementById("diagresult").value = diagnosisInfo.diagnosisresultID;
-            document.getElementById("diagresult").disabled = "true";
             // diagnosisresultID = DiagnoseInfo.diagnosisInfo[0].diagnosisresultID;
             //doctor = DiagnoseInfo.DiagnoseInfo[0].doctor;
 
@@ -242,4 +239,8 @@ function askForBack() {
     document.location.reload();
 
 }
-
+function removeDisabled() {
+    document.getElementById("remark").removeAttribute("disable");
+    document.getElementById("part").removeAttribute("disable");
+    document.getElementById("diagresult").removeAttribute("disable");
+}

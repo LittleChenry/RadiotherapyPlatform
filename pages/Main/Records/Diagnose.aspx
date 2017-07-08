@@ -56,7 +56,7 @@
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
-                    <div class="item col-xs-4">患病部位：<select id="part" name="part" class="form-item"></select></div>
+                    <div class="item col-xs-4">患病部位：<select id="part" name="part" class="form-item" disabled="disabled"></select></div>
                     <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
             </div>
@@ -67,13 +67,13 @@
                 <div class="single-row">
                     <div class="item col-xs-6">
                         诊断结果：
-                        <select id="diagresult" name="part" class="form-item"></select>
+                        <select id="diagresult" name="part" class="form-item" disabled="disabled"></select>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
                         备注：
-                        <textarea id="remark" name="remark" class="form-area"></textarea>
+                        <textarea id="remark" name="remark" class="form-area" disabled="disabled"></textarea>
                     </div>
                 </div>
             </div>
@@ -81,6 +81,7 @@
                 <div class="single-row">
                     <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
                     <div class="item col-xs-6">日期：<span id="date" class="underline"></span></div>
+                     <button type="button" name="test" id="test" class="btn btn-flat"> </button>
                 </div>
             </div>
         </div>

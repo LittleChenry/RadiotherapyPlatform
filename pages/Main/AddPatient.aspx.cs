@@ -73,8 +73,22 @@ public partial class pages_Main_AddPatient : System.Web.UI.Page
         sqlOperation5.AddParameterWithValue("@doctor", doctorid);
         int groupID = int.Parse(sqlOperation5.ExecuteScalar(groupid));
         DateTime datetime = DateTime.Now;
-        string strSqlCommand = "INSERT INTO patient(IdentificationNumber,Hospital,RecordNumber,Picture,Name,Gender,Age,Birthday,Nation,Address,Contact1,Contact2,Height,RegisterDoctor,Weight,Register_User_ID,RegisterTime,SickPart) VALUES("
-         + "@IdentificationNumber,@Hospital,@RecordNumber,@Picture,@Name,@Gender,@Age,@Birthday,@Nation,@Address,@Contact1,@Contact2,@Height,@doctorid,@Weight,@Register_User_ID,@RegisterTime,@SickPart)";
+        DateTime date = DateTime.Now;
+        string date1 = date.ToString("yyyy-MM-dd");
+        string date2 = date.ToString("yyyyMMdd");
+        string count = "select count(ID) from patient where RegisterTime LIKE @time ";
+        sqlOperation1.AddParameterWithValue("@time", "%"+date1+"%");
+        int Count = Convert.ToInt32(sqlOperation1.ExecuteScalar(count));
+        string add = Count.ToString();
+        if (Count < 10)
+        {
+            add = "0" + Count;
+        }
+        int treatID = 0;
+        string treatid = date2 + add;
+        treatID = Convert.ToInt32(treatid);
+        string strSqlCommand = "INSERT INTO patient(IdentificationNumber,Hospital,RecordNumber,Picture,Name,Gender,Age,Birthday,Nation,Address,Contact1,Contact2,Height,RegisterDoctor,Weight,Register_User_ID,RegisterTime,SubCenterPrincipal_ID,Radiotherapy_ID,Principal_User_ID) VALUES("
+         + "@IdentificationNumber,@Hospital,@RecordNumber,@Picture,@Name,@Gender,@Age,@Birthday,@Nation,@Address,@Contact1,@Contact2,@Height,@doctorid,@Weight,@Register_User_ID,@RegisterTime,@SubCenterPrincipal_ID,@Radiotherapy_ID,@Principal_User_ID)";
         //各参数赋予实际值
         sqlOperation.AddParameterWithValue("@IdentificationNumber", Request.Form["IDcardNumber"]);
         sqlOperation.AddParameterWithValue("@Hospital", Request.Form["Hospital"]);
@@ -90,61 +104,31 @@ public partial class pages_Main_AddPatient : System.Web.UI.Page
         sqlOperation.AddParameterWithValue("@Contact2", Request.Form["Number2"]);
         sqlOperation.AddParameterWithValue("@Height", Request.Form["height"]);
         sqlOperation.AddParameterWithValue("@Weight", Request.Form["weight"]);
+        sqlOperation.AddParameterWithValue("@Radiotherapy_ID", treatID);
         sqlOperation.AddParameterWithValue("@doctorid", doctorid);
+        sqlOperation.AddParameterWithValue("@SubCenterPrincipal_ID", Request.Form["Sub"]);
+        sqlOperation.AddParameterWithValue("@Principal_User_ID", 1);
         sqlOperation.AddParameterWithValue("@Register_User_ID", userID);
-        sqlOperation.AddParameterWithValue("@RegisterTime", datetime);
-        sqlOperation.AddParameterWithValue("@SickPart", Convert.ToInt32(Request.Form["SickPart"]));
-        int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-
+        sqlOperation.AddParameterWithValue("@RegisterTime", datetime);       
+        int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);   
         string patientID = "select ID  from patient where Name=@Name and IdentificationNumber=@IdentificationNumber order by ID desc";
         sqlOperation1.AddParameterWithValue("@IdentificationNumber", Request.Form["IDcardNumber"]);
         sqlOperation1.AddParameterWithValue("@Name", Request.Form["userName"]);
-        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation1.ExecuteReader(patientID);
+        int patient = Convert.ToInt32(sqlOperation1.ExecuteScalar(patientID));
         int intSuccess2 = 0;
         int intSuccess3 = 0;
-        int max = 0;
-        int treatID = 0;
-        if (reader.Read())
+            
+        if (intSuccess > 0 && treatID > 0)
         {
-            string treatid = DateTime.Now.Year.ToString() + Request.Form["SickPart"] + reader["ID"].ToString();
-            max = Convert.ToInt32(reader["ID"].ToString());
-            treatID = Convert.ToInt32(treatid);
-
-        }
-        if (intSuccess > 0 && max > 0 && treatID > 0)
-        {
-            string treatinsert = "insert into treatment(ID,Patient_ID) values(@ID,@PID)";
-            sqlOperation2.AddParameterWithValue("@ID", treatID);
-            sqlOperation2.AddParameterWithValue("@PID", max);
+            string treatinsert = "insert into treatment(TreatmentName,Patient_ID,Group_ID,Progress,State) values(@ID,@PID,Group_ID,0,1)";
+            sqlOperation2.AddParameterWithValue("@ID", 1);
+            sqlOperation2.AddParameterWithValue("@PID", patient);
+            sqlOperation5.AddParameterWithValue("@Group_ID", groupID);
             intSuccess2 = sqlOperation2.ExecuteNonQuery(treatinsert);
 
         }
+       
         if (intSuccess2 > 0)
-        {
-
-            //将信息写入数据库，并返回是否成功
-            string str1 = "INSERT INTO diagnosisrecord(SubCenterPrincipal_ID,Principal_User_ID,Part_ID,Treatment_ID) " +
-                                    "VALUES(@SubCenterPrincipal_ID,@Principal_User_ID,@SickPart,@Treatment_ID)";
-            sqlOperation3.AddParameterWithValue("@SickPart", Convert.ToInt32(Request.Form["SickPart"]));
-            sqlOperation3.AddParameterWithValue("@SubCenterPrincipal_ID", Convert.ToInt32(Request.Form["Sub"]));
-            sqlOperation3.AddParameterWithValue("@Principal_User_ID", 1);
-            sqlOperation3.AddParameterWithValue("@Treatment_ID", treatID);
-            int suc = sqlOperation3.ExecuteNonQuery(str1);
-            string diagID = "select ID  from diagnosisrecord where Treatment_ID=@Treatment_ID order by ID desc";
-            sqlOperation4.AddParameterWithValue("@Treatment_ID", treatID);
-            MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation4.ExecuteReader(diagID);
-
-            if (reader1.Read())
-            {
-                string treatupdate = " update treatment set DiagnosisRecord_ID=@DiagnosisRecord_ID,Group_ID=@Group_ID,Progress=1,State=1 where ID=@Treatment_ID";
-                sqlOperation5.AddParameterWithValue("@DiagnosisRecord_ID", Convert.ToInt32(reader1["ID"].ToString()));
-                sqlOperation5.AddParameterWithValue("@Group_ID", groupID);
-                sqlOperation5.AddParameterWithValue("@Treatment_ID", treatID);
-                intSuccess3 = sqlOperation5.ExecuteNonQuery(treatupdate);
-
-            }
-        }
-        if (intSuccess3 > 0)
         {
             return true;
         }

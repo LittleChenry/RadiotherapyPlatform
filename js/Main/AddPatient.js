@@ -12,12 +12,10 @@ function Init() {
     document.getElementById("save").addEventListener("click", CheckEmpty, false);
     //document.getElementById("Number1").addEventListener("change", phoneFormat, false);//电话号码格式化
     //document.getElementById("Number2").addEventListener("change", phoneFormat, false);//电话号码格式化
-    var select3 = document.getElementById("SickPart");
-    createPartItem(select3);
+    
     var select4 = document.getElementById("doctor");
     createdoctorItem(select4);
-    var select5 = document.getElementById("Sub");
-    createSubcenterItem(select5);
+    
     document.getElementById("userID").value = userID;
     document.getElementById("operate").innerHTML = userName;
     document.getElementById("date").innerHTML = getNowFormatDate();
@@ -44,29 +42,7 @@ function getNowFormatDate() {
     return currentdate;
 }
 //第二步诊断单中的分中心负责人选择项建立
-function createSubcenterItem(thiselement) {
-    var subcenterItem = JSON.parse(getsubcenterItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--分中心负责人--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < subcenterItem.length; i++) {
-        if (subcenterItem[i] != "") {
-            thiselement.options[i + 1] = new Option(subcenterItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(subcenterItem[i].ID);
-        }
-    }
 
-
-}
-//第二步分中心负责人数据库信息调取
-function getsubcenterItem() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "Records/getsubcenter.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
-}
 function createdoctorItem(thiselement) {
     var doctorItem = JSON.parse(getdoctorItem()).Item;
     thiselement.options.length = 0;
@@ -102,27 +78,7 @@ function resetForm(evt) {
     }
 }
 //第二步部位下拉项建立
-function createPartItem(thiselement) {
-    var PartItem = JSON.parse(getPartItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--部位选择--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
-        }
-    }
-}
-//第二步部位项数据库调取
-function getPartItem() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "Records/getpart.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
-}
+
 //检查各个输入项内容
 function CheckEmpty() {
 
@@ -171,10 +127,7 @@ function CheckEmpty() {
         window.alert("病案号不能为空");
         return;
     }
-    if (document.getElementById("SickPart").value == "allItem") {
-        window.alert("请选择患病部位");
-        return;
-    }
+    
     if (document.getElementById("doctor").value == "allItem") {
         window.alert("请选择医生");
         return;
@@ -183,8 +136,8 @@ function CheckEmpty() {
         window.alert("就诊医院不能为空");
         return;
     }  
-    if (document.getElementById("Sub").value == "allItem") {
-        window.alert("请选择分中心负责人");
+    if (document.getElementById("Sub").value == "") {
+        window.alert("请输入分中心负责人");
         return;
     }  
     document.getElementById("frmaddpatient").submit();
