@@ -95,10 +95,10 @@ function CheckEmpty() {
         window.alert("身份证不能为空");
         return;
     }
-    if (isCardNo()) {
-        window.alert("身份证格式不正确");
-        return;
-    }
+    //if (isCardNo()) {
+    //    window.alert("身份证格式不正确");
+    //    return;
+    //}
     if (document.getElementById("Birthday").value == "") {
         window.alert("出生日期不能为空");
         return;
