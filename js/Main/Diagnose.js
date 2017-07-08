@@ -240,7 +240,7 @@ function askForBack() {
 
 }
 function removeDisabled() {
-    document.getElementById("remark").removeAttribute("disable");
-    document.getElementById("part").removeAttribute("disable");
-    document.getElementById("diagresult").removeAttribute("disable");
+    document.getElementById("remark").removeAttribute("disabled");
+    document.getElementById("part").removeAttribute("disabled");
+    document.getElementById("diagresult").removeAttribute("disabled");
 }

@@ -133,15 +133,15 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span id="out-name" class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
+              <span id="out-name" class="hidden-xs">Chenry</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 <p>
-                  <span id="in-name"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
-                  <small id="role"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserRole() %></small>
+                  <span id="in-name">Chenry</span>
+                  <small id="role">医师</small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -298,10 +298,10 @@
           <table class="table table-bordered">
             <thead>
             <tr>
-              <th>疗程号</th>
+              <th>放疗号</th>
               <th>姓名</th>
-              <th>诊断</th>
-              <th>状态</th>
+              <th>疗程</th>
+              <th>进度</th>
               <th>主治医生</th>
               <!-- <th>登记日期</th>
               <th>年龄</th> -->
@@ -329,7 +329,7 @@
       <div class="layout-main-tab">
         <nav class="tab-nav" style="padding-left: 0px;">
           <div style="text-align: center;">
-            状态：
+            新增流程
             <span id="patient-status"></span>
           </div>
         </nav>
@@ -341,7 +341,7 @@
       <div class="layout-main-tab">
         <nav class="tab-nav" style="padding-top:3px;">
           <div>
-            <button class="btn btn-success"><i class="fa fa-fw fa-edit"></i>编辑</button>
+            <button class="btn btn-success" disabled="disabled"><i class="fa fa-fw fa-edit"></i>编辑</button>
             <div class="btn-group">
               <button type="button" class="btn btn-success" data-toggle="dropdown"><i class="fa fa-fw fa-send"></i>选择模板</button>
               <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
@@ -353,7 +353,7 @@
                 <li><a href="#">Something else here</a></li>
               </ul>
             </div>
-            <button id="save" class="btn btn-success"><i class="fa fa-fw fa-save"></i>保存</button>
+            <button id="save" class="btn btn-success" disabled="disabled"><i class="fa fa-fw fa-save"></i>保存</button>
             <button id="printIframe" class="btn btn-success"><i class="fa fa-fw fa-print"></i>打印</button>
           </div>
         </nav>
@@ -374,33 +374,6 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<div id="chooseOperator" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">选择操作成员</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>成员1</label>
-                    <select id="operator1" class="form-control"></select>
-                </div>
-                <div class="form-group">
-                    <label>成员2</label>
-                    <select id="operator2" class="form-control"></select>
-                </div>
-                <div class="form-group">
-                    <label>成员3</label>
-                    <select id="operator3" class="form-control"></select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="saveOperator" class="btn btn-primary" data-dismiss="modal">保存</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
