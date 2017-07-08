@@ -10,8 +10,6 @@ function Init() {
     getUserID();
     getUserName();
     document.getElementById("save").addEventListener("click", CheckEmpty, false);
-    //document.getElementById("Number1").addEventListener("change", phoneFormat, false);//电话号码格式化
-    //document.getElementById("Number2").addEventListener("change", phoneFormat, false);//电话号码格式化
     
     var select4 = document.getElementById("doctor");
     createdoctorItem(select4);
@@ -81,7 +79,6 @@ function resetForm(evt) {
 
 //检查各个输入项内容
 function CheckEmpty() {
-
     if (document.getElementById("userName").value == "") {
         window.alert("姓名不能为空");
         return;
@@ -139,8 +136,25 @@ function CheckEmpty() {
     if (document.getElementById("Sub").value == "") {
         window.alert("请输入分中心负责人");
         return;
-    }  
-    document.getElementById("frmaddpatient").submit();
+    }
+    var form = new FormData(document.getElementById("frmaddpatient"));
+    $.ajax({
+        url: "Addpatient.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("注册成功");
+            window.location.reload();
+        },
+        error: function (e) {
+            window.location.href = "../Records/Error.aspx";
+        },
+        failure: function (e) {
+            alert("注册失败！！");
+        }
+    });
 }
 
 //根据classname做对应的各项检查
@@ -229,3 +243,7 @@ function isCardNo() {
     }
     return false;
 }
+
+
+
+
