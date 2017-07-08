@@ -99,6 +99,7 @@ function countGroups(group) {
         currentcounts++;
     }
     if (currentLength != 12) {
+        max = max < (currentcounts - preGroupCount) ? (currentcounts - preGroupCount) : max;
         maxMembers.push(max);
     }
 }
@@ -380,6 +381,18 @@ $(function () {
         getSearch(searchText);//获取符合搜索条件的对象
         createSearchTable();//根据符合条件对象生成搜索结果
     });
+
+    $("#GroupSearchID").bind("input", function () {
+        var searchText = $("#GroupSearchID").val();
+        if (searchText == "") {
+            window.location.href = "../../pages/Root/Root-Group.aspx";
+            return;
+        }
+        searchArray.length = 0;//清空
+
+        getSearch(searchText);//获取符合搜索条件的对象
+        createSearchTable();//根据符合条件对象生成搜索结果
+    });
 })
 
 /**
@@ -396,7 +409,7 @@ function getSearch(text) {
             currentGid = groupJsonObj[begin].gid;
             startIndex = begin;
         }
-        if (groupJsonObj[begin].groupName.indexOf(text) > -1 || groupJsonObj[begin].userName.indexOf(text) > -1) {
+        if (groupJsonObj[begin].groupName.indexOf(text) > -1 || groupJsonObj[begin].userName.indexOf(text) > -1 || groupJsonObj[begin].chargerName.indexOf(text) > -1) {
             begin = pushGroup(startIndex);//压入组返回结束位置 + 1
         } else {
             ++begin;
@@ -424,12 +437,13 @@ function pushGroup(startIndex) {
  * 根据符合条件数组生成结果视图
  */
 function createSearchTable() {
+    var $groupArea = $("#groupArea");
     if (searchArray.length == 0) {
+        $groupArea.empty();
         return;
     }
 
     var groupID = -1;
-    var $groupArea = $("#groupArea");
     var $tr = null;
     var currentRowcols = 0;
     var max = countMax();
@@ -581,11 +595,24 @@ $(function () {
             success: function () {
                 alert("删除成功");
                 $currentTr.remove();
+                deleteJsonObj(idStr.split(" ")[0]);
                 $("#cannelEdit").trigger("click");i
             }
         });
     });
 });
+
+function deleteJsonObj(id) {
+    var cont = true;
+    for (var i = 0; i < groupJsonObj.length; i++) {
+        if (groupJsonObj[i].gid == id) {
+            groupJsonObj.splice(i, 1);
+            cont = false;
+        } else if (groupJsonObj[i].gid != id && cont == false) {
+            break;
+        }
+    }
+}
 
 /**
  * 修改组

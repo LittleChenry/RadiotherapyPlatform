@@ -35,6 +35,21 @@ public class UpdateGroup : IHttpHandler {
         string cname = context.Request.Form["chargerName"];
         string cid = nows[0];
 
+        int count = 0;
+        if (pres[1] != cid)
+        {
+            string select = "SELECT COUNT(ID) FROM groups WHERE Charge_User_ID=@preid";
+            sqlOperation.AddParameterWithValue("@preid", pres[1]);
+            if (int.Parse(sqlOperation.ExecuteScalar(select)) > 1)
+            {
+                count = 1;
+            }
+        }
+        else if (pres[1] == cid)
+        {
+            count = 1;
+        }
+
         //修改组名
         string sqlCommand = "UPDATE groups set groupName=@groupName,Charge_User_Name=@uName,Charge_User_ID=@cid WHERE ID=@gid";
         sqlOperation.AddParameterWithValue("@groupName", groupName);
@@ -44,20 +59,24 @@ public class UpdateGroup : IHttpHandler {
         sqlOperation.ExecuteNonQuery(sqlCommand);
         
         //成员置空
-        StringBuilder update = new StringBuilder("UPDATE user set Group_ID=0 WHERE ID in(");
-        for (int i = 1; i < pres.Length - 1; i++)
+        int j = ((count == 1) ? 2 : 1);
+        if (j < pres.Length)
         {
-            update.Append(pres[i]).Append(",");
+            StringBuilder update = new StringBuilder("UPDATE user set Group_ID=0 WHERE ID in(");
+            for (int i = j; i < pres.Length - 1; i++)
+            {
+                update.Append(pres[i]).Append(",");
+            }
+            update.Remove(update.Length - 1, 1)
+                  .Append(")");
+
+            sqlCommand = update.ToString();
+            sqlOperation.ExecuteNonQuery(sqlCommand);
         }
-        update.Remove(update.Length - 1, 1)
-              .Append(")");
-        
-        sqlCommand = update.ToString();
-        sqlOperation.ExecuteNonQuery(sqlCommand);
         
         //更新成员
         StringBuilder upUser = new StringBuilder("UPDATE user SET Group_ID=@gid WHERE ID in(");
-        for (int i = 0; i < nows.Length - 1; ++i)
+        for (int i = 1; i < nows.Length - 1; ++i)
         {
             upUser.Append(nows[i]).Append(",");
         }
@@ -65,58 +84,14 @@ public class UpdateGroup : IHttpHandler {
             .Append(")");
         sqlCommand = upUser.ToString();
         sqlOperation.ExecuteNonQuery(sqlCommand);
-        //string jsonStr = context.Request.Form["data"];
-        //JavaScriptSerializer js = new JavaScriptSerializer();
-        //LitJson.JsonData[] obj = js.Deserialize<LitJson.JsonData[]>(jsonStr);
-        //string remove = context.Request.Form["delete"];
-        //string[] removes = remove.Split(' ');
-        //string removeSql = "UPDATE user SET Group_ID=0 WHERE ID in(";
-        //int len = removes.Length;
-        //bool changeCharger = false;
-        //if(int.Parse(removes[0]) != int.Parse(obj[0]["ID"].ToString())){
-        //    changeCharger = true;
-        //    sqlOperation.AddParameterWithValue("@CID", obj[0]["ID"].ToString());
-        //    sqlOperation.AddParameterWithValue("@gid", obj[obj.Length - 1]["GroupID"].ToString());
-        //    sqlOperation.AddParameterWithValue("@Cname", obj[0]["Name"].ToString());
-        //    sqlOperation.ExecuteNonQuery("UPDATE groups SET Charge_User_Name=@Cname,Charge_User_ID=@CID WHERE ID=@gid");
-        //}
-        //if (len > 2)
-        //{
-        //    for (int i = 1; i < len; ++i)
-        //    {
-        //        if (removes[i] != "")
-        //        {
-        //            removeSql += removes[i];
-        //            if (i != (len - 2))
-        //            {
-        //                removeSql += ",";
-        //            }
-        //        }
-        //    }
-        //    if (changeCharger)
-        //    {
-        //        removeSql += "," + removes[0];
-        //    }
-        //    removeSql += ")";
-        //    sqlOperation.ExecuteNonQuery(removeSql);
-        //}
-        
-        //string sqlCommand = "UPDATE groups SET Charge_User_Name = @name WHERE ID=@id";
-        //sqlOperation.AddParameterWithValue("@name", obj[0]["Name"].ToString());
-        //sqlOperation.AddParameterWithValue("@id", obj[0]["ID"].ToString());
-        //sqlOperation.ExecuteNonQuery(sqlCommand);
-        //sqlCommand = "UPDATE user SET Group_ID=@gid WHERE ID in(";
-        //sqlOperation.AddParameterWithValue("@gid", obj[obj.Length - 1]["GroupID"].ToString());
-        //for (int i = 0; i < obj.Length - 1; i++)
-        //{
-        //    sqlCommand += obj[i]["ID"];
-        //    if (i != obj.Length - 2)
-        //    {
-        //        sqlCommand += ",";
-        //    }
-        //}
-        //sqlCommand += ")";
-        //sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (pres[1] != cid)
+        {
+            sqlCommand = "UPDATE user set Group_ID=-1 WHERE ID=@id";
+            sqlOperation.AddParameterWithValue("@id", cid);
+            sqlOperation.ExecuteNonQuery(sqlCommand);
+        }
+
         sqlOperation.Close();
         sqlOperation.Dispose();
         sqlOperation = null;

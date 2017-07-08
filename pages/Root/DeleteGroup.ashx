@@ -27,8 +27,13 @@ public class DeleteGroup : IHttpHandler {
         sqlOperation.AddParameterWithValue("@gid", ids[0]);
         sqlOperation.ExecuteNonQuery(sqlCommand);
 
+        sqlCommand = "SELECT COUNT(ID) FROM groups WHERE Charge_User_ID=@cid";
+        sqlOperation.AddParameterWithValue("@cid", ids[1]);
+        int count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
+
         StringBuilder update = new StringBuilder("UPDATE user set Group_ID=0 WHERE ID in(");
-        for (int i = 0; i < ids.Length - 1; i++)
+        int j = count > 0 ? 2 : 1;
+        for (int i = j; i < ids.Length - 1; i++)
         {
             update.Append(ids[i]).Append(",");
         }
