@@ -46,9 +46,14 @@ public class AddNewGroup : IHttpHandler {
         sqlCommand = update.ToString();
         sqlOperation.AddParameterWithValue("@Group_ID", groupsID);
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        string updateChargerGroupID = "UPDATE user SET Group_ID=-1 WHERE ID=@ID";
+        sqlOperation.AddParameterWithValue("@ID", obj[0]["ID"].ToString());
+        sqlOperation.ExecuteNonQuery(updateChargerGroupID);
+        
         sqlOperation.Close();
         sqlOperation.Dispose();
-        sqlOperation = null;
+        sqlOperation = null;        
         
     }
 }
