@@ -71,13 +71,13 @@
                     </div>
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4">固定装置：</span>
-                        <select id="fixEquip" name="fixEquip" class="form-item"></select>
+                        <select id="fixEquip" name="fixEquip" class="form-item" disabled="disabled"></select>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4" style="padding-left:0px;">体位：</span>
-                        <select id="bodyPost" name="bodyPost" class="form-item">
+                        <select id="bodyPost" name="bodyPost" class="form-item" disabled="disabled">
                             <option value="allItem">----选择体位-----</option>
                             <option value="仰卧">仰卧</option>
                             <option value="俯卧">俯卧</option>
@@ -86,14 +86,14 @@
                     </div>
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4">特殊要求：</span>
-                        <select id="specialrequest" name="specialrequest" class="form-item"></select>
+                        <select id="specialrequest" name="specialrequest" class="form-item" disabled="disabled"></select>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-8">
                         <span class="form-text col-xs-3" style="padding-left:0px;">设备与时间：</span>
-                        <input id="appointtime"  name="appointtime" type="text" class="form-item" readonly="true" />
-                        <button id="chooseappoint" class="btn btn-default" data-toggle="modal" data-target="#appoint">预约</button>
+                        <input id="appointtime"  name="appointtime" type="text" class="form-item" readonly="true"  disabled="disabled"/>
+                        <button id="chooseappoint" class="btn btn-default" data-toggle="modal" data-target="#appoint" disabled="disabled">预约</button>
                     </div>
                 </div>
             </div>

@@ -40,11 +40,8 @@ function Init(evt) {
         document.getElementById("ApplicationTime").innerHTML = fixedInfo.ApplicationTime;
         if (patient.Progress >= 5) {
             document.getElementById("BodyPositionDetail").value = fixedInfo.BodyPositionDetail;
-            document.getElementById("BodyPositionDetail").disabled = "true";
             document.getElementById("AnnexDescription").value = fixedInfo.AnnexDescription;
-            document.getElementById("AnnexDescription").disabled = "true";
             document.getElementById("Remarks").value = fixedInfo.Remarks;
-            document.getElementById("Remarks").disabled = "true";
             document.getElementById("operator").innerHTML = fixedInfo.operate;
             document.getElementById("date").innerHTML = fixedInfo.OperateTime;
             var boxesgroup = document.getElementsByClassName("boxes");
@@ -212,4 +209,9 @@ function postimportFIX() {
         return;
     }
     document.getElementById("saveFixRecord").submit();
+}
+function remove() {
+    document.getElementById("BodyPositionDetail").removeAttribute("disable");
+    document.getElementById("AnnexDescription").removeAttribute("disable");
+    document.getElementById("Remarks").removeAttribute("disable");
 }

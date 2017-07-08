@@ -41,30 +41,20 @@ function Init(evt) {
     if (patient.Progress >= 4) {
         var info = getLocationInfomation(treatmentID);
         document.getElementById("scanmethod").value = info.scanmethod;
-        document.getElementById("scanmethod").disabled = "true";
         document.getElementById("scanpart").value = info.scanpartname;
-        document.getElementById("scanpart").disabled = "true";
         document.getElementById("up").value = info.UpperBound;
-        document.getElementById("up").disabled = "true";
         document.getElementById("down").value = info.LowerBound;
-        document.getElementById("down").disabled = "true";
         document.getElementById("special").value = info.locationrequire;
-        document.getElementById("special").disabled = "true";
         document.getElementById("remark").value = info.Remarks;
-        document.getElementById("remark").disabled = "true";
         var add = document.getElementsByName("add");
-        document.getElementById("yes").disabled = "disabled";
-        document.getElementById("No").disabled = "disabled";
         if (info.Enhance == "1") {
             add[0].checked = "true";
             document.getElementById("addmethod").value = info.enhancemethod;
-            document.getElementById("addmethod").disabled = "disabled";
         } else {
             add[1].checked = "true";
             document.getElementById("enhancemethod").style.display = "none";
         }
-        document.getElementById("appointtime").value = info.equipname + " " + info.Date + " " + toTime(info.Begin) + "-" + toTime(info.End);
-        document.getElementById("chooseappoint").disabled = "disabled";
+        document.getElementById("appointtime").value = info.equipname + " " + info.Date + " " + toTime(info.Begin) + "-" + toTime(info.End);      
         document.getElementById("applyuser").innerHTML = info.username;
         document.getElementById("time").innerHTML = info.ApplicationTime;
 
@@ -543,4 +533,17 @@ function compareWithToday(time) {
             }
         }
     }
+}
+function remove() {
+    document.getElementById("scanmethod").removeAttribute("disable");
+    document.getElementById("scanpart").removeAttribute("disable");
+    document.getElementById("up").removeAttribute("disable");
+    document.getElementById("down").removeAttribute("disable");
+    document.getElementById("special").removeAttribute("disable");
+    document.getElementById("remark").removeAttribute("disable");
+    document.getElementById("yes").removeAttribute("disable");
+    document.getElementById("No").removeAttribute("disable");
+    document.getElementById("addmethod").removeAttribute("disable");
+    document.getElementById("appointtime").removeAttribute("disable");
+    document.getElementById("chooseappoint").removeAttribute("disable");
 }

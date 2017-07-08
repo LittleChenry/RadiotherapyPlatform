@@ -31,15 +31,10 @@ function Init(evt) {
     if (patient.Progress>= 3) {
         var info = getfixInfomation(treatmentID);
         document.getElementById("modelselect").value = info.materialName;
-        document.getElementById("modelselect").disabled = "true";
         document.getElementById("specialrequest").value = info.require;
-        document.getElementById("specialrequest").disabled = "true";
         document.getElementById("fixEquip").value = info.fixedequipname;
-        document.getElementById("fixEquip").disabled = "true";
-        document.getElementById("bodyPost").value = info.BodyPosition;
-        document.getElementById("bodyPost").disabled = "true";       
+        document.getElementById("bodyPost").value = info.BodyPosition;     
         document.getElementById("appointtime").value = info.equipname + " " + info.Date+ " " + toTime(info.Begin) + "-" + toTime(info.End);
-        document.getElementById("chooseappoint").disabled = "disabled";
         document.getElementById("applyuser").innerHTML = info.username;
         document.getElementById("time").innerHTML = info.ApplicationTime;
 
@@ -414,4 +409,12 @@ function compareWithToday(time) {
             }
         }
     }
+}
+function remove() {
+    document.getElementById("modelselect").removeAttribute("disable");
+    document.getElementById("specialrequest").removeAttribute("disable"); 
+    document.getElementById("fixEquip").removeAttribute("disable");
+    document.getElementById("bodyPost").removeAttribute("disable");
+    document.getElementById("appointtime").removeAttribute("disable");
+    document.getElementById("chooseappoint").removeAttribute("disable");
 }

@@ -66,56 +66,56 @@
                 <div class="single-row">
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4" style="padding-left:0px;">扫描部位：</span>
-                        <select id="scanpart" name="scanpart" class="form-item"></select>
+                        <select id="scanpart" name="scanpart" class="form-item" disabled="disabled"></select>
                     </div>
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4">扫描方式：</span>
-                        <select id="scanmethod" name="scanmethod" class="form-item"></select>
+                        <select id="scanmethod" name="scanmethod" class="form-item" disabled="disabled"></select>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4" style="padding-left:0px;">上界：</span>
-                        <input id="up" name="up" type="text" class="form-item" />
+                        <input id="up" name="up" type="text" class="form-item" disabled="disabled"/>
                     </div>
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4">下界：</span>
-                        <input id="down" name="down" type="text" class="form-item" />
+                        <input id="down" name="down" type="text" class="form-item" disabled="disabled"/>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4" style="padding-left:0px;">是否增强：</span>
                         <span>
-                            <input  id="yes" type="radio" name="add" checked="true" style="width:20pt" onclick="forchange()" value="1"/>
+                            <input  id="yes" type="radio" name="add" checked="true" style="width:20pt" onclick="forchange()" value="1" disabled="disabled"/>
                             是
-                            <input id="No" type="radio" name="add"  style="width:20pt" onclick="forchange()" value="0"/>
+                            <input id="No" type="radio" name="add"  style="width:20pt" onclick="forchange()" value="0" disabled="disabled"/>
                             否
                         </span>
                     </div>
                     <div  id="enhancemethod" class="col-xs-6">
                         <span class="form-text col-xs-4">增强方式：</span>
-                        <select id="addmethod" name="addmethod" class="form-item"></select>
+                        <select id="addmethod" name="addmethod" class="form-item" disabled="disabled"></select>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4" style="padding-left:0px;">特殊要求：</span>
-                        <select id="special" name="special" class="form-item"></select>
+                        <select id="special" name="special" class="form-item" disabled="disabled"></select>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-8">
                         <span class="form-text col-xs-3" style="padding-left:0px;">设备与时间：</span>
-                        <input id="appointtime" name="appoint" type="text" readonly="true" class="form-item"  />
+                        <input id="appointtime" name="appoint" type="text" readonly="true" class="form-item" disabled="disabled" />
                         <input id="idforappoint"  value="0" type="hidden" />
-                        <input id="chooseappoint" type="button" class="btn btn-default" value="预约"  data-toggle="modal" data-target="#appoint" />
+                        <input id="chooseappoint" type="button" class="btn btn-default" value="预约"  data-toggle="modal" data-target="#appoint" disabled="disabled"/>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
                         备注：
-                        <textarea id="remark" class="form-area"></textarea>
+                        <textarea id="remark" class="form-area" disabled="disabled"></textarea>
                     </div>
                 </div>
             </div>
