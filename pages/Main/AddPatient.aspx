@@ -296,41 +296,57 @@
                         </div>
                     </div>
                     <div class="single-row">
-                        <div class="col-xs-4">
+                        <div class="col-xs-3">
                             <span class="form-text col-xs-4" style="padding-left:0px;">姓名：</span>
                             <input id="userName" name="userName" class="form-item col-xs-8" type="text"  AUTOCOMPLETE="OFF"/>
                         </div>
-                        <div class="item col-xs-6" style="padding-top:5px;"> 
-                            <span class="col-xs-3">性别：</span>
-                            <span class="col-xs-3" style="padding-left:0px;">
+                        <div class="item col-xs-4" style="padding-top:5px;"> 
+                            <span class="col-xs-4">性别：</span>
+                            <span class="col-xs-4" style="padding-left:0px;">
                                 <input type="radio" name="Gender" id="male" value="M" />
                                 男
                             </span>
-                            <span class="col-xs-3" style="padding-left:0px;">
+                            <span class="col-xs-4" style="padding-left:0px;">
                                 <input type="radio" name="Gender" id="female" value="F" />
                                 女
                             </span>
                         </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="col-xs-4">
+                     <div class="col-xs-3">
                             <span class="form-text col-xs-4" style="padding-left:0px;">民族：</span>
                             <input id="Nation" name="Nation"  class="form-item col-xs-8" type="text"  AUTOCOMPLETE="OFF" />
-  
-                        </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-3">身份证号：</span>
-                            <input id="IDcardNumber" name="IDcardNumber" class="form-item col-xs-9" type="text" AUTOCOMPLETE="OFF"/>
                         </div>
                     </div>
-                    <div class="single-row">
+                    <div class="single-row">   
                         <div class="col-xs-4">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">身份证号：</span>
+                            <input id="IDcardNumber"  name="IDcardNumber" class="form-item col-xs-8" type="text" AUTOCOMPLETE="OFF"/>
+                        </div>
+                        <div class="col-xs-5">
                             <span class="form-text col-xs-4" style="padding-left:0px;">出生日期：</span>
                             <input class="form-item col-xs-8" id="Birthday" name="Birthday"type="text"  placeholder="选择日期"   AUTOCOMPLETE="OFF"/>
                         </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-3">地址：</span>
-                            <input id="Address" name="Address" class="form-item col-xs-9" AUTOCOMPLETE="OFF" type="text"/>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-11">
+                            <span class="form-text col-xs-1" style="padding-left:0px;">地址：</span>
+                            <select id="id_provSelect"  class="form-item col-xs-3" name="provSelect" onChange="loadCity(this.value);">
+                                <option value="">请选择省份</option>
+                            </select>
+                            <select id="id_citySelect" class="form-item col-xs-3" name="citySelect" onChange="loadArea(this.value);">
+                                <option value="">请选择城市</option>
+                            </select>
+                             <select id="id_areaSelect" class="form-item col-xs-3"  name="areaSelect">
+                                <option value="">请选择区域</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="provSelect_text" id="provSelect_text" />
+                        <input type="hidden" name="citySelect_text" id="citySelect_text" />
+                        <input type="hidden" name="areaSelect_text" id="areaSelect_text" />
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-11">
+                            <span class="form-text col-xs-1" style="padding-left:0px;"></span>
+                             <input id="addressmore"  name="addressmore" class="form-item col-xs-6"   placeholder="详细地址" type="text" AUTOCOMPLETE="OFF"/>
                         </div>
                     </div>
                     <div class="single-row">
@@ -434,7 +450,9 @@
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- js -->
 <script src="../../js/Main/AddPatient.js"></script>
-    <script src="../../js/Main/addimgs.js"></script>
+ <script src="../../js/Main/addimgs.js"></script>
+<script type="text/javascript" src="../../js/Main/TestAddress.js"></script>
+<script type="text/javascript" src="../../js/Main/TestChooseAddress.js"></script>
 <script>
     $("#addpatient-content").css("minHeight", $(document).height() - 101);
     $("#Birthday").datepicker({ autoclose: true });

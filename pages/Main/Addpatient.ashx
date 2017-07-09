@@ -72,9 +72,6 @@ public class Addpatient : IHttpHandler {
         {
             int doctorid = Convert.ToInt32(context.Request.Form["doctor"]);
             int userID = Convert.ToInt32(context.Request.Form["userID"]);
-            string groupid = "SELECT Group_ID from user where ID=@doctor";
-            sqlOperation5.AddParameterWithValue("@doctor", doctorid);
-            int groupID = int.Parse(sqlOperation5.ExecuteScalar(groupid));
             DateTime datetime = DateTime.Now;
             DateTime date = DateTime.Now;
             string date1 = date.ToString("yyyy-MM-dd");
@@ -102,7 +99,7 @@ public class Addpatient : IHttpHandler {
             sqlOperation.AddParameterWithValue("@Birthday", context.Request.Form["Birthday"]);
             sqlOperation.AddParameterWithValue("@Age", Convert.ToInt32(DateTime.Now.Year.ToString()) - Convert.ToInt32(context.Request.Form["Birthday"].Substring(0, 4)));
             sqlOperation.AddParameterWithValue("@Nation", context.Request.Form["Nation"]);
-            sqlOperation.AddParameterWithValue("@Address", context.Request.Form["Address"]);
+            sqlOperation.AddParameterWithValue("@Address", context.Request.Form["provSelect_text"] + context.Request.Form["citySelect_text"] + context.Request.Form["areaSelect_text"] + context.Request.Form["addressmore"]);
             sqlOperation.AddParameterWithValue("@Contact1", context.Request.Form["Number1"]);
             sqlOperation.AddParameterWithValue("@Contact2", context.Request.Form["Number2"]);
             sqlOperation.AddParameterWithValue("@Height", context.Request.Form["height"]);
@@ -121,10 +118,9 @@ public class Addpatient : IHttpHandler {
             int intSuccess2 = 0;
             if (intSuccess > 0 && treatID > 0)
             {
-                string treatinsert = "insert into treatment(TreatmentName,Patient_ID,Group_ID,Progress,State) values(@ID,@PID,@Group_ID,1,1)";
+                string treatinsert = "insert into treatment(TreatmentName,Patient_ID,Progress,State) values(@ID,@PID,1,1)";
                 sqlOperation2.AddParameterWithValue("@ID", 1);
                 sqlOperation2.AddParameterWithValue("@PID", patient);
-                sqlOperation2.AddParameterWithValue("@Group_ID", groupID);
                 intSuccess2 = sqlOperation2.ExecuteNonQuery(treatinsert);
             }
             if (intSuccess2 > 0)

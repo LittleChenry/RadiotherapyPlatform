@@ -17,6 +17,7 @@ function Init() {
     document.getElementById("userID").value = userID;
     document.getElementById("operate").innerHTML = userName;
     document.getElementById("date").innerHTML = getNowFormatDate();
+    loadProvince('');
 }
 function getNowFormatDate() {
     var date = new Date();
@@ -95,19 +96,22 @@ function CheckEmpty() {
         window.alert("身份证不能为空");
         return;
     }
-    //if (isCardNo()) {
-    //    window.alert("身份证格式不正确");
-    //    return;
-    //}
+
     if (document.getElementById("Birthday").value == "") {
         window.alert("出生日期不能为空");
         return;
 
     }   
-    if (document.getElementById("Address").value == "") {
+    if (document.getElementById("id_provSelect").value == "" || document.getElementById("id_citySelect").value == "" || document.getElementById("id_areaSelect").value == "") {
         window.alert("地址不能为空");
         return;
     }
+    var sel1 = document.getElementById("id_provSelect");
+    document.getElementById('provSelect_text').value = sel1.options[sel1.selectedIndex].text;
+    var sel2 = document.getElementById("id_citySelect");
+    document.getElementById('citySelect_text').value = sel2.options[sel2.selectedIndex].text;
+    var sel3 = document.getElementById("id_areaSelect");
+    document.getElementById('areaSelect_text').value = sel3.options[sel3.selectedIndex].text;
     if (document.getElementById("Number1").value == "") {
         window.alert("电话1不能为空");
         return;
@@ -137,21 +141,12 @@ function CheckEmpty() {
         window.alert("请输入分中心负责人");
         return;
     }
-    var form = new FormData(document.getElementById("frmaddpatient"));
-    $.ajax({
-        url: "Addpatient.ashx",
-        type: "post",
-        data: form,
-        processData: false,
-        contentType: false,
-        success: function (data) {
-            alert("注册成功");
-            window.location.reload();
-        },
-        error: function (e) {
+    var form = new FormData(document.getElementById("frmaddpatient"));    $.ajax({
+        url: "Addpatient.ashx",        type: "post",        data: form,        processData: false,        contentType: false,        success: function (data) {
+            alert("注册成功");            window.location.reload();
+        },        error: function (e) {
             window.location.href = "../Records/Error.aspx";
-        },
-        failure: function (e) {
+        },        failure: function (e) {
             alert("注册失败！！");
         }
     });
@@ -243,7 +238,56 @@ function isCardNo() {
     }
     return false;
 }
+function loadProvince(regionId) {
+    $("#id_provSelect").html("");
+    $("#id_provSelect").append("<option value=''>请选择省份</option>");
+    var jsonStr = getAddress(regionId, 0);
+    for (var k in jsonStr) {
+        $("#id_provSelect").append("<option value='" + k + "'>" + jsonStr[k] + "</option>");
+    }
+    if (regionId.length != 6) {
+        $("#id_citySelect").html("");
+        $("#id_citySelect").append("<option value=''>请选择城市</option>");
+        $("#id_areaSelect").html("");
+        $("#id_areaSelect").append("<option value=''>请选择区域</option>");
+    } else {
+        $("#id_provSelect").val(regionId.substring(0, 2) + "0000");
+        loadCity(regionId);
+    }
+}
 
+function loadCity(regionId) {
+    $("#id_citySelect").html("");
+    $("#id_citySelect").append("<option value=''>请选择城市</option>");
+    if (regionId.length != 6) {
+        $("#id_areaSelect").html("");
+        $("#id_areaSelect").append("<option value=''>请选择区域</option>");
+    } else {
+        var jsonStr = getAddress(regionId, 1);
+        for (var k in jsonStr) {
+            $("#id_citySelect").append("<option value='" + k + "'>" + jsonStr[k] + "</option>");
+        }
+        if (regionId.substring(2, 6) == "0000") {
+            $("#id_areaSelect").html("");
+            $("#id_areaSelect").append("<option value=''>请选择区域</option>");
+        } else {
+            $("#id_citySelect").val(regionId.substring(0, 4) + "00");
+            loadArea(regionId);
+        }
+    }
+}
+
+function loadArea(regionId) {
+    $("#id_areaSelect").html("");
+    $("#id_areaSelect").append("<option value=''>请选择区域</option>");
+    if (regionId.length == 6) {
+        var jsonStr = getAddress(regionId, 2);
+        for (var k in jsonStr) {
+            $("#id_areaSelect").append("<option value='" + k + "'>" + jsonStr[k] + "</option>");
+        }
+        if (regionId.substring(4, 6) != "00") { $("#id_areaSelect").val(regionId); }
+    }
+}
 
 
 
