@@ -47,13 +47,9 @@ function Init(evt) {
         document.getElementById("Remarks").innerHTML = locationInfo.Remarks;
         if (patient.Progress >= 6) {
             document.getElementById("Thickness").value = locationInfo.Thickness;
-            document.getElementById("Thickness").disabled = "true";
             document.getElementById("Number").value = locationInfo.Number;
-            document.getElementById("Number").disabled = "true";
             document.getElementById("ReferenceNumber").value = locationInfo.ReferenceNumber;
-            document.getElementById("ReferenceNumber").disabled = "true"; ReferenceScale
             document.getElementById("ReferenceScale").value = locationInfo.ReferenceScale;
-            document.getElementById("ReferenceScale").disabled = "true";
             document.getElementById("operator").innerHTML = locationInfo.operate;
             document.getElementById("date").innerHTML = locationInfo.OperateTime;
             var boxesgroup = document.getElementsByClassName("boxes");
@@ -200,4 +196,11 @@ function postimportlocation() {
         return;
     }
     document.getElementById("frmlocation").submit();
+}
+
+function remove() {
+    document.getElementById("Thickness").removeAttribute("disabled");
+    document.getElementById("Number").removeAttribute("disabled");
+    document.getElementById("ReferenceNumber").removeAttribute("disabled");
+    document.getElementById("ReferenceScale").removeAttribute("disabled");   
 }

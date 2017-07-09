@@ -129,11 +129,7 @@
                         <div class="item col-xs-4">
                             病案号：
                             <input id="RecordNumber" name="RecordNumber" type="text" class="form-item" />
-                        </div>
-                        <div class="item col-xs-4">
-                            患病部位：
-                            <select id="SickPart" name="SickPart" class="form-item"></select>
-                        </div>
+                        </div>                      
                         <div class="item col-xs-4">
                             所属医生：
                             <select id="doctor" name="doctor" class="form-item"></select>
@@ -146,7 +142,7 @@
                         </div>
                         <div class="item col-xs-6">
                             分中心负责人：
-                            <select id="Sub" name="Sub" class="form-item"></select>
+                            <input id="Sub" name="Sub" type="text" class="form-item"></input>
                         </div>
                     </div>
                 </div>

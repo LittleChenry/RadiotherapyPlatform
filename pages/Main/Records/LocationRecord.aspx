@@ -103,21 +103,21 @@
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">层厚：</span>
-                            <input id="Thickness" class="form-item col-xs-6" type="number" name="Thickness"/>
+                            <input id="Thickness" class="form-item col-xs-6" type="number" name="Thickness" disabled="disabled"/>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">层数：</span>
-                            <input id="Number" class="form-item col-xs-6" type="number" name="Number"/>
+                            <input id="Number" class="form-item col-xs-6" type="number" name="Number" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">参考中心层面：</span>
-                            <input id="ReferenceNumber" class="form-item col-xs-6" type="number" name="ReferenceNumber"/>
+                            <input id="ReferenceNumber" class="form-item col-xs-6" type="number" name="ReferenceNumber" disabled="disabled"/>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">体表参考刻度：</span>
-                            <input id="ReferenceScale" class="form-item col-xs-6" type="number" name="ReferenceScale"/>
+                            <input id="ReferenceScale" class="form-item col-xs-6" type="number" name="ReferenceScale" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
@@ -130,7 +130,7 @@
                             <div id="multipic" class="imgbox multifile">
                                 <div class="boxes">
                                     <div class="imgnum">
-                                        <input type="file" name="f1" class="multifilepath filepath" />
+                                        <input type="file" name="f1" id="f1" class="multifilepath filepath" />
                                         <span class="closecamera closearea"><i class="fa fa-times"></i></span>
                                         <img src="../../../img/camera.png" class="camera-picture" />
                                         <img class="img"/>

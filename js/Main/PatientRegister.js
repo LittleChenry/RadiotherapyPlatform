@@ -36,12 +36,10 @@ function getPatientInfo(treatID) {
     writePatientInfo(patientInfo);
 }
 function writePatientInfo(PatientInfo) {
-    var select3 = document.getElementById("SickPart");
-    createPartItem(select3);
+    
     var select4 = document.getElementById("doctor");
     createdoctorItem(select4);
-    var select5 = document.getElementById("Sub");
-    createSubcenterItem(select5);
+   
     document.getElementById("RecordNumber").value = PatientInfo.patientInfo[0].RecordNumber;
    
     document.getElementById("userName").value = PatientInfo.patientInfo[0].Name;
@@ -56,9 +54,8 @@ function writePatientInfo(PatientInfo) {
     document.getElementById("patientID").value =  PatientInfo.patientInfo[0].ID;
     //document.getElementById("diagnosisresult").value =  PatientInfo.patientInfo[0].diagnosisresult;
     document.getElementById("doctor").value = PatientInfo.patientInfo[0].doctor;
-    document.getElementById("picture1").value = PatientInfo.patientInfo[0].Picture;
-    document.getElementById("SickPart").value = PatientInfo.patientInfo[0].SickPartID;
-    document.getElementById("Sub").value = PatientInfo.patientInfo[0].SubID;;
+    document.getElementById("picture1").value = PatientInfo.patientInfo[0].Picture;   
+    document.getElementById("Sub").value = PatientInfo.patientInfo[0].Sub;;
     document.getElementById("Hospital").value =  PatientInfo.patientInfo[0].Hospital;
     document.getElementById("Nation").value =  PatientInfo.patientInfo[0].Nation;
     document.getElementById("Birthday").value =  PatientInfo.patientInfo[0].Birthday;
@@ -87,29 +84,7 @@ function sex(evt) {
         return "male";
 }
 //第二步诊断单中的分中心负责人选择项建立
-function createSubcenterItem(thiselement) {
-    var subcenterItem = JSON.parse(getsubcenterItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-----负责人选择-----");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < subcenterItem.length; i++) {
-        if (subcenterItem[i] != "") {
-            thiselement.options[i + 1] = new Option(subcenterItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(subcenterItem[i].ID);
-        }
-    }
 
-
-}
-//第二步分中心负责人数据库信息调取
-function getsubcenterItem() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "getsubcenter.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
-}
 function createdoctorItem(thiselement) {
     var doctorItem = JSON.parse(getdoctorItem()).Item;
     thiselement.options.length = 0;
@@ -145,29 +120,7 @@ function resetForm(evt) {
     }
 }
 //第二步部位下拉项建立
-function createPartItem(thiselement) {
-    var PartItem = JSON.parse(getPartItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-----部位选择-----");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
-        }
-    }
 
-
-}
-//第二步部位项数据库调取
-function getPartItem() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "getpart.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
-}
 //检查各个输入项内容
 function CheckInput(evt) {
     isAllGood = true;//初始默认全为通过
@@ -237,13 +190,8 @@ function CheckEmpty() {
         window.alert("体重不能为空");
         return;                 
     }
-
-    if (document.getElementById("SickPart").value == "allItem") {
-        window.alert("请选择患病部位"); 
-        return;   
-    }
-    if (document.getElementById("Sub").value == "allItem") {
-        window.alert("请选择分中心负责人"); 
+    if (document.getElementById("Sub").value == "") {
+        window.alert("请输入分中心负责人"); 
         return;   
     }
     if (document.getElementById("doctor").value == "allItem") {

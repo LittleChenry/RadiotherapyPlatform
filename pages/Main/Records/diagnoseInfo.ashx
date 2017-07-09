@@ -36,7 +36,7 @@ public class diagnoseInfo : IHttpHandler {
         int treatid = Convert.ToInt32(context.Request.QueryString["treatID"]);
 
 
-        string sqlCommand = "select diagnosisrecord.*,part.Name as partname,user.Name as username from user,part,diagnosisrecord where diagnosisrecord.Diagnosis_User_ID=user.ID and diagnosisrecord.Part_ID=part.ID and  diagnosisrecord.Treatment_ID=@treatID";
+        string sqlCommand = "select diagnosisrecord.*,part.Name as partname,user.Name as username from user,part,diagnosisrecord,treatment where diagnosisrecord.Diagnosis_User_ID=user.ID and treatment.DiagnosisRecord_ID=diagnosisrecord.ID and diagnosisrecord.Part_ID=part.ID and treatment.ID=@treatID";
         sqlOperation2.AddParameterWithValue("@treatID", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"diagnosisInfo\":[");
