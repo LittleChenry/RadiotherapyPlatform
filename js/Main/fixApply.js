@@ -411,10 +411,10 @@ function compareWithToday(time) {
     }
 }
 function remove() {
-    document.getElementById("modelselect").removeAttribute("disable");
-    document.getElementById("specialrequest").removeAttribute("disable"); 
-    document.getElementById("fixEquip").removeAttribute("disable");
-    document.getElementById("bodyPost").removeAttribute("disable");
-    document.getElementById("appointtime").removeAttribute("disable");
-    document.getElementById("chooseappoint").removeAttribute("disable");
+    document.getElementById("modelselect").removeAttribute("disabled");
+    document.getElementById("specialrequest").removeAttribute("disabled"); 
+    document.getElementById("fixEquip").removeAttribute("disabled");
+    document.getElementById("bodyPost").removeAttribute("disabled");
+    document.getElementById("appointtime").removeAttribute("disabled");
+    document.getElementById("chooseappoint").removeAttribute("disabled");
 }

@@ -535,15 +535,15 @@ function compareWithToday(time) {
     }
 }
 function remove() {
-    document.getElementById("scanmethod").removeAttribute("disable");
-    document.getElementById("scanpart").removeAttribute("disable");
-    document.getElementById("up").removeAttribute("disable");
-    document.getElementById("down").removeAttribute("disable");
-    document.getElementById("special").removeAttribute("disable");
-    document.getElementById("remark").removeAttribute("disable");
-    document.getElementById("yes").removeAttribute("disable");
-    document.getElementById("No").removeAttribute("disable");
-    document.getElementById("addmethod").removeAttribute("disable");
-    document.getElementById("appointtime").removeAttribute("disable");
-    document.getElementById("chooseappoint").removeAttribute("disable");
+    document.getElementById("scanmethod").removeAttribute("disabled");
+    document.getElementById("scanpart").removeAttribute("disabled");
+    document.getElementById("up").removeAttribute("disabled");
+    document.getElementById("down").removeAttribute("disabled");
+    document.getElementById("special").removeAttribute("disabled");
+    document.getElementById("remark").removeAttribute("disabled");
+    document.getElementById("yes").removeAttribute("disabled");
+    document.getElementById("No").removeAttribute("disabled");
+    document.getElementById("addmethod").removeAttribute("disabled");
+    document.getElementById("appointtime").removeAttribute("disabled");
+    document.getElementById("chooseappoint").removeAttribute("disabled");
 }

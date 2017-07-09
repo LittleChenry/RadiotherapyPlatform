@@ -211,7 +211,7 @@ function postimportFIX() {
     document.getElementById("saveFixRecord").submit();
 }
 function remove() {
-    document.getElementById("BodyPositionDetail").removeAttribute("disable");
-    document.getElementById("AnnexDescription").removeAttribute("disable");
-    document.getElementById("Remarks").removeAttribute("disable");
+    document.getElementById("BodyPositionDetail").removeAttribute("disabled");
+    document.getElementById("AnnexDescription").removeAttribute("disabled");
+    document.getElementById("Remarks").removeAttribute("disabled");
 }
