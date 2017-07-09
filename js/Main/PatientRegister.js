@@ -198,7 +198,24 @@ function CheckEmpty() {
         window.alert("请选择医生");        
         return;   
     }
-    document.getElementById("frmRegist").submit();
+    var form = new FormData(document.getElementById("frmRegist"));
+    $.ajax({
+        url: "patientRegister.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("更新成功");
+            window.location.reload();
+        },
+        error: function (e) {
+            window.location.href = "Error.aspx";
+        },
+        failure: function (e) {
+            alert("更新失败！！");
+        }
+    });
 }
     
 //根据classname做对应的各项检查

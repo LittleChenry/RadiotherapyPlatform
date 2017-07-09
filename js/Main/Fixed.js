@@ -38,9 +38,10 @@ function Init(evt) {
         document.getElementById("fixedEquipment").innerHTML = fixedInfo.fixedEquipment;
         document.getElementById("ApplicationUser").innerHTML = fixedInfo.ApplicationUser;
         document.getElementById("ApplicationTime").innerHTML = fixedInfo.ApplicationTime;
+        var BodyPositionDetail = "固定装置：" + fixedInfo.fixedEquipment + "；固定模具：" + fixedInfo.modelID + "；体位：" + fixedInfo.body + "；特殊要求：" + fixedInfo.requireID;
+        document.getElementById("BodyPositionDetail").value = BodyPositionDetail;
         if (patient.Progress >= 5) {
-            document.getElementById("BodyPositionDetail").value = fixedInfo.BodyPositionDetail;
-            document.getElementById("AnnexDescription").value = fixedInfo.AnnexDescription;
+            document.getElementById("BodyPositionDetail").value = fixedInfo.BodyPositionDetail;          
             document.getElementById("Remarks").value = fixedInfo.Remarks;
             document.getElementById("operator").innerHTML = fixedInfo.operate;
             document.getElementById("date").innerHTML = fixedInfo.OperateTime;
@@ -195,11 +196,7 @@ function postimportFIX() {
     if (document.getElementById("BodyPositionDetail").value == "") {
         alert("请填写体位详细描述");
         return;
-    }
-    if (document.getElementById("AnnexDescription").value == "") {
-        alert("请填写附件描述");
-        return;
-    }
+    }    
     if (document.getElementById("Remarks").value == "") {
         alert("请填写备注");
         return;
@@ -208,10 +205,26 @@ function postimportFIX() {
         alert("请填写备注");
         return;
     }
-    document.getElementById("saveFixRecord").submit();
+    var form = new FormData(document.getElementById("saveFixRecord"));
+    $.ajax({
+        url: "fixRecordRecord.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("更新成功");
+            window.location.reload();
+        },
+        error: function (e) {
+            window.location.href = "Error.aspx";
+        },
+        failure: function (e) {
+            alert("更新失败！！");
+        }
+    });
 }
 function remove() {
     document.getElementById("BodyPositionDetail").removeAttribute("disabled");
-    document.getElementById("AnnexDescription").removeAttribute("disabled");
     document.getElementById("Remarks").removeAttribute("disabled");
 }

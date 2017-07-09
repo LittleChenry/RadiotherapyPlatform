@@ -194,8 +194,25 @@ function postimportlocation() {
     if (document.getElementById("ReferenceScale").value == "") {
         alert("请填写体表参考刻度");
         return;
-    }
-    document.getElementById("frmlocation").submit();
+    } 
+    var form = new FormData(document.getElementById("frmlocation"));
+    $.ajax({
+        url: "locationRecordRecord.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("更新成功");
+            window.location.reload();
+        },
+        error: function (e) {
+            window.location.href = "Error.aspx";
+        },
+        failure: function (e) {
+            alert("更新失败！！");
+        }
+    });
 }
 
 function remove() {
