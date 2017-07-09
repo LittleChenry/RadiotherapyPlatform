@@ -3,6 +3,7 @@
 var userID;
 var treatID;
 var userName;
+var radioID;
 //JS入口主函数
 function createPatient(evt) {
     //获取入口患者信息界面的div
@@ -10,9 +11,12 @@ function createPatient(evt) {
     //获得当前执行人姓名与ID
     getUserID();
     getUserName();
-    treatID = window.location.search.split("=")[1];
+    var treatmentgroup = window.location.search.split("&")[1];
+    treatID = treatmentgroup.split("=")[1];
+    var treatmentgroup1 = window.location.search.split("&")[0];
+    radioID = treatmentgroup1.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
-    var patient = getPatientInfo(treatID);
+    var patient = getPatientInfo(treatID,radioID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
     document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
@@ -90,9 +94,9 @@ function getDignoseInfo(treatID) {
 }
 
 //获取病人基本信息
-function getPatientInfo(treatmentID) {
+function getPatientInfo(treatmentID,RadiotherapyID) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "patientInfoForFix.ashx?treatmentID=" + treatmentID;
+    var url = "patientForDiagnose.ashx?treatmentID=" + treatmentID + "&RadiotherapyID=" + RadiotherapyID;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -175,7 +179,7 @@ function checkAll() {
         return;
     }
     var xmlHttp = new XMLHttpRequest();
-    var url = "recordDiag.ashx?treatid=" + treatID + "&diaguserid=" + diaguserid.value + "&remark=" + remark.value;
+    var url = "recordDiag.ashx?treatid=" + treatID +"&radioid=" + radioID+ "&diaguserid=" + diaguserid.value + "&remark=" + remark.value;
     url = url + "&part=" + select3.value + "&diagresult=" + select4.value;
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
