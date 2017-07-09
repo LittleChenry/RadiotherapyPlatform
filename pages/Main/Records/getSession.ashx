@@ -4,6 +4,8 @@ using System;
 using System.Web;
 using System.Text;
 using System.Web.SessionState;
+using System.Collections.Generic;
+
 
 public class getSession : IHttpHandler, IRequiresSessionState
 {
@@ -23,6 +25,9 @@ public class getSession : IHttpHandler, IRequiresSessionState
     private string getLoginUser(HttpContext context)
     {
         UserInformation user = (UserInformation)context.Session["loginUser"];
+
+        LinkedList<int> progress = user.getProgress();
+        
         StringBuilder result = new StringBuilder("{");
 
         result.Append("\"userID\":\"")
@@ -35,6 +40,14 @@ public class getSession : IHttpHandler, IRequiresSessionState
               .Append(user.GetUserRole())
               .Append("\",\"assistant\":\"")
               .Append(user.getAssistant())
+              .Append("\",\"progress\":\"");
+        StringBuilder pro = new StringBuilder();
+        foreach (int x in progress)
+        {
+            pro.Append(x).Append(" ");
+        }
+        pro.Remove(pro.Length - 1, 1);
+        result.Append(pro)
               .Append("\"}");
         return result.ToString();
     }
