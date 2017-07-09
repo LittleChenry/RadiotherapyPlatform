@@ -13,6 +13,7 @@ public class UserInformation
     private string userName;
     private string userRole;
     private string assistant;
+    private LinkedList<int> progress;
 
     /// <summary>
     /// 构造函数
@@ -72,6 +73,16 @@ public class UserInformation
     public string getAssistant()
     {
         return this.assistant;
+    }
+
+    public void setProgress(LinkedList<int> progress)
+    {
+        this.progress = progress;
+    }
+
+    public LinkedList<int> getProgress()
+    {
+        return this.progress;
     }
 
     public static Dictionary<string,string> GetRoleName()

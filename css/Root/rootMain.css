@@ -5,3 +5,7 @@
 #addGroup > tbody > tr > th, #editArea > tr > th {
     width:20%;
 }
+
+.removePadding {
+    padding: 0px;
+}
