@@ -121,13 +121,12 @@ public class Addpatient : IHttpHandler {
             int intSuccess2 = 0;
             if (intSuccess > 0 && treatID > 0)
             {
-                string treatinsert = "insert into treatment(TreatmentName,Patient_ID,Group_ID,Progress,State) values(@ID,@PID,@Group_ID,0,1)";
+                string treatinsert = "insert into treatment(TreatmentName,Patient_ID,Group_ID,Progress,State) values(@ID,@PID,@Group_ID,1,1)";
                 sqlOperation2.AddParameterWithValue("@ID", 1);
                 sqlOperation2.AddParameterWithValue("@PID", patient);
                 sqlOperation2.AddParameterWithValue("@Group_ID", groupID);
                 intSuccess2 = sqlOperation2.ExecuteNonQuery(treatinsert);
             }
-
             if (intSuccess2 > 0)
             {
                 return "success";
