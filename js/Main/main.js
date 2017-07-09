@@ -426,7 +426,7 @@ function CreateTable(start, end, patient) {
         tbody.append(tr);
     }
     for (var i = start; i < end; i++) {
-        $("#" + patient.PatientInfo[i].treatID + "").click({ ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+        $("#" + patient.PatientInfo[i].treatID + "").click({ Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
             var ul = $("#progress-iframe").contents().find("#ul-progress a");
             ul.each(function (index, element) {
