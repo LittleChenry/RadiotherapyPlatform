@@ -47,13 +47,9 @@ function Init(evt) {
         document.getElementById("Remarks").innerHTML = locationInfo.Remarks;
         if (patient.Progress >= 6) {
             document.getElementById("Thickness").value = locationInfo.Thickness;
-            document.getElementById("Thickness").disabled = "true";
             document.getElementById("Number").value = locationInfo.Number;
-            document.getElementById("Number").disabled = "true";
             document.getElementById("ReferenceNumber").value = locationInfo.ReferenceNumber;
-            document.getElementById("ReferenceNumber").disabled = "true"; ReferenceScale
             document.getElementById("ReferenceScale").value = locationInfo.ReferenceScale;
-            document.getElementById("ReferenceScale").disabled = "true";
             document.getElementById("operator").innerHTML = locationInfo.operate;
             document.getElementById("date").innerHTML = locationInfo.OperateTime;
             var boxesgroup = document.getElementsByClassName("boxes");
@@ -198,6 +194,30 @@ function postimportlocation() {
     if (document.getElementById("ReferenceScale").value == "") {
         alert("请填写体表参考刻度");
         return;
-    }
-    document.getElementById("frmlocation").submit();
+    } 
+    var form = new FormData(document.getElementById("frmlocation"));
+    $.ajax({
+        url: "locationRecordRecord.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("更新成功");
+            window.location.reload();
+        },
+        error: function (e) {
+            window.location.href = "Error.aspx";
+        },
+        failure: function (e) {
+            alert("更新失败！！");
+        }
+    });
+}
+
+function remove() {
+    document.getElementById("Thickness").removeAttribute("disabled");
+    document.getElementById("Number").removeAttribute("disabled");
+    document.getElementById("ReferenceNumber").removeAttribute("disabled");
+    document.getElementById("ReferenceScale").removeAttribute("disabled");   
 }

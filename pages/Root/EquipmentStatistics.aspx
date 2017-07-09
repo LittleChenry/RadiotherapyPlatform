@@ -1,11 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RootMain.aspx.cs" Inherits="pages_Root_RootMain" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="EquipmentStatistics.aspx.cs" Inherits="pages_Root_EquipmentStatistics" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
-    <meta charset="utf-8" />
+<head runat="server">
+<meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
     <!--Tell the brower to be responsive to screen width -->
     <meta content="Width=device-width, initial-scale=1, maxmum-scale=1, user-scalable=no" name="viewport" />
     <!--Boostrap -->
@@ -18,10 +19,22 @@
     <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css" />
     <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce -->
     <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css" />
+    <!--date-->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css" />
 
     <!-- Main Css -->
     <link rel="stylesheet" href="../../css/Root/rootMain.css" />
-    <title>放疗同质化平台</title>
+
+    <title>医生分组</title>
+    <!-- Main CSS -->
+    <link href="../../css/Main/main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/Root/equipmentMain.css" />
+      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -240,13 +253,13 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
+              <span class="hidden-xs"><%=((UserInformation)Session["loginUser"]).GetUserName() %></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+                
                 <p>
                   <span class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
                   <small id="role">管理员</small>
@@ -264,6 +277,7 @@
               </li>
             </ul>
           </li>
+          <!-- Control Sidebar Toggle Button -->
         </ul>
       </div>
     </nav>
@@ -278,7 +292,7 @@
           <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-           <p id="user-name"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName()%></p>
+           <p id="user-name"><%=((UserInformation)Session["loginUser"]).GetUserName() %></p>
           <a href="#" id="user-role">管理员</a>
         </div>
       </div>
@@ -296,7 +310,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul id="menu" class="sidebar-menu">
         <li class="header">管理员导航</li>
-        <li class="active">
+        <li>
           <a href="RootMain.aspx">
             <i class="fa fa-coffee fa-fw"></i> <span>主页</span>
             <span class="pull-right-container">
@@ -379,7 +393,7 @@
                 </span>
             </a>
         </li>
-        <li class="treeview">
+          <li class="treeview active">
           <a href="#">
             <i class="fa fa-group fa-fw"></i>
             <span>数据统计</span>
@@ -388,7 +402,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-              <li><a href="EquipmentStatistics.aspx"><i class="fa fa-circle-o"></i> 设备检查统计</a></li>
+              <li class="active"><a href="EquipmentStatistics.aspx"><i class="fa fa-circle-o"></i> 设备检查统计</a></li>
           </ul>
         </li>
       </ul>
@@ -401,137 +415,70 @@
 
 
     <!-- Main content -->
-      <section class="content">
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="page-header">设备检查统计</h1>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
-                <h1 class="page-header">欢迎使用本系统</h1>
+                <div class="col-md-3">&nbsp;</div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select id="equipmentSelect" class="form-control">
+
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-sm-6 removePadding">
+                        <input class="form-item form-control" id="dates" name="dates" type="text"  placeholder="选择日期" style="float:left;" AUTOCOMPLETE="OFF"/>
+                    </div>
+                    <div class="col-sm-6 removePadding">
+                        <button class="btn btn-default" style="height:34px;" type="button" id="search">
+                            <i class="fa fa-search"></i>
+                        </button>  
+                    </div>          
+                </div>
             </div>
-            <!-- /.col-md-12 -->
-        </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <span class="module-title">消息模块</span>
+            <div class="col-md-12">
+                <div class="panel panel-default mintablewidth">
+                    <div class="panel-heading mintablewidth">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        <span class="panel-title"></span>                 
                     </div>
-                    <div class="panel-body">
-                        <p><a href="#">消息标题1</a></p>
-                        <p><a href="#">消息标题2</a></p>
-                        <p><a href="#">消息标题3</a></p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
+                    <div id="tableArea" class="panel-body mintablewidth">
+                        <table class="table table-striped table-hover" style="width:100%">
+                            <thead id="thead">
+                                
+                            </thead>
+                            <tbody id="tbody">
+
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-sm-6">&nbsp;</div>
+                            <div class="col-sm-6">
+                                <input id="currentPage" type="hidden" value="1" />
+                                <input id="sumPage" type="hidden" value="0" />
+                                <div id="pageButton" class="toright" style="display: block;">
+                                    <button type="button" id="firstPage" class="btn btn-primary btn-sm disabled">首页</button>
+                                    <button type="button" id="prePage" class="btn btn-primary btn-sm disabled">上一页</button>
+                                    <button type="button" id="nextPage" class="btn btn-primary btn-sm disabled">下一页</button>
+                                    <button type="button" id="lastPage" class="btn btn-primary btn-sm disabled">末页</button>
+                                </div>
+                                <div id="searchRecover" class="toright tohidden">
+                                    <input type="button" id="refresh" class="btn btn-primary btn-sm" value="显示全部" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <span class="module-title">账号申请</span>
-                    </div>
-                    <div class="panel-body">
-                        <p>姓名1</p>
-                        <p>姓名2</p>
-                        <p>姓名3</p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <span class="module-title">设备状态</span>
-                    </div>
-                    <div class="panel-body">
-                        <p>设备1状态</p>
-                        <p>设备2状态</p>
-                        <p>设备3状态</p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-        </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <span class="module-title">科室工作</span>
-                    </div>
-                    <div class="panel-body">
-                        <p>登记处</p>
-                        <p>医师</p>
-                        <p>模拟技师</p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <span class="module-title">违规操作</span>
-                    </div>
-                    <div class="panel-body">
-                        <p>违规操作1</p>
-                        <p>违规操作2</p>
-                        <p>违规操作3</p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <span class="module-title">操作指南</span>
-                    </div>
-                    <div class="panel-body">
-                        <p><a href="#">操作1</a></p>
-                        <p><a href="#">操作2</a></p>
-                        <p><a href="#">操作3</a></p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-        </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        <span class="module-title">友情链接</span>
-                    </div>
-                    <div class="panel-body">
-                        <p><a href="#">链接1</a></p>
-                        <p><a href="#">链接2</a></p>
-                        <p><a href="#">链接3</a></p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-        </div>
-        <!-- /.row -->
-          </section>
-    </div>
+        </div>        
+    </section>
+  </div>
 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -551,6 +498,9 @@
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/jquery.min.js"></script>
+
+
+
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -562,5 +512,22 @@
 <!-- Main js-->
 <script src="../../js/Root/RootMainJS.js"></script>
 
+
+<!-- bootstrap datepicker -->
+<script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
+<!-- DataTables -->
+<script src="../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../../plugin/AdminLTE/plugins/fastclick/fastclick.js"></script>
+
+
+<!-- Main JavaScript -->
+<script src="../../js/Root/EquipmentStaticisticsJS.js"></script>
+<script type="text/javascript">
+    $("#dates").datepicker({ autoclose: true, format: 'yyyy-mm', minViewMode: 1, startView: 1});
+</script>
 </body>
 </html>

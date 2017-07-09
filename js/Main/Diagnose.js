@@ -16,7 +16,7 @@ function createPatient(evt) {
     var treatmentgroup1 = window.location.search.split("&")[0];
     radioID = treatmentgroup1.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
-    var patient = getPatientInfo(treatID,radioID);
+    var patient = getPatientInfo(treatID, radioID);    
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
     document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
@@ -33,17 +33,13 @@ function createPatient(evt) {
     var select3 = document.getElementById("part");
     createPartItem(select3);
     var select4 = document.getElementById("diagresult");
-    createDiagResultItem(select4);
-
-    
-        var diagnosisInfo = getDignoseInfo(treatID);
-        
-        document.getElementById("part").value = patient.partID;
+    createDiagResultItem(select4);  
+    var diagnosisInfo = getDignoseInfo(patient.treatID);        
         if (patient.Progress >= 2) {
             document.getElementById("operator").innerHTML = diagnosisInfo.username;
             document.getElementById("remark").value = diagnosisInfo.Remarks;
            
-            //SickPartid = DiagnoseInfo.diagnosisInfo.partID;
+            document.getElementById("part").value =  diagnosisInfo.partID;
             document.getElementById("diagresult").value = diagnosisInfo.diagnosisresultID;
             // diagnosisresultID = DiagnoseInfo.diagnosisInfo[0].diagnosisresultID;
             //doctor = DiagnoseInfo.DiagnoseInfo[0].doctor;
@@ -80,11 +76,11 @@ function getNowFormatDate() {
            
     return currentdate;
 }
-function getDignoseInfo(treatID) {
+function getDignoseInfo(treatid) {
 
     var xmlHttp = new XMLHttpRequest();
 
-    var url = "diagnoseInfo.ashx?treatID=" + treatID;
+    var url = "diagnoseInfo.ashx?treatID=" + treatid;
 
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);

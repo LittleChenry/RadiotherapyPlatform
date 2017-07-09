@@ -88,13 +88,7 @@
                             <span class="col-xs-2" style="padding-left:0px;">体位详细描述：</span>
                             <textarea id="BodyPositionDetail" class="form-area col-xs-10" name="BodyPositionDetail" disabled="disabled"></textarea>
                         </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item area-group col-xs-12">
-                            <span class="col-xs-2" style="padding-left:0px;">附件描述：</span>
-                            <textarea id="AnnexDescription" class="form-area col-xs-10" name="AnnexDescription" disabled="disabled"></textarea>
-                        </div>
-                    </div>
+                    </div>                   
                     <div class="single-row">
                         <div class="item area-group col-xs-12">
                             <span class="col-xs-2" style="padding-left:0px;">备注：</span>

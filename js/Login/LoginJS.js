@@ -150,7 +150,7 @@ function TransferMain() {
     var index = sel.selectedIndex;
     var url = sel.options[index].value;
     var name = sel.options[index].innerHTML;
-    setSessionRole(name);
+    setSessionRole(name, url);
     if (url == "Root") {
         window.location.replace("../../pages/Root/RootMain.aspx?role" + name);
     } else {
@@ -158,9 +158,9 @@ function TransferMain() {
     }
 }
 
-function setSessionRole(name) {
+function setSessionRole(name, des) {
     xmlHttp = new XMLHttpRequest();
-    var url = "handlerSetRole.ashx?role=" + name;
+    var url = "handlerSetRole.ashx?role=" + name + "&des=" + des;
     xmlHttp.open("GET", url, true);
     xmlHttp.send();
 }
