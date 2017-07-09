@@ -42,8 +42,8 @@ public class GetPatientInfo : IHttpHandler
         {
                    
             backText.Append("{\"Name\":\"" + reader["Name"].ToString() +
-                 "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treatID\":\"" + reader["Treatmentname"].ToString() 
-                 + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString()  + "\"}");
+                 "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treatID\":\"" + reader["Treatmentname"].ToString()
+                 + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treat\":\"" + reader["treatid"].ToString() + "\"}");
     
             if (i < count)
             {
