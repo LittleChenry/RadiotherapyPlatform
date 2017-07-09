@@ -1,5 +1,6 @@
 var currentID = 0;
 var currentpage = 1;
+var functions = new Array();
 
 $(document).ready(function () {
     $(".frame-content").height($(document).height() - 151);
@@ -23,7 +24,11 @@ $(document).ready(function () {
     $("#save").click(function(){
         addProgress(patient);
         Paging(patient);
-    })
+        $('#save').attr("disabled","disabled");
+    });
+    $('#edit').click(function(){
+        $("#save").removeAttr("disabled");
+    });
     $("#changeOperator").bind("click", function () {
         changeAssistant();
     });
@@ -31,11 +36,53 @@ $(document).ready(function () {
         setAssistant();
     });
     //chooseAssistant();
+    //getSession();
+    getFunctions();
 })
 
 /*window.onresize=function(){
     document.location.reload();
 }*/
+
+function checkEdit(str){
+    $('#edit').attr("disabled","disabled");
+    for (var i = 0; i < functions.length; i++) {
+        if (functions[i] == str) {
+            $("#edit").removeAttr("disabled");
+        }
+    }
+}
+
+function getFunctions(){
+    $.ajax({
+        type: "GET",
+        url: "../../pages/Main/Records/getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            obj = $.parseJSON(data);
+            functions = obj.progress.split(" ");
+        },
+        error: function(){
+            alert("error");
+        }
+    });
+}
+
+function getSession(){
+    $.ajax({
+        type: "GET",
+        url: "../../pages/Main/Records/getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            alert(data);
+        },
+        error: function(){
+            alert("error");
+        }
+    });
+}
 
 function addProgress(patient){
     var ul = $("#progress-iframe").contents().find("#ul-progress a");
@@ -462,6 +509,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("0");
                         });
                         break;
                     case 2:
@@ -472,6 +520,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("1");
                         });
                         break;
                     case 3:
@@ -482,6 +531,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("2");
                         });
                         break;
                     case 4:
@@ -492,6 +542,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("3");
                         });
                         break;
                     case 5:
@@ -502,6 +553,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("4");
                         });
                         break;
                     case 6:
@@ -512,6 +564,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("5");
                         });
                         break;
                     case 7:
@@ -522,6 +575,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("6");
                         });
                         break;
                     case 8:
@@ -532,6 +586,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("7");
                         });
                         break;
                     case 9:
@@ -542,6 +597,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("8");
                         });
                         break;
                     case 10:
@@ -552,6 +608,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("9");
                         });
                         break;
                     case 11:
@@ -562,6 +619,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("10");
                         });
                         break;
                     case 12:
@@ -572,6 +630,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("11");
                         });
                         break;
                     case 13:
@@ -582,6 +641,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("12");
                         });
                         break;
                     case 14:
@@ -592,6 +652,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("13");
                         });
                         break;
                     case 15:
@@ -602,6 +663,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("14");
                         });
                         break;
                     case 16:
@@ -612,6 +674,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("15");
                         });
                         break;
                     case 17:
@@ -622,6 +685,7 @@ function CreateTable(start, end, patient) {
                                 $(this).find('span').removeClass();
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("16");
                         });
                         break;
                     default:

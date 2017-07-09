@@ -332,7 +332,7 @@
       <div class="layout-main-tab">
         <nav class="tab-nav" style="padding-top:3px;">
           <div>
-            <button class="btn btn-success" disabled="disabled"><i class="fa fa-fw fa-edit"></i>编辑</button>
+            <button id="edit" class="btn btn-success" disabled="disabled"><i class="fa fa-fw fa-edit"></i>编辑</button>
             <div class="btn-group">
               <button type="button" class="btn btn-success" data-toggle="dropdown"><i class="fa fa-fw fa-send"></i>选择模板</button>
               <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
