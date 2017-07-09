@@ -133,15 +133,15 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span id="out-name" class="hidden-xs">Chenry</span>
+              <span id="out-name" class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 <p>
-                  <span id="in-name">Chenry</span>
-                  <small id="role">医师</small>
+                  <span id="in-name"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
+                  <small id="role"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserRole() %></small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -260,35 +260,26 @@
   <div class="content-wrapper">
     <section id="main-content" class="col-xs-4" style="padding:0px;">
       <div class="layout-main-tab">
-        <nav class="tab-nav">
+        <nav class="tab-nav" style="padding-top: 3px;">
           <div class="col-xs-4">
-            <a href="javascript:;">
-              <i class="fa fa-fw fa-exclamation"></i>
-                加急
-            </a>
+            当前患者：
+            <span id="current-patient">张三</span>
           </div>
           <div class="col-xs-4">
-            <a href="javascript:;">
-              <i class="fa fa-fw fa-pause"></i>
-                暂停治疗
-            </a>
+            下个患者：
+            <span id="next-patient">李四</span>
           </div>
-          <div class="col-xs-4">
-            <a href="javascript:;">
-              <i class="fa fa-fw fa-times"></i>
-                结束治疗
-            </a>
-          </div>
+            <button type="button" class="btn btn-primary" ><i class="fa fa-fw fa-forward"></i>叫号</button>
         </nav>
       </div>
-      <div id="patient-content" class="box" style="border-top:0px;">
+      <div id="patient-content" class="box" style="border-top:0px;margin-bottom:0px;">
         <div class="box-header col-xs-8" style="padding-top: 15px;text-align: center;">
           <h3 class="box-title">患者汇总</h3>
         </div>
         <div class="input-group input-group-sm col-xs-4" style="padding-right: 10px;padding-top: 8px;max-width: 180px;">
           <input id="patient-search" type="search" class="form-control input-sm">
           <span class="input-group-btn">
-            <button class="btn btn-primary btn-flat">
+            <button class="btn btn-primary btn-flat" id="search-button">
               <i class="fa fa-fw fa-search"></i>
             </button>
           </span>

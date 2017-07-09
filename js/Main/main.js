@@ -1,5 +1,4 @@
-var currentRadiotherapyID = 0;
-var currentTreatID = 0;
+var currentID = 0;
 var currentpage = 1;
 
 $(document).ready(function () {
@@ -9,6 +8,10 @@ $(document).ready(function () {
     $("#progress-iframe").width($("#progress-content").width());
     var patient = getPatient();
     $("#patient-search").bind('input propertychange', function() {
+        var Searchedpatients = Search($("#patient-search").val(),patient);
+        Paging(Searchedpatients);
+    });
+    $("#search-button").bind("click", function () {
         var Searchedpatients = Search($("#patient-search").val(),patient);
         Paging(Searchedpatients);
     });
@@ -51,7 +54,7 @@ function addProgress(patient){
         }
     });
     for (var i = 0; i < patient.PatientInfo.length; i++) {
-        if (patient.PatientInfo[i].treatID  == currentRadiotherapyID) {
+        if (patient.PatientInfo[i].treatID  == currentID) {
             patient.PatientInfo[i].Progress = parseInt(patient.PatientInfo[i].Progress) + 1;
         }
     }
@@ -240,81 +243,27 @@ function removeSession() {
 }
 
 function Recover(){
-    if(currentRadiotherapyID != "0"){
+    if(currentID != "0"){
         $("#page_" + currentpage).click();
-        if ($("#" + currentRadiotherapyID + "_" + currentTreatID).length > 0) {
-            $("#" + currentRadiotherapyID + "_" + currentTreatID).addClass("chose");
+        if ($("#" + currentID).length > 0) {
+            $("#" + currentID).addClass("chose");
         }
     }
 }
 
 function Search(str,patient){
-    var TreatmentID, Name, diagnosisresult, state, doctor, date, age, progress;
+    var TreatmentID, treatID, Name, treat, doctor, Progress;
     var Searchedpatient = new Array();
     var count = 0;
     for (var i = 0; i < patient.PatientInfo.length; i++) {
         Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-        treatID = patient.PatientInfo[i].treatID;
+        treat = patient.PatientInfo[i].treat;
+        TreatmentID = patient.PatientInfo[i].treatID;
         Name = patient.PatientInfo[i].Name;
-        switch(patient.PatientInfo[i].Progress){
-            case "0":
-                Progress = "登记信息";
-                break;
-            case "1":
-                Progress = "病情诊断";
-                break;
-            case "2":
-                Progress = "体位固定申请";
-                break;
-            case "3":
-                Progress = "模拟定位申请";
-                break;
-            case "4":
-                Progress = "体位固定";
-                break;
-            case "5":
-                Progress = "模拟定位";
-                break;
-            case "6":
-                Progress = "CT图像导入";
-                break;
-            case "7":
-                Progress = "计划申请";
-                break;
-            case "8":
-                Progress = "计划领取";
-                break;
-            case "9":
-                Progress = "计划提交";
-                break;
-            case "10":
-                Progress = "计划确认";
-                break;
-            case "11":
-                Progress = "计划复核";
-                break;
-            case "12":
-                Progress = "复位申请";
-                break;
-            case "13":
-                Progress = "复位验证";
-                break;
-            case "14":
-                Progress = "首次治疗预约";
-                break;
-            case "15":
-                Progress = "加速器治疗";
-                break;
-            case "16":
-                Progress = "总结随访";
-                break;
-            default:
-                Progress = "无";
-
-        }
+        Progress = patient.PatientInfo[i].Progress;
         doctor = patient.PatientInfo[i].doctor;
-        if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treatID.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0) {
-            var singlepatient = {treatID:treatID,Name:Name,Radiotherapy_ID:Radiotherapy_ID,doctor:doctor,Progress:Progress};
+        if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0) {
+            var singlepatient = {treat:treat, treatID:TreatmentID, Name:Name, Radiotherapy_ID:Radiotherapy_ID, doctor:doctor, Progress:Progress};
             Searchedpatient[count++] = singlepatient;
         }
     }
@@ -407,10 +356,11 @@ function CreateTable(start, end, patient) {
     tbody.html("");
     var num = end - start;
     $("#patient_info").text("本页" + +num + "条记录 / 共" + patient.PatientInfo.length + "条记录");
-    var Radiotherapy_ID, Name, treatID, Progress, doctor;
+    var TreatmentID, treatID, Name, treat, doctor, Progress;
     for (var i = start; i < end; i++) {
         Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-        treatID = patient.PatientInfo[i].treatID;
+        treat = patient.PatientInfo[i].treat;
+        TreatmentID = patient.PatientInfo[i].treatID;
         Name = patient.PatientInfo[i].Name;
         switch(patient.PatientInfo[i].Progress){
             case "0":
@@ -471,20 +421,19 @@ function CreateTable(start, end, patient) {
         doctor = patient.PatientInfo[i].doctor;
         /*var tr = "<tr id='"+TreatmentID+"'><td>"+TreatmentID+"</td><td>"+Name+"</td><td>"+diagnosisresult+"</td><td>"+state
         +"</td><td>"+doctor+"</td><td>"+date+"</td><td>"+age+"</td></tr>";*/
-        var tr = "<tr id='" + Radiotherapy_ID+ "_"+ treatID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + "疗程"+ treatID + "</td><td>" + Progress
+        var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + "疗程"+ treat + "</td><td>" + Progress
         + "</td><td>" + doctor + "</td></tr>";
         tbody.append(tr);
     }
     for (var i = start; i < end; i++) {
-        $("#" + patient.PatientInfo[i].Radiotherapy_ID+ "_"+ patient.PatientInfo[i].treatID + "").click({ Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID,treatID:patient.PatientInfo[i].treatID, count: patient.PatientInfo[i].Progress }, function (e) {
-            currentRadiotherapyID = e.data.Radiotherapy_ID;
-            currentTreatID = e.data.treatID;
+        $("#" + patient.PatientInfo[i].treatID + "").click({ ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+            currentID = e.data.ID;
             var ul = $("#progress-iframe").contents().find("#ul-progress a");
             ul.each(function (index, element) {
                 $(this).find('span').removeClass();
             });
             $("#record-iframe").attr('src', "Records/Blank.aspx");
-            //$("#patient-status").text(e.data.state);
+            $("#patient-status").text(e.data.state);
             var tr = $("#patient-table-body tr");
             tr.each(function (index, element) {
                 if ($(this).hasClass("chose")) {
@@ -507,7 +456,7 @@ function CreateTable(start, end, patient) {
                 switch (index + 1) {
                     case 1:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/PatientRegister.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -517,7 +466,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 2:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/Diagnose.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/Diagnose.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treat=" + e.data.treat);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -527,7 +476,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 3:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/FixedApply.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID +"&TreatmentItem=Fixed");
+                            $("#record-iframe").attr('src', "Records/FixedApply.aspx?TreatmentID=" + e.data.ID  +"&TreatmentItem=Fixed");
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -537,7 +486,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 4:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/LocationApply.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID + "&TreatmentItem=Location");
+                            $("#record-iframe").attr('src', "Records/LocationApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location");
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -547,7 +496,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 5:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/FixedRecord.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/FixedRecord.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -557,7 +506,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 6:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/LocationRecord.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/LocationRecord.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -567,7 +516,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 7:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/ImportCT.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/ImportCT.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -577,7 +526,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 8:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/DesignApply.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/DesignApply.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -587,7 +536,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 9:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/DesignReceive.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/DesignReceive.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -597,7 +546,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 10:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/DesignSubmit.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/DesignSubmit.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -607,7 +556,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 11:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/DesignConfirm.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/DesignConfirm.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -617,7 +566,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 12:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/DesignReview.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/DesignReview.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -627,7 +576,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 13:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/ReplacementApply.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID + "&TreatmentItem=Location");
+                            $("#record-iframe").attr('src', "Records/ReplacementApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location");
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -637,7 +586,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 14:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/ReplacementRecord.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/ReplacementRecord.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -647,7 +596,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 15:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/FirstAccelerator.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID + "&TreatmentItem=Accelerator");
+                            $("#record-iframe").attr('src', "Records/FirstAccelerator.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Accelerator");
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -657,7 +606,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 16:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/TreatmentRecord.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/TreatmentRecord.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -667,7 +616,7 @@ function CreateTable(start, end, patient) {
                         break;
                     case 17:
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/Summary.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treatID=" + e.data.treatID);
+                            $("#record-iframe").attr('src', "Records/Summary.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -705,7 +654,7 @@ function Paging(patient) {
         tbody.html("");
         var ul = $("#page-index-content");
         ul.html("");
-        var Radiotherapy_ID, Name, treatID, doctor, Progress;
+        var TreatmentID, treatID, Name, treat, doctor, Progress;
         for (var i = 0; i < patient.PatientInfo.length; i++) {
             if (tbody.height() > tableheight) {
                 pageindex[pagecount] = i;
@@ -717,15 +666,71 @@ function Paging(patient) {
                 tbody.html("");
                 break;
             }
-            treatID = patient.PatientInfo[i].treatID;
-            Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-            if (currentRadiotherapyID == Radiotherapy_ID && currentTreatID == treatID) {
+            TreatmentID = patient.PatientInfo[i].treatID;
+            if (currentID == TreatmentID) {
                 currentpage = pagecount + 1;
             }
+            Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
+            treat = patient.PatientInfo[i].treat;
             Name = patient.PatientInfo[i].Name;
+            switch(patient.PatientInfo[i].Progress){
+                case "0":
+                    Progress = "登记信息";
+                    break;
+                case "1":
+                    Progress = "病情诊断";
+                    break;
+                case "2":
+                    Progress = "体位固定申请";
+                    break;
+                case "3":
+                    Progress = "模拟定位申请";
+                    break;
+                case "4":
+                    Progress = "体位固定";
+                    break;
+                case "5":
+                    Progress = "模拟定位";
+                    break;
+                case "6":
+                    Progress = "CT图像导入";
+                    break;
+                case "7":
+                    Progress = "计划申请";
+                    break;
+                case "8":
+                    Progress = "计划领取";
+                    break;
+                case "9":
+                    Progress = "计划提交";
+                    break;
+                case "10":
+                    Progress = "计划确认";
+                    break;
+                case "11":
+                    Progress = "计划复核";
+                    break;
+                case "12":
+                    Progress = "复位申请";
+                    break;
+                case "13":
+                    Progress = "复位验证";
+                    break;
+                case "14":
+                    Progress = "首次治疗预约";
+                    break;
+                case "15":
+                    Progress = "加速器治疗";
+                    break;
+                case "16":
+                    Progress = "总结随访";
+                    break;
+                default:
+                    Progress = "无";
+
+            }
             doctor = patient.PatientInfo[i].doctor;
-            Progress = patient.PatientInfo[i].Progress;
-            var tr = "<tr id='" + Radiotherapy_ID+ "_"+ treatID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + "疗程"+ treatID + "</td><td>" + Progress
+            var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + "疗程"+ treat + "</td><td>" + Progress
             + "</td><td>" + doctor + "</td></tr>";
             /*var tr = "<tr id='"+TreatmentID+"'><td>"+TreatmentID+"</td><td>"+Name+"</td><td>"+diagnosisresult+"</td><td>"+state
             +"</td><td>"+doctor+"</td><td>"+date+"</td><td>"+age+"</td></tr>";*/
