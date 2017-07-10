@@ -65,6 +65,18 @@ function createPatient(evt) {
         document.getElementById("date").innerHTML = getNowFormatDate();
         document.getElementById("operator").innerHTML = userName;
         document.getElementById("diaguserid").value = userID;
+        for (var i = 0; i < diagnosisInfo.diagnosisInfo.length; i++) {
+            if (treatID != diagnosisInfo.diagnosisInfo[i].Treatmentname) {
+                var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ diagnosisInfo.diagnosisInfo[i].Treatmentname +'诊断</a></li>';
+                var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
+                    + '<div class="item col-xs-4">患病部位：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].partname +'</span></div>'
+                    + '<div class="item col-xs-4">诊断结果：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].diagnosisresultName +'</span></div>'
+                    + '<div class="item col-xs-4">医疗组：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].groupName +'</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].Remarks +'</span></div></div></div>';
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+            }
+        }
     }
 }
 
