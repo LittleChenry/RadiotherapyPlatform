@@ -261,7 +261,7 @@
   <!-- Content Wrapper. Contains page content -->
   <!--  style="background-image:url(../../img/hospital.png)" -->
   <div class="content-wrapper">
-    <section id="addpatient-content" class="content" style="background-color:#fff;width:1000px;">
+    <section id="addpatient-content" class="content table-responsive" style="background-color:#fff;width:1000px;">
         <form id="frmaddpatient" name="frmaddpatient" method="post" runat="server">
             <div class="paper">
                 <div class="paper-title">
@@ -296,11 +296,11 @@
                         </div>
                     </div>
                     <div class="single-row">
-                        <div class="col-xs-3">
+                        <div class="col-xs-5">
                             <span class="form-text col-xs-4" style="padding-left:0px;">姓名：</span>
-                            <input id="userName" name="userName" class="form-item col-xs-8" type="text"  AUTOCOMPLETE="OFF"/>
+                            <input id="userName" name="userName" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
                         </div>
-                        <div class="item col-xs-4" style="padding-top:5px;"> 
+                        <div class="item col-xs-5"> 
                             <span class="col-xs-4">性别：</span>
                             <span class="col-xs-4" style="padding-left:0px;">
                                 <input type="radio" name="Gender" id="male" value="M" />
@@ -311,31 +311,33 @@
                                 女
                             </span>
                         </div>
-                     <div class="col-xs-3">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">民族：</span>
-                            <input id="Nation" name="Nation"  class="form-item col-xs-8" type="text"  AUTOCOMPLETE="OFF" />
-                        </div>
                     </div>
-                    <div class="single-row">   
-                        <div class="col-xs-4">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">身份证号：</span>
-                            <input id="IDcardNumber"  name="IDcardNumber" class="form-item col-xs-8" type="text" AUTOCOMPLETE="OFF"/>
+                    <div class="single-row">
+                        <div class="col-xs-5">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">民族：</span>
+                            <input id="Nation" name="Nation"  class="form-item" type="text" AUTOCOMPLETE="OFF" />
                         </div>
                         <div class="col-xs-5">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">出生日期：</span>
-                            <input class="form-item col-xs-8" id="Birthday" name="Birthday"type="text"  placeholder="选择日期"   AUTOCOMPLETE="OFF"/>
+                            <span class="form-text col-xs-4">出生日期：</span>
+                            <input class="form-item" id="Birthday" name="Birthday"type="text" placeholder="选择日期" AUTOCOMPLETE="OFF"/>
                         </div>
                     </div>
                     <div class="single-row">
-                        <div class="col-xs-11">
-                            <span class="form-text col-xs-1" style="padding-left:0px;">地址：</span>
-                            <select id="id_provSelect"  class="form-item col-xs-3" name="provSelect" onChange="loadCity(this.value);">
+                        <div class="col-xs-5">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">身份证号：</span>
+                            <input id="IDcardNumber"  name="IDcardNumber" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-10">
+                            <span class="form-text col-xs-2" style="padding-left:0px;width:120.2px;">地址：</span>
+                            <select id="id_provSelect"  class="form-item col-xs-3" name="provSelect" onChange="loadCity(this.value);" style="width:196.4px;">
                                 <option value="">请选择省份</option>
                             </select>
-                            <select id="id_citySelect" class="form-item col-xs-3" name="citySelect" onChange="loadArea(this.value);">
+                            <select id="id_citySelect" class="form-item col-xs-3" name="citySelect" onChange="loadArea(this.value);" style="width:196.4px;">
                                 <option value="">请选择城市</option>
                             </select>
-                             <select id="id_areaSelect" class="form-item col-xs-3"  name="areaSelect">
+                             <select id="id_areaSelect" class="form-item col-xs-3" name="areaSelect" style="width:196.4px;">
                                 <option value="">请选择区域</option>
                             </select>
                         </div>
@@ -344,32 +346,32 @@
                         <input type="hidden" name="areaSelect_text" id="areaSelect_text" />
                     </div>
                     <div class="single-row">
-                        <div class="col-xs-11">
-                            <span class="form-text col-xs-1" style="padding-left:0px;"></span>
-                             <input id="addressmore"  name="addressmore" class="form-item col-xs-6"   placeholder="详细地址" type="text" AUTOCOMPLETE="OFF"/>
+                        <div class="col-xs-10">
+                            <span class="form-text col-xs-2" style="padding-left:0px;width:120.2px;">详细地址：</span>
+                            <input id="addressmore" name="addressmore" class="form-item" type="text" AUTOCOMPLETE="OFF" style="width:52%;"/>
                         </div>
                     </div>
                     <div class="single-row">
-                        <div class="col-xs-4">
+                        <div class="col-xs-5">
                             <span class="form-text col-xs-4" style="padding-left:0px;">联系电话1：</span>
-                            <input id="Number1" name="Number1" class="form-item col-xs-8" type="text"/>
+                            <input id="Number1" name="Number1" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
                         </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-3">联系电话2：</span>
-                            <input id="Number2" name="Number2" class="form-item col-xs-5" type="text"/>
+                        <div class="col-xs-5">
+                            <span class="form-text col-xs-4">联系电话2：</span>
+                            <input id="Number2" name="Number2" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
                         </div>
                     </div>
                     <div class="single-row">
-                        <div class="col-xs-4">
+                        <div class="col-xs-5">
                             <span class="form-text col-xs-4" style="padding-left:0px;">身高：</span>
-                            <div class="group-item col-xs-8" style="padding:0px;">
+                            <div class="group-item" style="padding:0px;">
                                 <input type="number" id="height" name="height" class="form-group-input" />
                                 <span class="input-group-addon">cm</span>
                             </div>
                         </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-3">体重：</span>
-                            <div class="group-item col-xs-5" style="padding:0px;">
+                        <div class="col-xs-5">
+                            <span class="form-text col-xs-4">体重：</span>
+                            <div class="group-item" style="padding:0px;">
                                 <input type="number" id="weight" name="weight" class="form-group-input" />
                                 <span class="input-group-addon">kg</span>
                             </div>
@@ -381,23 +383,29 @@
                         <span>病案信息：</span>
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-4">
-                            病案号：
-                            <input id="RecordNumber" name="RecordNumber" type="text" class="form-item" />
-                        </div>                       
-                        <div class="item col-xs-4">
-                            所属医生：
-                            <select id="doctor" name="doctor" class="form-item"></select>
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">病案号：</span>
+                            <input id="RecordNumber" name="RecordNumber" type="text" class="form-item" AUTOCOMPLETE="OFF" />
+                        </div>
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4">住院号：</span>
+                            <input id="" name="" type="text" class="form-item" AUTOCOMPLETE="OFF" />
                         </div>
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-6">
-                            分中心医院：
-                            <input id="Hospital" name="Hospital" type="text" class="form-item" />
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">所属医生：</span>
+                            <select id="doctor" name="doctor" class="form-item"></select>
                         </div>
-                        <div class="item col-xs-6">
-                            分中心负责人：
-                            <input id="Sub" name="Sub" class="form-item"></input>
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4">分中心医院：</span>
+                            <input id="Hospital" name="Hospital" type="text" class="form-item" AUTOCOMPLETE="OFF" />
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">分中心负责人：</span>
+                            <input id="Sub" name="Sub" class="form-item" AUTOCOMPLETE="OFF"/>
                         </div>
                     </div>
                 </div>

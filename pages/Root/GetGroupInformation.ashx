@@ -21,24 +21,22 @@ public class GetGroupInformation : IHttpHandler {
     private string group()
     {
         DataLayer sqlOperation = new DataLayer("sqlStr");
-        string sqlCommand = "SELECT user.ID uid,user.Name userName,groups.ID gid,groups.groupName groupName,groups.Charge_User_Name,groups.Charge_User_ID "
-                            + "FROM user LEFT JOIN groups ON user.Group_ID=groups.ID "
-                            + "WHERE user.Group_ID NOT IN(0,-1) and user.Group_ID IS NOT NULL ORDER BY user.Group_ID";
+        string sqlCommand = "SELECT `user`.`Name`,`user`.ID uid,groups.ID gid,groups.groupName,groups2user.identity FROM "
+                            + "`user` RIGHT JOIN groups2user ON `user`.ID=groups2user.User_ID "
+                            +"RIGHT JOIN groups ON groups2user.Group_ID=groups.ID ORDER BY gid,identity";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder result = new StringBuilder("[");
         while(reader.Read()){
          result.Append("{\"userID\":\"")
              .Append(reader["uid"].ToString())
              .Append("\",\"userName\":\"")
-             .Append(reader["userName"].ToString())
+             .Append(reader["Name"].ToString())
              .Append("\",\"gid\":\"")
              .Append(reader["gid"].ToString())
              .Append("\",\"groupName\":\"")
              .Append(reader["groupName"].ToString())
-             .Append("\",\"chagerID\":\"")
-             .Append(reader["Charge_User_ID"].ToString())
-             .Append("\",\"chargerName\":\"")
-             .Append(reader["Charge_User_Name"].ToString())
+             .Append("\",\"identity\":\"")
+             .Append(reader["identity"].ToString())
              .Append("\"},");     
         }
         result.Remove(result.Length-1,1);
