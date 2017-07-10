@@ -24,7 +24,7 @@ public class GetPatientInfo : IHttpHandler
     private string patientInformation()
     {
         DataLayer sqlOperation = new DataLayer("sqlStr");
-        string sqlCommand = "SELECT count(*) from patient";
+        string sqlCommand = "SELECT count(*) from treatment";
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
         if (count == 0)
         {

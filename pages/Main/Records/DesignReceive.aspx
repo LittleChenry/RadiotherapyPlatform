@@ -54,9 +54,79 @@
                     <span>病案信息：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
-                    <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
+                    <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                    <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
+                    <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                    <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
                     <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
+                </div>
+            </div>
+            <div class="paper-content">
+                <div class="content-title">
+                    <span>计划申请信息：</span>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">
+                        <span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>
+                        <span id="Remarks" class="col-xs-10"></span>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-6" style="padding-left:0px;">
+                        <span class="form-text col-xs-4">靶区处方剂量：</span>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        <table id="Priority" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>靶区</th>
+                                    <th>外放</th>
+                                    <th>PTV</th>
+                                    <th>单次量cGy</th>
+                                    <th>次数</th>
+                                    <th>总剂量cGy</th>
+                                    <th>备注</th>
+                                    <th>优先级</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-6" style="padding-left:0px;">
+                        <span class="form-text col-xs-4">危及器官限量：</span>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        <table id="Dosage" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>危及器官</th>
+                                    <th>D/V</th>
+                                    <th>限制</th>
+                                    <th>数值</th>
+                                    <th>PRV/V</th>
+                                    <th>限制</th>
+                                    <th>数值</th>
+                                    <th>优先级</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">治疗技术：<span id="technology" class="underline"></span></div>
+                    <div class="item col-xs-4">放疗设备：<span id="equipment" class="underline"></span></div>
+                    <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>                    
                 </div>
             </div>
             <div class="paper-content">
@@ -64,7 +134,7 @@
                     <span>领取计划：</span>
                 </div>
                 <div class="single-row" style="text-align:center;">
-                    <button id="receive" class="btn btn-default">领取该计划</button>
+                    <button id="receive" class="btn btn-default" type="button" disabled="disabled">领取该计划</button>
                 </div>
             </div>
             <div class="paper-footer">

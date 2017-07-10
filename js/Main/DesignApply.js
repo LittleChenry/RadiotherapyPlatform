@@ -31,7 +31,11 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
-    document.getElementById("part").innerHTML = patient.partname;
+    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
+    document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
+    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     document.getElementById("aa").value = aa;
     document.getElementById("bb").value = bb;
     var select1 = document.getElementById("technology");
@@ -41,15 +45,10 @@ function Init(evt) {
     if (patient.Progress >= 8) {
         var designInfo = getDesignInfo(treatID);
         document.getElementById("Remarks").value = designInfo.RadiotherapyHistory;
-        document.getElementById("Remarks").disabled = "true";
         readDosagePriority(designInfo.DosagePriority);
-        document.getElementById("Priority").disabled = "true";
         readDosage(designInfo.Dosage);
-        document.getElementById("Dosage").disabled = "true";
         document.getElementById("technology").value = designInfo.technology;
-        document.getElementById("technology").disabled = "true";
         document.getElementById("equipment").value = designInfo.equipment;
-        document.getElementById("equipment").disabled = "equipment";
         document.getElementById("applyuser").innerHTML = designInfo.doctor;
         document.getElementById("time").innerHTML = designInfo.apptime;
     }
@@ -269,6 +268,8 @@ function addDosage() {
     var t7 = row.insertCell(6);
     var t8 = row.insertCell(7);
     var t9 = row.insertCell(8);
+    var t10 = row.insertCell(9);
+    var t11 = row.insertCell(10);
     t1.style.padding = "0px";
     t2.style.padding = "0px";
     t3.style.padding = "0px";
@@ -277,17 +278,21 @@ function addDosage() {
     t6.style.padding = "0px";
     t7.style.padding = "0px";
     t8.style.padding = "0px";
-    t9.style.cssText = "text-align: center;padding:0px;vertical-align: middle";
-    t9.id = "deletes" + rows;
+    t9.style.padding = "0px";
+    t10.style.padding = "0px";
+    t11.style.cssText = "text-align: center;padding:0px;vertical-align: middle";
+    t11.id = "deletes" + rows;
     t1.innerHTML = '<input id="type' + rows + '" name="type' + rows + '" type="text" class="td-input" />';
     t2.innerHTML = '<input id="dv' + rows + '" name="dv' + rows + '" type="text" class="td-input" />';
     t3.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
     t4.innerHTML = '<input id="number' + rows + '" name="number' + rows + '" type="number" class="td-input" />';
-    t5.innerHTML = '<input id="prv' + rows + '" name="prv' + rows + '" type="text" class="td-input" />';
-    t6.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
-    t7.innerHTML = '<input id="numbers' + rows + '" name="numbers' + rows + '" type="text" class="td-input" />';
-    t8.innerHTML = '<input id="pp' + rows + '" name="pp' + rows + '" type="number" class="td-input" />';
-    t9.innerHTML = '<a href="javascript:deleteDosage(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
+    t5.innerHTML = '<input id="out' + rows + '" name="out' + rows + '" type="text" class="td-input" />';
+    t6.innerHTML = '<input id="prv' + rows + '" name="prv' + rows + '" type="text" class="td-input" />';
+    t7.innerHTML = '<input id="num' + rows + '" name="num' + rows + '" type="number" class="td-input" />';
+    t8.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
+    t9.innerHTML = '<input id="numbers' + rows + '" name="numbers' + rows + '" type="text" class="td-input" />';
+    t10.innerHTML = '<input id="pp' + rows + '" name="pp' + rows + '" type="number" class="td-input" />';
+    t11.innerHTML = '<a href="javascript:deleteDosage(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
     bb = rows;
     document.getElementById("bb").value =bb;
 }
@@ -353,19 +358,24 @@ function deleteDosage(row) {
         var td4 = document.getElementById("number" + i);
         td4.id = "number" + j;
         td4.name = "number" + j;
-        var td5 = document.getElementById("prv" + i);
-        td5.id = "prv" + j;
-        td5.name = "prv" + j;
-       
-        var td7 = document.getElementById("numbers" + i);
-        td7.id = "numbers" + j;
-        td7.name = "numbers" + j;
-        var td8 = document.getElementById("pp" + i);
-        td8.id = "pp" + j;
-        td8.name = "pp" + j;        
-        var td9 = document.getElementById("deletes" + i);
-        td9.id = "deletes" + j;
-        td9.innerHTML = '<a  href="javascript:deleteDosage(' + j + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';;
+        var td5 = document.getElementById("out" + i);
+        td5.id = "out" + j;
+        td5.name = "out" + j;
+        var td6 = document.getElementById("prv" + i);
+        td6.id = "prv" + j;
+        td6.name = "prv" + j;
+        var td7 = document.getElementById("num" + i);
+        td7.id = "num" + j;
+        td7.name = "num" + j;
+        var td9 = document.getElementById("numbers" + i);
+        td9.id = "numbers" + j;
+        td9.name = "numbers" + j;
+        var td10 = document.getElementById("pp" + i);
+        td10.id = "pp" + j;
+        td10.name = "pp" + j;        
+        var td11 = document.getElementById("deletes" + i);
+        td11.id = "deletes" + j;
+        td11.innerHTML = '<a  href="javascript:deleteDosage(' + j + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';;
     }
     table.deleteRow(row + 1);
     bb--;
@@ -441,8 +451,24 @@ function saveDesignApplyRecord() {
         window.alert("放疗设备没有选择");
         return;
     }
-    document.getElementById("savedesign").submit();
-  
+    var form = new FormData(document.getElementById("savedesign"));
+    $.ajax({
+        url: "designApplyRecord.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("保存成功");
+            window.location.reload();
+        },
+        error: function (e) {
+            window.location.href = "Error.aspx";
+        },
+        failure: function (e) {
+            alert("保存失败！！");
+        }
+    });
 }
 
 
@@ -468,4 +494,11 @@ function dateformat(format) {
     }
     var time = year + "年" + month + "月" + day + "日 " + hour + "：" + minute;
     return time;
+}
+function remove() {
+    document.getElementById("Remarks").removeAttribute("disabled");
+     //document.getElementById("Priority").removeAttribute("disabled");
+    //document.getElementById("Dosage").removeAttribute("disabled");
+    document.getElementById("technology").removeAttribute("disabled");
+    document.getElementById("equipment").removeAttribute("disabled");
 }

@@ -61,9 +61,14 @@
                 <div class="content-title">
                     <span>病案信息：</span>
                 </div>
+                 <div class="single-row">
+                    <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                    <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
+                    <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
+                </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
-                    <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
+                    <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                    <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
                     <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
             </div>
@@ -74,7 +79,7 @@
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
                         特殊情况(放疗史)：
-                        <textarea id="Remarks" name="Remarks" class="form-area" style="width:80%;"></textarea>
+                        <textarea id="Remarks" name="Remarks" class="form-area" style="width:80%;" disabled="disabled"></textarea>
                     </div>
                 </div>
                 <div class="single-row">
@@ -84,7 +89,7 @@
                 </div>
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
-                        <table id="Priority" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
+                        <table id="Priority" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;" >
                             <thead>
                                 <tr>
                                     <th>靶区</th>
@@ -145,12 +150,14 @@
                             <thead>
                                 <tr>
                                     <th>危及器官</th>
-                                    <th>D/V</th>
+                                    <th>剂量</th>
                                     <th>限制</th>
-                                    <th>数值</th>
-                                    <th>PRV/V</th>
+                                    <th>体积</th>
+                                    <th>外放</th>
+                                    <th>PRV</th>
+                                    <th>剂量</th>
                                     <th>限制</th>
-                                    <th>数值</th>
+                                    <th>体积</th>
                                     <th>优先级</th>
                                     <th style="text-align: center;">
                                         <a href="javascript:addDosage();"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
@@ -172,7 +179,13 @@
                                         <input id="number0" name="number0" type="number" class="td-input" />
                                     </td>
                                     <td style="padding:0px;">
+                                        <input  id="out0" name="out0" type="text" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
                                         <input id="prv0" name="prv0" type="text" class="td-input" />
+                                    </td>
+                                    <td style="padding:0px;">
+                                        <input id="num0" name="num0" type="text" class="td-input" />
                                     </td>
                                     <td style="padding:0px;">
                                         <input type="text" class="td-input" value="<" readonly="true" />
@@ -194,11 +207,11 @@
                 <div class="single-row">
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4" style="padding-left:0px;">治疗技术：</span>
-                        <select id="technology" name="technology" class="form-item"></select>
+                        <select id="technology" name="technology" class="form-item" disabled="disabled"></select>
                     </div>
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4" style="padding-left:0px;">放疗设备：</span>
-                        <select id="equipment" name="equipment" class="form-item"></select>
+                        <select id="equipment" name="equipment" class="form-item" disabled="disabled"></select>
                     </div>
                 </div>
             </div>

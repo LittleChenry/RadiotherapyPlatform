@@ -22,8 +22,11 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("treatID").innerHTML = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
-    document.getElementById("treatID").innerHTML = treatmentID;
-    document.getElementById("part").innerHTML = patient.partname;
+    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
+    document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
+    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     document.getElementById("diaguser").innerHTML = patient.RegisterDoctor;
     var select1 = document.getElementById("DensityConversion");
     createDnsityItem(select1);
@@ -178,5 +181,31 @@ function postimportCT() {
         alert("请选择多模态图像");
         return;
     }
-    document.getElementById("saveImportCT").submit();
+    var form = new FormData(document.getElementById("saveImportCT"));
+    $.ajax({
+        url: "importCTRecord.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("保存成功");
+            window.location.reload();
+        },
+        error: function (e) {
+            window.location.href = "Error.aspx";
+        },
+        failure: function (e) {
+            alert("保存失败！！");
+        }
+    });
+}
+function remove() {
+    document.getElementById("Remarks").removeAttribute("disabled");
+    document.getElementById("DensityConversion").removeAttribute("disabled");
+    document.getElementById("SequenceNaming").removeAttribute("disabled");
+    document.getElementById("Thickness").removeAttribute("disabled");
+    document.getElementById("MultimodalImage").removeAttribute("disabled");
+    document.getElementById("ReferenceScale").removeAttribute("disabled");
+    document.getElementById("Number").removeAttribute("disabled");
 }

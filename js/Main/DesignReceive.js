@@ -21,20 +21,30 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
-    document.getElementById("part").innerHTML = patient.partname;
-    if (patient.Progress >= 9) {
-        var designre = getdesignre(treatID);
-        document.getElementById("applyuser").innerHTML = designre.name;
-        document.getElementById("time").innerHTML = designre.ReceiveTime;
-        document.getElementById("receive").disabled = true;
-
-    }
-    if (patient.Progress == 8) {
+    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
+    document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
+    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    if (patient.Progress >= 8) {
+        var designre = getdesignre(treatID);       
         document.getElementById("applyuser").innerHTML = userName;
-        document.getElementById("time").innerHTML = getNowFormatDate();
+        document.getElementById("time").innerHTML = getNowFormatDate();      
+        document.getElementById("Remarks").innerHTML = designre.RadiotherapyHistory;
+        readDosagePriority(designre.DosagePriority);
+        readDosage(designre.Dosage);
+        document.getElementById("technology").innerHTML = designre.technology;
+        document.getElementById("equipment").innerHTML = designre.equipment;
+        document.getElementById("ApplicationUser").innerHTML = designre.doctor;
+        document.getElementById("ApplicationTime").innerHTML = designre.apptime;
         document.getElementById("receive").addEventListener("click", function () {
             receiveDesign(treatID);
-        }, false);       
+        }, false);
+        if (patient.Progress >= 9) {
+            document.getElementById("applyuser").innerHTML = designre.name;
+            document.getElementById("time").innerHTML = designre.ReceiveTime;
+            document.getElementById("receive").disabled = true;
+        }
     }
 }
 function receiveDesign(treatID) {
@@ -47,12 +57,68 @@ function receiveDesign(treatID) {
     var result = xmlHttp.responseText;
     if (result == "success") {
         window.alert("领取成功");
-        location.reload();
-        askForBack();
+        window.location.reload();
     }
-    else {
+    if (result == "failure"){
         window.alert("领取失败");
     }
+    if (result == "error") {
+        window.location.href = "Error.aspx";
+    }
+}
+function readDosagePriority(DosagePriority) {
+    var table = document.getElementById("Priority");
+    var tbody = document.createElement("tbody");
+    for (var i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var tr = document.createElement("tr");
+        for (var j = 0; j < list.length; j++) {
+            var td = document.createElement("td");
+            var textNode = document.createTextNode(list[j]);
+            td.appendChild(textNode);
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
+    tbody.style.textAlign = "center";
+    table.appendChild(tbody);
+}
+function readDosage(DosagePriority) {
+    var table = document.getElementById("Dosage");
+    var tbody = document.createElement("tbody");
+    for (var i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var tr = document.createElement("tr");
+        for (var j = 0; j < list.length; j++) {
+            var td = document.createElement("td");
+            if (j == 2) {
+                var textNode = document.createTextNode("<");
+                td.appendChild(textNode);
+                tr.appendChild(td);
+            } else {
+                var textNode = document.createTextNode(list[j]);
+            }
+            td.appendChild(textNode);
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
+    tbody.style.textAlign = "center";
+    table.appendChild(tbody);
 }
 function getNowFormatDate() {
     var date = new Date();
@@ -128,7 +194,7 @@ function sex(evt) {
     else
         return "男";
 }
-function askForBack() {
-    document.designsubmit.reload();
+function remove() {
+    document.getElementById("receive").removeAttribute("disabled");
 
 }

@@ -54,8 +54,13 @@
                     <span>病案信息：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
-                    <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
+                    <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                    <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
+                    <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                    <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
                     <div class="item col-xs-4">所属医生：<span id="diaguser" class="underline"></span></div>
                 </div>
             </div>
@@ -70,31 +75,31 @@
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">CT-电子密度转换：</span>
-                            <select id="DensityConversion" name="DensityConversion" class="form-item"></select>
+                            <select id="DensityConversion" name="DensityConversion" class="form-item" disabled="disabled"></select>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">CT序列命名：</span>
-                            <input id="SequenceNaming" name="SequenceNaming" class="form-item"/>
+                            <input id="SequenceNaming" name="SequenceNaming" class="form-item" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">层厚：</span>
-                            <input id="Thickness" name="Thickness" type="number"  class="form-item" />
+                            <input id="Thickness" name="Thickness" type="number"  class="form-item" disabled="disabled"/>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">层数：</span>
-                            <input id="Number" name="Number" type="number"  class="form-item" />
+                            <input id="Number" name="Number" type="number"  class="form-item" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">参考中心层面：</span>
-                            <input id="ReferenceScale" class="form-item" type="number" name="ReferenceScale"/>
+                            <input id="ReferenceScale" class="form-item" type="number" name="ReferenceScale" disabled="disabled"/>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">多模态图像：</span>
-                            <select id="MultimodalImage" name="MultimodalImage" class="form-item">
+                            <select id="MultimodalImage" name="MultimodalImage" class="form-item" disabled="disabled">
                                 <option value="allItem" >--选择多模态图像--</option>
                                 <option value="MRI">MRI</option>
                                 <option value="PET">PET</option>
@@ -105,7 +110,7 @@
                     <div class="single-row">
                         <div class="item area-group col-xs-12">
                             备注：
-                            <textarea id="Remarks" class="form-area"></textarea>
+                            <textarea id="Remarks" class="form-area" disabled="disabled"></textarea>
                         </div>
                     </div>
                 </form>
