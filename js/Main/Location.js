@@ -31,7 +31,7 @@ function Init(evt) {
         document.getElementById("modelID").innerHTML = locationInfo.modelID;
         document.getElementById("fixedEquipment").innerHTML = locationInfo.fixedEquipment;
         document.getElementById("body").innerHTML = locationInfo.body + "，" + locationInfo.BodyPositionDetail;
-        document.getElementById("AnnexDescription").innerHTML = locationInfo.AnnexDescription;
+        //document.getElementById("AnnexDescription").innerHTML = locationInfo.AnnexDescription;
         //
         document.getElementById("ScanPart").innerHTML = locationInfo.ScanPart;
         document.getElementById("ScanMethod").innerHTML = locationInfo.ScanMethod;
@@ -206,14 +206,14 @@ function postimportlocation() {
         processData: false,
         contentType: false,
         success: function (data) {
-            alert("更新成功");
+            alert("保存成功");
             window.location.reload();
         },
         error: function (e) {
             window.location.href = "Error.aspx";
         },
         failure: function (e) {
-            alert("更新失败！！");
+            window.location.href = "Error.aspx";
         }
     });
 }

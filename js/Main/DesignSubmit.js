@@ -51,22 +51,14 @@ function Init(evt) {
         document.getElementById("hidetreatID").value = treatID;
     
         if (patient.Progress >=10) {
-            document.getElementById("PlanSystem").value = designInfo.PlanSystem;
-            document.getElementById("PlanSystem").disabled = true;
+            document.getElementById("PlanSystem").value = designInfo.PlanSystem;            
             document.getElementById("IlluminatedNumber").value = designInfo.IlluminatedNumber;
-            document.getElementById("IlluminatedNumber").disabled = true;
             document.getElementById("Coplanar").value = designInfo.Coplanar;
-            document.getElementById("Coplanar").disabled = true;
             document.getElementById("MachineNumbe").value = designInfo.MachineNumbe;
-            document.getElementById("MachineNumbe").disabled = true;
             document.getElementById("ControlPoint").value = designInfo.ControlPoint;
-            document.getElementById("ControlPoint").disabled = true;
             document.getElementById("Grid").value = designInfo.Grid_ID;
-            document.getElementById("Grid").disabled = true;
             document.getElementById("Algorithm").value = designInfo.Algorithm_ID;
-            document.getElementById("Algorithm").disabled = true;
             document.getElementById("Feasibility").value = designInfo.Feasibility;
-            document.getElementById("Feasibility").disabled = true;
             document.getElementById("applyuser").innerHTML = designInfo.SubmitUser;
             document.getElementById("time").innerHTML = designInfo.SubmitTime;
         }
@@ -305,7 +297,34 @@ function saveDesignSubmit() {
         window.alert("请填写控制点数量");
         return;
     }
-   
-    document.getElementById("saveDesignSubmit").submit();
 
+    var form = new FormData(document.getElementById("saveDesignSubmit"));
+    $.ajax({
+        url: "designSubmitRecord.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("保存成功");
+            window.location.reload();
+        },
+        error: function (e) {
+            window.location.href = "Error.aspx";
+        },
+        message: function (e) {
+            alert("您不是领取人");
+            window.location.reload();
+        }
+    });
+}
+function remove() {
+    document.getElementById("PlanSystem").removeAttribute("disabled");
+    document.getElementById("IlluminatedNumber").removeAttribute("disabled");
+    document.getElementById("Coplanar").removeAttribute("disabled");
+    document.getElementById("MachineNumbe").removeAttribute("disabled");
+    document.getElementById("ControlPoint").removeAttribute("disabled");
+    document.getElementById("Grid").removeAttribute("disabled");
+    document.getElementById("Algorithm").removeAttribute("disabled");
+    document.getElementById("Feasibility").removeAttribute("disabled");    
 }

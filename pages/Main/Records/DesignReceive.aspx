@@ -108,12 +108,14 @@
                             <thead>
                                 <tr>
                                     <th>危及器官</th>
-                                    <th>D/V</th>
+                                    <th>剂量</th>
                                     <th>限制</th>
-                                    <th>数值</th>
-                                    <th>PRV/V</th>
+                                    <th>体积</th>
+                                    <th>外放</th>
+                                    <th>PRV</th>
+                                    <th>剂量</th>
                                     <th>限制</th>
-                                    <th>数值</th>
+                                    <th>体积</th>
                                     <th>优先级</th>
                                 </tr>
                             </thead>

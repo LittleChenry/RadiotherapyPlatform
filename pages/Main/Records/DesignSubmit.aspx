@@ -103,12 +103,14 @@
                             <thead>
                                 <tr>
                                     <th>危及器官</th>
-                                    <th>D/V</th>
+                                    <th>剂量</th>
                                     <th>限制</th>
-                                    <th>数值</th>
-                                    <th>PRV/V</th>
+                                    <th>体积</th>
+                                    <th>外放</th>
+                                    <th>PRV</th>
+                                    <th>剂量</th>
                                     <th>限制</th>
-                                    <th>数值</th>
+                                    <th>体积</th>
                                     <th>优先级</th>
                                 </tr>
                             </thead>
@@ -133,49 +135,49 @@
                     <input type="hidden"  id="userID" name="userID" />
                     <input type="hidden" id="diaguserid" name="diaguserid" />
                     <div class="content-title">
-                        <span>填写计划申请信息：</span>
+                        <span>填写计划提交信息：</span>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">计划系统：</span>
-                            <select id="PlanSystem" name="PlanSystem" class="form-item"></select>
+                            <select id="PlanSystem" name="PlanSystem" class="form-item" disabled="disabled"></select>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">射野数量：</span>
-                            <input id="IlluminatedNumber" name="IlluminatedNumber" type="number" class="form-item"/>
+                            <input id="IlluminatedNumber" name="IlluminatedNumber" type="number" class="form-item" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">非共面照射：</span>
-                            <select id="Coplanar" name="Coplanar" class="form-item">
+                            <select id="Coplanar" name="Coplanar" class="form-item" disabled="disabled">
                                 <option value="1">是</option>
                                 <option value="0">否</option>
                             </select>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">机器跳数：</span>
-                            <input id="MachineNumbe" name="MachineNumbe" type="number" class="form-item"/>
+                            <input id="MachineNumbe" name="MachineNumbe" type="number" class="form-item" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">控制点数量：</span>
-                            <input id="ControlPoint" name="ControlPoint" type="number" class="form-item"/>
+                            <input id="ControlPoint" name="ControlPoint" type="number" class="form-item" disabled="disabled"/>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">计算网络：</span>
-                            <select id="Grid" name="Grid" class="form-item"></select>
+                            <select id="Grid" name="Grid" class="form-item" disabled="disabled"></select>
                         </div>
                     </div> 
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">优化算法：</span>
-                            <select id="Algorithm" name="Algorithm" class="form-item"></select>
+                            <select id="Algorithm" name="Algorithm" class="form-item" disabled="disabled"></select>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">计划可执行度：</span>
-                            <select id="Feasibility" name="Feasibility" class="form-item">
+                            <select id="Feasibility" name="Feasibility" class="form-item" disabled="disabled">
                                 <option value="1">可执行</option>
                                 <option value="0">不可执行</option>
                             </select>

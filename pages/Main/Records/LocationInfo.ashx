@@ -41,7 +41,7 @@ public class LocationInfo : IHttpHandler
     {
             String locationID = context.Request.QueryString["treatID"];
             int treatID = Convert.ToInt32(locationID);
-            string sqlCommand1 = "select CTPictures,location.ApplicationTime as apptime,fixed.*,material.Name as mname,scanpart.Name as partname,scanmethod.*,enhancemethod.Method as enmethod,locationrequirements.*,user.Name as doctor,fixedequipment.Name as fename,location.Operate_User_ID as opid,location.OperateTime as optime,location.* from locationrequirements,scanpart,scanmethod,enhancemethod,location,fixedequipment,user,material,treatment,fixed where enhancemethod.ID=location.EnhanceMethod_ID and scanmethod.ID=location.ScanMethod_ID and scanpart.ID=location.ScanPart_ID and locationrequirements.ID=location.LocationRequirements_ID and location.ID=treatment.Location_ID and fixedequipment.ID=fixed.FixedEquipment_ID and  fixed.Model_ID=material.ID and  treatment.Fixed_ID=fixed.ID and location.Application_User_ID =user.ID and treatment.ID = @treatid";
+            string sqlCommand1 = "select CTPictures,location.ApplicationTime as apptime,fixed.*,material.Name as mname,scanpart.Name as partname,scanmethod.*,locationrequirements.*,user.Name as doctor,fixedequipment.Name as fename,location.Operate_User_ID as opid,location.OperateTime as optime,location.* from locationrequirements,scanpart,scanmethod,location,fixedequipment,user,material,treatment,fixed where scanmethod.ID=location.ScanMethod_ID and scanpart.ID=location.ScanPart_ID and locationrequirements.ID=location.LocationRequirements_ID and location.ID=treatment.Location_ID and fixedequipment.ID=fixed.FixedEquipment_ID and fixed.Model_ID=material.ID and treatment.Fixed_ID=fixed.ID and location.Application_User_ID =user.ID and treatment.ID = @treatid";
             sqlOperation1.AddParameterWithValue("@treatid", treatID);
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation1.ExecuteReader(sqlCommand1);
              StringBuilder backText = new StringBuilder("{\"locationInfo\":[");
@@ -68,6 +68,19 @@ public class LocationInfo : IHttpHandler
                     operate = sqlOperation.ExecuteScalar(sqlCommand);
                     
                 }
+                string enmethod;
+                if (reader["Enhance"].ToString()=="0")
+                {
+
+                    enmethod = "";
+                }
+                else
+                {
+                    string sqlCommand = "select EnhanceMethod.Name as method from location,enhancemethod,treatment where location.ID=treatment.Location_ID and location.EnhanceMethod_ID =enhancemethod.ID and treatment.ID = @treatid";
+                    sqlOperation.AddParameterWithValue("@treatid", treatID);
+                    enmethod = sqlOperation.ExecuteScalar(sqlCommand);
+
+                }
                 backText.Append("{\"Thickness\":\"" + reader["Thickness"].ToString() + "\",\"ReferenceNumber\":\"" + reader["ReferenceNumber"].ToString() +
                         "\",\"ReferenceScale\":\"" + reader["ReferenceScale"].ToString() + "\",\"Number\":\"" + reader["Number"].ToString() +
                          "\",\"modelID\":\"" + reader["mname"].ToString() + "\",\"requireID\":\"" + reader["Requirements"].ToString() + "\",\"operate\":\"" + operate +
@@ -75,7 +88,7 @@ public class LocationInfo : IHttpHandler
                          "\",\"ApplicationTime\":\"" + date1 + "\",\"ApplicationUser\":\"" + reader["doctor"].ToString() +
                          "\",\"ScanPart\":\"" + reader["partname"].ToString() + "\",\"ScanMethod\":\"" + reader["Method"].ToString() +
                          "\",\"UpperBound\":\"" + reader["UpperBound"].ToString() + "\",\"LowerBound\":\"" + reader["LowerBound"].ToString() +
-                         "\",\"Enhance\":\"" + reader["Enhance"].ToString() + "\",\"EnhanceMethod\":\"" + reader["enmethod"].ToString() +
+                         "\",\"Enhance\":\"" + reader["Enhance"].ToString() + "\",\"EnhanceMethod\":\"" + enmethod +
                          "\",\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"BodyPositionDetail\":\"" + reader["BodyPositionDetail"].ToString() +
                          "\",\"AnnexDescription\":\"" + reader["AnnexDescription"].ToString() + "\",\"CTPictures\":\"" + reader["CTPictures"].ToString() + "\",\"OperateTime\":\"" + date2 + "\"}");
             }

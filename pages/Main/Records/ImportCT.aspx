@@ -110,7 +110,7 @@
                     <div class="single-row">
                         <div class="item area-group col-xs-12">
                             备注：
-                            <textarea id="Remarks" class="form-area" disabled="disabled"></textarea>
+                            <textarea id="Remarks" name="Remarks" class="form-area" disabled="disabled"></textarea>
                         </div>
                     </div>
                 </form>

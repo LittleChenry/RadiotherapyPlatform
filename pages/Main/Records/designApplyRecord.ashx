@@ -125,10 +125,7 @@ public class designApplyRecord : IHttpHandler {
             {
                 return "failure";
             }
-
-
         }
-
         catch (System.Exception Ex1)
         {
             return "error";

@@ -81,10 +81,7 @@
                     </div>
                     <div class="single-row">
                         <div class="item col-xs-12">体位：<span id="body" class="underline"></span></div>   
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-12">附件：<span id="AnnexDescription" class="underline"></span></div>
-                    </div>
+                    </div>                    
                      <div class="single-row">
                         
                         <div class="item col-xs-4">扫描部位：<span id="ScanPart" class="underline"></span></div>
