@@ -14,9 +14,10 @@ function Init(evt) {
     getUserName();
 
     var treatID = window.location.search.split("=")[1];
-    document.getElementById("treatID").innerHTML = treatID;
+    
    
     var patient = getPatientInfo(treatID);
+   
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
     document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
@@ -28,8 +29,11 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
-    document.getElementById("part").innerHTML = patient.partname;
-    
+    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
+    document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
+    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    //document.getElementById("part").innerHTML = patient.partname;
     if (patient.Progress >= 3) {
         var fixedInfo = getDignoseInfo(treatID);
         document.getElementById("body").innerHTML = fixedInfo.body;

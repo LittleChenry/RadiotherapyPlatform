@@ -33,7 +33,7 @@ public class patientInfoForFix : IHttpHandler {
 
         DataLayer sqlOperation2 = new DataLayer("sqlStr");
         StringBuilder backText = new StringBuilder("{\"patient\":[");
-        string sqlCommand2 = "select treatment.Treatmentname,Progress,patient.*,user.Name as doctor,part.name as partname,diagnosisrecord.Part_ID as partID from treatment,patient,user,part,diagnosisrecord where treatment.DiagnosisRecord_ID=diagnosisrecord.ID and diagnosisrecord.Part_ID=part.ID and patient.RegisterDoctor=user.ID and treatment.Patient_ID=patient.ID and treatment.ID=@id";
+        string sqlCommand2 = "select treatment.Treatmentname,Progress,patient.*,user.Name as doctor,part.name as partname,diagnosisresult.*,diagnosisrecord.Part_ID as partID from diagnosisresult,treatment,patient,user,part,diagnosisrecord where diagnosisrecord.DiagnosisResult_ID=diagnosisresult.ID and treatment.DiagnosisRecord_ID=diagnosisrecord.ID and diagnosisrecord.Part_ID=part.ID and patient.RegisterDoctor=user.ID and treatment.Patient_ID=patient.ID and treatment.ID=@id";
         sqlOperation2.AddParameterWithValue("@id", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         int i = 1;
@@ -42,7 +42,7 @@ public class patientInfoForFix : IHttpHandler {
             backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"IdentificationNumber\":\"" + reader["IdentificationNumber"] + "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() +
                  "\",\"Hospital\":\"" + reader["Hospital"].ToString() + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString()  + "\",\"Name\":\"" + reader["Name"].ToString() +
                  "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"RegisterDoctor\":\"" + reader["doctor"].ToString() +
-                 "\",\"Nation\":\"" + reader["Nation"].ToString() + "\",\"Address\":\"" + reader["Address"].ToString() + "\",\"Contact1\":\"" + reader["Contact1"].ToString() +
+                 "\",\"Nation\":\"" + reader["Nation"].ToString() + "\",\"Address\":\"" + reader["Address"].ToString() + "\",\"Contact1\":\"" + reader["Contact1"].ToString() + "\",\"diagnosisresult\":\"" + reader["TumorName"].ToString() +reader["Description"].ToString()+
                  "\",\"Contact2\":\"" + reader["Contact2"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"partID\":\"" + reader["partID"].ToString() + "\",\"partname\":\"" + reader["partname"].ToString() + "\"}");
             if (i < count)
             {

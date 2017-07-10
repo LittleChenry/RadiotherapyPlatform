@@ -59,6 +59,10 @@
                     <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
                     <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">病案号：<span id="RecordNumber" class="underline"></span></div>
+                    <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>                
+                </div>
             </div>
             <div class="paper-content">
                 <div class="content-title">

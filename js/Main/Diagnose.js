@@ -15,10 +15,11 @@ function createPatient(evt) {
     treatID = treatmentgroup.split("=")[1];
     var treatmentgroup1 = window.location.search.split("&")[0];
     radioID = treatmentgroup1.split("=")[1];
-    document.getElementById("treatID").innerHTML = treatID;
+    document.getElementById("treatID").innerHTML = "疗程" + treatID;
     document.getElementById("radiotherapy").innerHTML = radioID;
     var patient = getPatientInfo(treatID, radioID);    
     document.getElementById("username").innerHTML = patient.Name;
+    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
     document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
     document.getElementById("nation").innerHTML = patient.Nation;
