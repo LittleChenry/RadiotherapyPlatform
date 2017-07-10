@@ -36,7 +36,7 @@ public class diagnoseInfo : IHttpHandler {
         int treatid = Convert.ToInt32(context.Request.QueryString["treatID"]);
 
 
-        string sqlCommand = "select diagnosisrecord.*,part.Name as partname,user.Name as username,treatment.Group_ID as group from user,part,diagnosisrecord,treatment where diagnosisrecord.Diagnosis_User_ID=user.ID and treatment.DiagnosisRecord_ID=diagnosisrecord.ID and diagnosisrecord.Part_ID=part.ID and treatment.ID=@treatID";
+        string sqlCommand = "select diagnosisrecord.*,part.Name as partname,user.Name as username,Group_ID  from user,part,diagnosisrecord,treatment where diagnosisrecord.Diagnosis_User_ID=user.ID and treatment.DiagnosisRecord_ID=diagnosisrecord.ID and diagnosisrecord.Part_ID=part.ID and treatment.ID=@treatID";
         sqlOperation2.AddParameterWithValue("@treatID", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"diagnosisInfo\":[");
@@ -46,7 +46,7 @@ public class diagnoseInfo : IHttpHandler {
             DateTime dt1 = Convert.ToDateTime(date);
             string date1 = dt1.ToString("yyyy-MM-dd HH:mm");
             backText.Append("{\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"partname\":\"" + reader["partname"] + "\",\"partID\":\"" + reader["Part_ID"] +
-                 "\",\"diagnosisresultID\":\"" + reader["DiagnosisResult_ID"].ToString() + "\",\"username\":\"" + reader["username"].ToString() + "\",\"group\":\"" + reader["group"].ToString() + "\",\"userID\":\"" + reader["Diagnosis_User_ID"].ToString() +
+                 "\",\"diagnosisresultID\":\"" + reader["DiagnosisResult_ID"].ToString() + "\",\"username\":\"" + reader["username"].ToString() + "\",\"group\":\"" + reader["Group_ID"].ToString() + "\",\"userID\":\"" + reader["Diagnosis_User_ID"].ToString() +
                  "\",\"Time\":\"" + date1 + "\"}");
 
         }
