@@ -16,6 +16,7 @@ function createPatient(evt) {
     var treatmentgroup1 = window.location.search.split("&")[0];
     radioID = treatmentgroup1.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
+    document.getElementById("radiotherapy").innerHTML = radioID;
     var patient = getPatientInfo(treatID, radioID);    
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);

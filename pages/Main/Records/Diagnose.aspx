@@ -55,8 +55,8 @@
                     <span>病案信息：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
-                    <div class="item col-xs-4">患病部位：<select id="part" name="part" class="form-item" disabled="disabled"></select></div>
+                    <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                    <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
                     <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
             </div>
@@ -65,11 +65,21 @@
                     <span>诊断：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-6">
+                    <div class="item col-xs-4">
+                        患病部位：
+                        <select id="part" name="part" class="form-item" disabled="disabled"></select>
+
+                    </div>
+                    <div class="item col-xs-4">
                         诊断结果：
                         <select id="diagresult" name="part" class="form-item" disabled="disabled"></select>
-                    </div>
-                </div>
+                    </div>                                  
+                    <div class="item col-xs-4">
+                        选择医疗组：
+                        <select id="" name="" class="form-item" disabled="disabled"></select>
+
+                    </div>                                     
+                </div>         
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
                         备注：
