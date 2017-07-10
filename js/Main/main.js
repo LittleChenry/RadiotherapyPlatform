@@ -49,8 +49,8 @@ function checkEdit(str){
     var activeProgress = getProgressActive();
     for (var i = 0; i < functions.length; i++) {
         if (functions[i] == str) {
-            for (var i = 0; i < activeProgress.length; i++) {
-                if(activeProgress[i].toString() == str){
+            for (var j = 0; j < activeProgress.length; j++) {
+                if(activeProgress[j].toString() == str || "0" == str){
                     $("#edit").removeAttr("disabled");
                     return true;
                 }
