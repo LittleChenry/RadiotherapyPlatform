@@ -391,6 +391,9 @@
         $("#printIframe").bind("click", function () {
             $("#record-iframe")[0].contentWindow.print();
         });
+        $("#edit").bind("click", function () {
+            $("#record-iframe")[0].contentWindow.remove();
+        });
         $("#save").bind("click", function () {
             if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 0) {
                     $("#record-iframe")[0].contentWindow.CheckEmpty();                      

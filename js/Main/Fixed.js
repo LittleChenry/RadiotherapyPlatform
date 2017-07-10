@@ -33,6 +33,7 @@ function Init(evt) {
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     //document.getElementById("part").innerHTML = patient.partname;
     if (patient.Progress >= 3) {
         var fixedInfo = getDignoseInfo(treatID);

@@ -25,7 +25,7 @@ function Init(evt) {
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
-
+    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     if (patient.Progress >= 5) {
         var locationInfo = getDignoseInfo(treatID);
         document.getElementById("modelID").innerHTML = locationInfo.modelID;

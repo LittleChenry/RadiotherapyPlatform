@@ -31,7 +31,7 @@ function createPatient(evt) {
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     //调取后台所有等待就诊的疗程号及其对应的病人
-    document.getElementById("test").addEventListener("click", removeDisabled, false);
+    document.getElementById("test").addEventListener("click", remove, false);
     var select3 = document.getElementById("part");
     createPartItem(select3);
     var select4 = document.getElementById("diagresult");
@@ -241,7 +241,7 @@ function askForBack() {
     document.location.reload();
 
 }
-function removeDisabled() {
+function remove() {
     document.getElementById("remark").removeAttribute("disabled");
     document.getElementById("part").removeAttribute("disabled");
     document.getElementById("diagresult").removeAttribute("disabled");
