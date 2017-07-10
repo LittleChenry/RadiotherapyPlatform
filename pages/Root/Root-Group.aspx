@@ -429,8 +429,9 @@
                             <thead>
                                 <tr>
                                     <th>组名</th>
+                                    <th>高资历</th>
                                     <th>组长</th>
-                                    <th colspan="6">组员</th>
+                                    <th colspan="8">组员</th>
                                 </tr>
                             </thead>
                             <tbody id="groupArea">
@@ -473,6 +474,15 @@
                                         <th>组名</th>
                                         <td>
                                             <input id="groupName" type="text" class="form-control" style="margin-right:0.8em" value="" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>高资历</th>
+                                        <td>
+                                            <select id="higher" class="form-control" style="margin-right:0.8em">
+                                                <option value="">--请选择高资历--</option>
+                                            </select>
+                                            <input type="hidden" />
                                         </td>
                                     </tr>
                                     <tr>

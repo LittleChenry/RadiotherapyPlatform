@@ -32,63 +32,27 @@ public class UpdateGroup : IHttpHandler {
         string gid = pres[0];
         string groupName = context.Request.Form["name"];
 
-        string cname = context.Request.Form["chargerName"];
-        string cid = nows[0];
-
-        int count = 0;
-        if (pres[1] != cid)
-        {
-            string select = "SELECT COUNT(ID) FROM groups WHERE Charge_User_ID=@preid";
-            sqlOperation.AddParameterWithValue("@preid", pres[1]);
-            if (int.Parse(sqlOperation.ExecuteScalar(select)) > 1)
-            {
-                count = 1;
-            }
-        }
-        else if (pres[1] == cid)
-        {
-            count = 1;
-        }
-
-        //修改组名
-        string sqlCommand = "UPDATE groups set groupName=@groupName,Charge_User_Name=@uName,Charge_User_ID=@cid WHERE ID=@gid";
-        sqlOperation.AddParameterWithValue("@groupName", groupName);
+        string sqlCommand = "UPDATE groups SET groupName=@gname WHERE ID=@gid";
         sqlOperation.AddParameterWithValue("@gid", gid);
-        sqlOperation.AddParameterWithValue("@uName", cname);
-        sqlOperation.AddParameterWithValue("@cid", cid);
-        sqlOperation.ExecuteNonQuery(sqlCommand);
-        
-        //成员置空
-        int j = ((count == 1) ? 2 : 1);
-        if (j < pres.Length)
-        {
-            StringBuilder update = new StringBuilder("UPDATE user set Group_ID=0 WHERE ID in(");
-            for (int i = j; i < pres.Length - 1; i++)
-            {
-                update.Append(pres[i]).Append(",");
-            }
-            update.Remove(update.Length - 1, 1)
-                  .Append(")");
-
-            sqlCommand = update.ToString();
-            sqlOperation.ExecuteNonQuery(sqlCommand);
-        }
-        
-        //更新成员
-        StringBuilder upUser = new StringBuilder("UPDATE user SET Group_ID=@gid WHERE ID in(");
-        for (int i = 1; i < nows.Length - 1; ++i)
-        {
-            upUser.Append(nows[i]).Append(",");
-        }
-        upUser.Remove(upUser.Length - 1, 1)
-            .Append(")");
-        sqlCommand = upUser.ToString();
+        sqlOperation.AddParameterWithValue("@gname", groupName);
         sqlOperation.ExecuteNonQuery(sqlCommand);
 
-        if (pres[1] != cid)
+        sqlCommand = "DELETE FROM groups2user WHERE Group_ID=@gid";
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        sqlCommand = "INSERT INTO groups2user(User_ID,Group_ID,identity) VALUES(@uid,@gid,@identity)";
+        sqlOperation.AddParameterWithValue("@uid", nows[0]);
+        sqlOperation.AddParameterWithValue("@identity",1);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        sqlOperation.AddParameterWithValue("@uid", nows[1]);
+        sqlOperation.AddParameterWithValue("@identity", 2);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        sqlOperation.AddParameterWithValue("@identity", 3);
+        for (int i = 2; i < nows.Length - 1; ++i)
         {
-            sqlCommand = "UPDATE user set Group_ID=-1 WHERE ID=@id";
-            sqlOperation.AddParameterWithValue("@id", cid);
+            sqlOperation.AddParameterWithValue("@uid", nows[i]);
             sqlOperation.ExecuteNonQuery(sqlCommand);
         }
 

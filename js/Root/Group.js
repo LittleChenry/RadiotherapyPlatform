@@ -41,7 +41,7 @@ function createGroupTable(page) {
     var groupID = "-1";
     var $tr = null;
     var currentLength = 0;//当前页面表格行数
-    var max = maxMembers[page - 1];//该页最多多少列
+    var max = maxMembers[page - 1] - 2;//该页最多多少列
     var currentRowcols = 0;
 
     $groupArea.empty();//清空页面区域
@@ -58,12 +58,14 @@ function createGroupTable(page) {
             currentRowcols = 0;
             $tr = $("<tr></tr>");
             $tr.append("<td>" + groupJsonObj[i].groupName + "<input type=hidden value="
- 			+ groupJsonObj[i].gid + " /></td><td>" + groupJsonObj[i].chargerName
- 			+ "<input type=hidden value=" + groupJsonObj[i].chagerID + " /></td>");
+ 			+ groupJsonObj[i].gid + " /></td><td>" + groupJsonObj[i].userName
+ 			+ "<input type=hidden value=" + groupJsonObj[i].userID + " /></td>"
+            + "<td>" + groupJsonObj[++i].userName + "<input type=hidden value=" + groupJsonObj[i].userID + " /></td>");
             groupID = groupJsonObj[i].gid;
+        } else {
+            $tr.append("<td>" + groupJsonObj[i].userName + "<input type=hidden value=" + groupJsonObj[i].userID + " /></td>");
+            currentRowcols++;
         }
-        $tr.append("<td>" + groupJsonObj[i].userName + "<input type=hidden value=" + groupJsonObj[i].userID + " /></td>");
-        currentRowcols++;
     }
     for (var j = currentRowcols; j < max; j++) {
         $tr.append("<td>&nbsp;</td>");
@@ -246,6 +248,7 @@ $(function () {
         success: function (data) {
             allUser = $.parseJSON(data);
             fillSelect($("#charger"));//填入组长下拉菜单
+            fillSelect($("#higher"));//填入高资历下拉菜单
             //绑定增加成员点击事件
             $("#addNewMember").bind("click", function () {
                 addNewMember($(this));                
@@ -300,17 +303,26 @@ function cannelAddGroup() {
     $("#addGroup > tbody").children("tr:first").find("input").val("");
     var firstChild = $("#addGroup > tbody").children("tr:first").clone();
     var secondChild = $("#addGroup > tbody").children("tr:eq(1)").clone(true);
+    var thirdChild = $("#addGroup > tbody").children("tr:eq(2)").clone(true);
     var lastChild = $("#addGroup > tbody").children("tr:last").clone(true);
     $("#addGroup > tbody").empty();
-    $("#addGroup > tbody").append(firstChild).append(secondChild).append(lastChild);
+    $("#addGroup > tbody").append(firstChild).append(secondChild).append(thirdChild).append(lastChild);
 }
 
 /**
  * 确定新增一组
  */
 function sureAddGroup() {
-        var $selectedMember = $("#addGroup :selected");
+    var $selectedMember = $("#addGroup :selected");
+    if ($("#groupName").val() == "") {
+        alert("请填写组名");
+        return false;
+    }
         if ($selectedMember[0].value == "") {
+            alert("请选择高资历");
+            return false;
+        }
+        if ($selectedMember[1].value == "") {
             alert("请选择组长");
             return false;
         }
@@ -320,9 +332,8 @@ function sureAddGroup() {
             postAdd.push({ "Name": $selectedMember[i].innerText, "ID": $selectedMember[i].value });
         }
 
-        postNewGroup(postAdd,$("#groupName").val());
-        alert("新增成功");
-        window.location.href = "../../pages/Root/Root-Group.aspx";
+        postNewGroup(postAdd, $("#groupName").val());
+
 }
 
 /**
@@ -332,7 +343,11 @@ function postNewGroup(postAdd, name) {
     $.ajax({
         type: "post",
         url: "AddNewGroup.ashx",
-        data: { "data": toJsonString(postAdd),"name" :name }
+        data: { "data": toJsonString(postAdd), "name": name },
+        success:function(){
+            alert("新增成功");
+            window.location.href = "../../pages/Root/Root-Group.aspx";
+        }
     });
 }
 
@@ -377,7 +392,9 @@ $(function () {
 
         if (searchText == "") {
             window.location.href = "../../pages/Root/Root-Group.aspx";
+            return;
         }
+        searchArray.length = 0;//清空
         getSearch(searchText);//获取符合搜索条件的对象
         createSearchTable();//根据符合条件对象生成搜索结果
     });
@@ -409,7 +426,7 @@ function getSearch(text) {
             currentGid = groupJsonObj[begin].gid;
             startIndex = begin;
         }
-        if (groupJsonObj[begin].groupName.indexOf(text) > -1 || groupJsonObj[begin].userName.indexOf(text) > -1 || groupJsonObj[begin].chargerName.indexOf(text) > -1) {
+        if (groupJsonObj[begin].groupName.indexOf(text) > -1 || groupJsonObj[begin].userName.indexOf(text) > -1) {
             begin = pushGroup(startIndex);//压入组返回结束位置 + 1
         } else {
             ++begin;
@@ -446,7 +463,7 @@ function createSearchTable() {
     var groupID = -1;
     var $tr = null;
     var currentRowcols = 0;
-    var max = countMax();
+    var max = countMax() - 2;
 
     $groupArea.empty();
     $("#pageButton").hide();
@@ -463,12 +480,14 @@ function createSearchTable() {
             currentRowcols = 0;
             $tr = $("<tr></tr>");
             $tr.append("<td>" + searchArray[i].groupName + "<input type=hidden value="
- 			+ searchArray[i].gid + " /></td><td>" + searchArray[i].chargerName
- 			+ "<input type=hidden value=" + searchArray[i].chargerID + " /></td>");
+ 			+ searchArray[i].gid + " /></td><td>" + searchArray[i].userName
+ 			+ "<input type=hidden value=" + searchArray[i].userID + " /></td>"
+            + "<td>" + groupJsonObj[++i].userName + "<input type=hidden value=" + groupJsonObj[i].userID + " /></td>");
             groupID = searchArray[i].gid;
+        } else {
+            $tr.append("<td>" + searchArray[i].userName + "<input type=hidden value=" + searchArray[i].userID + " /></td>");
+            currentRowcols++;
         }
-        $tr.append("<td>" + searchArray[i].userName + "<input type=hidden value=" + searchArray[i].userID + " /></td>");
-        currentRowcols++;
     }
     $groupArea.append($tr);
 }
@@ -537,7 +556,8 @@ function editGroup($tr) {
     $tds = $tr.find("td");
 
     $editArea.append("<tr><th>组名</td><th><input type=text class=form-control style=margin-right:0.8em value=" + $tds[0].innerText + " /><input type=hidden value=" + $($tds[0]).find(":hidden").val() + " /></td></tr>")
-            .append("<tr><th id=editCharger>组长</th></tr>");
+             .append("<tr><th id=editHigher>高资历</th></tr>")
+             .append("<tr><th id=editCharger>组长</th></tr>");
     var $select = $("<select class=form-control style=margin-right:0.8em></select>");
 
     for (var i = 0; i < allUser.length; ++i) {
@@ -547,9 +567,14 @@ function editGroup($tr) {
     $td = $("<td></td>");
     $td.append($select.clone(true).val($($tds[1]).find("input").val()));
     $td.append("<input type=hidden value=" + $($tds[1]).find(":hidden").val() + " />");
+    $editArea.find("#editHigher").after($td);
+
+    $td = $("<td></td>");
+    $td.append($select.clone(true).val($($tds[2]).find("input").val()));
+    $td.append("<input type=hidden value=" + $($tds[2]).find(":hidden").val() + " />");
     $editArea.find("#editCharger").after($td);
 
-    for (var i = 2; i < $tds.length; ++i) {
+    for (var i = 3; i < $tds.length; ++i) {
         if ($tds[i].innerHTML == "&nbsp;") {
             continue;
         }
@@ -595,8 +620,9 @@ $(function () {
             success: function () {
                 alert("删除成功");
                 $currentTr.remove();
-                deleteJsonObj(idStr.split(" ")[0]);
-                $("#cannelEdit").trigger("click");i
+                //deleteJsonObj(idStr.split(" ")[0]);
+                updateView();
+                $("#cannelEdit").trigger("click");
             }
         });
     });
@@ -626,16 +652,35 @@ $(function () {
         for (var i = 0; i < members.length; ++i) {
             str += members[i].value + " ";
         }
-        var chargerName = $currentTr.find("td:eq(1)").text();
 
         $.ajax({
             type: "post",
             url: "../../pages/Root/UpdateGroup.ashx",
-            data: { "pre": idStr, "now": str, "name":groupName, "chargerName":members[0].innerText },
+            data: { "pre": idStr, "now": str, "name":groupName },
             success: function () {
                 alert("修改成功");
-                window.location.href = "../../pages/Root/Root-Group.aspx";
+                //window.location.href = "../../pages/Root/Root-Group.aspx";
+                updateView();
             }
         });
     });
 });
+
+function updateView() {
+    $.ajax({
+        type: "get",
+        url: "../../pages/Root/GetGroupInformation.ashx",
+        dataType: "text",
+        async: false,
+        success: function (data) {
+            groupJsonObj = $.parseJSON(data);
+            countGroups(groupJsonObj);
+            //创建分组表格
+            createGroupTable(parseInt($("#currentPage").val()));
+
+            //计算并设置总页数           
+            $("#sumPage").val(rows.length);
+            $("#cannelEdit").trigger("click");
+        }
+    });
+}
