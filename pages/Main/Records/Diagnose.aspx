@@ -80,7 +80,7 @@
                     </div>                                  
                     <div class="item col-xs-4">
                         选择医疗组：
-                        <select id="" name="" class="form-item" disabled="disabled"></select>
+                        <select id="groupid" name="groupid" class="form-item" disabled="disabled"></select>
 
                     </div>                                     
                 </div>         
@@ -95,7 +95,7 @@
                 <div class="single-row">
                     <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
                     <div class="item col-xs-6">日期：<span id="date" class="underline"></span></div>
-                     <button type="button" name="test" id="test" class="btn btn-flat"> </button>
+                     <button type="button" name="test" id="test" style="display:none" class="btn btn-flat"> </button>
                 </div>
             </div>
         </div>

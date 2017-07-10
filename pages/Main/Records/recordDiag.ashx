@@ -39,6 +39,7 @@ public class recordDiag : IHttpHandler {
             string diagresult = context.Request.QueryString["diagresult"];
             string diaguserid = context.Request.QueryString["diaguserid"];
             string remark = context.Request.QueryString["remark"];
+            string group = context.Request.QueryString["group"];
             //查诊断号
             string patient = "select ID from patient where Radiotherapy_ID=@Radiotherapy_ID";
             sqlOperation.AddParameterWithValue("@Radiotherapy_ID", Convert.ToInt32(radioID));
@@ -66,11 +67,12 @@ public class recordDiag : IHttpHandler {
             {
                 diagno = Convert.ToInt32(reader["ID"].ToString());
             }
-            string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID where Treatmentname=@treatid and Patient_ID=@patient";
+            string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID,Group_ID=@group where Treatmentname=@treatid and Patient_ID=@patient";
             sqlOperation2.AddParameterWithValue("@treatid", treatID);
             sqlOperation2.AddParameterWithValue("@patient", patientID);
             sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
             sqlOperation2.AddParameterWithValue("@Progress", 2);
+            sqlOperation2.AddParameterWithValue("@group",Convert.ToInt32(group));
             int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
 
             if (intSuccess > 0 && intSuccess1 > 0)
