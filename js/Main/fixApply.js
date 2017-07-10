@@ -107,7 +107,8 @@ function getfixInfomation(treatmentID) {
     return obj1.info[0];
 }
 function postfix() {
-    var treatmentid = document.getElementById("treatID").innerHTML;
+    var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
+    var treatmentid = treatmentgroup.split("=")[1];
     var model = document.getElementById("modelselect").value;
     var special=document.getElementById("specialrequest").value;
     var time=document.getElementById("time").value;

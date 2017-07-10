@@ -21,9 +21,12 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("treatID").value = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
-    document.getElementById("treatID").innerHTML = treatmentID;
-    document.getElementById("part").innerHTML = patient.partname;
-    document.getElementById("diaguser").innerHTML = patient.RegisterDoctor;
+    document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
+    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
+    document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
+    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     var select1 = document.getElementById("scanpart");
     createscanpartItem(select1);
     var select2 = document.getElementById("scanmethod");
@@ -125,7 +128,8 @@ function getLocationInfomation(treatmentID) {
     return obj1.info[0];
 }
 function postlocation() {
-    var treatmentid = document.getElementById("treatID").innerHTML;
+    var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
+    var treatmentid = treatmentgroup.split("=")[1];
     var scanpart = document.getElementById("scanpart").value;
     var scanmethod = document.getElementById("scanmethod").value;
     var special = document.getElementById("special").value;
