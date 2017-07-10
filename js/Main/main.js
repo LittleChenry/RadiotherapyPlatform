@@ -46,11 +46,18 @@ $(document).ready(function () {
 
 function checkEdit(str){
     $('#edit').attr("disabled","disabled");
+    var activeProgress = getProgressActive();
     for (var i = 0; i < functions.length; i++) {
         if (functions[i] == str) {
-            $("#edit").removeAttr("disabled");
+            for (var i = 0; i < activeProgress.length; i++) {
+                if(activeProgress[i].toString() == str){
+                    $("#edit").removeAttr("disabled");
+                    return true;
+                }
+            }
         }
     }
+    return false;
 }
 
 function getFunctions(){
@@ -316,6 +323,18 @@ function Search(str,patient){
     }
     var patientGroup = {PatientInfo:Searchedpatient};
     return patientGroup;
+}
+
+function getProgressActive(){
+    var ul = $("#progress-iframe").contents().find("#ul-progress a");
+    var indexs = new Array();
+    var count = 0;
+    var activeProgress = ul.each(function (index, element) {
+        if ($(this).find('li').hasClass("progress-active")) {
+            indexs[count++] = index;
+        }
+    });
+    return indexs;
 }
 
 function getActive() {
