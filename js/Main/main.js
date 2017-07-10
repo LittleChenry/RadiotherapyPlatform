@@ -28,6 +28,7 @@ $(document).ready(function () {
     });
     $('#edit').click(function(){
         $("#save").removeAttr("disabled");
+        $('#edit').attr("disabled","disabled");
     });
     $("#changeOperator").bind("click", function () {
         changeAssistant();
@@ -46,6 +47,7 @@ $(document).ready(function () {
 
 function checkEdit(str){
     $('#edit').attr("disabled","disabled");
+    $('#save').attr("disabled","disabled");
     var activeProgress = getProgressActive();
     for (var i = 0; i < functions.length; i++) {
         if (functions[i] == str) {

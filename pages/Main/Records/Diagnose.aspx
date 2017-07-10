@@ -69,25 +69,43 @@
                     <span>诊断：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">
-                        患病部位：
-                        <select id="part" name="part" class="form-item" disabled="disabled"></select>
-
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">疗程2诊断</a></li>
+                        <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">疗程1诊断</a></li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div class="single-row">
+                            <div class="item col-xs-4">
+                                患病部位：
+                                <select id="part" name="part" class="form-item" disabled="disabled"></select>
+                            </div>
+                            <div class="item col-xs-4">
+                                诊断结果：
+                                <select id="diagresult" name="part" class="form-item" disabled="disabled"></select>
+                            </div>                                  
+                            <div class="item col-xs-4">
+                                选择医疗组：
+                                <select id="groupid" name="groupid" class="form-item" disabled="disabled"></select>
+                            </div>
+                        </div>
+                        <div class="single-row">
+                            <div class="item area-group col-xs-12">
+                                备注：
+                                <textarea id="remark" name="remark" class="form-area" disabled="disabled"></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="item col-xs-4">
-                        诊断结果：
-                        <select id="diagresult" name="part" class="form-item" disabled="disabled"></select>
-                    </div>                                  
-                    <div class="item col-xs-4">
-                        选择医疗组：
-                        <select id="groupid" name="groupid" class="form-item" disabled="disabled"></select>
-
-                    </div>                                     
-                </div>         
-                <div class="single-row">
-                    <div class="item area-group col-xs-12">
-                        备注：
-                        <textarea id="remark" name="remark" class="form-area" disabled="disabled"></textarea>
+                    <div class="tab-pane" id="tab_2">
+                        <div class="single-row">
+                            <div class="item col-xs-4">患病部位：<span class="underline"></span></div>
+                            <div class="item col-xs-4">诊断结果：<span class="underline"></span></div>
+                            <div class="item col-xs-4">医疗组：<span class="underline"></span></div>
+                        </div>
+                        <div class="single-row">
+                            <div class="item col-xs-12">备注：<span class="underline"></span></div>
+                        </div>
                     </div>
                 </div>
             </div>
