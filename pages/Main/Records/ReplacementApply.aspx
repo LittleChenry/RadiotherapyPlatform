@@ -72,7 +72,7 @@
                 <div class="single-row">
                     <div class="col-xs-5">
                         <span class="form-text col-xs-5" style="padding-left:0px;">复位要求：</span>
-                           <select id="replacementrequire" class="form-item" name="replacementrequire">
+                           <select id="replacementrequire" disabled="disabled" class="form-item" name="replacementrequire">
                            </select>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                     <div class="col-xs-8">
                         <span class="form-text col-xs-3" style="padding-left:0px;">设备与时间：</span>
                         <input id="appointtime"  name="appointtime" type="text" class="form-item" readonly="true" />
-                        <button id="chooseappoint" class="btn btn-default" data-toggle="modal" data-target="#appoint">预约</button>
+                        <button id="chooseappoint" class="btn btn-default" disabled="disabled" data-toggle="modal" data-target="#appoint">预约</button>
                     </div>
                 </div>
             </div>

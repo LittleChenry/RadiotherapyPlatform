@@ -346,3 +346,7 @@ function getrequireItem() {
     var Items = xmlHttp.responseText;
     return Items;
 }
+function remove() {
+    document.getElementById("replacementrequire").removeAttribute("disabled");
+    document.getElementById("chooseappoint").removeAttribute("disabled");
+}
