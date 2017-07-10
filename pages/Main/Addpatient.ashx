@@ -87,8 +87,8 @@ public class Addpatient : IHttpHandler {
             int treatID = 0;
             string treatid = date2 + add;
             treatID = Convert.ToInt32(treatid);
-            string strSqlCommand = "INSERT INTO patient(IdentificationNumber,Hospital,RecordNumber,Picture,Name,Gender,Age,Birthday,Nation,Address,Contact1,Contact2,Height,RegisterDoctor,Weight,Register_User_ID,RegisterTime,SubCenterPrincipal_ID,Radiotherapy_ID,Principal_User_ID) VALUES("
-             + "@IdentificationNumber,@Hospital,@RecordNumber,@Picture,@Name,@Gender,@Age,@Birthday,@Nation,@Address,@Contact1,@Contact2,@Height,@doctorid,@Weight,@Register_User_ID,@RegisterTime,@SubCenterPrincipal_ID,@Radiotherapy_ID,@Principal_User_ID)";
+            string strSqlCommand = "INSERT INTO patient(IdentificationNumber,Hospital,RecordNumber,Picture,Name,Gender,Age,Birthday,Nation,Address,Contact1,Contact2,Height,RegisterDoctor,Weight,Register_User_ID,RegisterTime,SubCenterPrincipal_ID,Radiotherapy_ID,Principal_User_ID,Hospital_ID) VALUES("
+             + "@IdentificationNumber,@Hospital,@RecordNumber,@Picture,@Name,@Gender,@Age,@Birthday,@Nation,@Address,@Contact1,@Contact2,@Height,@doctorid,@Weight,@Register_User_ID,@RegisterTime,@SubCenterPrincipal_ID,@Radiotherapy_ID,@Principal_User_ID,@hospitalnumber)";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@IdentificationNumber", context.Request.Form["IDcardNumber"]);
             sqlOperation.AddParameterWithValue("@Hospital", context.Request.Form["Hospital"]);
@@ -110,6 +110,7 @@ public class Addpatient : IHttpHandler {
             sqlOperation.AddParameterWithValue("@Principal_User_ID", 1);
             sqlOperation.AddParameterWithValue("@Register_User_ID", userID);
             sqlOperation.AddParameterWithValue("@RegisterTime", datetime);
+            sqlOperation.AddParameterWithValue("@hospitalnumber", Convert.ToInt32(context.Request.Form["hospitalnumber"]));
             int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
             string patientID = "select ID  from patient where Name=@Name and IdentificationNumber=@IdentificationNumber order by ID desc";
             sqlOperation1.AddParameterWithValue("@IdentificationNumber", context.Request.Form["IDcardNumber"]);

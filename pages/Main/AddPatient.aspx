@@ -389,7 +389,7 @@
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">住院号：</span>
-                            <input id="" name="" type="text" class="form-item" AUTOCOMPLETE="OFF" />
+                            <input id="hospitalnumber" name="hospitalnumber" type="text" class="form-item" AUTOCOMPLETE="OFF" />
                         </div>
                     </div>
                     <div class="single-row">
