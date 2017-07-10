@@ -256,103 +256,120 @@
     <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
     <section id="main-content" class="col-xs-4" style="padding:0px;">
-      <div class="layout-main-tab">
+        <div class="layout-main-tab">
         <nav class="tab-nav" style="padding-top: 3px;">
-          <div class="col-xs-4">
+            <div class="col-xs-4">
             当前患者：
             <span id="current-patient">张三</span>
-          </div>
-          <div class="col-xs-4">
+            </div>
+            <div class="col-xs-4">
             下个患者：
             <span id="next-patient">李四</span>
-          </div>
+            </div>
             <button type="button" class="btn btn-primary" ><i class="fa fa-fw fa-forward"></i>叫号</button>
         </nav>
-      </div>
-      <div id="patient-content" class="box" style="border-top:0px;margin-bottom:0px;">
+        </div>
+        <div id="patient-content" class="box" style="border-top:0px;margin-bottom:0px;">
         <div class="box-header col-xs-8" style="padding-top: 15px;text-align: center;">
-          <h3 class="box-title">患者汇总</h3>
+            <h3 class="box-title">患者汇总</h3>
         </div>
         <div class="input-group input-group-sm col-xs-4" style="padding-right: 10px;padding-top: 8px;max-width: 180px;">
-          <input id="patient-search" type="search" class="form-control input-sm">
-          <span class="input-group-btn">
+            <input id="patient-search" type="search" class="form-control input-sm">
+            <span class="input-group-btn">
             <button class="btn btn-primary btn-flat" id="search-button">
-              <i class="fa fa-fw fa-search"></i>
+                <i class="fa fa-fw fa-search"></i>
             </button>
-          </span>
+            </span>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table class="table table-bordered">
+            <table class="table table-bordered">
             <thead>
             <tr>
-              <th>放疗号</th>
-              <th>姓名</th>
-              <th>疗程</th>
-              <th>进度</th>
-              <th>主治医生</th>
-              <!-- <th>登记日期</th>
-              <th>年龄</th> -->
+                <th>放疗号</th>
+                <th>姓名</th>
+                <th>疗程</th>
+                <th>进度</th>
+                <th>主治医生</th>
+                <!-- <th>登记日期</th>
+                <th>年龄</th> -->
             </tr>
             </thead>
             <tbody id="patient-table-body">
             </tbody>
-          </table>
-          <div class="row">
+            </table>
+            <div class="row">
             <div class="col-sm-3">
-              <div class="dataTables_info" id="patient_info" role="status" aria-live="polite"></div>
+                <div class="dataTables_info" id="patient_info" role="status" aria-live="polite"></div>
             </div>
             <div class="col-sm-9">
-              <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
                 <ul id="page-index-content" class="pagination">
                 </ul>
-              </div>
+                </div>
             </div>
-          </div>
+            </div>
         </div>
         <!-- /.box-body -->
-      </div>
+        </div>
     </section>
     <section id="progress-content" class="col-xs-2" style="padding:0px;">
-      <div class="layout-main-tab">
-        <nav class="tab-nav" style="padding-left: 0px;">
-          <div style="text-align: center;">
-            新增流程
-            <span id="patient-status"></span>
-          </div>
+        <div class="layout-main-tab">
+        <nav class="tab-nav" style="padding-left:0px;padding-top:3px;">
+            <div style="text-align:center;">
+                <button id="addTreatment" type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" disabled="disabled">新增疗程</button>
+                <span id="patient-status"></span>
+            </div>
         </nav>
-      </div>
-      <iframe id="progress-iframe" class="frame-content" src="Records/progress.html"></iframe>
+        </div>
+        <iframe id="progress-iframe" class="frame-content" src="Records/progress.html"></iframe>
       
     </section>
     <section id="record-content" class="col-xs-6" style="padding:0px;">
-      <div class="layout-main-tab">
+        <div class="layout-main-tab">
         <nav class="tab-nav" style="padding-top:3px;">
-          <div>
+            <div>
             <button id="edit" class="btn btn-success" disabled="disabled"><i class="fa fa-fw fa-edit"></i>编辑</button>
             <div class="btn-group">
-              <button type="button" class="btn btn-success" data-toggle="dropdown"><i class="fa fa-fw fa-send"></i>选择模板</button>
-              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                <button type="button" class="btn btn-success" data-toggle="dropdown"><i class="fa fa-fw fa-send"></i>选择模板</button>
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                 <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
+                </button>
+                <ul class="dropdown-menu" role="menu">
                 <li><a href="#">Action</a></li>
                 <li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
-              </ul>
+                </ul>
             </div>
             <button id="save" class="btn btn-success" disabled="disabled"><i class="fa fa-fw fa-save"></i>保存</button>
             <button id="printIframe" class="btn btn-success"><i class="fa fa-fw fa-print"></i>打印</button>
-          </div>
+            </div>
         </nav>
-      </div>
-      <iframe id="record-iframe" name="record-iframe" class="frame-content" src="Records/Blank.aspx"></iframe>
+        </div>
+        <iframe id="record-iframe" name="record-iframe" class="frame-content" src="Records/Blank.aspx"></iframe>
     </section>
-  </div>
-  <!-- /.content-wrapper -->
+    </div>
+    <!-- /.content-wrapper -->
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.0

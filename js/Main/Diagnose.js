@@ -40,18 +40,32 @@ function createPatient(evt) {
     var select5 = document.getElementById("groupid");
     creategroupItem(select5);
     var diagnosisInfo = getDignoseInfo(patient.treatID);
-    if (patient.Progress >= 2) {
-        document.getElementById("operator").innerHTML = diagnosisInfo.username;
-        document.getElementById("remark").value = diagnosisInfo.Remarks;
-        document.getElementById("part").value = diagnosisInfo.partID;
-        document.getElementById("diagresult").value = diagnosisInfo.diagnosisresultID;
-        document.getElementById("date").innerHTML = diagnosisInfo.Time;
-        document.getElementById("groupid").value = diagnosisInfo.group;
-    } else {
-        document.getElementById("date").innerHTML = getNowFormatDate();
-        document.getElementById("operator").innerHTML = userName;
-        document.getElementById("diaguserid").value = userID;
-
+    alert(treatID);
+    for (var i = 0; i < diagnosisInfo.diagnosisInfo.length; i++) {
+        if (treatID == diagnosisInfo.diagnosisInfo[i].Treatmentname) {
+            $("#current-tab").innerHTML = "疗程"+ treatID +"诊断";
+            if (patient.Progress >= 2) {
+                document.getElementById("operator").innerHTML = diagnosisInfo.diagnosisInfo[i].username;
+                document.getElementById("remark").value = diagnosisInfo.diagnosisInfo[i].Remarks;
+                document.getElementById("part").value = diagnosisInfo.diagnosisInfo[i].partID;
+                document.getElementById("diagresult").value = diagnosisInfo.diagnosisInfo[i].diagnosisresultID;
+                document.getElementById("date").innerHTML = diagnosisInfo.diagnosisInfo[i].Time;
+                document.getElementById("groupid").value = diagnosisInfo.diagnosisInfo[i].group;
+            } else {
+                document.getElementById("date").innerHTML = getNowFormatDate();
+                document.getElementById("operator").innerHTML = userName;
+                document.getElementById("diaguserid").value = userID;
+            }
+        }else{
+            var tab = '<li class=""><a href="#tab_'+ i +'" data-toggle="tab'+ i +'" aria-expanded="false">疗程'+ diagnosisInfo.diagnosisInfo[i].Treatmentname +'诊断</a></li>';
+            var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
+                + '<div class="item col-xs-4">患病部位：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].partname +'</span></div>'
+                + '<div class="item col-xs-4">诊断结果：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].diagnosisresultName +'</span></div>'
+                + '<div class="item col-xs-4">医疗组：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].groupName +'</span></div></div>'
+                + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].Remarks +'</span></div></div></div>';
+            $("#tabs").append(tab);
+            $("#tab-content").append(content);
+        }
     }
 
 }
@@ -109,7 +123,7 @@ function getDignoseInfo(treatid) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var obj1 = eval("(" + json + ")");
-    return obj1.diagnosisInfo[0];
+    return obj1;
 }
 
 //获取病人基本信息

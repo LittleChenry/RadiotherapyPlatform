@@ -496,6 +496,7 @@ function CreateTable(start, end, patient) {
     for (var i = start; i < end; i++) {
         $("#" + patient.PatientInfo[i].treatID + "").click({ Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
+            $("#addTreatment").removeAttr("disabled");
             var ul = $("#progress-iframe").contents().find("#ul-progress a");
             ul.each(function (index, element) {
                 $(this).find('span').removeClass();
