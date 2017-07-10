@@ -46,7 +46,11 @@ public class getSession : IHttpHandler, IRequiresSessionState
         {
             pro.Append(x).Append(" ");
         }
-        pro.Remove(pro.Length - 1, 1);
+        if (pro.Length > 0)
+        {
+            pro.Remove(pro.Length - 1, 1);
+        }
+        
         result.Append(pro)
               .Append("\"}");
         return result.ToString();
