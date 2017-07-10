@@ -21,9 +21,12 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("treatID").value = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
-    document.getElementById("treatID").innerHTML = treatmentID;
-    document.getElementById("part").innerHTML = patient.partname;
-    document.getElementById("diaguser").innerHTML = patient.RegisterDoctor;
+    document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
+    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
+    document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
+    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     createrequireItem(document.getElementById("replacementrequire"));
     if (patient.Progress >=12) {
         var info = getReplaceInfomation(treatmentID);
@@ -80,7 +83,8 @@ function getReplaceInfomation(treatmentID) {
     return obj1.info[0];
 }
 function postreplace() {
-    var treatmentid = document.getElementById("treatID").innerHTML;
+    var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
+    var treatmentid = treatmentgroup.split("=")[1];
     var appointid = document.getElementById("idforappoint").value;
     var require = document.getElementById("replacementrequire").value;
     if (require == "allItem") {

@@ -100,7 +100,7 @@ public class ReplacementApply : IHttpHandler {
 
 
                     //将诊断ID填入treatment表
-                    string inserttreat = "update treatment set Replacement_ID=@fix_ID,Progress=12 where ID=@treat";
+                    string inserttreat = "update treatment set Replacement_ID=@fix_ID,Progress=13 where ID=@treat";
                     sqlOperation3.AddParameterWithValue("@fix_ID", Convert.ToInt32(idnumber));
                     sqlOperation3.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
                     int Success = sqlOperation3.ExecuteNonQuery(inserttreat);
