@@ -124,6 +124,10 @@ function CheckEmpty() {
         window.alert("体重不能为空");
         return;
     }
+    if (isCardNo()) {
+        window.alert("身份证格式不正确");
+        return;
+    }
     if (document.getElementById("RecordNumber").value == "") {
         window.alert("病案号不能为空");
         return;
@@ -141,12 +145,21 @@ function CheckEmpty() {
         window.alert("请输入分中心负责人");
         return;
     }
-    var form = new FormData(document.getElementById("frmaddpatient"));    $.ajax({
-        url: "Addpatient.ashx",        type: "post",        data: form,        processData: false,        contentType: false,        success: function (data) {
-            alert("注册成功");            window.location.reload();
-        },        error: function (e) {
+    var form = new FormData(document.getElementById("frmaddpatient"));
+    $.ajax({
+        url: "Addpatient.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("注册成功");
+            window.location.reload();
+        },
+        error: function (e) {
             window.location.href = "../Records/Error.aspx";
-        },        failure: function (e) {
+        },
+        failure: function (e) {
             alert("注册失败！！");
         }
     });
