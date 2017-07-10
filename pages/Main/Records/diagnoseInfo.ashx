@@ -40,7 +40,7 @@ public class diagnoseInfo : IHttpHandler {
         string countCompute = "select count(diagnosisrecord.ID) from treatment,diagnosisrecord where treatment.Patient_ID=@patient and treatment.DiagnosisRecord_ID is not null and diagnosisrecord.ID =treatment.DiagnosisRecord_ID";
         sqlOperation2.AddParameterWithValue("@patient", patientid);
         int count = int.Parse(sqlOperation2.ExecuteScalar(countCompute));
-        int i = 0;
+        int i = 1;
         string sqlCommand1 = "select diagnosisrecord.*,part.Name as partname,user.Name as username,Group_ID,Treatmentname from user,part,diagnosisrecord,treatment where diagnosisrecord.Diagnosis_User_ID=user.ID and treatment.DiagnosisRecord_ID=diagnosisrecord.ID and diagnosisrecord.Part_ID=part.ID and treatment.Patient_ID=@patient";
         sqlOperation2.AddParameterWithValue("@patient", patientid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand1);
