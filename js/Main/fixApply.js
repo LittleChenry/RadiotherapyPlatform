@@ -19,12 +19,13 @@ function Init(evt) {
     document.getElementById("hospital").innerHTML = patient.Hospital;
     document.getElementById("contact").innerHTML = patient.Contact1;
     document.getElementById("contact2").innerHTML = patient.Contact2;
-    document.getElementById("treatID").innerHTML = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
-    document.getElementById("treatID").innerHTML = treatmentID;
-    document.getElementById("part").innerHTML = patient.partname;
-    document.getElementById("diaguser").innerHTML = patient.RegisterDoctor;
-
+    document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
+    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
+    document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
+    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     createmodelselectItem(document.getElementById("modelselect"));
     createspecialrequestItem(document.getElementById("specialrequest"));
     createfixEquipItem(document.getElementById("fixEquip"));
