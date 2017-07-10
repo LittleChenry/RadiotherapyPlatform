@@ -158,9 +158,6 @@ function CheckEmpty() {
         },
         error: function (e) {
             window.location.href = "../Records/Error.aspx";
-        },
-        failure: function (e) {
-            alert("注册失败！！");
         }
     });
 }
