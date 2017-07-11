@@ -4,38 +4,61 @@ using System;
 using System.Web;
 using System.Text;
 public class GetfinishedimportCT : IHttpHandler {
-    
-    public void ProcessRequest (HttpContext context) {
+
+    private DataLayer sqlOperation = new DataLayer("sqlStr");
+    public void ProcessRequest(HttpContext context)
+    {
         context.Response.ContentType = "text/plain";
-        string backString = patientimportCTInformation(context);
-        context.Response.Write(backString);
+        try
+        {
+            string json = patientimportCTInformation(context);
+            sqlOperation.Close();
+            sqlOperation.Dispose();
+            sqlOperation = null;          
+            context.Response.Write(json);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Message(ex.Message);
+        }
     }
- 
-    public bool IsReusable {
-        get {
+
+    public bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }
     public string patientimportCTInformation(HttpContext context)
     {
-        string treatid = context.Request["treatmentID"];
-        DataLayer sqlOperation = new DataLayer("sqlStr");
-        StringBuilder backText = new StringBuilder("{\"info\":[");
-        string sqlCommand = "select DensityConversion_ID,SequenceNaming,ct.Thickness as Thickness,ct.Number as Number,ct.ReferenceScale as ReferenceScale,ct.MultimodalImage as MultimodalImage,user.Name as username,ct.OperateTime as  OperateTime,ct.Remarks as remarks from location,ct,treatment,user where treatment.ID=@treat and treatment.Location_ID=location.ID and location.CT_ID=ct.ID and ct.Operate_User_ID=user.ID";
-        sqlOperation.AddParameterWithValue("@treat", treatid);
-        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        int treatid =Convert.ToInt32(context.Request["treatmentID"]);        
+        string sqlCommand = "select Patient_ID from treatment where treatment.ID=@treatID";
+        sqlOperation.AddParameterWithValue("@treatID", treatid);
+        int patientid = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
+        string sqlcommand2 = "select count(treatment.ID) from treatment,location where treatment.Patient_ID=@patient and treatment.Location_ID=location.ID and location.CT_ID is not null";
+        sqlOperation.AddParameterWithValue("@patient", patientid);
+        int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
+        int i = 1;
+        string sqlCommand3 = "select Treatmentname,densityconversion.Name as dename,DensityConversion_ID,SequenceNaming,ct.Thickness as Thickness,ct.Number as Number,ct.ReferenceScale as ReferenceScale,ct.MultimodalImage as MultimodalImage,user.Name as username,ct.OperateTime as  OperateTime,ct.Remarks as remarks from densityconversion,location,ct,treatment,user where densityconversion.ID=ct.DensityConversion_ID and treatment.Patient_ID=@patient and treatment.Location_ID=location.ID and location.CT_ID=ct.ID and ct.Operate_User_ID=user.ID";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand3);
+        StringBuilder backText = new StringBuilder("{\"info\":["+count);
         while (reader.Read())
         {
-            backText.Append("{\"DensityConversion_ID\":\"" + reader["DensityConversion_ID"].ToString() + "\",\"SequenceNaming\":\"" + reader["SequenceNaming"] +
+            string date2 = reader["OperateTime"].ToString();
+            DateTime dt2 = Convert.ToDateTime(date2);
+            string date3 = dt2.ToString("yyyy-MM-dd HH:mm");
+            backText.Append("{\"DensityConversion_ID\":\"" + reader["DensityConversion_ID"].ToString() + "\",\"SequenceNaming\":\"" + reader["SequenceNaming"] + "\",\"DensityConversionName\":\"" + reader["dename"] + "\",\"Treatmentname\":\"" + reader["Treatmentname"] +
                  "\",\"Thickness\":\"" + reader["Thickness"].ToString() + "\",\"Number\":\"" + reader["Number"].ToString() + "\",\"ReferenceScale\":\"" + reader["ReferenceScale"].ToString() +
-                 "\",\"MultimodalImage\":\"" + reader["MultimodalImage"].ToString() + "\",\"Remarks\":\"" + reader["remarks"].ToString() + "\",\"OperateTime\":\"" + reader["OperateTime"].ToString() + "\",\"username\":\"" + reader["username"].ToString() + "\"}");
-            backText.Append(",");
+                 "\",\"MultimodalImage\":\"" + reader["MultimodalImage"].ToString() + "\",\"Remarks\":\"" + reader["remarks"].ToString() + "\",\"OperateTime\":\"" + date3 + "\",\"username\":\"" + reader["username"].ToString() + "\"}");
+            if (i < count)
+            {
+                backText.Append(",");
+            }
+            i++;
         }
         backText.Append("]}");
         reader.Close();
-        sqlOperation.Close();
-        sqlOperation.Dispose();
-        sqlOperation = null;
         return backText.ToString();
 
     }
