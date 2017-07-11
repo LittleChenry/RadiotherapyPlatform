@@ -66,7 +66,7 @@ public class fixRecordRecord : IHttpHandler {
                 if (files[i].ContentLength > 0)
                 {
                     files[i].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
-                    savepath1 = savepath1 + "," + "../../../upload/FixRecord/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
+                    savepath1 = savepath1 + "," + "/RadiotherapyPlatform/upload/FixRecord/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
 
                 }
             }

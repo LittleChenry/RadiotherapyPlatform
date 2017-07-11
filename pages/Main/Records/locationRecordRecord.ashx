@@ -66,7 +66,7 @@ public class locationRecordRecord : IHttpHandler {
                 if (files[i].ContentLength > 0)
                 {
                     files[i].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
-                    savepath1 = savepath1 + "," + "../../../upload/LocationRecord/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
+                    savepath1 = savepath1 + "," + "/RadiotherapyPlatform/upload/LocationRecord/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
 
                 }
             }

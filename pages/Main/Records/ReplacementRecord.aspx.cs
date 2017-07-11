@@ -57,7 +57,7 @@ public partial class pages_Main_Records_ReplacementRecord : System.Web.UI.Page
                     if (files[i].ContentLength > 0)
                     {
                         files[i].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
-                        savepath1 = savepath1 + "," + "../../../upload/replacerecord/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
+                        savepath1 = savepath1 + "," + "/RadiotherapyPlatform/upload/replacerecord/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
                     }
 
                 }
@@ -71,7 +71,7 @@ public partial class pages_Main_Records_ReplacementRecord : System.Web.UI.Page
                     if (files[i].ContentLength > 0)
                     {
                         files[i].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
-                        savepath2 = savepath2 + "," + "../../../upload/replacerecord/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
+                        savepath2 = savepath2 + "," + "/RadiotherapyPlatform/upload/replacerecord/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
                     }
 
                 }
