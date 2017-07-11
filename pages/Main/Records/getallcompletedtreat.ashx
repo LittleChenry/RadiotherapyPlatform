@@ -35,7 +35,7 @@ public class getallcompletedtreat : IHttpHandler {
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand2);
         while (reader.Read())
         {
-            backText.Append("{\"diagnose\":\"" + reader["DiagnosisRecord_ID"].ToString() + "\",\"patient\":\"" + patientid + "\",\"fixed\":\"" + reader["Fixed_ID"].ToString() + "\",\"location\":\"" + reader["Location_ID"].ToString() + "\",\"design\":\"" + reader["Design_ID"].ToString() + "\",\"replace\":\"" + reader["Replacement_ID"].ToString() + "\",\"review\":\"" + reader["Review_ID"].ToString() + "\"}");
+            backText.Append("{\"diagnose\":\"" + reader["DiagnosisRecord_ID"].ToString() + "\",\"fixed\":\"" + reader["Fixed_ID"].ToString() + "\",\"location\":\"" + reader["Location_ID"].ToString() + "\",\"design\":\"" + reader["Design_ID"].ToString() + "\",\"replace\":\"" + reader["Replacement_ID"].ToString() + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");
