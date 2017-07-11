@@ -19,8 +19,9 @@ public class getallcompletedtreat : IHttpHandler {
     }
     public string patientfixInformation(HttpContext context)
     {
-        int radiotherapyid = Convert.ToInt32(context.Request.QueryString["Radiotherapy_ID"]);
+        int radiotherapyid = Convert.ToInt32(context.Request["Radiotherapy_ID"]);
         DataLayer sqlOperation = new DataLayer("sqlStr");
+        DataLayer sqlOperation1 = new DataLayer("sqlStr");
         string sqlCommand = "select ID from patient where Radiotherapy_ID=@radio";
         sqlOperation.AddParameterWithValue("@radio", radiotherapyid);
         int patientid = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
@@ -35,7 +36,39 @@ public class getallcompletedtreat : IHttpHandler {
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand2);
         while (reader.Read())
         {
-            backText.Append("{\"diagnose\":\"" + reader["DiagnosisRecord_ID"].ToString() + "\",\"fixed\":\"" + reader["Fixed_ID"].ToString() + "\",\"location\":\"" + reader["Location_ID"].ToString() + "\",\"design\":\"" + reader["Design_ID"].ToString() + "\",\"replace\":\"" + reader["Replacement_ID"].ToString() + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\"}");
+            string fix="";
+            string location = "";
+            if (reader["Fixed_ID"].ToString() != "")
+            {
+                string sqlCommand3 = "select Operate_User_ID from fixed where ID=@fix";
+                sqlOperation1.AddParameterWithValue("@fix", Convert.ToInt32(reader["Fixed_ID"].ToString()));
+                string user = sqlOperation1.ExecuteScalar(sqlCommand3);
+                if (user == "")
+                {
+                    fix = "";
+                }
+                else
+                {
+                    fix = reader["Fixed_ID"].ToString();
+                }
+            }
+            if (reader["Location_ID"].ToString() != "")
+            {
+                string sqlCommand3 = "select Operate_User_ID,CT_ID from location where ID=@location";
+                sqlOperation1.AddParameterWithValue("@location", Convert.ToInt32(reader["Location_ID"].ToString()));
+                string user = sqlOperation1.ExecuteScalar(sqlCommand3);
+                if (user == "")
+                {
+                    location = "";
+                }
+                else
+                {
+                    location= reader["Fixed_ID"].ToString();
+                }
+            }
+
+
+            backText.Append("{\"diagnose\":\"" + reader["DiagnosisRecord_ID"].ToString() + "\",\"fixed\":\"" + fix + "\",\"location\":\"" + location + "\",\"design\":\"" + reader["Design_ID"].ToString() + "\",\"replace\":\"" + reader["Replacement_ID"].ToString() + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");
@@ -47,6 +80,9 @@ public class getallcompletedtreat : IHttpHandler {
         sqlOperation.Close();
         sqlOperation.Dispose();
         sqlOperation = null;
+        sqlOperation1.Close();
+        sqlOperation1.Dispose();
+        sqlOperation1= null;
         return backText.ToString();
     }
 
