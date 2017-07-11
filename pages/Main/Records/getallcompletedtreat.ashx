@@ -54,10 +54,12 @@ public class getallcompletedtreat : IHttpHandler {
             }
             if (reader["Location_ID"].ToString() != "")
             {
-                string sqlCommand3 = "select Operate_User_ID,CT_ID from location where ID=@location";
+                string sqlCommand3 = "select Operate_User_ID from location where ID=@location";
                 sqlOperation1.AddParameterWithValue("@location", Convert.ToInt32(reader["Location_ID"].ToString()));
                 string user = sqlOperation1.ExecuteScalar(sqlCommand3);
-                if (user == "")
+                string sqlCommand4 = "select CT_ID from location where ID=@location";
+                string ct = sqlOperation1.ExecuteScalar(sqlCommand4);
+                if (user == "" || ct=="")
                 {
                     location = "";
                 }
