@@ -48,7 +48,7 @@ public class LocationInfo : IHttpHandler
             sqlOperation.AddParameterWithValue("@patient", patientid);
             int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
             int i = 1;
-            string sqlCommand1 = "select CTPictures,location.ApplicationTime as apptime,fixed.*,material.Name as mname,scanpart.Name as partname,scanmethod.*,locationrequirements.*,user.Name as doctor,fixedequipment.Name as fename,location.Operate_User_ID as opid,location.OperateTime as optime,location.* from locationrequirements,scanpart,scanmethod,location,fixedequipment,user,material,treatment,fixed where scanmethod.ID=location.ScanMethod_ID and scanpart.ID=location.ScanPart_ID and locationrequirements.ID=location.LocationRequirements_ID and location.ID=treatment.Location_ID and fixedequipment.ID=fixed.FixedEquipment_ID and fixed.Model_ID=material.ID and treatment.Fixed_ID=fixed.ID and location.Application_User_ID =user.ID and treatment.Patient_ID=@patient";
+            string sqlCommand1 = "select Treatmentname,CTPictures,location.ApplicationTime as apptime,fixed.*,material.Name as mname,scanpart.Name as partname,scanmethod.*,locationrequirements.*,user.Name as doctor,fixedequipment.Name as fename,location.Operate_User_ID as opid,location.OperateTime as optime,location.* from locationrequirements,scanpart,scanmethod,location,fixedequipment,user,material,treatment,fixed where scanmethod.ID=location.ScanMethod_ID and scanpart.ID=location.ScanPart_ID and locationrequirements.ID=location.LocationRequirements_ID and location.ID=treatment.Location_ID and fixedequipment.ID=fixed.FixedEquipment_ID and fixed.Model_ID=material.ID and treatment.Fixed_ID=fixed.ID and location.Application_User_ID =user.ID and treatment.Patient_ID=@patient";
             sqlOperation1.AddParameterWithValue("@patient", patientid);
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation1.ExecuteReader(sqlCommand1);
             StringBuilder backText = new StringBuilder("{\"locationInfo\":[");
@@ -88,7 +88,7 @@ public class LocationInfo : IHttpHandler
                     enmethod = sqlOperation.ExecuteScalar(sqlCommand4);
 
                 }
-                backText.Append("{\"Thickness\":\"" + reader["Thickness"].ToString() + "\",\"ReferenceNumber\":\"" + reader["ReferenceNumber"].ToString() +
+                backText.Append("{\"Thickness\":\"" + reader["Thickness"].ToString() + "\",\"ReferenceNumber\":\"" + reader["ReferenceNumber"].ToString() +"\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString()+
                         "\",\"ReferenceScale\":\"" + reader["ReferenceScale"].ToString() + "\",\"Number\":\"" + reader["Number"].ToString() +
                          "\",\"modelID\":\"" + reader["mname"].ToString() + "\",\"requireID\":\"" + reader["Requirements"].ToString() + "\",\"operate\":\"" + operate +
                          "\",\"body\":\"" + reader["BodyPosition"].ToString() + "\",\"fixedEquipment\":\"" + reader["fename"].ToString() +
