@@ -442,16 +442,16 @@
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 10) {
                    $("#record-iframe")[0].contentWindow.saveDesignConfirm();
                }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 11) {
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 12) {
                    $("#record-iframe")[0].contentWindow.postreplace();
                }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 12) {
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 14) {
                    $("#record-iframe")[0].contentWindow.postfirstaccelerate();
                }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 13) {
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 11) {
                    $("#record-iframe")[0].contentWindow.saveDesignReview();
                }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 14) {
+               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 13) {
                    $("#record-iframe")[0].contentWindow.postimportReplaceRecord();
                } 
                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 16) {

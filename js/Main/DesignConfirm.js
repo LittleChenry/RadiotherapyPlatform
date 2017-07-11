@@ -12,7 +12,7 @@ function Init(evt) {
     //alert("jy");
     //document.getElementById("username").value = userID; 
     var treatID = window.location.search.split("=")[1];
-    document.getElementById("treatID").innerHTML = treatID;
+   
 
     var patient = getPatientInfo(treatID);
     document.getElementById("username").innerHTML = patient.Name;
@@ -64,12 +64,8 @@ function Init(evt) {
             document.getElementById("state").value = "审核不通过";
         }, false);
         if (patient.Progress >= 11) {
-            document.getElementById("advice").value = designInfo.advice;
-            document.getElementById("advice").disabled = true;
-            document.getElementById("state").value = charge2(designInfo.State);
-            document.getElementById("state").disabled = true;
-            document.getElementById("confirm").disabled = true;
-            document.getElementById("unconfirm").disabled = true;
+            document.getElementById("advice").value = designInfo.advice;            
+            document.getElementById("state").value = charge2(designInfo.State);     
             document.getElementById("applyuser").innerHTML = designInfo.ConfirmUser;
             document.getElementById("time").innerHTML = designInfo.ConfirmTime;
         }
@@ -240,6 +236,27 @@ function saveDesignConfirm() {
         window.alert("请填写审核意见");
         return;
     }  
-    document.getElementById("saveDesignConfirm").submit();
-
+    var form = new FormData(document.getElementById("saveDesignConfirm"));
+    $.ajax({
+        url: "designConfirmRecord.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("保存成功");
+            window.location.reload();
+        },
+        error: function (e) {
+            window.location.href = "Error.aspx";
+        },
+        failure: function (e) {
+            window.location.href = "Error.aspx";
+        }
+    });
+}
+function remove() {    
+    document.getElementById("unconfirm").removeAttribute("disabled");
+    document.getElementById("confirm").removeAttribute("disabled");
+    document.getElementById("advice").removeAttribute("disabled");
 }
