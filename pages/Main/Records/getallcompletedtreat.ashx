@@ -98,7 +98,7 @@ public class getallcompletedtreat : IHttpHandler {
                     replace = reader["Replacement_ID"].ToString();
                 }
             }
-            backText.Append("{\"diagnose\":\"" + reader["DiagnosisRecord_ID"].ToString() + "\",\"fixed\":\"" + fix + "\",\"location\":\"" + location + "\",\"design\":\"" + design + "\",\"replace\":\"" + replace + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"review\":\"" + reader["Review_ID"].ToString() + "\"}");
+            backText.Append("{\"diagnose\":\"" + reader["DiagnosisRecord_ID"].ToString() + "\",\"fixed\":\"" + fix + "\",\"location\":\"" + location + "\",\"design\":\"" + design + "\",\"replace\":\"" + replace + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"review\":\"" + reader["Review_ID"].ToString() + "\",\"group\":\"" + reader["Group_ID"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");
