@@ -466,7 +466,7 @@ function saveDesignApplyRecord() {
             window.location.href = "Error.aspx";
         },
         failure: function (e) {
-            alert("保存失败！！");
+            window.location.href = "Error.aspx";   
         }
     });
 }

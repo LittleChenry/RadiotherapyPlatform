@@ -11,7 +11,7 @@ function Init(evt) {
     //alert("jy");
     //document.getElementById("username").value = userID; 
     var treatID = window.location.search.split("=")[1];
-    document.getElementById("treatID").innerHTML = treatID;
+
 
     var patient = getPatientInfo(treatID);
     document.getElementById("username").innerHTML = patient.Name;
@@ -25,10 +25,13 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
-    document.getElementById("part").innerHTML = patient.partname;
+    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
+    document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
+    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
 
-
-    if (patient.Progress >= 13) {
+    if (patient.Progress >= 11) {
         var designInfo = getDesignInfo(treatID);      
         document.getElementById("Technology").innerHTML = designInfo.technology;
         document.getElementById("Equipment").innerHTML = designInfo.equipment;      
@@ -45,7 +48,7 @@ function Init(evt) {
         document.getElementById("time").innerHTML = getNowFormatDate();
         document.getElementById("hidetreatID").value = treatID;
    
-        if (patient.Progress >= 14) {
+        if (patient.Progress >= 12) {
             var reviewInfo = getReviewInfo(treatID);
             document.getElementById("TechnologyConfirm").innerHTML = charge2(reviewInfo.TechnologyConfirm);
             document.getElementById("EquipmentConfirm").innerHTML = charge2(reviewInfo.EquipmentConfirm);
@@ -56,36 +59,14 @@ function Init(evt) {
             document.getElementById("ControlPointConfirm").innerHTML = charge2(reviewInfo.ControlPointConfirm);
             document.getElementById("GridConfirm").innerHTML = charge2(reviewInfo.GridConfirm);
             document.getElementById("AlgorithmConfirm").innerHTML = charge2(reviewInfo.AlgorithmConfirm);
-            document.getElementById("FeasibilityConfirm").innerHTML = charge2(reviewInfo.FeasibilityConfirm);
+            document.getElementById("FeasibilityConfirm").innerHTML = charge(reviewInfo.FeasibilityConfirm);
             document.getElementById("Reoptimization").innerHTML = charge2(reviewInfo.Reoptimization);
             document.getElementById("PlaceInformation").innerHTML = charge2(reviewInfo.PlaceInformation);
             document.getElementById("DRR").innerHTML = charge2(reviewInfo.DRR);
             getreference(reviewInfo.ReferenceCenter);
             gettreatment(reviewInfo.TreatmentCenter);
             getmovement(reviewInfo.Movement);
-            document.getElementById("confirmTechnology").disabled = true;
-            document.getElementById("confirmEquipment").disabled = true;
-            document.getElementById("confirmPlanSystem").disabled = true;
-            document.getElementById("confirmAngle").disabled = true;
-            document.getElementById("confirmCoplanar").disabled = true;
-            document.getElementById("confirmMachineNumbe").disabled = true;
-            document.getElementById("confirmControlPoint").disabled = true;
-            document.getElementById("confirmGrid").disabled = true;
-            document.getElementById("confirmAlgorithm").disabled = true;
-            document.getElementById("confirmFeasibility").disabled = true;
-            document.getElementById("confirmReoptimization").disabled = true;
-            document.getElementById("confirmPlaceInformation").disabled = true;
-            document.getElementById("confirmIsExport").disabled = true;
-            document.getElementById("confirmDRR").disabled = true;
-            document.getElementById("ReferenceCenterX").disabled=true;
-            document.getElementById("ReferenceCenterY").disabled = true;
-            document.getElementById("ReferenceCenterZ").disabled = true;
-            document.getElementById("TreatmentCenterX").disabled = true;
-            document.getElementById("TreatmentCenterY").disabled = true;
-            document.getElementById("TreatmentCenterZ").disabled = true;
-            document.getElementById("MovementX").disabled = true;
-            document.getElementById("MovementY").disabled = true;
-            document.getElementById("MovementZ").disabled = true;
+            
             document.getElementById("IsExport").innerHTML = charge2(reviewInfo.IsExport);
             document.getElementById("applyuser").innerHTML = reviewInfo.name;
             document.getElementById("time").innerHTML = reviewInfo.ReviewTime;
@@ -227,9 +208,9 @@ function sex(evt) {
 }
 function charge(evt) {
     if (evt == "0")
-        return "不可行";
+        return "不可执行";
     else
-        return "可行";
+        return "可执行";
 }
 function charge1(evt) {
     if (evt == "0")
@@ -262,6 +243,47 @@ function getmovement(ReferenceCenter) {
     document.getElementById("MovementZ").value = Reference[2];
 }
 function saveDesignReview() {
-    document.getElementById("saveReview").submit();
-
+    var form = new FormData(document.getElementById("saveReview"));
+    $.ajax({
+        url: "designReviewRecord.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("保存成功");
+            window.location.reload();
+        },
+        error: function (e) {
+            window.location.href = "Error.aspx";
+        },
+        failure: function (e) {
+            window.location.href = "Error.aspx";
+        }
+    });
+}
+function remove() {   
+    document.getElementById("confirmTechnology").removeAttribute("disabled");
+    document.getElementById("confirmEquipment").removeAttribute("disabled");
+    document.getElementById("confirmPlanSystem").removeAttribute("disabled");
+    document.getElementById("confirmAngle").removeAttribute("disabled");
+    document.getElementById("confirmCoplanar").removeAttribute("disabled");
+    document.getElementById("confirmMachineNumbe").removeAttribute("disabled");
+    document.getElementById("confirmControlPoint").removeAttribute("disabled");
+    document.getElementById("confirmGrid").removeAttribute("disabled");
+    document.getElementById("confirmAlgorithm").removeAttribute("disabled");
+    document.getElementById("confirmFeasibility").removeAttribute("disabled");
+    document.getElementById("confirmReoptimization").removeAttribute("disabled");
+    document.getElementById("confirmPlaceInformation").removeAttribute("disabled");
+    document.getElementById("confirmIsExport").removeAttribute("disabled");
+    document.getElementById("confirmDRR").removeAttribute("disabled");
+    document.getElementById("ReferenceCenterX").removeAttribute("disabled");
+    document.getElementById("ReferenceCenterY").removeAttribute("disabled");
+    document.getElementById("ReferenceCenterZ").removeAttribute("disabled");
+    document.getElementById("TreatmentCenterX").removeAttribute("disabled");
+    document.getElementById("TreatmentCenterY").removeAttribute("disabled");
+    document.getElementById("TreatmentCenterZ").removeAttribute("disabled");
+    document.getElementById("MovementX").removeAttribute("disabled");
+    document.getElementById("MovementY").removeAttribute("disabled");
+    document.getElementById("MovementZ").removeAttribute("disabled");
 }

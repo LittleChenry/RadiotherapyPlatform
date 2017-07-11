@@ -72,8 +72,13 @@
                     <span>病案信息：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
-                    <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
+                    <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                    <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
+                    <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                    <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
                     <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
             </div>
@@ -101,7 +106,7 @@
                                     <td id="Technology"></td>
                                     <td id="TechnologyConfirm">未通过</td>                        
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmTechnology" class="btn btn-block btn-success"  type="button" onclick="confirm(this, TechnologyConfirm, TechnologyConfirm1, confirmTechnology, cancelconfirmTechnology)" >通过</button>
+                                        <button id="confirmTechnology" class="btn btn-block btn-success"  type="button" onclick="confirm(this, TechnologyConfirm, TechnologyConfirm1, confirmTechnology, cancelconfirmTechnology)"  disabled="disabled">通过</button>
                                         <button id="cancelconfirmTechnology" class="btn btn-block btn-warning"  type="button" onclick="cancelconfirm(this, TechnologyConfirm, TechnologyConfirm1, confirmTechnology, cancelconfirmTechnology)" style="display:none;margin:0px;" >取消通过</button>
                                     </td>
                                 </tr>
@@ -111,7 +116,7 @@
                                     <td id="PlanSystem" ></td>
                                     <td id="PlanSystemConfirm">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmPlanSystem" class="btn btn-block btn-success" type="button"  onclick="confirm(this, PlanSystemConfirm, confirmPlanSystem1, confirmPlanSystem, cancelconfirmPlanSystem)" >通过</button>
+                                        <button id="confirmPlanSystem" class="btn btn-block btn-success" type="button"  onclick="confirm(this, PlanSystemConfirm, confirmPlanSystem1, confirmPlanSystem, cancelconfirmPlanSystem)" disabled="disabled">通过</button>
                                         <button id="cancelconfirmPlanSystem" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this, PlanSystemConfirm, confirmPlanSystem1, confirmPlanSystem, cancelconfirmPlanSystem)" style="display:none;margin:0px;" >取消通过</button>
                                     </td>
                                 </tr>
@@ -121,7 +126,7 @@
                                     <td id="Equipment" ></td>
                                     <td id="EquipmentConfirm">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmEquipment" class="btn btn-block btn-success" type="button"  onclick="confirm(this, EquipmentConfirm, EquipmentConfirm1, confirmEquipment, cancelconfirmEquipment)" >通过</button>
+                                        <button id="confirmEquipment" class="btn btn-block btn-success" type="button"  onclick="confirm(this, EquipmentConfirm, EquipmentConfirm1, confirmEquipment, cancelconfirmEquipment)" disabled="disabled">通过</button>
                                         <button id="cancelconfirmEquipment" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this, EquipmentConfirm, EquipmentConfirm1, confirmEquipment, cancelconfirmEquipment)" style="display:none;margin:0px;" >取消通过</button>
                                     </td>
                                 </tr>
@@ -131,7 +136,7 @@
                                     <td id="IlluminatedNumber" ></td>
                                     <td id="AngleConfirm">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmAngle" class="btn btn-block btn-success" type="button"  onclick="confirm(this, AngleConfirm, confirmAngle1, confirmAngle, cancelconfirmAngle)" >通过</button>
+                                        <button id="confirmAngle" class="btn btn-block btn-success" type="button"  onclick="confirm(this, AngleConfirm, confirmAngle1, confirmAngle, cancelconfirmAngle)" disabled="disabled">通过</button>
                                         <button id="cancelconfirmAngle" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this, AngleConfirm, confirmAngle1, confirmAngle, cancelconfirmAngle)" style="display:none;margin:0px;" >取消通过</button>
                                     </td>
                                 </tr>
@@ -141,7 +146,7 @@
                                     <td id="Coplanar" ></td>
                                     <td id="CoplanarConfirm">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmCoplanar" class="btn btn-block btn-success" type="button"  onclick="confirm(this, CoplanarConfirm, confirmCoplanar1, confirmCoplanar, cancelconfirmCoplanar)" >通过</button>
+                                        <button id="confirmCoplanar" class="btn btn-block btn-success" type="button"  onclick="confirm(this, CoplanarConfirm, confirmCoplanar1, confirmCoplanar, cancelconfirmCoplanar)" disabled="disabled">通过</button>
                                         <button id="cancelconfirmCoplanar" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this, CoplanarConfirm, confirmCoplanar1, confirmCoplanar, cancelconfirmCoplanar)" style="display:none;margin:0px;" >取消通过</button>
                                     </td>
                                 </tr>
@@ -151,7 +156,7 @@
                                     <td id="MachineNumbe" ></td>
                                     <td id="MachineNumbeConfirm">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmMachineNumbe" class="btn btn-block btn-success" type="button"  onclick="confirm(this, MachineNumbeConfirm, confirmMachineNumbe1, confirmMachineNumbe, cancelconfirmMachineNumbe)" >通过</button>
+                                        <button id="confirmMachineNumbe" class="btn btn-block btn-success" type="button"  onclick="confirm(this, MachineNumbeConfirm, confirmMachineNumbe1, confirmMachineNumbe, cancelconfirmMachineNumbe)" disabled="disabled">通过</button>
                                         <button id="cancelconfirmMachineNumbe" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this, MachineNumbeConfirm, confirmMachineNumbe1, confirmMachineNumbe, cancelconfirmMachineNumbe)" style="display:none;margin:0px;" >取消通过</button>
                                     </td>
                                 </tr>
@@ -161,7 +166,7 @@
                                     <td id="ControlPoint" ></td>
                                     <td id="ControlPointConfirm">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmControlPoint" class="btn btn-block btn-success" type="button"  onclick="confirm(this, ControlPointConfirm, confirmControlPoint1, confirmControlPoint, cancelconfirmControlPoint)" >通过</button>
+                                        <button id="confirmControlPoint" class="btn btn-block btn-success" type="button"  onclick="confirm(this, ControlPointConfirm, confirmControlPoint1, confirmControlPoint, cancelconfirmControlPoint)" disabled="disabled">通过</button>
                                         <button id="cancelconfirmControlPoint" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this, ControlPointConfirm, confirmControlPoint1, confirmControlPoint, cancelconfirmControlPoint)" style="display:none;margin:0px;" >取消通过</button>
                                     </td>
                                 </tr>
@@ -171,7 +176,7 @@
                                     <td id="Grid" ></td>
                                     <td id="GridConfirm">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmGrid" class="btn btn-block btn-success" type="button"  onclick="confirm(this, GridConfirm, confirmGrid1, confirmGrid, cancelconfirmGrid)" >通过</button>
+                                        <button id="confirmGrid" class="btn btn-block btn-success" type="button"  onclick="confirm(this, GridConfirm, confirmGrid1, confirmGrid, cancelconfirmGrid)" disabled="disabled">通过</button>
                                         <button id="cancelconfirmGrid" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this, GridConfirm, confirmGrid1, confirmGrid, cancelconfirmGrid)" style="display:none;margin:0px;" >取消通过</button>
                                     </td>
                                 </tr>
@@ -181,7 +186,7 @@
                                     <td id="Algorithm" ></td>
                                     <td id="AlgorithmConfirm">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmAlgorithm" class="btn btn-block btn-success" type="button"  onclick="confirm(this, AlgorithmConfirm, confirmAlgorithm1, confirmAlgorithm, cancelconfirmAlgorithm)" >通过</button>
+                                        <button id="confirmAlgorithm" class="btn btn-block btn-success" type="button"  onclick="confirm(this, AlgorithmConfirm, confirmAlgorithm1, confirmAlgorithm, cancelconfirmAlgorithm)" disabled="disabled">通过</button>
                                         <button id="cancelconfirmAlgorithm" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this, AlgorithmConfirm, confirmAlgorithm1, confirmAlgorithm, cancelconfirmAlgorithm)" style="display:none;margin:0px;" >取消通过</button>
                                     </td>
                                 </tr>
@@ -191,8 +196,8 @@
                                      <td id="Feasibility" ></td>
                                     <td id="FeasibilityConfirm">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmFeasibility" class="btn btn-block btn-success" type="button"  onclick="confirm(this, FeasibilityConfirm, confirmFeasibility1, confirmFeasibility, cancelconfirmFeasibility)" >通过</button>
-                                        <button id="cancelconfirmFeasibility" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this, FeasibilityConfirm, confirmFeasibility1, confirmFeasibility, cancelconfirmFeasibility)" style="display:none;margin:0px;" >取消通过</button>
+                                        <button id="confirmFeasibility" class="btn btn-block btn-success" type="button"  onclick="confirm(this, FeasibilityConfirm, confirmFeasibility1, confirmFeasibility, cancelconfirmFeasibility)" disabled="disabled">可执行</button>
+                                        <button id="cancelconfirmFeasibility" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this, FeasibilityConfirm, confirmFeasibility1, confirmFeasibility, cancelconfirmFeasibility)" style="display:none;margin:0px;" >不可执行</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -201,7 +206,7 @@
                                    <td id="Td1" ></td>
                                     <td id="Reoptimization">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmReoptimization" class="btn btn-block btn-success" type="button" onclick="confirm(this, Reoptimization, confirmReoptimization1, confirmReoptimization, cancelconfirmReoptimization)" >通过</button>
+                                        <button id="confirmReoptimization" class="btn btn-block btn-success" type="button" onclick="confirm(this, Reoptimization, confirmReoptimization1, confirmReoptimization, cancelconfirmReoptimization)" disabled="disabled">通过</button>
                                         <button id="cancelconfirmReoptimization" class="btn btn-block btn-warning" type="button" onclick="cancelconfirm(this, Reoptimization, confirmReoptimization1, confirmReoptimization, cancelconfirmReoptimization)" style="display:none;margin:0px;" >取消通过</button>
                                     </td>
                                 </tr>
@@ -211,7 +216,7 @@
                                     <td id="Td2" ></td>
                                     <td id="PlaceInformation">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmPlaceInformation" class="btn btn-block btn-success" type="button"  onclick="confirm(this, PlaceInformation, confirmPlaceInformation1, confirmPlaceInformation, cancelconfirmPlaceInformation)" >通过</button>
+                                        <button id="confirmPlaceInformation" class="btn btn-block btn-success" type="button"  onclick="confirm(this, PlaceInformation, confirmPlaceInformation1, confirmPlaceInformation, cancelconfirmPlaceInformation)" disabled="disabled">通过</button>
                                         <button id="cancelconfirmPlaceInformation" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this, PlaceInformation, confirmPlaceInformation1, confirmPlaceInformation, cancelconfirmPlaceInformation)" style="display:none;margin:0px;" >取消通过</button>
                                     </td>
                                 </tr>
@@ -221,7 +226,7 @@
                                     <td id="Td4" ></td>
                                     <td id="DRR">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmDRR" class="btn btn-block btn-success" type="button"  onclick="confirm(this, DRR, confirmDRR1, confirmDRR, cancelconfirmDRR)" >通过</button>
+                                        <button id="confirmDRR" class="btn btn-block btn-success" type="button"  onclick="confirm(this, DRR, confirmDRR1, confirmDRR, cancelconfirmDRR)" disabled="disabled">通过</button>
                                         <button id="cancelconfirmDRR" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this, DRR, confirmDRR1, confirmDRR, cancelconfirmDRR)" style="display:none;margin:0px;" >取消通过</button>
                                     </td>
                                 </tr>
@@ -231,7 +236,7 @@
                                     <td id="Td6" ></td>
                                     <td id="IsExport">否</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
-                                        <button id="confirmIsExport" class="btn btn-block btn-success" type="button" onclick="confirm(this, IsExport, confirmIsExport1, confirmIsExport, cancelconfirmIsExport)" >是</button>
+                                        <button id="confirmIsExport" class="btn btn-block btn-success" type="button" onclick="confirm(this, IsExport, confirmIsExport1, confirmIsExport, cancelconfirmIsExport)" disabled="disabled">是</button>
                                         <button id="cancelconfirmIsExport" class="btn btn-block btn-warning" type="button" onclick="cancelconfirm(this, IsExport, confirmIsExport1, confirmIsExport, cancelconfirmIsExport)" style="display:none;margin:0px;" >否</button>
                                     </td>
                                 </tr>
@@ -244,17 +249,17 @@
                         <span class="form-text col-xs-2" style="padding-left:0px;">参考等中心：</span>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">x</span>
-                            <input id="ReferenceCenterX" name="ReferenceCenterX" type="number" class="form-group-input" />
+                            <input id="ReferenceCenterX" name="ReferenceCenterX" type="number" class="form-group-input" disabled="disabled"/>
                             <span class="input-group-addon">cm</span>
                         </div>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">y</span>
-                             <input id="ReferenceCenterY" name="ReferenceCenterY" type="number" class="form-group-input" />
+                             <input id="ReferenceCenterY" name="ReferenceCenterY" type="number" class="form-group-input" disabled="disabled"/>
                             <span class="input-group-addon">cm</span>
                         </div>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">z</span>
-                             <input id="ReferenceCenterZ" name="ReferenceCenterZ" type="number" class="form-group-input" />
+                             <input id="ReferenceCenterZ" name="ReferenceCenterZ" type="number" class="form-group-input" disabled="disabled"/>
                             <span class="input-group-addon">cm</span>
                         </div>
                     </div>
@@ -264,17 +269,17 @@
                         <span class="form-text col-xs-2" style="padding-left:0px;">治疗等中心：</span>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">x</span>
-                            <input id="TreatmentCenterX" name="TreatmentCenterX" type="number" class="form-group-input" />
+                            <input id="TreatmentCenterX" name="TreatmentCenterX" type="number" class="form-group-input" disabled="disabled"/>
                             <span class="input-group-addon">mm</span>
                         </div>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">y</span>
-                            <input id="TreatmentCenterY" name="TreatmentCenterY" type="number" class="form-group-input" />
+                            <input id="TreatmentCenterY" name="TreatmentCenterY" type="number" class="form-group-input" disabled="disabled"/>
                             <span class="input-group-addon">mm</span>
                         </div>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">z</span>
-                            <input id="TreatmentCenterZ" name="TreatmentCenterZ" type="number" class="form-group-input" />
+                            <input id="TreatmentCenterZ" name="TreatmentCenterZ" type="number" class="form-group-input" disabled="disabled"/>
                             <span class="input-group-addon">mm</span>
                         </div>
                     </div>
@@ -284,17 +289,17 @@
                         <span class="form-text col-xs-2" style="padding-left:0px;">移床参数：</span>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">左</span>
-                            <input id="MovementX" name="MovementX" type="number" class="form-group-input" />
+                            <input id="MovementX" name="MovementX" type="number" class="form-group-input" disabled="disabled"/>
                             <span class="input-group-addon">mm</span>
                         </div>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">头</span>
-                            <input id="MovementY" name="MovementY" type="number" class="form-group-input" />
+                            <input id="MovementY" name="MovementY" type="number" class="form-group-input" disabled="disabled"/>
                             <span class="input-group-addon">mm</span>
                         </div>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">腹</span>
-                            <input id="MovementZ" name="MovementZ" type="number" class="form-group-input" />
+                            <input id="MovementZ" name="MovementZ" type="number" class="form-group-input" disabled="disabled"/>
                             <span class="input-group-addon">mm</span>
                         </div>
                     </div>

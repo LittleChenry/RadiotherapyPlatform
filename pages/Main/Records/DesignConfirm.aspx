@@ -161,14 +161,14 @@
                         <input id="state" name="state" type="text" value="未审核" readonly="true" class="form-item"  />
                     </div>
                     <div class="col-xs-3">
-                        <button id="unconfirm" class="btn btn-warning" type="button">不合格</button>
-                        <button id="confirm" class="btn btn-success" type="button" >确认通过</button>
+                        <button id="unconfirm" class="btn btn-warning" type="button" disabled="disabled">不合格</button>
+                        <button id="confirm" class="btn btn-success" type="button" disabled="disabled">确认通过</button>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
                         审核意见：
-                        <textarea id="advice" name="advice" class="form-area" style="width:80%;"></textarea>
+                        <textarea id="advice" name="advice" class="form-area" style="width:80%;" disabled="disabled"></textarea>
                     </div>
                 </div>
                 <div class="single-row">
