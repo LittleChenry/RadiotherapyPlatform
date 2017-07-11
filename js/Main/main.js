@@ -36,6 +36,7 @@ $(document).ready(function () {
     $("#saveOperator").bind("click",function(){
         setAssistant();
     });
+    $("#saveTreatment").bind("click",saveTreatment);
     //chooseAssistant();
     //getSession();
     getFunctions();
@@ -44,6 +45,245 @@ $(document).ready(function () {
 /*window.onresize=function(){
     document.location.reload();
 }*/
+
+function saveTreatment(){
+    var diagnose, fixed, location, design, replace, treatmentname, review, group;
+    //$("#register").
+}
+
+function checkAddTreatment(Radiotherapy_ID){
+    $("#addTreatment").attr("disabled","disabled");
+    for (var i = 0; i < functions.length; i++) {
+        if(functions[i].toString() == "18"){
+            $("#addTreatment").removeAttr("disabled");
+            $("#addTreatment").click({Radiotherapy_ID:Radiotherapy_ID},function(e){
+                $.ajax({
+                    type: "POST",
+                    url: "../../pages/Main/Records/getallcompletedtreat.ashx",
+                    async: true,
+                    dateType: "text",
+                    data:{Radiotherapy_ID:e.data.Radiotherapy_ID},
+                    success: function (data) {
+                        var table = $("#addTreatmentRecord");
+                        table.html("");
+                        var thead = '<thead><tr id="progress"><th>流程</th></tr></thead>';
+                        var tbody = '<tbody><tr id="register"><td>患者登记<i></i></td></tr>'+
+                            '<tr id="diagnose"><td>病情诊断<i></i></td></tr>'+
+                            '<tr id="fixed"><td>体位固定<i></i></td></tr><tr id="location"><td>CT模拟<i></i></td></tr>'+
+                            '<tr id="design"><td>计划设计<i></i></td></tr><tr id="replace"><td>复位验证<i></i></td></tr></tbody>';
+                        table.append(thead);
+                        table.append(tbody);
+                        obj = $.parseJSON(data);
+                        for (var i = 0; i < obj.treatinfo.length; i++) {
+                            var th = '<th>疗程'+ obj.treatinfo[i].treatmentname +'</th>';
+                            $("#progress").append(th);
+
+                            var td0 = '<td id="register_'+ i +'"><i></i></td>';
+                            $("#register").append(td0);
+                            $("#register_"+i).click(function(){
+                                if ($(this).find("i")[0].className != "") {
+                                    $(this).find("i").removeClass();
+                                }else{
+                                    var currentrowselected = 0;
+                                    $(this).parent().find("td").each(function(){
+                                        if ($(this).find("i")[0].className != "") {
+                                            currentrowselected = 1;
+                                        }
+                                    });
+                                    if (currentrowselected == 0) {
+                                        $(this).find("i").addClass("fa fa-fw fa-check");
+                                    }else{
+                                        alert("每一行只能选择一个模块复用！");
+                                    }
+                                }
+                            });
+
+                            if (obj.treatinfo[i].diagnose != "") {
+                                var td1 = '<td id="diagnose_'+ obj.treatinfo[i].diagnose +'_' + obj.treatinfo[i].group + '"><i></i></td>';
+                                $("#diagnose").append(td1);
+                                $("#diagnose_"+ obj.treatinfo[i].diagnose + "_" + obj.treatinfo[i].group).click(function(){
+                                    if ($(this).find("i")[0].className != "") {
+                                        $(this).find("i").removeClass();
+                                    }else{
+                                        var currentrowselected = 0;
+                                        var prerowselected = 0;
+                                        $(this).parent().find("td").each(function(){
+                                            if ($(this).find("i")[0].className != "") {
+                                                currentrowselected = 1;
+                                            }
+                                        });
+                                        $(this).parent().prev().find("td").each(function(){
+                                            if ($(this).find("i")[0].className != "") {
+                                                prerowselected = 1;
+                                            }
+                                        });
+                                        if (currentrowselected == 0) {
+                                            if (prerowselected == 1) {
+                                                $(this).find("i").addClass("fa fa-fw fa-check");
+                                            }else{
+                                                alert("上一行还未选择复用模块！");
+                                            }
+                                        }else{
+                                            alert("每一行只能选择一个模块复用！");
+                                        }
+                                    }
+                                });
+                            }else{
+                                var td1 = '<td style="background-color:#E1E4E6"><i></i></td>';
+                                $("#diagnose").append(td1);
+                            }
+
+                            if (obj.treatinfo[i].fixed != "") {
+                                var td2 = '<td id="fixed_'+ obj.treatinfo[i].fixed +'"><i></i></td>';
+                                $("#fixed").append(td2);
+                                $("#fixed_"+ obj.treatinfo[i].fixed).click(function(){
+                                    if ($(this).find("i")[0].className != "") {
+                                        $(this).find("i").removeClass();
+                                    }else{
+                                        var currentrowselected = 0;
+                                        var prerowselected = 0;
+                                        $(this).parent().find("td").each(function(){
+                                            if ($(this).find("i")[0].className != "") {
+                                                currentrowselected = 1;
+                                            }
+                                        });
+                                        $(this).parent().prev().find("td").each(function(){
+                                            if ($(this).find("i")[0].className != "") {
+                                                prerowselected = 1;
+                                            }
+                                        });
+                                        if (currentrowselected == 0) {
+                                            if (prerowselected == 1) {
+                                                $(this).find("i").addClass("fa fa-fw fa-check");
+                                            }else{
+                                                alert("上一行还未选择复用模块！");
+                                            }
+                                        }else{
+                                            alert("每一行只能选择一个模块复用！");
+                                        }
+                                    }
+                                });
+                            }else{
+                                var td2 = '<td style="background-color:#E1E4E6"><i></i></td>';
+                                $("#fixed").append(td2);
+                            }
+                            
+                            if (obj.treatinfo[i].location != "") {
+                                var td3 = '<td id="location_'+ obj.treatinfo[i].location +'"><i></i></td>';
+                                $("#location").append(td3);
+                                $("#location_"+ obj.treatinfo[i].location).click(function(){
+                                    if ($(this).find("i")[0].className != "") {
+                                        $(this).find("i").removeClass();
+                                    }else{
+                                        var currentrowselected = 0;
+                                        var prerowselected = 0;
+                                        $(this).parent().find("td").each(function(){
+                                            if ($(this).find("i")[0].className != "") {
+                                                currentrowselected = 1;
+                                            }
+                                        });
+                                        $(this).parent().prev().find("td").each(function(){
+                                            if ($(this).find("i")[0].className != "") {
+                                                prerowselected = 1;
+                                            }
+                                        });
+                                        if (currentrowselected == 0) {
+                                            if (prerowselected == 1) {
+                                                $(this).find("i").addClass("fa fa-fw fa-check");
+                                            }else{
+                                                alert("上一行还未选择复用模块！");
+                                            }
+                                        }else{
+                                            alert("每一行只能选择一个模块复用！");
+                                        }
+                                    }
+                                });
+                            }else{
+                                var td3 = '<td style="background-color:#E1E4E6"><i></i></td>';
+                                $("#location").append(td3);
+                            }
+
+                            if (obj.treatinfo[i].design != "") {
+                                var td4 = '<td id="design_'+ obj.treatinfo[i].design + '_' + obj.treatinfo[i].review + '"><i></i></td>';
+                                $("#design").append(td4);
+                                $("#design_"+ obj.treatinfo[i].design + "_" + obj.treatinfo[i].review).click(function(){
+                                    if ($(this).find("i")[0].className != "") {
+                                        $(this).find("i").removeClass();
+                                    }else{
+                                        var currentrowselected = 0;
+                                        var prerowselected = 0;
+                                        $(this).parent().find("td").each(function(){
+                                            if ($(this).find("i")[0].className != "") {
+                                                currentrowselected = 1;
+                                            }
+                                        });
+                                        $(this).parent().prev().find("td").each(function(){
+                                            if ($(this).find("i")[0].className != "") {
+                                                prerowselected = 1;
+                                            }
+                                        });
+                                        if (currentrowselected == 0) {
+                                            if (prerowselected == 1) {
+                                                $(this).find("i").addClass("fa fa-fw fa-check");
+                                            }else{
+                                                alert("上一行还未选择复用模块！");
+                                            }
+                                        }else{
+                                            alert("每一行只能选择一个模块复用！");
+                                        }
+                                    }
+                                });
+                            }else{
+                                var td4 = '<td style="background-color:#E1E4E6"><i></i></td>';
+                                $("#design").append(td4);
+                            }
+
+                            if (obj.treatinfo[i].replace != "") {
+                                var td5 = '<td id="replace_'+ obj.treatinfo[i].replace +'"><i></i></td>';
+                                $("#replace").append(td5);
+                                $("#replace_"+ obj.treatinfo[i].replace).click(function(){
+                                    if ($(this).find("i")[0].className != "") {
+                                        $(this).find("i").removeClass();
+                                    }else{
+                                        var currentrowselected = 0;
+                                        var prerowselected = 0;
+                                        $(this).parent().find("td").each(function(){
+                                            if ($(this).find("i")[0].className != "") {
+                                                currentrowselected = 1;
+                                            }
+                                        });
+                                        $(this).parent().prev().find("td").each(function(){
+                                            if ($(this).find("i")[0].className != "") {
+                                                prerowselected = 1;
+                                            }
+                                        });
+                                        if (currentrowselected == 0) {
+                                            if (prerowselected == 1) {
+                                                $(this).find("i").addClass("fa fa-fw fa-check");
+                                            }else{
+                                                alert("上一行还未选择复用模块！");
+                                            }
+                                        }else{
+                                            alert("每一行只能选择一个模块复用！");
+                                        }
+                                    }
+                                });
+                            }else{
+                                var td5 = '<td style="background-color:#E1E4E6"><i></i></td>';
+                                $("#replace").append(td4);
+                            }
+                        }
+                    },
+                    error: function(){
+                        alert("error");
+                    }
+                });
+            });
+            return true;
+        }
+    }
+    return false;
+}
 
 function checkEdit(str){
     $('#edit').attr("disabled","disabled");
@@ -496,13 +736,14 @@ function CreateTable(start, end, patient) {
     for (var i = start; i < end; i++) {
         $("#" + patient.PatientInfo[i].treatID + "").click({ Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
-            $("#addTreatment").removeAttr("disabled");
+            checkAddTreatment(e.data.Radiotherapy_ID);
+            //$("#addTreatment").removeAttr("disabled");
             var ul = $("#progress-iframe").contents().find("#ul-progress a");
             ul.each(function (index, element) {
                 $(this).find('span').removeClass();
             });
             $("#record-iframe").attr('src', "Records/Blank.aspx");
-            $("#patient-status").text(e.data.state);
+            //$("#patient-status").text(e.data.state);
             var tr = $("#patient-table-body tr");
             tr.each(function (index, element) {
                 if ($(this).hasClass("chose")) {
