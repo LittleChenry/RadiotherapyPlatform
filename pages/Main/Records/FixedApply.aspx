@@ -70,6 +70,13 @@
                     <span>填写申请信息：</span>
                 </div>
                 <div class="single-row">
+                    <ul id="tabs" class="nav nav-tabs">
+                        <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
+                    </ul>
+                </div>
+                <div id="tab-content" class="tab-content">
+                <div class="tab-pane active" id="tab">
+                <div class="single-row">
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4" style="padding-left:0px;">模具：</span>
                         <select id="modelselect" name="modelselect" class="form-item" disabled="disabled"></select>
@@ -102,6 +109,8 @@
                     </div>
                 </div>
             </div>
+                    </div>
+                </div>
             <div class="paper-footer">
                 <div class="single-row">
                     <div class="item col-xs-6">医生签字：<span id="applyuser" class="underline"></span></div>

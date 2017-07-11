@@ -41,26 +41,43 @@ function Init(evt) {
         document.getElementById("addmethod").disabled = "true";
 
     }
+    var info = getLocationInfomation(treatmentID);
+    $("#current-tab").text("疗程" + patient.Treatmentname + "模拟定位申请");
     if (patient.Progress >= 4) {
-        var info = getLocationInfomation(treatmentID);
-        document.getElementById("scanmethod").value = info.scanmethod;
-        document.getElementById("scanpart").value = info.scanpartname;
-        document.getElementById("up").value = info.UpperBound;
-        document.getElementById("down").value = info.LowerBound;
-        document.getElementById("special").value = info.locationrequire;
-        document.getElementById("remark").value = info.Remarks;
-        var add = document.getElementsByName("add");
-        if (info.Enhance == "1") {
-            add[0].checked = "true";
-            document.getElementById("addmethod").value = info.enhancemethod;
-        } else {
-            add[1].checked = "true";
-            document.getElementById("enhancemethod").style.display = "none";
+        for (var i = 0; i < info.length; i++) {
+            if (info[i].treatname == patient.Treatmentname) {
+                document.getElementById("scanmethod").value = info[i].scanmethodID;
+                document.getElementById("scanpart").value = info[i].scanpartID;
+                document.getElementById("up").value = info[i].UpperBound;
+                document.getElementById("down").value = info[i].LowerBound;
+                document.getElementById("special").value = info[i].locationrequireID;
+                document.getElementById("remark").value = info[i].Remarks;
+                var add = document.getElementsByName("add");
+                if (info[i].Enhance == "1") {
+                    add[0].checked = "true";
+                    document.getElementById("addmethod").value = info[i].enhancemethod;
+                } else {
+                    add[1].checked = "true";
+                    document.getElementById("enhancemethod").style.display = "none";
+                }
+                document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
+                document.getElementById("applyuser").innerHTML = info[i].username;
+                document.getElementById("time").innerHTML = info[i].ApplicationTime;
+            } else {
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatname + '模拟定位申请</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                    + '<div class="item col-xs-6">扫描部位：<span class="underline">' + info[i].scanpartname + '</span></div>'
+                    + '<div class="item col-xs-6">扫描方式：<span class="underline">' + info[i].scanmethod + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">上界:<span class="underline">' + info[i].UpperBound + '</span></div>'
+                    + '<div class="item col-xs-6">下界：<span class="underline">' + info[i].LowerBound + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">是否增强:<span class="underline">' + trans(info[i].Enhance) + '</span></div>'
+                    + '<div class="item col-xs-6">增强方式：<span class="underline">' + transmethod(info[i].methodname) + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div></div>';
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+            }
         }
-        document.getElementById("appointtime").value = info.equipname + " " + info.Date + " " + toTime(info.Begin) + "-" + toTime(info.End);      
-        document.getElementById("applyuser").innerHTML = info.username;
-        document.getElementById("time").innerHTML = info.ApplicationTime;
-
     } else {
         createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
         var date = new Date();
@@ -74,7 +91,44 @@ function Init(evt) {
             CreateNewAppiontTable(event);
         }, false);//根据条件创建预约表
         document.getElementById("sure").addEventListener("click", checkAllTable, false);
+        for (var i = 0; i < info.length; i++) {
+            if (info[i].treatname != patient.Treatmentname) {
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatname + '模拟定位申请</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                    + '<div class="item col-xs-6">扫描部位：<span class="underline">' + info[i].scanpartname + '</span></div>'
+                    + '<div class="item col-xs-6">扫描方式：<span class="underline">' + info[i].scanmethod + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">上界:<span class="underline">' + info[i].UpperBound + '</span></div>'
+                    + '<div class="item col-xs-6">下界：<span class="underline">' + info[i].LowerBound + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">是否增强:<span class="underline">' + trans(info[i].Enhance) + '</span></div>'
+                    + '<div class="item col-xs-6">增强方式：<span class="underline">' + transmethod(info[i].methodname) + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div>'
+                   + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div></div>';
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+               
+            }
+        }
 
+    }
+}
+function trans(s)
+{
+    if(s=="1")
+    {
+        return "是";
+    }else
+    {
+        return "否";
+    }
+}
+function transmethod(s)
+{
+    if(s=="")
+    {
+        return "无";
+    }else
+    {
+        return s;
     }
 }
 function getNowFormatDate() {
@@ -125,7 +179,7 @@ function getLocationInfomation(treatmentID) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var obj1 = eval("(" + json + ")");
-    return obj1.info[0];
+    return obj1.info;
 }
 function postlocation() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息

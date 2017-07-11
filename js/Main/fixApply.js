@@ -29,16 +29,30 @@ function Init(evt) {
     createmodelselectItem(document.getElementById("modelselect"));
     createspecialrequestItem(document.getElementById("specialrequest"));
     createfixEquipItem(document.getElementById("fixEquip"));
-    if (patient.Progress>= 3) {
-        var info = getfixInfomation(treatmentID);
-        document.getElementById("modelselect").value = info.materialName;
-        document.getElementById("specialrequest").value = info.require;
-        document.getElementById("fixEquip").value = info.fixedequipname;
-        document.getElementById("bodyPost").value = info.BodyPosition;     
-        document.getElementById("appointtime").value = info.equipname + " " + info.Date+ " " + toTime(info.Begin) + "-" + toTime(info.End);
-        document.getElementById("applyuser").innerHTML = info.username;
-        document.getElementById("time").innerHTML = info.ApplicationTime;
-
+    var info = getfixInfomation(treatmentID);
+    $("#current-tab").text("疗程" + patient.Treatmentname + "体位固定申请");
+    if (patient.Progress >= 3) {
+        for (var i = 0; i < info.length; i++) {
+            if (info[i].treatmentname == patient.Treatmentname) {
+                document.getElementById("modelselect").value = info[i].materialID;
+                document.getElementById("specialrequest").value = info[i].require;
+                document.getElementById("fixEquip").value = info[i].fixedequipid;
+                document.getElementById("bodyPost").value = info[i].BodyPosition;
+                document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
+                document.getElementById("applyuser").innerHTML = info[i].username;
+                document.getElementById("time").innerHTML = info[i].ApplicationTime;
+            } else {
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '体位固定申请</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                    + '<div class="item col-xs-6">模具：<span class="underline">' + info[i].materialName + '</span></div>'
+                    + '<div class="item col-xs-6">固定装置：<span class="underline">' + info[i].fixedequipname + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">体位:<span class="underline">' + info[i].BodyPosition + '</span></div>'
+                    + '<div class="item col-xs-6">特殊要求：<span class="underline">' + info[i].fixedrequire + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div></div>';
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+            }
+        }
     } else {
         createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
         var date = new Date();
@@ -52,7 +66,19 @@ function Init(evt) {
             CreateNewAppiontTable(event);
         }, false);//根据条件创建预约表
         document.getElementById("sure").addEventListener("click", checkAllTable, false);
-      
+        for (var i = 0; i < info.length; i++) {
+            if (info[i].treatmentname != patient.Treatmentname) {
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '体位固定申请</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                    + '<div class="item col-xs-6">模具：<span class="underline">' + info[i].materialName + '</span></div>'
+                    + '<div class="item col-xs-6">固定装置：<span class="underline">' + info[i].fixedequipname + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">体位:<span class="underline">' + info[i].BodyPosition + '</span></div>'
+                    + '<div class="item col-xs-6">特殊要求：<span class="underline">' + info[i].fixedrequire + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div></div>';
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+            }
+        }
     }
 }
 //设备下拉菜单
@@ -104,7 +130,7 @@ function getfixInfomation(treatmentID) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var obj1 = eval("(" + json + ")");
-    return obj1.info[0];
+    return obj1.info;
 }
 function postfix() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
