@@ -47,8 +47,74 @@ $(document).ready(function () {
 }*/
 
 function saveTreatment(){
-    var diagnose, fixed, location, design, replace, treatmentname, review, group;
-    //$("#register").
+    var diagnose = "";
+    var fixed = "";
+    var location = "";
+    var design = ""
+    var replace = "";
+    var treatmentname = "";
+    var review = "";
+    var group = "";
+    $("#diagnose").find("td").each(function(){
+        if ($(this).find("i")[0].className != "") {
+            var temp = $(this).attr("id").split("_");
+            diagnose = temp[1];
+            group = temp[2];
+        }
+    });
+    $("#fixed").find("td").each(function(){
+        if ($(this).find("i")[0].className != "") {
+            var temp = $(this).attr("id").split("_");
+            fixed = temp[1];
+        }
+    });
+    $("#location").find("td").each(function(){
+        if ($(this).find("i")[0].className != "") {
+            var temp = $(this).attr("id").split("_");
+            location = temp[1];
+        }
+    });
+    $("#design").find("td").each(function(){
+        if ($(this).find("i")[0].className != "") {
+            var temp = $(this).attr("id").split("_");
+            design = temp[1];
+            review = temp[2];
+        }
+    });
+    $("#replace").find("td").each(function(){
+        if ($(this).find("i")[0].className != "") {
+            var temp = $(this).attr("id").split("_");
+            replace = temp[1];
+        }
+    });
+    treatmentname = $("#register").find("td").length;
+    alert("diagnose:" + diagnose + ",fixed:" + fixed + ",location:" + location + ",design:" + design + ",replace:" + replace + ",treatmentname:" + treatmentname + ",review:" + review + ",group:" + group);
+    $("#addTreatmentRecord").html("");
+    /*$.ajax({
+        type: "POST",
+        url: "../../pages/Main/Records/xxx.ashx",
+        async: true,
+        dateType: "json",
+        data:{
+            diagnose:diagnose,
+            fixed:fixed,
+            location:location,
+            design:design,
+            replace:replace,
+            treatmentname:treatmentname,
+            review:review,
+            group:group
+        },
+        success: function (data) {
+            alert("新增成功！");
+            $("#addTreatmentRecord").html("");
+            var patient = getPatient();
+            Paging(patient);
+        },
+        error: function(){
+            alert("error");
+        }
+    });*/
 }
 
 function checkAddTreatment(Radiotherapy_ID){
@@ -83,6 +149,11 @@ function checkAddTreatment(Radiotherapy_ID){
                             $("#register_"+i).click(function(){
                                 if ($(this).find("i")[0].className != "") {
                                     $(this).find("i").removeClass();
+                                    $(this).parent().nextAll().each(function(){
+                                        $(this).find("td").each(function(){
+                                            $(this).find("i").removeClass();
+                                        });
+                                    });
                                 }else{
                                     var currentrowselected = 0;
                                     $(this).parent().find("td").each(function(){
@@ -104,6 +175,11 @@ function checkAddTreatment(Radiotherapy_ID){
                                 $("#diagnose_"+ obj.treatinfo[i].diagnose + "_" + obj.treatinfo[i].group).click(function(){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
+                                        $(this).parent().nextAll().each(function(){
+                                            $(this).find("td").each(function(){
+                                                $(this).find("i").removeClass();
+                                            });
+                                        });
                                     }else{
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
@@ -139,6 +215,11 @@ function checkAddTreatment(Radiotherapy_ID){
                                 $("#fixed_"+ obj.treatinfo[i].fixed).click(function(){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
+                                        $(this).parent().nextAll().each(function(){
+                                            $(this).find("td").each(function(){
+                                                $(this).find("i").removeClass();
+                                            });
+                                        });
                                     }else{
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
@@ -174,6 +255,11 @@ function checkAddTreatment(Radiotherapy_ID){
                                 $("#location_"+ obj.treatinfo[i].location).click(function(){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
+                                        $(this).parent().nextAll().each(function(){
+                                            $(this).find("td").each(function(){
+                                                $(this).find("i").removeClass();
+                                            });
+                                        });
                                     }else{
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
@@ -209,6 +295,11 @@ function checkAddTreatment(Radiotherapy_ID){
                                 $("#design_"+ obj.treatinfo[i].design + "_" + obj.treatinfo[i].review).click(function(){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
+                                        $(this).parent().nextAll().each(function(){
+                                            $(this).find("td").each(function(){
+                                                $(this).find("i").removeClass();
+                                            });
+                                        });
                                     }else{
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
