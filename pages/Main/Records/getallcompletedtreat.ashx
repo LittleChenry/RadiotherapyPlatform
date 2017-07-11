@@ -38,6 +38,8 @@ public class getallcompletedtreat : IHttpHandler {
         {
             string fix="";
             string location = "";
+            string design = "";
+            string replace = "";
             if (reader["Fixed_ID"].ToString() != "")
             {
                 string sqlCommand3 = "select Operate_User_ID from fixed where ID=@fix";
@@ -68,9 +70,35 @@ public class getallcompletedtreat : IHttpHandler {
                     location= reader["Fixed_ID"].ToString();
                 }
             }
-
-
-            backText.Append("{\"diagnose\":\"" + reader["DiagnosisRecord_ID"].ToString() + "\",\"fixed\":\"" + fix + "\",\"location\":\"" + location + "\",\"design\":\"" + reader["Design_ID"].ToString() + "\",\"replace\":\"" + reader["Replacement_ID"].ToString() + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\"}");
+            if (reader["Review_ID"].ToString() != "")
+            {
+                string sqlCommand3 = "select _User_ID from review where ID=@review";
+                sqlOperation1.AddParameterWithValue("@review", Convert.ToInt32(reader["Review_ID"].ToString()));
+                string user = sqlOperation1.ExecuteScalar(sqlCommand3);
+                if (user == "")
+                {
+                    design = "";
+                }
+                else
+                {
+                    design = reader["Design_ID"].ToString();
+                }
+            }
+            if (reader["Replacement_ID"].ToString() != "")
+            {
+                string sqlCommand3 = "select Operate_User_ID from replacement where ID=@replace";
+                sqlOperation1.AddParameterWithValue("@replace", Convert.ToInt32(reader["Replacement_ID"].ToString()));
+                string user = sqlOperation1.ExecuteScalar(sqlCommand3);
+                if (user == "")
+                {
+                    replace = "";
+                }
+                else
+                {
+                    replace = reader["Replacement_ID"].ToString();
+                }
+            }
+            backText.Append("{\"diagnose\":\"" + reader["DiagnosisRecord_ID"].ToString() + "\",\"fixed\":\"" + fix + "\",\"location\":\"" + location + "\",\"design\":\"" + design + "\",\"replace\":\"" + replace + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"review\":\"" + reader["Review_ID"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");
