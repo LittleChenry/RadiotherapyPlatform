@@ -40,7 +40,6 @@ public class ReplacementApply : IHttpHandler {
     public string AddReplaceRecord(HttpContext context)
     {
         //获取表单信息
-
         string appoint = context.Request.QueryString["id"];
         string treatid = context.Request.QueryString["treatid"];
         string user = context.Request.QueryString["user"];

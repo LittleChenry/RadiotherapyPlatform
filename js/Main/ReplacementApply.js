@@ -28,15 +28,25 @@ function Init(evt) {
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     createrequireItem(document.getElementById("replacementrequire"));
-    if (patient.Progress >=12) {
-        var info = getReplaceInfomation(treatmentID);
-        document.getElementById("replacementrequire").value = info.require;
-        document.getElementById("replacementrequire").disabled = "true";
-        document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
-        document.getElementById("chooseappoint").disabled = "disabled";
-        document.getElementById("applyuser").innerHTML = info.username;
-        document.getElementById("time").innerHTML = info.ApplicationTime;
+    var info = getReplaceInfomation(treatmentID);
+    $("#current-tab").text("疗程" + patient.Treatmentname + "复位申请");
+    if (patient.Progress >=13) {
+        for (var i = 0; i < info.length; i++) {
+            if (info[i].treatmentname == patient.Treatmentname) {
+                document.getElementById("replacementrequire").value = info[i].requirement;
+                document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date.split(" ")[0] + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
+                document.getElementById("applyuser").innerHTML = info[i].username;
+                document.getElementById("time").innerHTML = info[i].ApplicationTime;
+            } else {
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '复位申请</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                    + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div></div>';
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
 
+            }
+        }
     } else {
         createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
         var date = new Date();
@@ -50,6 +60,16 @@ function Init(evt) {
             CreateNewAppiontTable(event);
         }, false);//根据条件创建预约表
         document.getElementById("sure").addEventListener("click", checkAllTable, false);
+        for (var i = 0; i < info.length; i++) {
+            if (info[i].treatmentname != patient.Treatmentname) {
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '复位申请</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                    + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div></div>';
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+            }
+        }
 
     }
 }
@@ -80,7 +100,7 @@ function getReplaceInfomation(treatmentID) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var obj1 = eval("(" + json + ")");
-    return obj1.info[0];
+    return obj1.info;
 }
 function postreplace() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
