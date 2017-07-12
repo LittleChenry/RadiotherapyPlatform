@@ -86,39 +86,49 @@
                 </div>
                 <div class="paper-content">
                     <div class="content-title">
-                        <span>记录信息填写：</span>
-                    </div>  
-                    <div class="single-row">
-                        <div class="item area-group col-xs-12">
-                            <span class="col-xs-2" style="padding-left:0px;">体位详细描述：</span>
-                            <textarea id="BodyPositionDetail" class="form-area col-xs-10" name="BodyPositionDetail" disabled="disabled"></textarea>
-                        </div>
-                    </div>                   
-                    <div class="single-row">
-                        <div class="item area-group col-xs-12">
-                            <span class="col-xs-2" style="padding-left:0px;">备注：</span>
-                            <textarea id="Remarks" name="Remarks" class="form-area col-xs-10" disabled="disabled"></textarea>
-                        </div>                                                                 
+                        <span>体位固定记录：</span>
                     </div>
-                    <div class="single-row">
-                        <div class="item col-xs-12">
-                            <span class="col-xs-2" style="padding-left:0px;">体位图片：</span>
-                        </div>
+                    <div class="single-row tab-row">
+                        <ul id="tabs" class="nav nav-tabs">
+                            <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
+                        </ul>
                     </div>
-                    <div class="single-row">
-                        <div class="item col-xs-12">
-                            <div id="multipic" class="imgbox multifile">
-                                <div class="boxes">
-                                    <div class="imgnum">
-                                        <input type="file" name="f1" class="multifilepath filepath" />
-                                        <span class="closecamera closearea"><i class="fa fa-times"></i></span>
-                                        <img src="../../../img/camera.png" class="camera-picture" />
-                                        <img class="img"/>
+                    <div id="tab-content" class="tab-content">
+                        <div class="tab-pane active" id="tab">
+                            <div class="single-row">
+                                <div class="item area-group col-xs-12">
+                                    <span class="col-xs-2" style="padding-left:0px;">体位详细描述：</span>
+                                    <textarea id="BodyPositionDetail" class="form-area col-xs-10" name="BodyPositionDetail" disabled="disabled"></textarea>
+                                </div>
+                            </div>                   
+                            <div class="single-row">
+                                <div class="item area-group col-xs-12">
+                                    <span class="col-xs-2" style="padding-left:0px;">备注：</span>
+                                    <textarea id="Remarks" name="Remarks" class="form-area col-xs-10" disabled="disabled"></textarea>
+                                </div>                                                                 
+                            </div>
+                            <div class="single-row">
+                                <div class="item col-xs-12">
+                                    <span class="col-xs-2" style="padding-left:0px;">体位图片：</span>
+                                </div>
+                            </div>
+                            <div class="single-row">
+                                <div class="item col-xs-12">
+                                    <div id="multipic" class="imgbox multifile">
+                                        <div class="boxes">
+                                            <div class="imgnum">
+                                                <input type="file" name="f1" class="multifilepath filepath" />
+                                                <span class="closecamera closearea"><i class="fa fa-times"></i></span>
+                                                <img src="../../../img/camera.png" class="camera-picture" />
+                                                <img class="img"/>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
                 <div class="paper-footer">
                     <div class="single-row">
