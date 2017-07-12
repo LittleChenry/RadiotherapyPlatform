@@ -147,12 +147,12 @@ function Init(evt) {
            } else {
                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '复位记录</a></li>';
                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
-                   + '<div class="col-xs-12" style="padding-left:0px;"><span class="form-text col-xs-12">参数变化(按照PDF填写):</span></div></div>'
+                   + '<div class="col-xs-12" style="padding-left:0px;"><span class="form-text col-xs-12">参数变化(按照PDF填写)：</span></div></div>'
                    + '<div class="single-row"><div class="item area-group col-xs-12"><table id="ReplacementRecord" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">'
                    + '<thead><tr><th>方向</th><th>原始中心(cm)</th><th>计划中心(cm)</th><th>移床参数(cm)</th><th>复位结果(cm)</th><th>差值(cm)</th></tr></thead>'
                    + '<tbody style="text-align:center;"><tr><td>x</td><td>' + info[i].OriginCenter.split(",")[0] + '</td><td>' + info[i].PlanCenter.split(",")[0] + '</td><td>' + info[i].Movement.split(",")[0] + '</td><td>' + info[i].Result.split(",")[0] + '</td><td>' + info[i].Distance.split(",")[0] + '</td></tr>'
-                   + '<tr><td>x</td><td>' + info[i].OriginCenter.split(",")[1] + '</td><td>' + info[i].PlanCenter.split(",")[1] + '</td><td>' + info[i].Movement.split(",")[1] + '</td><td>' + info[i].Result.split(",")[1] + '</td><td>' + info[i].Distance.split(",")[1] + '</td></tr>'
-                   + '<tr><td>x</td><td>' + info[i].OriginCenter.split(",")[2] + '</td><td>' + info[i].PlanCenter.split(",")[2] + '</td><td>' + info[i].Movement.split(",")[2] + '</td><td>' + info[i].Result.split(",")[2] + '</td><td>' + info[i].Distance.split(",")[2] + '</td></tr></tbody></table></div></div>'
+                   + '<tr><td>y</td><td>' + info[i].OriginCenter.split(",")[1] + '</td><td>' + info[i].PlanCenter.split(",")[1] + '</td><td>' + info[i].Movement.split(",")[1] + '</td><td>' + info[i].Result.split(",")[1] + '</td><td>' + info[i].Distance.split(",")[1] + '</td></tr>'
+                   + '<tr><td>z</td><td>' + info[i].OriginCenter.split(",")[2] + '</td><td>' + info[i].PlanCenter.split(",")[2] + '</td><td>' + info[i].Movement.split(",")[2] + '</td><td>' + info[i].Result.split(",")[2] + '</td><td>' + info[i].Distance.split(",")[2] + '</td></tr></tbody></table></div></div>'
                    + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">参考DRR：</span></div></div>';
                var pictures = info[i].ReferenceDRRPicture.split(",");
                if (info[i].ReferenceDRRPicture == "") {
@@ -187,12 +187,12 @@ function Init(evt) {
             if (info[i].treatmentname != patient.Treatmentname) {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '复位记录</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
-                    + '<div class="col-xs-12" style="padding-left:0px;"><span class="form-text col-xs-12">参数变化(按照PDF填写):</span></div></div>'
+                    + '<div class="col-xs-12" style="padding-left:0px;"><span class="form-text col-xs-12">参数变化(按照PDF填写)：</span></div></div>'
                     + '<div class="single-row"><div class="item area-group col-xs-12"><table id="ReplacementRecord" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">'
                     + '<thead><tr><th>方向</th><th>原始中心(cm)</th><th>计划中心(cm)</th><th>移床参数(cm)</th><th>复位结果(cm)</th><th>差值(cm)</th></tr></thead>'
                     + '<tbody style="text-align:center;"><tr><td>x</td><td>' + info[i].OriginCenter.split(",")[0] + '</td><td>' + info[i].PlanCenter.split(",")[0] + '</td><td>' + info[i].Movement.split(",")[0] + '</td><td>' + info[i].Result.split(",")[0] + '</td><td>' + info[i].Distance.split(",")[0] + '</td></tr>'
-                    + '<tr><td>x</td><td>' + info[i].OriginCenter.split(",")[1] + '</td><td>' + info[i].PlanCenter.split(",")[1] + '</td><td>' + info[i].Movement.split(",")[1] + '</td><td>' + info[i].Result.split(",")[1] + '</td><td>' + info[i].Distance.split(",")[1] + '</td></tr>'
-                    + '<tr><td>x</td><td>' + info[i].OriginCenter.split(",")[2] + '</td><td>' + info[i].PlanCenter.split(",")[2] + '</td><td>' + info[i].Movement.split(",")[2] + '</td><td>' + info[i].Result.split(",")[2] + '</td><td>' + info[i].Distance.split(",")[2] + '</td></tr></tbody></table></div></div>'
+                    + '<tr><td>y</td><td>' + info[i].OriginCenter.split(",")[1] + '</td><td>' + info[i].PlanCenter.split(",")[1] + '</td><td>' + info[i].Movement.split(",")[1] + '</td><td>' + info[i].Result.split(",")[1] + '</td><td>' + info[i].Distance.split(",")[1] + '</td></tr>'
+                    + '<tr><td>z</td><td>' + info[i].OriginCenter.split(",")[2] + '</td><td>' + info[i].PlanCenter.split(",")[2] + '</td><td>' + info[i].Movement.split(",")[2] + '</td><td>' + info[i].Result.split(",")[2] + '</td><td>' + info[i].Distance.split(",")[2] + '</td></tr></tbody></table></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">参考DRR：</span></div></div>';
                 var pictures = info[i].ReferenceDRRPicture.split(",");
                 if (info[i].ReferenceDRRPicture == "") {
