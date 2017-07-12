@@ -91,11 +91,11 @@ function saveTreatment(){
     treatmentname = $("#register").find("td").length;
     alert("diagnose:" + diagnose + ",fixed:" + fixed + ",location:" + location + ",design:" + design + ",replace:" + replace + ",treatmentname:" + treatmentname + ",review:" + review + ",group:" + group + ",Radiotherapy_ID:" + Radiotherapy_ID);
     $("#addTreatmentRecord").html("");
-    /*$.ajax({
-        type: "POST",
-        url: "../../pages/Main/Records/xxx.ashx",
+   $.ajax({
+        type: "post",
+        url: "../../pages/main/records/AddTreatment.ashx",
         async: true,
-        dateType: "json",
+        datetype: "json",
         data:{
             diagnose:diagnose,
             fixed:fixed,
@@ -104,18 +104,20 @@ function saveTreatment(){
             replace:replace,
             treatmentname:treatmentname,
             review:review,
-            group:group
+            group: group,
+            Radiotherapy_ID:Radiotherapy_ID
+
         },
         success: function (data) {
             alert("新增成功！");
-            $("#addTreatmentRecord").html("");
-            var patient = getPatient();
-            Paging(patient);
+            $("#addtreatmentrecord").html("");
+            var patient = getpatient();
+            paging(patient);
         },
         error: function(){
             alert("error");
         }
-    });*/
+    });
 }
 
 function checkAddTreatment(Radiotherapy_ID){
