@@ -41,7 +41,7 @@ function Init(evt) {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '复位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
 
@@ -65,7 +65,7 @@ function Init(evt) {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '复位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
