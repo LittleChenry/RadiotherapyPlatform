@@ -58,6 +58,9 @@ public class Getfinishedreplace : IHttpHandler {
         sqlOperation.Close();
         sqlOperation.Dispose();
         sqlOperation = null;
+        sqlOperation1.Close();
+        sqlOperation1.Dispose();
+        sqlOperation1 = null;
         return backText.ToString();
 
     }

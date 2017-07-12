@@ -50,9 +50,14 @@
                     <div class="content-title">
                         <span>病案信息：</span>
                     </div>
+                   <div class="single-row">
+                        <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                        <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
+                        <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
+                    </div>
                     <div class="single-row">
-                        <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
-                        <div class="item col-xs-4">患病部位：<span id="part"  class="underline"></span></div>
+                        <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                        <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
                         <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                     </div>
                 </div>  
@@ -72,11 +77,11 @@
                     </div>  
                     <div class="single-row">
                      <div class="col-xs-12" style="padding-left:40%;" >
-                          <a id="viewpdf" href="../../../upload/PDF/20170704景宇 1216073606.pdf" target="_blank" class="btn btn-default">查看计划PDF文档</a>
+                          <a id="viewpdf" disabled="disabled" href="../../../upload/PDF/20170704景宇 1216073606.pdf" target="_blank" class="btn btn-default">查看计划PDF文档</a>
                      </div>
                     </div>
                 </div>
-              <form id="saveRepalceRecord" name="saveReplaceRecord" method="post" runat="server" enctype="multipart/form-data"> 
+              <form id="saveReplaceRecord" name="saveReplaceRecord" method="post" runat="server" enctype="multipart/form-data"> 
                 <input type="hidden" name="ispostback" value="true" />
                 <input type="hidden"  id="hidetreatID" name="hidetreatID" />
                 <input type="hidden"  id="userID" name="userID" />
@@ -85,6 +90,13 @@
                     <div class="content-title">
                         <span>复位记录填写：</span>
                     </div>
+                     <div class="single-row">
+                            <ul id="tabs" class="nav nav-tabs">
+                                <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
+                            </ul>
+                    </div>
+                     <div id="tab-content" class="tab-content">
+                    <div class="tab-pane active" id="tab">
                     <div class="single-row">
                         <div class="col-xs-6" style="padding-left:0px;">
                             <span class="form-text col-xs-12">参数变化(按照PDF填写)：</span>
@@ -100,52 +112,62 @@
                                         <th>计划中心(cm)</th>
                                         <th>移床参数(cm)</th>
                                         <th>复位结果(cm)</th>
+                                        <th>差值(cm)</th>
                                     </tr>
                                 </thead>
                                 <tbody style="text-align:center;">
                                     <tr>
                                         <td>x</td>
                                         <td style="padding:0px;">
-                                            <input id="OriginCenter1" class="td-input" type="number" name="OriginCenter1"/>
+                                            <input id="OriginCenter1" class="td-input" disabled="disabled" type="number" name="OriginCenter1"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="PlanCenter1" class="td-input" type="number" name="PlanCenter1"/>
+                                            <input id="PlanCenter1" class="td-input" disabled="disabled" type="number" name="PlanCenter1"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="Movement1" class="td-input" type="number" name="Movement1"/>
+                                            <input id="Movement1" class="td-input" disabled="disabled" type="number" name="Movement1"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="Result1" class="td-input" type="number" name="Result1"/>
+                                            <input id="Result1" class="td-input" disabled="disabled" type="number" name="Result1"/>
+                                        </td>
+                                         <td style="padding:0px;">
+                                            <input id="distance1" class="td-input" disabled="disabled" type="number" name="distance1"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>y</td>
                                         <td style="padding:0px;">
-                                            <input id="OriginCenter2" class="td-input" type="number" name="OriginCenter2"/>
+                                            <input id="OriginCenter2" class="td-input" disabled="disabled" type="number" name="OriginCenter2"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="PlanCenter2" class="td-input" type="number" name="PlanCenter2"/>
+                                            <input id="PlanCenter2" class="td-input" disabled="disabled" type="number" name="PlanCenter2"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="Movement2" class="td-input" type="number" name="Movement2"/>
+                                            <input id="Movement2" class="td-input" disabled="disabled" type="number" name="Movement2"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="Result2" class="td-input" type="number" name="Result2"/>
+                                            <input id="Result2" class="td-input" disabled="disabled" type="number" name="Result2"/>
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="distance2" class="td-input" disabled="disabled" type="number" name="distance2"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>z</td>
                                         <td style="padding:0px;">
-                                            <input id="OriginCenter3" class="td-input" type="number" name="OriginCenter3"/>
+                                            <input id="OriginCenter3" class="td-input" disabled="disabled" type="number" name="OriginCenter3"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="PlanCenter3" class="td-input" type="number" name="PlanCenter3"/>
+                                            <input id="PlanCenter3" class="td-input" disabled="disabled" type="number" name="PlanCenter3"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="Movement3" class="td-input" type="number" name="Movement3"/>
+                                            <input id="Movement3" class="td-input" disabled="disabled" type="number" name="Movement3"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="Result3" class="td-input" type="number" name="Result3"/>
+                                            <input id="Result3" class="td-input" disabled="disabled" type="number" name="Result3"/>
+                                        </td>
+                                        <td style="padding:0px;">
+                                            <input id="distance3" class="td-input" disabled="disabled" type="number" name="distance3"/>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -163,7 +185,7 @@
                             <div id="multipic_DRR" class="imgbox multifile">
                                 <div id="firstdrr" class="boxes">
                                     <div class="imgnum">
-                                        <input type="file" name="f1" class="multifilepath filepath" />
+                                        <input disabled="disabled" type="file" name="f1" class="multifilepath filepath" />
                                         <span class="closecamera closearea"><i class="fa fa-times"></i></span>
                                         <img src="../../../img/camera.png" class="camera-picture" />
                                         <img class="img"/>
@@ -183,7 +205,7 @@
                             <div id="multipic_yanzheng" class="imgbox multifile">
                                 <div id="firstyanzheng" class="boxes">
                                     <div class="imgnum">
-                                        <input type="file" name="f2" class="multifilepath1 filepath" />
+                                        <input disabled="disabled" type="file" name="f2" class="multifilepath1 filepath" />
                                         <span class="closecamera closearea"><i class="fa fa-times"></i></span>
                                         <img src="../../../img/camera.png" class="camera-picture" />
                                         <img class="img"/>
@@ -195,9 +217,11 @@
                     <div class="single-row">
                         <div class="item area-group col-xs-12">
                             <span class="col-xs-2" style="padding-left:0px;">备注：</span>
-                            <textarea id="Remarks" name="Remarks" class="form-area col-xs-10" ></textarea>
+                            <textarea id="Remarks" disabled="disabled" name="Remarks" class="form-area col-xs-10" ></textarea>
                         </div>                                                                 
                     </div>
+                    </div>
+                   </div>
                  </div>
                 <div class="paper-footer">
                 <div class="single-row">

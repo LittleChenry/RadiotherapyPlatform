@@ -43,11 +43,19 @@ public class getreplaceApply : IHttpHandler {
         sqlOperation.AddParameterWithValue("@treatid", treatID);
         string desgin = "select PDF from design,treatment where treatment.Design_ID=design.ID and treatment.ID=@treatid";
         string pdf = sqlOperation.ExecuteScalar(desgin);
+        string sqlCommand2 = "select ReferenceCenter,TreatmentCenter,Movement from review,treatment where treatment.Review_ID=review.ID and treatment.ID=@treatid";
+        sqlOperation1.AddParameterWithValue("@treatid", treatID);
+        MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(sqlCommand2);
+        string data="";
+        if (reader1.Read())
+        {
+            data = data + reader1["ReferenceCenter"].ToString() + "," + reader1["TreatmentCenter"].ToString() + "," + reader1["Movement"].ToString();
+        }
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"replace\":[");
         while (reader.Read())
         {
-            backText.Append("{\"replacerequire\":\"" + reader["replacerequire"].ToString() + "\",\"pdf\":\"" + pdf.ToString()+ "\",\"ApplicationUser\":\"" + reader["doctor"].ToString() + "\",\"ApplicationTime\":\"" + reader["ApplicationTime"].ToString() 
+            backText.Append("{\"replacerequire\":\"" + reader["replacerequire"].ToString() + "\",\"pdf\":\"" + pdf.ToString() + "\",\"data\":\"" + data + "\",\"ApplicationUser\":\"" + reader["doctor"].ToString() + "\",\"ApplicationTime\":\"" + reader["ApplicationTime"].ToString() 
                      + "\"}");
         }     
         reader.Close();

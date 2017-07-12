@@ -23,81 +23,206 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("treatID").innerHTML = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
-    document.getElementById("treatID").innerHTML = treatmentID;
-    document.getElementById("part").innerHTML = patient.partname;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
+    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
+    document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
+    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     var replacerecordinfo = getreplacerecordInfo(treatmentID);
     document.getElementById("requireID").innerHTML = replacerecordinfo.replacerequire;
     document.getElementById("ApplicationUser").innerHTML = replacerecordinfo.ApplicationUser;
     document.getElementById("ApplicationTime").innerHTML = replacerecordinfo.ApplicationTime;
     document.getElementById("viewpdf").href = replacerecordinfo.pdf;
-    if (patient.Progress >= 15) {
-        var info = getreplacerecordInfomation(treatmentID);
-        var ReplacementRecord = document.getElementById("ReplacementRecord")
-        for (var i = 0; i < 3; i++) {
-            ReplacementRecord.rows[i+1].cells[1].innerHTML = info.OriginCenter.split(",")[i];
-            ReplacementRecord.rows[i+1].cells[2].innerHTML = info.PlanCenter.split(",")[i];
-            ReplacementRecord.rows[i+1].cells[3].innerHTML = info.Movement.split(",")[i];
-            ReplacementRecord.rows[i+1].cells[4].innerHTML = info.Result.split(",")[i];
-        }
-        var boxes = document.getElementById("multipic_DRR");
-        var firstdrr = document.getElementById("firstdrr");
-        firstdrr.style.display = "none";
-        var pictures = info.ReferenceDRRPicture.split(",");
-        if (info.ReferenceDRRPicture == "") {
-            boxes.innerHTML = "无";
+    document.getElementById("OriginCenter1").value = replacerecordinfo.data.split(",")[0];
+    document.getElementById("OriginCenter2").value = replacerecordinfo.data.split(",")[1];
+    document.getElementById("OriginCenter3").value = replacerecordinfo.data.split(",")[2];
+    document.getElementById("PlanCenter1").value = replacerecordinfo.data.split(",")[3];
+    document.getElementById("PlanCenter2").value = replacerecordinfo.data.split(",")[4];
+    document.getElementById("PlanCenter3").value = replacerecordinfo.data.split(",")[5];
+    document.getElementById("Movement1").value = replacerecordinfo.data.split(",")[6];
+    document.getElementById("Movement2").value = replacerecordinfo.data.split(",")[7];
+    document.getElementById("Movement3").value = replacerecordinfo.data.split(",")[8];
+    $('#Movement1').bind('input propertychange', function () {
+        if (document.getElementById("Result1").value == "") {
+            document.getElementById("distance1").value = "";
         } else {
-            for (var i = 1; i < pictures.length; i++) {
-                var div = document.createElement("DIV");
-                div.className = "boxes";
-                var div1 = document.createElement("DIV");
-                div1.className = "imgnum";
-                var img = document.createElement("IMG");
-                img.addEventListener("click", showPicture, false);
-                img.className = "img";
-                img.src = pictures[i];
-                img.style.display = "block";
-                div1.appendChild(img);
-                div.appendChild(div1);
-                boxes.appendChild(div);
-            }
+            document.getElementById("distance1").value = parseInt(document.getElementById("Result1").value) - parseInt(document.getElementById("Movement1").value);
         }
-        var boxes1 = document.getElementById("multipic_yanzheng");
-        var firstyanzheng = document.getElementById("firstyanzheng");
-        firstyanzheng.style.display = "none";
-        var pictures = info.VerificationPicture.split(",");
-        if (info.VerificationPicture == "") {
-            boxes.innerHTML = "无";
+    });
+    $('#Result1').bind('input propertychange', function () {
+        if (document.getElementById("Movement1").value == "") {
+            document.getElementById("distance1").value = "";
         } else {
-            for (var i = 1; i < pictures.length; i++) {
-                var div = document.createElement("DIV");
-                div.className = "boxes";
-                var div1 = document.createElement("DIV");
-                div1.className = "imgnum";
-                var img = document.createElement("IMG");
-                img.addEventListener("click", showPicture, false);
-                img.className = "img";
-                img.src = pictures[i];
-                img.style.display = "block";
-                div1.appendChild(img);
-                div.appendChild(div1);
-                boxes1.appendChild(div);
-            }
+            document.getElementById("distance1").value = parseInt(document.getElementById("Result1").value) - parseInt(document.getElementById("Movement1").value);
         }
-        document.getElementById("Remarks").value = info.remark;
-        document.getElementById("Remarks").disabled = "true";
-        document.getElementById("operator").innerHTML = info.username;
-        document.getElementById("date").innerHTML = info.OperateTime;
-
-
+    });
+    $('#Movement2').bind('input propertychange', function () {
+        if (document.getElementById("Result2").value == "") {
+            document.getElementById("distance2").value = "";
+        } else {
+            document.getElementById("distance2").value = parseInt(document.getElementById("Result2").value) - parseInt(document.getElementById("Movement2").value);
+        }
+    });
+    $('#Movement3').bind('input propertychange', function () {
+        if (document.getElementById("Result3").value == "") {
+            document.getElementById("distance3").value = "";
+        } else {
+            document.getElementById("distance3").value = parseInt(document.getElementById("Result3").value) - parseInt(document.getElementById("Movement3").value);
+        }
+    });
+    $('#Result2').bind('input propertychange', function () {
+        if (document.getElementById("Movement2").value == "") {
+            document.getElementById("distance2").value = "";
+        } else {
+            document.getElementById("distance2").value = parseInt(document.getElementById("Result2").value) - parseInt(document.getElementById("Movement2").value);
+        }
+    });
+    $('#Result3').bind('input propertychange', function () {
+        if (document.getElementById("Movement3").value == "") {
+            document.getElementById("distance3").value = "";
+        } else {
+            document.getElementById("distance3").value = parseInt(document.getElementById("Result3").value) - parseInt(document.getElementById("Movement3").value);
+        }
+    });
+    var info = getreplacerecordInfomation(treatmentID);
+    $("#current-tab").text("疗程" + patient.Treatmentname + "复位记录");
+   if (patient.Progress >= 14) {
+       for (var i = 0; i < info.length; i++) {
+           if (info[i].treatmentname == patient.Treatmentname) {
+               var ReplacementRecord = document.getElementById("ReplacementRecord")
+               for (var k = 0; k < 3; k++) {
+                   ReplacementRecord.rows[k + 1].cells[1].innerHTML = info[i].OriginCenter.split(",")[k];
+                   ReplacementRecord.rows[k + 1].cells[2].innerHTML = info[i].PlanCenter.split(",")[k];
+                   ReplacementRecord.rows[k + 1].cells[3].innerHTML = info[i].Movement.split(",")[k];
+                   ReplacementRecord.rows[k + 1].cells[4].innerHTML = info[i].Result.split(",")[k];
+                   ReplacementRecord.rows[k + 1].cells[5].innerHTML = info[i].Distance.split(",")[k];
+               }
+               var boxes = document.getElementById("multipic_DRR");
+               var firstdrr = document.getElementById("firstdrr");
+               firstdrr.style.display = "none";
+               var pictures = info[i].ReferenceDRRPicture.split(",");
+               if (info[i].ReferenceDRRPicture == "") {
+                   boxes.innerHTML = "无";
+               } else {
+                   for (var k = 1; k < pictures.length; k++) {
+                       var div = document.createElement("DIV");
+                       div.className = "boxes";
+                       var div1 = document.createElement("DIV");
+                       div1.className = "imgnum";
+                       var img = document.createElement("IMG");
+                       img.addEventListener("click", showPicture, false);
+                       img.className = "img";
+                       img.src = pictures[k];
+                       img.style.display = "block";
+                       div1.appendChild(img);
+                       div.appendChild(div1);
+                       boxes.appendChild(div);
+                   }
+               }
+               var boxes1 = document.getElementById("multipic_yanzheng");
+               var firstyanzheng = document.getElementById("firstyanzheng");
+               firstyanzheng.style.display = "none";
+               var pictures = info[i].VerificationPicture.split(",");
+               if (info[i].VerificationPicture == "") {
+                   boxes1.innerHTML = "无";
+               } else {
+                   for (var k = 1; k < pictures.length; k++) {
+                       var div = document.createElement("DIV");
+                       div.className = "boxes";
+                       var div1 = document.createElement("DIV");
+                       div1.className = "imgnum";
+                       var img = document.createElement("IMG");
+                       img.className = "img";
+                       img.src = pictures[k];
+                       img.style.display = "block";
+                       div1.appendChild(img);
+                       div.appendChild(div1);
+                       boxes1.appendChild(div);
+                   }
+               }
+               document.getElementById("Remarks").value = info[i].Remarks;
+               document.getElementById("operator").innerHTML = info[i].username;
+               document.getElementById("date").innerHTML = info[i].OperateTime;
+           } else {
+               var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '复位记录</a></li>';
+               var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                   + '<div class="col-xs-12" style="padding-left:0px;"><span class="form-text col-xs-12">参数变化(按照PDF填写):</span></div></div>'
+                   + '<div class="single-row"><div class="item area-group col-xs-12"><table id="ReplacementRecord" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">'
+                   + '<thead><tr><th>方向</th><th>原始中心(cm)</th><th>计划中心(cm)</th><th>移床参数(cm)</th><th>复位结果(cm)</th><th>差值(cm)</th></tr></thead>'
+                   + '<tbody style="text-align:center;"><tr><td>x</td><td>' + info[i].OriginCenter.split(",")[0] + '</td><td>' + info[i].PlanCenter.split(",")[0] + '</td><td>' + info[i].Movement.split(",")[0] + '</td><td>' + info[i].Result.split(",")[0] + '</td><td>' + info[i].Distance.split(",")[0] + '</td></tr>'
+                   + '<tr><td>x</td><td>' + info[i].OriginCenter.split(",")[1] + '</td><td>' + info[i].PlanCenter.split(",")[1] + '</td><td>' + info[i].Movement.split(",")[1] + '</td><td>' + info[i].Result.split(",")[1] + '</td><td>' + info[i].Distance.split(",")[1] + '</td></tr>'
+                   + '<tr><td>x</td><td>' + info[i].OriginCenter.split(",")[2] + '</td><td>' + info[i].PlanCenter.split(",")[2] + '</td><td>' + info[i].Movement.split(",")[2] + '</td><td>' + info[i].Result.split(",")[2] + '</td><td>' + info[i].Distance.split(",")[2] + '</td></tr></tbody></table></div></div>'
+                   + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">参考DRR：</span></div></div>';
+               var pictures = info[i].ReferenceDRRPicture.split(",");
+               if (info[i].ReferenceDRRPicture == "") {
+                   content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes">无</div></div></div></div>';
+               } else {
+                   for (var k = 1; k < pictures.length; k++) {
+                       content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img  class="img"  src="' + pictures[k] + '" style="display:block" /></div></div></div></div></div>';
+                   }
+               }
+               content = content + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">验证图像：</span></div></div>';
+               var pictures1 = info[i].VerificationPicture.split(",");
+               if (info[i].VerificationPicture == "") {
+                   content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes">无</div></div></div></div>';
+               } else {
+                   for (var k = 1; k < pictures1.length; k++) {
+                       content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img class="img"  src="' + pictures1[k] + '" style="display:block" /></div></div></div></div></div>';
+                   }
+               }
+               content = content + '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + '</span></div></div>';
+               $("#tabs").append(tab);
+               $("#tab-content").append(content);
+               $("#tab-content").find("img").each(function () {
+                   $(this).bind("click", showPicture);
+               });
+           }
+       }
     } else {
         var date = new Date();
         document.getElementById("date").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         document.getElementById("operator").innerHTML = userName;
+        for (var i = 0; i < info.length; i++) {
+            if (info[i].treatmentname != patient.Treatmentname) {
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '复位记录</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                    + '<div class="col-xs-12" style="padding-left:0px;"><span class="form-text col-xs-12">参数变化(按照PDF填写):</span></div></div>'
+                    + '<div class="single-row"><div class="item area-group col-xs-12"><table id="ReplacementRecord" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">'
+                    + '<thead><tr><th>方向</th><th>原始中心(cm)</th><th>计划中心(cm)</th><th>移床参数(cm)</th><th>复位结果(cm)</th><th>差值(cm)</th></tr></thead>'
+                    + '<tbody style="text-align:center;"><tr><td>x</td><td>' + info[i].OriginCenter.split(",")[0] + '</td><td>' + info[i].PlanCenter.split(",")[0] + '</td><td>' + info[i].Movement.split(",")[0] + '</td><td>' + info[i].Result.split(",")[0] + '</td><td>' + info[i].Distance.split(",")[0] + '</td></tr>'
+                    + '<tr><td>x</td><td>' + info[i].OriginCenter.split(",")[1] + '</td><td>' + info[i].PlanCenter.split(",")[1] + '</td><td>' + info[i].Movement.split(",")[1] + '</td><td>' + info[i].Result.split(",")[1] + '</td><td>' + info[i].Distance.split(",")[1] + '</td></tr>'
+                    + '<tr><td>x</td><td>' + info[i].OriginCenter.split(",")[2] + '</td><td>' + info[i].PlanCenter.split(",")[2] + '</td><td>' + info[i].Movement.split(",")[2] + '</td><td>' + info[i].Result.split(",")[2] + '</td><td>' + info[i].Distance.split(",")[2] + '</td></tr></tbody></table></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">参考DRR：</span></div></div>';
+                var pictures = info[i].ReferenceDRRPicture.split(",");
+                if (info[i].ReferenceDRRPicture == "") {
+                    content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes">无</div></div></div></div>';
+                } else {
+                    for (var k = 1; k < pictures.length; k++) {
+                        content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img style="display:block"  src="' + pictures[k] + '" class="img"/></div></div></div></div></div>';
+                    }
+                }
+                content = content + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">验证图像：</span></div></div>';
+                var pictures1 = info[i].VerificationPicture.split(",");
+                if (info[i].VerificationPicture == "") {
+                    content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes">无</div></div></div></div>';
+                } else {
+                    for (var k = 1; k < pictures1.length; k++) {
+                        content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img style="display:block"  src="' + pictures1[k] + '" class="img"/></div></div></div></div></div>';
+                    }
+                }
+                content = content + '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + '</span></div></div>';
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+                $("#tab-content").find("img").each(function () {
+                    $(this).bind("click", showPicture);
+                });
+            }
+        }
     }
 }
 function showPicture() {
-    $("#showPic").click();
+    $("#myModal").modal("show");
     $("#pic").attr("src", this.src);
 }
 
@@ -130,7 +255,7 @@ function getreplacerecordInfomation(treatmentID) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var obj1 = eval("(" + json + ")");
-    return obj1.info[0];
+    return obj1.info;
 }
 function getreplacerecordInfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
@@ -167,8 +292,6 @@ function getPatientInfo(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.patient[0];
 }
-
-
 function getUserID() {
     var xmlHttp = new XMLHttpRequest();
     var url = "GetUserID.ashx";
@@ -248,7 +371,25 @@ function postimportReplaceRecord() {
         evt.preventDefault();
         return;
     }
-    document.getElementById("saveRepalceRecord").submit();
+    var form = new FormData(document.getElementById("saveReplaceRecord"));
+    $.ajax({
+        url: "ReplaceRecordRecord.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            if (data == "error") {
+                alert("更新失败");
+            } else {
+                alert("更新成功");
+            }
+            window.location.reload();
+        },
+        error: function (e) {
+            window.location.href = "Error.aspx";
+        },
+    });
 }
 function getchildNumber(boxgroup) {
     var r = [];
@@ -259,4 +400,12 @@ function getchildNumber(boxgroup) {
         }
     }
     return r.length ;
+}
+function remove() {
+    var groups = document.getElementsByTagName("input");
+    for (var k = 0; k <= groups.length - 1; k++) {
+            groups[k].removeAttribute("disabled");
+    }
+    document.getElementById("Remarks").removeAttribute("disabled");
+    document.getElementById("viewpdf").removeAttribute("disabled");
 }
