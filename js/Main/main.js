@@ -55,6 +55,7 @@ function saveTreatment(){
     var treatmentname = "";
     var review = "";
     var group = "";
+    var Radiotherapy_ID = $("#Radiotherapy_ID").val();
     $("#diagnose").find("td").each(function(){
         if ($(this).find("i")[0].className != "") {
             var temp = $(this).attr("id").split("_");
@@ -88,7 +89,7 @@ function saveTreatment(){
         }
     });
     treatmentname = $("#register").find("td").length;
-    alert("diagnose:" + diagnose + ",fixed:" + fixed + ",location:" + location + ",design:" + design + ",replace:" + replace + ",treatmentname:" + treatmentname + ",review:" + review + ",group:" + group);
+    alert("diagnose:" + diagnose + ",fixed:" + fixed + ",location:" + location + ",design:" + design + ",replace:" + replace + ",treatmentname:" + treatmentname + ",review:" + review + ",group:" + group + ",Radiotherapy_ID:" + Radiotherapy_ID);
     $("#addTreatmentRecord").html("");
     /*$.ajax({
         type: "POST",
@@ -122,6 +123,7 @@ function checkAddTreatment(Radiotherapy_ID){
     for (var i = 0; i < functions.length; i++) {
         if(functions[i].toString() == "18"){
             $("#addTreatment").removeAttr("disabled");
+            $("#Radiotherapy_ID").val(Radiotherapy_ID);
             $("#addTreatment").click({Radiotherapy_ID:Radiotherapy_ID},function(e){
                 $.ajax({
                     type: "POST",

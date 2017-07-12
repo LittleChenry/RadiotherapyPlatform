@@ -362,6 +362,7 @@
                 </div>
                 <div class="modal-body">
                     <table id="addTreatmentRecord" class="table table-bordered" ></table>
+                    <input id="Radiotherapy_ID" type="text" hidden="hidden" />
                     <label class="label-control">注：点击选择复用模块，灰色区域不可选择。</label>
                 </div>
                 <div class="modal-footer">
