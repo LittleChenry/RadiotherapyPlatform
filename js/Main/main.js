@@ -174,9 +174,9 @@ function checkAddTreatment(Radiotherapy_ID){
                             });
 
                             if (obj.treatinfo[i].diagnose != "") {
-                                var td1 = '<td id="diagnose_'+ obj.treatinfo[i].diagnose +'_' + obj.treatinfo[i].group + '"><i></i></td>';
+                                var td1 = '<td id="diagnose_'+ obj.treatinfo[i].diagnose +'_' + obj.treatinfo[i].group + '_' + i +'"><i></i></td>';
                                 $("#diagnose").append(td1);
-                                $("#diagnose_"+ obj.treatinfo[i].diagnose + "_" + obj.treatinfo[i].group).click(function(){
+                                $("#diagnose_"+ obj.treatinfo[i].diagnose + "_" + obj.treatinfo[i].group + "_" + i).click(function(){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
                                         $(this).parent().nextAll().each(function(){
@@ -214,9 +214,9 @@ function checkAddTreatment(Radiotherapy_ID){
                             }
 
                             if (obj.treatinfo[i].fixed != "") {
-                                var td2 = '<td id="fixed_'+ obj.treatinfo[i].fixed +'"><i></i></td>';
+                                var td2 = '<td id="fixed_'+ obj.treatinfo[i].fixed +'_' + i +'"><i></i></td>';
                                 $("#fixed").append(td2);
-                                $("#fixed_"+ obj.treatinfo[i].fixed).click(function(){
+                                $("#fixed_"+ obj.treatinfo[i].fixed + "_" + i).click(function(){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
                                         $(this).parent().nextAll().each(function(){
@@ -254,9 +254,9 @@ function checkAddTreatment(Radiotherapy_ID){
                             }
                             
                             if (obj.treatinfo[i].location != "") {
-                                var td3 = '<td id="location_'+ obj.treatinfo[i].location +'"><i></i></td>';
+                                var td3 = '<td id="location_'+ obj.treatinfo[i].location +'_' + i +'"><i></i></td>';
                                 $("#location").append(td3);
-                                $("#location_"+ obj.treatinfo[i].location).click(function(){
+                                $("#location_"+ obj.treatinfo[i].location + "_" + i).click(function(){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
                                         $(this).parent().nextAll().each(function(){
@@ -294,9 +294,9 @@ function checkAddTreatment(Radiotherapy_ID){
                             }
 
                             if (obj.treatinfo[i].design != "") {
-                                var td4 = '<td id="design_'+ obj.treatinfo[i].design + '_' + obj.treatinfo[i].review + '"><i></i></td>';
+                                var td4 = '<td id="design_'+ obj.treatinfo[i].design + '_' + obj.treatinfo[i].review + '_' + i +'"><i></i></td>';
                                 $("#design").append(td4);
-                                $("#design_"+ obj.treatinfo[i].design + "_" + obj.treatinfo[i].review).click(function(){
+                                $("#design_"+ obj.treatinfo[i].design + "_" + obj.treatinfo[i].review + "_" + i).click(function(){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
                                         $(this).parent().nextAll().each(function(){
@@ -334,9 +334,9 @@ function checkAddTreatment(Radiotherapy_ID){
                             }
 
                             if (obj.treatinfo[i].replace != "") {
-                                var td5 = '<td id="replace_'+ obj.treatinfo[i].replace +'"><i></i></td>';
+                                var td5 = '<td id="replace_'+ obj.treatinfo[i].replace +'_' + i +'"><i></i></td>';
                                 $("#replace").append(td5);
-                                $("#replace_"+ obj.treatinfo[i].replace).click(function(){
+                                $("#replace_"+ obj.treatinfo[i].replace + "_" + i).click(function(){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
                                     }else{
