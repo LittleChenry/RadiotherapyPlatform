@@ -65,7 +65,7 @@ public class FirstAcclerateRecord : IHttpHandler {
                 int Success2 = sqlOperation1.ExecuteNonQuery(strSqlCommand);
 
                 //将诊断ID填入treatment表
-                string inserttreat = "update treatment set Progress=13 where ID=@treat";
+                string inserttreat = "update treatment set Progress=15 where ID=@treat";
                 int Success = sqlOperation.ExecuteNonQuery(inserttreat);
                 if (Success > 0 && Success2 > 0)
                 {

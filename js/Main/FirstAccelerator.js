@@ -20,10 +20,13 @@ function Init(evt) {
     document.getElementById("contact").innerHTML = patient.Contact1;
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
-    document.getElementById("treatID").innerHTML = treatmentID;
-    document.getElementById("part").innerHTML = patient.partname;
-    document.getElementById("diaguser").innerHTML = patient.RegisterDoctor;
-    if (patient.Progress >= 13) {
+    document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
+    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
+    document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
+    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    if (patient.Progress >= 15) {
         var info = getfirstaccelerateInfomation(treatmentID);
         document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
         document.getElementById("chooseappoint").disabled = "disabled";
@@ -73,7 +76,8 @@ function getfirstaccelerateInfomation(treatmentID) {
     return obj1.info[obj1.info.length-1];
 }
 function postfirstaccelerate() {
-    var treatmentid = document.getElementById("treatID").innerHTML;
+    var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
+    var treatmentid = treatmentgroup.split("=")[1];
     var appointid = document.getElementById("idforappoint").value;
     if (document.getElementById("idforappoint").value == "0") {
         window.alert("请预约时间与设备");
@@ -81,6 +85,7 @@ function postfirstaccelerate() {
     }
     var xmlHttp = new XMLHttpRequest();
     var url = "FirstAcclerateRecord.ashx?id=" + appointid + "&treatid=" + treatmentid;
+    alert(url);
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     var result = xmlHttp.responseText;
@@ -346,4 +351,7 @@ function compare(evt1, evt2) {
     }
     return true;
 
+}
+function remove() {
+    document.getElementById("chooseappoint").removeAttribute("disabled");
 }
