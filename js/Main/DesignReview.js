@@ -32,22 +32,26 @@ function Init(evt) {
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
 
     if (patient.Progress >= 11) {
-        var designInfo = getDesignInfo(treatID);      
-        document.getElementById("Technology").innerHTML = designInfo.technology;
-        document.getElementById("Equipment").innerHTML = designInfo.equipment;      
-        document.getElementById("PlanSystem").innerHTML = designInfo.PlanSystem;
-        document.getElementById("IlluminatedNumber").innerHTML = designInfo.IlluminatedNumber;
-        document.getElementById("Coplanar").innerHTML = charge1(designInfo.Coplanar);
-        document.getElementById("MachineNumbe").innerHTML = designInfo.MachineNumbe;
-        document.getElementById("ControlPoint").innerHTML = designInfo.ControlPoint;
-        document.getElementById("Grid").innerHTML = designInfo.Grid_ID;
-        document.getElementById("Algorithm").innerHTML = designInfo.Algorithm_ID;
-        document.getElementById("Feasibility").innerHTML = charge(designInfo.Feasibility);       
+        var designInfo = getDesignInfo(treatID);
+        var length = designInfo.length;
+        for (var i = 0; i < length; i++) {
+            if (designInfo[i].Treatmentname == patient.Treatmentname) {
+                document.getElementById("Technology").innerHTML = designInfo[i].technology;
+                document.getElementById("Equipment").innerHTML = designInfo[i].equipment;
+                document.getElementById("PlanSystem").innerHTML = designInfo[i].PlanSystem;
+                document.getElementById("IlluminatedNumber").innerHTML = designInfo[i].IlluminatedNumber;
+                document.getElementById("Coplanar").innerHTML = charge1(designInfo[i].Coplanar);
+                document.getElementById("MachineNumbe").innerHTML = designInfo[i].MachineNumbe;
+                document.getElementById("ControlPoint").innerHTML = designInfo[i].ControlPoint;
+                document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
+                document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
+                document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);               
+            }
+        }
         document.getElementById("userID").value = userID;
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("time").innerHTML = getNowFormatDate();
         document.getElementById("hidetreatID").value = treatID;
-   
         if (patient.Progress >= 12) {
             var reviewInfo = getReviewInfo(treatID);
             document.getElementById("TechnologyConfirm").innerHTML = charge2(reviewInfo.TechnologyConfirm);
@@ -92,7 +96,7 @@ function getDesignInfo(treatID) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var obj1 = eval("(" + json + ")");
-    return obj1.designInfo[0];
+    return obj1.designInfo;
 }
 function getPatientInfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();

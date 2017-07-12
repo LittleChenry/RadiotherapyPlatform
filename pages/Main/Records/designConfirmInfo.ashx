@@ -45,8 +45,14 @@ public class designConfirmInfo : IHttpHandler {
         String designID = context.Request.QueryString["treatID"];
 
         int treatID = Convert.ToInt32(designID);
-        string sqlCommand = "select technology.name as tname,equipmenttype.type as eqname,grid.Name as gridname,algorithm.Name as algorithmname,plansystem.Name as planname,user.Name as doctor,design.* from technology,equipmenttype,design,user,treatment,plansystem,grid,algorithm where grid.ID=design.Grid_ID and plansystem.ID=design.PlanSystem_ID and algorithm.ID=design.Algorithm_ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.ID = @designid";
-        sqlOperation.AddParameterWithValue("@designid", treatID);
+        string sqlCommand4 = "select Patient_ID from treatment where treatment.ID=@treatID";
+        sqlOperation.AddParameterWithValue("@treatID", treatID);
+        int patientid = int.Parse(sqlOperation.ExecuteScalar(sqlCommand4));
+        string sqlcommand5= "select count(treatment.ID) from treatment,design where treatment.Patient_ID=@patient and treatment.Design_ID=design.ID";
+        sqlOperation.AddParameterWithValue("@patient", patientid);
+        int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand5));
+        int i = 1;
+        string sqlCommand = "select Treatmentname,technology.name as tname,equipmenttype.type as eqname,grid.Name as gridname,algorithm.Name as algorithmname,plansystem.Name as planname,user.Name as doctor,design.* from technology,equipmenttype,design,user,treatment,plansystem,grid,algorithm where grid.ID=design.Grid_ID and plansystem.ID=design.PlanSystem_ID and algorithm.ID=design.Algorithm_ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
         StringBuilder backText = new StringBuilder("{\"designInfo\":[");
@@ -69,11 +75,13 @@ public class designConfirmInfo : IHttpHandler {
                 DateTime dt3 = Convert.ToDateTime(date3);
                 date3 = dt3.ToString("yyyy-MM-dd HH:mm");
             }
-            string sqlCommand1 = "select user.Name from design,user,treatment where design.ID=treatment.Design_ID and design.Receive_User_ID =user.ID and treatment.ID = @treatid";
-            sqlOperation1.AddParameterWithValue("@treatid", treatID);
+            string sqlCommand1 = "select user.Name from design,user,treatment where design.ID=treatment.Design_ID and design.Receive_User_ID =user.ID and ReceiveTime = @ReceiveTime and treatment.Patient_ID=@patient";
+            sqlOperation1.AddParameterWithValue("@ReceiveTime", reader["ReceiveTime"].ToString());
+            sqlOperation1.AddParameterWithValue("@patient", patientid);
             string receiver = sqlOperation1.ExecuteScalar(sqlCommand1);
-            string sqlCommand2 = "select user.Name from design,user,treatment where design.ID=treatment.Design_ID and design.Submit_User_ID =user.ID and treatment.ID = @treatid";
-            sqlOperation2.AddParameterWithValue("@treatid", treatID);
+            string sqlCommand2 = "select user.Name from design,user,treatment where design.ID=treatment.Design_ID and design.Submit_User_ID =user.ID and ReceiveTime = @ReceiveTime and treatment.Patient_ID=@patient";
+            sqlOperation2.AddParameterWithValue("@ReceiveTime", reader["ReceiveTime"].ToString());
+            sqlOperation2.AddParameterWithValue("@patient", patientid);
             string submit= sqlOperation2.ExecuteScalar(sqlCommand2);
             string operate = null;
             if (reader["Confirm_User_ID"] is DBNull)
@@ -83,8 +91,9 @@ public class designConfirmInfo : IHttpHandler {
             }
             else
             {
-                string sqlCommand3 = "select user.Name from design,user,treatment where design.ID=treatment.Design_ID and design.Confirm_User_ID =user.ID and treatment.ID = @treatid";
-                sqlOperation2.AddParameterWithValue("@treatid", treatID);
+                string sqlCommand3 = "select user.Name from design,user,treatment where design.ID=treatment.Design_ID and design.Confirm_User_ID =user.ID and ReceiveTime = @ReceiveTime and treatment.Patient_ID=@patient";
+                sqlOperation2.AddParameterWithValue("@ReceiveTime", reader["ReceiveTime"].ToString());
+                sqlOperation2.AddParameterWithValue("@patient", patientid);
                 operate = sqlOperation2.ExecuteScalar(sqlCommand3);
             }
             string Do = reader["DosagePriority"].ToString();
@@ -93,12 +102,15 @@ public class designConfirmInfo : IHttpHandler {
             backText.Append("{\"apptime\":\"" + date1 + "\",\"ConfirmUser\":\"" + operate + "\",\"ConfirmTime\":\"" + date3 + "\",\"State\":\"" + reader["State"].ToString() + "\",\"advice\":\"" + reader["Checkadvice"].ToString() +
                  "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"ReceiveUser\":\"" + receiver + "\",\"ReceiveTime\":\"" + date2 + "\",\"SubmitUser\":\"" + submit + "\",\"SubmitTime\":\"" + date4 +
                   "\",\"technology\":\"" + reader["tname"].ToString() + "\",\"equipment\":\"" + reader["eqname"].ToString() + "\",\"PlanSystem\":\"" + reader["planname"].ToString() +
-                  "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage +
+                  "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() +
                    "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() +
                    "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\",\"Grid_ID\":\"" + reader["gridname"].ToString() + "\",\"Algorithm_ID\":\"" + reader["algorithmname"].ToString() +
                    "\",\"Feasibility\":\"" + reader["Feasibility"].ToString() + "\"}");
-
-
+            if (i < count)
+            {
+                backText.Append(",");
+            }
+            i++;
         }
 
         backText.Append("]}");

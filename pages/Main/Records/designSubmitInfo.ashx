@@ -44,9 +44,15 @@ public class designSubmitInfo : IHttpHandler {
         String designID = context.Request.QueryString["treatID"];
  
         int treatID = Convert.ToInt32(designID);
-        string sqlCommand = "select technology.name as tname,equipmenttype.type as eqname,user.Name as doctor,design.* from technology,equipmenttype,design,user,treatment where technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.ID = @designid";      
-        sqlOperation.AddParameterWithValue("@designid", treatID);
-        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        string sqlCommand = "select Patient_ID from treatment where treatment.ID=@treatID";
+        sqlOperation.AddParameterWithValue("@treatID", treatID);
+        int patientid = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
+        string sqlcommand2 = "select count(treatment.ID) from treatment,design where treatment.Patient_ID=@patient and treatment.Design_ID=design.ID";
+        sqlOperation.AddParameterWithValue("@patient", patientid);
+        int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
+        int i = 1;
+        string sqlCommand3 = "select Treatmentname,plansystem.Name as planname,grid.Name as gridname,algorithm.Name as alname,technology.name as tname,equipmenttype.type as eqname,user.Name as doctor,design.* from grid,algorithm,plansystem,technology,equipmenttype,design,user,treatment where design.Algorithm_ID=algorithm.ID and plansystem.ID=design.PlanSystem_ID and grid.ID=design.Grid_ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";      
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand3);
 
         StringBuilder backText = new StringBuilder("{\"designInfo\":[");
         //backText.Append(reader.Read());
@@ -64,9 +70,10 @@ public class designSubmitInfo : IHttpHandler {
             {
                 DateTime dt3 = Convert.ToDateTime(date3);
                 date3 = dt3.ToString("yyyy-MM-dd HH:mm");
-            }         
-            string sqlCommand1 = "select user.Name from design,user,treatment where design.ID=treatment.Design_ID and design.Receive_User_ID =user.ID and treatment.ID = @treatid";
-            sqlOperation1.AddParameterWithValue("@treatid", treatID);
+            }
+            string sqlCommand1 = "select user.Name from design,user,treatment where design.ID=treatment.Design_ID and design.Receive_User_ID =user.ID and ReceiveTime = @ReceiveTime and treatment.Patient_ID=@patient";
+            sqlOperation1.AddParameterWithValue("@ReceiveTime", reader["ReceiveTime"].ToString());
+            sqlOperation1.AddParameterWithValue("@patient", patientid);
             string receiver = sqlOperation1.ExecuteScalar(sqlCommand1);
              string operate = null;
              if (reader["Submit_User_ID"] is DBNull)
@@ -76,9 +83,10 @@ public class designSubmitInfo : IHttpHandler {
              }
              else
              {
-                 string sqlCommand2 = "select user.Name from design,user,treatment where design.ID=treatment.Design_ID and design.Submit_User_ID =user.ID and treatment.ID = @treatid";
-                 sqlOperation2.AddParameterWithValue("@treatid", treatID);
-                 operate = sqlOperation2.ExecuteScalar(sqlCommand2);
+                 string sqlCommand4 = "select user.Name from design,user,treatment where design.ID=treatment.Design_ID and design.Submit_User_ID =user.ID and ReceiveTime = @ReceiveTime and treatment.Patient_ID=@patient";
+                 sqlOperation2.AddParameterWithValue("@ReceiveTime", reader["ReceiveTime"].ToString());
+                 sqlOperation2.AddParameterWithValue("@patient", patientid);
+                 operate = sqlOperation2.ExecuteScalar(sqlCommand4);
              }
             string Do = reader["DosagePriority"].ToString();
             string Priority = Do.Split(new char[1] {'&'})[0];
@@ -89,9 +97,14 @@ public class designSubmitInfo : IHttpHandler {
                   "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage +
                    "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() +
                    "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\",\"Grid_ID\":\"" + reader["Grid_ID"].ToString() + "\",\"Algorithm_ID\":\"" + reader["Algorithm_ID"].ToString() +
-                   "\",\"Feasibility\":\"" + reader["Feasibility"].ToString() + "\"}");
+                   "\",\"Feasibility\":\"" + reader["Feasibility"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"gridname\":\"" + reader["gridname"].ToString() +
+                   "\",\"PlanSystemname\":\"" + reader["planname"].ToString() + "\",\"algorithmname\":\"" + reader["alname"].ToString() + "\"}");
 
-           
+            if (i < count)
+            {
+                backText.Append(",");
+            }
+            i++;
         }
 
         backText.Append("]}");
