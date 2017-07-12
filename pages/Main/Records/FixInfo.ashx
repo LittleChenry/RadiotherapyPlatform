@@ -81,7 +81,7 @@ public class FixInfo : IHttpHandler
                      "\",\"body\":\"" + reader["BodyPosition"].ToString() + "\",\"fixedEquipment\":\"" + reader["fename"].ToString() + "\",\"operate\":\"" + operate +
                      "\",\"ApplicationTime\":\"" + date1 + "\",\"ApplicationUser\":\"" + reader["doctor"].ToString() + "\",\"BodyPositionDetail\":\"" + reader["BodyPositionDetail"].ToString() +
                      "\",\"AnnexDescription\":\"" + reader["AnnexDescription"].ToString() + "\",\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"Pictures\":\"" + reader["Pictures"].ToString() + "\",\"OperateTime\":\"" + date2 +
-                     "\",\"fixedID\":\"" + reader["fixedid"].ToString() + "\"}");
+                     "\",\"fixedID\":\"" + reader["fixedid"].ToString() + "\",\"state\":0\"" +  "\"}");
                 if (i < count)
                 {
                     backText.Append(",");

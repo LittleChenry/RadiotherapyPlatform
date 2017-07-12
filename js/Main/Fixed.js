@@ -36,11 +36,16 @@ function Init(evt) {
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     //document.getElementById("part").innerHTML = patient.partname;
 
-    $("#current-tab").text("疗程"+ patient.Treatmentname +"体位固定记录");
+    $("#current-tab").text(patient.Treatmentname);
     if (patient.Progress >= 3) {
         var fixedInfo = getFixedInfo(treatID);
         for (var i = 0; i < fixedInfo.fixedInfo.length; i++) {
             if (patient.Treatmentname == fixedInfo.fixedInfo[i].Treatmentname) {
+                for (var k = i + 1; k < fixedInfo.fixedInfo.length; k++) {
+                    if (fixedInfo.fixedInfo[k].fixedid == fixedInfo.fixedInfo[i].fixedid) {
+                        $("#current-tab").innerHTML = $("#current-tab").innerHTML + "," + fixedInfo.fixedInfo[k].Treatmentname;
+                    }
+                }
                 document.getElementById("body").innerHTML = fixedInfo.fixedInfo[i].body;
                 document.getElementById("requireID").innerHTML = fixedInfo.fixedInfo[i].requireID;
                 document.getElementById("modelID").innerHTML = fixedInfo.fixedInfo[i].modelID;
@@ -78,8 +83,19 @@ function Init(evt) {
                     }
                 }
             }else{
+                var Treatmentnames = fixedInfo.fixedInfo[i].fixedid;
+                for (var k = i + 1; k < fixedInfo.fixedInfo.length; k++) {
+                    alert(fixedInfo.fixedInfo[k].fixedid + "," + fixedInfo.fixedInfo[i].fixedid)
+                    if (fixedInfo.fixedInfo[k].fixedid == fixedInfo.fixedInfo[i].fixedid) {
+                        for (var j = 0; j < i; j++) {
+                            if (fixedInfo.fixedInfo[j].fixedid != fixedInfo.fixedInfo[i].fixedid) {
+                                Treatmentnames = Treatmentnames + "," + fixedInfo.fixedInfo[k].fixedid;
+                            }
+                        }
+                    }
+                }
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
-                var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ fixedInfo.fixedInfo[i].Treatmentname +'体位固定记录</a></li>';
+                var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ Treatmentnames +'体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
                     + '<div class="item col-xs-12">体位详细描述：<span class="underline">'+ fixedInfo.fixedInfo[i].BodyPositionDetail +'</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">'+ fixedInfo.fixedInfo[i].Remarks +'</span></div></div>'
@@ -109,8 +125,19 @@ function Init(evt) {
         document.getElementById("hidetreatID").value = treatID;
         for (var i = 0; i < fixedInfo.fixedInfo.length; i++) {
             if (patient.Treatmentname != fixedInfo.fixedInfo[i].Treatmentname) {
+                var Treatmentnames = fixedInfo.fixedInfo[i].fixedid;
+                for (var k = i + 1; k < fixedInfo.fixedInfo.length; k++) {
+                    alert(fixedInfo.fixedInfo[k].fixedid + "," + fixedInfo.fixedInfo[i].fixedid)
+                    if (fixedInfo.fixedInfo[k].fixedid == fixedInfo.fixedInfo[i].fixedid) {
+                        for (var j = 0; j < i; j++) {
+                            if (fixedInfo.fixedInfo[j].fixedid != fixedInfo.fixedInfo[i].fixedid) {
+                                Treatmentnames = Treatmentnames + "," + fixedInfo.fixedInfo[k].fixedid;
+                            }
+                        }
+                    }
+                }
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
-                var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ fixedInfo.fixedInfo[i].Treatmentname +'体位固定记录</a></li>';
+                var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ Treatmentnames +'体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
                     + '<div class="item col-xs-12">体位详细描述：<span class="underline">'+ fixedInfo.fixedInfo[i].BodyPositionDetail +'</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">'+ fixedInfo.fixedInfo[i].Remarks +'</span></div></div>'
