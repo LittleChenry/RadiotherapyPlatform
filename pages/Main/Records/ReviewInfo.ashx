@@ -43,7 +43,7 @@ public class ReviewInfo : IHttpHandler {
         sqlOperation.AddParameterWithValue("@patient", patientid);
         int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
         int i = 1;
-        string sqlCommand = "select review.*,user.Name as username,Treatmentname from review,treatment,user where review.ID=treatment.Review_ID and review._User_ID=user.ID and treatment.Patient_ID=@patient";
+        string sqlCommand = "select review.*,user.Name as username,review.ID as reviewid,Treatmentname from review,treatment,user where review.ID=treatment.Review_ID and review._User_ID=user.ID and treatment.Patient_ID=@patient";
         sqlOperation2.AddParameterWithValue("@patient", patientid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"reviewInfo\":[");
@@ -59,7 +59,7 @@ public class ReviewInfo : IHttpHandler {
                 "\",\"GridConfirm\":\"" + reader["GridConfirm"] + "\",\"AlgorithmConfirm\":\"" + reader["AlgorithmConfirm"] +
                 "\",\"FeasibilityConfirm\":\"" + reader["FeasibilityConfirm"] + "\",\"Reoptimization\":\"" + reader["Reoptimization"] +
                 "\",\"ReferenceCenter\":\"" + reader["ReferenceCenter"] + "\",\"TreatmentCenter\":\"" + reader["TreatmentCenter"] +
-                "\",\"Movement\":\"" + reader["Movement"] + "\",\"PlaceInformation\":\"" + reader["PlaceInformation"] +
+                "\",\"Movement\":\"" + reader["Movement"] + "\",\"PlaceInformation\":\"" + reader["PlaceInformation"] + "\",\"reviewID\":\"" + reader["reviewid"] +
                 "\",\"DRR\":\"" + reader["DRR"] + "\",\"IsExport\":\"" + reader["IsExport"] + "\",\"Treatmentname\":\"" + reader["Treatmentname"] + "\"}");
             if (i < count)
             {

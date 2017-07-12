@@ -40,7 +40,7 @@ public class GetfinishedimportCT : IHttpHandler {
         sqlOperation.AddParameterWithValue("@patient", patientid);
         int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
         int i = 1;
-        string sqlCommand3 = "select Treatmentname,densityconversion.Name as dename,DensityConversion_ID,SequenceNaming,ct.Thickness as Thickness,ct.Number as Number,ct.ReferenceScale as ReferenceScale,ct.MultimodalImage as MultimodalImage,user.Name as username,ct.OperateTime as  OperateTime,ct.Remarks as remarks from densityconversion,location,ct,treatment,user where densityconversion.ID=ct.DensityConversion_ID and treatment.Patient_ID=@patient and treatment.Location_ID=location.ID and location.CT_ID=ct.ID and ct.Operate_User_ID=user.ID";
+        string sqlCommand3 = "select ct.ID as ctid,Treatmentname,densityconversion.Name as dename,DensityConversion_ID,SequenceNaming,ct.Thickness as Thickness,ct.Number as Number,ct.ReferenceScale as ReferenceScale,ct.MultimodalImage as MultimodalImage,user.Name as username,ct.OperateTime as  OperateTime,ct.Remarks as remarks from densityconversion,location,ct,treatment,user where densityconversion.ID=ct.DensityConversion_ID and treatment.Patient_ID=@patient and treatment.Location_ID=location.ID and location.CT_ID=ct.ID and ct.Operate_User_ID=user.ID";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand3);
         StringBuilder backText = new StringBuilder("{\"info\":["+count);
         while (reader.Read())
@@ -49,7 +49,7 @@ public class GetfinishedimportCT : IHttpHandler {
             DateTime dt2 = Convert.ToDateTime(date2);
             string date3 = dt2.ToString("yyyy-MM-dd HH:mm");
             backText.Append("{\"DensityConversion_ID\":\"" + reader["DensityConversion_ID"].ToString() + "\",\"SequenceNaming\":\"" + reader["SequenceNaming"] + "\",\"DensityConversionName\":\"" + reader["dename"] + "\",\"Treatmentname\":\"" + reader["Treatmentname"] +
-                 "\",\"Thickness\":\"" + reader["Thickness"].ToString() + "\",\"Number\":\"" + reader["Number"].ToString() + "\",\"ReferenceScale\":\"" + reader["ReferenceScale"].ToString() +
+                 "\",\"Thickness\":\"" + reader["Thickness"].ToString() + "\",\"Number\":\"" + reader["Number"].ToString() + "\",\"ReferenceScale\":\"" + reader["ReferenceScale"].ToString() + "\",\"CTID\":\"" + reader["ctid"].ToString() +
                  "\",\"MultimodalImage\":\"" + reader["MultimodalImage"].ToString() + "\",\"Remarks\":\"" + reader["remarks"].ToString() + "\",\"OperateTime\":\"" + date3 + "\",\"username\":\"" + reader["username"].ToString() + "\"}");
             if (i < count)
             {
