@@ -67,7 +67,7 @@ public class getallcompletedtreat : IHttpHandler {
                 }
                 else
                 {
-                    location= reader["Fixed_ID"].ToString();
+                    location = reader["Location_ID"].ToString();
                 }
             }
             if (reader["Review_ID"].ToString() != "")
