@@ -1,22 +1,19 @@
 var currentID = 0;
-var currentpage = 1;
 var functions = new Array();
 
 $(document).ready(function () {
     $(".frame-content").height($(document).height() - 151);
     $("#patient-content").height($(document).height() - 151);
+    $("#patient-table-content").height($(document).height() - 190);
     $("#record-iframe").width($("#record-content").width());
     $("#progress-iframe").width($("#progress-content").width());
-    var patient = getPatient();
+    var session = getSession();
+    var patient = getPatient(session.userID, session.role);
     $("#patient-search").bind('input propertychange', function() {
         var Searchedpatients = Search($("#patient-search").val(),patient);
         Paging(Searchedpatients);
     });
-    $("#search-button").bind("click", function () {
-        var Searchedpatients = Search($("#patient-search").val(),patient);
-        Paging(Searchedpatients);
-    });
-    Paging(patient);
+    Paging(patient,session.role);
     $("#signOut").bind("click", function () {
         removeSession();//ajax 注销用户Session
         window.location.replace("../Login/Login.aspx");
@@ -30,21 +27,402 @@ $(document).ready(function () {
         $("#save").removeAttr("disabled");
         $('#edit').attr("disabled","disabled");
     });
-    $("#changeOperator").bind("click", function () {
-        changeAssistant();
-    });
-    $("#saveOperator").bind("click",function(){
-        setAssistant();
-    });
     $("#saveTreatment").bind("click",saveTreatment);
     //chooseAssistant();
-    //getSession();
     getFunctions();
 })
 
 /*window.onresize=function(){
     document.location.reload();
 }*/
+
+function ProgressToString(pro){
+    var Progress = "";
+    switch(pro){
+        case "0":
+            Progress = "登记信息";
+            break;
+        case "1":
+            Progress = "病情诊断";
+            break;
+        case "2":
+            Progress = "体位固定申请";
+            break;
+        case "3":
+            Progress = "模拟定位申请";
+            break;
+        case "4":
+            Progress = "体位固定";
+            break;
+        case "5":
+            Progress = "模拟定位";
+            break;
+        case "6":
+            Progress = "CT图像导入";
+            break;
+        case "7":
+            Progress = "计划申请";
+            break;
+        case "8":
+            Progress = "计划领取";
+            break;
+        case "9":
+            Progress = "计划提交";
+            break;
+        case "10":
+            Progress = "计划确认";
+            break;
+        case "11":
+            Progress = "计划复核";
+            break;
+        case "12":
+            Progress = "复位申请";
+            break;
+        case "13":
+            Progress = "复位验证";
+            break;
+        case "14":
+            Progress = "首次治疗预约";
+            break;
+        case "15":
+            Progress = "加速器治疗";
+            break;
+        case "16":
+            Progress = "总结随访";
+            break;
+        default:
+            Progress = "无";
+
+    }
+}
+
+function Paging(patient,role){
+    if (patient.PatientInfo != "") {
+        tableheight = $("#patient-content").height() - 160;
+        var table = $("#patient-table");
+        table.html("");
+        switch(role){
+            case "医师":
+                var Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
+                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
+                    + '<th>主治医生</th><th>医疗组</th></tr></thead>';
+                table.append(thead);
+                var tbody = '<tbody>';
+                for (var i = 0; i < patient.PatientInfo.length; i++) {
+                    TreatmentID = patient.PatientInfo[i].treatID;
+                    Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
+                    Name = patient.PatientInfo[i].Name;
+                    treat = patient.PatientInfo[i].treat;
+                    diagnosisresult = patient.PatientInfo[i].diagnosisresult;
+                    Progress = ProgressToString(patient.PatientInfo[i].Progress);
+                    doctor = patient.PatientInfo[i].doctor;
+                    groupname = patient.PatientInfo[i].groupname;
+                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
+                        + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
+                    tbody += tr;
+                }
+                tbody += '</tbody>';
+                table.append(tbody);
+                for (var i = 0; i < patient.PatientInfo.length; i++) {
+                    Things[i]
+                }
+                break;
+            case "计量师":
+                var url = "";
+                break;
+            case "物理师":
+                var url = "";
+                break;
+            case "模拟技师":
+                var url = "";
+                break;
+            case "放疗技师":
+                var url = "";
+                break;
+            case "登记处人员":
+                var url = "";
+                break;
+            default:
+                var url = "";
+        }
+        var TreatmentID, treatID, Name, treat, doctor, Progress;
+        $("#patient_info").text("共" + patient.PatientInfo.length + "条记录");
+        for (var i = 0; i < patient.PatientInfo.length; i++) {
+            TreatmentID = patient.PatientInfo[i].treatID;
+            Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
+            treat = patient.PatientInfo[i].treat;
+            Name = patient.PatientInfo[i].Name;
+            
+            doctor = patient.PatientInfo[i].doctor;
+            var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + "疗程"+ treat + "</td><td>" + Progress
+            + "</td><td>" + doctor + "</td></tr>";
+            /*var tr = "<tr id='"+TreatmentID+"'><td>"+TreatmentID+"</td><td>"+Name+"</td><td>"+diagnosisresult+"</td><td>"+state
+            +"</td><td>"+doctor+"</td><td>"+date+"</td><td>"+age+"</td></tr>";*/
+            tbody.append(tr);
+
+            $("#" + patient.PatientInfo[i].treatID + "").click({ Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+                currentID = e.data.ID;
+                checkAddTreatment(e.data.Radiotherapy_ID);
+                //$("#addTreatment").removeAttr("disabled");
+                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                ul.each(function (index, element) {
+                    $(this).find('span').removeClass();
+                });
+                $("#record-iframe").attr('src', "Records/Blank.aspx");
+                //$("#patient-status").text(e.data.state);
+                var tr = $("#patient-table-body tr");
+                tr.each(function (index, element) {
+                    if ($(this).hasClass("chose")) {
+                        $(this).removeClass("chose");
+                    }
+                });
+                $(this).addClass("chose");
+                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                ul.each(function (index, element) {
+                    if (index < e.data.count) {
+                        $(this).find('li').removeClass().addClass("progress-finished");
+                        $(this).find('i').removeClass().addClass("fa fa-fw fa-check");
+                    } else if (index == e.data.count) {
+                        $(this).find('li').removeClass().addClass("progress-active");
+                        $(this).find('i').removeClass().addClass("fa fa-fw fa-edit");
+                    } else {
+                        $(this).find('li').removeClass().addClass("progress-unfinished");
+                        $(this).find('i').removeClass().addClass("fa fa-fw fa-ban");
+                    }
+                    switch (index + 1) {
+                        case 1:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("0");
+                            });
+                            break;
+                        case 2:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/Diagnose.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treat=" + e.data.treat);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("1");
+                            });
+                            break;
+                        case 3:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/FixedApply.aspx?TreatmentID=" + e.data.ID  +"&TreatmentItem=Fixed");
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("2");
+                            });
+                            break;
+                        case 4:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/LocationApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location");
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("3");
+                            });
+                            break;
+                        case 5:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/FixedRecord.aspx?TreatmentID=" + e.data.ID);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("4");
+                            });
+                            break;
+                        case 6:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/LocationRecord.aspx?TreatmentID=" + e.data.ID);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("5");
+                            });
+                            break;
+                        case 7:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/ImportCT.aspx?TreatmentID=" + e.data.ID);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("6");
+                            });
+                            break;
+                        case 8:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/DesignApply.aspx?TreatmentID=" + e.data.ID);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("7");
+                            });
+                            break;
+                        case 9:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/DesignReceive.aspx?TreatmentID=" + e.data.ID);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("8");
+                            });
+                            break;
+                        case 10:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/DesignSubmit.aspx?TreatmentID=" + e.data.ID);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("9");
+                            });
+                            break;
+                        case 11:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/DesignConfirm.aspx?TreatmentID=" + e.data.ID);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("10");
+                            });
+                            break;
+                        case 12:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/DesignReview.aspx?TreatmentID=" + e.data.ID);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("11");
+                            });
+                            break;
+                        case 13:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/ReplacementApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location");
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("12");
+                            });
+                            break;
+                        case 14:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/ReplacementRecord.aspx?TreatmentID=" + e.data.ID);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("13");
+                            });
+                            break;
+                        case 15:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/FirstAccelerator.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Accelerator");
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("14");
+                            });
+                            break;
+                        case 16:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/TreatmentRecord.aspx?TreatmentID=" + e.data.ID);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("15");
+                            });
+                            break;
+                        case 17:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/Summary.aspx?TreatmentID=" + e.data.ID);
+                                var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                                ul.each(function (index, element) {
+                                    $(this).find('span').removeClass();
+                                });
+                                $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                                checkEdit("16");
+                            });
+                            break;
+                        default:
+                            $(this).click(function () {
+                                $("#record-iframe").attr('src', "Records/Error.aspx");
+                            });
+                    }
+                });
+            });
+        }
+        
+    } else {
+        var table = $("#patient-table");
+        table.html("");
+        switch(role){
+            case "医师":
+                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
+                    + '<th>主治医生</th><th>医疗组</th></tr></thead>';
+                table.append(thead);
+                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:250px;">没有病人信息</td></tr></tbody>';
+                table.append(tbody);
+                break;
+            case "计量师":
+                var url = "";
+                break;
+            case "物理师":
+                var url = "";
+                break;
+            case "模拟技师":
+                var url = "";
+                break;
+            case "放疗技师":
+                var url = "";
+                break;
+            case "登记处人员":
+                var url = "";
+                break;
+            default:
+                var url = "";
+        }
+        var tbody = $("#patient-table");
+        tbody.html("");
+        
+        tbody.append(tr);
+        $("#patient_info").text("本页0条记录 / 共0条记录");
+    }
+    Recover();
+}
 
 function saveTreatment(){
     var diagnose = "";
@@ -144,6 +522,8 @@ function checkAddTreatment(Radiotherapy_ID){
                         table.append(thead);
                         table.append(tbody);
                         obj = $.parseJSON(data);
+                        var newTreatname = obj.treatinfo.length + 1;
+                        $("#newname").val("疗程" + newTreatname);
                         for (var i = 0; i < obj.treatinfo.length; i++) {
                             var th = '<th>疗程'+ obj.treatinfo[i].treatmentname +'</th>';
                             $("#progress").append(th);
@@ -414,18 +794,21 @@ function getFunctions(){
 }
 
 function getSession(){
+    var Session;
     $.ajax({
         type: "GET",
         url: "../../pages/Main/Records/getSession.ashx",
         async: false,
         dateType: "text",
         success: function (data) {
-            alert(data);
+            //alert(data);
+            Session = $.parseJSON(data);
         },
         error: function(){
             alert("error");
         }
     });
+    return Session;
 }
 
 function addProgress(patient){
@@ -634,11 +1017,8 @@ function removeSession() {
 }
 
 function Recover(){
-    if(currentID != "0"){
-        $("#page_" + currentpage).click();
-        if ($("#" + currentID).length > 0) {
-            $("#" + currentID).addClass("chose");
-        }
+    if(currentID != "0" && $("#" + currentID).length > 0){
+        $("#" + currentID).addClass("chose");
     }
 }
 
@@ -1056,10 +1436,31 @@ function CreateTable(start, end, patient) {
     }
 }
 
-function getPatient(){
+function getPatient(userID,role){
     var xmlHttp = new XMLHttpRequest();
     var xmlHttp = new XMLHttpRequest();
-    var url = "Records/GetPatientInfo.ashx";
+    switch(role){
+        case "医师":
+            var url = "Records/patientInfoForDoctor.ashx?userID=" + userID;
+            break;
+        case "计量师":
+            var url = "";
+            break;
+        case "物理师":
+            var url = "";
+            break;
+        case "模拟技师":
+            var url = "";
+            break;
+        case "放疗技师":
+            var url = "";
+            break;
+        case "登记处人员":
+            var url = "";
+            break;
+        default:
+            var url = "";
+    }
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -1067,7 +1468,7 @@ function getPatient(){
     return patient;
 }
 
-function Paging(patient) {
+function PagingTemp(patient) {
     if (patient.PatientInfo != "") {
         var pageindex = new Array();
         tableheight = $("#patient-content").height() - 160;

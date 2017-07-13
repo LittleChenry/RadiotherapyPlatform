@@ -260,57 +260,39 @@
     <div class="content-wrapper">
     <section id="main-content" class="col-xs-4" style="padding:0px;">
         <div class="layout-main-tab">
-        <nav class="tab-nav" style="padding-top: 3px;">
-            <div class="col-xs-4">
-            当前患者：
-            <span id="current-patient">张三</span>
-            </div>
-            <div class="col-xs-4">
-            下个患者：
-            <span id="next-patient">李四</span>
-            </div>
-            <button type="button" class="btn btn-primary" ><i class="fa fa-fw fa-forward"></i>叫号</button>
-        </nav>
+            <nav class="tab-nav">
+                <div class="col-xs-8" style="text-align:center;">
+                    <h4 class="box-title" style="font-weight:600;">患者汇总</h4>
+                </div>
+                <div class="col-xs-4" style="margin-top:2px;">
+                    <input id="patient-search" type="search" class="form-control" placeholder="搜索">
+                </div>
+            </nav>
         </div>
         <div id="patient-content" class="box" style="border-top:0px;margin-bottom:0px;">
-        <div class="box-header col-xs-8" style="padding-top: 15px;text-align: center;">
-            <h3 class="box-title">患者汇总</h3>
-        </div>
-        <div class="input-group input-group-sm col-xs-4" style="padding-right: 10px;padding-top: 8px;max-width: 180px;">
-            <input id="patient-search" type="search" class="form-control input-sm">
-            <span class="input-group-btn">
-            <button class="btn btn-primary btn-flat" id="search-button">
-                <i class="fa fa-fw fa-search"></i>
-            </button>
-            </span>
-        </div>
         <!-- /.box-header -->
-        <div class="box-body">
-            <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>放疗号</th>
-                <th>姓名</th>
-                <th>疗程</th>
-                <th>进度</th>
-                <th>主治医生</th>
-                <!-- <th>登记日期</th>
-                <th>年龄</th> -->
-            </tr>
-            </thead>
-            <tbody id="patient-table-body">
-            </tbody>
-            </table>
-            <div class="row">
-            <div class="col-sm-3">
-                <div class="dataTables_info" id="patient_info" role="status" aria-live="polite"></div>
+        <div class="box-body" style="padding:0px;">
+            <div id="patient-table-content" class="scroll-content">
+                <table class="table table-bordered" style="width:800px;margin-bottom:0px;">
+                    <thead>
+                    <tr>
+                        <th>放疗号</th>
+                        <th>姓名</th>
+                        <th>疗程</th>
+                        <th>进度</th>
+                        <th>主治医生</th>
+                        <!-- <th>登记日期</th>
+                        <th>年龄</th> -->
+                    </tr>
+                    </thead>
+                    <tbody id="patient-table-body">
+                    </tbody>
+                </table>
             </div>
-            <div class="col-sm-9">
-                <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                <ul id="page-index-content" class="pagination">
-                </ul>
+            <div class="row" style="margin:1px;float:right;">
+                <div class="col-sm-3">
+                    <div class="dataTables_info" id="patient_info" role="status" aria-live="polite"></div>
                 </div>
-            </div>
             </div>
         </div>
         <!-- /.box-body -->
@@ -320,8 +302,17 @@
         <div class="layout-main-tab">
         <nav class="tab-nav" style="padding-left:0px;padding-top:3px;">
             <div style="text-align:center;">
-                <button id="addTreatment" type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" disabled="disabled">新增疗程</button>
-                <span id="patient-status"></span>
+                <div class="btn-group">
+                    <button id="patient-status" type="button" class="btn btn-success"><i class="fa fa-fw fa-forward"></i>进行中</button>
+                    <button id="addTreatment" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" disabled="disabled">
+                    <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" style="min-width:112px;">
+                        <li><a href="javascript:;" data-toggle="modal" data-target="#myModal">新增疗程</a></li>
+                        <li><a href="javascript:;">暂停疗程</a></li>
+                        <li><a href="javascript:;">结束疗程</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
         </div>
@@ -361,6 +352,13 @@
                     <h4 class="modal-title">新增疗程</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            新疗程名:
+                            <input id="newname" type="text" maxlength="8" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="pull-right" style="margin:10px;">默认数字编号，最多8个字。</div>
                     <table id="addTreatmentRecord" class="table table-bordered" ></table>
                     <input id="Radiotherapy_ID" type="text" hidden="hidden" />
                     <label class="label-control">注：点击选择复用模块，灰色区域不可选择。</label>
@@ -406,6 +404,14 @@
 <script src="../../js/Main/main.js"></script>
 
 <script type="text/javascript">
+    $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false
+    });
     $(function () {
         $("#printIframe").bind("click", function () {
             $("#record-iframe")[0].contentWindow.print();
