@@ -42,7 +42,7 @@ public class GetfinishedimportCT : IHttpHandler {
         int i = 1;
         string sqlCommand3 = "select ct.ID as ctid,Treatmentname,densityconversion.Name as dename,DensityConversion_ID,SequenceNaming,ct.Thickness as Thickness,ct.Number as Number,ct.ReferenceScale as ReferenceScale,ct.MultimodalImage as MultimodalImage,user.Name as username,ct.OperateTime as  OperateTime,ct.Remarks as remarks from densityconversion,location,ct,treatment,user where densityconversion.ID=ct.DensityConversion_ID and treatment.Patient_ID=@patient and treatment.Location_ID=location.ID and location.CT_ID=ct.ID and ct.Operate_User_ID=user.ID";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand3);
-        StringBuilder backText = new StringBuilder("{\"info\":["+count);
+        StringBuilder backText = new StringBuilder("{\"info\":[");
         while (reader.Read())
         {
             string date2 = reader["OperateTime"].ToString();

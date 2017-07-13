@@ -30,31 +30,58 @@ function Init(evt) {
     document.getElementById("diaguser").innerHTML = patient.RegisterDoctor;
     var select1 = document.getElementById("DensityConversion");
     createDnsityItem(select1);
+    var info = getimportCTInfomation(treatmentID);
+    $("#current-tab").text("疗程" + patient.Treatmentname + "CT图像信息填写");
     if (patient.Progress >= 7) {
-        var info = getimportCTInfomation(treatmentID);
-        document.getElementById("DensityConversion").value = info.DensityConversion_ID;
-        document.getElementById("DensityConversion").disabled = "true";
-        document.getElementById("SequenceNaming").value = info.SequenceNaming;
-        document.getElementById("SequenceNaming").disabled = "true";
-        document.getElementById("Thickness").value = info.Thickness;
-        document.getElementById("Thickness").disabled = "true";
-        document.getElementById("MultimodalImage").value = info.MultimodalImage;
-        document.getElementById("MultimodalImage").disabled = "true";
-        document.getElementById("ReferenceScale").value = info.ReferenceScale;
-        document.getElementById("ReferenceScale").disabled = "true";
-        document.getElementById("Remarks").value = info.Remarks;
-        document.getElementById("Remarks").disabled = "true";
-        document.getElementById("Number").value = info.Number;
-        document.getElementById("Number").disabled = "true";
-        document.getElementById("applyuser").innerHTML = info.username;
-        document.getElementById("time").innerHTML = info.OperateTime;
+        for (var i = 0; i < info.length; i++) {
+            if (info[i].Treatmentname == patient.Treatmentname) {
+                document.getElementById("DensityConversion").value = info[i].DensityConversion_ID;
+                document.getElementById("SequenceNaming").value = info[i].SequenceNaming;;
+                document.getElementById("Thickness").value = info[i].Thickness;
+                document.getElementById("MultimodalImage").value = info[i].MultimodalImage;
+                document.getElementById("ReferenceScale").value = info[i].ReferenceScale;
+                document.getElementById("Remarks").value = info[i].Remarks;
+                document.getElementById("Number").value = info[i].Number;
+                document.getElementById("applyuser").innerHTML = info[i].username;
+                document.getElementById("time").innerHTML = info[i].OperateTime;
 
+            } else {
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].Treatmentname + 'CT图像信息填写</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                    + '<div class="item col-xs-6">CT-电子密度转换：<span class="underline">' + info[i].DensityConversionName + '</span></div>'
+                    + '<div class="item col-xs-6">CT序列命名：<span class="underline">' + info[i].SequenceNaming + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">层厚：<span class="underline">' + info[i].Thickness + '</span></div>'
+                    + '<div class="item col-xs-6">层数：<span class="underline">' + info[i].Number + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + info[i].ReferenceScale + '</span></div>'
+                    + '<div class="item col-xs-6">多模态图像：<span class="underline">' + info[i].MultimodalImage + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div></div>';
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+
+            }
+        }
     } else {
         var date = new Date();
         document.getElementById("treatmentID").value = treatmentID;
         document.getElementById("userID").value = userID;
         document.getElementById("time").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         document.getElementById("applyuser").innerHTML = userName;
+        for (var i = 0; i < info.length; i++) {
+            if (info[i].Treatmentname != patient.Treatmentname) {
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].Treatmentname + 'CT图像信息填写</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                    + '<div class="item col-xs-6">CT-电子密度转换：<span class="underline">' + info[i].DensityConversionName + '</span></div>'
+                    + '<div class="item col-xs-6">CT序列命名：<span class="underline">' + info[i].SequenceNaming + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">层厚：<span class="underline">' + info[i].Thickness + '</span></div>'
+                    + '<div class="item col-xs-6">层数：<span class="underline">' + info[i].Number + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + info[i].ReferenceScale + '</span></div>'
+                    + '<div class="item col-xs-6">多模态图像：<span class="underline">' + info[i].MultimodalImage + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div></div>';
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+            }
+        }
+
     }
 
 }
@@ -65,7 +92,7 @@ function getimportCTInfomation(treatmentID) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var obj1 = eval("(" + json + ")");
-    return obj1.info[0];
+    return obj1.info;
 
 }
 //获取所有待等待体位固定申请疗程号以及所属患者ID与其他信息
@@ -194,10 +221,7 @@ function postimportCT() {
         },
         error: function (e) {
             window.location.href = "Error.aspx";
-        },
-        failure: function (e) {
-            alert("保存失败！！");
-        }
+        }  
     });
 }
 function remove() {
