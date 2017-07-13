@@ -26,6 +26,9 @@ public class DeleteGroup : IHttpHandler {
         string sqlCommand = "DELETE FROM groups WHERE ID=@gid";
         sqlOperation.AddParameterWithValue("@gid", ids[0]);
         sqlOperation.ExecuteNonQuery(sqlCommand);
+        sqlCommand = "UPDATE treatment set Group_ID=@null WHERE Group_ID=@gid";
+        sqlOperation.AddParameterWithValue("@null", DBNull.Value);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
 
         /*sqlCommand = "SELECT COUNT(ID) FROM groups WHERE Charge_User_ID=@cid";
         sqlOperation.AddParameterWithValue("@cid", ids[1]);
