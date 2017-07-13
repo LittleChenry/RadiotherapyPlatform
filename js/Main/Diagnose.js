@@ -7,9 +7,18 @@ var radioID;
 //JS入口主函数
 function createPatient(evt) {
     //获取入口患者信息界面的div
-
     //获得当前执行人姓名与ID
     getUserID();
+    if ((typeof(userID)=="undefined")) {
+        if(confirm("用户信息已经没有,是否选择重新登录?"))
+        {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+        else
+        {
+            window.location.reload();
+        }
+    }
     getUserName();
     var treatmentgroup = window.location.search.split("&")[1];
     treatID = treatmentgroup.split("=")[1];
@@ -54,7 +63,8 @@ function createPatient(evt) {
                 } else {
                     document.getElementById("groupid").value = "allItem";
                 }
-            }else{
+            } else {
+
                 var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ diagnosisInfo.diagnosisInfo[i].Treatmentname +'诊断</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
                     + '<div class="item col-xs-4">患病部位：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].partname +'</span></div>'
