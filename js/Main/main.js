@@ -11,7 +11,7 @@ $(document).ready(function () {
     var patient = getPatient(session.userID, session.role);
     $("#patient-search").bind('input propertychange', function() {
         var Searchedpatients = Search($("#patient-search").val(),patient);
-        Paging(Searchedpatients);
+        Paging(Searchedpatients,session.role);
     });
     Paging(patient,session.role);
     $("#signOut").bind("click", function () {
@@ -1008,18 +1008,20 @@ function Recover(){
 }
 
 function Search(str,patient){
-    var TreatmentID, treatID, Name, treat, doctor, Progress;
+    var Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
     var Searchedpatient = new Array();
     var count = 0;
     for (var i = 0; i < patient.PatientInfo.length; i++) {
-        Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-        treat = patient.PatientInfo[i].treat;
         TreatmentID = patient.PatientInfo[i].treatID;
+        Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
         Name = patient.PatientInfo[i].Name;
-        Progress = patient.PatientInfo[i].Progress;
+        treat = patient.PatientInfo[i].treat;
+        diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
+        Progress = ProgressToString(patient.PatientInfo[i].Progress);
         doctor = patient.PatientInfo[i].doctor;
-        if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0) {
-            var singlepatient = {treat:treat, treatID:TreatmentID, Name:Name, Radiotherapy_ID:Radiotherapy_ID, doctor:doctor, Progress:Progress};
+        groupname = patient.PatientInfo[i].groupname;
+        if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0 || groupname.search(str) >= 0) {
+            var singlepatient = {treat:treat, treatID:TreatmentID, Name:Name, Radiotherapy_ID:Radiotherapy_ID, doctor:doctor, Progress:patient.PatientInfo[i].Progress, groupname:groupname, diagnosisresult:patient.PatientInfo[i].diagnosisresult};
             Searchedpatient[count++] = singlepatient;
         }
     }
