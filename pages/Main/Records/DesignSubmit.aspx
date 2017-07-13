@@ -142,6 +142,13 @@
                     <div class="content-title">
                         <span>填写计划提交信息：</span>
                     </div>
+                    <div class="single-row tab-row">
+                    <ul id="tabs" class="nav nav-tabs">
+                        <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
+                    </ul>
+                   </div>
+                  <div id="tab-content" class="tab-content">
+                    <div class="tab-pane active" id="tab">
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">计划系统：</span>
@@ -187,7 +194,9 @@
                                 <option value="0">不可执行</option>
                             </select>
                         </div>
-                    </div> 
+                    </div>
+                        </div>
+                      </div> 
                 </form>
             </div>
             <div class="paper-footer">

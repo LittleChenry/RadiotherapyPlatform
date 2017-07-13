@@ -38,35 +38,91 @@ function Init(evt) {
     createGridItem(select2);
     var select3 = document.getElementById("Algorithm");
     createAlgorithmItem(select3);
+    var designInfo = getDesignInfo(treatID);
+    $("#current-tab").text("疗程" + patient.Treatmentname + "计划提交");
     if (patient.Progress >= 9) {
-        var designInfo = getDesignInfo(treatID);
-        document.getElementById("Remarks").innerHTML = designInfo.RadiotherapyHistory;      
-        readDosagePriority(designInfo.DosagePriority);       
-        readDosage(designInfo.Dosage);      
-        document.getElementById("technology").innerHTML = designInfo.technology;      
-        document.getElementById("equipment").innerHTML = designInfo.equipment;
-        document.getElementById("ApplicationUser").innerHTML = designInfo.doctor;
-        document.getElementById("ApplicationTime").innerHTML = designInfo.apptime;
-        document.getElementById("receiveUser").innerHTML = designInfo.ReceiveUser;
-        document.getElementById("receiveTime").innerHTML = designInfo.ReceiveTime;
-        document.getElementById("userID").value = userID;
-        document.getElementById("applyuser").innerHTML = userName;
-        document.getElementById("time").innerHTML = getNowFormatDate();
-        document.getElementById("hidetreatID").value = treatID;
-    
-        if (patient.Progress >=10) {
-            document.getElementById("PlanSystem").value = designInfo.PlanSystem;            
-            document.getElementById("IlluminatedNumber").value = designInfo.IlluminatedNumber;
-            document.getElementById("Coplanar").value = designInfo.Coplanar;
-            document.getElementById("MachineNumbe").value = designInfo.MachineNumbe;
-            document.getElementById("ControlPoint").value = designInfo.ControlPoint;
-            document.getElementById("Grid").value = designInfo.Grid_ID;
-            document.getElementById("Algorithm").value = designInfo.Algorithm_ID;
-            document.getElementById("Feasibility").value = designInfo.Feasibility;
-            document.getElementById("applyuser").innerHTML = designInfo.SubmitUser;
-            document.getElementById("time").innerHTML = designInfo.SubmitTime;
+        for (var i = 0; i < designInfo.length; i++) {
+            if (designInfo[i].Treatmentname == patient.Treatmentname) {
+                document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
+                readDosagePriority(designInfo[i].DosagePriority);
+                readDosage(designInfo[i].Dosage);
+                document.getElementById("technology").innerHTML = designInfo[i].technology;
+                document.getElementById("equipment").innerHTML = designInfo[i].equipment;
+                document.getElementById("ApplicationUser").innerHTML = designInfo[i].doctor;
+                document.getElementById("ApplicationTime").innerHTML = designInfo[i].apptime;
+                document.getElementById("receiveUser").innerHTML = designInfo[i].ReceiveUser;
+                document.getElementById("receiveTime").innerHTML = designInfo[i].ReceiveTime;
+                document.getElementById("userID").value = userID;
+                document.getElementById("applyuser").innerHTML = userName;
+                document.getElementById("time").innerHTML = getNowFormatDate();
+                document.getElementById("hidetreatID").value = treatID;
+            }
         }
-   }
+        if (patient.Progress >= 10) {
+            for (var i = 0; i < designInfo.length; i++) {
+                if (designInfo[i].Treatmentname == patient.Treatmentname) {
+                    document.getElementById("PlanSystem").value = designInfo[i].PlanSystem;
+                    document.getElementById("IlluminatedNumber").value = designInfo[i].IlluminatedNumber;
+                    document.getElementById("Coplanar").value = designInfo[i].Coplanar;
+                    document.getElementById("MachineNumbe").value = designInfo[i].MachineNumbe;
+                    document.getElementById("ControlPoint").value = designInfo[i].ControlPoint;
+                    document.getElementById("Grid").value = designInfo[i].Grid_ID;
+                    document.getElementById("Algorithm").value = designInfo[i].Algorithm_ID;
+                    document.getElementById("Feasibility").value = designInfo[i].Feasibility;
+                    document.getElementById("applyuser").innerHTML = designInfo[i].SubmitUser;
+                    document.getElementById("time").innerHTML = designInfo[i].SubmitTime;
+                } else {
+                    var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + designInfo[i].Treatmentname + '计划提交信息</a></li>';
+                    var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                        + '<div class="item col-xs-6">计划系统：<span class="underline">' + designInfo[i].PlanSystem + '</span></div>'
+                        + '<div class="item col-xs-6">射野数量：<span class="underline">' + designInfo[i].IlluminatedNumber + '</span></div></div>'
+                        + '<div class="single-row"><div class="item col-xs-6">非共面照射：<span class="underline">' + trans(designInfo[i].Coplanar) + '</span></div>'
+                        + '<div class="item col-xs-6">机器跳数：<span class="underline">' + designInfo[i].MachineNumbe + '</span></div></div>'
+                         + '<div class="single-row"><div class="item col-xs-6">控制点数量：<span class="underline">' + designInfo[i].ControlPoint + '</span></div>'
+                        + '<div class="item col-xs-6">计算网络：<span class="underline">' + designInfo[i].gridname + '</span></div></div>'
+                        + '<div class="single-row"><div class="item col-xs-6">优化算法：<span class="underline">' + designInfo[i].algorithmname + '</span></div>'
+                        + '<div class="item col-xs-6">计划可执行度：<span class="underline">' + transfer(designInfo[i].Feasibility) + '</span></div></div></div>'
+                    $("#tabs").append(tab);
+                    $("#tab-content").append(content);
+                }
+            }
+        } else {
+            for (var i = 0; i < designInfo.length; i++) {
+                if (designInfo[i].Treatmentname != patient.Treatmentname) {
+                    var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + designInfo[i].Treatmentname + '计划提交信息</a></li>';
+                    var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                        + '<div class="item col-xs-6">计划系统：<span class="underline">' + designInfo[i].PlanSystem + '</span></div>'
+                        + '<div class="item col-xs-6">射野数量：<span class="underline">' + designInfo[i].IlluminatedNumber + '</span></div></div>'
+                        + '<div class="single-row"><div class="item col-xs-6">非共面照射：<span class="underline">' + trans(designInfo[i].Coplanar) + '</span></div>'
+                        + '<div class="item col-xs-6">机器跳数：<span class="underline">' + designInfo[i].MachineNumbe + '</span></div></div>'
+                         + '<div class="single-row"><div class="item col-xs-6">控制点数量：<span class="underline">' + designInfo[i].ControlPoint + '</span></div>'
+                        + '<div class="item col-xs-6">计算网络：<span class="underline">' + designInfo[i].gridname + '</span></div></div>'
+                        + '<div class="single-row"><div class="item col-xs-6">优化算法：<span class="underline">' + designInfo[i].algorithmname + '</span></div>'
+                        + '<div class="item col-xs-6">计划可执行度：<span class="underline">' + transfer(designInfo[i].Feasibility) + '</span></div></div></div>'
+                    $("#tabs").append(tab);
+                    $("#tab-content").append(content);
+                }
+            }
+        }
+    }
+}
+    
+function trans(number) {
+    if (number == "1") {
+        return "是";
+    }
+    if (number == "0") {
+        return "否";
+    }
+
+}
+function transfer(number) {
+    if (number == "1") {
+        return "可执行";
+    }
+    if (number == "0") {
+        return "不可执行";
+    }
 
 }
 
@@ -148,7 +204,7 @@ function getDesignInfo(treatID) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var obj1 = eval("(" + json + ")");
-    return obj1.designInfo[0];
+    return obj1.designInfo;
 }
 function getPatientInfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
@@ -310,15 +366,18 @@ function saveDesignSubmit() {
         processData: false,
         contentType: false,
         success: function (data) {
-            alert("保存成功");
-            window.location.reload();
+            if (data == "success") {
+                alert("保存成功");
+                window.location.reload();
+            }
+            if (data == "messsage") {
+                alert("您不是领取人");
+                window.location.reload();
+            }
+
         },
         error: function (e) {
             window.location.href = "Error.aspx";
-        },
-        message: function (e) {
-            alert("您不是领取人");
-            window.location.reload();
         }
     });
 }
