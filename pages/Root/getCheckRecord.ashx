@@ -24,7 +24,7 @@ public class getCheckRecord : IHttpHandler {
         string date = context.Request.Form["date"];
         string eid = context.Request.Form["equipmentID"];
 
-        string sqlCommand = "SELECT inspection.ChildItem,checkresult.IMRTRealValue,checkrecord.checkDate FROM inspection LEFT JOIN checkresult ON inspection.ID=checkresult.Inspection_ID LEFT JOIN checkrecord ON checkresult.Record_ID=checkrecord.ID WHERE checkrecord.checkCycle='day' AND DATE_FORMAT(checkrecord.checkDate,'%Y-%m')=@date AND checkrecord.Equipment_ID=@eid";
+        string sqlCommand = "SELECT inspection.ChildItem,checkresult.IMRTRealValue,DATE_FORMAT(checkrecord.checkDate,'%e') checkDate FROM inspection LEFT JOIN checkresult ON inspection.ID=checkresult.Inspection_ID LEFT JOIN checkrecord ON checkresult.Record_ID=checkrecord.ID WHERE checkrecord.checkCycle='day' AND DATE_FORMAT(checkrecord.checkDate,'%Y-%m')=@date AND checkrecord.Equipment_ID=@eid";
         sqlOperator.AddParameterWithValue("@date", date);
         sqlOperator.AddParameterWithValue("@eid", eid);
 
@@ -38,7 +38,6 @@ public class getCheckRecord : IHttpHandler {
         {
             //找到第一个有记录的天，之前的为空记录
             day = reader["checkDate"].ToString();
-            day = reader["checkDate"].ToString().Split(' ')[0].Split('/')[2];
             int d = int.Parse(day);
             for (int i = 1; i < d; i++)
             {
@@ -58,7 +57,7 @@ public class getCheckRecord : IHttpHandler {
         }
         while (reader.Read())
         {
-            string now = reader["checkDate"].ToString().Split(' ')[0].Split('/')[2];
+            string now = reader["checkDate"].ToString();
             if (now != day)
             {
                 result.Remove(result.Length - 1, 1).Append("},");
@@ -82,7 +81,7 @@ public class getCheckRecord : IHttpHandler {
         
         result.Remove(result.Length-1,1).Append("}");
         
-        int ld = int.Parse(lastDay.Split(' ')[0].Split('/')[2]);
+        int ld = int.Parse(lastDay.Split(' ')[0]);
         for (int i = ld; i < 31; i++)
         {
             result.Append(",{}");

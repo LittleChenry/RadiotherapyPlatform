@@ -95,7 +95,10 @@ public class UserInformation
         {
             RoleName[reader["description"].ToString()] = reader["name"].ToString();
         }
+        reader.Close();
         sqlOperation.Close();
+        sqlOperation.Dispose();
+        sqlOperation = null;
         return RoleName;
     }
 }
