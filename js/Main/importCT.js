@@ -34,7 +34,7 @@ function Init(evt) {
     $("#current-tab").text("疗程" + patient.Treatmentname + "CT图像信息填写");
     if (patient.Progress >= 7) {
         for (var i = 0; i < info.length; i++) {
-            if (info[i].treatname == patient.Treatmentname) {
+            if (info[i].Treatmentname == patient.Treatmentname) {
                 document.getElementById("DensityConversion").value = info[i].DensityConversion_ID;
                 document.getElementById("SequenceNaming").value = info[i].SequenceNaming;;
                 document.getElementById("Thickness").value = info[i].Thickness;
@@ -66,17 +66,21 @@ function Init(evt) {
         document.getElementById("userID").value = userID;
         document.getElementById("time").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
         document.getElementById("applyuser").innerHTML = userName;
-        var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].Treatmentname + 'CT图像信息填写</a></li>';
-        var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
-            + '<div class="item col-xs-6">CT-电子密度转换：<span class="underline">' + info[i].DensityConversionName + '</span></div>'
-            + '<div class="item col-xs-6">CT序列命名：<span class="underline">' + info[i].SequenceNaming + '</span></div></div>'
-            + '<div class="single-row"><div class="item col-xs-6">层厚：<span class="underline">' + info[i].Thickness + '</span></div>'
-            + '<div class="item col-xs-6">层数：<span class="underline">' + info[i].Number + '</span></div></div>'
-            + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + info[i].ReferenceScale + '</span></div>'
-            + '<div class="item col-xs-6">多模态图像：<span class="underline">' + info[i].MultimodalImage + '</span></div></div>'
-            + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div></div>';
-        $("#tabs").append(tab);
-        $("#tab-content").append(content);
+        for (var i = 0; i < info.length; i++) {
+            if (info[i].Treatmentname != patient.Treatmentname) {
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].Treatmentname + 'CT图像信息填写</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                    + '<div class="item col-xs-6">CT-电子密度转换：<span class="underline">' + info[i].DensityConversionName + '</span></div>'
+                    + '<div class="item col-xs-6">CT序列命名：<span class="underline">' + info[i].SequenceNaming + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">层厚：<span class="underline">' + info[i].Thickness + '</span></div>'
+                    + '<div class="item col-xs-6">层数：<span class="underline">' + info[i].Number + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + info[i].ReferenceScale + '</span></div>'
+                    + '<div class="item col-xs-6">多模态图像：<span class="underline">' + info[i].MultimodalImage + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div></div>';
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+            }
+        }
 
     }
 
