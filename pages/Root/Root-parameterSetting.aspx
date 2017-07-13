@@ -381,6 +381,18 @@
                 </span>
             </a>
         </li>
+          <li class="treeview">
+          <a href="#">
+            <i class="fa fa-group fa-fw"></i>
+            <span>数据统计</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+              <li><a href="EquipmentStatistics.aspx"><i class="fa fa-circle-o"></i> 设备检查统计</a></li>
+          </ul>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
