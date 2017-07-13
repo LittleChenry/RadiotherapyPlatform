@@ -42,37 +42,40 @@ $(function () {
         var dates = $("#dates").val();
         $.ajax({
             type: "post",
-            url: "",
+            url: "getCheckRecord.ashx",
+            data: {"equipmentID" : $equipment.val(), "date" : dates},
             dataType: "text",
             success: function (data) {
-                createTable($.parseJSON(data));
+                if (data == "null") {
+                    return;
+                }
+                var jsonObj = $.parseJSON(data);
+                var max = 0, index = 0;
+                for (var i = 0; i < jsonObj.length; ++i) {
+                    var len = countLength(jsonObj[i]);
+                    if (max < len) {
+                        max = len;
+                        index = i;
+                    }
+                }
+                var head = new Array();
+                for (i in jsonObj[index]) {
+                    head.push(i);
+                }
+                $("#tableArea").createTable(jsonObj, {
+                    rows: 12,
+                    needDate: true,
+                    createDate: dates,
+                    lessLength: max,
+                    headName: head
+                });
             }
         })
     });
 });
 
-function createTable(obj) {
-    createHead();
-    createBody();
-}
-
-/*
- * 创建表头
- */
-function createHead() {
-    var $head = $("#thead");
-    $head.empty();
-    $.ajax({
-        type: "post",
-        url: "getEquipmentInspection.ashx",
-        dataType: "text",
-        success: function (data) {
-            var jsonObj = $.parseJSON(data);
-            var $tr = $("<tr></tr>");
-            for (var i = 0; i < jsonObj.length; ++i) {
-
-            }
-        }
-    });
-
+function countLength(obj) {
+    var arr = Object.keys(obj);
+    var len = arr.length;
+    return len;
 }

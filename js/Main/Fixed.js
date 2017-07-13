@@ -123,6 +123,7 @@ function Init(evt) {
         document.getElementById("operator").innerHTML = userName;
         document.getElementById("date").innerHTML = getNowFormatDate();
         document.getElementById("hidetreatID").value = treatID;
+        var fixedInfo = getFixedInfo(treatID);
         for (var i = 0; i < fixedInfo.fixedInfo.length; i++) {
             if (patient.Treatmentname != fixedInfo.fixedInfo[i].Treatmentname) {
                 var Treatmentnames = fixedInfo.fixedInfo[i].fixedid;

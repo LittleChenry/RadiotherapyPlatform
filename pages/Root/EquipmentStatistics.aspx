@@ -450,29 +450,8 @@
                     </div>
                     <div id="tableArea" class="panel-body mintablewidth">
                         <table class="table table-striped table-hover" style="width:100%">
-                            <thead id="thead">
-                                
-                            </thead>
-                            <tbody id="tbody">
-
-                            </tbody>
+                            
                         </table>
-                        <div class="row">
-                            <div class="col-sm-6">&nbsp;</div>
-                            <div class="col-sm-6">
-                                <input id="currentPage" type="hidden" value="1" />
-                                <input id="sumPage" type="hidden" value="0" />
-                                <div id="pageButton" class="toright" style="display: block;">
-                                    <button type="button" id="firstPage" class="btn btn-primary btn-sm disabled">首页</button>
-                                    <button type="button" id="prePage" class="btn btn-primary btn-sm disabled">上一页</button>
-                                    <button type="button" id="nextPage" class="btn btn-primary btn-sm disabled">下一页</button>
-                                    <button type="button" id="lastPage" class="btn btn-primary btn-sm disabled">末页</button>
-                                </div>
-                                <div id="searchRecover" class="toright tohidden">
-                                    <input type="button" id="refresh" class="btn btn-primary btn-sm" value="显示全部" />
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -499,7 +478,8 @@
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/jquery.min.js"></script>
 
-
+<!-- createTable -->
+<script src="../../js/Root/createTable.js"></script>
 
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
