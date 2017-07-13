@@ -30,8 +30,6 @@ public class GetPatientInfo : IHttpHandler
         {
             return "{\"PatientInfo\":false}";
         }
-        sqlOperation.Close();
-        sqlOperation.Dispose();
         DataLayer sqlOperation2 = new DataLayer("sqlStr");
         StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
         string sqlCommand2 = "select treatment.ID as treatid,patient.*,State,Progress,user.Name as doctor,treatment.Treatmentname from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID order by patient.ID desc";
@@ -52,6 +50,13 @@ public class GetPatientInfo : IHttpHandler
             i++;
         }
        // backText.Remove(backText.Length - 1, 1);
+        reader.Close();
+        sqlOperation.Close();
+        sqlOperation.Dispose();
+        sqlOperation = null;
+        sqlOperation2.Close();
+        sqlOperation2.Dispose();
+        sqlOperation2 = null;
         backText.Append("]}");
         return backText.ToString();
     }
