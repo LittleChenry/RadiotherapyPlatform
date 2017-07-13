@@ -42,22 +42,117 @@ function Init(evt) {
     createTechnologyItem(select1);
     var select2 = document.getElementById("equipment");
     createEquipmentItem(select2);
+    $("#current-tab").text("疗程" + patient.Treatmentname + "计划申请");
     if (patient.Progress >= 8) {
         var designInfo = getDesignInfo(treatID);
-        document.getElementById("Remarks").value = designInfo.RadiotherapyHistory;
-        readDosagePriority(designInfo.DosagePriority);
-        readDosage(designInfo.Dosage);
-        document.getElementById("technology").value = designInfo.technology;
-        document.getElementById("equipment").value = designInfo.equipment;
-        document.getElementById("applyuser").innerHTML = designInfo.doctor;
-        document.getElementById("time").innerHTML = designInfo.apptime;
+        for (var i = 0; i < designInfo.length; i++) {
+            if (patient.Treatmentname == designInfo[i].treatmentname) {
+                document.getElementById("Remarks").value = designInfo[i].RadiotherapyHistory;
+                readDosagePriority(designInfo[i].DosagePriority);
+                readDosage(designInfo[i].Dosage);
+                document.getElementById("technology").value = designInfo[i].technology;
+                document.getElementById("equipment").value = designInfo[i].equipment;
+                document.getElementById("applyuser").innerHTML = designInfo[i].doctor;
+                document.getElementById("time").innerHTML = designInfo[i].apptime;
+            } else {
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + designInfo[i].treatmentname + '计划申请</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>' +
+                        '<span class="col-xs-10">'+designInfo[i].RadiotherapyHistory+'</span></div></div>'+
+                        '<div class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">靶区处方剂量：</span></div></div>'+
+                        '<div class="single-row"><div class="item area-group col-xs-12"><table id="Priority'+ i + '" class="table table-bordered">'+
+                        '<thead><tr><th>靶区</th><th>外放</th><th>PTV</th><th>单次量cGy</th><th>次数</th><th>总剂量cGy</th><th>备注</th><th>优先级</th></tr></thead></table></div></div>'+
+                        '<div class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">危及器官限量：</span></div></div>'+
+                        '<div class="single-row"><div class="item area-group col-xs-12"><table id="Dosage'+ i + '" class="table table-bordered">'+
+                        '<thead><tr><th>危及器官</th><th>剂量</th><th>限制</th><th>体积</th><th>外放</th><th>PRV</th><th>剂量</th><th>限制</th><th>体积</th><th>优先级</th>'+
+                        '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-6">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
+                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div></div>';           
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+                readDosagePriority1(designInfo[i].DosagePriority, i);
+                readDosage1(designInfo[i].Dosage, i);
+            }
+        }
     }
     if (patient.Progress == 7) {
         document.getElementById("userID").value = userID;
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("time").innerHTML = getNowFormatDate();
         document.getElementById("hidetreatID").value = treatID;
+        var designInfo = getDesignInfo(treatID);
+        for (var i = 0; i < designInfo.length; i++) {
+            if (patient.Treatmentname != designInfo[i].treatmentname) {
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + designInfo[i].treatmentname + '计划申请</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>' +
+                        '<span class="col-xs-10">' + designInfo[i].RadiotherapyHistory + '</span></div></div>' +
+                        '<div class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">靶区处方剂量：</span></div></div>' +
+                        '<div class="single-row"><div class="item area-group col-xs-12"><table id="Priority' + i + '" class="table table-bordered">' +
+                        '<thead><tr><th>靶区</th><th>外放</th><th>PTV</th><th>单次量cGy</th><th>次数</th><th>总剂量cGy</th><th>备注</th><th>优先级</th></tr></thead></table></div></div>' +
+                        '<div class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">危及器官限量：</span></div></div>' +
+                        '<div class="single-row"><div class="item area-group col-xs-12"><table id="Dosage' + i + '" class="table table-bordered">' +
+                        '<thead><tr><th>危及器官</th><th>剂量</th><th>限制</th><th>体积</th><th>外放</th><th>PRV</th><th>剂量</th><th>限制</th><th>体积</th><th>优先级</th>' +
+                        '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-6">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
+                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div></div>';
+                readDosagePriority1(designInfo[i].DosagePriority, i);
+                readDosage1(designInfo[i].Dosage, i);
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+            }
+        }
     }
+ }
+function readDosagePriority1(DosagePriority,ii) {
+    var table = document.getElementById("Priority"+ii);
+    var tbody = document.createElement("tbody");
+    for (var i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var tr = document.createElement("tr");
+        for (var j = 0; j < list.length; j++) {
+            var td = document.createElement("td");
+            var textNode = document.createTextNode(list[j]);
+            td.appendChild(textNode);
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
+    tbody.style.textAlign = "center";
+    table.appendChild(tbody);
+}
+function readDosage1(DosagePriority,ii) {
+    var table = document.getElementById("Dosage"+ii);
+    var tbody = document.createElement("tbody");
+    for (var i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var tr = document.createElement("tr");
+        for (var j = 0; j < list.length; j++) {
+            var td = document.createElement("td");
+            if (j == 2) {
+                var textNode = document.createTextNode("<");
+                td.appendChild(textNode);
+                tr.appendChild(td);
+            } else {
+                var textNode = document.createTextNode(list[j]);
+            }
+            td.appendChild(textNode);
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
+    tbody.style.textAlign = "center";
+    table.appendChild(tbody);
 }
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
@@ -66,7 +161,7 @@ function getDesignInfo(treatID) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var obj1 = eval("(" + json + ")");
-    return obj1.designInfo[0];
+    return obj1.designInfo;
 }
 
 function getPatientInfo(treatmentID) {
@@ -102,7 +197,8 @@ function getNowFormatDate() {
 }
 
 function readDosagePriority(DosagePriority) {
-    var table = document.getElementById("Priority");
+    var item = "Priority";
+    var table = document.getElementById(item);
     var tbody = document.createElement("tbody");
     for (var i = table.rows.length - 1; i > 0; i--) {
         table.deleteRow(i);
@@ -138,7 +234,8 @@ function RemoveAllChild(area) {
 }
 
 function readDosage(DosagePriority) {
-    var table = document.getElementById("Dosage");
+    var item = "Dosage";
+    var table = document.getElementById(item);
     var tbody = document.createElement("tbody");
     for (var i = table.rows.length - 1; i > 0; i--) {
         table.deleteRow(i);

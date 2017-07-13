@@ -76,6 +76,13 @@
                 <div class="content-title">
                     <span>填写计划申请信息：</span>
                 </div>
+                <div class="single-row tab-row">
+                        <ul id="tabs" class="nav nav-tabs">
+                            <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
+                        </ul>
+                </div>
+                <div id="tab-content" class="tab-content">
+                <div class="tab-pane active" id="tab">
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
                         特殊情况(放疗史)：
@@ -214,6 +221,8 @@
                         <select id="equipment" name="equipment" class="form-item" disabled="disabled"></select>
                     </div>
                 </div>
+            </div>
+                        </div>
             </div>
             <div class="paper-footer">
                 <div class="single-row">
