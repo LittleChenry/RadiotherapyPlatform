@@ -92,7 +92,10 @@ public class ReplaceRecordRecord : IHttpHandler {
         int intSuccess1 = sqlOperation.ExecuteNonQuery(strSqlCommand);
         string strSqlCommand1 = "UPDATE  appointment  SET Completed=1 where Treatment_ID=@treatid and Task='模拟定位'";
         int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand1);
-        string strSqlCommand2 = "UPDATE  treatment  SET Progress=14 where ID=@treatid ";
+        string select1 = "select Progress from treatment where ID=@treatid";
+        string progress = sqlOperation.ExecuteScalar(select1);
+        string strSqlCommand2 = "UPDATE  treatment  SET Progress=@progress where ID=@treatid ";
+        sqlOperation.AddParameterWithValue("@progress", progress + ",13");
         int intSuccess2 = sqlOperation.ExecuteNonQuery(strSqlCommand2);
         if (intSuccess > 0 && intSuccess2 > 0 && intSuccess1 > 0)
         {

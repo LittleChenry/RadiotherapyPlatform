@@ -49,7 +49,11 @@ function createPatient(evt) {
                 document.getElementById("part").value = diagnosisInfo.diagnosisInfo[i].partID;
                 document.getElementById("diagresult").value = diagnosisInfo.diagnosisInfo[i].diagnosisresultID;
                 document.getElementById("date").innerHTML = diagnosisInfo.diagnosisInfo[i].Time;
-                document.getElementById("groupid").value = diagnosisInfo.diagnosisInfo[i].group;
+                if (diagnosisInfo.diagnosisInfo[i].group != "") {
+                    document.getElementById("groupid").value = diagnosisInfo.diagnosisInfo[i].group;
+                } else {
+                    document.getElementById("groupid").value = "allItem";
+                }
             }else{
                 var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ diagnosisInfo.diagnosisInfo[i].Treatmentname +'诊断</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'

@@ -95,9 +95,11 @@ public class LocationApplyRecord : IHttpHandler {
                 string maxnumber = "select ID from  location where Appointment_ID=@appointid and Application_User_ID=@Application_User_ID order by ID desc";
                 sqlOperation.AddParameterWithValue("@Application_User_ID", Convert.ToInt32(user));
                 string maxfixid = sqlOperation.ExecuteScalar(maxnumber);
-
+                string select1 = "select Progress from treatment where ID=@treat";
+                string progress=sqlOperation.ExecuteScalar(select1);
                 //将诊断ID填入treatment表
-                string inserttreat = "update treatment set Location_ID=@Location_ID,Progress=4 where ID=@treat";
+                string inserttreat = "update treatment set Location_ID=@Location_ID,Progress=@progress where ID=@treat";
+                sqlOperation.AddParameterWithValue("@progress", progress + ",3");
                 sqlOperation.AddParameterWithValue("@Location_ID", Convert.ToInt32(maxfixid));
                 int Success = sqlOperation.ExecuteNonQuery(inserttreat);
                 if (Success > 0 && Success2 > 0 && Success1 > 0)

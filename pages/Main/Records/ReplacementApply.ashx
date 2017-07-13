@@ -96,10 +96,12 @@ public class ReplacementApply : IHttpHandler {
                     sqlOperation2.AddParameterWithValue("@Appointment_ID", Convert.ToInt32(appoint));
                     sqlOperation2.AddParameterWithValue("@Application_User_ID", Convert.ToInt32(user));
                     string idnumber = sqlOperation2.ExecuteScalar(maxnumber);
-
+                    string select1 = "select Progress from treatment where ID=@treat";
+                    string progress = sqlOperation.ExecuteScalar(select1);
 
                     //将诊断ID填入treatment表
-                    string inserttreat = "update treatment set Replacement_ID=@fix_ID,Progress=13 where ID=@treat";
+                    string inserttreat = "update treatment set Replacement_ID=@fix_ID,Progress=@progress where ID=@treat";
+                    sqlOperation3.AddParameterWithValue("@progress", progress + ",12");
                     sqlOperation3.AddParameterWithValue("@fix_ID", Convert.ToInt32(idnumber));
                     sqlOperation3.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
                     int Success = sqlOperation3.ExecuteNonQuery(inserttreat);

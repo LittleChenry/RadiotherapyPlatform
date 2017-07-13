@@ -45,9 +45,12 @@ public class changeReceiveUser : IHttpHandler {
             sqlOperation.AddParameterWithValue("@userid", Convert.ToInt32(userID));
             sqlOperation.AddParameterWithValue("@ReceiveTime", datetime);
             int Success = sqlOperation.ExecuteNonQuery(finishappoint);
+            string select1 = "select Progress from treatment where ID=@treat";
+            sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatID));
+            string progress = sqlOperation.ExecuteScalar(select1);
             string change = "update treatment set Progress=@ReceiveTime where ID=@treatID";
             sqlOperation1.AddParameterWithValue("@treatID", Convert.ToInt32(treatID));
-            sqlOperation1.AddParameterWithValue("@ReceiveTime",9);
+            sqlOperation1.AddParameterWithValue("@ReceiveTime", progress+",8");
             int Success1 = sqlOperation1.ExecuteNonQuery(change);
             if ( Success > 0)
             {

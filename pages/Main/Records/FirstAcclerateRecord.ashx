@@ -63,9 +63,11 @@ public class FirstAcclerateRecord : IHttpHandler {
                 sqlOperation1.AddParameterWithValue("@Appointment_ID", Convert.ToInt32(appoint));
                 sqlOperation1.AddParameterWithValue("@Treatment_ID",Convert.ToInt32(treatid));
                 int Success2 = sqlOperation1.ExecuteNonQuery(strSqlCommand);
-
+                string select1 = "select Progress from treatment where ID=@treat";
+                string progress = sqlOperation.ExecuteScalar(select1);
                 //将诊断ID填入treatment表
-                string inserttreat = "update treatment set Progress=15 where ID=@treat";
+                string inserttreat = "update treatment set Progress=@progress where ID=@treat";
+                sqlOperation.AddParameterWithValue("@progress", progress + ",14");
                 int Success = sqlOperation.ExecuteNonQuery(inserttreat);
                 if (Success > 0 && Success2 > 0)
                 {

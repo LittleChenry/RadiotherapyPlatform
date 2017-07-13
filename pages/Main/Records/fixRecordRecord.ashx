@@ -101,13 +101,15 @@ public class fixRecordRecord : IHttpHandler {
             string strSqlCommand1 = "UPDATE  appointment  SET Completed=@state where Treatment_ID=@treatid and Task='体位固定'";
             sqlOperation3.AddParameterWithValue("@state", state);
             sqlOperation3.AddParameterWithValue("@treatid", treatID);
-
             int ss = sqlOperation3.ExecuteNonQuery(strSqlCommand1);
+            string select1 = "select Progress from treatment where ID=@treatid";
+            sqlOperation.AddParameterWithValue("@treatid", treatID);
+            string progress = sqlOperation.ExecuteScalar(select1);
             string fID = "UPDATE treatment SET Progress=@fixedID where ID=@treatid";
 
             sqlOperation2.AddParameterWithValue("@treatid", treatID);
 
-            sqlOperation2.AddParameterWithValue("@fixedID", 5);
+            sqlOperation2.AddParameterWithValue("@fixedID", progress+",4");
             int Success = sqlOperation2.ExecuteNonQuery(fID);
         
             if (intSuccess > 0 && Success>0 &&  ss > 0)

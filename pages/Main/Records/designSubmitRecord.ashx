@@ -72,7 +72,12 @@ public class designSubmitRecord : IHttpHandler {
             sqlOperation.AddParameterWithValue("@userid", userid);
 
             int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-            string inserttreat = "update treatment set Progress=10 where ID=@treat";
+            string select1 = "select Progress from treatment where ID=@treat";
+            sqlOperation.AddParameterWithValue("@treat", CTID);
+            string progress = sqlOperation.ExecuteScalar(select1);
+            
+            string inserttreat = "update treatment set Progress=@progress where ID=@treat";
+            sqlOperation2.AddParameterWithValue("@progress", progress+",9");
             sqlOperation2.AddParameterWithValue("@treat", CTID);
             int Success = sqlOperation2.ExecuteNonQuery(inserttreat);
 

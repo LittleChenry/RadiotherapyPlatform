@@ -105,8 +105,11 @@ public class locationRecordRecord : IHttpHandler {
             string strSqlCommand2 = "INSERT INTO ct(ID) VALUES(@loc)";
             sqlOperation2.AddParameterWithValue("@loc", LocationID);
             int intSuccess = sqlOperation2.ExecuteNonQuery(strSqlCommand2);
+            string select1 = "select Progress from treatment where ID=@treat";
+            sqlOperation.AddParameterWithValue("@treat", treatID);
+            string progress = sqlOperation.ExecuteScalar(select1);
             string strSqlCommand3 = "UPDATE  treatment  SET Progress=@Progress where Treatment.ID=@tr";
-            sqlOperation3.AddParameterWithValue("@Progress", 6);
+            sqlOperation3.AddParameterWithValue("@Progress", progress+",5");
             sqlOperation3.AddParameterWithValue("@tr", treatID);
             int intSuccess3 = sqlOperation3.ExecuteNonQuery(strSqlCommand3);
             if (intSuccess > 0 && intSuccess1 > 0 && intSuccess2 > 0 && intSuccess3 > 0)

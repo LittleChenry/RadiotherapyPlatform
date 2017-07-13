@@ -55,7 +55,10 @@ public class importCTRecord : IHttpHandler {
             sqlOperation.AddParameterWithValue("ReferenceScale", context.Request.Form["ReferenceScale"]);
             sqlOperation.AddParameterWithValue("MultimodalImage", context.Request.Form["MultimodalImage"]);
             int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-            string strSqlCommand2 = "UPDATE  treatment  SET Progress=7 where treatment.ID=@treat";
+            string select1 = "select Progress from treatment where ID=@treat";
+            string progress = sqlOperation.ExecuteScalar(select1);
+            string strSqlCommand2 = "UPDATE  treatment  SET Progress=@progress where treatment.ID=@treat";
+            sqlOperation.AddParameterWithValue("@progress", progress + ",6");
             int intSuccess2 = sqlOperation.ExecuteNonQuery(strSqlCommand2);
             if (intSuccess > 0 & intSuccess2 > 0)
             {

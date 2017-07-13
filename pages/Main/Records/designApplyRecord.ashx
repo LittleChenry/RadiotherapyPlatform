@@ -111,8 +111,11 @@ public class designApplyRecord : IHttpHandler {
             sqlOperation1.AddParameterWithValue("@Application_User_ID", userid);
             string count = sqlOperation1.ExecuteScalar(maxnumber);
             int Count = Convert.ToInt32(count);
-
-            string inserttreat = "update treatment set Design_ID=@Design_ID,Progress=8 where ID=@treat";
+            string select1 = "select Progress from treatment where ID=@treat";
+            sqlOperation.AddParameterWithValue("@treat", treatID);
+            string progress = sqlOperation.ExecuteScalar(select1);
+            string inserttreat = "update treatment set Design_ID=@Design_ID,Progress=@progress where ID=@treat";
+            sqlOperation2.AddParameterWithValue("@progress", progress+",7");
             sqlOperation2.AddParameterWithValue("@Design_ID", Count);
             sqlOperation2.AddParameterWithValue("@treat", treatID);
             int Success = sqlOperation2.ExecuteNonQuery(inserttreat);

@@ -81,7 +81,8 @@ public class fixedApplyRecord : IHttpHandler {
                 string maxfixid = sqlOperation.ExecuteScalar(maxnumber);
 
                 //将诊断ID填入treatment表
-                string inserttreat = "update treatment set Fixed_ID=@fix_ID,Progress=3 where ID=@treat";
+                string inserttreat = "update treatment set Fixed_ID=@fix_ID,Progress=@progress where ID=@treat";
+                sqlOperation.AddParameterWithValue("@progress", "0,1,2");
                 sqlOperation.AddParameterWithValue("@fix_ID", Convert.ToInt32(maxfixid));
                 int Success = sqlOperation.ExecuteNonQuery(inserttreat);
                 if (Success > 0 && Success2 > 0 && Success1>0)

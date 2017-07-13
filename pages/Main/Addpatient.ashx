@@ -119,7 +119,8 @@ public class Addpatient : IHttpHandler {
             int intSuccess2 = 0;
             if (intSuccess > 0 && treatID > 0)
             {
-                string treatinsert = "insert into treatment(TreatmentName,Patient_ID,Progress,State) values(@ID,@PID,1,1)";
+                string treatinsert = "insert into treatment(TreatmentName,Patient_ID,Progress,State) values(@ID,@PID,@progress,1)";
+                sqlOperation2.AddParameterWithValue("@progress", "0");
                 sqlOperation2.AddParameterWithValue("@ID", 1);
                 sqlOperation2.AddParameterWithValue("@PID", patient);
                 intSuccess2 = sqlOperation2.ExecuteNonQuery(treatinsert);

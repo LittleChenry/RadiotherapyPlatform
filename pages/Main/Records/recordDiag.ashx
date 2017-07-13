@@ -71,7 +71,7 @@ public class recordDiag : IHttpHandler {
             sqlOperation2.AddParameterWithValue("@treatid", treatID);
             sqlOperation2.AddParameterWithValue("@patient", patientID);
             sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
-            sqlOperation2.AddParameterWithValue("@Progress", 2);
+            sqlOperation2.AddParameterWithValue("@Progress", "0,1");
             sqlOperation2.AddParameterWithValue("@group",Convert.ToInt32(group));
             int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
 

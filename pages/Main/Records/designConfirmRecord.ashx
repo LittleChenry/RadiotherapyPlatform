@@ -94,9 +94,12 @@ public class designConfirmRecord : IHttpHandler {
             sqlOperation.AddParameterWithValue("@datetime", datetime);
             sqlOperation.AddParameterWithValue("@ctID", designID);
             sqlOperation.AddParameterWithValue("@userid", userid);
-
-            int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-            string inserttreat = "update treatment set Progress=11 where ID=@treat";
+            int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);     
+            string select1 = "select Progress from treatment where ID=@treat";
+            sqlOperation.AddParameterWithValue("@treat", CTID);
+            string progress = sqlOperation.ExecuteScalar(select1);
+            string inserttreat = "update treatment set Progress=@progress where ID=@treat";
+            sqlOperation2.AddParameterWithValue("@progress", progress+",10");
             sqlOperation2.AddParameterWithValue("@treat", CTID);
             int Success = sqlOperation2.ExecuteNonQuery(inserttreat);
 
