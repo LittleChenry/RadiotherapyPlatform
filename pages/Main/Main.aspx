@@ -273,7 +273,7 @@
         <!-- /.box-header -->
         <div class="box-body" style="padding:0px;">
             <div id="patient-table-content" class="scroll-content">
-                <table id="patient-table" class="table table-bordered" style="width:800px;margin-bottom:0px;"></table>
+                <table id="patient-table" class="table table-bordered" style="word-break:keep-all;margin-bottom:0px;"></table>
             </div>
             <div class="row" style="margin:1px;float:right;">
                 <div class="col-sm-3">
@@ -290,11 +290,11 @@
             <div style="text-align:center;">
                 <div class="btn-group">
                     <button id="patient-status" type="button" class="btn btn-success"><i class="fa fa-fw fa-forward"></i>进行中</button>
-                    <button id="addTreatment" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" disabled="disabled">
+                    <button id="manageTreatment" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" disabled="disabled">
                     <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu" style="min-width:112px;">
-                        <li><a href="javascript:;" data-toggle="modal" data-target="#myModal">新增疗程</a></li>
+                        <li><a id="addTreatment" href="javascript:;" data-toggle="modal" data-target="#myModal">新增疗程</a></li>
                         <li><a href="javascript:;">暂停疗程</a></li>
                         <li><a href="javascript:;">结束疗程</a></li>
                     </ul>
