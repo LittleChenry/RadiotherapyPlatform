@@ -72,6 +72,13 @@
                     <div class="content-title">
                         <span>CT图像信息填写：</span>
                     </div>
+                    <div class="single-row tab-row">
+                    <ul id="tabs" class="nav nav-tabs">
+                        <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
+                    </ul>
+                  </div>
+                 <div id="tab-content" class="tab-content">
+                    <div class="tab-pane active" id="tab">
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">CT-电子密度转换：</span>
@@ -113,6 +120,8 @@
                             <textarea id="Remarks" name="Remarks" class="form-area" disabled="disabled"></textarea>
                         </div>
                     </div>
+                    </div>
+                     </div>
                 </form>
             </div>
             <div class="paper-footer">
