@@ -273,21 +273,7 @@
         <!-- /.box-header -->
         <div class="box-body" style="padding:0px;">
             <div id="patient-table-content" class="scroll-content">
-                <table class="table table-bordered" style="width:800px;margin-bottom:0px;">
-                    <thead>
-                    <tr>
-                        <th>放疗号</th>
-                        <th>姓名</th>
-                        <th>疗程</th>
-                        <th>进度</th>
-                        <th>主治医生</th>
-                        <!-- <th>登记日期</th>
-                        <th>年龄</th> -->
-                    </tr>
-                    </thead>
-                    <tbody id="patient-table-body">
-                    </tbody>
-                </table>
+                <table id="patient-table" class="table table-bordered" style="width:800px;margin-bottom:0px;"></table>
             </div>
             <div class="row" style="margin:1px;float:right;">
                 <div class="col-sm-3">
