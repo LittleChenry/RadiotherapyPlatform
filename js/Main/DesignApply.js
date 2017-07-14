@@ -13,6 +13,11 @@ function Init(evt) {
     //获得当前执行人姓名与ID
     getUserName();
     getUserID();
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     //此处为分页代码
     //alert("jy");
     //document.getElementById("username").value = userID; 
@@ -547,6 +552,11 @@ function saveDesignApplyRecord() {
     if (document.getElementById("equipment").value == "allItem") {
         window.alert("放疗设备没有选择");
         return;
+    }
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
     }
     var form = new FormData(document.getElementById("savedesign"));
     $.ajax({

@@ -8,6 +8,11 @@ window.addEventListener("load", Init, false);//添加页面加载处理函数
 //初始化
 function Init() {
     getUserID();
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     getUserName();
     document.getElementById("save").addEventListener("click", CheckEmpty, false);
     
@@ -144,6 +149,11 @@ function CheckEmpty() {
     if (document.getElementById("Sub").value == "") {
         window.alert("请输入分中心负责人");
         return;
+    }
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
     }
     var form = new FormData(document.getElementById("frmaddpatient"));
     $.ajax({

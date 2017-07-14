@@ -11,13 +11,14 @@ function Init(evt) {
     //xubixiao
     //获取入口患者信息界面的div
     getUserID();
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     getUserName();
-
     var treatID = window.location.search.split("=")[1];
-    
-   
     var patient = getPatientInfo(treatID);
-   
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
     document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
@@ -34,18 +35,11 @@ function Init(evt) {
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
-    //document.getElementById("part").innerHTML = patient.partname;
-
-    $("#current-tab").text(patient.Treatmentname);
-    if (patient.Progress >= 3) {
-        var fixedInfo = getFixedInfo(treatID);
+    $("#current-tab").text( patient.Treatmentname);
+    var fixedInfo = getFixedInfo(treatID);
+    if (patient.Progress >= 5) {
         for (var i = 0; i < fixedInfo.fixedInfo.length; i++) {
             if (patient.Treatmentname == fixedInfo.fixedInfo[i].Treatmentname) {
-                for (var k = i + 1; k < fixedInfo.fixedInfo.length; k++) {
-                    if (fixedInfo.fixedInfo[k].fixedid == fixedInfo.fixedInfo[i].fixedid) {
-                        $("#current-tab").innerHTML = $("#current-tab").innerHTML + "," + fixedInfo.fixedInfo[k].Treatmentname;
-                    }
-                }
                 document.getElementById("body").innerHTML = fixedInfo.fixedInfo[i].body;
                 document.getElementById("requireID").innerHTML = fixedInfo.fixedInfo[i].requireID;
                 document.getElementById("modelID").innerHTML = fixedInfo.fixedInfo[i].modelID;
@@ -53,8 +47,6 @@ function Init(evt) {
                 document.getElementById("ApplicationUser").innerHTML = fixedInfo.fixedInfo[i].ApplicationUser;
                 document.getElementById("ApplicationTime").innerHTML = fixedInfo.fixedInfo[i].ApplicationTime;
                 var BodyPositionDetail = "固定装置：" + fixedInfo.fixedInfo[i].fixedEquipment + "；固定模具：" + fixedInfo.fixedInfo[i].modelID + "；体位：" + fixedInfo.fixedInfo[i].body + "；特殊要求：" + fixedInfo.fixedInfo[i].requireID;
-                document.getElementById("BodyPositionDetail").value = BodyPositionDetail;
-                if (patient.Progress >= 5) {
                     document.getElementById("BodyPositionDetail").value = fixedInfo.fixedInfo[i].BodyPositionDetail;          
                     document.getElementById("Remarks").value = fixedInfo.fixedInfo[i].Remarks;
                     document.getElementById("operator").innerHTML = fixedInfo.fixedInfo[i].operate;
@@ -81,21 +73,9 @@ function Init(evt) {
                             boxes.appendChild(div);
                         }
                     }
-                }
             }else{
-                var Treatmentnames = fixedInfo.fixedInfo[i].fixedid;
-                for (var k = i + 1; k < fixedInfo.fixedInfo.length; k++) {
-                    alert(fixedInfo.fixedInfo[k].fixedid + "," + fixedInfo.fixedInfo[i].fixedid)
-                    if (fixedInfo.fixedInfo[k].fixedid == fixedInfo.fixedInfo[i].fixedid) {
-                        for (var j = 0; j < i; j++) {
-                            if (fixedInfo.fixedInfo[j].fixedid != fixedInfo.fixedInfo[i].fixedid) {
-                                Treatmentnames = Treatmentnames + "," + fixedInfo.fixedInfo[k].fixedid;
-                            }
-                        }
-                    }
-                }
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
-                var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ Treatmentnames +'体位固定记录</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + fixedInfo.fixedInfo[i].Treatmentname + '体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
                     + '<div class="item col-xs-12">体位详细描述：<span class="underline">'+ fixedInfo.fixedInfo[i].BodyPositionDetail +'</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">'+ fixedInfo.fixedInfo[i].Remarks +'</span></div></div>'
@@ -123,22 +103,10 @@ function Init(evt) {
         document.getElementById("operator").innerHTML = userName;
         document.getElementById("date").innerHTML = getNowFormatDate();
         document.getElementById("hidetreatID").value = treatID;
-        var fixedInfo = getFixedInfo(treatID);
         for (var i = 0; i < fixedInfo.fixedInfo.length; i++) {
             if (patient.Treatmentname != fixedInfo.fixedInfo[i].Treatmentname) {
-                var Treatmentnames = fixedInfo.fixedInfo[i].fixedid;
-                for (var k = i + 1; k < fixedInfo.fixedInfo.length; k++) {
-                    alert(fixedInfo.fixedInfo[k].fixedid + "," + fixedInfo.fixedInfo[i].fixedid)
-                    if (fixedInfo.fixedInfo[k].fixedid == fixedInfo.fixedInfo[i].fixedid) {
-                        for (var j = 0; j < i; j++) {
-                            if (fixedInfo.fixedInfo[j].fixedid != fixedInfo.fixedInfo[i].fixedid) {
-                                Treatmentnames = Treatmentnames + "," + fixedInfo.fixedInfo[k].fixedid;
-                            }
-                        }
-                    }
-                }
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
-                var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ Treatmentnames +'体位固定记录</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + fixedInfo.fixedInfo[i].Treatmentname + '体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
                     + '<div class="item col-xs-12">体位详细描述：<span class="underline">'+ fixedInfo.fixedInfo[i].BodyPositionDetail +'</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">'+ fixedInfo.fixedInfo[i].Remarks +'</span></div></div>'
@@ -291,6 +259,11 @@ function postimportFIX() {
     if (document.getElementById("Remarks").value == "") {
         alert("请填写备注");
         return;
+    }
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
     }
     var form = new FormData(document.getElementById("saveFixRecord"));
     $.ajax({

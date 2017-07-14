@@ -5,6 +5,11 @@ var userID;
 function Init(evt) {
 
     getUserID();
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     getUserName();
     var treatID = window.location.search.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
@@ -48,6 +53,11 @@ function Init(evt) {
     }
 }
 function receiveDesign(treatID) {
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     var xmlHttp = new XMLHttpRequest();
 
     var url = "changeReceiveUser.ashx?treatID=" + treatID + "&userID=" + userID;

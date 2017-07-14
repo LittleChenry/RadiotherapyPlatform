@@ -8,6 +8,11 @@ function Init(evt) {
     //获得当前执行人姓名与ID
     getUserName();
     getUserID();
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     //此处为分页代码
     //alert("jy");
     //document.getElementById("username").value = userID; 
@@ -357,7 +362,11 @@ function saveDesignSubmit() {
         window.alert("请填写控制点数量");
         return;
     }
-
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     var form = new FormData(document.getElementById("saveDesignSubmit"));
     $.ajax({
         url: "designSubmitRecord.ashx",
