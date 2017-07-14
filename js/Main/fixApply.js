@@ -8,6 +8,11 @@ function Init(evt) {
     var treatmentID = treatmentgroup.split("=")[1];
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     getUserName();
     var patient = getfixPatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
@@ -31,7 +36,8 @@ function Init(evt) {
     createfixEquipItem(document.getElementById("fixEquip"));
     var info = getfixInfomation(treatmentID);
     $("#current-tab").text("疗程" + patient.Treatmentname + "体位固定申请");
-    if (patient.Progress >= 3) {
+    var groupprogress = patient.Progress.split(",");
+    if (contains(groupprogress, "2")) {
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatmentname == patient.Treatmentname) {
                 document.getElementById("modelselect").value = info[i].materialID;
@@ -48,7 +54,7 @@ function Init(evt) {
                     + '<div class="item col-xs-6">固定装置：<span class="underline">' + info[i].fixedequipname + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">体位:<span class="underline">' + info[i].BodyPosition + '</span></div>'
                     + '<div class="item col-xs-6">特殊要求：<span class="underline">' + info[i].fixedrequire + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
@@ -74,12 +80,30 @@ function Init(evt) {
                     + '<div class="item col-xs-6">固定装置：<span class="underline">' + info[i].fixedequipname + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">体位:<span class="underline">' + info[i].BodyPosition + '</span></div>'
                     + '<div class="item col-xs-6">特殊要求：<span class="underline">' + info[i].fixedrequire + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
         }
+
     }
+    $("#tab-content").find("button").each(function () {
+        $(this).bind("click", function () {
+            var k = this.id;
+            document.getElementById("modelselect").value = info[k].materialID;
+            document.getElementById("specialrequest").value = info[k].require;
+            document.getElementById("fixEquip").value = info[k].fixedequipid;
+            document.getElementById("bodyPost").value = info[k].BodyPosition;
+        });
+    });
+}
+function contains(group, s) {
+    for (var k = 0; k <= group.length - 1; k++) {
+        if (group[k] == s) {
+            return true;
+        }
+    }
+    return false;
 }
 //设备下拉菜单
 function getNowFormatDate() {
@@ -160,6 +184,11 @@ function postfix() {
     if (document.getElementById("idforappoint").value == "allItem") {
         window.alert("设备没有预约");
         return;
+    }
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
     }
     var xmlHttp = new XMLHttpRequest();
     var url = "fixedApplyRecord.ashx?id=" + appointid + "&treatid=" + treatmentid + "&model=" + model + "&fixreq=" + special + "&user=" + userID + "&fixequip=" + fixequip + "&bodypost=" + bodypost;
