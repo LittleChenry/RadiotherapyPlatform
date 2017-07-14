@@ -37,7 +37,8 @@ function Init(evt) {
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     $("#current-tab").text( patient.Treatmentname);
     var fixedInfo = getFixedInfo(treatID);
-    if (patient.Progress >= 5) {
+    var progress = patient.Progress.split(",");
+    if (isInArray(progress, '4')) {
         for (var i = 0; i < fixedInfo.fixedInfo.length; i++) {
             if (patient.Treatmentname == fixedInfo.fixedInfo[i].Treatmentname) {
                 document.getElementById("body").innerHTML = fixedInfo.fixedInfo[i].body;
@@ -46,7 +47,7 @@ function Init(evt) {
                 document.getElementById("fixedEquipment").innerHTML = fixedInfo.fixedInfo[i].fixedEquipment;
                 document.getElementById("ApplicationUser").innerHTML = fixedInfo.fixedInfo[i].ApplicationUser;
                 document.getElementById("ApplicationTime").innerHTML = fixedInfo.fixedInfo[i].ApplicationTime;
-                var BodyPositionDetail = "固定装置：" + fixedInfo.fixedInfo[i].fixedEquipment + "；固定模具：" + fixedInfo.fixedInfo[i].modelID + "；体位：" + fixedInfo.fixedInfo[i].body + "；特殊要求：" + fixedInfo.fixedInfo[i].requireID;
+               
                     document.getElementById("BodyPositionDetail").value = fixedInfo.fixedInfo[i].BodyPositionDetail;          
                     document.getElementById("Remarks").value = fixedInfo.fixedInfo[i].Remarks;
                     document.getElementById("operator").innerHTML = fixedInfo.fixedInfo[i].operate;
@@ -82,14 +83,14 @@ function Init(evt) {
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">体位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
                 if (fixedInfo.fixedInfo[i].Pictures == "") {
-                    content += '无</div></div></div>';
+                    content += '无</div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
                 } else {
                     for (var j = 1; j < pictures.length; j++) {
                         content = content + '<div class="boxes"><div class="imgnum">'
                                 + '<span class="closecamera closearea"><i class="fa fa-times"></i></span>'
                                 + '<img src="'+ pictures[j] +'" class="img" style="display:block;"/></div></div>';
                     }
-                    content += '</div></div></div>';
+                    content += '</div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
                 }
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
@@ -102,9 +103,17 @@ function Init(evt) {
         document.getElementById("userID").value = userID;
         document.getElementById("operator").innerHTML = userName;
         document.getElementById("date").innerHTML = getNowFormatDate();
-        document.getElementById("hidetreatID").value = treatID;
+        document.getElementById("hidetreatID").value = treatID;       
         for (var i = 0; i < fixedInfo.fixedInfo.length; i++) {
             if (patient.Treatmentname != fixedInfo.fixedInfo[i].Treatmentname) {
+                document.getElementById("body").innerHTML = fixedInfo.fixedInfo[i].body;
+                document.getElementById("requireID").innerHTML = fixedInfo.fixedInfo[i].requireID;
+                document.getElementById("modelID").innerHTML = fixedInfo.fixedInfo[i].modelID;
+                document.getElementById("fixedEquipment").innerHTML = fixedInfo.fixedInfo[i].fixedEquipment;
+                document.getElementById("ApplicationUser").innerHTML = fixedInfo.fixedInfo[i].ApplicationUser;
+                document.getElementById("ApplicationTime").innerHTML = fixedInfo.fixedInfo[i].ApplicationTime;
+                var BodyPositionDetail = "固定装置：" + fixedInfo.fixedInfo[i].fixedEquipment + "；固定模具：" + fixedInfo.fixedInfo[i].modelID + "；体位：" + fixedInfo.fixedInfo[i].body + "；特殊要求：" + fixedInfo.fixedInfo[i].requireID;
+                document.getElementById("BodyPositionDetail").value = BodyPositionDetail;
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + fixedInfo.fixedInfo[i].Treatmentname + '体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
@@ -113,14 +122,14 @@ function Init(evt) {
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">体位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
                 if (fixedInfo.fixedInfo[i].Pictures == "") {
-                    content += '无</div></div></div>';
+                    content += '无</div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div></div>';
                 } else {
                     for (var j = 1; j < pictures.length; j++) {
                         content = content + '<div class="boxes"><div class="imgnum">'
                                 + '<span class="closecamera closearea"><i class="fa fa-times"></i></span>'
                                 + '<img src="'+ pictures[j] +'" class="img" style="display:block;"/></div></div>';
                     }
-                    content += '</div></div></div>';
+                    content += '</div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div></div>';
                 }
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
@@ -130,6 +139,21 @@ function Init(evt) {
             }
         }
     }
+    $("#tab-content").find("button").each(function () {
+        $(this).bind("click", function () {
+            var k = this.id;
+            document.getElementById("BodyPositionDetail").value = fixedInfo.fixedInfo[k].BodyPositionDetail;
+            document.getElementById("Remarks").value = fixedInfo.fixedInfo[k].Remarks;
+        });
+    });
+}
+function isInArray(arr, value) {
+    for (var i = 0; i < arr.length; i++) {
+        if (value === arr[i]) {
+            return true;
+        }
+    }
+    return false;
 }
 function getNowFormatDate() {
     var date = new Date();

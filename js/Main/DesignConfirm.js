@@ -37,7 +37,8 @@ function Init(evt) {
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
  
-    if (patient.Progress >= 10) {
+    var progress = patient.Progress.split(",");
+    if (isInArray(progress, '9')) {
         var designInfo = getDesignInfo(treatID);
         for (var i = 0; i < designInfo.length; i++) {
             if (patient.Treatmentname == designInfo[i].Treatmentname) {
@@ -70,7 +71,7 @@ function Init(evt) {
                 document.getElementById("unconfirm").addEventListener("click", function (evt) {
                     document.getElementById("state").value = "审核不通过";
                 }, false);
-                if (patient.Progress >= 11) {
+                if (isInArray(progress, '10')) {
                     document.getElementById("advice").value = designInfo[i].advice;
                     document.getElementById("state").value = charge2(designInfo[i].State);
                     document.getElementById("applyuser").innerHTML = designInfo[i].ConfirmUser;
@@ -80,7 +81,14 @@ function Init(evt) {
         }
     }
 }
-
+function isInArray(arr, value) {
+    for (var i = 0; i < arr.length; i++) {
+        if (value === arr[i]) {
+            return true;
+        }
+    }
+    return false;
+}
 
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();

@@ -48,7 +48,8 @@ function Init(evt) {
     var select2 = document.getElementById("equipment");
     createEquipmentItem(select2);
     $("#current-tab").text("疗程" + patient.Treatmentname + "计划申请");
-    if (patient.Progress >= 8) {
+    var progress = patient.Progress.split(",");
+    if (isInArray(progress, '7')) {
         var designInfo = getDesignInfo(treatID);
         for (var i = 0; i < designInfo.length; i++) {
             if (patient.Treatmentname == designInfo[i].treatmentname) {
@@ -70,7 +71,7 @@ function Init(evt) {
                         '<div class="single-row"><div class="item area-group col-xs-12"><table id="Dosage'+ i + '" class="table table-bordered">'+
                         '<thead><tr><th>危及器官</th><th>剂量</th><th>限制</th><th>体积</th><th>外放</th><th>PRV</th><th>剂量</th><th>限制</th><th>体积</th><th>优先级</th>'+
                         '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-6">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
-                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div></div>';           
+                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
                 readDosagePriority1(designInfo[i].DosagePriority, i);
@@ -78,7 +79,7 @@ function Init(evt) {
             }
         }
     }
-    if (patient.Progress == 7) {
+    else{
         document.getElementById("userID").value = userID;
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("time").innerHTML = getNowFormatDate();
@@ -96,7 +97,7 @@ function Init(evt) {
                         '<div class="single-row"><div class="item area-group col-xs-12"><table id="Dosage' + i + '" class="table table-bordered">' +
                         '<thead><tr><th>危及器官</th><th>剂量</th><th>限制</th><th>体积</th><th>外放</th><th>PRV</th><th>剂量</th><th>限制</th><th>体积</th><th>优先级</th>' +
                         '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-6">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
-                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div></div>';
+                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
                 readDosagePriority1(designInfo[i].DosagePriority, i);
                 readDosage1(designInfo[i].Dosage, i);
                 $("#tabs").append(tab);
@@ -104,7 +105,25 @@ function Init(evt) {
             }
         }
     }
- }
+    $("#tab-content").find("button").each(function () {
+        $(this).bind("click", function () {
+            var k = this.id;
+            document.getElementById("Remarks").value = designInfo[k].RadiotherapyHistory;
+            readDosagePriority(designInfo[k].DosagePriority);
+            readDosage(designInfo[k].Dosage);
+            document.getElementById("technology").value = designInfo[k].technology;
+            document.getElementById("equipment").value = designInfo[k].equipment;
+        });
+    });
+}
+function isInArray(arr, value) {
+    for (var i = 0; i < arr.length; i++) {
+        if (value === arr[i]) {
+            return true;
+        }
+    }
+    return false;
+}
 function readDosagePriority1(DosagePriority,ii) {
     var table = document.getElementById("Priority"+ii);
     var tbody = document.createElement("tbody");

@@ -32,7 +32,8 @@ function Init(evt) {
     createDnsityItem(select1);
     var info = getimportCTInfomation(treatmentID);
     $("#current-tab").text("疗程" + patient.Treatmentname + "CT图像信息填写");
-    if (patient.Progress >= 7) {
+    var progress = patient.Progress.split(",");
+    if (isInArray(progress, '6')) {
         for (var i = 0; i < info.length; i++) {
             if (info[i].Treatmentname == patient.Treatmentname) {
                 document.getElementById("DensityConversion").value = info[i].DensityConversion_ID;
@@ -54,7 +55,7 @@ function Init(evt) {
                     + '<div class="item col-xs-6">层数：<span class="underline">' + info[i].Number + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + info[i].ReferenceScale + '</span></div>'
                     + '<div class="item col-xs-6">多模态图像：<span class="underline">' + info[i].MultimodalImage + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
 
@@ -76,14 +77,33 @@ function Init(evt) {
                     + '<div class="item col-xs-6">层数：<span class="underline">' + info[i].Number + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + info[i].ReferenceScale + '</span></div>'
                     + '<div class="item col-xs-6">多模态图像：<span class="underline">' + info[i].MultimodalImage + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
         }
 
     }
-
+    $("#tab-content").find("button").each(function () {
+        $(this).bind("click", function () {
+            var k = this.id;
+            document.getElementById("DensityConversion").value = info[k].DensityConversion_ID;
+            document.getElementById("SequenceNaming").value = info[k].SequenceNaming;;
+            document.getElementById("Thickness").value = info[k].Thickness;
+            document.getElementById("MultimodalImage").value = info[k].MultimodalImage;
+            document.getElementById("ReferenceScale").value = info[k].ReferenceScale;
+            document.getElementById("Remarks").value = info[k].Remarks;
+            document.getElementById("Number").value = info[k].Number;
+        });
+    });
+}
+function isInArray(arr, value) {
+    for (var i = 0; i < arr.length; i++) {
+        if (value === arr[i]) {
+            return true;
+        }
+    }
+    return false;
 }
 function getimportCTInfomation(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
