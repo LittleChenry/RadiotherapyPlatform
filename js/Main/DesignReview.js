@@ -50,7 +50,7 @@ function Init(evt) {
                 document.getElementById("ControlPoint").innerHTML = designInfo[i].ControlPoint;
                 document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
                 document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
-                document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);               
+                document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
             }
         }
         document.getElementById("userID").value = userID;
@@ -59,31 +59,34 @@ function Init(evt) {
         document.getElementById("hidetreatID").value = treatID;
         if (patient.Progress >= 12) {
             var reviewInfo = getReviewInfo(treatID);
-            document.getElementById("TechnologyConfirm").innerHTML = charge2(reviewInfo.TechnologyConfirm);
-            document.getElementById("EquipmentConfirm").innerHTML = charge2(reviewInfo.EquipmentConfirm);
-            document.getElementById("PlanSystemConfirm").innerHTML = charge2(reviewInfo.PlanSystemConfirm);
-            document.getElementById("AngleConfirm").innerHTML = charge2(reviewInfo.AngleConfirm);
-            document.getElementById("CoplanarConfirm").innerHTML = charge2(reviewInfo.CoplanarConfirm);
-            document.getElementById("MachineNumbeConfirm").innerHTML = charge2(reviewInfo.MachineNumbeConfirm);
-            document.getElementById("ControlPointConfirm").innerHTML = charge2(reviewInfo.ControlPointConfirm);
-            document.getElementById("GridConfirm").innerHTML = charge2(reviewInfo.GridConfirm);
-            document.getElementById("AlgorithmConfirm").innerHTML = charge2(reviewInfo.AlgorithmConfirm);
-            document.getElementById("FeasibilityConfirm").innerHTML = charge(reviewInfo.FeasibilityConfirm);
-            document.getElementById("Reoptimization").innerHTML = charge2(reviewInfo.Reoptimization);
-            document.getElementById("PlaceInformation").innerHTML = charge2(reviewInfo.PlaceInformation);
-            document.getElementById("DRR").innerHTML = charge2(reviewInfo.DRR);
-            getreference(reviewInfo.ReferenceCenter);
-            gettreatment(reviewInfo.TreatmentCenter);
-            getmovement(reviewInfo.Movement);
-            
-            document.getElementById("IsExport").innerHTML = charge2(reviewInfo.IsExport);
-            document.getElementById("applyuser").innerHTML = reviewInfo.name;
-            document.getElementById("time").innerHTML = reviewInfo.ReviewTime;
+            for (var i = 0; i < reviewInfo.length; i++) {
+                if (reviewInfo[i].Treatmentname == patient.Treatmentname) {
+                    document.getElementById("TechnologyConfirm").innerHTML = charge2(reviewInfo[i].TechnologyConfirm);
+                    document.getElementById("EquipmentConfirm").innerHTML = charge2(reviewInfo[i].EquipmentConfirm);
+                    document.getElementById("PlanSystemConfirm").innerHTML = charge2(reviewInfo[i].PlanSystemConfirm);
+                    document.getElementById("AngleConfirm").innerHTML = charge2(reviewInfo[i].AngleConfirm);
+                    document.getElementById("CoplanarConfirm").innerHTML = charge2(reviewInfo[i].CoplanarConfirm);
+                    document.getElementById("MachineNumbeConfirm").innerHTML = charge2(reviewInfo[i].MachineNumbeConfirm);
+                    document.getElementById("ControlPointConfirm").innerHTML = charge2(reviewInfo[i].ControlPointConfirm);
+                    document.getElementById("GridConfirm").innerHTML = charge2(reviewInfo[i].GridConfirm);
+                    document.getElementById("AlgorithmConfirm").innerHTML = charge2(reviewInfo[i].AlgorithmConfirm);
+                    document.getElementById("FeasibilityConfirm").innerHTML = charge(reviewInfo[i].FeasibilityConfirm);
+                    document.getElementById("Reoptimization").innerHTML = charge2(reviewInfo[i].Reoptimization);
+                    document.getElementById("PlaceInformation").innerHTML = charge2(reviewInfo[i].PlaceInformation);
+                    document.getElementById("DRR").innerHTML = charge2(reviewInfo[i].DRR);
+                    getreference(reviewInfo[i].ReferenceCenter);
+                    gettreatment(reviewInfo[i].TreatmentCenter);
+                    getmovement(reviewInfo[i].Movement);
+
+                    document.getElementById("IsExport").innerHTML = charge2(reviewInfo[i].IsExport);
+                    document.getElementById("applyuser").innerHTML = reviewInfo[i].name;
+                    document.getElementById("time").innerHTML = reviewInfo[i].ReviewTime;
+                }
+            }
         }
     }
 
 }
-
 
 function getReviewInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
@@ -92,7 +95,7 @@ function getReviewInfo(treatID) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var obj1 = eval("(" + json + ")");
-    return obj1.reviewInfo[0];
+    return obj1.reviewInfo;
 }
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
