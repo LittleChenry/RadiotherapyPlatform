@@ -55,7 +55,7 @@ function Paging(patient,role){
                     Name = patient.PatientInfo[i].Name;
                     treat = patient.PatientInfo[i].treat;
                     diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
-                    Progress = ProgressToString(patient.PatientInfo[i].Progress);
+                    Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = patient.PatientInfo[i].groupname;
                     var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
@@ -450,65 +450,108 @@ function LightLi(e, Progresses, currentProgress, preProgress){
     }
 }
 
+function sortarr(arr){
+    for(var i = 0; i < arr.length - 1;i++){
+        for(var j = 0; j < arr.length - 1 - i; j++){
+            if(arr[j] > arr[j + 1]){
+                var temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+    return arr;
+}
+
 function ProgressToString(pro){
     var Progress = "";
-    switch(pro){
-        case "0":
-            Progress = "登记信息";
-            break;
-        case "1":
-            Progress = "病情诊断";
-            break;
-        case "2":
-            Progress = "体位固定申请";
-            break;
-        case "3":
-            Progress = "模拟定位申请";
-            break;
-        case "4":
-            Progress = "体位固定";
-            break;
-        case "5":
-            Progress = "模拟定位";
-            break;
-        case "6":
-            Progress = "CT图像导入";
-            break;
-        case "7":
-            Progress = "计划申请";
-            break;
-        case "8":
-            Progress = "计划领取";
-            break;
-        case "9":
-            Progress = "计划提交";
-            break;
-        case "10":
-            Progress = "计划确认";
-            break;
-        case "11":
-            Progress = "计划复核";
-            break;
-        case "12":
-            Progress = "复位申请";
-            break;
-        case "13":
-            Progress = "复位验证";
-            break;
-        case "14":
-            Progress = "首次治疗预约";
-            break;
-        case "15":
-            Progress = "加速器治疗";
-            break;
-        case "16":
-            Progress = "总结随访";
-            break;
-        default:
-            Progress = "无";
-
+    var currentProgress = new Array();
+    var count = 0;
+    for (var i = 0; i < pro.length; i++) {
+        pro[i] = parseInt(pro[i]);
     }
-    return Progress;
+    length = pro.length;
+    pro = sortarr(pro);
+    if (pro[length - 1] == (length - 1)) {
+        currentProgress[count++] = length;
+    }
+    switch(length){
+        case 3:
+            currentProgress[count++] = 4;
+            break;
+        case 4:
+            currentProgress[count++] = 3;
+            break;
+        case 11:
+            currentProgress[count++] = 12;
+            break;
+        case 12:
+            currentProgress[count++] = 11;
+            currentProgress[count++] = 13;
+            break;
+        case 13:
+            currentProgress[count++] = 11;
+            break;
+    }
+    for (var i = 0; i < currentProgress.length; i++) {
+        switch(currentProgress[i]){
+            case 0:
+                Progress += "登记信息、";
+                break;
+            case 1:
+                Progress += "病情诊断、";
+                break;
+            case 2:
+                Progress += "体位固定申请、";
+                break;
+            case 3:
+                Progress += "模拟定位申请、";
+                break;
+            case 4:
+                Progress += "体位固定、";
+                break;
+            case 5:
+                Progress += "模拟定位、";
+                break;
+            case 6:
+                Progress += "CT图像导入、";
+                break;
+            case 7:
+                Progress += "计划申请、";
+                break;
+            case 8:
+                Progress += "计划领取、";
+                break;
+            case 9:
+                Progress += "计划提交、";
+                break;
+            case 10:
+                Progress += "计划确认、";
+                break;
+            case 11:
+                Progress += "计划复核、";
+                break;
+            case 12:
+                Progress += "复位申请、";
+                break;
+            case 13:
+                Progress += "复位验证、";
+                break;
+            case 14:
+                Progress += "首次治疗预约、";
+                break;
+            case 15:
+                Progress += "加速器治疗、";
+                break;
+            case 16:
+                Progress += "总结随访、";
+                break;
+            default:
+                Progress += "无、";
+
+        }
+    }
+    return Progress.substring(0, Progress.length - 1);
 }
 
 function saveTreatment(){
@@ -945,7 +988,7 @@ function Search(str,patient){
         Name = patient.PatientInfo[i].Name;
         treat = patient.PatientInfo[i].treat;
         diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
-        Progress = ProgressToString(patient.PatientInfo[i].Progress);
+        Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
         doctor = patient.PatientInfo[i].doctor;
         groupname = patient.PatientInfo[i].groupname;
         if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0 || groupname.search(str) >= 0) {
