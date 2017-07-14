@@ -28,6 +28,8 @@ public class handlerUpdateSession : IHttpHandler, IRequiresSessionState
         UserInformation user = (UserInformation)context.Session["loginUser"];
         user.setUserRole(rolename);
         user.setProgress(progress);
+        user.setAssistant("");
+        user.setEquipment(new KeyValuePair<int, string>());
         context.Session["loginUser"] = user;
     }
 

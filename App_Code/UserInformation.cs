@@ -14,6 +14,7 @@ public class UserInformation
     private string userRole;
     private string assistant;
     private LinkedList<int> progress;
+    private KeyValuePair<int, string> equipment;
 
     /// <summary>
     /// 构造函数
@@ -53,6 +54,16 @@ public class UserInformation
     public string GetUserName()
     {
         return userName;
+    }
+
+    public KeyValuePair<int, string> getEquipment()
+    {
+        return this.equipment;
+    }
+
+    public void setEquipment(KeyValuePair<int, string> equipment)
+    {
+        this.equipment = equipment;
     }
 
     public string GetUserRole()
