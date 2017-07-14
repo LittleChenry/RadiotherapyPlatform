@@ -8,6 +8,11 @@ function Init(evt) {
     var treatmentID = treatmentgroup.split("=")[1];
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     getUserName();
     var patient = getPatientInfo(treatmentID);
     document.getElementById("hidetreatID").value = treatmentID;
@@ -370,6 +375,11 @@ function postimportReplaceRecord() {
         window.alert("参考DRR和验证图像未完善");
         evt.preventDefault();
         return;
+    }
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
     }
     var form = new FormData(document.getElementById("saveReplaceRecord"));
     $.ajax({

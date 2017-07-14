@@ -5,6 +5,11 @@ var userID;
 function Init(evt) {
 
     getUserID();
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     getUserName();
     var treatID = window.location.search.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
@@ -257,7 +262,12 @@ function postimportlocation() {
     if (document.getElementById("ReferenceScale").value == "") {
         alert("请填写体表参考刻度");
         return;
-    } 
+    }
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     var form = new FormData(document.getElementById("frmlocation"));
     $.ajax({
         url: "locationRecordRecord.ashx",

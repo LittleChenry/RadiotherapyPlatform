@@ -10,13 +10,9 @@ function createPatient(evt) {
     //获得当前执行人姓名与ID
     getUserID();
     if ((typeof(userID)=="undefined")) {
-        if(confirm("用户信息已经没有,是否选择重新登录?"))
+        if(confirm("用户身份已经失效,是否选择重新登录?"))
         {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
-        }
-        else
-        {
-            window.location.reload();
         }
     }
     getUserName();
@@ -69,7 +65,7 @@ function createPatient(evt) {
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
                     + '<div class="item col-xs-4">患病部位：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].partname +'</span></div>'
                     + '<div class="item col-xs-4">诊断结果：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].diagnosisresultName +'</span></div>'
-                    + '<div class="item col-xs-4">医疗组：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].groupName +'</span></div></div>'
+                    + '<div class="item col-xs-4">医疗组：<span class="underline">'+ transfer(diagnosisInfo.diagnosisInfo[i].groupName) +'</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].Remarks +'</span></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
@@ -85,12 +81,19 @@ function createPatient(evt) {
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
                     + '<div class="item col-xs-4">患病部位：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].partname +'</span></div>'
                     + '<div class="item col-xs-4">诊断结果：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].diagnosisresultName +'</span></div>'
-                    + '<div class="item col-xs-4">医疗组：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].groupName +'</span></div></div>'
+                    + '<div class="item col-xs-4">医疗组：<span class="underline">' + transfer(diagnosisInfo.diagnosisInfo[i].groupName) + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].Remarks +'</span></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
         }
+    }
+}
+function transfer(res) {
+    if (res == "") {
+        return "暂无分组";
+    } else {
+        return res;
     }
 }
 
@@ -216,7 +219,6 @@ function getDiagResultItem() {
     return Items;
 }
 function checkAll() {
-
     var time = document.getElementById("time");
     var diaguserid = document.getElementById("diaguserid");
     var remark = document.getElementById("remark");
@@ -234,6 +236,11 @@ function checkAll() {
     if (select5.value == "allItem") {
         window.alert("请选择分组选项");
         return;
+    }
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
     }
     var xmlHttp = new XMLHttpRequest();
     var url = "recordDiag.ashx?treatid=" + treatID + "&radioid=" + radioID + "&diaguserid=" + diaguserid.value + "&remark=" + remark.value;

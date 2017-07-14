@@ -8,6 +8,11 @@ function Init(evt) {
     var treatmentID = treatmentgroup.split("=")[1];
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     getUserName();
     var patient = getReplacePatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
@@ -114,6 +119,11 @@ function postreplace() {
     if (document.getElementById("idforappoint").value == "0") {
         window.alert("请预约时间与设备");
         return;
+    }
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
     }
     var xmlHttp = new XMLHttpRequest();
     var url = "ReplacementApply.ashx?id=" + appointid + "&treatid=" + treatmentid + "&replacementrequire=" + require +"&user="+userID;
