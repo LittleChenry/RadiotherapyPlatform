@@ -39,43 +39,46 @@ function Init(evt) {
  
     if (patient.Progress >= 10) {
         var designInfo = getDesignInfo(treatID);
-        document.getElementById("Remarks").innerHTML = designInfo.RadiotherapyHistory;
-        readDosagePriority(designInfo.DosagePriority);
-        readDosage(designInfo.Dosage);
-        document.getElementById("technology").innerHTML = designInfo.technology;
-        document.getElementById("equipment").innerHTML = designInfo.equipment;
-        document.getElementById("ApplicationUser").innerHTML = designInfo.doctor;
-        document.getElementById("ApplicationTime").innerHTML = designInfo.apptime;
-        document.getElementById("receiveUser").innerHTML = designInfo.ReceiveUser;
-        document.getElementById("receiveTime").innerHTML = designInfo.ReceiveTime;
-        document.getElementById("PlanSystem").innerHTML = designInfo.PlanSystem;
-        document.getElementById("IlluminatedNumber").innerHTML = designInfo.IlluminatedNumber;
-        document.getElementById("Coplanar").innerHTML = charge1(designInfo.Coplanar);
-        document.getElementById("MachineNumbe").innerHTML = designInfo.MachineNumbe;
-        document.getElementById("ControlPoint").innerHTML = designInfo.ControlPoint;
-        document.getElementById("Grid").innerHTML = designInfo.Grid_ID;
-        document.getElementById("Algorithm").innerHTML = designInfo.Algorithm_ID;
-        document.getElementById("Feasibility").innerHTML = charge(designInfo.Feasibility);
-        document.getElementById("Submituser").innerHTML = designInfo.SubmitUser;
-        document.getElementById("Submittime").innerHTML = designInfo.SubmitTime;
-        document.getElementById("userID").value = userID;
-        document.getElementById("applyuser").innerHTML = userName;
-        document.getElementById("time").innerHTML = getNowFormatDate();
-        document.getElementById("hidetreatID").value = treatID;
-        document.getElementById("confirm").addEventListener("click", function (evt) {
-            document.getElementById("state").value = "审核通过";
-        }, false);
-        document.getElementById("unconfirm").addEventListener("click", function (evt) {
-            document.getElementById("state").value = "审核不通过";
-        }, false);
-        if (patient.Progress >= 11) {
-            document.getElementById("advice").value = designInfo.advice;            
-            document.getElementById("state").value = charge2(designInfo.State);     
-            document.getElementById("applyuser").innerHTML = designInfo.ConfirmUser;
-            document.getElementById("time").innerHTML = designInfo.ConfirmTime;
+        for (var i = 0; i < designInfo.length; i++) {
+            if (patient.Treatmentname == designInfo[i].Treatmentname) {
+                document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
+                readDosagePriority(designInfo[i].DosagePriority);
+                readDosage(designInfo[i].Dosage);
+                document.getElementById("technology").innerHTML = designInfo[i].technology;
+                document.getElementById("equipment").innerHTML = designInfo[i].equipment;
+                document.getElementById("ApplicationUser").innerHTML = designInfo[i].doctor;
+                document.getElementById("ApplicationTime").innerHTML = designInfo[i].apptime;
+                document.getElementById("receiveUser").innerHTML = designInfo[i].ReceiveUser;
+                document.getElementById("receiveTime").innerHTML = designInfo[i].ReceiveTime;
+                document.getElementById("PlanSystem").innerHTML = designInfo[i].PlanSystem;
+                document.getElementById("IlluminatedNumber").innerHTML = designInfo[i].IlluminatedNumber;
+                document.getElementById("Coplanar").innerHTML = charge1(designInfo[i].Coplanar);
+                document.getElementById("MachineNumbe").innerHTML = designInfo[i].MachineNumbe;
+                document.getElementById("ControlPoint").innerHTML = designInfo[i].ControlPoint;
+                document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
+                document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
+                document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
+                document.getElementById("Submituser").innerHTML = designInfo[i].SubmitUser;
+                document.getElementById("Submittime").innerHTML = designInfo[i].SubmitTime;
+                document.getElementById("userID").value = userID;
+                document.getElementById("applyuser").innerHTML = userName;
+                document.getElementById("time").innerHTML = getNowFormatDate();
+                document.getElementById("hidetreatID").value = treatID;
+                document.getElementById("confirm").addEventListener("click", function (evt) {
+                    document.getElementById("state").value = "审核通过";
+                }, false);
+                document.getElementById("unconfirm").addEventListener("click", function (evt) {
+                    document.getElementById("state").value = "审核不通过";
+                }, false);
+                if (patient.Progress >= 11) {
+                    document.getElementById("advice").value = designInfo[i].advice;
+                    document.getElementById("state").value = charge2(designInfo[i].State);
+                    document.getElementById("applyuser").innerHTML = designInfo[i].ConfirmUser;
+                    document.getElementById("time").innerHTML = designInfo[i].ConfirmTime;
+                }
+            }
         }
-     }
-
+    }
 }
 
 
@@ -86,7 +89,7 @@ function getDesignInfo(treatID) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var obj1 = eval("(" + json + ")");
-    return obj1.designInfo[0];
+    return obj1.designInfo;
 }
 function getPatientInfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();

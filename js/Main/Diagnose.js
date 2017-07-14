@@ -45,8 +45,9 @@ function createPatient(evt) {
     var select5 = document.getElementById("groupid");
     creategroupItem(select5);
     var diagnosisInfo = getDignoseInfo(patient.treatID);
-    $("#current-tab").text("疗程"+ treatID +"诊断");
-    if (patient.Progress >= 2) {
+    $("#current-tab").text("疗程" + treatID + "诊断");
+    var groupprogress = patient.Progress.split(",");
+    if (contains(groupprogress,"1")) {
         for (var i = 0; i < diagnosisInfo.diagnosisInfo.length; i++) {
             if (treatID == diagnosisInfo.diagnosisInfo[i].Treatmentname) {
                 document.getElementById("operator").innerHTML = diagnosisInfo.diagnosisInfo[i].username;
@@ -102,6 +103,14 @@ function createPatient(evt) {
         });
     });
 }
+function contains(group, s) {
+    for (var k = 0; k <= group.length - 1; k++) {
+        if (group[k] == s) {
+            return true;
+        }
+    }
+    return false;
+    }
 function transfer(res) {
     if (res == "") {
         return "暂无分组";
@@ -162,6 +171,7 @@ function getDignoseInfo(treatid) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    alert(json);
     var obj1 = eval("(" + json + ")");
     return obj1;
 }

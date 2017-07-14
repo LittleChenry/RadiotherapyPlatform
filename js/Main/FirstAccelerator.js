@@ -31,7 +31,8 @@ function Init(evt) {
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
-    if (patient.Progress >= 15) {
+    var groupprogress = patient.Progress.split(",");
+    if (contains(groupprogress, "14")) {
         var info = getfirstaccelerateInfomation(treatmentID);
         document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
         document.getElementById("chooseappoint").disabled = "disabled";
@@ -49,6 +50,14 @@ function Init(evt) {
         document.getElementById("sure").addEventListener("click", checkAllTable, false);
 
     }
+}
+function contains(group, s) {
+    for (var k = 0; k <= group.length - 1; k++) {
+        if (group[k] == s) {
+            return true;
+        }
+    }
+    return false;
 }
 //设备下拉菜单
 function createfixEquipmachine(thiselement, item) {

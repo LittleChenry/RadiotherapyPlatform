@@ -35,7 +35,8 @@ function Init(evt) {
     createrequireItem(document.getElementById("replacementrequire"));
     var info = getReplaceInfomation(treatmentID);
     $("#current-tab").text("疗程" + patient.Treatmentname + "复位申请");
-    if (patient.Progress >=13) {
+    var groupprogress = patient.Progress.split(",");
+    if (contains(groupprogress, "12")) {
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatmentname == patient.Treatmentname) {
                 document.getElementById("replacementrequire").value = info[i].requirement;
@@ -46,7 +47,7 @@ function Init(evt) {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '复位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div><div class="item col-xs-4"><button disabled="disabled" class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
 
@@ -70,13 +71,27 @@ function Init(evt) {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '复位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
         }
 
     }
+    $("#tab-content").find("button").each(function () {
+        $(this).bind("click", function () {
+            var k = this.id;
+            document.getElementById("replacementrequire").value = info[k].requirement;
+        });
+    });
+}
+function contains(group, s) {
+    for (var k = 0; k <= group.length - 1; k++) {
+        if (group[k] == s) {
+            return true;
+        }
+    }
+    return false;
 }
 //设备下拉菜单
 function createfixEquipmachine(thiselement, item) {

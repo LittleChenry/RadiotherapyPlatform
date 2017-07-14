@@ -92,7 +92,8 @@ function Init(evt) {
     });
     var info = getreplacerecordInfomation(treatmentID);
     $("#current-tab").text("疗程" + patient.Treatmentname + "复位记录");
-   if (patient.Progress >= 14) {
+    var groupprogress = patient.Progress.split(",");
+    if (contains(groupprogress, "13")) {
        for (var i = 0; i < info.length; i++) {
            if (info[i].treatmentname == patient.Treatmentname) {
                var ReplacementRecord = document.getElementById("ReplacementRecord")
@@ -176,7 +177,7 @@ function Init(evt) {
                        content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img class="img"  src="' + pictures1[k] + '" style="display:block" /></div></div></div></div></div>';
                    }
                }
-               content = content + '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + '</span></div></div>';
+               content = content + '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                $("#tabs").append(tab);
                $("#tab-content").append(content);
                $("#tab-content").find("img").each(function () {
@@ -216,7 +217,7 @@ function Init(evt) {
                         content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img style="display:block"  src="' + pictures1[k] + '" class="img"/></div></div></div></div></div>';
                     }
                 }
-                content = content + '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + '</span></div></div>';
+                content = content + '<div class="single-row"><div class="item area-group col-xs-8"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + + '</span></div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
                 $("#tab-content").find("img").each(function () {
@@ -225,6 +226,29 @@ function Init(evt) {
             }
         }
     }
+    $("#tab-content").find("button").each(function () {
+        $(this).bind("click", function () {
+            var m = this.id;
+            var ReplacementRecord = document.getElementById("ReplacementRecord")
+            for (var k = 0; k < 3; k++) {
+                ReplacementRecord.rows[k + 1].cells[1].innerHTML = info[m].OriginCenter.split(",")[k];
+                ReplacementRecord.rows[k + 1].cells[2].innerHTML = info[m].PlanCenter.split(",")[k];
+                ReplacementRecord.rows[k + 1].cells[3].innerHTML = info[m].Movement.split(",")[k];
+                ReplacementRecord.rows[k + 1].cells[4].innerHTML = info[m].Result.split(",")[k];
+                ReplacementRecord.rows[k + 1].cells[5].innerHTML = info[m].Distance.split(",")[k];
+            }
+            document.getElementById("Remarks").value = info[m].Remarks;
+
+        });
+    });
+}
+function contains(group, s) {
+    for (var k = 0; k <= group.length - 1; k++) {
+        if (group[k] == s) {
+            return true;
+        }
+    }
+    return false;
 }
 function showPicture() {
     $("#myModal").modal("show");
