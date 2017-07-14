@@ -171,7 +171,6 @@ function getDignoseInfo(treatid) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    alert(json);
     var obj1 = eval("(" + json + ")");
     return obj1;
 }
