@@ -9,7 +9,38 @@ $(document).ready(function () {
     $("#progress-iframe").width($("#progress-content").width());
     var session = getSession();
     var patient;
-    getFunctions();
+    functions = session.progress.split(" ");
+    RolesToPatients(session);
+    $("#patient-search").bind('input propertychange', function() {
+        var Searchedpatients = Search($("#patient-search").val(), patient, session.role);
+        Paging(Searchedpatients,session.role);
+    });
+    $("#signOut").bind("click", function () {
+        removeSession();//ajax 注销用户Session
+        window.location.replace("../Login/Login.aspx");
+    });
+    $("#save").click(function(){
+        //$("#record-iframe")[0].contentWindow.save();
+        RolesToPatients(session);
+        Recover();
+        $('#save').attr("disabled","disabled");
+    });
+    $('#edit').click(function(){
+        $("#save").removeAttr("disabled");
+        $('#edit').attr("disabled","disabled");
+    });
+    $("#saveTreatment").bind("click",function(){
+        saveTreatment();
+    });
+    //chooseAssistant();
+    
+})
+
+/*window.onresize=function(){
+    document.location.reload();
+}*/
+
+function RolesToPatients(session){
     if (session.role == "模拟技师" || session.role == "放疗技师") {
         if (session.equipmentID == "0") {
             chooseEquipment();
@@ -52,36 +83,11 @@ $(document).ready(function () {
         }
         
     }else{
-        patient = getPatient(session.userID, session.role, new Array());
+        var parameters = new Array();
+        patient = getPatient(session.userID, session.role, parameters);
         Paging(patient,session.role);
     }
-    $("#patient-search").bind('input propertychange', function() {
-        var Searchedpatients = Search($("#patient-search").val(), patient, session.role);
-        Paging(Searchedpatients,session.role);
-    });
-    $("#signOut").bind("click", function () {
-        removeSession();//ajax 注销用户Session
-        window.location.replace("../Login/Login.aspx");
-    });
-    $("#save").click(function(){
-        addProgress(patient);
-        Paging(patient,session.role);
-        $('#save').attr("disabled","disabled");
-    });
-    $('#edit').click(function(){
-        $("#save").removeAttr("disabled");
-        $('#edit').attr("disabled","disabled");
-    });
-    $("#saveTreatment").bind("click",function(){
-        saveTreatment();
-    });
-    //chooseAssistant();
-    
-})
-
-/*window.onresize=function(){
-    document.location.reload();
-}*/
+}
 
 function Paging(patient,role){
     if (patient.PatientInfo != "") {
@@ -222,7 +228,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 1:
-                        if (LightLi(this,Progresses, "1", "0")) {
+                        if (LightLi(this,Progresses, "1", "0", "-1")) {
                             var url = "Records/Diagnose.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treat=" + e.data.treat;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -238,7 +244,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 2:
-                        if (LightLi(this,Progresses, "2", "1")) {
+                        if (LightLi(this,Progresses, "2", "1", "-1")) {
                             var url = "Records/FixedApply.aspx?TreatmentID=" + e.data.ID  +"&TreatmentItem=Fixed";
                         }else{
                             var url = "Records/Blank.aspx";
@@ -254,7 +260,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 3:
-                        if (LightLi(this,Progresses, "3", "2")) {
+                        if (LightLi(this,Progresses, "3", "2", "-1")) {
                             var url = "Records/LocationApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location";
                         }else{
                             var url = "Records/Blank.aspx";
@@ -270,7 +276,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 4:
-                        if (LightLi(this,Progresses, "4", "2")) {
+                        if (LightLi(this,Progresses, "4", "2", "-1")) {
                             var url = "Records/FixedRecord.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -286,7 +292,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 5:
-                        if (LightLi(this,Progresses, "5", "3")) {
+                        if (LightLi(this,Progresses, "5", "4", "3")) {
                             var url = "Records/LocationRecord.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -302,7 +308,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 6:
-                        if (LightLi(this,Progresses, "6", "5")) {
+                        if (LightLi(this,Progresses, "6", "5", "-1")) {
                             var url = "Records/ImportCT.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -318,7 +324,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 7:
-                        if (LightLi(this,Progresses, "7", "6")) {
+                        if (LightLi(this,Progresses, "7", "6", "-1")) {
                             var url = "Records/DesignApply.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -334,7 +340,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 8:
-                        if (LightLi(this,Progresses, "8", "7")) {
+                        if (LightLi(this,Progresses, "8", "7", "-1")) {
                             var url = "Records/DesignReceive.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -350,7 +356,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 9:
-                        if (LightLi(this,Progresses, "9", "8")) {
+                        if (LightLi(this,Progresses, "9", "8", "-1")) {
                             var url = "Records/DesignSubmit.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -366,7 +372,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 10:
-                        if (LightLi(this,Progresses, "10", "9")) {
+                        if (LightLi(this,Progresses, "10", "9", "-1")) {
                             var url = "Records/DesignConfirm.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -382,7 +388,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 11:
-                        if (LightLi(this,Progresses, "11", "10")) {
+                        if (LightLi(this,Progresses, "11", "10", "-1")) {
                             var url = "Records/DesignReview.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -398,7 +404,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 12:
-                        if (LightLi(this,Progresses, "12", "10")) {
+                        if (LightLi(this,Progresses, "12", "10", "-1")) {
                             var url = "Records/ReplacementApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location";
                         }else{
                             var url = "Records/Blank.aspx";
@@ -414,7 +420,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 13:
-                        if (LightLi(this,Progresses, "13", "12")) {
+                        if (LightLi(this,Progresses, "13", "12", "-1")) {
                             var url = "Records/ReplacementRecord.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -430,7 +436,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 14:
-                        if (LightLi(this,Progresses, "14", "13")) {
+                        if (LightLi(this,Progresses, "14", "13", "-1")) {
                             var url = "Records/FirstAccelerator.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Accelerator";
                         }else{
                             var url = "Records/Blank.aspx";
@@ -446,7 +452,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 15:
-                        if (LightLi(this,Progresses, "15", "14")) {
+                        if (LightLi(this,Progresses, "15", "14", "-1")) {
                             var url = "Records/TreatmentRecord.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -462,7 +468,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 16:
-                        if (LightLi(this,Progresses, "16", "15")) {
+                        if (LightLi(this,Progresses, "16", "15", "-1")) {
                             var url = "Records/Summary.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -495,8 +501,14 @@ function LightLi(e, Progresses, currentProgress, preProgress, preProgress2){
             flag = 2;
             break;
         }else{
-            if (Progresses[i] == preProgress || Progresses[i] == preProgress2) {
-                flag = 1;
+            if (preProgress2 != -1) {
+                if (Progresses[i] == preProgress && Progresses[i] == preProgress2) {
+                    flag = 1;
+                }
+            }else{
+                if (Progresses[i] == preProgress) {
+                    flag = 1;
+                }
             }
         }
     }
@@ -518,7 +530,7 @@ function LightLi(e, Progresses, currentProgress, preProgress, preProgress2){
     }
 }
 
-function sortarr(arr){
+function BubbleSort(arr){
     for(var i = 0; i < arr.length - 1;i++){
         for(var j = 0; j < arr.length - 1 - i; j++){
             if(arr[j] > arr[j + 1]){
@@ -539,7 +551,7 @@ function ProgressToString(pro){
         pro[i] = parseInt(pro[i]);
     }
     length = pro.length;
-    pro = sortarr(pro);
+    pro = BubbleSort(pro);
     if (pro[length - 1] == (length - 1)) {
         currentProgress[count++] = length;
     }
@@ -548,7 +560,9 @@ function ProgressToString(pro){
             currentProgress[count++] = 4;
             break;
         case 4:
-            currentProgress[count++] = 3;
+            if (pro[length - 1] != (length - 1)) {
+                currentProgress[count++] = 3;
+            }
             break;
         case 11:
             currentProgress[count++] = 12;
@@ -975,23 +989,6 @@ function checkEdit(str){
     return false;
 }
 
-function getFunctions(){
-    $.ajax({
-        type: "GET",
-        url: "../../pages/Main/Records/getSession.ashx",
-        async: false,
-        dateType: "text",
-        success: function (data) {
-            //alert(data);
-            obj = $.parseJSON(data);
-            functions = obj.progress.split(" ");
-        },
-        error: function(){
-            alert("error");
-        }
-    });
-}
-
 function getSession(){
     var Session;
     $.ajax({
@@ -1010,29 +1007,6 @@ function getSession(){
     return Session;
 }
 
-function addProgress(patient){
-    var ul = $("#progress-iframe").contents().find("#ul-progress a");
-    var sign = 0;
-    ul.each(function (index, element) {
-        if($(this).find('li').hasClass("progress-active")){
-            if(index < 14){
-                $(this).find('li').removeClass("progress-active").addClass("progress-finished");
-                $(this).find('i').removeClass().addClass("fa fa-fw fa-check");
-                $(this).find('span').removeClass();
-                $(this).find('li').parent().next().find('li').removeClass("progress-unfinished").addClass("progress-active");
-                $(this).find('li').parent().next().find('i').removeClass().addClass("fa fa-fw fa-edit");
-                $(this).find('li').parent().next().find('span').removeClass().addClass("fa fa-arrow-circle-right");
-                return false;
-            }
-        }
-    });
-    for (var i = 0; i < patient.PatientInfo.length; i++) {
-        if (patient.PatientInfo[i].treatID  == currentID) {
-            patient.PatientInfo[i].Progress = parseInt(patient.PatientInfo[i].Progress) + 1;
-        }
-    }
-}
-
 function removeSession() {
     $.ajax({
         type: "GET",
@@ -1042,7 +1016,7 @@ function removeSession() {
 
 function Recover(){
     if(currentID != "0" && $("#" + currentID).length > 0){
-        $("#" + currentID).addClass("chose");
+        $("#" + currentID).click();
     }
 }
 
