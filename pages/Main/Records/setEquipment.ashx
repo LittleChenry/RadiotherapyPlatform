@@ -25,6 +25,9 @@ public class setEquipment : IHttpHandler, IRequiresSessionState
         string name = context.Request.Form["name"];
         int id = int.Parse(context.Request.Form["id"]);
 
+        string beg = context.Request.Form["beginTime"];
+        string end = context.Request.Form["endTime"];
+
         KeyValuePair<int, string> equipment = new KeyValuePair<int, string>(id, name);
         if (context.Session["loginUser"] == null)
         {
@@ -32,6 +35,8 @@ public class setEquipment : IHttpHandler, IRequiresSessionState
         }
         UserInformation user = (UserInformation)context.Session["loginUser"];
         user.setEquipment(equipment);
+        user.setBeginTime(beg);
+        user.setEndTime(end);
         context.Session["loginUser"] = user;
         return "success";
     }

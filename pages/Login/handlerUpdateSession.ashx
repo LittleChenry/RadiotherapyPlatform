@@ -30,6 +30,8 @@ public class handlerUpdateSession : IHttpHandler, IRequiresSessionState
         user.setProgress(progress);
         user.setAssistant("");
         user.setEquipment(new KeyValuePair<int, string>());
+        user.setBeginTime("");
+        user.setEndTime("");
         context.Session["loginUser"] = user;
     }
 

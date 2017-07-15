@@ -15,6 +15,8 @@ public class UserInformation
     private string assistant;
     private LinkedList<int> progress;
     private KeyValuePair<int, string> equipment;
+    private string beginTime;
+    private string endTime;
 
     /// <summary>
     /// 构造函数
@@ -96,6 +98,25 @@ public class UserInformation
         return this.progress;
     }
 
+    public void setBeginTime(string beginTime)
+    {
+        this.beginTime = beginTime;
+    }
+
+    public string getBeginTime()
+    {
+        return this.beginTime;
+    }
+
+    public void setEndTime(string endTime)
+    {
+        this.endTime = endTime;
+    }
+
+    public string getEndTime()
+    {
+        return this.endTime;
+    }
     public static Dictionary<string,string> GetRoleName()
     {
         Dictionary<string, string> RoleName = new Dictionary<string, string>();
