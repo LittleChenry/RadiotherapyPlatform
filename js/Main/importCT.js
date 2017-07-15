@@ -203,7 +203,7 @@ function dateformat(format) {
     var time = year + "年" + month + "月" + day + "日 " + hour + "：" + minute;
     return time;
 }
-function postimportCT() {
+function save() {
     if (document.getElementById("DensityConversion").value == "allItem") {
         alert("请选择CT电子密度转换方式");
         return;

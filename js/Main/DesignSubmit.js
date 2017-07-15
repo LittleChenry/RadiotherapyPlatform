@@ -362,7 +362,7 @@ function sex(evt) {
     else
         return "男";
 }
-function saveDesignSubmit() {
+function save() {
     if (document.getElementById("PlanSystem").value == "allItem") {
         window.alert("计划系统没有选择");
         return;

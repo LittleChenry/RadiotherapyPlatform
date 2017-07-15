@@ -243,7 +243,7 @@ function charge2(evt) {
     else
         return "审核通过";
 }
-function saveDesignConfirm() {
+function save() {
     if (document.getElementById("state").value == "未审核") {
         window.alert("请审核计划");
         return;

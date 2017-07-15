@@ -89,7 +89,7 @@ function getfirstaccelerateInfomation(treatmentID) {
  
     return obj1.info[obj1.info.length-1];
 }
-function postfirstaccelerate() {
+function save() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentid = treatmentgroup.split("=")[1];
     var appointid = document.getElementById("idforappoint").value;

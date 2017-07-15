@@ -36,7 +36,8 @@ function Init(evt) {
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
 
-    if (patient.Progress >= 11) {
+    var progress = patient.Progress.split(",");
+    if (isInArray(progress, '10')) {
         var designInfo = getDesignInfo(treatID);
         var length = designInfo.length;
         for (var i = 0; i < length; i++) {
@@ -57,7 +58,7 @@ function Init(evt) {
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("time").innerHTML = getNowFormatDate();
         document.getElementById("hidetreatID").value = treatID;
-        if (patient.Progress >= 12) {
+        if (isInArray(progress, '11')) {
             var reviewInfo = getReviewInfo(treatID);
             for (var i = 0; i < reviewInfo.length; i++) {
                 if (reviewInfo[i].Treatmentname == patient.Treatmentname) {
@@ -87,7 +88,14 @@ function Init(evt) {
     }
 
 }
-
+function isInArray(arr, value) {
+    for (var i = 0; i < arr.length; i++) {
+        if (value === arr[i]) {
+            return true;
+        }
+    }
+    return false;
+}
 function getReviewInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "ReviewInfo.ashx?treatID=" + treatID;
@@ -254,7 +262,7 @@ function getmovement(ReferenceCenter) {
     document.getElementById("MovementY").value = Reference[1];
     document.getElementById("MovementZ").value = Reference[2];
 }
-function saveDesignReview() {
+function save() {
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";

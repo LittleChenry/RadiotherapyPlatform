@@ -278,7 +278,7 @@ function dateformat(format) {
     var time = year + "年" + month + "月" + day + "日 " + hour + "：" + minute;
     return time;
 }
-function postimportlocation() {
+function save() {
 
     if (document.getElementById("Thickness").value == "") {
         alert("请填写层厚");

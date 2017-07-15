@@ -211,7 +211,7 @@ function getLocationInfomation(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 }
-function postlocation() {
+function save() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentid = treatmentgroup.split("=")[1];
     var scanpart = document.getElementById("scanpart").value;

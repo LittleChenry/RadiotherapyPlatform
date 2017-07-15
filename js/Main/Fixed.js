@@ -270,7 +270,7 @@ function dateformat(format) {
     var time = year + "年" + month + "月" + day + "日 " + hour + "：" + minute;
     return time;
 }
-function postimportFIX() {
+function save() {
     
     if (document.getElementById("BodyPositionDetail").value == "") {
         alert("请填写体位详细描述");

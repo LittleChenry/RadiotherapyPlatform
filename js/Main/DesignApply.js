@@ -563,7 +563,7 @@ function getUserID() {
 //建立入口病患表
 
 
-function saveDesignApplyRecord() {
+function save() {
     if (document.getElementById("technology").value == "allItem") {
         window.alert("治疗技术没有选择");
         return;
