@@ -1,9 +1,9 @@
-﻿<%@ WebHandler Language="C#" Class="getEquipmentForMNJS" %>
+﻿<%@ WebHandler Language="C#" Class="getEquipment" %>
 
 using System;
 using System.Web;
 using System.Text;
-public class getEquipmentForMNJS : IHttpHandler {
+public class getEquipment : IHttpHandler {
     private DataLayer sqlOperation = new DataLayer("sqlStr");
     private DataLayer sqlOperation2 = new DataLayer("sqlStr");
   
@@ -44,7 +44,7 @@ public class getEquipmentForMNJS : IHttpHandler {
         int i = 1;
         string sqlCommand2 = "select equipment.ID as eqid,equipment.Name as eqname,TreatmentItem,Type from equipmenttype,equipment where equipment.EquipmentType=equipmenttype.ID";       
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
-        StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
+        StringBuilder backText = new StringBuilder("{\"EquipmentInfo\":[");
 
         while (reader.Read())
         {

@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="../../css/Main/main.css">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
   <!-- Font Awesome -->
@@ -364,11 +366,30 @@
                     <h4 class="modal-title">选择设备</h4>
                 </div>
                 <div class="modal-body">
-                    <select id="equipment" class="form-control"></select>
+                    <div class="form-group">
+                        <span>选择操作项目：</span>
+                        <select id="equipmentType" class="form-control">
+                            <option value="all">全部项目</option>
+                            <option value="体位固定">体位固定</option>
+                            <option value="模拟定位">CT模拟</option>
+                            <option value="加速器">加速器治疗</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <span>选择设备：</span>
+                        <select id="equipment" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <span>开始日期：</span>
+                        <input type="text" class="form-control" id="startdate">
+                    </div>
+                    <div class="form-group">
+                        <span>结束日期：</span>
+                        <input type="text" class="form-control" id="enddate">
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button id="getSelectedPatient" type="button" class="btn btn-primary" data-dismiss="modal">查询所有患者</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -393,6 +414,8 @@
 <!-- DataTables -->
 <script src="../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- SlimScroll -->
 <script src="../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
@@ -407,14 +430,8 @@
 <script src="../../js/Main/main.js"></script>
 
 <script type="text/javascript">
-    $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false
-    });
+    $("#startdate").datepicker({ autoclose: true });
+    $("#enddate").datepicker({ autoclose: true });
     $(function () {
         $("#printIframe").bind("click", function () {
             $("#record-iframe")[0].contentWindow.print();

@@ -8,12 +8,20 @@ $(document).ready(function () {
     $("#record-iframe").width($("#record-content").width());
     $("#progress-iframe").width($("#progress-content").width());
     var session = getSession();
-    var patient = getPatient(session.userID, session.role);
+    getFunctions();
+    if (session.role == "模拟技师" || session.role == "放疗技师") {
+        chooseEquipment();
+        $("#getSelectedPatient").click(function(){
+            getSelectedPatient(session.role);
+        });
+    }else{
+        var patient = getPatient(session.userID, session.role);
+        Paging(patient,session.role);
+    }
     $("#patient-search").bind('input propertychange', function() {
         var Searchedpatients = Search($("#patient-search").val(),patient);
         Paging(Searchedpatients,session.role);
     });
-    Paging(patient,session.role);
     $("#signOut").bind("click", function () {
         removeSession();//ajax 注销用户Session
         window.location.replace("../Login/Login.aspx");
@@ -29,7 +37,7 @@ $(document).ready(function () {
     });
     $("#saveTreatment").bind("click",saveTreatment);
     //chooseAssistant();
-    getFunctions();
+    
 })
 
 /*window.onresize=function(){
@@ -44,7 +52,7 @@ function Paging(patient,role){
         $("#patient_info").text("一共" +  patient.PatientInfo.length +"条记录");
         switch(role){
             case "医师":
-                var Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
+                var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
                 var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
@@ -73,7 +81,28 @@ function Paging(patient,role){
                 var url = "";
                 break;
             case "模拟技师":
-                var url = "";
+                var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, date, begin, end, doctor;
+                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>预约时间</th><th>疗程</th><th>诊断结果</th>'
+                    + '<th>主治医生</th></tr></thead>';
+                table.append(thead);
+                var tbody = '<tbody>';
+                for (var i = 0; i < patient.PatientInfo.length; i++) {
+                    TreatmentID = patient.PatientInfo[i].treatID;
+                    Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
+                    Name = patient.PatientInfo[i].Name;
+                    treat = patient.PatientInfo[i].treat;
+                    diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
+                    date = patient.PatientInfo[i].date;
+                    doctor = patient.PatientInfo[i].doctor;
+                    begin = patient.PatientInfo[i].begin;
+                    end = patient.PatientInfo[i].end;
+                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + " " + begin + " " + end + "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td>"
+                        + "<td>" + doctor + "</td></tr>";
+                    tbody += tr;
+                }
+                tbody += '</tbody>';
+                table.append(tbody);
+                trAddClick(patient);
                 break;
             case "放疗技师":
                 var url = "";
@@ -1048,7 +1077,7 @@ function getPatient(userID,role){
             var url = "";
             break;
         case "模拟技师":
-            var url = "";
+            var url = "Records/patientInfoForDoctor.ashx?equipmentID=" + equipmentID + "&startdate" + startdate + "&enddate" + enddate;
             break;
         case "放疗技师":
             var url = "";
@@ -1064,6 +1093,83 @@ function getPatient(userID,role){
     var json = xmlHttp.responseText;
     var patient = eval("(" + json + ")");
     return patient;
+}
+
+function chooseEquipment(){
+    $("#chooseMachine").modal({backdrop: 'static'});
+    
+    $.ajax({
+        type: "GET",
+        url: "../../pages/Main/Records/getEquipment.ashx",
+        async: false,
+        dateType: "json",
+        success: function (data) {
+            var Equipment = $.parseJSON(data);
+            var options;
+            for (var i = 0; i < Equipment.EquipmentInfo.length; i++) {
+                options += '<option value="'+ Equipment.EquipmentInfo[i].equipmentID +'">'+ Equipment.EquipmentInfo[i].equipmentName +'</option>';
+            }
+            $("#equipment").append(options);
+            $("#equipmentType").change(function(){
+                if($("#equipmentType").val() == "all"){
+                    options ="";
+                    for (var i = 0; i < Equipment.EquipmentInfo.length; i++) {
+                        options += '<option value="'+ Equipment.EquipmentInfo[i].equipmentID +'">'+ Equipment.EquipmentInfo[i].equipmentName +'</option>';
+                    }
+                }else{
+                    options = "";
+                    for (var i = 0; i < Equipment.EquipmentInfo.length; i++) {
+                        if ($("#equipmentType").val() == Equipment.EquipmentInfo[i].TreatmentItem) {
+                            options += '<option value="'+ Equipment.EquipmentInfo[i].equipmentID +'">'+ Equipment.EquipmentInfo[i].equipmentName +'</option>';
+                        }
+                    }
+                }
+                $("#equipment").html("").append(options);
+            });
+        },
+        error: function(){
+            alert("error");
+        }
+    });
+    
+    
+    var currentTime = new Date().Format("yyyy-MM-dd");
+    $("#startdate").val(currentTime);
+    $("#enddate").val(currentTime);
+}
+
+function getSelectedPatient(role){
+    var xmlHttp = new XMLHttpRequest();
+    var xmlHttp = new XMLHttpRequest();
+    var equipmentID = $("#equipment").val();
+    var startdate = $("#startdate").val();
+    var enddate = $("#enddate").val();
+    var url = "Records/patientInfoForMNJS.ashx?equipmentid=" + equipmentID + "&date1=" + startdate + "&date2=" + enddate;
+    alert(url);
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    alert(json);
+    var patient = eval("(" + json + ")");
+    Paging(patient, role);
+}
+
+Date.prototype.Format = function(fmt){
+    var o = {
+        "M+" : this.getMonth()+1,
+        "d+" : this.getDate(),
+        "h+" : this.getHours(),
+        "m+" : this.getMinutes(),
+        "s+" : this.getSeconds(),
+        "q+" : Math.floor((this.getMonth()+3)/3),
+        "S"  : this.getMilliseconds()
+    };
+    if(/(y+)/.test(fmt))
+        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    for(var k in o)
+    if(new RegExp("("+ k +")").test(fmt))
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+    return fmt;
 }
 
 function chooseAssistant() {
