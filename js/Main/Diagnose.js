@@ -239,7 +239,7 @@ function getDiagResultItem() {
     var Items = xmlHttp.responseText;
     return Items;
 }
-function checkAll() {
+function save() {
     var time = document.getElementById("time");
     var diaguserid = document.getElementById("diaguserid");
     var remark = document.getElementById("remark");

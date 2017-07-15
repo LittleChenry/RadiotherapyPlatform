@@ -138,7 +138,7 @@ function CheckInput(evt) {
     }
 }
 //检查是否为空
-function CheckEmpty() {   
+function save() {   
    
     if (document.getElementById("userName").value=="") {
         window.alert("姓名不能为空");

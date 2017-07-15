@@ -43,7 +43,9 @@ function Init(evt) {
     }
     var info = getLocationInfomation(treatmentID);
     $("#current-tab").text("疗程" + patient.Treatmentname + "模拟定位申请");
-    if (patient.Progress >= 4) {
+    var progress = patient.Progress.split(",");
+
+    if (isInArray(progress, '3')) {
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatname == patient.Treatmentname) {
                 document.getElementById("scanmethod").value = info[i].scanmethodID;
@@ -73,7 +75,7 @@ function Init(evt) {
                     + '<div class="single-row"><div class="item col-xs-6">是否增强:<span class="underline">' + trans(info[i].Enhance) + '</span></div>'
                     + '<div class="item col-xs-6">增强方式：<span class="underline">' + transmethod(info[i].methodname) + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
@@ -102,7 +104,7 @@ function Init(evt) {
                     + '<div class="single-row"><div class="item col-xs-6">是否增强:<span class="underline">' + trans(info[i].Enhance) + '</span></div>'
                     + '<div class="item col-xs-6">增强方式：<span class="underline">' + transmethod(info[i].methodname) + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div></div>'
-                   + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div></div>';
+                   + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
                
@@ -110,6 +112,34 @@ function Init(evt) {
         }
 
     }
+    $("#tab-content").find("button").each(function () {
+        $(this).bind("click", function () {
+            var k = this.id;
+            document.getElementById("scanmethod").value = info[k].scanmethodID;
+            document.getElementById("scanpart").value = info[k].scanpartID;
+            document.getElementById("up").value = info[k].UpperBound;
+            document.getElementById("down").value = info[k].LowerBound;
+            document.getElementById("special").value = info[k].locationrequireID;
+            document.getElementById("remark").value = info[k].Remarks;
+            var add = document.getElementsByName("add");
+            if (info[k].Enhance == "1") {
+                add[0].checked = "true";
+                document.getElementById("addmethod").value = info[k].enhancemethod;
+            } else {
+                add[1].checked = "true";
+                document.getElementById("enhancemethod").style.display = "none";
+            }
+            document.getElementById("appointtime").value = info[k].equipname + " " + info[k].Date + " " + toTime(info[k].Begin) + "-" + toTime(info[k].End);
+        });
+    });
+}
+function isInArray(arr, value) {
+    for (var i = 0; i < arr.length; i++) {
+        if (value === arr[i]) {
+            return true;
+        }
+    }
+    return false;
 }
 function trans(s)
 {
@@ -181,7 +211,7 @@ function getLocationInfomation(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 }
-function postlocation() {
+function save() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentid = treatmentgroup.split("=")[1];
     var scanpart = document.getElementById("scanpart").value;

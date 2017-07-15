@@ -119,7 +119,7 @@ function sex(evt) {
     else
         return "男";
 }
-function putIn() {
+function save() {
     var remark = document.getElementById("content");
     if (remark.value == "") {
         window.alert("请填写随访记录");

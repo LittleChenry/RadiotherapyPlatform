@@ -31,7 +31,8 @@ function Init(evt) {
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
-    if (patient.Progress >= 8) {
+    var progress = patient.Progress.split(",");
+    if (isInArray(progress, '7')) {
         var designre = getdesignre(treatID);       
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("time").innerHTML = getNowFormatDate();      
@@ -45,12 +46,18 @@ function Init(evt) {
         document.getElementById("receive").addEventListener("click", function () {
             receiveDesign(treatID);
         }, false);
-        if (patient.Progress >= 9) {
             document.getElementById("applyuser").innerHTML = designre.name;
             document.getElementById("time").innerHTML = designre.ReceiveTime;
             document.getElementById("receive").disabled = true;
         }
+}
+function isInArray(arr, value) {
+    for (var i = 0; i < arr.length; i++) {
+        if (value === arr[i]) {
+            return true;
+        }
     }
+    return false;
 }
 function receiveDesign(treatID) {
     if ((typeof (userID) == "undefined")) {

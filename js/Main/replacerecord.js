@@ -370,7 +370,7 @@ function dateformat(format) {
     var time = year + "年" + month + "月" + day + "日 " + hour + "：" + minute;
     return time;
 }
-function postimportReplaceRecord() {
+function save() {
     var boxgroup = document.getElementById("multipic_DRR");
     var boxgroup1 = document.getElementById("multipic_yanzheng");
     document.getElementById("cankaodrr").value = boxgroup.children.length - 1;

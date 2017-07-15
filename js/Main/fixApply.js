@@ -156,7 +156,7 @@ function getfixInfomation(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 }
-function postfix() {
+function save() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentid = treatmentgroup.split("=")[1];
     var model = document.getElementById("modelselect").value;

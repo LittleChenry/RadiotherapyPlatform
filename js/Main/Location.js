@@ -33,10 +33,10 @@ function Init(evt) {
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     $("#current-tab").text("疗程" + patient.Treatmentname + "模拟定位记录");
     var locationInfo = getDignoseInfo(treatID);
-    if (patient.Progress >= 5) {
-        
+    var progress = patient.Progress.split(",");
+    if (isInArray(progress, '5')) {
         for (var i = 0; i < locationInfo.length; i++) {
-            if(patient.Treatmentname==locationInfo[i].Treatmentname){
+            if (patient.Treatmentname == locationInfo[i].Treatmentname) {
                 document.getElementById("modelID").innerHTML = locationInfo[i].modelID;
                 document.getElementById("fixedEquipment").innerHTML = locationInfo[i].fixedEquipment;
                 document.getElementById("body").innerHTML = locationInfo[i].body + "，" + locationInfo[i].BodyPositionDetail;
@@ -53,44 +53,42 @@ function Init(evt) {
                 } else {
                     document.getElementById("Enhance").innerHTML = "不增强";
                 }
-
                 document.getElementById("ApplicationUser").innerHTML = locationInfo[i].ApplicationUser;
                 document.getElementById("ApplicationTime").innerHTML = locationInfo[i].ApplicationTime;
                 document.getElementById("Remarks").innerHTML = locationInfo[i].Remarks;
-                if (patient.Progress >= 6) {
-                    document.getElementById("Thickness").value = locationInfo[i].Thickness;
-                    document.getElementById("Number").value = locationInfo[i].Number;
-                    document.getElementById("ReferenceNumber").value = locationInfo[i].ReferenceNumber;
-                    document.getElementById("ReferenceScale").value = locationInfo[i].ReferenceScale;
-                    document.getElementById("operator").innerHTML = locationInfo[i].operate;
-                    document.getElementById("date").innerHTML = locationInfo[i].OperateTime;
-                    var boxesgroup = document.getElementsByClassName("boxes");
-                    boxesgroup[0].style.display = "none";
-                    var boxes = document.getElementById("multipic");
-                    var pictures = locationInfo[i].CTPictures.split(",");
-                    if (locationInfo[i].CTPictures == "") {
-                        boxes.innerHTML = "无";
-                    } else {
-                        for (var i = 1; i < pictures.length; i++) {
-                            var div = document.createElement("DIV");
-                            div.className = "boxes";
-                            var div1 = document.createElement("DIV");
-                            div1.className = "imgnum";
-                            var img = document.createElement("IMG");
-                            img.addEventListener("click",showPicture,false);
-                            img.className = "img";
-                            img.src = pictures[i];
-                            img.style.display = "block";
-                            div1.appendChild(img);
-                            div.appendChild(div1);
-                            boxes.appendChild(div);
-                        }
+                document.getElementById("Thickness").value = locationInfo[i].Thickness;
+                document.getElementById("Number").value = locationInfo[i].Number;
+                document.getElementById("ReferenceNumber").value = locationInfo[i].ReferenceNumber;
+                document.getElementById("ReferenceScale").value = locationInfo[i].ReferenceScale;
+                document.getElementById("operator").innerHTML = locationInfo[i].operate;
+                document.getElementById("date").innerHTML = locationInfo[i].OperateTime;
+                var boxesgroup = document.getElementsByClassName("boxes");
+                boxesgroup[0].style.display = "none";
+                var boxes = document.getElementById("multipic");
+                var pictures = locationInfo[i].CTPictures.split(",");
+                if (locationInfo[i].CTPictures == "") {
+                    boxes.innerHTML = "无";
+                } else {
+                    for (var i = 1; i < pictures.length; i++) {
+                        var div = document.createElement("DIV");
+                        div.className = "boxes";
+                        var div1 = document.createElement("DIV");
+                        div1.className = "imgnum";
+                        var img = document.createElement("IMG");
+                        img.addEventListener("click", showPicture, false);
+                        img.className = "img";
+                        img.src = pictures[i];
+                        img.style.display = "block";
+                        div1.appendChild(img);
+                        div.appendChild(div1);
+                        boxes.appendChild(div);
                     }
                 }
-            }else{
+            }
+            else {
                 var pictures = locationInfo[i].CTPictures.split(",");
-                var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ locationInfo[i].Treatmentname +'模拟定位记录</a></li>';
-                var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + locationInfo[i].Treatmentname + '模拟定位记录</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-6">层厚：<span class="underline">' + locationInfo[i].Thickness + '</span></div>'
                     + '<div class="item col-xs-6">层数：<span class="underline">' + locationInfo[i].Number + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + locationInfo[i].ReferenceNumber + '</span></div>'
@@ -98,19 +96,19 @@ function Init(evt) {
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">定位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
                 if (locationInfo[i].CTPictures == "") {
-                    content += '无</div></div></div>';
+                    content += '无</div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
                 } else {
                     for (var j = 1; j < pictures.length; j++) {
                         content = content + '<div class="boxes"><div class="imgnum">'
                                 + '<span class="closecamera closearea"><i class="fa fa-times"></i></span>'
-                                + '<img src="'+ pictures[j] +'" class="img" style="display:block;"/></div></div>';
+                                + '<img src="' + pictures[j] + '" class="img" style="display:block;"/></div></div>';
                     }
-                    content += '</div></div></div>';
+                    content += '</div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
                 }
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
-                $("#tab-content").find("img").each(function(){
-                    $(this).bind("click",showPicture);
+                $("#tab-content").find("img").each(function () {
+                    $(this).bind("click", showPicture);
                 });
             }
         }
@@ -122,6 +120,25 @@ function Init(evt) {
         document.getElementById("hidetreatID").value = treatID;
         for (var i = 0; i < locationInfo.length; i++) {
             if (patient.Treatmentname != locationInfo[i].Treatmentname) {
+                document.getElementById("modelID").innerHTML = locationInfo[i].modelID;
+                document.getElementById("fixedEquipment").innerHTML = locationInfo[i].fixedEquipment;
+                document.getElementById("body").innerHTML = locationInfo[i].body + "，" + locationInfo[i].BodyPositionDetail;
+                //document.getElementById("AnnexDescription").innerHTML = locationInfo[i].AnnexDescription;
+                //
+                document.getElementById("ScanPart").innerHTML = locationInfo[i].ScanPart;
+                document.getElementById("ScanMethod").innerHTML = locationInfo[i].ScanMethod;
+                document.getElementById("requireID").innerHTML = locationInfo[i].requireID;
+                document.getElementById("UpperBound").innerHTML = locationInfo[i].UpperBound;
+                document.getElementById("LowerBound").innerHTML = locationInfo[i].LowerBound;
+
+                if (locationInfo[i].Enhance == 1) {
+                    document.getElementById("Enhance").innerHTML = "增强，" + locationInfo[i].EnhanceMethod;
+                } else {
+                    document.getElementById("Enhance").innerHTML = "不增强";
+                }
+                document.getElementById("ApplicationUser").innerHTML = locationInfo[i].ApplicationUser;
+                document.getElementById("ApplicationTime").innerHTML = locationInfo[i].ApplicationTime;
+                document.getElementById("Remarks").innerHTML = locationInfo[i].Remarks;
                 var pictures = locationInfo[i].CTPictures.split(",");
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + locationInfo[i].Treatmentname + '模拟定位记录</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
@@ -132,14 +149,14 @@ function Init(evt) {
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">定位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
                 if (locationInfo[i].CTPictures == "") {
-                    content += '无</div></div></div>';
+                    content += '无</div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div></div>';
                 } else {
                     for (var j = 1; j < pictures.length; j++) {
                         content = content + '<div class="boxes"><div class="imgnum">'
                                 + '<span class="closecamera closearea"><i class="fa fa-times"></i></span>'
                                 + '<img src="' + pictures[j] + '" class="img" style="display:block;"/></div></div>';
                     }
-                    content += '</div></div></div>';
+                    content += '</div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div></div>';
                 }
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
@@ -149,8 +166,24 @@ function Init(evt) {
             }
         }
     }
+    $("#tab-content").find("button").each(function () {
+        $(this).bind("click", function () {
+            var k = this.id;
+            document.getElementById("Thickness").value = locationInfo[k].Thickness;
+            document.getElementById("Number").value = locationInfo[k].Number;
+            document.getElementById("ReferenceNumber").value = locationInfo[k].ReferenceNumber;
+            document.getElementById("ReferenceScale").value = locationInfo[k].ReferenceScale;
+        });
+    });
 }
-
+function isInArray(arr, value) {
+    for (var i = 0; i < arr.length; i++) {
+        if (value === arr[i]) {
+            return true;
+        }
+    }
+    return false;
+}
 function getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
@@ -245,7 +278,7 @@ function dateformat(format) {
     var time = year + "年" + month + "月" + day + "日 " + hour + "：" + minute;
     return time;
 }
-function postimportlocation() {
+function save() {
 
     if (document.getElementById("Thickness").value == "") {
         alert("请填写层厚");

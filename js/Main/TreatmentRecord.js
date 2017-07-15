@@ -563,7 +563,7 @@ function dateformat(format) {
     var time = year + "年" + month + "月" + day + "日 " + hour + "：" + minute;
     return time;
 }
-function posttreatmentrecord() {
+function save() {
     var k = 1;
     for (k = 1; k <= 3 * rowcount; k++) {
         if (document.getElementById("require" + k + "1") != undefined) {
