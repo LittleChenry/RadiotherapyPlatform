@@ -96,14 +96,14 @@ function Init(evt) {
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">定位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
                 if (locationInfo[i].CTPictures == "") {
-                    content += '无</div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
+                    content += '无</div><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
                 } else {
                     for (var j = 1; j < pictures.length; j++) {
                         content = content + '<div class="boxes"><div class="imgnum">'
                                 + '<span class="closecamera closearea"><i class="fa fa-times"></i></span>'
                                 + '<img src="' + pictures[j] + '" class="img" style="display:block;"/></div></div>';
                     }
-                    content += '</div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
+                    content += '</div><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
                 }
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
@@ -120,6 +120,31 @@ function Init(evt) {
         document.getElementById("hidetreatID").value = treatID;
         for (var i = 0; i < locationInfo.length; i++) {
             if (patient.Treatmentname != locationInfo[i].Treatmentname) {
+                var pictures = locationInfo[i].CTPictures.split(",");
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + locationInfo[i].Treatmentname + '模拟定位记录</a></li>';
+                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
+                    + '<div class="item col-xs-6">层厚：<span class="underline">' + locationInfo[i].Thickness + '</span></div>'
+                    + '<div class="item col-xs-6">层数：<span class="underline">' + locationInfo[i].Number + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + locationInfo[i].ReferenceNumber + '</span></div>'
+                    + '<div class="item col-xs-6">体表参考刻度：<span class="underline">' + locationInfo[i].ReferenceScale + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">定位图片：</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
+                if (locationInfo[i].CTPictures == "") {
+                    content += '无</div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div></div>';
+                } else {
+                    for (var j = 1; j < pictures.length; j++) {
+                        content = content + '<div class="boxes"><div class="imgnum">'
+                                + '<span class="closecamera closearea"><i class="fa fa-times"></i></span>'
+                                + '<img src="' + pictures[j] + '" class="img" style="display:block;"/></div></div>';
+                    }
+                    content += '</div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div></div>';
+                }
+                $("#tabs").append(tab);
+                $("#tab-content").append(content);
+                $("#tab-content").find("img").each(function () {
+                    $(this).bind("click", showPicture);
+                });
+            } else {
                 document.getElementById("modelID").innerHTML = locationInfo[i].modelID;
                 document.getElementById("fixedEquipment").innerHTML = locationInfo[i].fixedEquipment;
                 document.getElementById("body").innerHTML = locationInfo[i].body + "，" + locationInfo[i].BodyPositionDetail;
@@ -139,30 +164,6 @@ function Init(evt) {
                 document.getElementById("ApplicationUser").innerHTML = locationInfo[i].ApplicationUser;
                 document.getElementById("ApplicationTime").innerHTML = locationInfo[i].ApplicationTime;
                 document.getElementById("Remarks").innerHTML = locationInfo[i].Remarks;
-                var pictures = locationInfo[i].CTPictures.split(",");
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + locationInfo[i].Treatmentname + '模拟定位记录</a></li>';
-                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
-                    + '<div class="item col-xs-6">层厚：<span class="underline">' + locationInfo[i].Thickness + '</span></div>'
-                    + '<div class="item col-xs-6">层数：<span class="underline">' + locationInfo[i].Number + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + locationInfo[i].ReferenceNumber + '</span></div>'
-                    + '<div class="item col-xs-6">体表参考刻度：<span class="underline">' + locationInfo[i].ReferenceScale + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">定位图片：</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
-                if (locationInfo[i].CTPictures == "") {
-                    content += '无</div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div></div>';
-                } else {
-                    for (var j = 1; j < pictures.length; j++) {
-                        content = content + '<div class="boxes"><div class="imgnum">'
-                                + '<span class="closecamera closearea"><i class="fa fa-times"></i></span>'
-                                + '<img src="' + pictures[j] + '" class="img" style="display:block;"/></div></div>';
-                    }
-                    content += '</div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div></div>';
-                }
-                $("#tabs").append(tab);
-                $("#tab-content").append(content);
-                $("#tab-content").find("img").each(function () {
-                    $(this).bind("click", showPicture);
-                });
             }
         }
     }

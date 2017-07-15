@@ -79,7 +79,7 @@ function Init(evt) {
                          + '<div class="single-row"><div class="item col-xs-6">控制点数量：<span class="underline">' + designInfo[i].ControlPoint + '</span></div>'
                         + '<div class="item col-xs-6">计算网络：<span class="underline">' + designInfo[i].gridname + '</span></div></div>'
                         + '<div class="single-row"><div class="item col-xs-6">优化算法：<span class="underline">' + designInfo[i].algorithmname + '</span></div>'
-                        + '<div class="item col-xs-6">计划可执行度：<span class="underline">' + transfer(designInfo[i].Feasibility) + '</span></div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>'
+                        + '<div class="item col-xs-6">计划可执行度：<span class="underline">' + transfer(designInfo[i].Feasibility) + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>'
                     $("#tabs").append(tab);
                     $("#tab-content").append(content);
                 }
@@ -109,7 +109,7 @@ function Init(evt) {
                          + '<div class="single-row"><div class="item col-xs-6">控制点数量：<span class="underline">' + designInfo[i].ControlPoint + '</span></div>'
                         + '<div class="item col-xs-6">计算网络：<span class="underline">' + designInfo[i].gridname + '</span></div></div>'
                         + '<div class="single-row"><div class="item col-xs-6">优化算法：<span class="underline">' + designInfo[i].algorithmname + '</span></div>'
-                        + '<div class="item col-xs-6">计划可执行度：<span class="underline">' + transfer(designInfo[i].Feasibility) + '</span></div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div></div>'
+                        + '<div class="item col-xs-6">计划可执行度：<span class="underline">' + transfer(designInfo[i].Feasibility) + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div></div>'
                     $("#tabs").append(tab);
                     $("#tab-content").append(content);
                 }

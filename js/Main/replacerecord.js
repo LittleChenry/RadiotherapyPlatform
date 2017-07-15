@@ -177,7 +177,7 @@ function Init(evt) {
                        content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img class="img"  src="' + pictures1[k] + '" style="display:block" /></div></div></div></div></div>';
                    }
                }
-               content = content + '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
+               content = content + '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                $("#tabs").append(tab);
                $("#tab-content").append(content);
                $("#tab-content").find("img").each(function () {
@@ -217,7 +217,7 @@ function Init(evt) {
                         content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img style="display:block"  src="' + pictures1[k] + '" class="img"/></div></div></div></div></div>';
                     }
                 }
-                content = content + '<div class="single-row"><div class="item area-group col-xs-8"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + + '</span></div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
+                content = content + '<div class="single-row"><div class="item area-group col-xs-8"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
                 $("#tab-content").find("img").each(function () {
