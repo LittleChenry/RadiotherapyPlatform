@@ -286,7 +286,7 @@ function trAddClick(patient){
                         });
                         break;
                     case 5:
-                        if (LightLi(this,Progresses, "5", "4")) {
+                        if (LightLi(this,Progresses, "5", "3")) {
                             var url = "Records/LocationRecord.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
@@ -488,14 +488,14 @@ function trAddClick(patient){
     }
 }
 
-function LightLi(e, Progresses, currentProgress, preProgress){
+function LightLi(e, Progresses, currentProgress, preProgress, preProgress2){
     var flag = 0;
     for (var i = 0; i < Progresses.length; i++) {
         if (Progresses[i] == currentProgress) {
             flag = 2;
             break;
         }else{
-            if (Progresses[i] == preProgress) {
+            if (Progresses[i] == preProgress || Progresses[i] == preProgress2) {
                 flag = 1;
             }
         }
