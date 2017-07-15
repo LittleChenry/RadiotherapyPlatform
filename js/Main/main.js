@@ -14,7 +14,17 @@ $(document).ready(function () {
         if (session.equipmentID == "0") {
             chooseEquipment();
             $("#getSelectedPatient").click(function(){
-                patient = getPatient(session.userID, session.role, new Array());
+                var equipmentID = $("#equipment").val();
+                var equipmentName = $("#equipment option:selected").html();
+                var startdate = $("#startdate").val();
+                var enddate = $("#enddate").val();
+                $("#chosenEquipment").html(equipmentName);
+                $("#dateRange").html(startdate + "~~" + enddate);
+                var parameters = new Array();
+                parameters[0] = equipmentID;
+                parameters[1] = startdate;
+                parameters[2] = enddate;
+                patient = getPatient(session.userID, session.role, parameters);
                 Paging(patient,session.role);
                 $.ajax({
                     type: "POST",
@@ -31,13 +41,10 @@ $(document).ready(function () {
                 });
             });
         }else{
-            var equipmentID = $("#equipment").val();
-            var startdate = $("#startdate").val();
-            var enddate = $("#enddate").val();
-            parameters = new Array();
-            parameters[0] = equipmentID;
-            parameters[1] = startdate;
-            parameters[2] = enddate;
+            var parameters = new Array();
+            parameters[0] = session.equipmentID;
+            parameters[1] = session.beginTime;
+            parameters[2] = session.endTime;
             patient = getPatient(session.userID, session.role, parameters);
             Paging(patient,session.role);
             $("#chosenEquipment").html(session.equipmentName);
@@ -1140,7 +1147,6 @@ function getPatient(userID,role,parameters){
         default:
             var url = "";
     }
-    alert(url);
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
