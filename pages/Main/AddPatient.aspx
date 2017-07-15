@@ -398,8 +398,10 @@
                             <select id="doctor" name="doctor" class="form-item"></select>
                         </div>
                         <div class="col-xs-6">
-                            <span class="form-text col-xs-4">分中心医院：</span>
-                            <input id="Hospital" name="Hospital" type="text" class="form-item" AUTOCOMPLETE="OFF" />
+                            <span class="form-text col-xs-4">所选分组：</span>
+                            <select id="group" name="group" class="form-item">
+                                <option value="allItem">----分组选择-----</option>
+                            </select>
                         </div>
                     </div>
                     <div class="single-row">
@@ -407,7 +409,12 @@
                             <span class="form-text col-xs-4" style="padding-left:0px;">分中心负责人：</span>
                             <input id="Sub" name="Sub" class="form-item" AUTOCOMPLETE="OFF"/>
                         </div>
+                         <div class="col-xs-6">
+                            <span class="form-text col-xs-4">分中心医院：</span>
+                            <input id="Hospital" name="Hospital" type="text" class="form-item" AUTOCOMPLETE="OFF" />
+                        </div>
                     </div>
+
                 </div>
                 <div class="paper-footer">
                     <div class="single-row">

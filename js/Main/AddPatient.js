@@ -2,7 +2,7 @@
 
 var userName;
 var userID;
-
+var docandgroup;
 window.addEventListener("load", Init, false);//添加页面加载处理函数
 
 //初始化
@@ -15,10 +15,12 @@ function Init() {
     }
     getUserName();
     document.getElementById("save").addEventListener("click", CheckEmpty, false);
-    
+    getdoctorandgroup();
     var select4 = document.getElementById("doctor");
     createdoctorItem(select4);
-    
+    select4.addEventListener("change", function () {
+        createselect2(select4.selectedIndex);
+    }, false);
     document.getElementById("userID").value = userID;
     document.getElementById("operate").innerHTML = userName;
     document.getElementById("date").innerHTML = getNowFormatDate();
@@ -48,24 +50,53 @@ function getNowFormatDate() {
 //第二步诊断单中的分中心负责人选择项建立
 
 function createdoctorItem(thiselement) {
-    var doctorItem = JSON.parse(getdoctorItem()).Item;
+    var doctorItem = docandgroup;
     thiselement.options.length = 0;
     thiselement.options[0] = new Option("-----医生选择-----");
     thiselement.options[0].value = "allItem";
-    for (var i = 0; i < doctorItem.length; i++) {
-        if (doctorItem[i] != "") {
-            thiselement.options[i + 1] = new Option(doctorItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(doctorItem[i].ID);
-        }
+    var i = 0;
+    for(var jsondata in doctorItem)
+    {
+        thiselement.options[i + 1] = new Option(doctorItem[jsondata][0].username);
+        thiselement.options[i + 1].value = parseInt(doctorItem[jsondata][0].userid);
+            i++;
     }
 }
-function getdoctorItem() {
+function createselect2(index)
+{
+    var thiselement = document.getElementById("group");
+    var groups = docandgroup;
+    var groupitem="";
+    var k = 0;
+    for (var jsondata in groups) {
+        if (k == index-1) {
+            groupitem = groups[jsondata];
+        } 
+        k++;
+    }
+    if (groupitem == "") {
+        thiselement.options.length = 0;
+        thiselement.options[0] = new Option("----分组选择-----");
+        thiselement.options[0].value = "allItem";
+    } else {
+        thiselement.options.length = 0;
+        thiselement.options[0] = new Option("----分组选择-----");
+        thiselement.options[0].value = "allItem";
+        for (var i = 1; i <= groupitem.length - 1; i++)
+            {
+            thiselement.options[i] = new Option(groupitem[i].groupname);
+            thiselement.options[i].value = parseInt(groupitem[i].groupid);
+        }
+    }
+
+    }
+function getdoctorandgroup() {
     var xmlHttp = new XMLHttpRequest();
-    var url = "Records/getdoctor.ashx";
+    var url = "Records/getdoctorandgroup.ashx";
     xmlHttp.open("GET", url, false);
-    xmlHttp.send();
+    xmlHttp.send(null);
     var Items = xmlHttp.responseText;
-    return Items;
+    docandgroup =JSON.parse(Items).Item;
 }
 
 
