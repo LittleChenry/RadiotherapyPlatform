@@ -128,8 +128,7 @@ function Init(evt) {
             } else {
                 add[1].checked = "true";
                 document.getElementById("enhancemethod").style.display = "none";
-            }
-            document.getElementById("appointtime").value = info[k].equipname + " " + info[k].Date + " " + toTime(info[k].Begin) + "-" + toTime(info[k].End);
+            }            
         });
     });
 }

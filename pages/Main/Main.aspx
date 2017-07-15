@@ -439,10 +439,8 @@
         $("#edit").bind("click", function () {
             $("#record-iframe")[0].contentWindow.remove();
         });
-        $("#save").bind("click", function () {
-           
-           $("#record-iframe")[0].contentWindow.save();                      
-              
+        $("#save").bind("click", function () {          
+           $("#record-iframe")[0].contentWindow.save();                                    
         });
     })
 </script>
