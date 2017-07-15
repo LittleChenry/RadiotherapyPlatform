@@ -1,9 +1,10 @@
-﻿<%@ WebHandler Language="C#" Class="patientInfoForJLS" %>
+﻿<%@ WebHandler Language="C#" Class="patientInfoForWLS" %>
 
 using System;
 using System.Web;
 using System.Text;
-public class patientInfoForJLS : IHttpHandler {
+public class patientInfoForWLS : IHttpHandler
+{
     private DataLayer sqlOperation = new DataLayer("sqlStr");
     private DataLayer sqlOperation2 = new DataLayer("sqlStr");
     private DataLayer sqlOperation1 = new DataLayer("sqlStr");
@@ -39,21 +40,21 @@ public class patientInfoForJLS : IHttpHandler {
     }
     private string getfixrecordinfo(HttpContext context)
     {
-        string sqlCommand = "SELECT count(*) from treatment where (Progress like '%6%' and Progress not in(select Progress from treatment where Progress like '%7%'))or ((Progress like '%8%' or Progress like '%9%') and Progress not in (select Progress from treatment where Progress like '%10%'))";       
+        string sqlCommand = "SELECT count(*) from treatment where Progress like '%11%' and Progress not in(select Progress from treatment where Progress like '%12%')";
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
         if (count == 0)
         {
             return "{\"PatientInfo\":false}";
         }
-        
+
         int i = 1;
-        string sqlCommand2 = "select treatment.ID as treatid,patient.*,user.Name as doctor,Progress,treatment.Treatmentname,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and ((Progress like '%6%' and Progress not in(select Progress from treatment where Progress like '%7%'))or ((Progress like '%8%' or Progress like '%9%') and Progress not in (select Progress from treatment where Progress like '%10%'))) order by patient.ID desc";   
+        string sqlCommand2 = "select treatment.ID as treatid,patient.*,user.Name as doctor,Progress,treatment.Treatmentname,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and Progress like '%11%' and Progress not in(select Progress from treatment where Progress like '%12%') order by patient.ID desc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
 
         while (reader.Read())
         {
-            string result="";
+            string result = "";
             if (reader["DiagnosisRecord_ID"] is DBNull)
             {
                 result = "";
@@ -67,9 +68,9 @@ public class patientInfoForJLS : IHttpHandler {
                 sqlOperation1.AddParameterWithValue("@ID", reader["DiagnosisRecord_ID"].ToString());
                 string Description = sqlOperation1.ExecuteScalar(sqlCommand4);
                 result = TumorName + Description;
-            }          
+            }
             backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"Progress\":\"" + reader["Progress"].ToString() +
-                    "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentname"].ToString() 
+                    "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentname"].ToString()
                     + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\"}");
 
             if (i < count)
@@ -78,9 +79,17 @@ public class patientInfoForJLS : IHttpHandler {
             }
             i++;
         }
-        reader.Close();       
+        reader.Close();
         // backText.Remove(backText.Length - 1, 1);                
         backText.Append("]}");
         return backText.ToString();
     }
 }
+
+    
+    
+    
+    
+    
+    
+    
