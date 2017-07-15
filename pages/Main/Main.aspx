@@ -440,54 +440,9 @@
             $("#record-iframe")[0].contentWindow.remove();
         });
         $("#save").bind("click", function () {
-            if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 0) {
-                    $("#record-iframe")[0].contentWindow.CheckEmpty();                      
-                }
-                if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 1) {
-                    $("#record-iframe")[0].contentWindow.checkAll();
-                }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 2) {
-                        $("#record-iframe")[0].contentWindow.postfix();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 4) {
-                   $("#record-iframe")[0].contentWindow.postimportFIX();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 3) {
-                   $("#record-iframe")[0].contentWindow.postlocation();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 5) {
-                   $("#record-iframe")[0].contentWindow.postimportlocation();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 6) {
-                   $("#record-iframe")[0].contentWindow.postimportCT();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 7) {
-                   $("#record-iframe")[0].contentWindow.saveDesignApplyRecord();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 9) {
-                   $("#record-iframe")[0].contentWindow.saveDesignSubmit();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 10) {
-                   $("#record-iframe")[0].contentWindow.saveDesignConfirm();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 12) {
-                   $("#record-iframe")[0].contentWindow.postreplace();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 14) {
-                   $("#record-iframe")[0].contentWindow.postfirstaccelerate();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 11) {
-                   $("#record-iframe")[0].contentWindow.saveDesignReview();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 13) {
-                   $("#record-iframe")[0].contentWindow.postimportReplaceRecord();
-               } 
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 16) {
-                   $("#record-iframe")[0].contentWindow.putIn();
-               }
-               if (document.getElementById('record-iframe').contentWindow.document.getElementById('progress').value == 15) {
-                   $("#record-iframe")[0].contentWindow.posttreatmentrecord();
-               }
+           
+           $("#record-iframe")[0].contentWindow.save();                      
+              
         });
     })
 </script>
