@@ -150,8 +150,18 @@
               <li class="user-body">
                 <div class="row">
                   <div class="text-center">
-                    <span>操作成员:</span>
-                    <a id="changeOperator" href="javascript:;"><span id="operator"></span></a>
+                    <div>
+                        <span>操作成员:</span>
+                        <a id="changeOperator" href="javascript:;"><span id="operator"></span></a>
+                    </div>
+                    <div>
+                        <span>操作设备:</span>
+                        <a id="changeEquipment" href="javascript:;"><span id="chosenEquipment"></span></a>
+                    </div>
+                    <div>
+                        <span>时间范围:</span>
+                        <a id="changeDate" href="javascript:;"><span id="dateRange"></span></a>
+                    </div>
                   </div>
                 </div>
                 <!-- /.row -->

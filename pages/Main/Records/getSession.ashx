@@ -27,6 +27,10 @@ public class getSession : IHttpHandler, IRequiresSessionState
         UserInformation user = (UserInformation)context.Session["loginUser"];
 
         LinkedList<int> progress = user.getProgress();
+
+        KeyValuePair<int, string> equipment = user.getEquipment();
+        string beg = user.getBeginTime();
+        string end = user.getEndTime();
         
         StringBuilder result = new StringBuilder("{");
 
@@ -52,6 +56,14 @@ public class getSession : IHttpHandler, IRequiresSessionState
         }
         
         result.Append(pro)
+              .Append("\",\"equipmentID\":\"")
+              .Append(equipment.Key)
+              .Append("\",\"equipmentName\":\"")
+              .Append(equipment.Value)
+              .Append("\",\"beginTime\":\"")
+              .Append(beg)
+              .Append("\",\"endTime\":\"")
+              .Append(end)
               .Append("\"}");
         return result.ToString();
     }

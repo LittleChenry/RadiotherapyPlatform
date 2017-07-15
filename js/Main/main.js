@@ -8,18 +8,48 @@ $(document).ready(function () {
     $("#record-iframe").width($("#record-content").width());
     $("#progress-iframe").width($("#progress-content").width());
     var session = getSession();
+    var patient;
     getFunctions();
     if (session.role == "模拟技师" || session.role == "放疗技师") {
-        chooseEquipment();
-        $("#getSelectedPatient").click(function(){
-            getSelectedPatient(session.role);
-        });
+        if (session.equipmentID == "0") {
+            chooseEquipment();
+            $("#getSelectedPatient").click(function(){
+                patient = getPatient(session.userID, session.role, new Array());
+                Paging(patient,session.role);
+                $.ajax({
+                    type: "POST",
+                    url: "../../pages/Main/Records/setEquipment.ashx",
+                    data:{
+                        id : $("#equipment").val(),
+                        name : $("#equipment option:selected").html(),
+                        beginTime : $("#startdate").val(),
+                        endTime : $("#enddate").val()
+                    },
+                    error:function(){
+                        alert("error");
+                    }
+                });
+            });
+        }else{
+            var equipmentID = $("#equipment").val();
+            var startdate = $("#startdate").val();
+            var enddate = $("#enddate").val();
+            parameters = new Array();
+            parameters[0] = equipmentID;
+            parameters[1] = startdate;
+            parameters[2] = enddate;
+            patient = getPatient(session.userID, session.role, parameters);
+            Paging(patient,session.role);
+            $("#chosenEquipment").html(session.equipmentName);
+            $("#dateRange").html(session.beginTime + "~~" + session.endTime);
+        }
+        
     }else{
-        var patient = getPatient(session.userID, session.role);
+        patient = getPatient(session.userID, session.role, new Array());
         Paging(patient,session.role);
     }
     $("#patient-search").bind('input propertychange', function() {
-        var Searchedpatients = Search($("#patient-search").val(),patient);
+        var Searchedpatients = Search($("#patient-search").val(), patient, session.role);
         Paging(Searchedpatients,session.role);
     });
     $("#signOut").bind("click", function () {
@@ -28,14 +58,16 @@ $(document).ready(function () {
     });
     $("#save").click(function(){
         addProgress(patient);
-        Paging(patient);
+        Paging(patient,session.role);
         $('#save').attr("disabled","disabled");
     });
     $('#edit').click(function(){
         $("#save").removeAttr("disabled");
         $('#edit').attr("disabled","disabled");
     });
-    $("#saveTreatment").bind("click",saveTreatment);
+    $("#saveTreatment").bind("click",function(){
+        saveTreatment();
+    });
     //chooseAssistant();
     
 })
@@ -94,9 +126,9 @@ function Paging(patient,role){
                     diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
                     date = patient.PatientInfo[i].date;
                     doctor = patient.PatientInfo[i].doctor;
-                    begin = patient.PatientInfo[i].begin;
-                    end = patient.PatientInfo[i].end;
-                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + " " + begin + " " + end + "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td>"
+                    begin = toTime(patient.PatientInfo[i].begin);
+                    end = toTime(patient.PatientInfo[i].end);
+                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td>"
                         + "<td>" + doctor + "</td></tr>";
                     tbody += tr;
                 }
@@ -961,7 +993,7 @@ function getSession(){
         async: false,
         dateType: "text",
         success: function (data) {
-            //alert(data);
+            alert(data);
             Session = $.parseJSON(data);
         },
         error: function(){
@@ -1007,23 +1039,43 @@ function Recover(){
     }
 }
 
-function Search(str,patient){
-    var Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
+function Search(str, patient, role){
+    //var Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
     var Searchedpatient = new Array();
     var count = 0;
-    for (var i = 0; i < patient.PatientInfo.length; i++) {
-        TreatmentID = patient.PatientInfo[i].treatID;
-        Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-        Name = patient.PatientInfo[i].Name;
-        treat = patient.PatientInfo[i].treat;
-        diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
-        Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
-        doctor = patient.PatientInfo[i].doctor;
-        groupname = patient.PatientInfo[i].groupname;
-        if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0 || groupname.search(str) >= 0) {
-            var singlepatient = {treat:treat, treatID:TreatmentID, Name:Name, Radiotherapy_ID:Radiotherapy_ID, doctor:doctor, Progress:patient.PatientInfo[i].Progress, groupname:groupname, diagnosisresult:patient.PatientInfo[i].diagnosisresult};
-            Searchedpatient[count++] = singlepatient;
-        }
+    switch(role){
+        case "医师":
+            for (var i = 0; i < patient.PatientInfo.length; i++) {
+                TreatmentID = patient.PatientInfo[i].treatID;
+                Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
+                Name = patient.PatientInfo[i].Name;
+                treat = patient.PatientInfo[i].treat;
+                diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
+                Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
+                doctor = patient.PatientInfo[i].doctor;
+                groupname = patient.PatientInfo[i].groupname;
+                if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0 || groupname.search(str) >= 0) {
+                    var singlepatient = {treat:treat, treatID:TreatmentID, Name:Name, Radiotherapy_ID:Radiotherapy_ID, doctor:doctor, Progress:patient.PatientInfo[i].Progress, groupname:groupname, diagnosisresult:patient.PatientInfo[i].diagnosisresult};
+                    Searchedpatient[count++] = singlepatient;
+                }
+            }
+            break;
+        case "模拟技师":
+            for (var i = 0; i < patient.PatientInfo.length; i++) {
+                TreatmentID = patient.PatientInfo[i].treatID;
+                Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
+                Name = patient.PatientInfo[i].Name;
+                treat = patient.PatientInfo[i].treat;
+                diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
+                date = patient.PatientInfo[i].date;
+                doctor = patient.PatientInfo[i].doctor;
+                begin = toTime(patient.PatientInfo[i].begin);
+                end = toTime(patient.PatientInfo[i].end);
+                if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || date.search(str) >= 0 || begin.search(str) >= 0 || end.search(str) >= 0 || doctor.search(str) >= 0) {
+                    var singlepatient = {treat:treat, treatID:TreatmentID,date:date, Name:Name, Radiotherapy_ID:Radiotherapy_ID, doctor:doctor, Progress:patient.PatientInfo[i].Progress,begin:patient.PatientInfo[i].begin,end:patient.PatientInfo[i].end, diagnosisresult:patient.PatientInfo[i].diagnosisresult};
+                    Searchedpatient[count++] = singlepatient;
+                }
+            }
     }
     var patientGroup = {PatientInfo:Searchedpatient};
     return patientGroup;
@@ -1063,7 +1115,7 @@ function getChose() {
     });
 }
 
-function getPatient(userID,role){
+function getPatient(userID,role,parameters){
     var xmlHttp = new XMLHttpRequest();
     var xmlHttp = new XMLHttpRequest();
     switch(role){
@@ -1077,7 +1129,7 @@ function getPatient(userID,role){
             var url = "";
             break;
         case "模拟技师":
-            var url = "Records/patientInfoForDoctor.ashx?equipmentID=" + equipmentID + "&startdate" + startdate + "&enddate" + enddate;
+            var url = "Records/patientInfoForMNJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
             break;
         case "放疗技师":
             var url = "";
@@ -1088,6 +1140,7 @@ function getPatient(userID,role){
         default:
             var url = "";
     }
+    alert(url);
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -1136,22 +1189,6 @@ function chooseEquipment(){
     var currentTime = new Date().Format("yyyy-MM-dd");
     $("#startdate").val(currentTime);
     $("#enddate").val(currentTime);
-}
-
-function getSelectedPatient(role){
-    var xmlHttp = new XMLHttpRequest();
-    var xmlHttp = new XMLHttpRequest();
-    var equipmentID = $("#equipment").val();
-    var startdate = $("#startdate").val();
-    var enddate = $("#enddate").val();
-    var url = "Records/patientInfoForMNJS.ashx?equipmentid=" + equipmentID + "&date1=" + startdate + "&date2=" + enddate;
-    alert(url);
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-    var json = xmlHttp.responseText;
-    alert(json);
-    var patient = eval("(" + json + ")");
-    Paging(patient, role);
 }
 
 Date.prototype.Format = function(fmt){
@@ -1345,4 +1382,10 @@ function setAssistant(){
             alert("error");
         }
     });
+}
+
+function toTime(minute) {
+    var hour = parseInt(parseInt(minute) / 60);
+    var min = parseInt(minute) - hour * 60;
+    return hour.toString() + ":" + (min < 10 ? "0" : "") + min.toString();
 }
