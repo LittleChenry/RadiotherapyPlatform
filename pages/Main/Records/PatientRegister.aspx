@@ -134,6 +134,12 @@
                             所属医生：
                             <select id="doctor" name="doctor" class="form-item"></select>
                         </div>
+                        <div class="item col-xs-4">
+                            所属分组：
+                            <select id="group" name="group" class="form-item">
+                                  <option value="allItem">----分组选择-----</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="single-row">
                         <div class="item col-xs-6">

@@ -1,28 +1,24 @@
 ﻿var isAllGood;//所有检查是否通过
-
+var docandgroup;
 window.addEventListener("load", Init, false);
 //初始化 
 
 function Init(evt) {
-    
     var treatID = window.location.search.split("=")[1];
-    
+    getdoctorandgroup();
+    var select4 = document.getElementById("doctor");
+    createdoctorItem(select4);
+    select4.addEventListener("change", function () {
+        createselect2(select4.selectedIndex);
+    }, false);
     getPatientInfo(treatID);
     document.getElementById("treatID").value = treatID;
-    //document.forms[0].addEventListener("submit", CheckInput, false);//添加表单提交事件处理函数
     document.forms[0].addEventListener("reset", resetForm, false);//添加表单rest事件函数
-    //document.getElementById("Number1").addEventListener("change", phoneFormat, false);//电话号码格式化
-   // document.getElementById("Number2").addEventListener("change", phoneFormat, false);//电话号码格式化
-    document.getElementById("progress").value = 0;
-   
-    
+  
 }
 function getPatientInfo(treatID) {
-    
     var xmlHttp = new XMLHttpRequest();
-    
     var url = "patientInfo.ashx?treatID=" + treatID;
-
     xmlHttp.open("GET", url, false);
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.status == 200 && xmlHttp.readyState == 4) {
@@ -32,28 +28,25 @@ function getPatientInfo(treatID) {
     }
     
     xmlHttp.send();
-    
     writePatientInfo(patientInfo);
 }
 function writePatientInfo(PatientInfo) {
-    
-    var select4 = document.getElementById("doctor");
-    createdoctorItem(select4);
-   
     document.getElementById("RecordNumber").value = PatientInfo.patientInfo[0].RecordNumber;
-   
     document.getElementById("userName").value = PatientInfo.patientInfo[0].Name;
-    //alert(sex(PatientInfo.patientInfo[0].Gender));
-    //alert(document.getElementById("female").value);
     document.getElementById(sex(PatientInfo.patientInfo[0].Gender)).checked = true;
-    //document.getElementById("Gender").value = PatientInfo.patientInfo[0].Gender;
     document.getElementById("IDcardNumber").value =  PatientInfo.patientInfo[0].IDcardNumber;
     document.getElementById("Address").value =  PatientInfo.patientInfo[0].Address;   
     document.getElementById("Number1").value =  PatientInfo.patientInfo[0].Contact1;
     document.getElementById("Number2").value =  PatientInfo.patientInfo[0].Contact2;
     document.getElementById("patientID").value =  PatientInfo.patientInfo[0].ID;
-    //document.getElementById("diagnosisresult").value =  PatientInfo.patientInfo[0].diagnosisresult;
     document.getElementById("doctor").value = PatientInfo.patientInfo[0].doctor;
+    var select4 = document.getElementById("doctor");
+    createselect2(select4.selectedIndex);
+    if (PatientInfo.patientInfo[0].group == "") {
+        document.getElementById("group").value = "allItem";
+    } else {
+        document.getElementById("group").value =PatientInfo.patientInfo[0].group;
+    }
     document.getElementById("picture1").value = PatientInfo.patientInfo[0].Picture;   
     document.getElementById("Sub").value = PatientInfo.patientInfo[0].Sub;;
     document.getElementById("Hospital").value =  PatientInfo.patientInfo[0].Hospital;
@@ -67,15 +60,9 @@ function writePatientInfo(PatientInfo) {
         document.getElementById("photo").style.display = "inline";
         document.getElementById("photo").src = PatientInfo.patientInfo[0].Picture;
     }
-    
-    //doctor = PatientInfo.patientInfo[0].doctor;
     document.getElementById("operator").innerHTML = PatientInfo.patientInfo[0].Registeruser;
     document.getElementById("date").innerHTML = PatientInfo.patientInfo[0].date;
     document.getElementById("date").disabled = "true";
-    //document.getElementById("userID").value = userID;
-    //addDosagePriority( PatientInfo.patientInfo[0].DosagePriority);
-
-
 }
 function sex(evt) {
     if (evt == "F")
@@ -84,28 +71,52 @@ function sex(evt) {
         return "male";
 }
 //第二步诊断单中的分中心负责人选择项建立
-
 function createdoctorItem(thiselement) {
-    var doctorItem = JSON.parse(getdoctorItem()).Item;
+    var doctorItem = docandgroup;
     thiselement.options.length = 0;
     thiselement.options[0] = new Option("-----医生选择-----");
     thiselement.options[0].value = "allItem";
-    for (var i = 0; i < doctorItem.length; i++) {
-        if (doctorItem[i] != "") {
-            thiselement.options[i + 1] = new Option(doctorItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(doctorItem[i].ID);
-        }
+    var i = 0;
+    for (var jsondata in doctorItem) {
+        thiselement.options[i + 1] = new Option(doctorItem[jsondata][0].username);
+        thiselement.options[i + 1].value = parseInt(doctorItem[jsondata][0].userid);
+        i++;
     }
 }
-function getdoctorItem() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "getdoctor.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
-}
+function createselect2(index) {
+    var thiselement = document.getElementById("group");
+    var groups = docandgroup;
+    var groupitem = "";
+    var k = 0;
+    for (var jsondata in groups) {
+        if (k == index - 1) {
+            groupitem = groups[jsondata];
+        }
+        k++;
+    }
+    if (groupitem == "") {
+        thiselement.options.length = 0;
+        thiselement.options[0] = new Option("----分组选择-----");
+        thiselement.options[0].value = "allItem";
+    } else {
+        thiselement.options.length = 0;
+        thiselement.options[0] = new Option("----分组选择-----");
+        thiselement.options[0].value = "allItem";
+        for (var i = 1; i <= groupitem.length - 1; i++) {
+            thiselement.options[i] = new Option(groupitem[i].groupname);
+            thiselement.options[i].value = parseInt(groupitem[i].groupid);
+        }
+    }
 
+}
+function getdoctorandgroup() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getdoctorandgroup.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    docandgroup = JSON.parse(Items).Item;
+}
 
 //表单reset函数
 function resetForm(evt) {
@@ -280,4 +291,6 @@ function recoverClassName(thisElement) {
         }
     }
     thisElement.className = returnClassName;
+}
+function remove() {
 }
