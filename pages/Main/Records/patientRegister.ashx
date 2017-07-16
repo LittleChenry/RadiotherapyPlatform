@@ -98,15 +98,14 @@ public class patientRegister : IHttpHandler
             sqlOperation.AddParameterWithValue("@Weight", context.Request.Form["weight"]);
             sqlOperation.AddParameterWithValue("@patientID", context.Request.Form["patientID"]);
             int Success = sqlOperation.ExecuteNonQuery(strSqlCommand);
-            if (Success > 0)
+            if (context.Request.Form["group"] != "allItem")
             {
-                return "success";
+                string command = "update treatment set Group_ID=@group where ID=@treat";
+                sqlOperation.AddParameterWithValue("@group", Convert.ToInt32(context.Request.Form["group"]));
+                sqlOperation.AddParameterWithValue("@treat",Convert.ToInt32(context.Request.Form["treatID"]));
+                int success2 = sqlOperation.ExecuteNonQuery(command);
             }
-            else
-            {
-                return "failure";
-            }
-
+            return "success";
 
         }
         catch (System.Exception Ex1)
