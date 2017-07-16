@@ -51,7 +51,7 @@ public class designSubmitInfo : IHttpHandler {
         sqlOperation.AddParameterWithValue("@patient", patientid);
         int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
         int i = 1;
-        string sqlCommand3 = "select design.ID as designid,Treatmentname,plansystem.Name as planname,grid.Name as gridname,algorithm.Name as alname,technology.name as tname,equipmenttype.type as eqname,user.Name as doctor,design.* from grid,algorithm,plansystem,technology,equipmenttype,design,user,treatment where design.Algorithm_ID=algorithm.ID and plansystem.ID=design.PlanSystem_ID and grid.ID=design.Grid_ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";      
+        string sqlCommand3 = "select design.ID as designid,Treatmentname,technology.name as tname,equipmenttype.type as eqname,user.Name as doctor,design.* from technology,equipmenttype,design,user,treatment where technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";      
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand3);
 
         StringBuilder backText = new StringBuilder("{\"designInfo\":[");
@@ -88,6 +88,42 @@ public class designSubmitInfo : IHttpHandler {
                  sqlOperation2.AddParameterWithValue("@patient", patientid);
                  operate = sqlOperation2.ExecuteScalar(sqlCommand4);
              }
+             string planname = null;
+             string gridname = null;
+             string alname = null;
+             if (reader["PlanSystem_ID"] is DBNull)
+             {
+
+                 planname = null;
+             }
+             else
+             {
+                 string sql1 = "select Name from plansystem where plansystem.ID=@PlanSystem_ID";
+                 sqlOperation2.AddParameterWithValue("@PlanSystem_ID", reader["PlanSystem_ID"].ToString());
+                 planname = sqlOperation2.ExecuteScalar(sql1);
+             }
+             if (reader["Grid_ID"] is DBNull)
+             {
+
+                 gridname = null;
+             }
+             else
+             {
+                 string sql = "select Name from grid where grid.ID=@Grid_ID";
+                 sqlOperation2.AddParameterWithValue("@Grid_ID", reader["Grid_ID"].ToString());
+                 gridname = sqlOperation2.ExecuteScalar(sql);
+             }
+             if (reader["Algorithm_ID"] is DBNull)
+             {
+
+                 alname = null;
+             }
+             else
+             {
+                 string sql2 = "select Name from algorithm where algorithm.ID=@Grid_ID";
+                 sqlOperation2.AddParameterWithValue("@Grid_ID", reader["Algorithm_ID"].ToString());
+                 alname = sqlOperation2.ExecuteScalar(sql2);
+             }
             string Do = reader["DosagePriority"].ToString();
             string Priority = Do.Split(new char[1] {'&'})[0];
             string Dosage = Do.Split(new char[1] { '&' })[1];
@@ -97,8 +133,8 @@ public class designSubmitInfo : IHttpHandler {
                   "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage +
                    "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() +
                    "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\",\"Grid_ID\":\"" + reader["Grid_ID"].ToString() + "\",\"Algorithm_ID\":\"" + reader["Algorithm_ID"].ToString() +
-                   "\",\"Feasibility\":\"" + reader["Feasibility"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"gridname\":\"" + reader["gridname"].ToString() +
-                   "\",\"PlanSystemname\":\"" + reader["planname"].ToString() + "\",\"algorithmname\":\"" + reader["alname"].ToString() + "\",\"designID\":\"" + reader["designid"].ToString() + "\"}");
+                   "\",\"Feasibility\":\"" + reader["Feasibility"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"gridname\":\""+ gridname +
+                   "\",\"PlanSystemname\":\"" + planname + "\",\"algorithmname\":\"" + alname + "\",\"designID\":\"" + reader["designid"].ToString() + "\"}");
 
             if (i < count)
             {

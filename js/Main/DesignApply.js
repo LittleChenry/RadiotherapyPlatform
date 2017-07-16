@@ -97,11 +97,11 @@ function Init(evt) {
                         '<div class="single-row"><div class="item area-group col-xs-12"><table id="Dosage' + i + '" class="table table-bordered">' +
                         '<thead><tr><th>危及器官</th><th>剂量</th><th>限制</th><th>体积</th><th>外放</th><th>PRV</th><th>剂量</th><th>限制</th><th>体积</th><th>优先级</th>' +
                         '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-6">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
-                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';
-                readDosagePriority1(designInfo[i].DosagePriority, i);
-                readDosage1(designInfo[i].Dosage, i);
+                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';                       
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
+                readDosagePriority1(designInfo[i].DosagePriority, i);
+                readDosage1(designInfo[i].Dosage, i);
             }
         }
     }
@@ -109,8 +109,8 @@ function Init(evt) {
         $(this).bind("click", function () {
             var k = this.id;
             document.getElementById("Remarks").value = designInfo[k].RadiotherapyHistory;
-            readDosagePriority(designInfo[k].DosagePriority);
-            readDosage(designInfo[k].Dosage);
+            addDosagePriority1(designInfo[k].DosagePriority);
+            addDosage1(designInfo[k].Dosage);
             document.getElementById("technology").value = designInfo[k].technology;
             document.getElementById("equipment").value = designInfo[k].equipment;
         });
@@ -374,6 +374,102 @@ function addDosagePriority() {
     t9.innerHTML = '<a href="javascript:deleteDosagePriority(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
     aa = rows;
     document.getElementById("aa").value = aa;
+}
+function addDosagePriority1(DosagePriority) {
+    var table = document.getElementById("Priority");
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    var rows = table.rows.length;
+    for (var j = rows-1; j > 0; j--) {
+        table.deleteRow(j);
+    }   
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var row = table.insertRow(i+1);        
+        var t1 = row.insertCell(0);
+        var t2 = row.insertCell(1);
+        var t3 = row.insertCell(2);
+        var t4 = row.insertCell(3);
+        var t5 = row.insertCell(4);
+        var t6 = row.insertCell(5);
+        var t7 = row.insertCell(6);
+        var t8 = row.insertCell(7);
+        var t9 = row.insertCell(8);
+        t1.style.padding = "0px";
+        t2.style.padding = "0px";
+        t3.style.padding = "0px";
+        t4.style.padding = "0px";
+        t5.style.padding = "0px";
+        t6.style.padding = "0px";
+        t7.style.padding = "0px";
+        t8.style.padding = "0px";
+        t9.style.cssText = "text-align: center;padding:0px;vertical-align: middle";
+        t9.id = "delete" + i;
+        t1.innerHTML = '<input id="Prioritytype' + i + '" name="Prioritytype' + i + '" value="'+list[0]+'" type="text" class="td-input" />';
+        t2.innerHTML = '<input id="Priorityout' + i + '" name="Priorityout' + i + '" value="' + list[1] + '" type="text" class="td-input" />';
+        t3.innerHTML = '<input id="Prioritptv' + i + '" name="Prioritptv' + i + '" value="' + list[2] + '" type="text" class="td-input" />';
+        t4.innerHTML = '<input id="Prioritcgy' + i + '" name="Prioritcgy' + i + '" value="' + list[3] + '" type="number" class="td-input" />';
+        t5.innerHTML = '<input id="Priorittime' + i + '" name="Priorittime' + i + '" value="' + list[4] + '" type="number" class="td-input" />';
+        t6.innerHTML = '<input id="Prioritsum' + i + '" name="Prioritsum' + i + '" value="' + list[5] + '" type="number" class="td-input" />';
+        t7.innerHTML = '<input id="Prioritremark' + i + '" name="Prioritremark' + i + '" value="' + list[6] + '" type="text" class="td-input" />';
+        t8.innerHTML = '<input id="Priorit' + i + '" name="Priorit' + i + '" type="number" value="' + list[7] + '" class="td-input" />';
+        t9.innerHTML = '<a href="javascript:deleteDosagePriority(' + i + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
+    }
+    aa = lists.length - 1;
+    document.getElementById("aa").value = aa;
+}
+function addDosage1(DosagePriority) {
+    var table = document.getElementById("Dosage");
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    var rows = table.rows.length;
+    for (var j = rows - 1; j > 0; j--) {
+        table.deleteRow(j);
+    }
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var row = table.insertRow(i + 1);
+        var t1 = row.insertCell(0);
+        var t2 = row.insertCell(1);
+        var t3 = row.insertCell(2);
+        var t4 = row.insertCell(3);
+        var t5 = row.insertCell(4);
+        var t6 = row.insertCell(5);
+        var t7 = row.insertCell(6);
+        var t8 = row.insertCell(7);
+        var t9 = row.insertCell(8);
+        var t10 = row.insertCell(9);
+        var t11 = row.insertCell(10);
+        t1.style.padding = "0px";
+        t2.style.padding = "0px";
+        t3.style.padding = "0px";
+        t4.style.padding = "0px";
+        t5.style.padding = "0px";
+        t6.style.padding = "0px";
+        t7.style.padding = "0px";
+        t8.style.padding = "0px";
+        t9.style.padding = "0px";
+        t10.style.padding = "0px";
+        t11.style.cssText = "text-align: center;padding:0px;vertical-align: middle";
+        t11.id = "deletes" + i;
+        t1.innerHTML = '<input id="type' + i + '" name="type' + i + '" value="' + list[0] + '"type="text" class="td-input" />';
+        t2.innerHTML = '<input id="dv' + i + '" name="dv' + i + '" type="text" value="' + list[1] + '" class="td-input" />';
+        t3.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
+        t4.innerHTML = '<input id="number' + i + '" name="number' + i + '" type="number" value="' + list[3] + '" class="td-input" />';
+        t5.innerHTML = '<input id="out' + i + '" name="out' + i + '" type="text" value="' + list[4] + '" class="td-input" />';
+        t6.innerHTML = '<input id="prv' + i + '" name="prv' + i + '" type="text" value="' + list[5] + '" class="td-input" />';
+        t7.innerHTML = '<input id="num' + i + '" name="num' + i + '" type="number" value="' + list[6] + '" class="td-input" />';
+        t8.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
+        t9.innerHTML = '<input id="numbers' + i + '" name="numbers' + i + '" type="text" value="' + list[8] + '" class="td-input" />';
+        t10.innerHTML = '<input id="pp' + i + '" name="pp' + i + '" type="number" value="' + list[9] + '" class="td-input" />';
+        t11.innerHTML = '<a href="javascript:deleteDosage(' + i + ');"><i class="fa fa-fw fa-minus-circle" value="' + list[10] + '" style="font-size:18px;"></i></a>';
+    }
+    bb = lists.length-1;
+    document.getElementById("bb").value = bb;
 }
 function addDosage() {
     var table = document.getElementById("Dosage");
