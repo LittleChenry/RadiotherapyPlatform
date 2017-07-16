@@ -41,6 +41,7 @@ function fillRoles(roles) {
 function updateSession(selectRole){
     $.ajax({
         type: "POST",
+        async: false,
         url: "handlerUpdateSession.ashx",
         data: { "role": selectRole }
     });
