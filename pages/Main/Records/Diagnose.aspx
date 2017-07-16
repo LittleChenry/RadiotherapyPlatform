@@ -84,10 +84,7 @@
                                 诊断结果：
                                 <select id="diagresult" name="part" class="form-item" disabled="disabled"></select>
                             </div>                                  
-                            <div class="item col-xs-4">
-                                选择医疗组：
-                                <select id="groupid" name="groupid" class="form-item" disabled="disabled"></select>
-                            </div>
+
                         </div>
                         <div class="single-row">
                             <div class="item area-group col-xs-12">
