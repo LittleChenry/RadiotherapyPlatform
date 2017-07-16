@@ -215,7 +215,32 @@ function Paging(patient,role){
                 trAddClick(patient);
                 break;
             case "治疗技师":
-                var url = "";
+                var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, date, begin, end, Completed, doctor, finishedtimes, totalnumber, totaltimes;
+                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>预约时间</th><th>是否完成</th><th>完成次数</th><th>累次剂量</th>'
+                    + '<th>总次数</th><th>疗程</th><th>诊断结果</th><th>主治医生</th></tr></thead>';
+                table.append(thead);
+                var tbody = '<tbody>';
+                for (var i = 0; i < patient.PatientInfo.length; i++) {
+                    TreatmentID = patient.PatientInfo[i].treatID;
+                    Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
+                    Name = patient.PatientInfo[i].Name;
+                    treat = patient.PatientInfo[i].treat;
+                    diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
+                    date = patient.PatientInfo[i].date;
+                    doctor = patient.PatientInfo[i].doctor;
+                    Completed = (patient.PatientInfo[i].Completed == "1")? "已完成":"未完成";
+                    begin = toTime(patient.PatientInfo[i].begin);
+                    end = toTime(patient.PatientInfo[i].end);
+                    finishedtimes = patient.PatientInfo[i].finishedtimes;
+                    totalnumber = patient.PatientInfo[i].totalnumber;
+                    totaltimes = patient.PatientInfo[i].totaltimes;
+                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + finishedtimes + "</td><td>" + totalnumber + "</td>"
+                        + "<td>" + totaltimes + "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td><td>" + doctor + "</td></tr>";
+                    tbody += tr;
+                }
+                tbody += '</tbody>';
+                table.append(tbody);
+                trAddClick(patient);
                 break;
             case "登记处人员":
                 var url = "";
@@ -261,14 +286,14 @@ function Paging(patient,role){
                 var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="6" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "物理师":
                 var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="6" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "模拟技师":
@@ -279,7 +304,11 @@ function Paging(patient,role){
                 table.append(tbody);
                 break;
             case "治疗技师":
-                var url = "";
+                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>预约时间</th><th>是否完成</th><th>完成次数</th><th>累次剂量</th>'
+                    + '<th>总次数</th><th>疗程</th><th>诊断结果</th><th>主治医生</th></tr></thead>';
+                table.append(thead);
+                var tbody = '<tbody><tr><td colspan="9" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                table.append(tbody);
                 break;
             case "科主任":
                 var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
@@ -1271,7 +1300,7 @@ function getPatient(userID,role,parameters){
             var url = "Records/patientInfoForMNJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
             break;
         case "治疗技师":
-            var url = "Records/patientInfoForMNJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
+            var url = "Records/patientInfoForZLJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
             break;
         case "登记处人员":
             var url = "";
