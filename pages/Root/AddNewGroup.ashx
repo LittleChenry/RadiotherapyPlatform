@@ -38,32 +38,28 @@ public class AddNewGroup : IHttpHandler {
         string higherID = obj[0]["ID"].ToString();
         string chargerID = obj[1]["ID"].ToString();
 
-        sqlOperation.AddParameterWithValue("@gid",groupsID);
-        sqlCommand = "INSERT INTO groups2user(User_ID,Group_ID,identity) VALUES(@uid,@gid,@identity)";
-        sqlOperation.AddParameterWithValue("@uid", higherID);
-        sqlOperation.AddParameterWithValue("@identity", 1);
-
-        sqlOperation.ExecuteNonQuery(sqlCommand);
-
-        sqlOperation.AddParameterWithValue("@uid", chargerID);
-        sqlOperation.AddParameterWithValue("@identity", 2);
-        sqlOperation.ExecuteNonQuery(sqlCommand);
-
-        sqlOperation.AddParameterWithValue("@identity", 3);
-
-        for (int i = 2; i < obj.Length; ++i)
+        DataLayer sqlInner = new DataLayer("sqlStr");
+        sqlInner.AddParameterWithValue("@gid", groupsID);
+        string sqlcommandInner = "";
+        sqlCommand = "SELECT ID FROM user";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
         {
-            sqlOperation.AddParameterWithValue("@uid", obj[i]["ID"].ToString());
-            try
+            string id = reader["ID"].ToString();
+            int identity = 0, state = 0;
+            sqlcommandInner = "INSERT INTO groups2user(User_ID,Group_ID,identity,state) VALUES(@uid,@gid,@identity,@state)";
+            sqlInner.AddParameterWithValue("@uid", id);
+            identity = checkIdentity(id,obj);
+            sqlInner.AddParameterWithValue("@identity",identity);
+            state = checkState(id, obj);
+            if (identity == 1)
             {
-                sqlOperation.ExecuteNonQuery(sqlCommand);
+                state = 0;
             }
-            catch (Exception e)
-            {
-                string msg = e.ToString();
-            }
+            sqlInner.AddParameterWithValue("@state", state);
+            sqlInner.ExecuteNonQuery(sqlcommandInner);
         }
-        
+
         /*
         StringBuilder update = new StringBuilder("UPDATE user SET Group_ID=@Group_ID WHERE ID in(");
         for (int i = 0; i < obj.Length; ++i)
@@ -86,5 +82,32 @@ public class AddNewGroup : IHttpHandler {
         sqlOperation.Dispose();
         sqlOperation = null;        
         
+    }
+
+    private int checkIdentity(string id, LitJson.JsonData[] obj)
+    {
+        for (int i = 0; i < obj.Length; ++i)
+        {
+            if (id == obj[i]["ID"].ToString())
+            {
+                if (i == 0)
+                    return 1;
+                else if (i == 1)
+                    return 2;
+                else
+                    return 3;
+            }
+        }
+        return 0;
+    }
+
+    private int checkState(string id, LitJson.JsonData[] obj)
+    {
+        for (int i = 0; i < obj.Length; ++i)
+        {
+            if (id == obj[i]["ID"].ToString())
+                return 1;
+        }
+        return 0;
     }
 }

@@ -21,9 +21,10 @@ public class GetGroupInformation : IHttpHandler {
     private string group()
     {
         DataLayer sqlOperation = new DataLayer("sqlStr");
+        
         string sqlCommand = "SELECT `user`.`Name`,`user`.ID uid,groups.ID gid,groups.groupName,groups2user.identity FROM "
                             + "`user` RIGHT JOIN groups2user ON `user`.ID=groups2user.User_ID "
-                            +"RIGHT JOIN groups ON groups2user.Group_ID=groups.ID ORDER BY gid,identity";
+                            +"RIGHT JOIN groups ON groups2user.Group_ID=groups.ID WHERE groups2user.state=1 OR groups2user.identity=1 ORDER BY gid,identity";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder result = new StringBuilder("[");
         while(reader.Read()){

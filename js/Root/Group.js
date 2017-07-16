@@ -313,6 +313,11 @@ function cannelAddGroup() {
  * 确定新增一组
  */
 function sureAddGroup() {
+    if (canAdd) {
+        canAdd = false;
+    } else {
+        return;
+    }
     var $selectedMember = $("#addGroup :selected");
     if ($("#groupName").val() == "") {
         alert("请填写组名");
@@ -336,17 +341,22 @@ function sureAddGroup() {
 
 }
 
+var canAdd = true;
 /**
  * 后台处理新增一组事件
  */
 function postNewGroup(postAdd, name) {
     $.ajax({
         type: "post",
-        url: "AddNewGroup.ashx",
+        url: "../../pages/Root/AddNewGroup.ashx",
         data: { "data": toJsonString(postAdd), "name": name },
-        success:function(){
+        success: function () {
+            canAdd = true;
             alert("新增成功");
             window.location.href = "../../pages/Root/Root-Group.aspx";
+        },
+        error: function () {
+            canAdd = true;
         }
     });
 }
@@ -606,23 +616,32 @@ function editGroup($tr) {
     });
 };
 
+var canDelete = true;
 /**
  * 删除组处理
  */
 $(function () {
     $("#deleteGroup").bind("click", function () {
         //var groupID = $("#editArea").find("td:first").find(":hidden").val();
-
+        if (canDelete) {
+            canDelete = false;
+        } else {
+            return;
+        }
         $.ajax({
             type: "post",
             url: "../../pages/Root/DeleteGroup.ashx",
             data: {"ids" :idStr},
             success: function () {
+                canDelete = true;
                 alert("删除成功");
                 $currentTr.remove();
                 //deleteJsonObj(idStr.split(" ")[0]);
                 updateView();
                 $("#cannelEdit").trigger("click");
+            },
+            error: function () {
+                canDelete = true;
             }
         });
     });
@@ -640,11 +659,17 @@ function deleteJsonObj(id) {
     }
 }
 
+var canChange = true;
 /**
  * 修改组
  */
 $(function () {
     $("#sureEdit").bind("click", function () {
+        if (canChange) {
+            canChange = false;
+        } else {
+            return;
+        }
         var str = "";
         var $editArea = $("#editArea");
         var groupName = $editArea.find("input[type=text]").val();
@@ -658,9 +683,13 @@ $(function () {
             url: "../../pages/Root/UpdateGroup.ashx",
             data: { "pre": idStr, "now": str, "name":groupName },
             success: function () {
+                canChange = true;
                 alert("修改成功");
                 //window.location.href = "../../pages/Root/Root-Group.aspx";
                 updateView();
+            },
+            error: function () {
+                canChange = true;
             }
         });
     });
