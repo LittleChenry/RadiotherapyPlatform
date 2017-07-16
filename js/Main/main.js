@@ -20,19 +20,22 @@ $(document).ready(function () {
         window.location.replace("../Login/Login.aspx");
     });
     $("#save").click(function(){
-        //$("#record-iframe")[0].contentWindow.save();
+        $("#record-iframe")[0].contentWindow.save();
         RolesToPatients(session);
         Recover();
         $('#save').attr("disabled","disabled");
     });
     $('#edit').click(function(){
+        $("#record-iframe")[0].contentWindow.remove();
         $("#save").removeAttr("disabled");
         $('#edit').attr("disabled","disabled");
     });
     $("#saveTreatment").bind("click",function(){
         saveTreatment();
     });
-    //chooseAssistant();
+    $("#printIframe").bind("click", function () {
+        $("#record-iframe")[0].contentWindow.print();
+    });
     
 })
 
@@ -42,7 +45,7 @@ $(document).ready(function () {
 
 function RolesToPatients(session){
     var patient;
-    if (session.role == "模拟技师" || session.role == "放疗技师") {
+    if (session.role == "模拟技师" || session.role == "治疗技师") {
         if (session.equipmentID == "0") {
             chooseEquipment();
             $("#getSelectedPatient").click(function(){
@@ -211,7 +214,7 @@ function Paging(patient,role){
                 table.append(tbody);
                 trAddClick(patient);
                 break;
-            case "放疗技师":
+            case "治疗技师":
                 var url = "";
                 break;
             case "登记处人员":
@@ -275,7 +278,7 @@ function Paging(patient,role){
                 var tbody = '<tbody><tr><td colspan="6" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
-            case "放疗技师":
+            case "治疗技师":
                 var url = "";
                 break;
             case "科主任":
@@ -1267,8 +1270,8 @@ function getPatient(userID,role,parameters){
         case "模拟技师":
             var url = "Records/patientInfoForMNJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
             break;
-        case "放疗技师":
-            var url = "";
+        case "治疗技师":
+            var url = "Records/patientInfoForMNJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
             break;
         case "登记处人员":
             var url = "";

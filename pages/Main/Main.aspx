@@ -442,17 +442,6 @@
 <script type="text/javascript">
     $("#startdate").datepicker({ autoclose: true });
     $("#enddate").datepicker({ autoclose: true });
-    $(function () {
-        $("#printIframe").bind("click", function () {
-            $("#record-iframe")[0].contentWindow.print();
-        });
-        $("#edit").bind("click", function () {
-            $("#record-iframe")[0].contentWindow.remove();
-        });
-        $("#save").bind("click", function () {          
-           $("#record-iframe")[0].contentWindow.save();                                    
-        });
-    })
 </script>
 </body>
 </html>
