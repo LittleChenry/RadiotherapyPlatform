@@ -3,6 +3,7 @@
 using System;
 using System.Web;
 using System.Text;
+using System.Collections;
 public class patientInfoForDoctor : IHttpHandler {
 
     private DataLayer sqlOperation = new DataLayer("sqlStr");
@@ -41,27 +42,35 @@ public class patientInfoForDoctor : IHttpHandler {
     private string getfixrecordinfo(HttpContext context)
     {        
         String userid = context.Request.QueryString["userID"];
-        
         int userID = Convert.ToInt32(userid);
-        string sqlCommand1 = "SELECT Group_ID from groups2user where User_ID=@userid";
+        string sqlCommand1 = "SELECT Group_ID from groups2user where User_ID=@userid and identity<>0";
         sqlOperation.AddParameterWithValue("@userid", userID);
-        
-        
         MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(sqlCommand1);
-        int j = 0;
-        int[] group=new int[20]; 
+        ArrayList array = new ArrayList();
+        ArrayList array2 = new ArrayList();
         while (reader1.Read())
         {
-            group[j] = int.Parse(reader1["Group_ID"].ToString());
-            j++;
+            array.Add(reader1["Group_ID"].ToString()); 
         }
-        int Count=0;
-        int count = 0;
         reader1.Close();
-        for (int k = 0; k < j; k++)
+        foreach (string element in array)
+        {
+            string sqlcommand2 = "select ID from groups2user where identity<>0 and Group_ID=@groupid";
+            sqlOperation1.AddParameterWithValue("@groupid", Convert.ToInt32(element));
+             MySql.Data.MySqlClient.MySqlDataReader reader2 = sqlOperation1.ExecuteReader(sqlcommand2);
+            while (reader2.Read())
+            {
+                array2.Add(reader2["ID"].ToString());
+            }
+           reader2.Close();
+        }
+
+        int Count = 0;
+        int count = 0;
+        foreach (string element in array2)
         {
             string sqlCommand = "SELECT count(*) from treatment where Group_ID=@groupid";
-            sqlOperation.AddParameterWithValue("@groupid", group[k]);
+            sqlOperation.AddParameterWithValue("@groupid", Convert.ToInt32(element));
             count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
             Count = Count + count;
         }
@@ -69,18 +78,22 @@ public class patientInfoForDoctor : IHttpHandler {
         {
             return "{\"PatientInfo\":false}";
         }
-        
         int i = 1;
         StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
-        for (int k = 0; k < j; k++)
+        foreach (string element in array2)
         {
-            string sqlCommand2 = "select treatment.ID as treatid,patient.*,State,Progress,user.Name as doctor,treatment.Treatmentname,groupName,DiagnosisRecord_ID from groups,treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and groups.ID=treatment.Group_ID and treatment.Group_ID=@groupid order by patient.ID desc";
-            sqlOperation2.AddParameterWithValue("@groupid", group[k]);
+            string sqlCommand11 = "select groups.groupName as groupname from groups,groups2user where groups.ID=groups2user.Group_ID and groups2user.ID=@groupid";
+            sqlOperation.AddParameterWithValue("@groupid", Convert.ToInt32(element));
+            string groupname = sqlOperation.ExecuteScalar(sqlCommand11);
+
+            string sqlCommand2 = "select treatment.Group_ID as groupID,treatment.ID as treatid,patient.*,State,Progress,user.Name as doctor,treatment.Treatmentname,Group_ID,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and (treatment.Group_ID=@groupid or treatment.Belongingdoctor=@userid) order by patient.ID desc";
+            sqlOperation2.AddParameterWithValue("@userid", Convert.ToInt32(userID));
+            sqlOperation2.AddParameterWithValue("@groupid", Convert.ToInt32(element));
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
 
             while (reader.Read())
             {
-                string result="";
+                string result = "";
                 if (reader["DiagnosisRecord_ID"] is DBNull)
                 {
                     result = "";
@@ -95,8 +108,17 @@ public class patientInfoForDoctor : IHttpHandler {
                     string Description = sqlOperation1.ExecuteScalar(sqlCommand4);
                     result = TumorName + Description;
                 }
+                string groupname2 = "";
+                if (reader["groupID"].ToString() == "")
+                {
+                    groupname2 = "";
+                }
+                else
+                {
+                    groupname2 = groupname;
+                }
                 backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result +
-                     "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentname"].ToString() + "\",\"groupname\":\"" + reader["groupName"].ToString()
+                     "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentname"].ToString() + "\",\"groupname\":\"" + groupname2
                      + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\"}");
 
                 if (i < Count)
@@ -107,7 +129,6 @@ public class patientInfoForDoctor : IHttpHandler {
             }
             reader.Close();
         }
-        // backText.Remove(backText.Length - 1, 1);                
         backText.Append("]}");
         return backText.ToString();
     }
