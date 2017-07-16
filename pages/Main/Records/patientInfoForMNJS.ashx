@@ -55,7 +55,7 @@ public class patientInfoForMNJS : IHttpHandler {
         }
         
         int i = 1;
-        string sqlCommand2 = "select Progress,treatment.ID as treatid,patient.*,user.Name as doctor,appointment.*,equipment.Name as eqname,treatment.Treatmentname,DiagnosisRecord_ID from appointment,treatment,patient,user,equipment where appointment.Equipment_ID=equipment.ID and appointment.Equipment_ID=@groupid and appointment.Date >= @date1 and appointment.Date <= @date2 and appointment.State=1 and appointment.Treatment_ID=treatment.ID and patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID order by appointment.Begin";
+        string sqlCommand2 = "select Progress,treatment.ID as treatid,patient.*,user.Name as doctor,appointment.*,equipment.Name as eqname,treatment.Treatmentname,DiagnosisRecord_ID,Completed from appointment,treatment,patient,user,equipment where appointment.Equipment_ID=equipment.ID and appointment.Equipment_ID=@groupid and appointment.Date >= @date1 and appointment.Date <= @date2 and appointment.State=1 and appointment.Treatment_ID=treatment.ID and patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID order by appointment.Begin";
         sqlOperation2.AddParameterWithValue("@groupid", equipmentID);
         sqlOperation2.AddParameterWithValue("@date1", date1);
         sqlOperation2.AddParameterWithValue("@date2", date2);
@@ -82,8 +82,8 @@ public class patientInfoForMNJS : IHttpHandler {
             string da = reader["Date"].ToString();
             DateTime dt1 = Convert.ToDateTime(da);
             string date3 = dt1.ToString("yyyy-MM-dd");
-            backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"date\":\"" + date3 + "\",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + 
-                    "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentname"].ToString()
+            backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"date\":\"" + date3 + "\",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() +
+                    "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentname"].ToString() + "\",\"Completed\":\"" + reader["Completed"].ToString()
                     + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\"}");
 
             if (i < count)
