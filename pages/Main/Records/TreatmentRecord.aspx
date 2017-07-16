@@ -119,6 +119,29 @@
                      </div>
                     </div>
               </div>
+    <div id="operatorModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">操作成员验证</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <span>账号：</span>
+                        <input type="text" class="form-control" id="OperatorNumber" />
+                    </div>
+                    <div class="form-group">
+                        <span>密码：</span>
+                        <input type="text" class="form-control" id="OperatorPassword" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">验证</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     </section>
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>

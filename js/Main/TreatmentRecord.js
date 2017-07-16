@@ -7,7 +7,8 @@ function Init(evt) {
     //获得当前执行人姓名与ID
     getUserName();
     getUserID();
-    //此处为分页代码
+    AssistantLogin();
+
     var treatID = window.location.search.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
     var patient = getPatientInfo(treatID);
@@ -47,6 +48,68 @@ function Init(evt) {
         createtreatrecordtable(treatID);
     }
 }
+
+function AssistantLogin(){
+  var session = getSession();
+  if(session.assistant == ""){
+    $("#operatorModal").modal({backdrop: 'static'});
+  }else{
+    $("#operator").html(session.assistant);
+  }
+  $("#changeOperator").click(function(){
+    $("#operatorModal").modal({backdrop: 'static'});
+  });
+  $("#validate").click(function(){
+    $.ajax({
+      type: "POST",
+      url: "../../pages/Main/Records/validateOperator.ashx",
+      async: false,
+      data: {
+        Number: $("#OperatorNumber").val(),
+        Password: $("#OperatorPassword").val()
+      },
+      dateType: "json",
+      success: function (data) {
+        if (true) {
+          alert("验证成功！");
+          $.ajax({
+            type: "POST",
+            url: "../../pages/Main/Records/setAssistant.ashx",
+            data:{assistant : data},
+            error:function(){
+                alert("error");
+            }
+        });
+        }else{
+          alert("验证失败，请重新验证！");
+          $("#operatorModal").modal({backdrop: 'static'});
+        }
+      },
+      error: function(){
+      alert("error");
+      }
+    });
+  });
+}
+
+function getSession(){
+    var Session;
+    $.ajax({
+        type: "GET",
+        url: "../../pages/Main/Records/getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            //alert(data);
+            Session = $.parseJSON(data);
+        },
+        error: function(){
+            alert("error");
+        }
+    });
+    return Session;
+}
+
 function gettreatmentrecordInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "designApplyInfo.ashx?treatID=" + treatID;
