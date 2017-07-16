@@ -60,7 +60,8 @@ function createGroupTable(page) {
             $tr.append("<td>" + groupJsonObj[i].groupName + "<input type=hidden value="
  			+ groupJsonObj[i].gid + " /></td><td>" + groupJsonObj[i].userName
  			+ "<input type=hidden value=" + groupJsonObj[i].userID + " /></td>"
-            + "<td>" + groupJsonObj[++i].userName + "<input type=hidden value=" + groupJsonObj[i].userID + " /></td>");
+            + "<td>" + (((i + 1) < groupJsonObj.length && (groupJsonObj[i + 1].identity == 2) && (groupJsonObj[i].userID != groupJsonObj[i + 1].userID)) ? (groupJsonObj[++i].userName + "<input type=hidden value=" + groupJsonObj[i].userID + " />") : (groupJsonObj[i].userName + "<input type=hidden value="
+ 			+ groupJsonObj[i].userID + " />")) + "</td>");
             groupID = groupJsonObj[i].gid;
         } else {
             $tr.append("<td>" + groupJsonObj[i].userName + "<input type=hidden value=" + groupJsonObj[i].userID + " /></td>");
@@ -492,7 +493,8 @@ function createSearchTable() {
             $tr.append("<td>" + searchArray[i].groupName + "<input type=hidden value="
  			+ searchArray[i].gid + " /></td><td>" + searchArray[i].userName
  			+ "<input type=hidden value=" + searchArray[i].userID + " /></td>"
-            + "<td>" + groupJsonObj[++i].userName + "<input type=hidden value=" + groupJsonObj[i].userID + " /></td>");
+            + "<td>" + (((i + 1) < searchArray.length && (searchArray[i + 1].identity == 2) && (searchArray[i].userID != searchArray[i + 1].userID)) ? (searchArray[++i].userName + "<input type=hidden value=" + searchArray[i].userID + " />") : (searchArray[i].userName + "<input type=hidden value="
+ 			+ searchArray[i].userID + " />")) + "</td>");
             groupID = searchArray[i].gid;
         } else {
             $tr.append("<td>" + searchArray[i].userName + "<input type=hidden value=" + searchArray[i].userID + " /></td>");

@@ -52,7 +52,7 @@ public class AddNewGroup : IHttpHandler {
             identity = checkIdentity(id,obj);
             sqlInner.AddParameterWithValue("@identity",identity);
             state = checkState(id, obj);
-            if (identity == 1)
+            if (identity == 1 && obj.Length > 2)
             {
                 state = 0;
             }

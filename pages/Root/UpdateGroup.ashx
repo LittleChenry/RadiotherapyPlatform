@@ -43,11 +43,17 @@ public class UpdateGroup : IHttpHandler {
         {
             sqlCommand = "UPDATE groups2user SET state=0,identity=1 WHERE Group_ID=@gid AND User_ID=@uid";
             sqlOperation.AddParameterWithValue("@uid", int.Parse(nows[0]));
+            if (nows[0] == nows[1])
+            {
+                sqlCommand = "UPDATE groups2user SET state=1,identity=1 WHERE Group_ID=@gid AND User_ID=@uid";
+            }
             sqlOperation.ExecuteNonQuery(sqlCommand);
-
-            sqlCommand = "UPDATE groups2user SET state=1,identity=2 WHERE Group_ID=@gid AND User_ID=@uid";
-            sqlOperation.AddParameterWithValue("@uid", int.Parse(nows[1]));
-            sqlOperation.ExecuteNonQuery(sqlCommand);
+            if (nows[0] != nows[1])
+            {
+                sqlCommand = "UPDATE groups2user SET state=1,identity=2 WHERE Group_ID=@gid AND User_ID=@uid";
+                sqlOperation.AddParameterWithValue("@uid", int.Parse(nows[1]));
+                sqlOperation.ExecuteNonQuery(sqlCommand);
+            }
 
             for (int i = 2; i < nows.Length - 1; ++i)
             {
