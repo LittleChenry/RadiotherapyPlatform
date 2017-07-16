@@ -285,7 +285,7 @@
         <!-- /.box-header -->
         <div class="box-body" style="padding:0px;">
             <div id="patient-table-content" class="scroll-content">
-                <table id="patient-table" class="table table-bordered" style="word-break:keep-all;margin-bottom:0px;"></table>
+                <table id="patient-table" class="table table-bordered" style="white-space:nowrap;margin-bottom:0px;"></table>
             </div>
             <div class="row" style="margin:1px;float:right;">
                 <div class="col-sm-3">
