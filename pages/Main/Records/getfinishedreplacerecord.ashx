@@ -29,12 +29,12 @@ public class getfinishedreplacerecord : IHttpHandler {
         sqlOperation.AddParameterWithValue("@treatID", treatid);
         int patientid = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
 
-        string sqlcommand = "select distinct(count(*)) from treatment,user,replacement where treatment.Replacement_ID=replacement.ID and replacement.Operate_User_ID=user.ID and treatment.Patient_ID=@patient and treatment.Progress>=13";
+        string sqlcommand = "select distinct(count(*)) from treatment,user,replacement where treatment.Replacement_ID=replacement.ID and replacement.Operate_User_ID=user.ID and treatment.Patient_ID=@patient";
         sqlOperation.AddParameterWithValue("@patient", patientid);
         int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand));
         StringBuilder backText = new StringBuilder("{\"info\":[");
         int i = 1;
-        string sqlCommand1 = "select Treatmentname,OriginCenter,PlanCenter,Movement,Distance,ReferenceDRRPicture,VerificationPicture,Result,user.Name as username,OperateTime,Remarks from treatment,user,replacement where treatment.Replacement_ID=replacement.ID and replacement.Operate_User_ID=user.ID and treatment.Patient_ID=@patient and treatment.Progress>=13";
+        string sqlCommand1 = "select Treatmentname,OriginCenter,PlanCenter,Movement,Distance,ReferenceDRRPicture,VerificationPicture,Result,user.Name as username,OperateTime,Remarks from treatment,user,replacement where treatment.Replacement_ID=replacement.ID and replacement.Operate_User_ID=user.ID and treatment.Patient_ID=@patient ";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand1);
         while (reader.Read())
         {
