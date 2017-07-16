@@ -42,8 +42,6 @@ function createPatient(evt) {
     createPartItem(select3);
     var select4 = document.getElementById("diagresult");
     createDiagResultItem(select4);
-    var select5 = document.getElementById("groupid");
-    creategroupItem(select5);
     var diagnosisInfo = getDignoseInfo(patient.treatID);
     $("#current-tab").text("疗程" + treatID + "诊断");
     var groupprogress = patient.Progress.split(",");
@@ -55,17 +53,12 @@ function createPatient(evt) {
                 document.getElementById("part").value = diagnosisInfo.diagnosisInfo[i].partID;
                 document.getElementById("diagresult").value = diagnosisInfo.diagnosisInfo[i].diagnosisresultID;
                 document.getElementById("date").innerHTML = diagnosisInfo.diagnosisInfo[i].Time;
-                if (diagnosisInfo.diagnosisInfo[i].group != "") {
-                    document.getElementById("groupid").value = diagnosisInfo.diagnosisInfo[i].group;
-                } else {
-                    document.getElementById("groupid").value = "allItem";
-                }
+                
             } else {
                 var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ diagnosisInfo.diagnosisInfo[i].Treatmentname +'诊断</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                    + '<div class="item col-xs-4">患病部位：<span class="underline">' + diagnosisInfo.diagnosisInfo[i].partname + '</span></div>'
                    + '<div class="item col-xs-4">诊断结果：<span class="underline">' + diagnosisInfo.diagnosisInfo[i].diagnosisresultName + '</span></div>'
-                   + '<div class="item col-xs-4">医疗组：<span class="underline">' + transfer(diagnosisInfo.diagnosisInfo[i].groupName) + '</span></div></div>'
                    + '<div class="single-row"><div class="item col-xs-8">备注：<span class="underline">' + diagnosisInfo.diagnosisInfo[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
@@ -81,8 +74,7 @@ function createPatient(evt) {
                 var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ diagnosisInfo.diagnosisInfo[i].Treatmentname +'诊断</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
                     + '<div class="item col-xs-4">患病部位：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].partname +'</span></div>'
-                    + '<div class="item col-xs-4">诊断结果：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].diagnosisresultName +'</span></div>'
-                    + '<div class="item col-xs-4">医疗组：<span class="underline">' + transfer(diagnosisInfo.diagnosisInfo[i].groupName) + '</span></div></div>'
+                    + '<div class="item col-xs-4">诊断结果：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].diagnosisresultName +'</span></div>'  
                     + '<div class="single-row"><div class="item col-xs-8">备注：<span class="underline">' + diagnosisInfo.diagnosisInfo[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
@@ -95,11 +87,7 @@ function createPatient(evt) {
             document.getElementById("remark").value = diagnosisInfo.diagnosisInfo[k].Remarks;
             document.getElementById("part").value = diagnosisInfo.diagnosisInfo[k].partID;
             document.getElementById("diagresult").value = diagnosisInfo.diagnosisInfo[k].diagnosisresultID;
-            if (diagnosisInfo.diagnosisInfo[k].group != "") {
-                document.getElementById("groupid").value = diagnosisInfo.diagnosisInfo[k].group;
-            } else {
-                document.getElementById("groupid").value = "allItem";
-            }
+            
         });
     });
 }
@@ -118,29 +106,7 @@ function transfer(res) {
         return res;
     }
 }
-//第二步分组下拉项建立
-function creategroupItem(thiselement) {
-    var PartItem = JSON.parse(getallgroup()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-----分组选择-----");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(PartItem[i].groupname);
-            thiselement.options[i + 1].value = parseInt(PartItem[i].groupid);
-        }
-    }
 
-
-}
-function getallgroup() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "getgroups.ashx?user=" + userID;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-    var json = xmlHttp.responseText;
-    return json;
-}
 function getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
