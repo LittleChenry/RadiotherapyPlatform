@@ -155,6 +155,29 @@ function Paging(patient,role){
             case "登记处人员":
                 var url = "";
                 break;
+            case "科主任":
+                var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
+                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
+                    + '<th>主治医生</th><th>医疗组</th></tr></thead>';
+                table.append(thead);
+                var tbody = '<tbody>';
+                for (var i = 0; i < patient.PatientInfo.length; i++) {
+                    TreatmentID = patient.PatientInfo[i].treatID;
+                    Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
+                    Name = patient.PatientInfo[i].Name;
+                    treat = patient.PatientInfo[i].treat;
+                    diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
+                    Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
+                    doctor = patient.PatientInfo[i].doctor;
+                    groupname = patient.PatientInfo[i].groupname;
+                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
+                        + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
+                    tbody += tr;
+                }
+                tbody += '</tbody>';
+                table.append(tbody);
+                trAddClick(patient);
+                break;
             default:
                 var url = "";
         }
@@ -166,7 +189,7 @@ function Paging(patient,role){
                 var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:250px;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "计量师":
@@ -1117,6 +1140,9 @@ function getPatient(userID,role,parameters){
             break;
         case "登记处人员":
             var url = "";
+            break;
+        case "科主任":
+            var url = "Records/GetPatientInfo.ashx?";
             break;
         default:
             var url = "";
