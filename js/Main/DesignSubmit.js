@@ -84,22 +84,14 @@ function Init(evt) {
                     $("#tab-content").append(content);
                 }
             }
-        } else {
+    } else {
+        document.getElementById("userID").value = userID;
+        document.getElementById("applyuser").innerHTML = userName;
+        document.getElementById("time").innerHTML = getNowFormatDate();
+        document.getElementById("hidetreatID").value = treatID;
             for (var i = 0; i < designInfo.length; i++) {
                 if (designInfo[i].Treatmentname != patient.Treatmentname) {
-                    document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
-                    readDosagePriority(designInfo[i].DosagePriority);
-                    readDosage(designInfo[i].Dosage);
-                    document.getElementById("technology").innerHTML = designInfo[i].technology;
-                    document.getElementById("equipment").innerHTML = designInfo[i].equipment;
-                    document.getElementById("ApplicationUser").innerHTML = designInfo[i].doctor;
-                    document.getElementById("ApplicationTime").innerHTML = designInfo[i].apptime;
-                    document.getElementById("receiveUser").innerHTML = designInfo[i].ReceiveUser;
-                    document.getElementById("receiveTime").innerHTML = designInfo[i].ReceiveTime;
-                    document.getElementById("userID").value = userID;
-                    document.getElementById("applyuser").innerHTML = userName;
-                    document.getElementById("time").innerHTML = getNowFormatDate();
-                    document.getElementById("hidetreatID").value = treatID;
+
                     var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + designInfo[i].Treatmentname + '计划提交信息</a></li>';
                     var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                         + '<div class="item col-xs-6">计划系统：<span class="underline">' + designInfo[i].PlanSystemname + '</span></div>'
@@ -112,6 +104,16 @@ function Init(evt) {
                         + '<div class="item col-xs-6">计划可执行度：<span class="underline">' + transfer(designInfo[i].Feasibility) + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div></div>'
                     $("#tabs").append(tab);
                     $("#tab-content").append(content);
+                } else {
+                    document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
+                    readDosagePriority(designInfo[i].DosagePriority);
+                    readDosage(designInfo[i].Dosage);
+                    document.getElementById("technology").innerHTML = designInfo[i].technology;
+                    document.getElementById("equipment").innerHTML = designInfo[i].equipment;
+                    document.getElementById("ApplicationUser").innerHTML = designInfo[i].doctor;
+                    document.getElementById("ApplicationTime").innerHTML = designInfo[i].apptime;
+                    document.getElementById("receiveUser").innerHTML = designInfo[i].ReceiveUser;
+                    document.getElementById("receiveTime").innerHTML = designInfo[i].ReceiveTime;                   
                 }
             }
         }
