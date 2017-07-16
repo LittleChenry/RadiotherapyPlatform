@@ -62,7 +62,7 @@ public class GetPatientInfo : IHttpHandler
             }
             else
             {
-                string sqlCommand5 = "select groupName from groups where groups.ID=@ID";
+                string sqlCommand5 = "select groupName from groups,groups2user where groups2user.ID=@ID and groups2user.Group_ID=groups.ID";
                 sqlOperation1.AddParameterWithValue("@ID", reader["Group_ID"].ToString());
                 groupname = sqlOperation1.ExecuteScalar(sqlCommand5);               
             }
