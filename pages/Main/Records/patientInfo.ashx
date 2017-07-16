@@ -46,31 +46,14 @@ public class patientInfo : IHttpHandler
         StringBuilder backText = new StringBuilder("{\"patientInfo\":[");
         while (reader.Read())
         {
-            string group = "";
-            int group2 = -1;
-            if (reader["Group_ID"].ToString()!= "")
-            {
-                group2 = Convert.ToInt32(reader["Group_ID"].ToString());
-            }
-            string command = "select count(*) from groups2user where User_ID=@user and Group_ID=@group";
-            sqlOperation3.AddParameterWithValue("@user", Convert.ToInt32(reader["Belongingdoctor"].ToString()));
-            sqlOperation3.AddParameterWithValue("@group", group2);
-            string count1 = sqlOperation3.ExecuteScalar(command);
-            if (count1 == "0")
-            {
-                group = "";
-            }
-            else
-            {
-                group = reader["Group_ID"].ToString();
-            }
+
             string date = reader["Birthday"].ToString();
             DateTime dt1 = Convert.ToDateTime(date);
             string date1 = dt1.ToString("yyyy-MM-dd");
             string date2 = reader["RegisterTime"].ToString();
             DateTime dt2 = Convert.ToDateTime(date2);
             string date3 = dt2.ToString("yyyy-MM-dd HH:mm");
-            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"group\":\"" + group + "\",\"IDcardNumber\":\"" + reader["IdentificationNumber"] + "\",\"Hospital\":\"" + reader["Hospital"] +
+            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"group\":\"" + reader["Group_ID"].ToString() + "\",\"IDcardNumber\":\"" + reader["IdentificationNumber"] + "\",\"Hospital\":\"" + reader["Hospital"] +
                  "\",\"Sub\":\"" + reader["SubCenterPrincipal_ID"].ToString() + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString() + "\",\"Picture\":\"" + reader["Picture"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() +
                  "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"Birthday\":\"" + date1 + 
                  "\",\"Nation\":\"" + reader["Nation"].ToString() + "\",\"Address\":\"" + reader["Address"].ToString() + "\",\"Contact1\":\"" + reader["Contact1"].ToString() + "\",\"doctor\":\"" + reader["RegisterDoctor"].ToString() + "\",\"Registeruser\":\"" + reader["username"].ToString() +
