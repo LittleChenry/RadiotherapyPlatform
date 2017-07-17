@@ -22,6 +22,7 @@ public class getallcompletedtreat : IHttpHandler {
         int radiotherapyid = Convert.ToInt32(context.Request["Radiotherapy_ID"]);
         DataLayer sqlOperation = new DataLayer("sqlStr");
         DataLayer sqlOperation1 = new DataLayer("sqlStr");
+        DataLayer sqlOperation2 = new DataLayer("sqlStr");
         string sqlCommand = "select ID from patient where Radiotherapy_ID=@radio";
         sqlOperation.AddParameterWithValue("@radio", radiotherapyid);
         int patientid = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
@@ -40,6 +41,41 @@ public class getallcompletedtreat : IHttpHandler {
             string location = "";
             string design = "";
             string replace = "";
+            string diagnosecomplete = "";
+            string fixcomplete = "";
+            string locationcomplete = "";
+            string designcomplete = "";
+            string replacecomplete = "";
+            string rigester = "";
+            string sqlCommand6 = "select patient.*,user.Name as username from user,patient where patient.RegisterDoctor=user.ID and patient.Radiotherapy_ID=@radio";
+            sqlOperation1.AddParameterWithValue("@radio", radiotherapyid);
+            MySql.Data.MySqlClient.MySqlDataReader reader4 = sqlOperation1.ExecuteReader(sqlCommand6);
+            if (reader4.Read())
+            {
+                string sex="";
+                if(reader4["Gender"].ToString()=="M")
+                {
+                    sex="男";
+                }else
+                {
+                    sex="女";
+                }
+                rigester = "姓名:" + reader4["Name"].ToString() + "。性别:" + sex + "。年龄:" + reader4["Age"].ToString() + "。民族:" + reader4["Nation"].ToString() + "。地址:" + reader4["Address"].ToString() + "。联系方式1:" + reader4["Contact1"].ToString() + "。联系方式2:" + reader4["Contact2"].ToString() + "。身高:" + reader4["Height"].ToString() + "。体重:" + reader4["Weight"].ToString() + "。所属医生:" + reader4["username"].ToString();
+
+            }
+            reader4.Close();
+            if(reader["DiagnosisRecord_ID"].ToString() != "")
+            {
+                string commandtemp="select part.Name as partname,user.Name as username,TumorName,diagnosisresult.Description as des,Remarks from user,part,diagnosisrecord,diagnosisresult where diagnosisresult.ID=diagnosisrecord.DiagnosisResult_ID and diagnosisrecord.Diagnosis_User_ID=user.ID and diagnosisrecord.Part_ID=part.ID and diagnosisrecord.ID=@diag";
+                sqlOperation1.AddParameterWithValue("@diag",Convert.ToInt32(reader["DiagnosisRecord_ID"].ToString()));
+                MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(commandtemp);
+                if(reader1.Read())
+                {
+                    diagnosecomplete="患病部位："+reader1["partname"].ToString()+"。诊断结果:"+reader1["TumorName"].ToString()+reader1["des"].ToString()+"。诊断备注:"+reader1["Remarks"].ToString(); 
+                }
+                reader1.Close();
+            }
+            
             if (reader["Fixed_ID"].ToString() != "")
             {
                 string sqlCommand3 = "select Operate_User_ID from fixed where ID=@fix";
@@ -52,6 +88,14 @@ public class getallcompletedtreat : IHttpHandler {
                 else
                 {
                     fix = reader["Fixed_ID"].ToString();
+                    string commandtemp = "select material.Name as mname,fixedequipment.Name as fename,fixedrequirements.Requirements as requirements,BodyPosition,fixed.Remarks as remark from material,fixedrequirements,fixed,fixedequipment where fixedequipment.ID=fixed.FixedEquipment_ID and fixed.Model_ID=material.ID and fixed.FixedRequirements_ID=fixedrequirements.ID and fixed.ID=@fix";
+                    sqlOperation1.AddParameterWithValue("@fix",Convert.ToInt32(reader["Fixed_ID"].ToString()));
+                     MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(commandtemp);
+                    if(reader1.Read())
+                   {
+                       fixcomplete = "模具：" + reader1["mname"].ToString() + "。特殊要求:" + reader1["requirements"].ToString() + "。固定装置:" + reader1["fename"].ToString() + "。体位:" + reader1["BodyPosition"].ToString() + "。备注:" + reader1["remark"].ToString(); 
+                  }
+                   reader1.Close(); 
                 }
             }
             if (reader["Location_ID"].ToString() != "")
@@ -68,6 +112,29 @@ public class getallcompletedtreat : IHttpHandler {
                 else
                 {
                     location = reader["Location_ID"].ToString();
+                    string commandtemp = "select scanpart.Name as partname,scanmethod.Method as scanmethod,locationrequirements.Requirements as locationrequire,UpperBound,LowerBound,Enhance,location.EnhanceMethod_ID as enhancemethod,location.Remarks as remarklocate,location.Thickness as Thick,location.Number as num,location.ReferenceNumber as refer1,location.ReferenceScale as refer2,densityconversion.Name as ctdes,ct.SequenceNaming as ctseq,ct.MultimodalImage as ctmul,ct.Remarks as ctremarks from location,scanmethod,scanpart,locationrequirements,enhancemethod,ct,densityconversion where location.CT_ID=ct.ID and location.ID=@locateid and ct.DensityConversion_ID=densityconversion.ID and location.ScanMethod_ID=scanmethod.ID  and location.LocationRequirements_ID=locationrequirements.ID and location.ScanPart_ID=scanpart.ID";
+                     sqlOperation1.AddParameterWithValue("@locateid",Convert.ToInt32(reader["Location_ID"].ToString()));
+                     MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(commandtemp);
+                    if(reader1.Read())
+                   {
+                        string enmethod="";
+                        string zengqiang="是";
+                        if (reader1["Enhance"].ToString() == "0")
+                       {
+
+                             enmethod = "无";
+                            zengqiang="否";
+                        }
+                        else
+                      {
+                            string sqlCommand5= "select Method from enhancemethod where ID=@enhancemethod";
+                            sqlOperation2.AddParameterWithValue("@enhancemethod", Convert.ToInt32(reader1["enhancemethod"].ToString()));
+                            enmethod = sqlOperation2.ExecuteScalar(sqlCommand5);
+
+                       }
+                        locationcomplete = "扫描部位：" + reader1["partname"].ToString() + "。扫描方式:" + reader1["scanmethod"].ToString() + "。特殊要求:" + reader1["locationrequire"].ToString() + "。扫描上界:" + reader1["UpperBound"].ToString() + "。扫描下界:" + reader1["LowerBound"].ToString() + "。是否增强:" + zengqiang + "。增强方式:" + enmethod + "。定位备注:" + reader1["remarklocate"].ToString() + "。层厚:" + reader1["Thick"].ToString() + "。层数:" + reader1["num"].ToString() + "。参考中心层面:" + reader1["refer1"].ToString() + "。体表参考刻度:" + reader1["refer2"].ToString() + "。CT密度转换方式:" + reader1["ctseq"].ToString() + "。CT序列命名:" + reader1["ctseq"].ToString() + "。CT多模态图像:" + reader1["ctmul"].ToString() + "。CT备注:" + reader1["ctremarks"].ToString(); 
+                  }
+                   reader1.Close();     
                 }
             }
             if (reader["Review_ID"].ToString() != "")
@@ -81,7 +148,22 @@ public class getallcompletedtreat : IHttpHandler {
                 }
                 else
                 {
-                    design = reader["Design_ID"].ToString();
+                     design = reader["Design_ID"].ToString();
+                    string commandtemp = "select design.*,technology.Name as tename,equipmenttype.Type as eqname,plansystem.Name as planname,algorithm.Name as alname,grid.Name as gridname,review.* from design,algorithm,grid,equipmenttype,plansystem,technology,review where design.ID=@designid and algorithm.ID=design.Algorithm_ID and grid.ID=design.Grid_ID and equipmenttype.ID=design.Equipment_ID and plansystem.ID=design.Plansystem_ID and technology.ID=design.Technology_ID and review.ID=@reviewid";
+                    sqlOperation1.AddParameterWithValue("@reviewid", Convert.ToInt32(reader["Review_ID"].ToString()));
+                    sqlOperation1.AddParameterWithValue("@designid", Convert.ToInt32(reader["Design_ID"].ToString()));
+                    MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(commandtemp);
+                    if (reader1.Read())
+                    {
+                       string Do = reader1["DosagePriority"].ToString();
+                       string Priority = Do.Split(new char[1] { '&' })[0];
+                       string Dosage = Do.Split(new char[1] { '&' })[1];
+                        designcomplete ="特殊情况放疗史:" +reader1["RadiotherapyHistory"].ToString()+"。靶区处方剂量:" +Priority+"。危及器官限量:" +Dosage+"。治疗技术:" +reader1["tename"].ToString()+"。放疗设备:" +reader1["eqname"].ToString() 
+                            +"。计划系统:" +reader1["planname"].ToString()+"。射野数量:" +reader1["IlluminatedNumber"].ToString()+"。非共面照射:" +reader1["Coplanar"].ToString()+"。机器跳数:" +reader1["MachineNumbe"].ToString()+"。控制点数量:" +reader1["ControlPoint"].ToString()+"。计算网络:" +reader1["gridname"].ToString()              
+                            +"。优化算法:" +reader1["alname"].ToString()+"。计划可执行度:" +reader1["Feasibility"].ToString();
+                    
+                  } 
+                    reader1.Close(); 
                 }
             }
             if (reader["Replacement_ID"].ToString() != "")
@@ -96,9 +178,22 @@ public class getallcompletedtreat : IHttpHandler {
                 else
                 {
                     replace = reader["Replacement_ID"].ToString();
+                     string commandtemp = "select replacementrequirements.Requirements as replacerequire,replacement.* from replacement,replacementrequirements where replacement.ReplacementRequirements_ID=replacementrequirements.ID and replacement.ID=@replace";
+                    sqlOperation1.AddParameterWithValue("@replace", Convert.ToInt32(reader["Replacement_ID"].ToString()));
+                    MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(commandtemp);
+                    if (reader1.Read())
+                    {
+                       
+                        replacecomplete ="复位要求:" +reader1["replacerequire"].ToString()+"。原始中心:" +reader1["OriginCenter"].ToString() 
+                            +"。计划中心:" +reader1["PlanCenter"].ToString()+"。移床参数:" +reader1["Movement"].ToString()+"。复位结果:" +reader1["Result"].ToString()+"。复位差值:" +reader1["Distance"].ToString();
+              
+                  } 
+                    reader1.Close(); 
+   
                 }
             }
-            backText.Append("{\"diagnose\":\"" + reader["DiagnosisRecord_ID"].ToString() + "\",\"fixed\":\"" + fix + "\",\"location\":\"" + location + "\",\"design\":\"" + design + "\",\"replace\":\"" + replace + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"review\":\"" + reader["Review_ID"].ToString() + "\",\"group\":\"" + reader["Group_ID"].ToString() + "\"}");
+
+            backText.Append("{\"diagnose\":\"" + reader["DiagnosisRecord_ID"].ToString() + "\",\"fixed\":\"" + fix + "\",\"fixed\":\"" + fix + "\",\"location\":\"" + location + "\",\"design\":\"" + design + "\",\"replace\":\"" + replace + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"review\":\"" + reader["Review_ID"].ToString() + "\",\"group\":\"" + reader["Group_ID"].ToString() + "\",\"diagnosecomplete\":\"" + diagnosecomplete + "\",\"fixcomplete\":\"" + fixcomplete + "\",\"locationcomplete\":\"" + locationcomplete + "\",\"designcomplete\":\"" + designcomplete + "\",\"replacecomplete\":\"" + replacecomplete + "\",\"rigester\":\"" + rigester + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");
@@ -113,6 +208,9 @@ public class getallcompletedtreat : IHttpHandler {
         sqlOperation1.Close();
         sqlOperation1.Dispose();
         sqlOperation1= null;
+         sqlOperation2.Close();
+        sqlOperation2.Dispose();
+        sqlOperation2= null;
         return backText.ToString();
     }
 
