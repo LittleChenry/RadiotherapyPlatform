@@ -201,6 +201,7 @@ function Paging(patient,role){
                             Name = patient.PatientInfo[i].Name;
                             treat = patient.PatientInfo[i].treat;
                             diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
+                            Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                             date = patient.PatientInfo[i].date;
                             doctor = patient.PatientInfo[i].doctor;
                             Completed = (patient.PatientInfo[i].Completed == "1")? "已完成":"未完成";
@@ -219,6 +220,7 @@ function Paging(patient,role){
                     treat = patient.PatientInfo[i].treat;
                     diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
                     date = patient.PatientInfo[i].date;
+                    Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     Completed = (patient.PatientInfo[i].Completed == "1")? "已完成":"未完成";
                     begin = toTime(patient.PatientInfo[i].begin);
@@ -652,16 +654,19 @@ function LightLi(e, Progresses, currentProgress, preProgress, preProgress2){
     var flag = 0;
     for (var i = 0; i < Progresses.length; i++) {
         if (Progresses[i] == currentProgress) {
-            flag = 2;
+            flag = 3;
             break;
         }else{
             if (preProgress2 != -1) {
-                if (Progresses[i] == preProgress && Progresses[i] == preProgress2) {
-                    flag = 1;
+                if (Progresses[i] == preProgress) {
+                    flag ++;
+                }
+                if (Progresses[i] == preProgress2) {
+                    flag ++;
                 }
             }else{
                 if (Progresses[i] == preProgress) {
-                    flag = 1;
+                    flag = 2;
                 }
             }
         }
@@ -672,10 +677,14 @@ function LightLi(e, Progresses, currentProgress, preProgress, preProgress2){
             $(e).find('i').removeClass().addClass("fa fa-fw fa-ban");
             return false;
         case 1:
+            $(e).find('li').removeClass().addClass("progress-unfinished");
+            $(e).find('i').removeClass().addClass("fa fa-fw fa-ban");
+            return false;
+        case 2:
             $(e).find('li').removeClass().addClass("progress-active");
             $(e).find('i').removeClass().addClass("fa fa-fw fa-edit");
             return true;
-        case 2:
+        case 3:
             $(e).find('li').removeClass().addClass("progress-finished");
             $(e).find('i').removeClass().addClass("fa fa-fw fa-check");
             return true;
@@ -1247,6 +1256,7 @@ function Search(str, patient, role){
                 Name = patient.PatientInfo[i].Name;
                 treat = patient.PatientInfo[i].treat;
                 diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ?"无":patient.PatientInfo[i].diagnosisresult;
+                Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                 date = patient.PatientInfo[i].date;
                 doctor = patient.PatientInfo[i].doctor;
                 Completed = (patient.PatientInfo[i].Completed == "1")? "已完成":"未完成";
