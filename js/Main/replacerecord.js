@@ -164,18 +164,23 @@ function Init(evt) {
                if (info[i].ReferenceDRRPicture == "") {
                    content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes">无</div></div></div></div>';
                } else {
+                   content = content + '<div class="single-row"><div class="item col-xs-12">';
                    for (var k = 1; k < pictures.length; k++) {
-                       content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img  class="img"  src="' + pictures[k] + '" style="display:block" /></div></div></div></div></div>';
+                       content = content + '<div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img  class="img"  src="' + pictures[k] + '" style="display:block" /></div></div>';
                    }
+                   content = content + "</div></div>";
                }
                content = content + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">验证图像：</span></div></div>';
                var pictures1 = info[i].VerificationPicture.split(",");
                if (info[i].VerificationPicture == "") {
                    content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes">无</div></div></div></div>';
                } else {
+                   content = content + '<div class="single-row"><div class="item col-xs-12">';
                    for (var k = 1; k < pictures1.length; k++) {
-                       content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img class="img"  src="' + pictures1[k] + '" style="display:block" /></div></div></div></div></div>';
+                       content = content + '<div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img class="img"  src="' + pictures1[k] + '" style="display:block" /></div></div>';
                    }
+                   content = content + "</div></div>";
+
                }
                content = content + '<div class="single-row"><div class="item area-group col-xs-8"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                $("#tabs").append(tab);
@@ -199,25 +204,30 @@ function Init(evt) {
                     + '<tbody style="text-align:center;"><tr><td>x</td><td>' + info[i].OriginCenter.split(",")[0] + '</td><td>' + info[i].PlanCenter.split(",")[0] + '</td><td>' + info[i].Movement.split(",")[0] + '</td><td>' + info[i].Result.split(",")[0] + '</td><td>' + info[i].Distance.split(",")[0] + '</td></tr>'
                     + '<tr><td>y</td><td>' + info[i].OriginCenter.split(",")[1] + '</td><td>' + info[i].PlanCenter.split(",")[1] + '</td><td>' + info[i].Movement.split(",")[1] + '</td><td>' + info[i].Result.split(",")[1] + '</td><td>' + info[i].Distance.split(",")[1] + '</td></tr>'
                     + '<tr><td>z</td><td>' + info[i].OriginCenter.split(",")[2] + '</td><td>' + info[i].PlanCenter.split(",")[2] + '</td><td>' + info[i].Movement.split(",")[2] + '</td><td>' + info[i].Result.split(",")[2] + '</td><td>' + info[i].Distance.split(",")[2] + '</td></tr></tbody></table></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">参考DRR：</span></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-8"><span class="col-xs-2" style="padding-left:0px;">参考DRR：</span></div></div>';
                 var pictures = info[i].ReferenceDRRPicture.split(",");
                 if (info[i].ReferenceDRRPicture == "") {
                     content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes">无</div></div></div></div>';
                 } else {
+                    content = content + '<div class="single-row"><div class="item col-xs-12">';
                     for (var k = 1; k < pictures.length; k++) {
-                        content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img style="display:block"  src="' + pictures[k] + '" class="img"/></div></div></div></div></div>';
+                        content = content + '<div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img  class="img"  src="' + pictures[k] + '" style="display:block" /></div></div></div>';
                     }
+                    content = content + "</div></div>";
                 }
                 content = content + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">验证图像：</span></div></div>';
                 var pictures1 = info[i].VerificationPicture.split(",");
                 if (info[i].VerificationPicture == "") {
                     content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes">无</div></div></div></div>';
                 } else {
+                    content = content + '<div class="single-row"><div class="item col-xs-12">';
                     for (var k = 1; k < pictures1.length; k++) {
-                        content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img style="display:block"  src="' + pictures1[k] + '" class="img"/></div></div></div></div></div>';
+                        content = content + '<div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img class="img"  src="' + pictures1[k] + '" style="display:block" /></div></div></div>';
                     }
+                    content = content + "</div></div>";
+
                 }
-                content = content + '<div class="single-row"><div class="item area-group col-xs-8"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';
+                content = content + '<div class="single-row"><div class="item area-group col-xs-8"><span class="col-xs-2" style="padding-left:0px;">备注：</span><span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button"  id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
                 $("#tab-content").find("img").each(function () {
@@ -230,12 +240,13 @@ function Init(evt) {
         $(this).bind("click", function () {
             var m = this.id;
             var ReplacementRecord = document.getElementById("ReplacementRecord")
-            for (var k = 0; k < 3; k++) {
-                ReplacementRecord.rows[k + 1].cells[1].innerHTML = info[m].OriginCenter.split(",")[k];
-                ReplacementRecord.rows[k + 1].cells[2].innerHTML = info[m].PlanCenter.split(",")[k];
-                ReplacementRecord.rows[k + 1].cells[3].innerHTML = info[m].Movement.split(",")[k];
-                ReplacementRecord.rows[k + 1].cells[4].innerHTML = info[m].Result.split(",")[k];
-                ReplacementRecord.rows[k + 1].cells[5].innerHTML = info[m].Distance.split(",")[k];
+            for (var k = 1; k < 4; k++) {
+                alert(m);
+                document.getElementById("OriginCenter"+k).value = info[m].OriginCenter.split(",")[k-1];
+                document.getElementById("PlanCenter" + k).value = info[m].PlanCenter.split(",")[k - 1];
+                document.getElementById("Movement" + k).value = info[m].Movement.split(",")[k - 1];
+                document.getElementById("Result" + k).value = info[m].Result.split(",")[k - 1];
+                document.getElementById("distance" + k).value = info[m].Distance.split(",")[k - 1];
             }
             document.getElementById("Remarks").value = info[m].Remarks;
 
