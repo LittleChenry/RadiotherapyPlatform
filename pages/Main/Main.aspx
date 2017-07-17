@@ -333,7 +333,15 @@
                 <li><a href="#">Something else here</a></li>
                 </ul>
             </div>
-            <button id="save" class="btn btn-success" disabled="disabled"><i class="fa fa-fw fa-save"></i>保存</button>
+            <div class="btn-group">
+                <button id="save" type="button" class="btn btn-success" data-toggle="dropdown" disabled="disabled"><i class="fa fa-fw fa-save"></i>保存</button>
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" style="min-width:100px;">
+                <li><a href="#">另存模板</a></li>
+                </ul>
+            </div>
             <button id="printIframe" class="btn btn-success"><i class="fa fa-fw fa-print"></i>打印</button>
             </div>
         </nav>

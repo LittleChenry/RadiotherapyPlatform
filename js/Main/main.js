@@ -330,7 +330,7 @@ function Paging(patient,role){
 
 function trAddClick(patient){
     for (var i = 0; i < patient.PatientInfo.length; i++) {
-        $("#" + patient.PatientInfo[i].treatID + "").click({ Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+        $("#" + patient.PatientInfo[i].treatID + "").click({ appointid:patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
             checkAddTreatment(e.data.Radiotherapy_ID);
             //$("#addTreatment").removeAttr("disabled");
@@ -589,7 +589,7 @@ function trAddClick(patient){
                         break;
                     case 15:
                         if (LightLi(this,Progresses, "15", "14", "-1")) {
-                            var url = "Records/TreatmentRecord.aspx?TreatmentID=" + e.data.ID;
+                            var url = "Records/TreatmentRecord.aspx?TreatmentID=" + e.data.ID +"&appointid=" + e.data.appointid;
                         }else{
                             var url = "Records/Blank.aspx";
                         }
