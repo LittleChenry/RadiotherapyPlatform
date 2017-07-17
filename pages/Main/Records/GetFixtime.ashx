@@ -33,8 +33,12 @@ public class GetFixtime : IHttpHandler {
     private string getfixtime(HttpContext context)
     {
         String treatid=context.Request.QueryString["treatid"];
-        string sqlCommand = "select Date,Begin,End from Appointment where Treatment_ID=@treatid and Task='体位固定'";
-        sqlOperation.AddParameterWithValue("@treatid",Convert.ToInt32(treatid));
+        string command = "select fixed.Appointment_ID as appoint from treatment,fixed where treatment.ID=@treatid and treatment.Fixed_ID=fixed.ID ";
+        sqlOperation.AddParameterWithValue("@treatid", Convert.ToInt32(treatid));
+        int appoint = int.Parse(sqlOperation.ExecuteScalar(command));
+       
+        string sqlCommand = "select Date,Begin,End from Appointment where ID=@appoint";
+        sqlOperation.AddParameterWithValue("@appoint", appoint);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"fixtime\":[");
         if(reader.Read())
