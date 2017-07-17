@@ -70,7 +70,7 @@ function Init(evt) {
                         '<div class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">危及器官限量：</span></div></div>'+
                         '<div class="single-row"><div class="item area-group col-xs-12"><table id="Dosage'+ i + '" class="table table-bordered">'+
                         '<thead><tr><th>危及器官</th><th>剂量</th><th>限制</th><th>体积</th><th>外放</th><th>PRV</th><th>剂量</th><th>限制</th><th>体积</th><th>优先级</th>'+
-                        '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-6">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
+                        '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-4">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
                         '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
@@ -96,7 +96,7 @@ function Init(evt) {
                         '<div class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">危及器官限量：</span></div></div>' +
                         '<div class="single-row"><div class="item area-group col-xs-12"><table id="Dosage' + i + '" class="table table-bordered">' +
                         '<thead><tr><th>危及器官</th><th>剂量</th><th>限制</th><th>体积</th><th>外放</th><th>PRV</th><th>剂量</th><th>限制</th><th>体积</th><th>优先级</th>' +
-                        '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-6">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
+                        '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-4">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
                         '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';                       
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);

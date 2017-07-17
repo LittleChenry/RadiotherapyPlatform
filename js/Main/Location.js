@@ -96,15 +96,16 @@ function Init(evt) {
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">定位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
                 if (locationInfo[i].CTPictures == "") {
-                    content += '无</div><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
+                    content += '无</div></div></div>';
                 } else {
                     for (var j = 1; j < pictures.length; j++) {
                         content = content + '<div class="boxes"><div class="imgnum">'
                                 + '<span class="closecamera closearea"><i class="fa fa-times"></i></span>'
                                 + '<img src="' + pictures[j] + '" class="img" style="display:block;"/></div></div>';
                     }
-                    content += '</div><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
+                    content += '</div></div></div>';
                 }
+                content = content + '<div class="single-row"><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
                 $("#tab-content").find("img").each(function () {
@@ -130,15 +131,16 @@ function Init(evt) {
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">定位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
                 if (locationInfo[i].CTPictures == "") {
-                    content += '无</div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div></div>';
+                    content += '无</div></div></div>';
                 } else {
                     for (var j = 1; j < pictures.length; j++) {
                         content = content + '<div class="boxes"><div class="imgnum">'
                                 + '<span class="closecamera closearea"><i class="fa fa-times"></i></span>'
                                 + '<img src="' + pictures[j] + '" class="img" style="display:block;"/></div></div>';
                     }
-                    content += '</div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div></div>';
+                    content += '</div></div></div>';
                 }
+                content = content + '<div class="single-row"><div class="item col-xs-4"><button class="btn btn-success" type="button"  id="' + i + '">载入历史信息</button></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
                 $("#tab-content").find("img").each(function () {
