@@ -71,6 +71,27 @@ function RolesToPatients(){
                 var equipmentName = $("#equipment option:selected").html();
                 var startdate = $("#startdate").val();
                 var enddate = $("#enddate").val();
+                var currentTime = new Date().Format("yyyy-MM-dd");
+                if (!equipmentID) {
+                    alert("设备不能为空！");
+                    return false;
+                }
+                if (!startdate) {
+                    alert("开始日期不能为空！");
+                    return false;
+                }
+                if (!enddate) {
+                    alert("结束日期不能为空！");
+                    return false;
+                }
+                if (startdate < enddate) {
+                    alert("结束日期不能小于开始日期！");
+                    return false;
+                }
+                if (startdate > currentTime) {
+                    alert("开始日期不能小于当天日期！");
+                    return false;
+                }
                 $("#chosenEquipment").html(equipmentName);
                 $("#dateRange").html(startdate + "~~" + enddate);
                 var parameters = new Array();
@@ -1427,7 +1448,17 @@ function getPatient(userID,role,parameters){
 
 function chooseEquipment(){
     $("#chooseMachine").modal({backdrop: 'static'});
-    
+    var session = getSession();
+    switch(session.role){
+        case "模拟技师":
+            var options = '<option value="">----选择项目----</option><option value="体位固定">体位固定</option><option value="模拟定位">CT模拟</option>';
+            $("#equipmentType").append(options);
+            break;
+        case "治疗技师":
+            var options = '<option value="">----选择项目----</option><option value="加速器">加速器治疗</option>';
+            $("#equipmentType").append(options);
+            break;
+    }
     $.ajax({
         type: "GET",
         url: "../../pages/Main/Records/getEquipment.ashx",
@@ -1436,25 +1467,20 @@ function chooseEquipment(){
         success: function (data) {
             var Equipment = $.parseJSON(data);
             var options;
-            for (var i = 0; i < Equipment.EquipmentInfo.length; i++) {
-                options += '<option value="'+ Equipment.EquipmentInfo[i].equipmentID +'">'+ Equipment.EquipmentInfo[i].equipmentName +'</option>';
-            }
             $("#equipment").append(options);
             $("#equipmentType").change(function(){
-                if($("#equipmentType").val() == "all"){
-                    options ="";
-                    for (var i = 0; i < Equipment.EquipmentInfo.length; i++) {
-                        options += '<option value="'+ Equipment.EquipmentInfo[i].equipmentID +'">'+ Equipment.EquipmentInfo[i].equipmentName +'</option>';
-                    }
-                }else{
+                if($("#equipmentType").val() != ""){
                     options = "";
                     for (var i = 0; i < Equipment.EquipmentInfo.length; i++) {
                         if ($("#equipmentType").val() == Equipment.EquipmentInfo[i].TreatmentItem) {
                             options += '<option value="'+ Equipment.EquipmentInfo[i].equipmentID +'">'+ Equipment.EquipmentInfo[i].equipmentName +'</option>';
                         }
                     }
+                    $("#equipment").html("").append(options);
+                }else{
+                    $("#equipment").html("");
                 }
-                $("#equipment").html("").append(options);
+                
             });
         },
         error: function(){

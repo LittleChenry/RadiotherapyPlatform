@@ -431,12 +431,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <span>选择操作项目：</span>
-                        <select id="equipmentType" class="form-control">
-                            <option value="all">全部项目</option>
-                            <option value="体位固定">体位固定</option>
-                            <option value="模拟定位">CT模拟</option>
-                            <option value="加速器">加速器治疗</option>
-                        </select>
+                        <select id="equipmentType" class="form-control"></select>
                     </div>
                     <div class="form-group">
                         <span>选择设备：</span>
