@@ -161,7 +161,7 @@ function TransferMain() {
 function setSessionRole(name, des) {
     xmlHttp = new XMLHttpRequest();
     var url = "handlerSetRole.ashx?role=" + name + "&des=" + des;
-    xmlHttp.open("GET", url, true);
+    xmlHttp.open("GET", url, false);
     xmlHttp.send();
 }
 

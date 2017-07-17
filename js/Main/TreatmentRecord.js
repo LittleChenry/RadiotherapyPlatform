@@ -52,6 +52,7 @@ function Init(evt) {
 function AssistantLogin(){
   var session = getSession();
   if(session.assistant == ""){
+    alert("hi");
     $("#operatorModal").modal({backdrop: 'static'});
   }else{
     $("#operator").html(session.assistant);
@@ -96,11 +97,11 @@ function getSession(){
     var Session;
     $.ajax({
         type: "GET",
-        url: "../../pages/Main/Records/getSession.ashx",
+        url: "getSession.ashx",
         async: false,
         dateType: "text",
         success: function (data) {
-            //alert(data);
+            alert(data);
             Session = $.parseJSON(data);
         },
         error: function(){
