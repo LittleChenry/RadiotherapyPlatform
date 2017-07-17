@@ -60,7 +60,7 @@ public class getallcompletedtreat : IHttpHandler {
                 {
                     sex="女";
                 }
-                rigester = "姓名:" + reader4["Name"].ToString() + "。性别:" + sex + "。年龄:" + reader4["Age"].ToString() + "。民族:" + reader4["Nation"].ToString() + "。地址:" + reader4["Address"].ToString() + "。联系方式1:" + reader4["Contact1"].ToString() + "。联系方式2:" + reader4["Contact2"].ToString() + "。身高:" + reader4["Height"].ToString() + "。体重:" + reader4["Weight"].ToString() + "。所属医生:" + reader4["username"].ToString();
+                rigester = "姓名：" + reader4["Name"].ToString() + "。性别：" + sex + "。年龄：" + reader4["Age"].ToString() + "。所属医生：" + reader4["username"].ToString();
 
             }
             reader4.Close();
@@ -71,7 +71,7 @@ public class getallcompletedtreat : IHttpHandler {
                 MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(commandtemp);
                 if(reader1.Read())
                 {
-                    diagnosecomplete="患病部位："+reader1["partname"].ToString()+"。诊断结果:"+reader1["TumorName"].ToString()+reader1["des"].ToString()+"。诊断备注:"+reader1["Remarks"].ToString(); 
+                    diagnosecomplete = "患病部位：" + reader1["partname"].ToString() + "。诊断结果：" + reader1["TumorName"].ToString() + reader1["des"].ToString() + "。诊断备注：" + reader1["Remarks"].ToString(); 
                 }
                 reader1.Close();
             }
@@ -93,7 +93,7 @@ public class getallcompletedtreat : IHttpHandler {
                      MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(commandtemp);
                     if(reader1.Read())
                    {
-                       fixcomplete = "模具：" + reader1["mname"].ToString() + "。特殊要求:" + reader1["requirements"].ToString() + "。固定装置:" + reader1["fename"].ToString() + "。体位:" + reader1["BodyPosition"].ToString() + "。备注:" + reader1["remark"].ToString(); 
+                       fixcomplete = "模具：" + reader1["mname"].ToString() + "。特殊要求：" + reader1["requirements"].ToString() + "。固定装置：" + reader1["fename"].ToString() + "。体位：" + reader1["BodyPosition"].ToString() + "。备注：" + reader1["remark"].ToString(); 
                   }
                    reader1.Close(); 
                 }
@@ -132,7 +132,7 @@ public class getallcompletedtreat : IHttpHandler {
                             enmethod = sqlOperation2.ExecuteScalar(sqlCommand5);
 
                        }
-                        locationcomplete = "扫描部位：" + reader1["partname"].ToString() + "。扫描方式:" + reader1["scanmethod"].ToString() + "。特殊要求:" + reader1["locationrequire"].ToString() + "。扫描上界:" + reader1["UpperBound"].ToString() + "。扫描下界:" + reader1["LowerBound"].ToString() + "。是否增强:" + zengqiang + "。增强方式:" + enmethod + "。定位备注:" + reader1["remarklocate"].ToString() + "。层厚:" + reader1["Thick"].ToString() + "。层数:" + reader1["num"].ToString() + "。参考中心层面:" + reader1["refer1"].ToString() + "。体表参考刻度:" + reader1["refer2"].ToString() + "。CT密度转换方式:" + reader1["ctseq"].ToString() + "。CT序列命名:" + reader1["ctseq"].ToString() + "。CT多模态图像:" + reader1["ctmul"].ToString() + "。CT备注:" + reader1["ctremarks"].ToString(); 
+                        locationcomplete = "扫描部位：" + reader1["partname"].ToString() + "。扫描方式：" + reader1["scanmethod"].ToString() + "。特殊要求：" + reader1["locationrequire"].ToString() + "。扫描上界：" + reader1["UpperBound"].ToString() + "。扫描下界：" + reader1["LowerBound"].ToString() + "。是否增强：" + zengqiang + "。增强方式：" + enmethod + "。定位备注：" + reader1["remarklocate"].ToString() + "。层厚：" + reader1["Thick"].ToString() + "。层数：" + reader1["num"].ToString() + "。参考中心层面：" + reader1["refer1"].ToString() + "。体表参考刻度：" + reader1["refer2"].ToString() + "。CT密度转换方式：" + reader1["ctseq"].ToString() + "。CT序列命名：" + reader1["ctseq"].ToString() + "。CT多模态图像：" + reader1["ctmul"].ToString() + "。CT备注：" + reader1["ctremarks"].ToString(); 
                   }
                    reader1.Close();     
                 }
@@ -158,9 +158,9 @@ public class getallcompletedtreat : IHttpHandler {
                        string Do = reader1["DosagePriority"].ToString();
                        string Priority = Do.Split(new char[1] { '&' })[0];
                        string Dosage = Do.Split(new char[1] { '&' })[1];
-                        designcomplete ="特殊情况放疗史:" +reader1["RadiotherapyHistory"].ToString()+"。靶区处方剂量:" +Priority+"。危及器官限量:" +Dosage+"。治疗技术:" +reader1["tename"].ToString()+"。放疗设备:" +reader1["eqname"].ToString() 
-                            +"。计划系统:" +reader1["planname"].ToString()+"。射野数量:" +reader1["IlluminatedNumber"].ToString()+"。非共面照射:" +reader1["Coplanar"].ToString()+"。机器跳数:" +reader1["MachineNumbe"].ToString()+"。控制点数量:" +reader1["ControlPoint"].ToString()+"。计算网络:" +reader1["gridname"].ToString()              
-                            +"。优化算法:" +reader1["alname"].ToString()+"。计划可执行度:" +reader1["Feasibility"].ToString();
+                        designcomplete ="特殊情况放疗史：" +reader1["RadiotherapyHistory"].ToString()+"。靶区处方剂量：" +Priority+"。危及器官限量：" +Dosage+"。治疗技术：" +reader1["tename"].ToString()+"。放疗设备：" +reader1["eqname"].ToString() 
+                            +"。计划系统：" +reader1["planname"].ToString()+"。射野数量：" +reader1["IlluminatedNumber"].ToString()+"。非共面照射：" +reader1["Coplanar"].ToString()+"。机器跳数：" +reader1["MachineNumbe"].ToString()+"。控制点数量：" +reader1["ControlPoint"].ToString()+"。计算网络：" +reader1["gridname"].ToString()              
+                            +"。优化算法：" +reader1["alname"].ToString()+"。计划可执行度：" +reader1["Feasibility"].ToString();
                     
                   } 
                     reader1.Close(); 
@@ -184,8 +184,8 @@ public class getallcompletedtreat : IHttpHandler {
                     if (reader1.Read())
                     {
                        
-                        replacecomplete ="复位要求:" +reader1["replacerequire"].ToString()+"。原始中心:" +reader1["OriginCenter"].ToString() 
-                            +"。计划中心:" +reader1["PlanCenter"].ToString()+"。移床参数:" +reader1["Movement"].ToString()+"。复位结果:" +reader1["Result"].ToString()+"。复位差值:" +reader1["Distance"].ToString();
+                        replacecomplete ="复位要求：" +reader1["replacerequire"].ToString()+"。原始中心：" +reader1["OriginCenter"].ToString() 
+                            +"。计划中心：" +reader1["PlanCenter"].ToString()+"。移床参数：" +reader1["Movement"].ToString()+"。复位结果：" +reader1["Result"].ToString()+"。复位差值：" +reader1["Distance"].ToString();
               
                   } 
                     reader1.Close(); 

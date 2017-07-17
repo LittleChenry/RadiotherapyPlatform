@@ -38,7 +38,7 @@ $(document).ready(function () {
     $("#saveTreatment").bind("click",function(){
         saveTreatment();
     });
-    $("#saveTemplate-button").bind("click",function(){
+    $("#saveTemplate-button").unbind("click").bind("click",function(){
         Template();
     });
     $("#printIframe").bind("click", function () {
@@ -813,6 +813,7 @@ function saveTreatment(){
     var review = "";
     var group = "";
     var Radiotherapy_ID = $("#Radiotherapy_ID").val();
+    var Treatmentdescribe = $("#newname").val();
     $("#diagnose").find("td").each(function(){
         if ($(this).find("i")[0].className != "") {
             var temp = $(this).attr("id").split("_");
@@ -860,6 +861,7 @@ function saveTreatment(){
             design:design,
             replace:replace,
             treatmentname:treatmentname,
+            Treatmentdescribe:Treatmentdescribe,
             review:review,
             group: group,
             Radiotherapy_ID:Radiotherapy_ID
@@ -883,7 +885,7 @@ function checkAddTreatment(Radiotherapy_ID){
         if(functions[i].toString() == "18"){
             $("#manageTreatment").removeAttr("disabled");
             $("#Radiotherapy_ID").val(Radiotherapy_ID);
-            $("#addTreatment").click({Radiotherapy_ID:Radiotherapy_ID},function(e){
+            $("#addTreatment").unbind("click").click({Radiotherapy_ID:Radiotherapy_ID},function(e){
                 $.ajax({
                     type: "POST",
                     url: "../../pages/Main/Records/getallcompletedtreat.ashx",
@@ -904,12 +906,12 @@ function checkAddTreatment(Radiotherapy_ID){
                         var newTreatname = obj.treatinfo.length + 1;
                         $("#newname").val("疗程" + newTreatname);
                         for (var i = 0; i < obj.treatinfo.length; i++) {
-                            var th = '<th>疗程'+ obj.treatinfo[i].treatmentname +'</th>';
+                            var th = '<th>疗程'+ obj.treatinfo[i].Treatmentdescribe +'</th>';
                             $("#progress").append(th);
 
                             var td0 = '<td id="register_'+ i +'"><i></i></td>';
                             $("#register").append(td0);
-                            $("#register_"+i).click(function(){
+                            $("#register_"+i).click({i:i},function(e){
                                 if ($(this).find("i")[0].className != "") {
                                     $(this).find("i").removeClass();
                                     $(this).parent().nextAll().each(function(){
@@ -917,6 +919,12 @@ function checkAddTreatment(Radiotherapy_ID){
                                             $(this).find("i").removeClass();
                                         });
                                     });
+                                    $("#registerDetail").html("未选择");
+                                    $("#diagnoseDetail").html("未选择");
+                                    $("#fixedDetail").html("未选择");
+                                    $("#locationDetail").html("未选择");
+                                    $("#designDetail").html("未选择");
+                                    $("#replaceDetail").html("未选择");
                                 }else{
                                     var currentrowselected = 0;
                                     $(this).parent().find("td").each(function(){
@@ -926,6 +934,12 @@ function checkAddTreatment(Radiotherapy_ID){
                                     });
                                     if (currentrowselected == 0) {
                                         $(this).find("i").addClass("fa fa-fw fa-check");
+                                        $("#registerDetail").html("");
+                                        var details = obj.treatinfo[e.data.i].rigester.split("。");
+                                        for (var i = 0; i < details.length; i++) {
+                                            var p = '<p>'+ details[i] +'</p>';
+                                            $("#registerDetail").append(p);
+                                        }
                                     }else{
                                         alert("每一行只能选择一个模块复用！");
                                     }
@@ -935,7 +949,7 @@ function checkAddTreatment(Radiotherapy_ID){
                             if (obj.treatinfo[i].diagnose != "") {
                                 var td1 = '<td id="diagnose_'+ obj.treatinfo[i].diagnose +'_' + obj.treatinfo[i].group + '_' + i +'"><i></i></td>';
                                 $("#diagnose").append(td1);
-                                $("#diagnose_"+ obj.treatinfo[i].diagnose + "_" + obj.treatinfo[i].group + "_" + i).click(function(){
+                                $("#diagnose_"+ obj.treatinfo[i].diagnose + "_" + obj.treatinfo[i].group + "_" + i).click({i:i},function(e){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
                                         $(this).parent().nextAll().each(function(){
@@ -943,6 +957,11 @@ function checkAddTreatment(Radiotherapy_ID){
                                                 $(this).find("i").removeClass();
                                             });
                                         });
+                                        $("#diagnoseDetail").html("未选择");
+                                        $("#fixedDetail").html("未选择");
+                                        $("#locationDetail").html("未选择");
+                                        $("#designDetail").html("未选择");
+                                        $("#replaceDetail").html("未选择");
                                     }else{
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
@@ -959,6 +978,12 @@ function checkAddTreatment(Radiotherapy_ID){
                                         if (currentrowselected == 0) {
                                             if (prerowselected == 1) {
                                                 $(this).find("i").addClass("fa fa-fw fa-check");
+                                                $("#diagnoseDetail").html("");
+                                                var details = obj.treatinfo[e.data.i].diagnosecomplete.split("。");
+                                                for (var i = 0; i < details.length; i++) {
+                                                    var p = '<p>'+ details[i] +'</p>';
+                                                    $("#diagnoseDetail").append(p);
+                                                }
                                             }else{
                                                 alert("上一行还未选择复用模块！");
                                             }
@@ -975,7 +1000,7 @@ function checkAddTreatment(Radiotherapy_ID){
                             if (obj.treatinfo[i].fixed != "") {
                                 var td2 = '<td id="fixed_'+ obj.treatinfo[i].fixed +'_' + i +'"><i></i></td>';
                                 $("#fixed").append(td2);
-                                $("#fixed_"+ obj.treatinfo[i].fixed + "_" + i).click(function(){
+                                $("#fixed_"+ obj.treatinfo[i].fixed + "_" + i).click({i:i},function(e){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
                                         $(this).parent().nextAll().each(function(){
@@ -983,6 +1008,10 @@ function checkAddTreatment(Radiotherapy_ID){
                                                 $(this).find("i").removeClass();
                                             });
                                         });
+                                        $("#fixedDetail").html("未选择");
+                                        $("#locationDetail").html("未选择");
+                                        $("#designDetail").html("未选择");
+                                        $("#replaceDetail").html("未选择");
                                     }else{
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
@@ -999,6 +1028,12 @@ function checkAddTreatment(Radiotherapy_ID){
                                         if (currentrowselected == 0) {
                                             if (prerowselected == 1) {
                                                 $(this).find("i").addClass("fa fa-fw fa-check");
+                                                $("#fixedDetail").html("");
+                                                var details = obj.treatinfo[e.data.i].fixcomplete.split("。");
+                                                for (var i = 0; i < details.length; i++) {
+                                                    var p = '<p>'+ details[i] +'</p>';
+                                                    $("#fixedDetail").append(p);
+                                                }
                                             }else{
                                                 alert("上一行还未选择复用模块！");
                                             }
@@ -1015,7 +1050,7 @@ function checkAddTreatment(Radiotherapy_ID){
                             if (obj.treatinfo[i].location != "") {
                                 var td3 = '<td id="location_'+ obj.treatinfo[i].location +'_' + i +'"><i></i></td>';
                                 $("#location").append(td3);
-                                $("#location_"+ obj.treatinfo[i].location + "_" + i).click(function(){
+                                $("#location_"+ obj.treatinfo[i].location + "_" + i).click({i:i},function(e){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
                                         $(this).parent().nextAll().each(function(){
@@ -1023,6 +1058,9 @@ function checkAddTreatment(Radiotherapy_ID){
                                                 $(this).find("i").removeClass();
                                             });
                                         });
+                                        $("#locationDetail").html("未选择");
+                                        $("#designDetail").html("未选择");
+                                        $("#replaceDetail").html("未选择");
                                     }else{
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
@@ -1039,6 +1077,12 @@ function checkAddTreatment(Radiotherapy_ID){
                                         if (currentrowselected == 0) {
                                             if (prerowselected == 1) {
                                                 $(this).find("i").addClass("fa fa-fw fa-check");
+                                                $("#locationDetail").html("");
+                                                var details = obj.treatinfo[e.data.i].locationcomplete.split("。");
+                                                for (var i = 0; i < details.length; i++) {
+                                                    var p = '<p>'+ details[i] +'</p>';
+                                                    $("#locationDetail").append(p);
+                                                }
                                             }else{
                                                 alert("上一行还未选择复用模块！");
                                             }
@@ -1055,7 +1099,7 @@ function checkAddTreatment(Radiotherapy_ID){
                             if (obj.treatinfo[i].design != "") {
                                 var td4 = '<td id="design_'+ obj.treatinfo[i].design + '_' + obj.treatinfo[i].review + '_' + i +'"><i></i></td>';
                                 $("#design").append(td4);
-                                $("#design_"+ obj.treatinfo[i].design + "_" + obj.treatinfo[i].review + "_" + i).click(function(){
+                                $("#design_"+ obj.treatinfo[i].design + "_" + obj.treatinfo[i].review + "_" + i).click({i:i},function(e){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
                                         $(this).parent().nextAll().each(function(){
@@ -1063,6 +1107,8 @@ function checkAddTreatment(Radiotherapy_ID){
                                                 $(this).find("i").removeClass();
                                             });
                                         });
+                                        $("#designDetail").html("未选择");
+                                        $("#replaceDetail").html("未选择");
                                     }else{
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
@@ -1079,6 +1125,12 @@ function checkAddTreatment(Radiotherapy_ID){
                                         if (currentrowselected == 0) {
                                             if (prerowselected == 1) {
                                                 $(this).find("i").addClass("fa fa-fw fa-check");
+                                                $("#designDetail").html("");
+                                                var details = obj.treatinfo[e.data.i].designcomplete.split("。");
+                                                for (var i = 0; i < details.length; i++) {
+                                                    var p = '<p>'+ details[i] +'</p>';
+                                                    $("#designDetail").append(p);
+                                                }
                                             }else{
                                                 alert("上一行还未选择复用模块！");
                                             }
@@ -1095,9 +1147,10 @@ function checkAddTreatment(Radiotherapy_ID){
                             if (obj.treatinfo[i].replace != "") {
                                 var td5 = '<td id="replace_'+ obj.treatinfo[i].replace +'_' + i +'"><i></i></td>';
                                 $("#replace").append(td5);
-                                $("#replace_"+ obj.treatinfo[i].replace + "_" + i).click(function(){
+                                $("#replace_"+ obj.treatinfo[i].replace + "_" + i).click({i:i},function(e){
                                     if ($(this).find("i")[0].className != "") {
                                         $(this).find("i").removeClass();
+                                        $("#replaceDetail").html("未选择");
                                     }else{
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
@@ -1114,6 +1167,12 @@ function checkAddTreatment(Radiotherapy_ID){
                                         if (currentrowselected == 0) {
                                             if (prerowselected == 1) {
                                                 $(this).find("i").addClass("fa fa-fw fa-check");
+                                                $("#replaceDetail").html("");
+                                                var details = obj.treatinfo[e.data.i].replacecomplete.split("。");
+                                                for (var i = 0; i < details.length; i++) {
+                                                    var p = '<p>'+ details[i] +'</p>';
+                                                    $("#replaceDetail").append(p);
+                                                }
                                             }else{
                                                 alert("上一行还未选择复用模块！");
                                             }
@@ -1124,7 +1183,7 @@ function checkAddTreatment(Radiotherapy_ID){
                                 });
                             }else{
                                 var td5 = '<td style="background-color:#E1E4E6"><i></i></td>';
-                                $("#replace").append(td4);
+                                $("#replace").append(td5);
                             }
                         }
                     },
