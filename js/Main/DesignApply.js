@@ -692,7 +692,40 @@ function save() {
         }
     });
 }
-
+function saveTemplate(TemplateName) {
+    if (document.getElementById("technology").value == "allItem") {
+        window.alert("治疗技术没有选择");
+        return;
+    }
+    if (document.getElementById("equipment").value == "allItem") {
+        window.alert("放疗设备没有选择");
+        return;
+    }
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
+    alert(TemplateName);
+    var form = new FormData(document.getElementById("savedesign"));
+    $.ajax({
+        url: "designApplytemplate.ashx?templatename=" + TemplateName,
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("模板保存成功");
+            window.location.reload();
+        },
+        error: function (e) {
+            window.location.href = "Error.aspx";
+        },
+        failure: function (e) {
+            window.location.href = "Error.aspx";
+        }
+    });
+}
 
 function sex(evt) {
     if (evt == "F")
