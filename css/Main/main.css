@@ -126,6 +126,6 @@
 }
 
 .scroll-content {
-	overflow-x:auto;
+	overflow-x:scroll;
 	border-bottom:1px solid #c1c1c1;
 }

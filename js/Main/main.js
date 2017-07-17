@@ -24,10 +24,15 @@ $(document).ready(function () {
         RolesToPatients(session);
         Recover();
         $('#save').attr("disabled","disabled");
+        $('#saveTemplate-list').attr("disabled","disabled");
     });
     $('#edit').click(function(){
         $("#record-iframe")[0].contentWindow.remove();
         $("#save").removeAttr("disabled");
+        $("#saveTemplate-list").removeAttr("disabled");
+        $("#chooseTemplate").removeAttr("disabled");
+        $("#Template-List").removeAttr("disabled");
+        $("#printIframe").removeAttr("disabled");
         $('#edit').attr("disabled","disabled");
     });
     $("#saveTreatment").bind("click",function(){
@@ -38,6 +43,15 @@ $(document).ready(function () {
     });
     $("#printIframe").bind("click", function () {
         $("#record-iframe")[0].contentWindow.print();
+    });
+    $("#changeOperator").bind("click",function(){
+        $("#record-iframe")[0].contentWindow.AssistantLogin();
+    });
+    $("#changeEquipment").bind("click",function(){
+        chooseEquipment();
+    });
+    $("#changeDate").bind("click",function(){
+        chooseEquipment();
     });
     
 })
@@ -106,7 +120,7 @@ function Paging(patient,role){
         switch(role){
             case "医师":
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
-                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
@@ -129,7 +143,7 @@ function Paging(patient,role){
                 break;
             case "剂量师":
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
-                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
@@ -152,7 +166,7 @@ function Paging(patient,role){
                 break;
             case "物理师":
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
-                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
@@ -175,7 +189,7 @@ function Paging(patient,role){
                 break;
             case "模拟技师":
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, date, begin, end, Completed, doctor;
-                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>预约时间</th><th>是否完成</th><th>疗程</th><th>诊断结果</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>预约时间</th><th>是否完成</th><th>疗程</th><th>诊断结果</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
@@ -219,7 +233,7 @@ function Paging(patient,role){
                 break;
             case "治疗技师":
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, date, begin, end, Completed, doctor, finishedtimes, totalnumber, totaltimes;
-                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>预约时间</th><th>是否完成</th><th>完成次数</th><th>累次剂量</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>预约时间</th><th>是否完成</th><th>完成次数</th><th>累次剂量</th>'
                     + '<th>总次数</th><th>疗程</th><th>诊断结果</th><th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
@@ -250,7 +264,7 @@ function Paging(patient,role){
                 break;
             case "科主任":
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
-                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
@@ -279,42 +293,42 @@ function Paging(patient,role){
         table.html("");
         switch(role){
             case "医师":
-                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "剂量师":
-                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="6" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "物理师":
-                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="6" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "模拟技师":
-                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>预约时间</th><th>是否完成</th><th>疗程</th><th>诊断结果</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>预约时间</th><th>是否完成</th><th>疗程</th><th>诊断结果</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="6" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "治疗技师":
-                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>预约时间</th><th>是否完成</th><th>完成次数</th><th>累次剂量</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>预约时间</th><th>是否完成</th><th>完成次数</th><th>累次剂量</th>'
                     + '<th>总次数</th><th>疗程</th><th>诊断结果</th><th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="9" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "科主任":
-                var thead = '<thead><tr><th>放疗号</th><th>姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
@@ -336,6 +350,7 @@ function trAddClick(patient){
         $("#" + patient.PatientInfo[i].treatID + "").click({ appointid:patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
             checkAddTreatment(e.data.Radiotherapy_ID);
+            OperateAttrDisabled();
             //$("#addTreatment").removeAttr("disabled");
             var ul = $("#progress-iframe").contents().find("#ul-progress a");
             ul.each(function (index, element) {
@@ -1118,6 +1133,10 @@ function checkAddTreatment(Radiotherapy_ID){
 function checkEdit(str){
     $('#edit').attr("disabled","disabled");
     $('#save').attr("disabled","disabled");
+    $('#saveTemplate-list').attr("disabled","disabled");
+    $("#chooseTemplate").attr("disabled","disabled");
+    $("#Template-List").attr("disabled","disabled");
+    $("#printIframe").attr("disabled","disabled");
     var activeProgress = getProgressActive();
     for (var i = 0; i < functions.length; i++) {
         if (functions[i] == str) {
@@ -1394,4 +1413,13 @@ function toTime(minute) {
     var hour = parseInt(parseInt(minute) / 60);
     var min = parseInt(minute) - hour * 60;
     return hour.toString() + ":" + (min < 10 ? "0" : "") + min.toString();
+}
+
+function OperateAttrDisabled(){
+    $("#save").attr("disabled","disabled");
+    $("#saveTemplate-list").attr("disabled","disabled");
+    $("#chooseTemplate").attr("disabled","disabled");
+    $("#Template-List").attr("disabled","disabled");
+    $("#printIframe").attr("disabled","disabled");
+    $('#edit').attr("disabled","disabled");
 }

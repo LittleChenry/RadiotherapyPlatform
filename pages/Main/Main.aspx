@@ -306,9 +306,9 @@
                     <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu" style="min-width:112px;">
-                        <li><a id="addTreatment" href="javascript:;" data-toggle="modal" data-target="#myModal">新增疗程</a></li>
-                        <li><a href="javascript:;">暂停疗程</a></li>
-                        <li><a href="javascript:;">结束疗程</a></li>
+                        <li><a id="addTreatment" data-toggle="modal" data-target="#myModal">新增疗程</a></li>
+                        <li><a id="pauseTreatment">暂停疗程</a></li>
+                        <li><a id="stopTreatment">结束疗程</a></li>
                     </ul>
                 </div>
             </div>
@@ -323,22 +323,22 @@
             <div>
             <button id="edit" class="btn btn-success" disabled="disabled"><i class="fa fa-fw fa-edit"></i>编辑</button>
             <div class="btn-group">
-                <button type="button" class="btn btn-success" data-toggle="dropdown"><i class="fa fa-fw fa-send"></i>选择模板</button>
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                <button id="chooseTemplate" type="button" class="btn btn-success" data-toggle="dropdown" disabled="disabled"><i class="fa fa-fw fa-send"></i>选择模板</button>
+                <button id="Template-List" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" disabled="disabled">
                     <span class="caret"></span>
                 </button>
                 <ul id="templateList" class="dropdown-menu" role="menu"></ul>
             </div>
             <div class="btn-group">
                 <button id="save" type="button" class="btn btn-success" data-toggle="dropdown" disabled="disabled"><i class="fa fa-fw fa-save"></i>保存</button>
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                <button id="saveTemplate-list" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" disabled="disabled">
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu" style="min-width:100px;">
                     <li><a id="saveTemplate-button">另存模板</a></li>
                 </ul>
             </div>
-            <button id="printIframe" class="btn btn-success"><i class="fa fa-fw fa-print"></i>打印</button>
+            <button id="printIframe" class="btn btn-success" disabled="disabled"><i class="fa fa-fw fa-print"></i>打印</button>
             </div>
         </nav>
         </div>
