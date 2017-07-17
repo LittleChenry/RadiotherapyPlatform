@@ -87,12 +87,6 @@
 	float: left;
 }
 
-.close {
-	position: absolute;
-	margin-left: 7px;
-    margin-top: -4px;
-}
-
 .frame-content {
     padding: 0px;
     margin-top: auto;
