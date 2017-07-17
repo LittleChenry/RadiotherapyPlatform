@@ -193,6 +193,7 @@ function CheckEmpty() {
         data: form,
         processData: false,
         contentType: false,
+        async: false,
         success: function (data) {
             alert("注册成功");
             window.location.reload();

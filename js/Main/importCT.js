@@ -55,7 +55,7 @@ function Init(evt) {
                     + '<div class="item col-xs-6">层数：<span class="underline">' + info[i].Number + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + info[i].ReferenceScale + '</span></div>'
                     + '<div class="item col-xs-6">多模态图像：<span class="underline">' + info[i].MultimodalImage + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-8">备注：<span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-8">备注：<span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" disabled="disabled" type="button" id="' + i + '">载入历史信息</button></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
 
@@ -77,7 +77,7 @@ function Init(evt) {
                     + '<div class="item col-xs-6">层数：<span class="underline">' + info[i].Number + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + info[i].ReferenceScale + '</span></div>'
                     + '<div class="item col-xs-6">多模态图像：<span class="underline">' + info[i].MultimodalImage + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-8">备注：<span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" id="' + i + '">载入历史信息</button></div></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-8">备注：<span class="underline">' + info[i].Remarks + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
@@ -235,6 +235,7 @@ function save() {
         data: form,
         processData: false,
         contentType: false,
+        async: false,
         success: function (data) {
             alert("保存成功");
             window.location.reload();

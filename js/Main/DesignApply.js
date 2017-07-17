@@ -679,6 +679,7 @@ function save() {
         type: "post",
         data: form,
         processData: false,
+        async: false,
         contentType: false,
         success: function (data) {
             alert("保存成功");
@@ -705,18 +706,18 @@ function saveTemplate(TemplateName) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
-    }
-    alert(TemplateName);
+    }  
+    document.getElementById("templatename").value = TemplateName;
     var form = new FormData(document.getElementById("savedesign"));
     $.ajax({
-        url: "designApplytemplate.ashx?templatename=" + TemplateName,
+        url: "designApplytemplate.ashx",
         type: "post",
         data: form,
         processData: false,
         contentType: false,
+        async: false,
         success: function (data) {
-            alert("模板保存成功");
-            window.location.reload();
+            alert("模板保存成功");         
         },
         error: function (e) {
             window.location.href = "Error.aspx";

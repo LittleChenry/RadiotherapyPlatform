@@ -423,6 +423,7 @@ function save() {
         data: form,
         processData: false,
         contentType: false,
+        async: false,
         success: function (data) {
             alert("更新成功");
             window.location.reload();

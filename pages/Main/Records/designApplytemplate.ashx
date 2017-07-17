@@ -48,7 +48,7 @@ public class designApplytemplate : IHttpHandler {
             string date1 = datetime.ToString();
             string aa = context.Request.Form["aa"];
             string bb = context.Request.Form["bb"];
-            string name = context.Request.QueryString["templatename"];
+            string name = context.Request.Form["templatename"];
             /*
             string maxnumber = "select max(ID) from design";
             string count = sqlOperation1.ExecuteScalar(maxnumber);

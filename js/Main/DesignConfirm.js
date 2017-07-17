@@ -263,6 +263,7 @@ function save() {
         type: "post",
         data: form,
         processData: false,
+        async: false,
         contentType: false,
         success: function (data) {
             alert("保存成功");

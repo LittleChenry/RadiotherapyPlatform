@@ -311,6 +311,7 @@ function save() {
         data: form,
         processData: false,
         contentType: false,
+        async: false,
         success: function (data) {
             alert("保存成功");
             window.location.reload();

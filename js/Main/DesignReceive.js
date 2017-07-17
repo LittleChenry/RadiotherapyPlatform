@@ -33,9 +33,9 @@ function Init(evt) {
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '7')) {
-        var designre = getdesignre(treatID);       
+        var designre = getdesignre(treatID);
         document.getElementById("applyuser").innerHTML = userName;
-        document.getElementById("time").innerHTML = getNowFormatDate();      
+        document.getElementById("time").innerHTML = getNowFormatDate();
         document.getElementById("Remarks").innerHTML = designre.RadiotherapyHistory;
         readDosagePriority(designre.DosagePriority);
         readDosage(designre.Dosage);
@@ -46,10 +46,12 @@ function Init(evt) {
         document.getElementById("receive").addEventListener("click", function () {
             receiveDesign(treatID);
         }, false);
+        if (isInArray(progress, '8')) {
             document.getElementById("applyuser").innerHTML = designre.name;
             document.getElementById("time").innerHTML = designre.ReceiveTime;
             document.getElementById("receive").disabled = true;
         }
+    }
 }
 function isInArray(arr, value) {
     for (var i = 0; i < arr.length; i++) {
