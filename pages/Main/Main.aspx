@@ -363,43 +363,56 @@
                     <div class="pull-right" style="margin:10px;">默认数字编号，最多8个字。</div>
                     <table id="addTreatmentRecord" class="table table-bordered" ></table>
                     <input id="Radiotherapy_ID" type="text" hidden="hidden" />
-                    <label class="label-control">新疗程预览</label>
-                    <div class="row" style="padding-top:10px;">
-                        <div class="col-xs-3" style="text-align:center;">登记信息：</div>
-                        <div class="col-xs-9">
-                            <span id="registerDetail">未选择</span>
+                    <div class="panel box box-primary">
+                        <div class="box-header">
+                            <h4 class="box-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
+                                    新疗程预览
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false">
+                            <div class="box-body">
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-3" style="text-align:center;">登记信息：</div>
+                                    <div class="col-xs-9">
+                                        <span id="registerDetail">未选择</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-3" style="text-align:center;">病情诊断：</div>
+                                    <div class="col-xs-9">
+                                        <span id="diagnoseDetail">未选择</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-3" style="text-align:center;">体位固定：</div>
+                                    <div class="col-xs-9">
+                                        <span id="fixedDetail">未选择</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-3" style="text-align:center;">CT模拟：</div>
+                                    <div class="col-xs-9">
+                                        <span id="locationDetail">未选择</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-3" style="text-align:center;">计划设计：</div>
+                                    <div class="col-xs-9">
+                                        <span id="designDetail">未选择</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-3" style="text-align:center;">复位验证：</div>
+                                    <div class="col-xs-9">
+                                        <span id="replaceDetail">未选择</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row" style="padding-top:10px;">
-                        <div class="col-xs-3" style="text-align:center;">病情诊断：</div>
-                        <div class="col-xs-9">
-                            <span id="diagnoseDetail">未选择</span>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-top:10px;">
-                        <div class="col-xs-3" style="text-align:center;">体位固定：</div>
-                        <div class="col-xs-9">
-                            <span id="fixedDetail">未选择</span>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-top:10px;">
-                        <div class="col-xs-3" style="text-align:center;">CT模拟：</div>
-                        <div class="col-xs-9">
-                            <span id="locationDetail">未选择</span>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-top:10px;">
-                        <div class="col-xs-3" style="text-align:center;">计划设计：</div>
-                        <div class="col-xs-9">
-                            <span id="designDetail">未选择</span>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-top:10px;">
-                        <div class="col-xs-3" style="text-align:center;">复位验证：</div>
-                        <div class="col-xs-9">
-                            <span id="replaceDetail">未选择</span>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>

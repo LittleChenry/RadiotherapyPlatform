@@ -19,14 +19,14 @@ $(document).ready(function () {
         removeSession();//ajax 注销用户Session
         window.location.replace("../Login/Login.aspx");
     });
-    $("#save").click(function(){
+    $("#save").unbind("click").click(function(){
         $("#record-iframe")[0].contentWindow.save();
-        RolesToPatients(session);
+        RolesToPatients();
         Recover();
         $('#save').attr("disabled","disabled");
         $('#saveTemplate-list').attr("disabled","disabled");
     });
-    $('#edit').click(function(){
+    $('#edit').unbind("click").click(function(){
         $("#record-iframe")[0].contentWindow.remove();
         $("#save").removeAttr("disabled");
         $("#saveTemplate-list").removeAttr("disabled");
@@ -35,22 +35,22 @@ $(document).ready(function () {
         $("#printIframe").removeAttr("disabled");
         $('#edit').attr("disabled","disabled");
     });
-    $("#saveTreatment").bind("click",function(){
+    $("#saveTreatment").unbind("click").bind("click",function(){
         saveTreatment();
     });
     $("#saveTemplate-button").unbind("click").bind("click",function(){
         Template();
     });
-    $("#printIframe").bind("click", function () {
+    $("#printIframe").unbind("click").bind("click", function () {
         $("#record-iframe")[0].contentWindow.print();
     });
-    $("#changeOperator").bind("click",function(){
+    $("#changeOperator").unbind("click").bind("click",function(){
         $("#record-iframe")[0].contentWindow.tankuang();
     });
-    $("#changeEquipment").bind("click",function(){
+    $("#changeEquipment").unbind("click").bind("click",function(){
         chooseEquipment();
     });
-    $("#changeDate").bind("click",function(){
+    $("#changeDate").unbind("click").bind("click",function(){
         chooseEquipment();
     });
     
@@ -60,12 +60,13 @@ $(document).ready(function () {
     document.location.reload();
 }*/
 
-function RolesToPatients(session){
+function RolesToPatients(){
     var patient;
+    var session = getSession();
     if (session.role == "模拟技师" || session.role == "治疗技师") {
         if (session.equipmentID == "0") {
             chooseEquipment();
-            $("#getSelectedPatient").click(function(){
+            $("#getSelectedPatient").unbind("click").click(function(){
                 var equipmentID = $("#equipment").val();
                 var equipmentName = $("#equipment option:selected").html();
                 var startdate = $("#startdate").val();
@@ -80,6 +81,7 @@ function RolesToPatients(session){
                 Paging(patient,session.role);
                 $.ajax({
                     type: "POST",
+                    async: false,
                     url: "../../pages/Main/Records/setEquipment.ashx",
                     data:{
                         id : $("#equipment").val(),
@@ -886,6 +888,12 @@ function checkAddTreatment(Radiotherapy_ID){
             $("#manageTreatment").removeAttr("disabled");
             $("#Radiotherapy_ID").val(Radiotherapy_ID);
             $("#addTreatment").unbind("click").click({Radiotherapy_ID:Radiotherapy_ID},function(e){
+                $("#registerDetail").html("未选择");
+                $("#diagnoseDetail").html("未选择");
+                $("#fixedDetail").html("未选择");
+                $("#locationDetail").html("未选择");
+                $("#designDetail").html("未选择");
+                $("#replaceDetail").html("未选择");
                 $.ajax({
                     type: "POST",
                     url: "../../pages/Main/Records/getallcompletedtreat.ashx",
@@ -1221,7 +1229,7 @@ function checkEdit(str){
 
 function Template(){
     $("#Template").modal({backdrop: 'static'});
-    $("#saveTemplate").click(function(){
+    $("#saveTemplate").unbind("click").click(function(){
         var TemplateName = $("#templateName").val();
         $("#record-iframe")[0].contentWindow.saveTemplate(TemplateName);
     });
