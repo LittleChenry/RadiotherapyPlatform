@@ -3,10 +3,12 @@ var userName;
 var userID;
 var number = 0;
 var obj = [];
+var treatID;
 function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
     //调取后台所有等待就诊的疗程号及其对应的病人
+    treatID = treatmentID;
     getUserID();
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -206,7 +208,44 @@ function save() {
         window.alert("申请失败");
     }
 }
-
+function saveTemplate(TemplateName) {
+    var model = document.getElementById("modelselect").value;
+    var special = document.getElementById("specialrequest").value;  
+    var bodypost = document.getElementById("bodyPost").value;
+    var fixequip = document.getElementById("fixEquip").value;   
+    if (document.getElementById("modelselect").value == "allItem") {
+        window.alert("模具没有选择");
+        return;
+    }
+    if (document.getElementById("specialrequest").value == "allItem") {
+        window.alert("特殊要求没有选择");
+        return;
+    }
+    if (document.getElementById("bodyPost").value == "allItem") {
+        window.alert("体位没有选择");
+        return;
+    }
+    if (document.getElementById("fixEquip").value == "allItem") {
+        window.alert("固定装置没有选择");
+        return;
+    } 
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
+    var xmlHttp = new XMLHttpRequest();
+    var url = "fixedApplytemplate.ashx?templatename=" + TemplateName + "&model=" + model + "&fixreq=" + special + "&user=" + userID + "&fixequip=" + fixequip + "&bodypost=" + bodypost;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var result = xmlHttp.responseText;
+    if (result == "success") {
+        window.alert("模板保存成功");   
+    }   
+    if (result == "failure") {
+        window.alert("模板保存失败");
+    }
+}
 //创建某设备某天的预约表
 function CreateCurrentEquipmentTbale(equiment, dateString) {
     var table = document.getElementById("apptiontTable");

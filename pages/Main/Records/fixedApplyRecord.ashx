@@ -6,9 +6,7 @@ using System.Web;
 public class fixedApplyRecord : IHttpHandler {
 
     DataLayer sqlOperation = new DataLayer("sqlStr");
-    DataLayer sqlOperation1 = new DataLayer("sqlStr");
-    DataLayer sqlOperation2 = new DataLayer("sqlStr");
-    DataLayer sqlOperation3 = new DataLayer("sqlStr");
+    DataLayer sqlOperation1 = new DataLayer("sqlStr");  
     public void ProcessRequest(HttpContext context)
     {
         context.Response.ContentType = "text/plain";

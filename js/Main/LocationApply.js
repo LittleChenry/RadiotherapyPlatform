@@ -276,6 +276,61 @@ function save() {
         window.alert("申请失败");
     }
 }
+function saveTemplate(TemplateName) {  
+    var scanpart = document.getElementById("scanpart").value;
+    var scanmethod = document.getElementById("scanmethod").value;
+    var special = document.getElementById("special").value;
+    var addgroup = document.getElementsByName("add");
+    var add;
+    if (addgroup[0].checked == "true") {
+        add = addgroup[0].value;
+    } else {
+        add = addgroup[1].value;
+    }
+    var up = document.getElementById("up").value;
+    var down = document.getElementById("down").value;
+    var addmethod = document.getElementById("addmethod").value;   
+    var remark = document.getElementById("remark").value;
+    if (document.getElementById("scanpart").value == "allItem") {
+        window.alert("请选择扫描部位");
+        return;
+    }
+    if (document.getElementById("scanmethod").value == "allItem") {
+        window.alert("请选择扫描方式");
+        return;
+    }
+    if (document.getElementById("up").value == "") {
+        window.alert("请填写上界");
+        return;
+    }
+    if (document.getElementById("down").value == "") {
+        window.alert("请填写下界");
+        return;
+    }
+    if (add == "1") {
+        if (document.getElementById("addmethod").value == "allItem") {
+            window.alert("请选择增强方式");
+            return;
+        }
+    }
+    if (special == "allItem") {
+        window.alert("请选择特殊要求");
+        return;
+    }   
+    var xmlHttp = new XMLHttpRequest();
+    var url = "LocationApplytemplate.ashx?templatename=" + TemplateName + "&scanpart=" + scanpart + "&scanmethod=" + scanmethod + "&user=" + userID + "&add=" + add + "&addmethod=" + addmethod + "&up=" + up + "&down=" + down + "&remark=" + remark + "&requirement=" + special;
+
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+
+    var result = xmlHttp.responseText;
+    if (result == "success") {
+        window.alert("模板保存成功");
+    }
+    if (result == "failure") {
+        window.alert("模板保存失败");
+    }
+}
 
 //创建某设备某天的预约表
 function CreateCurrentEquipmentTbale(equiment, dateString) {
