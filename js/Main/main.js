@@ -45,7 +45,7 @@ $(document).ready(function () {
         $("#record-iframe")[0].contentWindow.print();
     });
     $("#changeOperator").bind("click",function(){
-        $("#record-iframe")[0].contentWindow.AssistantLogin();
+        $("#record-iframe")[0].contentWindow.tankuang();
     });
     $("#changeEquipment").bind("click",function(){
         chooseEquipment();
