@@ -33,6 +33,9 @@ $(document).ready(function () {
     $("#saveTreatment").bind("click",function(){
         saveTreatment();
     });
+    $("#saveTemplate-button").bind("click",function(){
+        Template();
+    });
     $("#printIframe").bind("click", function () {
         $("#record-iframe")[0].contentWindow.print();
     });
@@ -330,7 +333,7 @@ function Paging(patient,role){
 
 function trAddClick(patient){
     for (var i = 0; i < patient.PatientInfo.length; i++) {
-        $("#" + patient.PatientInfo[i].treatID + "").click({ Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+        $("#" + patient.PatientInfo[i].treatID + "").click({ appointid:patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
             checkAddTreatment(e.data.Radiotherapy_ID);
             //$("#addTreatment").removeAttr("disabled");
@@ -589,7 +592,7 @@ function trAddClick(patient){
                         break;
                     case 15:
                         if (LightLi(this,Progresses, "15", "14", "-1")) {
-                            var url = "Records/TreatmentRecord.aspx?TreatmentID=" + e.data.ID;
+                            var url = "Records/TreatmentRecord.aspx?TreatmentID=" + e.data.ID +"&appointid=" + e.data.appointid;
                         }else{
                             var url = "Records/Blank.aspx";
                         }
@@ -1129,6 +1132,14 @@ function checkEdit(str){
     return false;
 }
 
+function Template(){
+    $("#Template").modal({backdrop: 'static'});
+    $("#saveTemplate").click(function(){
+        var TemplateName = $("#templateName").val();
+        $("#record-iframe")[0].contentWindow.saveTemplate(TemplateName);
+    });
+}
+
 function getSession(){
     var Session;
     $.ajax({
@@ -1377,181 +1388,6 @@ Date.prototype.Format = function(fmt){
     if(new RegExp("("+ k +")").test(fmt))
         fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
     return fmt;
-}
-
-function chooseAssistant() {
-    var operator1 = $("#operator1");
-    var operator2 = $("#operator2");
-    var operator3 = $("#operator3");
-    $.ajax({
-        type: "GET",
-        url: "../../pages/Main/Records/getSession.ashx",
-        async: false,
-        dateType: "text",
-        success: function (data) {
-            obj = $.parseJSON(data);
-            if (obj.assistant == "") {
-                $.ajax({
-                    type: "GET",
-                    url: "../../pages/Main/Records/getoperator.ashx",
-                    async: false,
-                    dateType: "text",
-                    success: function (data) {
-                        operatorUsers = $.parseJSON(data);
-                        operator1.empty();
-                        operator2.empty();
-                        operator3.empty();
-                        var option_empty_1 = "<option value=''>----选择操作成员1----</option>";
-                        var option_empty_2 = "<option value=''>----选择操作成员2----</option>";
-                        var option_empty_3 = "<option value=''>----选择操作成员3----</option>";
-                        operator1.append(option_empty_1);
-                        operator2.append(option_empty_2);
-                        operator3.append(option_empty_3);
-                        for (var i = 0; i < operatorUsers.operator.length; i++) {
-                            if(obj.userID != operatorUsers.operator[i].ID){
-                                var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
-                                operator1.append(option);
-                            }
-                        }
-                        operator1.change(function(){
-                            operator2.empty();
-                            operator3.empty();
-                            var option_empty_2 = "<option value=''>----选择操作成员2----</option>";
-                            var option_empty_3 = "<option value=''>----选择操作成员3----</option>";
-                            operator2.append(option_empty_2);
-                            operator3.append(option_empty_3);
-                            for (var i = 0; i < operatorUsers.operator.length; i++) {
-                                if(this.value != operatorUsers.operator[i].ID && obj.userID != operatorUsers.operator[i].ID){
-                                    var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
-                                    operator2.append(option);
-                                }
-                            }
-                            operator2.change({operator2:this.value},function(e){
-                                operator3.empty();
-                                var option_empty_3 = "<option value=''>----选择操作成员3----</option>";
-                                operator3.append(option_empty_3);
-                                for (var i = 0; i < operatorUsers.operator.length; i++) {
-                                    if(e.data.operator2 != operatorUsers.operator[i].ID && this.value != operatorUsers.operator[i].ID && obj.userID != operatorUsers.operator[i].ID){
-                                        var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
-                                        operator3.append(option);
-                                    }
-                                }
-                            });
-                        });
-                    },
-                    error: function () {
-                        alert("error");
-                    }
-                });
-                $('#chooseOperator').modal({ backdrop: 'static', keyboard: false });
-            }else{
-                $("#operator").html(obj.assistant);
-            }
-        },
-        error: function(){
-            alert("error");
-        }
-    });
-}
-
-function changeAssistant(){
-    var operator1 = $("#operator1");
-    var operator2 = $("#operator2");
-    var operator3 = $("#operator3");
-    $.ajax({
-        type: "GET",
-        url: "../../pages/Main/Records/getSession.ashx",
-        async: false,
-        dateType: "text",
-        success: function (data) {
-            obj = $.parseJSON(data);
-            $.ajax({
-                type: "GET",
-                url: "../../pages/Main/Records/getoperator.ashx",
-                async: false,
-                dateType: "text",
-                success: function (data) {
-                    operatorUsers = $.parseJSON(data);
-                    operator1.empty();
-                    operator2.empty();
-                    operator3.empty();
-                    var option_empty_1 = "<option value=''>----选择操作成员1----</option>";
-                    var option_empty_2 = "<option value=''>----选择操作成员2----</option>";
-                    var option_empty_3 = "<option value=''>----选择操作成员3----</option>";
-                    operator1.append(option_empty_1);
-                    operator2.append(option_empty_2);
-                    operator3.append(option_empty_3);
-                    for (var i = 0; i < operatorUsers.operator.length; i++) {
-                        if(obj.userID != operatorUsers.operator[i].ID){
-                            var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
-                            operator1.append(option);
-                        }
-                    }
-                    operator1.change(function(){
-                        operator2.empty();
-                        operator3.empty();
-                        var option_empty_2 = "<option value=''>----选择操作成员2----</option>";
-                        var option_empty_3 = "<option value=''>----选择操作成员3----</option>";
-                        operator2.append(option_empty_2);
-                        operator3.append(option_empty_3);
-                        for (var i = 0; i < operatorUsers.operator.length; i++) {
-                            if(this.value != operatorUsers.operator[i].ID && obj.userID != operatorUsers.operator[i].ID){
-                                var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
-                                operator2.append(option);
-                            }
-                        }
-                        operator2.change({operator2:this.value},function(e){
-                            operator3.empty();
-                            var option_empty_3 = "<option value=''>----选择操作成员3----</option>";
-                            operator3.append(option_empty_3);
-                            for (var i = 0; i < operatorUsers.operator.length; i++) {
-                                if(e.data.operator2 != operatorUsers.operator[i].ID && this.value != operatorUsers.operator[i].ID && obj.userID != operatorUsers.operator[i].ID){
-                                    var option = "<option id='"+  operatorUsers.operator[i].ID +"' value='"+ operatorUsers.operator[i].ID +"'>"+ operatorUsers.operator[i].Name +"</option>";
-                                    operator3.append(option);
-                                }
-                            }
-                        });
-                    });
-                },
-                error: function () {
-                    alert("error");
-                }
-            });
-            $('#chooseOperator').modal({ backdrop: 'static', keyboard: false });
-        },
-        error: function(){
-            alert("error");
-        }
-    });
-}
-
-function setAssistant(){
-    var operators = "";
-    for (var i = 1; i < 4; i++) {
-        if($("#operator"+ i +" option:selected").val() != ""){
-            operators += $("#operator"+ i +" option:selected").html();
-            var next = i + 1;
-            if ($("#operator" + next).val() != "" && $("#operator" + next).length != 0) {
-                operators += ","
-            }else{
-                break;
-            }
-        }else{
-            break;
-        } 
-    }
-    if (operators == "") {
-        operators = "无";
-    }
-    $("#operator").html(operators);
-    $.ajax({
-        type: "POST",
-        url: "../../pages/Main/Records/setAssistant.ashx",
-        data:{assistant : operators},
-        error:function(){
-            alert("error");
-        }
-    });
 }
 
 function toTime(minute) {

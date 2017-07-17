@@ -325,15 +325,19 @@
             <div class="btn-group">
                 <button type="button" class="btn btn-success" data-toggle="dropdown"><i class="fa fa-fw fa-send"></i>选择模板</button>
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                <span class="caret"></span>
+                    <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
+                <ul id="templateList" class="dropdown-menu" role="menu"></ul>
+            </div>
+            <div class="btn-group">
+                <button id="save" type="button" class="btn btn-success" data-toggle="dropdown" disabled="disabled"><i class="fa fa-fw fa-save"></i>保存</button>
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" style="min-width:100px;">
+                    <li><a id="saveTemplate-button">另存模板</a></li>
                 </ul>
             </div>
-            <button id="save" class="btn btn-success" disabled="disabled"><i class="fa fa-fw fa-save"></i>保存</button>
             <button id="printIframe" class="btn btn-success"><i class="fa fa-fw fa-print"></i>打印</button>
             </div>
         </nav>
@@ -359,7 +363,43 @@
                     <div class="pull-right" style="margin:10px;">默认数字编号，最多8个字。</div>
                     <table id="addTreatmentRecord" class="table table-bordered" ></table>
                     <input id="Radiotherapy_ID" type="text" hidden="hidden" />
-                    <label class="label-control">注：点击选择复用模块，灰色区域不可选择。</label>
+                    <label class="label-control">新疗程预览</label>
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-3" style="text-align:center;">登记信息：</div>
+                        <div class="col-xs-9">
+                            <span id="registerDetail">未选择</span>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-3" style="text-align:center;">病情诊断：</div>
+                        <div class="col-xs-9">
+                            <span id="diagnoseDetail">未选择</span>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-3" style="text-align:center;">体位固定：</div>
+                        <div class="col-xs-9">
+                            <span id="fixedDetail">未选择</span>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-3" style="text-align:center;">CT模拟：</div>
+                        <div class="col-xs-9">
+                            <span id="locationDetail">未选择</span>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-3" style="text-align:center;">计划设计：</div>
+                        <div class="col-xs-9">
+                            <span id="designDetail">未选择</span>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:10px;">
+                        <div class="col-xs-3" style="text-align:center;">复位验证：</div>
+                        <div class="col-xs-9">
+                            <span id="replaceDetail">未选择</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -400,6 +440,25 @@
                 </div>
                 <div class="modal-footer">
                     <button id="getSelectedPatient" type="button" class="btn btn-primary" data-dismiss="modal">查询所有患者</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="Template" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">另存为模板</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <span>模板名称：</span>
+                        <input type="text" class="form-control" id="templateName">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="saveTemplate" type="button" class="btn btn-primary" data-dismiss="modal">保存模板</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
