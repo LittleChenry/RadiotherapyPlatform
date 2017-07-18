@@ -21,7 +21,7 @@
 
     <!-- Main Css -->
     <link rel="stylesheet" href="../../css/Root/rootMain.css" />
-    <title>功能查看</title>
+    <title>功能管理</title>
     <!-- Main CSS -->
     <link href="../../css/Root/Root-userInformation.css" rel="stylesheet" type="text/css" />
 

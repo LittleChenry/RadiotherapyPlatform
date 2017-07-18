@@ -25,7 +25,7 @@
     <!-- Main Css -->
     <link rel="stylesheet" href="../../css/Root/rootMain.css" />
 
-    <title>医生分组</title>
+    <title>设备检查统计</title>
     <!-- Main CSS -->
     <link href="../../css/Main/main.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../css/Root/equipmentMain.css" />
