@@ -256,7 +256,19 @@ function RemoveAllChild(area) {
             area.removeChild(first);
     }
 }
-
+function chooseTempalte(templateID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "GetTemplateDesignApply.ashx?templateID=" + templateID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var obj1 = eval("(" + json + ")");
+    document.getElementById("Remarks").value = obj1.templateInfo[0].RadiotherapyHistory;
+    addDosagePriority1(obj1.templateInfo[0].DosagePriority);
+    addDosage1(obj1.templateInfo[0].Dosage);
+    document.getElementById("technology").value = obj1.templateInfo[0].technology;
+    document.getElementById("equipment").value = obj1.templateInfo[0].equipment;
+}
 function readDosage(DosagePriority) {
     var item = "Dosage";
     var table = document.getElementById(item);

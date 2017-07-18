@@ -210,6 +210,28 @@ function getLocationInfomation(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 }
+function chooseTempalte(templateID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "GetTemplateLocationApply.ashx?templateID=" + templateID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var obj1 = eval("(" + json + ")");
+    document.getElementById("scanmethod").value = obj1.templateInfo[0].scanmethodID;
+    document.getElementById("scanpart").value = obj1.templateInfo[0].scanpartID;
+    document.getElementById("up").value = obj1.templateInfo[0].UpperBound;
+    document.getElementById("down").value = obj1.templateInfo[0].LowerBound;
+    document.getElementById("special").value = obj1.templateInfo[0].locationrequireID;
+    document.getElementById("remark").value = obj1.templateInfo[0].Remarks;
+    var add = document.getElementsByName("add");
+    if (obj1.templateInfo[0].Enhance == "1") {
+        add[0].checked = "true";
+        document.getElementById("addmethod").value = obj1.templateInfo[0].enhancemethod;
+    } else {
+        add[1].checked = "true";
+        document.getElementById("enhancemethod").style.display = "none";
+    }
+}
 function save() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentid = treatmentgroup.split("=")[1];
