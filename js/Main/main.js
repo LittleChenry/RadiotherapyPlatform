@@ -59,40 +59,6 @@ $(document).ready(function () {
 /*window.onresize=function(){
     document.location.reload();
 }*/
-function tem(userID, type) {
-    var template = Templatechoose(userID, type);
-    var templateList = document.getElementById("templateul");
-    templateList.innerHTML = "";
-    for (var i = 0; i < template.length; i++) {
-        var list = document.createElement("li");
-        var a = document.createElement("a");
-        a.id = "a" + i;
-        a.innerHTML = template[i].Name;
-        list.appendChild(a);
-        templateList.appendChild(list);
-        var id = template[i].ID;
-        $("#a" + i).unbind("click").click({ id: id }, function (e) {
-            $("#record-iframe")[0].contentWindow.chooseTempalte(e.data.id);
-        });
-    }
-}
-function Templatechoose(userID, type) {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "Records/getTemplateType.ashx?userID=" + userID + "&type=" + type;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-    var json = xmlHttp.responseText;
-    var obj1 = eval("(" + json + ")");
-    return obj1.templateInfo;
-}
-function isInArray(arr, value) {
-    for (var i = 0; i < arr.length; i++) {
-        if (value === arr[i].toString()) {
-            return true;
-        }
-    }
-    return false;
-}
 function RolesToPatients() {
     var patient;
     var session = getSession();
@@ -263,7 +229,7 @@ function Paging(patient, role, userID) {
                             Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
                             begin = toTime(patient.PatientInfo[i].begin);
                             end = toTime(patient.PatientInfo[i + 1].end);
-                            var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed + "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td>"
+                            var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td>"
                                 + "<td>" + doctor + "</td></tr>";
                             tbody += tr;
                             i++;
@@ -281,13 +247,13 @@ function Paging(patient, role, userID) {
                     Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
                     begin = toTime(patient.PatientInfo[i].begin);
                     end = toTime(patient.PatientInfo[i].end);
-                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed + "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td>"
+                    var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td>"
                         + "<td>" + doctor + "</td></tr>";
                     tbody += tr;
                 }
                 tbody += '</tbody>';
                 table.append(tbody);
-                trAddClick(patient, userID);
+                trAddClickforJS(patient, userID);
                 break;
             case "治疗技师":
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, date, begin, end, Completed, doctor, finishedtimes, totalnumber, totaltimes;
@@ -309,13 +275,13 @@ function Paging(patient, role, userID) {
                     finishedtimes = patient.PatientInfo[i].finishedtimes;
                     totalnumber = patient.PatientInfo[i].totalnumber;
                     totaltimes = patient.PatientInfo[i].totaltimes;
-                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed + "</td><td>" + finishedtimes + "</td><td>" + totalnumber + "</td>"
+                    var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + finishedtimes + "</td><td>" + totalnumber + "</td>"
                         + "<td>" + totaltimes + "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td><td>" + doctor + "</td></tr>";
                     tbody += tr;
                 }
                 tbody += '</tbody>';
                 table.append(tbody);
-                trAddClick(patient, userID);
+                trAddClickforJS(patient, userID);
                 break;
             case "登记处人员":
                 var url = "";
@@ -406,6 +372,312 @@ function Paging(patient, role, userID) {
 function trAddClick(patient, userID) {
     for (var i = 0; i < patient.PatientInfo.length; i++) {
         $("#" + patient.PatientInfo[i].treatID + "").click({ appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+            currentID = e.data.ID;
+            checkAddTreatment(e.data.Radiotherapy_ID);
+            OperateAttrDisabled();
+            //$("#addTreatment").removeAttr("disabled");
+            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+            ul.each(function (index, element) {
+                $(this).find('span').removeClass();
+            });
+            $("#record-iframe").attr('src', "Records/Blank.aspx");
+            //$("#patient-status").text(e.data.state);
+            var tr = $("#patient-table tbody tr");
+            tr.each(function (index, element) {
+                if ($(this).hasClass("chose")) {
+                    $(this).removeClass("chose");
+                }
+            });
+            $(this).addClass("chose");
+            Progresses = e.data.count.split(",");
+            ul.each(function (index, element) {
+                switch (index) {
+                    case 0:
+                        $(this).find('li').removeClass().addClass("progress-finished");
+                        $(this).find('i').removeClass().addClass("fa fa-fw fa-check");
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("0");
+                        });
+                        break;
+                    case 1:
+                        if (LightLi(this, Progresses, "1", "0", "-1")) {
+                            var url = "Records/Diagnose.aspx?TreatmentID=" + e.data.ID;
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("1");
+                        });
+                        break;
+                    case 2:
+                        if (LightLi(this, Progresses, "2", "1", "-1")) {
+                            var url = "Records/FixedApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Fixed";
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("2");
+                            tem(userID, 2);
+                        });
+                        break;
+                    case 3:
+                        if (LightLi(this, Progresses, "3", "2", "-1")) {
+                            var url = "Records/LocationApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location";
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("3");
+                            tem(userID, 3);
+                        });
+                        break;
+                    case 4:
+                        if (LightLi(this, Progresses, "4", "2", "-1")) {
+                            var url = "Records/FixedRecord.aspx?TreatmentID=" + e.data.ID;
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("4");
+                        });
+                        break;
+                    case 5:
+                        if (LightLi(this, Progresses, "5", "4", "3")) {
+                            var url = "Records/LocationRecord.aspx?TreatmentID=" + e.data.ID;
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("5");
+                        });
+                        break;
+                    case 6:
+                        if (LightLi(this, Progresses, "6", "5", "-1")) {
+                            var url = "Records/ImportCT.aspx?TreatmentID=" + e.data.ID;
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("6");
+                        });
+                        break;
+                    case 7:
+                        if (LightLi(this, Progresses, "7", "6", "-1")) {
+                            var url = "Records/DesignApply.aspx?TreatmentID=" + e.data.ID;
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("7");
+                            tem(userID, 7);
+                        });
+                        break;
+                    case 8:
+                        if (LightLi(this, Progresses, "8", "7", "-1")) {
+                            var url = "Records/DesignReceive.aspx?TreatmentID=" + e.data.ID;
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("8");
+                        });
+                        break;
+                    case 9:
+                        if (LightLi(this, Progresses, "9", "8", "-1")) {
+                            var url = "Records/DesignSubmit.aspx?TreatmentID=" + e.data.ID;
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("9");
+                        });
+                        break;
+                    case 10:
+                        if (LightLi(this, Progresses, "10", "9", "-1")) {
+                            var url = "Records/DesignConfirm.aspx?TreatmentID=" + e.data.ID;
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("10");
+                        });
+                        break;
+                    case 11:
+                        if (LightLi(this, Progresses, "11", "10", "-1")) {
+                            var url = "Records/DesignReview.aspx?TreatmentID=" + e.data.ID;
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("11");
+                        });
+                        break;
+                    case 12:
+                        if (LightLi(this, Progresses, "12", "10", "-1")) {
+                            var url = "Records/ReplacementApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location";
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("12");
+                        });
+                        break;
+                    case 13:
+                        if (LightLi(this, Progresses, "13", "12", "-1")) {
+                            var url = "Records/ReplacementRecord.aspx?TreatmentID=" + e.data.ID;
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("13");
+                        });
+                        break;
+                    case 14:
+                        if (LightLi(this, Progresses, "14", "13", "-1")) {
+                            var url = "Records/FirstAccelerator.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Accelerator";
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("14");
+                        });
+                        break;
+                    case 15:
+                        if (LightLi(this, Progresses, "15", "14", "-1")) {
+                            var url = "Records/TreatmentRecord.aspx?TreatmentID=" + e.data.ID + "&appointid=" + e.data.appointid;
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("15");
+                        });
+                        break;
+                    case 16:
+                        if (LightLi(this, Progresses, "16", "15", "-1")) {
+                            var url = "Records/Summary.aspx?TreatmentID=" + e.data.ID;
+                        } else {
+                            var url = "Records/Blank.aspx";
+                        }
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', url);
+                            var ul = $("#progress-iframe").contents().find("#ul-progress a");
+                            ul.each(function (index, element) {
+                                $(this).find('span').removeClass();
+                            });
+                            $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
+                            checkEdit("16");
+                        });
+                        break;
+                    default:
+                        $(this).click(function () {
+                            $("#record-iframe").attr('src', "Records/Error.aspx");
+                        });
+                }
+            });
+
+        });
+    }
+}
+
+function trAddClickforJS(patient, userID) {
+    for (var i = 0; i < patient.PatientInfo.length; i++) {
+        $("#" + patient.PatientInfo[i].treatID + "_" + patient.PatientInfo[i].appointid).click({ appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
             checkAddTreatment(e.data.Radiotherapy_ID);
             OperateAttrDisabled();
@@ -1559,4 +1831,41 @@ function OperateAttrDisabled() {
     $("#chooseTemplate").attr("disabled", "disabled");
     $("#Template-List").attr("disabled", "disabled");
     $('#edit').attr("disabled", "disabled");
+}
+
+function tem(userID, type) {
+    var template = Templatechoose(userID, type);
+    var templateList = document.getElementById("templateul");
+    templateList.innerHTML = "";
+    for (var i = 0; i < template.length; i++) {
+        var list = document.createElement("li");
+        var a = document.createElement("a");
+        a.id = "a" + i;
+        a.innerHTML = template[i].Name;
+        list.appendChild(a);
+        templateList.appendChild(list);
+        var id = template[i].ID;
+        $("#a" + i).unbind("click").click({ id: id }, function (e) {
+            $("#record-iframe")[0].contentWindow.chooseTempalte(e.data.id);
+        });
+    }
+}
+
+function Templatechoose(userID, type) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "Records/getTemplateType.ashx?userID=" + userID + "&type=" + type;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var obj1 = eval("(" + json + ")");
+    return obj1.templateInfo;
+}
+
+function isInArray(arr, value) {
+    for (var i = 0; i < arr.length; i++) {
+        if (value === arr[i].toString()) {
+            return true;
+        }
+    }
+    return false;
 }
