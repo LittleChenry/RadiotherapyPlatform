@@ -22,7 +22,7 @@
     <!-- Main Css -->
     <link rel="stylesheet" href="../../css/Root/rootMain.css" />
 
-    <title>医生分组</title>
+    <title>分组管理</title>
     <!-- Main CSS -->
     <link href="../../css/Main/main.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../css/Root/equipmentMain.css" />
@@ -409,7 +409,7 @@
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
-                <h1 class="page-header">医生分组管理</h1>
+                <h1 class="page-header">分组管理</h1>
             </div>
         </div>
         <div class="row">

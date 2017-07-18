@@ -411,7 +411,7 @@
          <input id="type" type="hidden" value="Root" />
         <div class="row">
             <div class="col-xs-12">
-                <h1 class="page-header">角色管理</h1>
+                <h1 class="page-header">角色信息</h1>
             </div>
         </div>
         <div class="row" style="margin-top:10px;">

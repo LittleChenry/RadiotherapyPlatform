@@ -21,7 +21,7 @@
 
     <!-- Main Css -->
     <link rel="stylesheet" href="../../css/Root/rootMain.css" />
-    <title>放疗同质化平台</title>
+    <title>放疗质控系统</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">

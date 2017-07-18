@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>角色绑定</title>
+    <title>用户绑定</title>
 
     <!-- Main CSS -->
     <link href="../../css/Root/Root-userInformation.css" rel="stylesheet" type="text/css" />
@@ -411,7 +411,7 @@
         <input id="type" type="hidden" value="Root" />
         <div class="row">
             <div class="col-xs-12">
-                <h1 class="page-header">角色绑定</h1>              
+                <h1 class="page-header">用户绑定</h1>              
             </div>
         </div>
         <div class="row" style="margin-top:10px;">

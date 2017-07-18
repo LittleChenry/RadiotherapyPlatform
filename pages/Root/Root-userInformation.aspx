@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-6"/>
-    <title></title>
+    <title>用户信息</title>
 
     <!-- Main CSS -->
     <link href="../../css/Root/Root-userInformation.css" rel="stylesheet" type="text/css" />
