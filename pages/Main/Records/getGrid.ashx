@@ -12,6 +12,7 @@ public class getGrid : IHttpHandler {
         string backString = getprinItem();
         sqlOperation.Close();
         sqlOperation.Dispose();
+        sqlOperation = null;
         context.Response.Write(backString);
     }
 
@@ -41,6 +42,7 @@ public class getGrid : IHttpHandler {
             }
             i++;
         }
+        reader.Close();
         backText.Append("]}");
         return backText.ToString();
     }

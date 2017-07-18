@@ -158,6 +158,18 @@ function getfixInfomation(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 }
+function chooseTempalte(templateID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "GetTemplateFixApply.ashx?templateID=" + templateID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var obj1 = eval("(" + json + ")");
+    document.getElementById("modelselect").value = obj1.templateInfo[0].Model_ID;
+    document.getElementById("specialrequest").value = obj1.templateInfo[0].FixedRequirements_ID;
+    document.getElementById("fixEquip").value = obj1.templateInfo[0].FixedEquipment_ID;
+    document.getElementById("bodyPost").value = obj1.templateInfo[0].BodyPosition;
+}
 function save() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentid = treatmentgroup.split("=")[1];
