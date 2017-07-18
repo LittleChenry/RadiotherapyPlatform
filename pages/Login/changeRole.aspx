@@ -28,11 +28,9 @@
      <div class="background-img-fixed" style="margin:auto;text-align:center;">
         <img src="../../img/hospital.png" />
     </div>
-    <div class="name-logo">
-        <img src="../../img/hospitallogo.png" style="margin-left:20px;width:30%;max-width: 500px;" />
-    </div>
-    <div style="margin:auto;text-align:center;">
-        <img src="../../img/title.png" style="width:80%;max-width: 1300px;" />
+    <div style="margin:auto;text-align:center;padding-top:6%;">
+        <img src="../../img/title.png" style="width:65%;max-width: 1300px;" />
+        <img src="../../img/title-english.png" style="width:65%;max-width: 1300px;" />
     </div>
      <div id="changeroles" class="login-box-body toCenter toDown" >
         <h2 class="login-box-msg">请选择登录角色</h2>
@@ -42,6 +40,12 @@
             <br />
         <input id="login" type="button" value="登陆" class="btn btn-primary btn-block btn-flat"/>
       </div>
+    <footer class="main-footer" style="margin:0px;position:fixed;bottom:0;width:100%;background-color:transparent;border:0px;color:#c1c1c1;font-size:16px;">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 2.0
+        </div>
+        <strong>Copyright &copy; 2017-2017 <a href="http://www.jsph.org.cn/"> 江苏省人民医院</a> .</strong> 保留所有权利
+    </footer>
 <script src="../../plugin/AdminLTE/jquery.min.js"></script>  
 <script src="../../js/Login/changeRoleJS.js"></script>
 </body>

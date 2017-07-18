@@ -73,7 +73,7 @@
         <input id="login2" type="button" value="登陆" class="btn btn-primary btn-block btn-flat"/>
     </div>
 
-    <footer class="main-footer" style="margin:0px;position:fixed;bottom:0;width: 100%;">
+    <footer class="main-footer" style="margin:0px;position:fixed;bottom:0;width:100%;background-color:transparent;border:0px;color:#c1c1c1;font-size:16px;">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.0
         </div>
