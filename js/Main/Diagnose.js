@@ -281,5 +281,4 @@ function remove() {
     document.getElementById("remark").removeAttribute("disabled");
     document.getElementById("part").removeAttribute("disabled");
     document.getElementById("diagresult").removeAttribute("disabled");
-    document.getElementById("groupid").removeAttribute("disabled");
 }
