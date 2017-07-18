@@ -35,19 +35,21 @@
                     <span>基本信息：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
-                    <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
-                    <div class="item col-xs-4">年龄：<span id="age" class="underline"></span></div>
+                    <div class="item col-xs-3">姓名：<span id="username" class="underline"></span></div>
+                    <div class="item col-xs-3">性别：<span id="sex" class="underline"></span></div>
+                    <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>
+                    <div class="item col-xs-3">民族：<span id="nation" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">民族：<span id="nation" class="underline"></span></div>
-                    <div class="item col-xs-4">身份证号：<span id="idnumber" class="underline"></span></div>
-                    <div class="item col-xs-4">地址：<span id="address" class="underline"></span></div>
+                    <div class="item col-xs-6">身份证号：<span id="idnumber" class="underline"></span></div>
+                    <div class="item col-xs-6">家庭地址：<span id="address" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">联系方式1：<span id="contact" class="underline"></span></div>
-                    <div class="item col-xs-4">联系方式2：<span id="contact2" class="underline"></span></div>
-                    <div class="item col-xs-4">分中心医院：<span id="hospital" class="underline"></span></div>
+                    <div class="item col-xs-6">联系方式1：<span id="contact" class="underline"></span></div>
+                    <div class="item col-xs-6">联系方式2：<span id="contact2" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-6">分中心医院：<span id="hospital" class="underline"></span></div>
                 </div>
             </div>
             <div class="paper-content">
@@ -55,9 +57,45 @@
                     <span>病案信息：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
+                    <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
                     <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
                     <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">病案号：<span id="Span1" class="underline"></span></div>
+                    <div class="item col-xs-4">住院号：<span id="Span2" class="underline"></span></div>
+                </div>
+            </div>
+            <div class="paper-content">
+                <div class="content-title">
+                    <span>放疗小结：</span>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">入院时间：<span id="Span3" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">放疗方式：<span id="Span4" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">放疗程式：<span id="Span5" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">放疗装置：<span id="Span6" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">放疗剂量：<span id="Span7" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">照射部位：<span id="Span8" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">放疗（前、中、后）配合治疗：<span id="Span9" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">治疗结果：<span id="Span10" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">放疗结束医嘱：<span id="Span11" class="underline"></span></div>
                 </div>
             </div>
             <div class="paper-content">
@@ -67,15 +105,9 @@
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
                         随访内容：
-                        <textarea id="content" name="content" class="form-area" style="width:80%;"></textarea>
+                        <textarea id="Textarea1" name="content" class="form-area" style="width:80%;"></textarea>
                     </div>
                 </div>
-            </div>
-            <div id="summarycontent" class="paper-content">
-                <div class="content-title">
-                    <span>随访历史：</span>
-                </div>
-                
             </div>
             <div class="paper-footer">
                 <div class="single-row">

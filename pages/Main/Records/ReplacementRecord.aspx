@@ -31,19 +31,21 @@
                         <span>基本信息：</span>
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
-                        <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
-                        <div class="item col-xs-4">年龄：<span id="age" class="underline"></span></div>
+                        <div class="item col-xs-3">姓名：<span id="username" class="underline"></span></div>
+                        <div class="item col-xs-3">性别：<span id="sex" class="underline"></span></div>
+                        <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>
+                        <div class="item col-xs-3">民族：<span id="nation" class="underline"></span></div>
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-4">民族：<span id="nation" class="underline"></span></div>
-                        <div class="item col-xs-4">身份证号：<span id="idnumber" class="underline"></span></div>
-                        <div class="item col-xs-4">地址：<span id="address" class="underline"></span></div>
+                        <div class="item col-xs-6">身份证号：<span id="idnumber" class="underline"></span></div>
+                        <div class="item col-xs-6">家庭地址：<span id="address" class="underline"></span></div>
                     </div>
                     <div class="single-row">
-                    <div class="item col-xs-4">联系方式1：<span id="contact" class="underline"></span></div>
-                    <div class="item col-xs-4">联系方式2：<span id="contact2" class="underline"></span></div>
-                    <div class="item col-xs-4">分中心医院：<span id="hospital" class="underline"></span></div>
+                        <div class="item col-xs-6">联系方式1：<span id="contact" class="underline"></span></div>
+                        <div class="item col-xs-6">联系方式2：<span id="contact2" class="underline"></span></div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item col-xs-6">分中心医院：<span id="hospital" class="underline"></span></div>
                     </div>
                 </div>
                 <div class="paper-content">
