@@ -35,9 +35,9 @@
     <!-- Logo -->
     <a href="RootMain.aspx" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>js</b>ph</span>
+      <span class="logo-mini"><b>R</b>QS</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>江苏省</b>人民医院</span>
+      <span class="logo-lg"><b>放疗质控系统</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
