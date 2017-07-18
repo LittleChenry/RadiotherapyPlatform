@@ -142,7 +142,7 @@
                     <input type="hidden"  id="userID" name="userID" />
                     <input type="hidden" id="diaguserid" name="diaguserid" />
                     <div class="content-title">
-                        <span>填写计划提交信息：</span>
+                        <span>提交计划信息：</span>
                     </div>
                     <div class="single-row tab-row">
                     <ul id="tabs" class="nav nav-tabs">
@@ -204,7 +204,7 @@
             <div class="paper-footer">
                 <div class="single-row">
                     <div class="item col-xs-6">医生签字：<span id="applyuser" class="underline"></span></div>
-                    <div class="item col-xs-6">日期：<span  id="time" class="underline"></span></div>
+                    <div class="item col-xs-6">提交日期：<span  id="time" class="underline"></span></div>
                 </div>
             </div>
         </div>

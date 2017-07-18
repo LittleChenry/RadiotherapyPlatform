@@ -74,7 +74,7 @@
                 </div>
                 <div class="paper-content">
                     <div class="content-title">
-                        <span>申请信息：</span>
+                        <span>模拟定位申请信息：</span>
                     </div>
                     <div class="single-row">
                         <div class="item col-xs-4">固定装置：<span id="fixedEquipment" class="underline"></span></div>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="paper-content">
                     <div class="content-title">
-                        <span>定位记录部分：</span>
+                        <span>模拟定位记录：</span>
                     </div>
                     <div class="single-row tab-row">
                         <ul id="tabs" class="nav nav-tabs">

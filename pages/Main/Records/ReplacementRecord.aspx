@@ -92,7 +92,7 @@
                     <div class="content-title">
                         <span>复位记录填写：</span>
                     </div>
-                     <div class="single-row">
+                     <div class="single-row tab-row">
                             <ul id="tabs" class="nav nav-tabs">
                                 <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
                             </ul>

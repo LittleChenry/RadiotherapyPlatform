@@ -22,7 +22,7 @@
 
 .single-row {
 	height: auto!important;
-    min-height: 40px;
+    min-height: 35px;
     overflow: hidden;
     margin-bottom: 10px;
 }

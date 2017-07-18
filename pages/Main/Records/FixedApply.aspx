@@ -57,21 +57,21 @@
                     <span>病案信息：</span>
                 </div>
                 <div class="single-row">
-                        <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
-                        <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
-                        <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
-                        <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
-                        <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
-                    </div>
+                    <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                    <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
+                    <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                    <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
+                    <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
+                </div>
             </div>
             <div class="paper-content">
                 <div class="content-title">
                     <span>填写申请信息：</span>
                 </div>
-                <div class="single-row">
+                <div class="single-row tab-row">
                     <ul id="tabs" class="nav nav-tabs">
                         <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
                     </ul>

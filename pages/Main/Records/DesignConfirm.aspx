@@ -152,10 +152,10 @@
                 <div class="single-row">
                     <div class="item col-xs-4">领取医生：<span id="receiveUser" class="underline"></span></div>
                     <div class="item col-xs-4">领取时间：<span id="receiveTime" class="underline"></span></div>
-                    <div class="item col-xs-4">填写医生：<span id="Submituser" class="underline"></span></div>
+                    <div class="item col-xs-4">提交医生：<span id="Submituser" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">填写时间：<span id="Submittime" class="underline"></span></div>
+                    <div class="item col-xs-4">提交时间：<span id="Submittime" class="underline"></span></div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-4">
@@ -187,7 +187,7 @@
             <div class="paper-footer">
                 <div class="single-row">
                     <div class="item col-xs-6">医生签字：<span id="applyuser" class="underline"></span></div>
-                    <div class="item col-xs-6">日期：<span  id="time" class="underline"></span></div>
+                    <div class="item col-xs-6">确认时间：<span  id="time" class="underline"></span></div>
                 </div>
             </div>
                 </form>

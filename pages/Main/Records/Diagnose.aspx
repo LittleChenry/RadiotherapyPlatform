@@ -68,7 +68,7 @@
             </div>
             <div class="paper-content">
                 <div class="content-title">
-                    <span>诊断：</span>
+                    <span>病情诊断：</span>
                 </div>
                 <div class="single-row tab-row">
                     <ul id="tabs" class="nav nav-tabs">
@@ -100,7 +100,7 @@
             <div class="paper-footer">
                 <div class="single-row">
                     <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
-                    <div class="item col-xs-6">日期：<span id="date" class="underline"></span></div>
+                    <div class="item col-xs-6">诊断时间：<span id="date" class="underline"></span></div>
                      <button type="button" name="test" id="test" style="display:none" class="btn btn-flat"> </button>
                 </div>
             </div>

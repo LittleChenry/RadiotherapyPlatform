@@ -56,53 +56,58 @@
                 <div class="content-title">
                     <span>病案信息：</span>
                 </div>
-                 <div class="single-row">
-                        <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
-                        <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
-                        <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
-                        <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
-                        <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
-                    </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                    <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
+                    <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                    <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
+                    <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
+                </div>
             </div>
-            <div class="paper-footer"> 
-                    <div class="content-title">
-                        <span>加速器预约：</span>
-                    </div>
+            <div class="paper-content"> 
+                <div class="content-title">
+                    <span>加速器预约：</span>
+                </div>
                 <div class="single-row">
                     <div class="col-xs-10">
-                         <div class="col-xs-2">
-                             </div>
                         <span class="form-text col-xs-2" style="padding-left:0px;">设备与时间：</span>
                         <input id="appointtime"  name="appointtime" type="text" class="form-item" readonly="true" />
                         <button id="chooseappoint" class="btn btn-default" disabled="disabled" data-toggle="modal" data-target="#appoint">预约</button>
                     </div>
                 </div>
-              </div>     
-        <div class="modal fade" id="appoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:700px;margin:50px auto;">
-            <div class="panel panel-default" style="max-width:1000px;margin:auto;">
-                <div class="panel-heading">
-                    <h4 class="modal-title">预约设备与时间窗口</h4>
+            </div>
+            <div class="paper-footer">
+                <div class="single-row">
+                    <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
+                    <div class="item col-xs-6">预约时间：<span id="date" class="underline"></span></div>
                 </div>
-                <div class="panel-body">
-                    <div class="panel-row">
-                        <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
-                        <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
-                        <div class="col-xs-2">
-                            <button id="chooseProject" class="btn btn-default">查询该项</button>
-                        </div>
+            </div>
+            <div class="modal fade" id="appoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:700px;margin:50px auto;">
+                <div class="panel panel-default" style="max-width:1000px;margin:auto;">
+                    <div class="panel-heading">
+                        <h4 class="modal-title">预约设备与时间窗口</h4>
                     </div>
-                    <div class="panel-row">
-                        <table id="apptiontTable" class="table table-bordered col-xs-12"></table>
-                    </div>
-                    <div class="panel-row">
-                        <div class="col-xs-6">
-                            <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal" aria-label="Close" >取消</button>
+                    <div class="panel-body">
+                        <div class="panel-row">
+                            <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
+                            <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                            <div class="col-xs-2">
+                                <button id="chooseProject" class="btn btn-default">查询该项</button>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <button class="btn btn-default" id="sure" type="button" data-dismiss="modal">确定</button>
+                        <div class="panel-row">
+                            <table id="apptiontTable" class="table table-bordered col-xs-12"></table>
+                        </div>
+                        <div class="panel-row">
+                            <div class="col-xs-6">
+                                <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal" aria-label="Close" >取消</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button class="btn btn-default" id="sure" type="button" data-dismiss="modal">确定</button>
+                            </div>
                         </div>
                     </div>
                 </div>

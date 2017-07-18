@@ -135,7 +135,7 @@
                 <div class="paper-footer">
                     <div class="single-row">
                         <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
-                        <div class="item col-xs-6">日期：<span id="date" class="underline"></span></div>
+                        <div class="item col-xs-6">记录时间：<span id="date" class="underline"></span></div>
                     </div> 
                 </div>
             </form>

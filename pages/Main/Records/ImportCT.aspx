@@ -27,7 +27,7 @@
         <div class="paper">
             <input type="hidden" id="progress" />
             <div class="paper-title">
-                 CT图像导入
+                 CT图像信息导入
             </div>
             <div class="paper-content">
                 <div class="content-title">
@@ -72,7 +72,7 @@
                     <input type="hidden"  id="treatmentID" name="treatmentID" />
                     <input type="hidden"  id="userID" name="userID" />
                     <div class="content-title">
-                        <span>CT图像信息填写：</span>
+                        <span>CT图像信息导入：</span>
                     </div>
                     <div class="single-row tab-row">
                     <ul id="tabs" class="nav nav-tabs">
@@ -129,7 +129,7 @@
             <div class="paper-footer">
                 <div class="single-row">
                     <div class="item col-xs-6">医生签字：<span id="applyuser" class="underline"></span></div>
-                    <div class="item col-xs-6">日期：<span  id="time" class="underline"></span></div>
+                    <div class="item col-xs-6">导入时间：<span  id="time" class="underline"></span></div>
                 </div>
             </div>
         </div>
