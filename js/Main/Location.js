@@ -26,12 +26,12 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
-    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
-    $("#current-tab").text("疗程" + patient.Treatmentname + "模拟定位记录");
+    $("#current-tab").text(patient.Treatmentdescribe + "模拟定位记录");
     var locationInfo = getDignoseInfo(treatID);
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '5')) {
@@ -87,7 +87,7 @@ function Init(evt) {
             }
             else {
                 var pictures = locationInfo[i].CTPictures.split(",");
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + locationInfo[i].Treatmentname + '模拟定位记录</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + locationInfo[i].Treatmentdescribe + '模拟定位记录</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-6">层厚：<span class="underline">' + locationInfo[i].Thickness + '</span></div>'
                     + '<div class="item col-xs-6">层数：<span class="underline">' + locationInfo[i].Number + '</span></div></div>'
@@ -122,7 +122,7 @@ function Init(evt) {
         for (var i = 0; i < locationInfo.length; i++) {
             if (patient.Treatmentname != locationInfo[i].Treatmentname) {
                 var pictures = locationInfo[i].CTPictures.split(",");
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + locationInfo[i].Treatmentname + '模拟定位记录</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + locationInfo[i].Treatmentdescribe + '模拟定位记录</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-6">层厚：<span class="underline">' + locationInfo[i].Thickness + '</span></div>'
                     + '<div class="item col-xs-6">层数：<span class="underline">' + locationInfo[i].Number + '</span></div></div>'

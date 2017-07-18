@@ -36,7 +36,7 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
-    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
@@ -47,7 +47,7 @@ function Init(evt) {
     createTechnologyItem(select1);
     var select2 = document.getElementById("equipment");
     createEquipmentItem(select2);
-    $("#current-tab").text("疗程" + patient.Treatmentname + "计划申请");
+    $("#current-tab").text(patient.Treatmentdescribe + "计划申请");
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '7')) {
         var designInfo = getDesignInfo(treatID);
@@ -61,7 +61,7 @@ function Init(evt) {
                 document.getElementById("applyuser").innerHTML = designInfo[i].doctor;
                 document.getElementById("time").innerHTML = designInfo[i].apptime;
             } else {
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + designInfo[i].treatmentname + '计划申请</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].Treatmentdescribe + '计划申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>' +
                         '<span class="col-xs-10">'+designInfo[i].RadiotherapyHistory+'</span></div></div>'+
                         '<div class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">靶区处方剂量：</span></div></div>'+
@@ -87,7 +87,7 @@ function Init(evt) {
         var designInfo = getDesignInfo(treatID);
         for (var i = 0; i < designInfo.length; i++) {
             if (patient.Treatmentname != designInfo[i].treatmentname) {
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + designInfo[i].treatmentname + '计划申请</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].Treatmentdescribe + '计划申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>' +
                         '<span class="col-xs-10">' + designInfo[i].RadiotherapyHistory + '</span></div></div>' +
                         '<div class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">靶区处方剂量：</span></div></div>' +

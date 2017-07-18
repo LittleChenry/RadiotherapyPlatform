@@ -27,14 +27,14 @@ function Init(evt) {
     document.getElementById("treatID").value = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
-    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     createrequireItem(document.getElementById("replacementrequire"));
     var info = getReplaceInfomation(treatmentID);
-    $("#current-tab").text("疗程" + patient.Treatmentname + "复位申请");
+    $("#current-tab").text(patient.Treatmentdescribe + "复位申请");
     var groupprogress = patient.Progress.split(",");
     if (contains(groupprogress, "12")) {
         for (var i = 0; i < info.length; i++) {
@@ -44,7 +44,7 @@ function Init(evt) {
                 document.getElementById("applyuser").innerHTML = info[i].username;
                 document.getElementById("time").innerHTML = info[i].ApplicationTime;
             } else {
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '复位申请</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '复位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div><div class="item col-xs-4"><button disabled="disabled" type="button" class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
@@ -68,7 +68,7 @@ function Init(evt) {
         document.getElementById("sure").addEventListener("click", checkAllTable, false);
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatmentname != patient.Treatmentname) {
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '复位申请</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '复位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';

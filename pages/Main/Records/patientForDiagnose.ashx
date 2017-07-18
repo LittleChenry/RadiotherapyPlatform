@@ -24,7 +24,7 @@ public class patientForDiagnose : IHttpHandler {
         string treatid = context.Request["treatmentID"];
         string radioid = context.Request["RadiotherapyID"];
         DataLayer sqlOperation = new DataLayer("sqlStr");
-        string sqlCommand = "SELECT count(*) from patient,treatment where treatment.Patient_ID=patient.ID and patient.Radiotherapy_ID=@RadiotherapyID and treatment.Treatmentname=@id";
+        string sqlCommand = "SELECT count(*) from patient,treatment where treatment.Patient_ID=patient.ID and patient.Radiotherapy_ID=@RadiotherapyID and treatment.Treatmentdescribe=@id";
         sqlOperation.AddParameterWithValue("@id", treatid);
         sqlOperation.AddParameterWithValue("@RadiotherapyID", radioid);
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
@@ -38,7 +38,7 @@ public class patientForDiagnose : IHttpHandler {
 
         DataLayer sqlOperation2 = new DataLayer("sqlStr");
         StringBuilder backText = new StringBuilder("{\"patient\":[");
-        string sqlCommand2 = "select treatment.ID as treatid,Progress,patient.*,user.Name as doctor from treatment,patient,user where patient.RegisterDoctor=user.ID and treatment.Patient_ID=patient.ID and treatment.Treatmentname=@id and patient.Radiotherapy_ID=@RadiotherapyID";
+        string sqlCommand2 = "select treatment.ID as treatid,Progress,patient.*,Treatmentname,user.Name as doctor from treatment,patient,user where patient.RegisterDoctor=user.ID and treatment.Patient_ID=patient.ID and treatment.Treatmentdescribe=@id and patient.Radiotherapy_ID=@RadiotherapyID";
         sqlOperation2.AddParameterWithValue("@id", treatid);
         sqlOperation2.AddParameterWithValue("@RadiotherapyID", radioid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
@@ -47,7 +47,7 @@ public class patientForDiagnose : IHttpHandler {
         {
             backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"IdentificationNumber\":\"" + reader["IdentificationNumber"] +
                  "\",\"Hospital\":\"" + reader["Hospital"].ToString() + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() +
-                 "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"RegisterDoctor\":\"" + reader["doctor"].ToString() +
+                 "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"RegisterDoctor\":\"" + reader["doctor"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() +
                  "\",\"Nation\":\"" + reader["Nation"].ToString() + "\",\"Address\":\"" + reader["Address"].ToString() + "\",\"Contact1\":\"" + reader["Contact1"].ToString() +
                  "\",\"Contact2\":\"" + reader["Contact2"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"Hospital_ID\":\"" + reader["Hospital_ID"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\"}");
             if (i < count)

@@ -22,7 +22,7 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("treatID").innerHTML = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
-    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
@@ -31,7 +31,7 @@ function Init(evt) {
     var select1 = document.getElementById("DensityConversion");
     createDnsityItem(select1);
     var info = getimportCTInfomation(treatmentID);
-    $("#current-tab").text("疗程" + patient.Treatmentname + "CT图像信息填写");
+    $("#current-tab").text(patient.Treatmentdescribe + "CT图像信息填写");
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '6')) {
         for (var i = 0; i < info.length; i++) {
@@ -47,7 +47,7 @@ function Init(evt) {
                 document.getElementById("time").innerHTML = info[i].OperateTime;
 
             } else {
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].Treatmentname + 'CT图像信息填写</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + 'CT图像信息填写</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-6">CT-电子密度转换：<span class="underline">' + info[i].DensityConversionName + '</span></div>'
                     + '<div class="item col-xs-6">CT序列命名：<span class="underline">' + info[i].SequenceNaming + '</span></div></div>'
@@ -69,7 +69,7 @@ function Init(evt) {
         document.getElementById("applyuser").innerHTML = userName;
         for (var i = 0; i < info.length; i++) {
             if (info[i].Treatmentname != patient.Treatmentname) {
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].Treatmentname + 'CT图像信息填写</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + 'CT图像信息填写</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-6">CT-电子密度转换：<span class="underline">' + info[i].DensityConversionName + '</span></div>'
                     + '<div class="item col-xs-6">CT序列命名：<span class="underline">' + info[i].SequenceNaming + '</span></div></div>'

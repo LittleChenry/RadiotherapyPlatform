@@ -28,7 +28,7 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
-    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
@@ -37,7 +37,7 @@ function Init(evt) {
     createspecialrequestItem(document.getElementById("specialrequest"));
     createfixEquipItem(document.getElementById("fixEquip"));
     var info = getfixInfomation(treatmentID);
-    $("#current-tab").text("疗程" + patient.Treatmentname + "体位固定申请");
+    $("#current-tab").text(patient.Treatmentdescribe + "体位固定申请");
     var groupprogress = patient.Progress.split(",");
     if (contains(groupprogress, "2")) {
         for (var i = 0; i < info.length; i++) {
@@ -50,7 +50,7 @@ function Init(evt) {
                 document.getElementById("applyuser").innerHTML = info[i].username;
                 document.getElementById("time").innerHTML = info[i].ApplicationTime;
             } else {
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '体位固定申请</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '体位固定申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-6">模具：<span class="underline">' + info[i].materialName + '</span></div>'
                     + '<div class="item col-xs-6">固定装置：<span class="underline">' + info[i].fixedequipname + '</span></div></div>'
@@ -76,7 +76,7 @@ function Init(evt) {
         document.getElementById("sure").addEventListener("click", checkAllTable, false);
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatmentname != patient.Treatmentname) {
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + info[i].treatmentname + '体位固定申请</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '体位固定申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-6">模具：<span class="underline">' + info[i].materialName + '</span></div>'
                     + '<div class="item col-xs-6">固定装置：<span class="underline">' + info[i].fixedequipname + '</span></div></div>'

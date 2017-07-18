@@ -30,12 +30,12 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
-    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
-    $("#current-tab").text( patient.Treatmentname);
+    $("#current-tab").text(patient.Treatmentdescribe + "体位固定记录");
     var fixedInfo = getFixedInfo(treatID);
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '4')) {
@@ -75,7 +75,7 @@ function Init(evt) {
                     }
             }else{
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + fixedInfo.fixedInfo[i].Treatmentname + '体位固定记录</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + fixedInfo.fixedInfo[i].Treatmentdescribe + '体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
                     + '<div class="item col-xs-12">体位详细描述：<span class="underline">'+ fixedInfo.fixedInfo[i].BodyPositionDetail +'</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">'+ fixedInfo.fixedInfo[i].Remarks +'</span></div></div>'
@@ -107,7 +107,7 @@ function Init(evt) {
         for (var i = 0; i < fixedInfo.fixedInfo.length; i++) {
             if (patient.Treatmentname != fixedInfo.fixedInfo[i].Treatmentname) {
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
-                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + fixedInfo.fixedInfo[i].Treatmentname + '体位固定记录</a></li>';
+                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + fixedInfo.fixedInfo[i].Treatmentdescribe + '体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-12">体位详细描述：<span class="underline">' + fixedInfo.fixedInfo[i].BodyPositionDetail + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + fixedInfo.fixedInfo[i].Remarks + '</span></div></div>'

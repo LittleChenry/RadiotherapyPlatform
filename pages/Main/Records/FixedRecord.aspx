@@ -90,7 +90,7 @@
                     </div>
                     <div class="single-row tab-row">
                         <ul id="tabs" class="nav nav-tabs">
-                            <li class="active"><a href="#tab" data-toggle="tab" aria-expanded="true">疗程<span id="current-tab" ></span>体位固定记录</a></li>
+                            <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
                         </ul>
                     </div>
                     <div id="tab-content" class="tab-content">

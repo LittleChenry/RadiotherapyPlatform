@@ -89,7 +89,7 @@ public class patientInfoForDoctor : IHttpHandler {
            string sqlCommand11 = "select groups.groupName as groupname from groups,groups2user where groups.ID=groups2user.Group_ID and groups2user.ID=@groupid";
            sqlOperation.AddParameterWithValue("@groupid", Convert.ToInt32(element));
            string groupname = sqlOperation.ExecuteScalar(sqlCommand11);
-           string sqlCommand2 = "select treatment.Group_ID as groupID,treatment.ID as treatid,patient.*,State,Progress,user.Name as doctor,treatment.Treatmentname,Group_ID,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and treatment.Group_ID=@groupid  order by patient.ID desc";
+           string sqlCommand2 = "select treatment.Group_ID as groupID,treatment.ID as treatid,patient.*,State,Progress,user.Name as doctor,treatment.Treatmentdescribe,Group_ID,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and treatment.Group_ID=@groupid  order by patient.ID desc";
            sqlOperation2.AddParameterWithValue("@groupid", Convert.ToInt32(element));
            MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
            while (reader.Read())
@@ -111,7 +111,7 @@ public class patientInfoForDoctor : IHttpHandler {
                }
  
                backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result +
-                    "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentname"].ToString() + "\",\"groupname\":\"" + groupname
+                    "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + groupname
                     + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\"}");
 
                if (i < Count)

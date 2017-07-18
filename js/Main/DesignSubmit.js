@@ -31,7 +31,7 @@ function Init(evt) {
     document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
-    document.getElementById("treatID").innerHTML = "疗程" + patient.Treatmentname;
+    document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
@@ -44,7 +44,7 @@ function Init(evt) {
     var select3 = document.getElementById("Algorithm");
     createAlgorithmItem(select3);
     var designInfo = getDesignInfo(treatID);
-    $("#current-tab").text("疗程" + patient.Treatmentname + "计划提交");
+    $("#current-tab").text(patient.Treatmentdescribe + "计划提交");
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '9')) {
         for (var i = 0; i < designInfo.length; i++) {
@@ -70,7 +70,7 @@ function Init(evt) {
                 document.getElementById("applyuser").innerHTML = designInfo[i].SubmitUser;
                 document.getElementById("time").innerHTML = designInfo[i].SubmitTime;
                 } else {
-                    var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + designInfo[i].Treatmentname + '计划提交信息</a></li>';
+                    var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].Treatmentdescribe + '计划提交信息</a></li>';
                     var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                         + '<div class="item col-xs-6">计划系统：<span class="underline">' + designInfo[i].PlanSystemname + '</span></div>'
                         + '<div class="item col-xs-6">射野数量：<span class="underline">' + designInfo[i].IlluminatedNumber + '</span></div></div>'
@@ -92,7 +92,7 @@ function Init(evt) {
             for (var i = 0; i < designInfo.length; i++) {
                 if (designInfo[i].Treatmentname != patient.Treatmentname) {
 
-                    var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">疗程' + designInfo[i].Treatmentname + '计划提交信息</a></li>';
+                    var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].Treatmentdescribe + '计划提交信息</a></li>';
                     var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                         + '<div class="item col-xs-6">计划系统：<span class="underline">' + designInfo[i].PlanSystemname + '</span></div>'
                         + '<div class="item col-xs-6">射野数量：<span class="underline">' + designInfo[i].IlluminatedNumber + '</span></div></div>'

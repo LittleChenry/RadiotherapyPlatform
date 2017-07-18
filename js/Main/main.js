@@ -155,7 +155,7 @@ function Paging(patient,role){
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = patient.PatientInfo[i].groupname;
-                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
+                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
                         + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
                     tbody += tr;
                 }
@@ -178,7 +178,7 @@ function Paging(patient,role){
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = patient.PatientInfo[i].groupname;
-                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
+                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
                         + "</td><td>" + doctor + "</td></tr>";
                     tbody += tr;
                 }
@@ -201,7 +201,7 @@ function Paging(patient,role){
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = patient.PatientInfo[i].groupname;
-                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
+                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
                         + "</td><td>" + doctor + "</td></tr>";
                     tbody += tr;
                 }
@@ -229,7 +229,7 @@ function Paging(patient,role){
                             Completed = (patient.PatientInfo[i].Completed == "1")? "已完成":"未完成";
                             begin = toTime(patient.PatientInfo[i].begin);
                             end = toTime(patient.PatientInfo[i + 1].end);
-                            var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td>"
+                            var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td>"
                                 + "<td>" + doctor + "</td></tr>";
                             tbody += tr;
                             i++;
@@ -247,7 +247,7 @@ function Paging(patient,role){
                     Completed = (patient.PatientInfo[i].Completed == "1")? "已完成":"未完成";
                     begin = toTime(patient.PatientInfo[i].begin);
                     end = toTime(patient.PatientInfo[i].end);
-                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td>"
+                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td>"
                         + "<td>" + doctor + "</td></tr>";
                     tbody += tr;
                 }
@@ -276,7 +276,7 @@ function Paging(patient,role){
                     totalnumber = patient.PatientInfo[i].totalnumber;
                     totaltimes = patient.PatientInfo[i].totaltimes;
                     var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + finishedtimes + "</td><td>" + totalnumber + "</td>"
-                        + "<td>" + totaltimes + "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td><td>" + doctor + "</td></tr>";
+                        + "<td>" + totaltimes + "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td><td>" + doctor + "</td></tr>";
                     tbody += tr;
                 }
                 tbody += '</tbody>';
@@ -301,7 +301,7 @@ function Paging(patient,role){
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = patient.PatientInfo[i].groupname;
-                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + "疗程"+ treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
+                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
                         + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
                     tbody += tr;
                 }

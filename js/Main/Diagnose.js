@@ -20,9 +20,10 @@ function createPatient(evt) {
     treatID = treatmentgroup.split("=")[1];
     var treatmentgroup1 = window.location.search.split("&")[0];
     radioID = treatmentgroup1.split("=")[1];
-    document.getElementById("treatID").innerHTML = "疗程" + treatID;
+   
     document.getElementById("radiotherapy").innerHTML = radioID;
     var patient = getPatientInfo(treatID, radioID);
+    document.getElementById("treatID").innerHTML = treatID;
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
@@ -43,11 +44,11 @@ function createPatient(evt) {
     var select4 = document.getElementById("diagresult");
     createDiagResultItem(select4);
     var diagnosisInfo = getDignoseInfo(patient.treatID);
-    $("#current-tab").text("疗程" + treatID + "诊断");
+    $("#current-tab").text(treatID + "诊断");
     var groupprogress = patient.Progress.split(",");
     if (contains(groupprogress,"1")) {
         for (var i = 0; i < diagnosisInfo.diagnosisInfo.length; i++) {
-            if (treatID == diagnosisInfo.diagnosisInfo[i].Treatmentname) {
+            if (patient.Treatmentname == diagnosisInfo.diagnosisInfo[i].Treatmentname) {
                 document.getElementById("operator").innerHTML = diagnosisInfo.diagnosisInfo[i].username;
                 document.getElementById("remark").value = diagnosisInfo.diagnosisInfo[i].Remarks;
                 document.getElementById("part").value = diagnosisInfo.diagnosisInfo[i].partID;
@@ -55,7 +56,7 @@ function createPatient(evt) {
                 document.getElementById("date").innerHTML = diagnosisInfo.diagnosisInfo[i].Time;
                 
             } else {
-                var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ diagnosisInfo.diagnosisInfo[i].Treatmentname +'诊断</a></li>';
+                var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">'+ diagnosisInfo.diagnosisInfo[i].Treatmentdescribe +'诊断</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                    + '<div class="item col-xs-4">患病部位：<span class="underline">' + diagnosisInfo.diagnosisInfo[i].partname + '</span></div>'
                    + '<div class="item col-xs-4">诊断结果：<span class="underline">' + diagnosisInfo.diagnosisInfo[i].diagnosisresultName + '</span></div>'
@@ -70,8 +71,8 @@ function createPatient(evt) {
         document.getElementById("operator").innerHTML = userName;
         document.getElementById("diaguserid").value = userID;
         for (var i = 0; i < diagnosisInfo.diagnosisInfo.length; i++) {
-            if (treatID != diagnosisInfo.diagnosisInfo[i].Treatmentname) {
-                var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">疗程'+ diagnosisInfo.diagnosisInfo[i].Treatmentname +'诊断</a></li>';
+            if (patient.Treatmentname != diagnosisInfo.diagnosisInfo[i].Treatmentname) {
+                var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">'+ diagnosisInfo.diagnosisInfo[i].Treatmentdescribe +'诊断</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
                     + '<div class="item col-xs-4">患病部位：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].partname +'</span></div>'
                     + '<div class="item col-xs-4">诊断结果：<span class="underline">'+ diagnosisInfo.diagnosisInfo[i].diagnosisresultName +'</span></div>'  
