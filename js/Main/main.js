@@ -32,7 +32,6 @@ $(document).ready(function () {
         $("#saveTemplate-list").removeAttr("disabled");
         $("#chooseTemplate").removeAttr("disabled");
         $("#Template-List").removeAttr("disabled");
-        $("#printIframe").removeAttr("disabled");
         $('#edit').attr("disabled","disabled");
     });
     $("#saveTreatment").unbind("click").bind("click",function(){
@@ -1233,7 +1232,6 @@ function checkEdit(str){
     $('#saveTemplate-list').attr("disabled","disabled");
     $("#chooseTemplate").attr("disabled","disabled");
     $("#Template-List").attr("disabled","disabled");
-    $("#printIframe").attr("disabled","disabled");
     var activeProgress = getProgressActive();
     for (var i = 0; i < functions.length; i++) {
         if (functions[i] == str) {
@@ -1523,6 +1521,5 @@ function OperateAttrDisabled(){
     $("#saveTemplate-list").attr("disabled","disabled");
     $("#chooseTemplate").attr("disabled","disabled");
     $("#Template-List").attr("disabled","disabled");
-    $("#printIframe").attr("disabled","disabled");
     $('#edit').attr("disabled","disabled");
 }

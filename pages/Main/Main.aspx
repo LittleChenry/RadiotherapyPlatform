@@ -338,7 +338,7 @@
                     <li><a id="saveTemplate-button">另存模板</a></li>
                 </ul>
             </div>
-            <button id="printIframe" class="btn btn-success" disabled="disabled"><i class="fa fa-fw fa-print"></i>打印</button>
+            <button id="printIframe" class="btn btn-success"><i class="fa fa-fw fa-print"></i>打印</button>
             </div>
         </nav>
         </div>

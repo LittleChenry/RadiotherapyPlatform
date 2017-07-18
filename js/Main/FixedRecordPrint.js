@@ -26,6 +26,7 @@ function print() {
     }
 
     $("#printArea .paper").css("border", "0px");
+    $("#printArea .tab-row").css("display", "none");
     $("#printArea .img").removeClass("img").css("height","140px");
     $("#printArea .boxes").removeClass("boxes").css("margin", "0px 16px 16px 0px");
     $(".area-group").removeClass("area-group");
