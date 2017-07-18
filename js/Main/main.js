@@ -83,11 +83,11 @@ function RolesToPatients(){
                     alert("结束日期不能为空！");
                     return false;
                 }
-                if (startdate < enddate) {
+                if (startdate > enddate) {
                     alert("结束日期不能小于开始日期！");
                     return false;
                 }
-                if (startdate > currentTime) {
+                if (startdate < currentTime) {
                     alert("开始日期不能小于当天日期！");
                     return false;
                 }
