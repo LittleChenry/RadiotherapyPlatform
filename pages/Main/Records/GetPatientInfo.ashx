@@ -33,7 +33,7 @@ public class GetPatientInfo : IHttpHandler
         DataLayer sqlOperation2 = new DataLayer("sqlStr");
         DataLayer sqlOperation1 = new DataLayer("sqlStr");
         StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
-        string sqlCommand2 = "select treatment.ID as treatid,patient.*,Progress,user.Name as doctor,treatment.Treatmentname,Group_ID,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID order by patient.ID desc";
+        string sqlCommand2 = "select treatment.ID as treatid,patient.*,Progress,user.Name as doctor,treatment.Treatmentdescribe,Group_ID,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID order by patient.ID desc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         int i = 1;
       
@@ -67,7 +67,7 @@ public class GetPatientInfo : IHttpHandler
                 groupname = sqlOperation1.ExecuteScalar(sqlCommand5);               
             }
             backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result +
-                 "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentname"].ToString() + "\",\"groupname\":\"" + groupname
+                 "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + groupname
                  + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\"}");
 
             if (i < count)

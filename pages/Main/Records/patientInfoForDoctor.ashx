@@ -126,7 +126,7 @@ public class patientInfoForDoctor : IHttpHandler {
        {
            backText.Append(",");
        }
-       string command3 = "select treatment.ID as treatid,patient.*,State,Progress,user.Name as doctor,treatment.Treatmentname,Group_ID,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and treatment.Group_ID is NULL and treatment.Belongingdoctor=@userid  order by patient.ID desc";
+       string command3 = "select treatment.ID as treatid,patient.*,State,Progress,user.Name as doctor,treatment.Treatmentdescribe,Group_ID,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and treatment.Group_ID is NULL and treatment.Belongingdoctor=@userid  order by patient.ID desc";
        MySql.Data.MySqlClient.MySqlDataReader reader3 = sqlOperation2.ExecuteReader(command3);
        int temp=0;
        while (reader3.Read())
@@ -149,7 +149,7 @@ public class patientInfoForDoctor : IHttpHandler {
            }
 
            backText.Append("{\"Name\":\"" + reader3["Name"].ToString() + "\",\"diagnosisresult\":\"" + result +
-                "\",\"Radiotherapy_ID\":\"" + reader3["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader3["Treatmentname"].ToString() + "\",\"groupname\":\"" + ""
+                "\",\"Radiotherapy_ID\":\"" + reader3["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader3["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + ""
                 + "\",\"Progress\":\"" + reader3["Progress"].ToString() + "\",\"doctor\":\"" + reader3["doctor"].ToString() + "\",\"treatID\":\"" + reader3["treatid"].ToString() + "\"}");
 
            if (temp < count2-1)
