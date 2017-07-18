@@ -28,11 +28,9 @@
      <div class="background-img-fixed" style="margin:auto;text-align:center;">
         <img src="../../img/hospital.png" />
     </div>
-    <div class="name-logo">
-        <img src="../../img/hospitallogo.png" style="margin-left:20px;width:30%;max-width: 500px;" />
-    </div>
-    <div style="margin:auto;text-align:center;">
-        <img src="../../img/title.png" style="width:80%;max-width: 1300px;" />
+    <div style="margin:auto;text-align:center;padding-top:6%;">
+        <img src="../../img/title.png" style="width:65%;max-width: 1300px;" />
+        <img src="../../img/title-english.png" style="width:65%;max-width: 1300px;" />
     </div>
     <div id="loginDiv" class="login-box-body toCenter toDown">
     <h2 class="login-box-msg">请登录</h2>
@@ -66,14 +64,21 @@
     <label id="error"></label>
     </div>
 
-     <div id="chooseRole" class="login-box-body toCenter toDown" >
+    <div id="chooseRole" class="login-box-body toCenter toDown" >
         <h2 class="login-box-msg">请选择登录角色</h2>
-            <div class="form-group has-feedback">
-                <select id="userRole" class="form-control"></select>
-            </div>
-            <br />
+        <div class="form-group has-feedback">
+            <select id="userRole" class="form-control"></select>
+        </div>
+        <br />
         <input id="login2" type="button" value="登陆" class="btn btn-primary btn-block btn-flat"/>
-      </div>
+    </div>
+
+    <footer class="main-footer" style="margin:0px;position:fixed;bottom:0;width: 100%;">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 2.0
+        </div>
+        <strong>Copyright &copy; 2017-2017 <a href="http://www.jsph.org.cn/"> 江苏省人民医院</a> .</strong> 保留所有权利
+    </footer>
 
     <script src="../../js/Login/LoginJS.js"></script>
   

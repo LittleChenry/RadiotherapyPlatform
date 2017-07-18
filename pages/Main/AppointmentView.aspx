@@ -31,12 +31,12 @@
     <!-- Logo -->
     <a href="" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>JS</b>PH</span>
+      <span class="logo-mini"><b>R</b>QS</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <div style="position: absolute;">
-        <h3 style="margin-top: 13px;margin-left: 10px;color: white;">江苏省人民医院放疗同质化平台</h3>
+        <h3 style="margin-top: 13px;margin-left: 10px;color: white;">放疗质控系统</h3>
       </div>
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
