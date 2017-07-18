@@ -16,14 +16,12 @@ function createPatient(evt) {
         }
     }
     getUserName();
-    var treatmentgroup = window.location.search.split("&")[1];
-    treatID = treatmentgroup.split("=")[1];
-    var treatmentgroup1 = window.location.search.split("&")[0];
-    radioID = treatmentgroup1.split("=")[1];
-   
-    document.getElementById("radiotherapy").innerHTML = radioID;
-    var patient = getPatientInfo(treatID, radioID);
+    var treatID = window.location.search.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
+
+    var patient = getPatientInfo(treatID);
+    document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
+    document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
@@ -43,8 +41,8 @@ function createPatient(evt) {
     createPartItem(select3);
     var select4 = document.getElementById("diagresult");
     createDiagResultItem(select4);
-    var diagnosisInfo = getDignoseInfo(patient.treatID);
-    $("#current-tab").text(treatID + "诊断");
+    var diagnosisInfo = getDignoseInfo(treatID);
+    $("#current-tab").text(patient.Treatmentdescribe + "诊断");
     var groupprogress = patient.Progress.split(",");
     if (contains(groupprogress,"1")) {
         for (var i = 0; i < diagnosisInfo.diagnosisInfo.length; i++) {
@@ -143,9 +141,9 @@ function getDignoseInfo(treatid) {
 }
 
 //获取病人基本信息
-function getPatientInfo(treatmentID, RadiotherapyID) {
+function getPatientInfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "patientForDiagnose.ashx?treatmentID=" + treatmentID + "&RadiotherapyID=" + RadiotherapyID;
+    var url = "patientForDiagnose.ashx?treatmentID=" + treatmentID;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
