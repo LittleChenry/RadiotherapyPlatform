@@ -11,7 +11,7 @@ public class TreatmentRecord : IHttpHandler {
         context.Response.ContentType = "text/plain";
         try
         {
-            string json = getpatientFixinfo(context);
+            string json = treatrecord(context);
             sqlOperation.Close();
             sqlOperation.Dispose();
             context.Response.Write(json);
@@ -29,59 +29,72 @@ public class TreatmentRecord : IHttpHandler {
             return false;
         }
     }
-    private string getpatientFixinfo(HttpContext context)
+    private string treatrecord(HttpContext context)
     {
 
-        int treatID = Convert.ToInt32(context.Request.QueryString["treatID"]);
-        int i = 1;
-        string countCompute = "select count(ID) from treatmentrecord where TreatTime is not NULL and TreatedDays is not NULL and TreatedTimes is not NULL and Treat_User_ID is not NULL and Assist_User_ID is not NULL and Treatment_ID=@treatid";
-        sqlOperation.AddParameterWithValue("@treatid", treatID);
-        int count = int.Parse(sqlOperation.ExecuteScalar(countCompute));
-
-        string sqlCommand = "select treatmentrecord.*,user.Name as username from treatmentrecord,user where treatmentrecord.TreatTime is not NULL and treatmentrecord.TreatedDays is not NULL and treatmentrecord.TreatedTimes is not NULL and treatmentrecord.Treat_User_ID is not NULL and treatmentrecord.Treat_User_ID=user.ID and treatmentrecord.Treatment_ID=@treatid and treatmentrecord.Assist_User_ID is not NULL order by TreatTime desc";
-        sqlOperation.AddParameterWithValue("@treatid", treatID);
-        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
-        StringBuilder backText = new StringBuilder("{\"treatmentRecordInfo\":[");
-        //reader.Read();
-        //backText.Append(count);
-        while (reader.Read())
+        int treatID = Convert.ToInt32(context.Request["treatmentID"]);
+        int appointid = Convert.ToInt32(context.Request["appoint"]);
+        int totalnumber = Convert.ToInt32(context.Request["totalnumber"]);
+        int user = Convert.ToInt32(context.Request["user"]);
+        string  assistant = context.Request["assistant"];
+        int treatdays=Convert.ToInt32(context.Request["treatdays"]);
+        int patient=Convert.ToInt32(context.Request["patientid"]);
+        string sqlcommand1 = "select IlluminatedNumber,MachineNumbe,DosagePriority from design,treatment where design.ID=treatment.Design_ID and treatment.ID=@treat";
+        sqlOperation.AddParameterWithValue("treat", treatID);
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand1);
+        string IlluminatedNumber = "";
+        string MachineNumbe = "";
+        int DosagePriority = 0;
+        if (reader.Read())
         {
-            string date = reader["TreatTime"].ToString();
-            DateTime dt1 = Convert.ToDateTime(date);
-            string date1 = dt1.ToString("yyyy-MM-dd");
-            int ID = Convert.ToInt32(reader["ID"].ToString());
-            string operate = null;
-            string sqlCommand1 = "select user.Name from user,treatmentrecord where treatmentrecord.Assist_User_ID=user.ID and treatmentrecord.ID = @id";
-            sqlOperation1.AddParameterWithValue("@id", ID);
-            string assist = sqlOperation1.ExecuteScalar(sqlCommand1);
-            if (reader["Check_User_ID"] is DBNull)
+            string Do = reader["DosagePriority"].ToString();
+            string Priority = Do.Split(new char[1] { '&' })[0];
+            string[] dosage = Priority.Split(new char[1] { ';' });
+            int k = 0;
+            int finaldos = 0;
+            for (k = 0; k <= dosage.Length - 2; k++)
             {
+                if (Convert.ToInt32(dosage[k].Split(new char[1] { ',' })[3]) >= finaldos)
+                {
+                    finaldos = Convert.ToInt32(dosage[k].Split(new char[1] { ',' })[3]);
+                }
+            }
+            IlluminatedNumber = reader["IlluminatedNumber"].ToString();
+            MachineNumbe = reader["MachineNumbe"].ToString();
+            DosagePriority = finaldos;
+        }
+        reader.Close();
+        string sqlcommand2 = "select count(*) from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL";
+        int finishedtimes = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
+        string insert = "update treatmentrecord set TreatTime=@time,TreatedDays=@treatdays,TreatedTimes=@treattimes,Rest=@rest,Treat_User_ID=@user,IlluminatedNumber=@number1,MachineNumber=@number2,Assist_User=@assist,Singlenumber=@single where Appointment_ID=@appoint and Treatment_ID=@treat";
+        sqlOperation.AddParameterWithValue("@time", DateTime.Now);
+        sqlOperation.AddParameterWithValue("@treatdays", treatdays);
+        sqlOperation.AddParameterWithValue("@treattimes", finishedtimes + 1);
+        sqlOperation.AddParameterWithValue("@rest", totalnumber - finishedtimes - 1);
+        sqlOperation.AddParameterWithValue("@user", user);
+        sqlOperation.AddParameterWithValue("@number1", Convert.ToInt32(IlluminatedNumber));
+        sqlOperation.AddParameterWithValue("@number2", Convert.ToDouble(MachineNumbe));
+        sqlOperation.AddParameterWithValue("@assist", assistant);
+        sqlOperation.AddParameterWithValue("@single", DosagePriority);
+        sqlOperation.AddParameterWithValue("@appoint", appointid);
+        int success = sqlOperation.ExecuteNonQuery(insert);
+        if (success > 0)
+        {
 
-                operate = null;
+            string sqlcommand3 = "update appointment set Patient_ID=@patient,Treatment_ID=@treat,Completed=1 where ID=@appoint";
+            sqlOperation.AddParameterWithValue("@patient", patient);
+            int success1 = sqlOperation.ExecuteNonQuery(sqlcommand3);
+            if (success1 == 0)
+            {
+                return "fail";
             }
             else
             {
-                string sqlCommand2 = "select user.Name from user,treatmentrecord where treatmentrecord.Check_User_ID=user.ID and treatmentrecord.ID = @treatid";
-                sqlOperation1.AddParameterWithValue("@treatid",ID);
-                operate = sqlOperation1.ExecuteScalar(sqlCommand2);
+                return "success";
+            }
 
-            }
-            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Treatment_ID\":\"" + reader["Treatment_ID"].ToString() +
-                 "\",\"Illuminated\":\"" + reader["Illuminated"].ToString() + "\",\"Equipment_ID\":\"" + reader["Equipment_ID"].ToString() +
-                  "\",\"TreatTime\":\"" + date1 + "\",\"TreatPicture\":\"" + reader["TreatPicture"].ToString() +
-                   "\",\"TreatedDays\":\"" + reader["TreatedDays"].ToString() + "\",\"TreatedTimes\":\"" + reader["TreatedTimes"].ToString() +
-                    "\",\"Rest\":\"" + reader["Rest"].ToString() + "\",\"Treat_User_ID\":\"" + reader["username"].ToString() +
-                     "\",\"Check_User_ID\":\"" + operate + "\",\"Appointment_ID\":\"" + reader["Appointment_ID"].ToString() +
-                     "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"Singlenumber\":\"" + reader["Singlenumber"].ToString() + "\",\"X_System\":\"" + reader["X_System"].ToString() + "\",\"Y_System\":\"" + reader["Y_System"].ToString() + "\",\"Z_System\":\"" + reader["Z_System"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() +
-                     "\",\"Assist_User_ID\":\"" + assist + "\"}");
-            if (i < count)
-            {
-                backText.Append(",");
-            }
-            i++;
         }
-        backText.Append("]}");
-        return backText.ToString();
-
+        return "fail";
+        
     }
 }

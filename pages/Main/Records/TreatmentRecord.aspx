@@ -54,22 +54,43 @@
                     <span>病案信息：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">疗程号：<span id="treatID" class="underline"></span></div>
-                    <div class="item col-xs-4">患病部位：<span id="part" class="underline"></span></div>
-                    <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
-                </div>
+                        <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                        <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
+                        <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                        <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
+                        <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
+                    </div>
             </div>
             <div class="paper-content">
                 <div class="content-title">
                     <span>填写放射治疗记录与IGRT记录：</span>
                 </div>
                 <div class="single-row">
-                    <div class="col-xs-12" style="padding-left:50%;">
-                        <button id="treatmentedit" type="button" class="btn btn-success" >记载放疗记录</button>
-                        <button id="finishigrt" type="button" class="btn btn-info" >记载IGRT记录</button>
+                    <div class="col-xs-7">
+                     <span class="form-text col-xs-6" style="padding-left:0px;">放疗总次数：
+                     <input id="totalnumber" type="number" name="totalnumber" class="form-item" disabled="disabled"/>
+                     </span>
+                     <span class="form-text col-xs-5" style="padding-left:0px;">
+                     <button id="rest" disabled="disabled" type="button" data-toggle="modal" data-target="#appoint" class="btn btn-warning" >剩余加速器预约</button> 
+                     </span>
+                    </div>
+                   <div class="col-xs-5">
+                    <span class="form-text col-xs-12" style="padding-left:0px;">是否结束治疗：
+                        <input id="finishthistreat" value="0" type="hidden" name="finishthistreat" class="form-item" />
+                        <button id="finish" disabled="disabled" type="button" class="btn btn-warning" >结束</button>
+                    </span>
                     </div>
                 </div>
-            </div>
+                <div class="single-row">
+                    <div class="col-xs-12" style="padding-left:40%;">
+                        <button id="treatmentedit" disabled="disabled" type="button" class="btn btn-success" >记载放疗记录</button>
+                        <button id="finishigrt"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button>
+                    </div>
+                </div>
+                </div>
             <div class="paper-footer">
            <div class="content-title">
                     <span>放射治疗记录：</span>
@@ -91,7 +112,7 @@
                                     <th>周剂量核对</th>
                                 </tr>
                             </thead>
-                            <tbody id="treatmentrecord" style="text-align:center;"> 
+                            <tbody id="treatment" style="text-align:center;"> 
                             </tbody>
                         </table>
                    </div>
@@ -108,8 +129,8 @@
                                     <th>X(cm)</th>
                                     <th>Y(cm)</th>
                                     <th>Z(cm)</th>
-                                    <th>主操作手</th>
-                                    <th>副操作手</th>
+                                    <th>主操作</th>
+                                    <th>副操作</th>
                             </tr>
                        </thead>
                             <tbody id="IGRT" style="text-align:center;"> 
@@ -137,11 +158,68 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">验证</button>
+                    <button id="validate" type="button" class="btn btn-primary"  data-dismiss="modal">验证</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+       <div id="igrt" style="width:50%;margin:auto" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">IGRT记录</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <span>X方向：
+                        <input type="number" class="form-control" id="xvalue" />
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <span>y方向：
+                        <input type="number" class="form-control" id="yvalue" />
+                        </span>
+                    </div>
+                     <div class="form-group">
+                        <span>z方向：
+                        <input type="number" class="form-control" id="zvalue" />
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="recordigrt" type="button" class="btn btn-primary"  data-dismiss="modal">提交记录</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+       <div class="modal fade" id="appoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:700px;margin:50px auto;">
+            <div class="panel panel-default" style="max-width:1000px;margin:auto;">
+                <div class="panel-heading">
+                    <h4 class="modal-title">预约设备与时间窗口</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="panel-row">
+                        <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
+                        <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                        <div class="col-xs-2">
+                            <button id="chooseProject" class="btn btn-default">查询该项</button>
+                        </div>
+                    </div>
+                    <div class="panel-row">
+                        <table id="apptiontTable" class="table table-bordered col-xs-12"></table>
+                    </div>
+                    <div class="panel-row">
+                        <div class="col-xs-6">
+                            <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal" aria-label="Close" >取消</button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button class="btn btn-default" id="sure" type="button" data-dismiss="modal">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>

@@ -21,7 +21,7 @@ public class setAssistant : IHttpHandler, IRequiresSessionState
 
     private void setSession(HttpContext context)
     {
-        string assistant = context.Request.Form["assistant"];
+        string assistant = context.Request["assistant"];
 
         UserInformation user = (UserInformation)context.Session["loginUser"];
         user.setAssistant(assistant);
