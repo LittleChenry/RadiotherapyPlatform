@@ -407,7 +407,7 @@ function trAddClick(patient){
                         break;
                     case 1:
                         if (LightLi(this,Progresses, "1", "0", "-1")) {
-                            var url = "Records/Diagnose.aspx?Radiotherapy_ID=" + e.data.Radiotherapy_ID +"&treat=" + e.data.treat;
+                            var url = "Records/Diagnose.aspx?TreatmentID=" + e.data.ID;
                         }else{
                             var url = "Records/Blank.aspx";
                         }
