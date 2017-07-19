@@ -86,7 +86,48 @@ function Init(evt) {
             }
         }
     }
-
+    $('#ReferenceCenterX').bind('input propertychange', function () {
+        if (document.getElementById("ReferenceCenterX").value == "") {
+            document.getElementById("MovementX").value = "";
+        } else {
+            document.getElementById("MovementX").value = parseInt(document.getElementById("ReferenceCenterX").value) - parseInt(document.getElementById("TreatmentCenterX").value);
+        }
+    });
+    $('#TreatmentCenterX').bind('input propertychange', function () {
+        if (document.getElementById("TreatmentCenterX").value == "") {
+            document.getElementById("MovementX").value = "";
+        } else {
+            document.getElementById("MovementX").value = parseInt(document.getElementById("ReferenceCenterX").value) - parseInt(document.getElementById("TreatmentCenterX").value);
+        }
+    });
+    $('#ReferenceCenterY').bind('input propertychange', function () {
+        if (document.getElementById("ReferenceCenterY").value == "") {
+            document.getElementById("MovementY").value = "";
+        } else {
+            document.getElementById("MovementY").value = parseInt(document.getElementById("ReferenceCenterY").value) - parseInt(document.getElementById("TreatmentCenterY").value);
+        }
+    });
+    $('#TreatmentCenterY').bind('input propertychange', function () {
+        if (document.getElementById("TreatmentCenterY").value == "") {
+            document.getElementById("MovementY").value = "";
+        } else {
+            document.getElementById("MovementY").value = parseInt(document.getElementById("ReferenceCenterY").value) - parseInt(document.getElementById("TreatmentCenterY").value);
+        }
+    });
+    $('#ReferenceCenterZ').bind('input propertychange', function () {
+        if (document.getElementById("ReferenceCenterZ").value == "") {
+            document.getElementById("MovementZ").value = "";
+        } else {
+            document.getElementById("MovementZ").value = parseInt(document.getElementById("ReferenceCenterZ").value) - parseInt(document.getElementById("TreatmentCenterZ").value);
+        }
+    });
+    $('#TreatmentCenterZ').bind('input propertychange', function () {
+        if (document.getElementById("TreatmentCenterZ").value == "") {
+            document.getElementById("MovementZ").value = "";
+        } else {
+            document.getElementById("MovementZ").value = parseInt(document.getElementById("ReferenceCenterZ").value) - parseInt(document.getElementById("TreatmentCenterZ").value);
+        }
+    });
 }
 function isInArray(arr, value) {
     for (var i = 0; i < arr.length; i++) {
