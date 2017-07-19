@@ -21,11 +21,11 @@ $(document).ready(function () {
         window.location.replace("../Login/Login.aspx");
     });
     $("#save").unbind("click").click(function () {
+        $('#save').attr("disabled", "disabled");
+        $('#saveTemplate-list').attr("disabled", "disabled");
         $("#record-iframe")[0].contentWindow.save();
         RolesToPatients();
         Recover();
-        $('#save').attr("disabled", "disabled");
-        $('#saveTemplate-list').attr("disabled", "disabled");
     });
     $('#edit').unbind("click").click(function () {
         $("#record-iframe")[0].contentWindow.remove();
@@ -1756,6 +1756,7 @@ function getPatient(userID, role, parameters) {
 function chooseEquipment() {
     $("#chooseMachine").modal({ backdrop: 'static' });
     var session = getSession();
+    $("#equipmentType").html("");
     switch (session.role) {
         case "模拟技师":
             var options = '<option value="">----选择项目----</option><option value="体位固定">体位固定</option><option value="模拟定位">CT模拟</option>';
