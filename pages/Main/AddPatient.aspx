@@ -435,7 +435,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.0
     </div>
-    <strong>Copyright &copy; 2017-2017 <a href="http://www.jsph.org.cn/"> 江苏省人民医院</a> .</strong> 保留所有权利
+    <strong>Copyright &copy; 2017 <a href="#"> 医院</a> .</strong> 保留所有权利
   </footer>
 
   <!-- Add the sidebar's background. This div must be placed
