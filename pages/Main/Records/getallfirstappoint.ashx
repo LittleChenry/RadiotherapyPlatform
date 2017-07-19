@@ -26,15 +26,41 @@ public class getallfirstappoint : IHttpHandler {
     {
         string treatid = context.Request.QueryString["treatmentID"];
         int treat = int.Parse(treatid);
-        string sqlcommand = "select count(*) from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL";
+        int count = 0;
+        int appointid=0;
+        string sqlcommand = "select Treat_User_ID,Appointment_ID from treatmentrecord where Treatment_ID=@treat order by Appointment_ID desc";
         sqlOperation.AddParameterWithValue("treat", treatid);
-        int count1 = int.Parse(sqlOperation.ExecuteScalar(sqlcommand));
-        string sqlcommand2= "select max(ID) from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL";
-        int count2 = int.Parse(sqlOperation.ExecuteScalar(sqlcommand2));
-        string sqlcommand3 = "select count(*) from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is  NULL and ID>@count";
-        sqlOperation.AddParameterWithValue("@count", count2);
-        int count3 = int.Parse(sqlOperation.ExecuteScalar(sqlcommand3));
-        return count1 +count3+"";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand);
+        while (reader.Read())
+        {
+            if (reader["Treat_User_ID"].ToString() == "")
+            {
+                count++;
+            }
+            else
+            {
+                appointid = int.Parse(reader["Appointment_ID"].ToString());
+                break;
+            }  
+        }
+        reader.Close();
+        if (appointid != 0)
+        {
+            string sqlcommand1 = "select Treat_User_ID from treatmentrecord where Treatment_ID=@treat and Appointment_ID<=@appoint order by Appointment_ID asc";
+            sqlOperation.AddParameterWithValue("@appoint", appointid);
+            MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(sqlcommand1);
+            while (reader1.Read())
+            {
+                if (reader1["Treat_User_ID"].ToString() != "")
+                {
+                    count++;
+                }
+
+            } 
+            reader1.Close();
+        }
+       
+        return count+"";
     }
 
 
