@@ -97,6 +97,17 @@
                     </div>
                 </div>
             </div>
+            <div class="paper-content">
+                <div class="content-title">
+                    <span>病情知情同意：</span>
+                </div>
+                <div class="single-row">
+                    <span class="col-xs-12">上述病史均系本人、家属、陪同医生所述，经查看无误，认可签字。PET/CT检查尚未列入医保范围，已告知本人和/或家属。</span>
+                </div>
+                <div class="single-row">
+                    <span class="col-xs-12">受检者或家属签名：</span>
+                </div>
+            </div>
             <div class="paper-footer">
                 <div class="single-row">
                     <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>

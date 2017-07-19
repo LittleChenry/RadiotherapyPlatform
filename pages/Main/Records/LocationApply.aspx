@@ -135,6 +135,17 @@
               </div>
                </div>
             </div>
+            <div class="paper-content">
+                <div class="content-title">
+                    <span>CT增强知情同意：</span>
+                </div>
+                <div class="single-row">
+                    <span class="col-xs-12">CT增强，已告知本人和/或家属。</span>
+                </div>
+                <div class="single-row">
+                    <span class="col-xs-12">受检者或家属签名：</span>
+                </div>
+            </div>
                      
             <div class="paper-footer">
                 <div class="single-row">
