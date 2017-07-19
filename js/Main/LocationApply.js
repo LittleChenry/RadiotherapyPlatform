@@ -8,6 +8,11 @@ function Init(evt) {
     var treatmentID = treatmentgroup.split("=")[1];
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     getUserName();
     var patient = getLocationPatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
@@ -115,20 +120,22 @@ function Init(evt) {
     $("#tab-content").find("button").each(function () {
         $(this).bind("click", function () {
             var k = this.id;
-            document.getElementById("scanmethod").value = info[k].scanmethodID;
-            document.getElementById("scanpart").value = info[k].scanpartID;
-            document.getElementById("up").value = info[k].UpperBound;
-            document.getElementById("down").value = info[k].LowerBound;
-            document.getElementById("special").value = info[k].locationrequireID;
-            document.getElementById("remark").value = info[k].Remarks;
-            var add = document.getElementsByName("add");
-            if (info[k].Enhance == "1") {
-                add[0].checked = "true";
-                document.getElementById("addmethod").value = info[k].enhancemethod;
-            } else {
-                add[1].checked = "true";
-                document.getElementById("enhancemethod").style.display = "none";
-            }            
+            if (k != "chooseappoint") {
+                document.getElementById("scanmethod").value = info[k].scanmethodID;
+                document.getElementById("scanpart").value = info[k].scanpartID;
+                document.getElementById("up").value = info[k].UpperBound;
+                document.getElementById("down").value = info[k].LowerBound;
+                document.getElementById("special").value = info[k].locationrequireID;
+                document.getElementById("remark").value = info[k].Remarks;
+                var add = document.getElementsByName("add");
+                if (info[k].Enhance == "1") {
+                    add[0].checked = "true";
+                    document.getElementById("addmethod").value = info[k].enhancemethod;
+                } else {
+                    add[1].checked = "true";
+                    document.getElementById("enhancemethod").style.display = "none";
+                }
+            }
         });
     });
 }
@@ -233,6 +240,11 @@ function chooseTempalte(templateID) {
     }
 }
 function save() {
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentid = treatmentgroup.split("=")[1];
     var scanpart = document.getElementById("scanpart").value;
@@ -240,8 +252,9 @@ function save() {
     var special = document.getElementById("special").value;
     var addgroup = document.getElementsByName("add");
     var add;
-    if (addgroup[0].checked == "true") {
+    if (addgroup[0].checked == true) {
         add = addgroup[0].value;
+       
     } else {
         add = addgroup[1].value;
     }
@@ -280,23 +293,41 @@ function save() {
         window.alert("请预约时间与设备");
         return;
     }
-    var xmlHttp = new XMLHttpRequest();
-    var url = "LocationApplyRecord.ashx?id=" + appointid + "&treatid=" + treatmentid + "&scanpart=" + scanpart + "&scanmethod=" + scanmethod + "&user=" + userID + "&add=" + add + "&addmethod=" + addmethod + "&up=" + up + "&down=" + down + "&remark=" + remark + "&requirement=" + special;
- 
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    
-    var result = xmlHttp.responseText;
-    if (result == "success") {
-        window.alert("申请成功");
-        window.location.reload();
-    }
-    if (result == "busy") {
-        window.alert("预约时间被占,需要重新预约");
-    }
-    if (result == "failure") {
-        window.alert("申请失败");
-    }
+    $.ajax({
+        type: "POST",
+        url: "LocationApplyRecord.ashx",
+        async: false,
+        data: {
+            id: appointid,
+            treatid: treatmentid,
+            scanpart: scanpart,
+            scanmethod: scanmethod,
+            user: userID,
+            addmethod: addmethod,
+            up: up,
+            down: down,
+            remark: remark,
+            requirement: special
+        },
+        dateType: "json",
+        success: function (data) {
+            if (data == "success") {
+                window.alert("申请成功");
+                window.location.reload();
+            }
+            if (data == "busy") {
+                window.alert("预约时间被占,需要重新预约");
+            }
+            if (data == "failure") {
+                window.alert("申请失败");
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+
+   
 }
 function saveTemplate(TemplateName) {  
     var scanpart = document.getElementById("scanpart").value;

@@ -31,17 +31,17 @@ public class LocationApplyRecord : IHttpHandler {
     public string AddLocationApplyRecord(HttpContext context)
     {
         //获取表单信息
-        string appoint = context.Request.QueryString["id"];
-        string treatid = context.Request.QueryString["treatid"];
-        string scanpart = context.Request.QueryString["scanpart"];
-        string scanmethod = context.Request.QueryString["scanmethod"];
-        string user = context.Request.QueryString["user"];
-        string add = context.Request.QueryString["add"];
-        string addmethod = context.Request.QueryString["addmethod"];
-        string down = context.Request.QueryString["down"];
-        string up = context.Request.QueryString["up"];
-        string remark = context.Request.QueryString["remark"];
-        string requirement = context.Request.QueryString["requirement"];
+        string appoint = context.Request["id"];
+        string treatid = context.Request["treatid"];
+        string scanpart = context.Request["scanpart"];
+        string scanmethod = context.Request["scanmethod"];
+        string user = context.Request["user"];
+        string add = context.Request["add"];
+        string addmethod = context.Request["addmethod"];
+        string down = context.Request["down"];
+        string up = context.Request["up"];
+        string remark = context.Request["remark"];
+        string requirement = context.Request["requirement"];
         
         string strcommand = "select State from appointment where ID=@appointid";
         sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));

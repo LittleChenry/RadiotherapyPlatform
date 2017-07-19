@@ -330,7 +330,7 @@
                 <ul id="templateul" class="dropdown-menu" role="menu"></ul>
             </div>
             <div class="btn-group">
-                <button id="save" type="button" class="btn btn-success" data-toggle="dropdown" disabled="disabled"><i class="fa fa-fw fa-save"></i>保存</button>
+                <button id="save" type="button" class="btn btn-success"  disabled="disabled"><i class="fa fa-fw fa-save"></i>保存</button>
                 <button id="saveTemplate-list" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" disabled="disabled">
                     <span class="caret"></span>
                 </button>

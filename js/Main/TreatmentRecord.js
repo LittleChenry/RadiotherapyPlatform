@@ -629,29 +629,32 @@ function checkAllTable(treatmentID) {
     var choseid = ChoseID();
     var appoint = choseid.split("_");
     var appointid = appoint[0];
-    var xmlHttp = new XMLHttpRequest();
-    var url = "AccerateAppoint.ashx?id=" + appointid + "&treatid=" + treatmentID;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var result = xmlHttp.responseText;
-    if (result == "success") {
-        window.alert("申请成功");
-        var allfirstnumber = parseInt(getallfirst(treatmentID));
-        var totalnumber = document.getElementById("totalnumber").value;
-        if (parseInt(totalnumber) - allfirstnumber <= 0) {
-            document.getElementById("rest").innerHTML = "剩余加速器预约(剩0次)";
-            document.getElementById("rest").disabled = "disabled";
-        } else {
-            document.getElementById("rest").innerHTML = "剩余加速器预约(剩" + (parseInt(totalnumber) - allfirstnumber) + "次)";
-            document.getElementById("rest").removeAttribute("disabled");
+    $.ajax({
+        type: "POST",
+        url: "FirstAcclerateRecord.ashx",
+        async: false,
+        data: {
+            id: appointid,
+            treatid: treatmentID
+
+        },
+        dateType: "json",
+        success: function (data) {
+            if (data == "success") {
+                window.alert("申请成功");
+                window.location.reload();
+            }
+            if (data == "busy") {
+                window.alert("预约时间被占,需要重新预约");
+            }
+            if (data == "failure") {
+                window.alert("申请失败");
+            }
+        },
+        error: function () {
+            alert("error");
         }
-    }
-    if (result == "busy") {
-        window.alert("预约时间被占,需要重新预约");
-    }
-    if (result == "failure") {
-        window.alert("申请失败");
-    }
+    });
     
 }
 function getreplacetime(treatid) {

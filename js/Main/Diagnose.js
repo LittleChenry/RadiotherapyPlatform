@@ -18,7 +18,6 @@ function createPatient(evt) {
     getUserName();
     var treatID = window.location.search.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
-
     var patient = getPatientInfo(treatID);
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
@@ -205,12 +204,17 @@ function getDiagResultItem() {
     return Items;
 }
 function save() {
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
+    var treatID = window.location.search.split("=")[1];
     var time = document.getElementById("time");
     var diaguserid = document.getElementById("diaguserid");
     var remark = document.getElementById("remark");
     var select3 = document.getElementById("part");
     var select4 = document.getElementById("diagresult");
-    var select5 = document.getElementById("groupid");
     if (select3.value == "allItem") {
         window.alert("请选择部位");
         return;
@@ -219,31 +223,37 @@ function save() {
         window.alert("请选择诊断结果");
         return;
     }
-    if (select5.value == "allItem") {
-        window.alert("请选择分组选项");
-        return;
-    }
+  
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
-    var xmlHttp = new XMLHttpRequest();
-    var url = "recordDiag.ashx?treatid=" + treatID + "&radioid=" + radioID + "&diaguserid=" + diaguserid.value + "&remark=" + remark.value;
-    url = url + "&part=" + select3.value + "&diagresult=" + select4.value + "&group=" + select5.value;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    if (Items == "success") {
-        window.alert("诊断成功");
-        askForBack();
-        return;
+    $.ajax({
+        type: "POST",
+        url: "recordDiag.ashx",
+        async: false,
+        data: {
+            treatid: treatID,
+            diaguserid: diaguserid.value,
+            remark: remark.value,
+            part: select3.value,
+            diagresult: select4.value
+        },
+        dateType: "json",
+        success: function (data) {
+            if (data == "success") {
+                window.alert("诊断成功");
+                askForBack();
+            } else {
+                window.alert("诊断失败");
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });
 
-    }
-    else {
-        window.alert("诊断失败");
-        return;
-    }
 }
 
 function getUserID() {

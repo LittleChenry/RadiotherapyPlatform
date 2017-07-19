@@ -40,6 +40,7 @@ function Init(evt) {
     $("#current-tab").text(patient.Treatmentdescribe + "体位固定申请");
     var groupprogress = patient.Progress.split(",");
     if (contains(groupprogress, "2")) {
+       
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatmentname == patient.Treatmentname) {
                 document.getElementById("modelselect").value = info[i].materialID;
@@ -92,10 +93,12 @@ function Init(evt) {
     $("#tab-content").find("button").each(function () {
         $(this).bind("click", function () {
             var k = this.id;
-            document.getElementById("modelselect").value = info[k].materialID;
-            document.getElementById("specialrequest").value = info[k].require;
-            document.getElementById("fixEquip").value = info[k].fixedequipid;
-            document.getElementById("bodyPost").value = info[k].BodyPosition;
+            if (k != "chooseappoint") {
+                document.getElementById("modelselect").value = info[k].materialID;
+                document.getElementById("specialrequest").value = info[k].require;
+                document.getElementById("fixEquip").value = info[k].fixedequipid;
+                document.getElementById("bodyPost").value = info[k].BodyPosition;
+            }
         });
     });
 }
@@ -204,21 +207,38 @@ function save() {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
-    var xmlHttp = new XMLHttpRequest();
-    var url = "fixedApplyRecord.ashx?id=" + appointid + "&treatid=" + treatmentid + "&model=" + model + "&fixreq=" + special + "&user=" + userID + "&fixequip=" + fixequip + "&bodypost=" + bodypost;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var result = xmlHttp.responseText;
-    if (result == "success") {
-        window.alert("申请成功");
-        window.location.reload();
-    }
-    if (result == "busy") {
-        window.alert("预约时间被占,需要重新预约");
-    }
-    if (result == "failure") {
-        window.alert("申请失败");
-    }
+    $.ajax({
+        type: "POST",
+        url: "fixedApplyRecord.ashx",
+        async: false,
+        data: {
+            id: appointid,
+            treatid: treatmentid,
+            model: model,
+            fixreq: special,
+            special: userID,
+            fixequip: fixequip,
+            bodypost: bodypost
+        },
+        dateType: "json",
+        success: function (data) {
+            if (data== "success") {
+                window.alert("申请成功");
+                window.location.reload();
+            }
+            if (data == "busy") {
+                window.alert("预约时间被占,需要重新预约");
+            }
+            if (data == "failure") {
+                window.alert("申请失败");
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+
+    
 }
 function saveTemplate(TemplateName) {
     var model = document.getElementById("modelselect").value;

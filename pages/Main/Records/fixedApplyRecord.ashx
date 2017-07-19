@@ -30,13 +30,13 @@ public class fixedApplyRecord : IHttpHandler {
     public string AddFixRecord(HttpContext context)
     {
         //获取表单信息
-        string appoint = context.Request.QueryString["id"];
-        string treatid = context.Request.QueryString["treatid"];
-        string model = context.Request.QueryString["model"];
-        string fixreq = context.Request.QueryString["fixreq"];
-        string user = context.Request.QueryString["user"];
-        string fixequip = context.Request.QueryString["fixequip"];
-        string bodypost = context.Request.QueryString["bodypost"];
+        string appoint = context.Request["id"];
+        string treatid = context.Request["treatid"];
+        string model = context.Request["model"];
+        string fixreq = context.Request["fixreq"];
+        string user = context.Request["user"];
+        string fixequip = context.Request["fixequip"];
+        string bodypost = context.Request["bodypost"];
 
         string strcommand = "select State from appointment where ID=@appointid";
         sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));

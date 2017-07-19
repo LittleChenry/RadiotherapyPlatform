@@ -102,21 +102,32 @@ function save() {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
-    var xmlHttp = new XMLHttpRequest();
-    var url = "FirstAcclerateRecord.ashx?id=" + appointid + "&treatid=" + treatmentid;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var result = xmlHttp.responseText;
-    if (result == "success") {
-        window.alert("申请成功");
-        window.location.reload();
-    }
-    if (result == "busy") {
-        window.alert("预约时间被占,需要重新预约");
-    }
-    if (result == "failure") {
-        window.alert("申请失败");
-    }
+    $.ajax({
+        type: "POST",
+        url: "FirstAcclerateRecord.ashx",
+        async: false,
+        data: {
+            id: appointid,
+            treatid: treatmentid
+          
+        },
+        dateType: "json",
+        success: function (data) {
+            if (data == "success") {
+                window.alert("申请成功");
+                window.location.reload();
+            }
+            if (data == "busy") {
+                window.alert("预约时间被占,需要重新预约");
+            }
+            if (data == "failure") {
+                window.alert("申请失败");
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });
 }
 
 //创建某设备某天的预约表
