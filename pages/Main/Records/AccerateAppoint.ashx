@@ -32,8 +32,8 @@ public class AccerateAppoint : IHttpHandler {
     public string AddFixRecord(HttpContext context)
     {
         //获取表单信息
-        string appoint = context.Request.QueryString["id"];
-        string treatid = context.Request.QueryString["treatid"];
+        string appoint = context.Request["id"];
+        string treatid = context.Request["treatid"];
         string strcommand = "select State from appointment where ID=@appointid";
         sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));
         string count = sqlOperation.ExecuteScalar(strcommand);
