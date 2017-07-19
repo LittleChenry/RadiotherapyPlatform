@@ -129,10 +129,10 @@ function Init(evt) {
                 document.getElementById("remark").value = info[k].Remarks;
                 var add = document.getElementsByName("add");
                 if (info[k].Enhance == "1") {
-                    add[0].checked = "true";
+                    add[0].checked = true;
                     document.getElementById("addmethod").value = info[k].enhancemethod;
                 } else {
-                    add[1].checked = "true";
+                    add[1].checked = true;
                     document.getElementById("enhancemethod").style.display = "none";
                 }
             }
@@ -232,10 +232,10 @@ function chooseTempalte(templateID) {
     document.getElementById("remark").value = obj1.templateInfo[0].Remarks;
     var add = document.getElementsByName("add");
     if (obj1.templateInfo[0].Enhance == "1") {
-        add[0].checked = "true";
+        add[0].checked = true;
         document.getElementById("addmethod").value = obj1.templateInfo[0].enhancemethod;
     } else {
-        add[1].checked = "true";
+        add[1].checked = true;
         document.getElementById("enhancemethod").style.display = "none";
     }
 }
@@ -307,7 +307,8 @@ function save() {
             up: up,
             down: down,
             remark: remark,
-            requirement: special
+            requirement: special,
+            add:add
         },
         dateType: "json",
         success: function (data) {
@@ -335,7 +336,7 @@ function saveTemplate(TemplateName) {
     var special = document.getElementById("special").value;
     var addgroup = document.getElementsByName("add");
     var add;
-    if (addgroup[0].checked == "true") {
+    if (addgroup[0].checked == true) {
         add = addgroup[0].value;
     } else {
         add = addgroup[1].value;
@@ -372,10 +373,8 @@ function saveTemplate(TemplateName) {
     }   
     var xmlHttp = new XMLHttpRequest();
     var url = "LocationApplytemplate.ashx?templatename=" + TemplateName + "&scanpart=" + scanpart + "&scanmethod=" + scanmethod + "&user=" + userID + "&add=" + add + "&addmethod=" + addmethod + "&up=" + up + "&down=" + down + "&remark=" + remark + "&requirement=" + special;
-
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
-
     var result = xmlHttp.responseText;
     if (result == "success") {
         window.alert("模板保存成功");

@@ -42,7 +42,6 @@ public class LocationApplyRecord : IHttpHandler {
         string up = context.Request["up"];
         string remark = context.Request["remark"];
         string requirement = context.Request["requirement"];
-        
         string strcommand = "select State from appointment where ID=@appointid";
         sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));
         string count = sqlOperation.ExecuteScalar(strcommand);
@@ -96,7 +95,7 @@ public class LocationApplyRecord : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@Application_User_ID", Convert.ToInt32(user));
                 string maxfixid = sqlOperation.ExecuteScalar(maxnumber);
                 string select1 = "select Progress from treatment where ID=@treat";
-                string progress=sqlOperation.ExecuteScalar(select1);
+                string progress = sqlOperation.ExecuteScalar(select1);
                 //将诊断ID填入treatment表
                 string inserttreat = "update treatment set Location_ID=@Location_ID,Progress=@progress where ID=@treat";
                 sqlOperation.AddParameterWithValue("@progress", progress + ",3");

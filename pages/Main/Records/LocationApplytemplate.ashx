@@ -39,6 +39,7 @@ public class LocationApplytemplate : IHttpHandler
         string remark = context.Request.QueryString["remark"];
         string requirement = context.Request.QueryString["requirement"];
         string name = context.Request.QueryString["templatename"];
+
         //将信息写入数据库，并返回是否成功
         DateTime now = DateTime.Now;
         string date = now.ToString();
@@ -78,7 +79,7 @@ public class LocationApplytemplate : IHttpHandler
         sqlOperation.AddParameterWithValue("@User_ID", Convert.ToInt32(user));
         sqlOperation.AddParameterWithValue("@Name", name);
         int Success = sqlOperation.ExecuteNonQuery(inserttreat);
-        if (Success > 0 && Success2 > 0 )
+        if (Success > 0 && Success2 > 0)
         {
             return "success";
         }

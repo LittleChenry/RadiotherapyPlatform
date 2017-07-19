@@ -216,7 +216,7 @@ function save() {
             treatid: treatmentid,
             model: model,
             fixreq: special,
-            special: userID,
+            user: userID,
             fixequip: fixequip,
             bodypost: bodypost
         },

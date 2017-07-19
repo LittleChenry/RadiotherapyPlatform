@@ -32,15 +32,15 @@ public class TreatmentRecord : IHttpHandler {
     private string treatrecord(HttpContext context)
     {
 
-        int treatID = Convert.ToInt32(context.Request["treatmentID"]);
+        int treatid = Convert.ToInt32(context.Request["treatmentID"]);
         int appointid = Convert.ToInt32(context.Request["appoint"]);
         int totalnumber = Convert.ToInt32(context.Request["totalnumber"]);
         int user = Convert.ToInt32(context.Request["user"]);
-        string  assistant = context.Request["assistant"];
-        int treatdays=Convert.ToInt32(context.Request["treatdays"]);
-        int patient=Convert.ToInt32(context.Request["patientid"]);
+        string assistant = context.Request["assistant"];
+        int treatdays = Convert.ToInt32(context.Request["treatdays"]);
+        int patient = Convert.ToInt32(context.Request["patientid"]);
         string sqlcommand1 = "select IlluminatedNumber,MachineNumbe,DosagePriority from design,treatment where design.ID=treatment.Design_ID and treatment.ID=@treat";
-        sqlOperation.AddParameterWithValue("treat", treatID);
+        sqlOperation.AddParameterWithValue("treat", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand1);
         string IlluminatedNumber = "";
         string MachineNumbe = "";
@@ -64,6 +64,7 @@ public class TreatmentRecord : IHttpHandler {
             DosagePriority = finaldos;
         }
         reader.Close();
+
         string sqlcommand2 = "select count(*) from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL";
         int finishedtimes = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
         string insert = "update treatmentrecord set TreatTime=@time,TreatedDays=@treatdays,TreatedTimes=@treattimes,Rest=@rest,Treat_User_ID=@user,IlluminatedNumber=@number1,MachineNumber=@number2,Assist_User=@assist,Singlenumber=@single where Appointment_ID=@appoint and Treatment_ID=@treat";
