@@ -210,8 +210,8 @@ function Paging(patient, role, userID) {
                 trAddClick(patient, userID);
                 break;
             case "模拟技师":
-                var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, date, begin, end, Completed, doctor;
-                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>预约时间</th><th>是否完成</th><th>疗程</th><th>诊断结果</th>'
+                var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Task, date, begin, end, Completed, doctor;
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>预约项目</th><th>预约时间</th><th>是否完成</th><th>疗程</th><th>诊断结果</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
@@ -224,12 +224,13 @@ function Paging(patient, role, userID) {
                             treat = patient.PatientInfo[i].treat;
                             diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
                             Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
+                            Task = "复位验证";
                             date = patient.PatientInfo[i].date;
                             doctor = patient.PatientInfo[i].doctor;
                             Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
                             begin = toTime(patient.PatientInfo[i].begin);
                             end = toTime(patient.PatientInfo[i + 1].end);
-                            var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td>"
+                            var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Task + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td>"
                                 + "<td>" + doctor + "</td></tr>";
                             tbody += tr;
                             i++;
@@ -243,11 +244,12 @@ function Paging(patient, role, userID) {
                     diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
                     date = patient.PatientInfo[i].date;
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
+                    Task = patient.PatientInfo[i].Task;
                     doctor = patient.PatientInfo[i].doctor;
                     Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
                     begin = toTime(patient.PatientInfo[i].begin);
                     end = toTime(patient.PatientInfo[i].end);
-                    var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td>"
+                    var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Task + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td>"
                         + "<td>" + doctor + "</td></tr>";
                     tbody += tr;
                 }
@@ -338,10 +340,10 @@ function Paging(patient, role, userID) {
                 table.append(tbody);
                 break;
             case "模拟技师":
-                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>预约时间</th><th>是否完成</th><th>疗程</th><th>诊断结果</th>'
+                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>预约项目</th><th>预约时间</th><th>是否完成</th><th>疗程</th><th>诊断结果</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="6" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "治疗技师":
@@ -1646,23 +1648,48 @@ function Search(str, patient, role) {
             break;
         case "模拟技师":
             for (var i = 0; i < patient.PatientInfo.length; i++) {
+                if (i < patient.PatientInfo.length - 1) {
+                    if (patient.PatientInfo[i].treatID == patient.PatientInfo[i + 1].treatID) {
+                        TreatmentID = patient.PatientInfo[i].treatID;
+                        Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
+                        Name = patient.PatientInfo[i].Name;
+                        treat = patient.PatientInfo[i].treat;
+                        diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
+                        Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
+                        Task = "复位验证";
+                        date = patient.PatientInfo[i].date;
+                        doctor = patient.PatientInfo[i].doctor;
+                        Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
+                        begin = toTime(patient.PatientInfo[i].begin);
+                        end = toTime(patient.PatientInfo[i + 1].end);
+                        if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || date.search(str) >= 0 || Task.search(str) >= 0 || begin.search(str) >= 0 || end.search(str) >= 0 || doctor.search(str) >= 0 || Completed.search(str) >= 0) {
+                            var singlepatient1 = { treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, Progress: patient.PatientInfo[i].Progress, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed, Task:patient.PatientInfo[i].Task };
+                            var singlepatient2 = { treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, Progress: patient.PatientInfo[i].Progress, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed, Task:patient.PatientInfo[i].Task };
+                            Searchedpatient[count++] = singlepatient1;
+                            Searchedpatient[count++] = singlepatient2;
+                        }
+                        i++;
+                        continue;
+                    }
+                }
                 TreatmentID = patient.PatientInfo[i].treatID;
                 Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
                 Name = patient.PatientInfo[i].Name;
                 treat = patient.PatientInfo[i].treat;
                 diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
-                Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                 date = patient.PatientInfo[i].date;
+                Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
+                Task = patient.PatientInfo[i].Task;
                 doctor = patient.PatientInfo[i].doctor;
                 Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
                 begin = toTime(patient.PatientInfo[i].begin);
                 end = toTime(patient.PatientInfo[i].end);
-                if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || date.search(str) >= 0 || begin.search(str) >= 0 || end.search(str) >= 0 || doctor.search(str) >= 0 || Completed.search(str) >= 0) {
-                    var singlepatient = { treat: treat, treatID: TreatmentID, date: date, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed };
+                if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || date.search(str) >= 0 || Task.search(str) >= 0 || begin.search(str) >= 0 || end.search(str) >= 0 || doctor.search(str) >= 0 || Completed.search(str) >= 0) {
+                    var singlepatient = { treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, Progress: patient.PatientInfo[i].Progress, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed, Task:patient.PatientInfo[i].Task };
                     Searchedpatient[count++] = singlepatient;
                 }
             }
-
+            break;
         case "科主任":
             for (var i = 0; i < patient.PatientInfo.length; i++) {
                 TreatmentID = patient.PatientInfo[i].treatID;

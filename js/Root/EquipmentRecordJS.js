@@ -553,7 +553,7 @@ function sureFill(evt) {
                 content.UIMRTRealValue = "NA";
             } else if (tds[1].innerHTML == "功能是否正常") {
                 //content.UIMRTRealValue = tds[4].firstChild.options[tds[4].firstChild.selectedIndex].value;
-                content.UIMRTRealValue = "";
+                content.UIMRTRealValue = ((tds[4].firstChild.options[tds[4].firstChild.selectedIndex].value == 0) ? "":tds[4].firstChild.options[tds[4].firstChild.selectedIndex].innerText);
             }
 
             if (tds[1].innerHTML != "NA") {
@@ -567,7 +567,7 @@ function sureFill(evt) {
             } else if (tds[5].innerHTML == "NA") {
                 content.IMRTRealValue = "NA";
             } else if (tds[5].innerHTML == "功能是否正常") {
-                content.IMRTRealValue = "";
+                content.IMRTRealValue = ((tds[8].firstChild.options[tds[8].firstChild.selectedIndex].value == 0) ? "":tds[8].firstChild.options[tds[8].firstChild.selectedIndex].innerText);
             }
 
             if (tds[5].innerHTML != "NA") {
@@ -582,7 +582,7 @@ function sureFill(evt) {
                 content.SRSRealValue = "NA";
             } else if (tds[9].innerHTML == "功能是否正常") {
                 //content.SRSRealValue = tds[12].firstChild.options[tds[12].firstChild.selectedIndex].value;
-                content.SRSRealValue = "";
+                content.SRSRealValue = ( tds[12].firstChild.options[tds[12].firstChild.selectedIndex].value==0)? "":tds[12].firstChild.options[tds[12].firstChild.selectedIndex].innerText;
             }
 
             if (tds[9].innerHTML != "NA") {
