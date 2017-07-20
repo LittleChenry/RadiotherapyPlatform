@@ -130,6 +130,7 @@ function Init(evt) {
                 var add = document.getElementsByName("add");
                 if (info[k].Enhance == "1") {
                     add[0].checked = true;
+                    document.getElementById("enhancemethod").style.display = "block";
                     document.getElementById("addmethod").value = info[k].enhancemethod;
                 } else {
                     add[1].checked = true;
@@ -233,6 +234,7 @@ function chooseTempalte(templateID) {
     var add = document.getElementsByName("add");
     if (obj1.templateInfo[0].Enhance == "1") {
         add[0].checked = true;
+        document.getElementById("enhancemethod").style.display = "block";
         document.getElementById("addmethod").value = obj1.templateInfo[0].enhancemethod;
     } else {
         add[1].checked = true;
