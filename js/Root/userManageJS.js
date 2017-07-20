@@ -99,6 +99,7 @@ function createDropDowmList(role, roleArea) {
 $(function () {
     $("#cannelButton").bind("click", function () {
         $("#addGroup input").val("");
+        $("#addGroup input").removeClass("invalid");
         $("#addGroup select").val("");
         $("#hidePart").empty().append("<li>"
                                       +"<label class=control-label>"
@@ -115,7 +116,9 @@ $(function () {
     document.getElementById("userNumber").addEventListener("blur", checkNumber, false);     //账号输入框的blur事件
     document.getElementById("userPassword").addEventListener("blur", checkUserkey, false);  //第一次密码输入框
     document.getElementById("checkPassword").addEventListener("blur", checkRePswRight, false);//第二次密码输入框
-    document.getElementById("addNewFrm").addEventListener("submit", checkAll, false);       //新增用户表单的提交事件
+    $("#sureAdd").bind("click", function (evt) {
+        checkAll(evt);
+    });
 });
 
 
@@ -131,6 +134,7 @@ function checkAll(evt) {
     }
     if (!isAllGood) {
         evt.preventDefault();
+        return false;
     } else {
         recordRole();
     }
@@ -266,6 +270,7 @@ function checkContact(thisElement) {
 function checkPhone() {
     var error = document.getElementById("error");
     error.innerHTML = "";
+    $(error).hide();
     recoverClassName(this);
     if (checkContact(this)) {
         var rep = /^(\d{3})\-?(\d{4})\-?(\d{4})$/;
@@ -274,6 +279,7 @@ function checkPhone() {
     } else {
         error.innerHTML = "请输入正确的手机号码";
         this.className += " invalid";
+        $(error).show();
     }
 }
 //记录所选角色，形式:"ROOT WLS YS "
@@ -287,7 +293,21 @@ function recordRole() {
         }
     }
     hidden.value = seleced;
+    postNewUser(seleced);
 }
+
+function postNewUser(seleced) {
+
+    $.ajax({
+        type: "post",
+        url: "",
+        data: {},
+        success: function () {
+            alert("新增成功");
+        }
+    });
+}
+
 //重置class
 function recoverClassName(thisElement) {
     var thisClassNames = thisElement.className.split(" ");
@@ -303,11 +323,13 @@ function recoverClassName(thisElement) {
 function checkNumber() {
     var error = document.getElementById("error");
     error.innerHTML = "";
+    $(error).hide();
     recoverClassName(this);
     var id = this.value;
     if (id == "") {
         error.innerHTML = "账号不能为空";
         this.className += " invalid";
+        $(error).show();
         return false;
     }
     var xmlHttp = new XMLHttpRequest();
@@ -317,6 +339,7 @@ function checkNumber() {
         if (xmlHttp.status == 200 && xmlHttp.readyState == 4) {
             var back = xmlHttp.responseText;
             if (back == "false") {
+                $(error).show();
                 error.innerHTML = "账号重复"
                 document.getElementById("userNumber").className += " invalid";
             }
@@ -328,20 +351,24 @@ function checkNumber() {
 function checkUserkey() {
     var error = document.getElementById("error");
     error.innerHTML = "";
+    $(error).hide();
     recoverClassName(this);
     if (!checkKey(this)) {
         error.innerHTML = "请输入6-12位密码";
         this.className += " invalid";
+        $(error).show();
     }
 }
 //检查两次密码是否重复
 function checkRePswRight() {
     var error = document.getElementById("error");
     error.innerHTML = "";
+    $(error).hide();
     recoverClassName(this);
     if (this.value != document.getElementById("userPassword").value) {
         error.innerHTML = "两次密码不同";
         this.className += " invalid";
+        $(error).show();
     }
 }
 //重置新增用户的表单
