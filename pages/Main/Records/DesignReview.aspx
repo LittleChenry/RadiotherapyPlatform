@@ -272,17 +272,17 @@
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">x</span>
                             <input id="TreatmentCenterX" name="TreatmentCenterX" type="number" class="form-group-input" disabled="disabled"/>
-                            <span class="input-group-addon">mm</span>
+                            <span class="input-group-addon">cm</span>
                         </div>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">y</span>
                             <input id="TreatmentCenterY" name="TreatmentCenterY" type="number" class="form-group-input" disabled="disabled"/>
-                            <span class="input-group-addon">mm</span>
+                            <span class="input-group-addon">cm</span>
                         </div>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">z</span>
                             <input id="TreatmentCenterZ" name="TreatmentCenterZ" type="number" class="form-group-input" disabled="disabled"/>
-                            <span class="input-group-addon">mm</span>
+                            <span class="input-group-addon">cm</span>
                         </div>
                     </div>
                 </div>
@@ -292,17 +292,17 @@
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">左</span>
                             <input id="MovementX" name="MovementX" type="number" class="form-group-input" disabled="disabled"/>
-                            <span class="input-group-addon">mm</span>
+                            <span class="input-group-addon">cm</span>
                         </div>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">头</span>
                             <input id="MovementY" name="MovementY" type="number" class="form-group-input" disabled="disabled"/>
-                            <span class="input-group-addon">mm</span>
+                            <span class="input-group-addon">cm</span>
                         </div>
                         <div class="group-item col-xs-3">
                             <span class="input-group-addon">腹</span>
                             <input id="MovementZ" name="MovementZ" type="number" class="form-group-input" disabled="disabled"/>
-                            <span class="input-group-addon">mm</span>
+                            <span class="input-group-addon">cm</span>
                         </div>
                     </div>
                 </div>

@@ -94,7 +94,10 @@
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">层厚：</span>
-                            <input id="Thickness" name="Thickness" type="number"  class="form-item" disabled="disabled"/>
+                            <div class="group-item">
+                                <input id="Thickness" name="Thickness" type="number" class="form-group-input" disabled="disabled"/>
+                                <span class="input-group-addon">mm</span>
+                            </div>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">层数：</span>
@@ -104,7 +107,10 @@
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">参考中心层面：</span>
-                            <input id="ReferenceScale" class="form-item" type="number" name="ReferenceScale" disabled="disabled"/>
+                            <div class="group-item">
+                                <input id="ReferenceScale" class="form-group-input" type="number" name="ReferenceScale" disabled="disabled"/>
+                                <span class="input-group-addon">cm</span>
+                            </div>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">多模态图像：</span>
