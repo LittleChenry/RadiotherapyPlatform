@@ -57,6 +57,7 @@ public class AddTreatment : IHttpHandler {
         }
         }
         int treatname = Convert.ToInt32(context.Request["treatmentname"]);
+        string treatmentdescribe = context.Request["Treatmentdescribe"];
         DataLayer sqlOperation = new DataLayer("sqlStr");
         int radio = Convert.ToInt32(context.Request["Radiotherapy_ID"]);
         string sqlcommand = "select ID from patient where Radiotherapy_ID=@radio";
@@ -66,11 +67,12 @@ public class AddTreatment : IHttpHandler {
         int doctor= Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
         if (step == 0)
         {
-            string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,Belongingdoctor) values(@patient,0,@progress,@treatname,@doc)";
+            string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,Belongingdoctor,Treatmentdescribe) values(@patient,0,@progress,@treatname,@doc,@Treatmentdescribe)";
             sqlOperation.AddParameterWithValue("@patient", patientid);
             sqlOperation.AddParameterWithValue("@treatname", treatname);
             sqlOperation.AddParameterWithValue("@doc", doctor);
             sqlOperation.AddParameterWithValue("@progress", "0");
+            sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
             int success = sqlOperation.ExecuteNonQuery(insert);
 
             if (success > 0)
@@ -87,22 +89,24 @@ public class AddTreatment : IHttpHandler {
             int success=0;
             if (group != 0)
             {
-                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,Belongingdoctor,Group_ID) values(@patient,0,@progress,@treatname,@doc,@group)";
+                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,Belongingdoctor,Group_ID,Treatmentdescribe) values(@patient,0,@progress,@treatname,@doc,@group,@Treatmentdescribe)";
                 sqlOperation.AddParameterWithValue("@patient", patientid);
                 sqlOperation.AddParameterWithValue("@treatname", treatname);
                 sqlOperation.AddParameterWithValue("@doc", doctor);
                 sqlOperation.AddParameterWithValue("@group", group);
                 sqlOperation.AddParameterWithValue("@diag", diagid);
                 sqlOperation.AddParameterWithValue("@progress", "0,1");
+                sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
                 success = sqlOperation.ExecuteNonQuery(insert);
             }
             else
             {
-                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,Belongingdoctor) values(@patient,0,@progress,@treatname,@doc)";
+                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,Belongingdoctor,Treatmentdescribe) values(@patient,0,@progress,@treatname,@doc,@Treatmentdescribe)";
                 sqlOperation.AddParameterWithValue("@patient", patientid);
                 sqlOperation.AddParameterWithValue("@treatname", treatname);
                 sqlOperation.AddParameterWithValue("@doc", doctor);
                 sqlOperation.AddParameterWithValue("@progress", "0,1");
+                sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
                 success = sqlOperation.ExecuteNonQuery(insert);
             }
             if (success > 0)
@@ -119,7 +123,7 @@ public class AddTreatment : IHttpHandler {
             int success = 0;
             if (group != 0)
             {
-                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Group_ID,Fixed_ID,Belongingdoctor) values(@patient,0,@progress,@treatname,@diag,@group,@fix,@doc)";
+                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Group_ID,Fixed_ID,Belongingdoctor,Treatmentdescribe) values(@patient,0,@progress,@treatname,@diag,@group,@fix,@doc,@Treatmentdescribe)";
                 sqlOperation.AddParameterWithValue("@patient", patientid);
                 sqlOperation.AddParameterWithValue("@treatname", treatname);
                 sqlOperation.AddParameterWithValue("@diag", diagid);
@@ -127,17 +131,19 @@ public class AddTreatment : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@fix", fixid);
                 sqlOperation.AddParameterWithValue("@doc", doctor);
                 sqlOperation.AddParameterWithValue("@progress", "0,1,2,4");
+                sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
                 success = sqlOperation.ExecuteNonQuery(insert);
             }
             else
             {
-                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Fixed_ID,Belongingdoctor) values(@patient,0,@progress,@treatname,@diag,@fix,@doc)";
+                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Fixed_ID,Belongingdoctor,Treatmentdescribe) values(@patient,0,@progress,@treatname,@diag,@fix,@doc,@Treatmentdescribe)";
                 sqlOperation.AddParameterWithValue("@patient", patientid);
                 sqlOperation.AddParameterWithValue("@treatname", treatname);
                 sqlOperation.AddParameterWithValue("@diag", diagid);
                 sqlOperation.AddParameterWithValue("@fix", fixid);
                 sqlOperation.AddParameterWithValue("@doc", doctor);
                 sqlOperation.AddParameterWithValue("@progress", "0,1,2,4");
+                sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
                 success = sqlOperation.ExecuteNonQuery(insert);
             }
             if (success > 0)
@@ -154,7 +160,7 @@ public class AddTreatment : IHttpHandler {
             int success=0;
             if (group != 0)
             {
-                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Group_ID,Fixed_ID,Location_ID,Belongingdoctor) values(@patient,0,@progress,@treatname,@diag,@group,@fix,@locate,@doc)";
+                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Group_ID,Fixed_ID,Location_ID,Belongingdoctor,Treatmentdescribe) values(@patient,0,@progress,@treatname,@diag,@group,@fix,@locate,@doc,@Treatmentdescribe)";
                 sqlOperation.AddParameterWithValue("@patient", patientid);
                 sqlOperation.AddParameterWithValue("@treatname", treatname);
                 sqlOperation.AddParameterWithValue("@diag", diagid);
@@ -163,11 +169,12 @@ public class AddTreatment : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@locate", location);
                 sqlOperation.AddParameterWithValue("@doc", doctor);
                 sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6");
+                sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
                 success = sqlOperation.ExecuteNonQuery(insert);
             }
             else
             {
-                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Fixed_ID,Location_ID,Belongingdoctor) values(@patient,0,@progress,@treatname,@diag,@fix,@locate,@doc)";
+                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Fixed_ID,Location_ID,Belongingdoctor,Treatmentdescribe) values(@patient,0,@progress,@treatname,@diag,@fix,@locate,@doc,@Treatmentdescribe)";
                 sqlOperation.AddParameterWithValue("@patient", patientid);
                 sqlOperation.AddParameterWithValue("@treatname", treatname);
                 sqlOperation.AddParameterWithValue("@diag", diagid);
@@ -175,6 +182,7 @@ public class AddTreatment : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@locate", location);
                 sqlOperation.AddParameterWithValue("@doc", doctor);
                 sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6");
+                sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
                 success = sqlOperation.ExecuteNonQuery(insert);
             }
             if (success > 0)
@@ -191,7 +199,7 @@ public class AddTreatment : IHttpHandler {
             int success = 0;
             if (group != 0)
             {
-                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Group_ID,Fixed_ID,Location_ID,Design_ID,Review_ID,Belongingdoctor) values(@patient,0,@progress,@treatname,@diag,@group,@fix,@locate,@design,@review,@doc)";
+                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Group_ID,Fixed_ID,Location_ID,Design_ID,Review_ID,Belongingdoctor,Treatmentdescribe) values(@patient,0,@progress,@treatname,@diag,@group,@fix,@locate,@design,@review,@doc,@Treatmentdescribe)";
                 sqlOperation.AddParameterWithValue("@patient", patientid);
                 sqlOperation.AddParameterWithValue("@treatname", treatname);
                 sqlOperation.AddParameterWithValue("@diag", diagid);
@@ -202,11 +210,12 @@ public class AddTreatment : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@review", review);
                 sqlOperation.AddParameterWithValue("@doc", doctor);
                 sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6,7,8,9,10,11");
+                sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
                 success = sqlOperation.ExecuteNonQuery(insert);
             }
             else
             {
-                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Fixed_ID,Location_ID,Design_ID,Review_ID,Belongingdoctor) values(@patient,0,@progress,@treatname,@diag,@fix,@locate,@design,@review,@doc)";
+                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Fixed_ID,Location_ID,Design_ID,Review_ID,Belongingdoctor,Treatmentdescribe) values(@patient,0,@progress,@treatname,@diag,@fix,@locate,@design,@review,@doc,@Treatmentdescribe)";
                 sqlOperation.AddParameterWithValue("@patient", patientid);
                 sqlOperation.AddParameterWithValue("@treatname", treatname);
                 sqlOperation.AddParameterWithValue("@diag", diagid);
@@ -216,6 +225,7 @@ public class AddTreatment : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@review", review);
                 sqlOperation.AddParameterWithValue("@doc", doctor);
                 sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6,7,8,9,10,11");
+                sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
                 success = sqlOperation.ExecuteNonQuery(insert);
             }
             if (success > 0)
@@ -232,7 +242,7 @@ public class AddTreatment : IHttpHandler {
             int success = 0;
             if (group != 0)
             {
-                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Group_ID,Fixed_ID,Location_ID,Design_ID,Review_ID,Replacement_ID,Belongingdoctor) values(@patient,0,@progress,@treatname,@diag,@group,@fix,@locate,@design,@review,@replace,@doc)";
+                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Group_ID,Fixed_ID,Location_ID,Design_ID,Review_ID,Replacement_ID,Belongingdoctor,Treatmentdescribe) values(@patient,0,@progress,@treatname,@diag,@group,@fix,@locate,@design,@review,@replace,@doc,@Treatmentdescribe)";
                 sqlOperation.AddParameterWithValue("@patient", patientid);
                 sqlOperation.AddParameterWithValue("@treatname", treatname);
                 sqlOperation.AddParameterWithValue("@diag", diagid);
@@ -244,11 +254,12 @@ public class AddTreatment : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@replace", replace);
                 sqlOperation.AddParameterWithValue("@doc", doctor);
                 sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6,7,8,9,10,11,12,13");
+                sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
                 success = sqlOperation.ExecuteNonQuery(insert);
             }
             else
             {
-                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Fixed_ID,Location_ID,Design_ID,Review_ID,Replacement_ID,Belongingdoctor) values(@patient,0,@progress,@treatname,@diag,@fix,@locate,@design,@review,@replace,@doc)";
+                string insert = "insert into treatment(Patient_ID,State,Progress,Treatmentname,DiagnosisRecord_ID,Fixed_ID,Location_ID,Design_ID,Review_ID,Replacement_ID,Belongingdoctor,Treatmentdescribe) values(@patient,0,@progress,@treatname,@diag,@fix,@locate,@design,@review,@replace,@doc,@Treatmentdescribe)";
                 sqlOperation.AddParameterWithValue("@patient", patientid);
                 sqlOperation.AddParameterWithValue("@treatname", treatname);
                 sqlOperation.AddParameterWithValue("@diag", diagid);
@@ -258,6 +269,7 @@ public class AddTreatment : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@review", review);
                 sqlOperation.AddParameterWithValue("@replace", replace);
                 sqlOperation.AddParameterWithValue("@doc", doctor);
+                sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
                 sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6,7,8,9,10,11,12,13");
                 success = sqlOperation.ExecuteNonQuery(insert);
             }

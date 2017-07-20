@@ -92,12 +92,12 @@
                             <thead>
                                 <tr>
                                     <th>靶区</th>
-                                    <th>外放</th>
+                                    <th>外放/mm</th>
                                     <th>PTV</th>
                                     <th>单次量cGy</th>
                                     <th>次数</th>
                                     <th>总剂量cGy</th>
-                                    <th>备注</th>
+                                    <th>体积/%</th>
                                     <th>优先级</th>
                                 </tr>
                             </thead>
@@ -115,14 +115,14 @@
                             <thead>
                                 <tr>
                                     <th>危及器官</th>
-                                    <th>D/V</th>
+                                    <th>剂量cGy</th>
                                     <th>限制</th>
-                                    <th>数值</th>
-                                    <th>PRV/V</th>
+                                    <th>体积/%</th>
+                                    <th>外放mm</th>
+                                    <th>PRV</th>
+                                    <th>剂量cGy</th>
                                     <th>限制</th>
-                                    <th>数值</th>
-                                    <th>优先级</th>
-                                    <th>体积</th>
+                                    <th>体积/%</th>
                                     <th>优先级</th>
                                 </tr>
                             </thead>

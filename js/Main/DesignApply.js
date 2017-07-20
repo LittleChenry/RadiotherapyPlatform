@@ -23,7 +23,7 @@ function Init(evt) {
     //document.getElementById("username").value = userID; 
     var treatID = window.location.search.split("=")[1];
     document.getElementById("treatID").innerHTML = treatID;
-    
+
     var patient = getPatientInfo(treatID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
@@ -63,13 +63,13 @@ function Init(evt) {
             } else {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].Treatmentdescribe + '计划申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>' +
-                        '<span class="col-xs-10">'+designInfo[i].RadiotherapyHistory+'</span></div></div>'+
-                        '<div class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">靶区处方剂量：</span></div></div>'+
-                        '<div class="single-row"><div class="item area-group col-xs-12"><table id="Priority'+ i + '" class="table table-bordered">'+
-                        '<thead><tr><th>靶区</th><th>外放</th><th>PTV</th><th>单次量cGy</th><th>次数</th><th>总剂量cGy</th><th>备注</th><th>优先级</th></tr></thead></table></div></div>'+
-                        '<div class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">危及器官限量：</span></div></div>'+
-                        '<div class="single-row"><div class="item area-group col-xs-12"><table id="Dosage'+ i + '" class="table table-bordered">'+
-                        '<thead><tr><th>危及器官</th><th>剂量</th><th>限制</th><th>体积</th><th>外放</th><th>PRV</th><th>剂量</th><th>限制</th><th>体积</th><th>优先级</th>'+
+                        '<span class="col-xs-10">' + designInfo[i].RadiotherapyHistory + '</span></div></div>' +
+                        '<div class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">靶区处方剂量：</span></div></div>' +
+                        '<div class="single-row"><div class="item area-group col-xs-12"><table id="Priority' + i + '" class="table table-bordered">' +
+                        '<thead><tr><th>靶区</th><th>外放</th><th>PTV</th><th>单次量cGy</th><th>次数</th><th>总剂量cGy</th><th>备注</th><th>优先级</th></tr></thead></table></div></div>' +
+                        '<div class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">危及器官限量：</span></div></div>' +
+                        '<div class="single-row"><div class="item area-group col-xs-12"><table id="Dosage' + i + '" class="table table-bordered">' +
+                        '<thead><tr><th>危及器官</th><th>剂量</th><th>限制</th><th>体积</th><th>外放</th><th>PRV</th><th>剂量</th><th>限制</th><th>体积</th><th>优先级</th>' +
                         '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-4">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
                         '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
@@ -79,7 +79,7 @@ function Init(evt) {
             }
         }
     }
-    else{
+    else {
         document.getElementById("userID").value = userID;
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("time").innerHTML = getNowFormatDate();
@@ -97,7 +97,7 @@ function Init(evt) {
                         '<div class="single-row"><div class="item area-group col-xs-12"><table id="Dosage' + i + '" class="table table-bordered">' +
                         '<thead><tr><th>危及器官</th><th>剂量</th><th>限制</th><th>体积</th><th>外放</th><th>PRV</th><th>剂量</th><th>限制</th><th>体积</th><th>优先级</th>' +
                         '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-4">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
-                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';                       
+                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
                 readDosagePriority1(designInfo[i].DosagePriority, i);
@@ -114,6 +114,22 @@ function Init(evt) {
             document.getElementById("technology").value = designInfo[k].technology;
             document.getElementById("equipment").value = designInfo[k].equipment;
         });
+    });
+    
+   var i = 0
+    $('#Prioritcgy' + i).bind('input propertychange', {i:i} ,function (e) {
+        if (document.getElementById("Prioritcgy"+e.data.i).value == "") {
+            document.getElementById("Prioritsum" + e.data.i).value = "";
+        } else {
+            document.getElementById("Prioritsum" + e.data.i).value = parseInt(document.getElementById("Prioritcgy" + e.data.i).value) * parseInt(document.getElementById("Priorittime" + e.data.i).value);
+        }
+    });
+    $('#Priorittime' + i).bind('input propertychange', { i: i }, function (e) {
+        if (document.getElementById("Priorittime" + e.data.i).value == "") {
+            document.getElementById("Prioritsum" + e.data.i).value = "";
+        } else {
+            document.getElementById("Prioritsum" + e.data.i).value = parseInt(document.getElementById("Prioritcgy" + e.data.i).value) * parseInt(document.getElementById("Priorittime" + e.data.i).value);
+        }
     });
 }
 function isInArray(arr, value) {
@@ -383,7 +399,22 @@ function addDosagePriority() {
     t6.innerHTML = '<input id="Prioritsum' + rows + '" name="Prioritsum' + rows + '" type="number" class="td-input" />';
     t7.innerHTML = '<input id="Prioritremark' + rows + '" name="Prioritremark' + rows + '" type="text" class="td-input" />';
     t8.innerHTML = '<input id="Priorit' + rows + '" name="Priorit' + rows + '" type="number" class="td-input" />';
-    t9.innerHTML = '<a href="javascript:deleteDosagePriority(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
+    t9.innerHTML = '<a href="javascript:deleteDosagePriority(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>'; 
+    var i = rows;
+    $('#Prioritcgy' + i).bind('input propertychange', { i: i }, function (e) {
+        if (document.getElementById("Prioritcgy" + e.data.i).value == "") {
+            document.getElementById("Prioritsum" + e.data.i).value = "";
+        } else {
+            document.getElementById("Prioritsum" + e.data.i).value = parseInt(document.getElementById("Prioritcgy" + e.data.i).value) * parseInt(document.getElementById("Priorittime" + e.data.i).value);
+        }
+    });
+    $('#Priorittime' + i).bind('input propertychange', { i: i }, function (e) {
+        if (document.getElementById("Priorittime" + e.data.i).value == "") {
+            document.getElementById("Prioritsum" + e.data.i).value = "";
+        } else {
+            document.getElementById("Prioritsum" + e.data.i).value = parseInt(document.getElementById("Prioritcgy" + e.data.i).value) * parseInt(document.getElementById("Priorittime" + e.data.i).value);
+        }
+    });
     aa = rows;
     document.getElementById("aa").value = aa;
 }
@@ -428,6 +459,20 @@ function addDosagePriority1(DosagePriority) {
         t7.innerHTML = '<input id="Prioritremark' + i + '" name="Prioritremark' + i + '" value="' + list[6] + '" type="text" class="td-input" />';
         t8.innerHTML = '<input id="Priorit' + i + '" name="Priorit' + i + '" type="number" value="' + list[7] + '" class="td-input" />';
         t9.innerHTML = '<a href="javascript:deleteDosagePriority(' + i + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
+        $('#Prioritcgy' + i).bind('input propertychange', { i: i }, function (e) {
+            if (document.getElementById("Prioritcgy" + e.data.i).value == "") {
+                document.getElementById("Prioritsum" + e.data.i).value = "";
+            } else {
+                document.getElementById("Prioritsum" + e.data.i).value = parseInt(document.getElementById("Prioritcgy" + e.data.i).value) * parseInt(document.getElementById("Priorittime" + e.data.i).value);
+            }
+        });
+        $('#Priorittime' + i).bind('input propertychange', { i: i }, function (e) {
+            if (document.getElementById("Priorittime" + e.data.i).value == "") {
+                document.getElementById("Prioritsum" + e.data.i).value = "";
+            } else {
+                document.getElementById("Prioritsum" + e.data.i).value = parseInt(document.getElementById("Prioritcgy" + e.data.i).value) * parseInt(document.getElementById("Priorittime" + e.data.i).value);
+            }
+        });
     }
     aa = lists.length - 1;
     document.getElementById("aa").value = aa;
