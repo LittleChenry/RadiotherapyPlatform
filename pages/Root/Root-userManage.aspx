@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="userTest.aspx.cs" Inherits="pages_Root_userTest" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Root-userManage.aspx.cs" Inherits="pages_Root_userTest" %>
 
 <!DOCTYPE html>
 
@@ -67,10 +67,10 @@
                 <div class="panel panel-default mintablewidth">
                     <div class="panel-heading mintablewidth">
                         <i class="fa fa-bar-chart-o fa-fw"></i>
-                        <span class="panel-title">分组表</span>
+                        <span class="panel-title">用户信息</span>
                         <input type="button" class="btn btn-primary btn-sm buttonToLeft floatRight" id="newGroup" data-toggle="modal" data-target="#myModal" value="新增" style="padding: 2.5px 10px;" />
-                        <input type="button" class="btn btn-primary btn-sm floatRight" id="changeGroup" value="编辑" style="padding: 2.5px 10px;" />
-                        <input type="button" class="btn btn-primary btn-sm floatRight" id="closeEdite" value="结束编辑" style="padding: 2.5px 10px;display:none" />
+                        <input type="button" class="btn btn-primary btn-sm floatRight" id="changeUser" value="编辑" style="padding: 2.5px 10px;" />
+                        <input type="button" class="btn btn-primary btn-sm floatRight" id="closeEdit" value="结束编辑" style="padding: 2.5px 10px;display:none" />
                         <input type="button" class="tohidden" id="EditGroup" data-toggle="modal" data-target="#editModal" />
                     </div>
                     <div id="tableArea" class="panel-body mintablewidth">
@@ -85,7 +85,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
-                        <h4 class="modal-title" id="myModalLabel">新增分组</h4>
+                        <h4 class="modal-title" id="myModalLabel">新增用户</h4>
                         
                     </div>
                         <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
@@ -95,13 +95,13 @@
                                         <tr>
                                             <td style="width:30%;">账号</td>
                                             <td>
-                                                <input id="userNumber" class="form-control" name="userNumber" type="text" placeholder="请输入账号" />
+                                                <input id="userNumber" class="form-control IsEmpty number" name="userNumber" type="text" placeholder="请输入账号" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>姓名</td>
                                             <td>
-                                                <input id="name" name="userName" type="text" placeholder="请输入姓名" class="form-control" />
+                                                <input id="name" name="userName" type="text" placeholder="请输入姓名" class="form-control IsEmpty" />
                                             </td>
                                         </tr><tr>
                                             <td>性别</td>
@@ -119,25 +119,25 @@
                                         <tr>
                                             <td>密码</td>
                                             <td>
-                                                <input id="userPassword" name="userKey" type="password" placeholder="请输入密码" class="form-control" />
+                                                <input id="userPassword" name="userKey" type="password" placeholder="请输入密码" class="form-control userKey" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>确认密码</td>
                                             <td>
-                                                <input id="checkPassword" type="password" placeholder="请再次输入密码" class="form-control" />
+                                                <input id="checkPassword" type="password" placeholder="请再次输入密码" class="form-control checkPassword" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>联系方式</td>
                                             <td>
-                                                <input id="phoneContact" name="phoneNumber" type="text" placeholder="请输入联系方式" class="form-control" />
+                                                <input id="phoneContact" name="phoneNumber" type="text" placeholder="请输入联系方式" class="form-control contact" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>办公室</td>
                                             <td>
-                                                <select id="Select1" name="officeSelect" class="form-control" >
+                                                <select id="Select1" name="officeSelect" class="form-control office" >
                                                     <option value="">--请选择办公室--</option>
                                                     <option value="登记处">登记处</option>
                                                     <option value="放疗设备状态监测室">放疗设备状态监测室</option>
@@ -158,7 +158,7 @@
                                                 </a>
                                                 <div id="collapseOne" class="info-option panel-collapse collapse" aria-expanded="true">
                                                     <div class="form-group">
-                                                        <ul id="hidePart" class="list-inline" style="text-align:left;">
+                                                        <ul id="hidePart" class="list-inline checkRole" style="text-align:left;">
                                                             <li>
                                                                 <label class="control-label">
                                                                     <input id="allRole" type="checkbox" />
@@ -205,15 +205,80 @@
                         <h4 class="modal-title">修改用户</h4>                     
                     </div>
                         <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
-                            <table class="mytable table-bordered table-center">
-                                <tbody id="editArea">
-                                    
+                            <label id="editError" class="tohidden"></label>
+                             <table id="EditTable" class="mytable table-bordered table-center">
+                                 <tbody style="text-align:center;">
+                                        <tr>
+                                            <td style="width:30%;">账号</td>
+                                            <td>
+                                                <input id="numberEdit" class="form-control IsEmpty number" name="numberEdit" type="text" disabled/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>姓名</td>
+                                            <td>
+                                                <input id="nameEdit" name="nameEdit" type="text" class="form-control IsEmpty" />
+                                            </td>
+                                        </tr><tr>
+                                            <td>性别</td>
+                                            <td>
+                                                <div class="col-xs-4">
+                                                    <input id="genderEdit1" type="radio" name="genderEdit" checked="checked" value="M" />
+                                                    <label for="male">男</label>
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <input id="genderEdit2" type="radio" name="genderEdit" value="F" />
+                                                    <label for="female">女</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>密码</td>
+                                            <td>
+                                                <input id="pwdEdit" name="pwdEdit" type="text" class="form-control userKey" disabled/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>联系方式</td>
+                                            <td>
+                                                <input id="phoneEdit" name="phoneEdit" type="text" class="form-control contact" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>办公室</td>
+                                            <td>
+                                                <select id="officeEdit" name="officeEdit" class="form-control office" >
+                                                    <option value="">--请选择办公室--</option>
+                                                    <option value="登记处">登记处</option>
+                                                    <option value="放疗设备状态监测室">放疗设备状态监测室</option>
+                                                    <option value="加速器治疗室">加速器治疗室</option>
+                                                    <option value="模具摆放室">模具摆放室</option>
+                                                    <option value="模拟定位室">模拟定位室</option>
+                                                    <option value="物理室">物理室</option>
+                                                    <option value="医生工作室">医生工作室</option>
+                                                    <option value="制模室">制模室</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>激活状态</td>
+                                            <td>
+                                                <div class="col-xs-4">
+                                                    <input id="activateEdit1" type="radio" name="activateEdit" value="1"checked="checked" />
+                                                    <label for="activated">激活</label>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <input id="activateEdit2" type="radio" name="activateEdit" value="0" />
+                                                    <label for="unactivate">不激活</label>
+                                                </div>
+                                            </td>
+                                        </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="modal-footer">
                             <button id="cannelEdit" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
-                            <input id="deleteGroup" class="btn btn-danger" type="button" value="删除用户" />
+                            <input id="deleteUser" class="btn btn-danger" type="button" value="删除用户" />
                             <input id="sureEdit" type="submit" class="btn btn-primary" value="确认" />
                         </div>
                 </div>

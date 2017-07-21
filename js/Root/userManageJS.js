@@ -95,7 +95,7 @@ function createDropDowmList(role, roleArea) {
     li.appendChild(label);
     roleArea.appendChild(li);
 }
-
+//新增取消
 $(function () {
     $("#cannelButton").bind("click", function () {
         $("#addGroup input").val("");
@@ -110,7 +110,6 @@ $(function () {
         createRole();
     });
 });
-
 $(function () {
     document.getElementById("phoneContact").addEventListener("blur", checkPhone, false);    //电话号码输入框的blur事件
     document.getElementById("userNumber").addEventListener("blur", checkNumber, false);     //账号输入框的blur事件
@@ -120,16 +119,133 @@ $(function () {
         checkAll(evt);
     });
 });
+//编辑
+$(function(){
+    $("#changeUser").bind("click",function(){
+        $(this).hide();
+        $("#newGroup").hide();
+        $("#closeEdit").show();
+        $("#UserTable").bind("click",function(evt){
+            var which = evt.target;
+            var $tr = $(which).closest("tr");
+            $("#EditGroup").trigger("click");
+            createEditArea($tr);
+        });
+    });
+    $("#closeEdit").bind("click",function(){
+        $(this).hide();
+        $("#changeUser").show();
+        $("#newGroup").show();
+        $("#UserTable").unbind("click");
+    });
+});
+
+//创建编辑用户的modal内容
+function createEditArea($tr){
+    var $tds = $tr.find("td");
+    $("#numberEdit").val($tds[0].innerText);
+    $("#nameEdit").val($tds[1].innerText);
+    if($tds[2].innerText == "男"){
+        $("#genderEdit1").attr("checked","checked");
+    }else{
+        $("#genderEdit2").attr("checked","checked");
+    }
+    $("#pwdEdit").val($tds[5].innerText);
+    $("#phoneEdit").val($tds[3].innerText);
+    $("#officeEdit").val($tds[4].innerText);
+    if($tds[6].innerText == "已激活"){
+        $("#activateEdit1").attr("checked","checked");
+    }else{
+        $("#activateEdit2").attr("checked","checked");
+    }
 
 
+    $("#deleteUser").bind("click",function(){
+        deleteUser();
+    });
+}
+function editUser(){
+    var numberEdit = $("#numberEdit").val();
+    var nameEdit = $("#nameEdit").val();
+    var genderEdit = $("input:radio[name='genderEdit']:checked").val();
+    var phoneEdit = $("#phoneEdit").val();
+    var officeEdit = $("#officeEdit").val();
+    var activateEdit = $("input:radio[name='activateEdit']:checked").val();
+    $.ajax({
+        type: "post",
+        url: "/RadiotherapyPlatform/pages/Root/editUser.ashx",
+        data: {"numberEdit":numberEdit,"nameEdit":nameEdit,"genderEdit":genderEdit,"phoneEdit":phoneEdit,"officeEdit":officeEdit,"activateEdit":activateEdit},
+        dataType: "text",
+        success: function () {
+            alert("修改成功");
+            var activate = $("#role").val();
+            var office = $("#office").val();
+
+            $.ajax({
+            type: "post",
+            url: "getAllUser.ashx",
+            dataType: "text",
+            data: {"activate":activate, "office":office},
+            success: function (data) {
+                if (data == "]") {
+                    var $table = $("#UserTable");
+                    $("#tableArea").empty().append($table);
+                    $("#UserTable").empty();
+                    return;
+                }
+                $("#tableArea").createTable($.parseJSON(data), {
+                    headName: new Array("用户账号", "姓名", "性别", "联系方式", "办公室", "用户密码", "激活状态")
+                });
+                $("#cannelEdit").trigger("click");
+            }
+        });
+        }
+    });
+}
+
+function deleteUser(){
+    var numberEdit = $("#numberEdit").val();
+    $.ajax({
+        type: "post",
+        url: "/RadiotherapyPlatform/pages/Root/deleteUser.ashx",
+        data: {"numberEdit":numberEdit},
+        dataType: "text",
+        success: function () {
+            alert("删除成功");
+            var activate = $("#role").val();
+            var office = $("#office").val();
+
+            $.ajax({
+            type: "post",
+            url: "getAllUser.ashx",
+            dataType: "text",
+            data: {"activate":activate, "office":office},
+            success: function (data) {
+                if (data == "]") {
+                    var $table = $("#UserTable");
+                    $("#tableArea").empty().append($table);
+                    $("#UserTable").empty();
+                    return;
+                }
+                $("#tableArea").createTable($.parseJSON(data), {
+                    headName: new Array("用户账号", "姓名", "性别", "联系方式", "办公室", "用户密码", "激活状态")
+                });
+                $("#cannelEdit").trigger("click");
+            }
+        });
+        }
+    });
+}
 //新增用户表单提交时的验证
 function checkAll(evt) {
     isAllGood = true;
     document.getElementById("error").innerHTML = "";
-    var allElements = this.getElementsByTagName("*");
+    $("#error").hide();
+    var allElements = document.getElementById("addGroup").getElementsByTagName("*");
     for (var i = 0; i < allElements.length; i++) {
         if (!checkElement(allElements[i])) {
             isAllGood = false;
+            break;
         }
     }
     if (!isAllGood) {
@@ -152,13 +268,17 @@ function checkElement(element) {
             element.select;
         }
         if (element.nodeName == "UL") {
-            element.style.display = "list-item";
-            document.getElementById('enableSeeSpan').className = "fa fa-angle-double-down";
+            $("#hidePart").show();
+            //document.getElementById('enableSeeSpan').className = "fa fa-angle-double-down";
         }
         var error = document.getElementById("error");
+        $(error).show();
         switch (element.id) {
             case "userNumber":
                 error.innerHTML = "请输入账号";
+                if(numberrepeat){
+                     error.innerHTML = "账号重复";
+                }
                 break;
             case "userPassword":
                 error.innerHTML = "请输入6-12位密码";
@@ -192,6 +312,19 @@ function checkClassName(thisClassName, thisElement) {
             break;
         case "IsEmpty":
             if (isAllGood && !checkEmpty(thisElement)) {
+                backString += "invalid ";
+                isAllGood = false;
+            }
+            backString += thisClassName;
+            break;
+        case "number":
+            if(!isAllGood){
+                backString += thisClassName;
+                break;
+            }
+            checkRepeatNumber();
+
+            if(numberrepeat){
                 backString += "invalid ";
             }
             backString += thisClassName;
@@ -295,15 +428,25 @@ function recordRole() {
     hidden.value = seleced;
     postNewUser(seleced);
 }
-
+//新增提交
 function postNewUser(seleced) {
-
+    var userNumber = $("#userNumber").val();
+    var userName = $("#name").val();
+    var gender = $("input:radio[name='gender']:checked").val();
+    var userPassword = $("#userPassword").val();
+    var phoneContact = $("#phoneContact").val();
+    var office = $("#Select1").val();
+    var roles = seleced;
+    var activate = $("input:radio[name='activate']:checked").val();
     $.ajax({
         type: "post",
-        url: "",
-        data: {},
+        url: "addUser.ashx",
+        data: {"userNumber":userNumber,"userName":userName,"gender":gender,"userPassword":userPassword,
+                "phoneContact":phoneContact,"office":office,"roles":roles,"activate":activate},
+         dataType: "text",
         success: function () {
             alert("新增成功");
+            location.reload();
         }
     });
 }
@@ -320,6 +463,23 @@ function recoverClassName(thisElement) {
     thisElement.className = backString;
 }
 //检测输入的账号在数据库中是否存在
+var numberrepeat = false;
+function checkRepeatNumber(){
+    var number = $("#userNumber");
+    numberrepeat = false;
+    $.ajax({
+        type: "get",
+        url: "../../pages/Root/checkNumberReapt.ashx?userName=" + number.val(),
+        async: false,
+        success: function(data){
+            if(data == "false"){
+                numberrepeat = true;
+            }
+        }
+    })
+}
+
+
 function checkNumber() {
     var error = document.getElementById("error");
     error.innerHTML = "";
@@ -382,4 +542,52 @@ function resetForm(evt) {
             recoverClassName(allInput[i]);//恢复Input样式
         }
     }
+}
+
+$(function(){
+    $("#phoneEdit").blur(function(){
+        var error = document.getElementById("editError");
+        error.innerHTML = "";
+        $(error).hide();
+        $(this).removeClass("invalid");
+        if (checkContact(this)) {
+            var rep = /^(\d{3})\-?(\d{4})\-?(\d{4})$/;
+            rep.exec(this.value);
+            this.value = RegExp.$1 + "-" + RegExp.$2 + "-" + RegExp.$3;
+        } else {
+            error.innerHTML = "请输入正确的手机号码";
+            $(this).addClass("invalid");
+            $(error).show();
+        }
+    });
+    $("#nameEdit").blur(function(){
+        var error = document.getElementById("editError");
+        error.innerHTML = "";
+        $(error).hide();
+        $(this).removeClass("invalid");
+        if ($(this).val() == "") {
+            error.innerHTML = "请输入姓名";
+            $(this).addClass("invalid");
+            $(error).show();
+        }
+    });
+    $("#sureEdit").bind("click", function (evt) {
+        checkEditAll(evt);
+    });
+});
+
+function checkEditAll(evt){
+    if($("#phoneEdit").val() == ""){
+        $("#phoneEdit").addClass("invalid");
+        $("#editError").html("请输入正确的手机号码").show();
+        evt.preventDefault();
+        return false;
+    }
+    if($("#nameEdit").val() == ""){
+        $("#nameEdit").addClass("invalid");
+        $("#editError").html("请输入姓名").show();
+        evt.preventDefault();
+        return false;
+    }
+    editUser();
 }

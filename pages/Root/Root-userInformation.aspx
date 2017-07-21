@@ -28,6 +28,8 @@
 
     <!-- Main Css -->
     <link rel="stylesheet" href="../../css/Root/rootMain.css" />
+    <link href="../../css/Main/main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/Root/equipmentMain.css" />
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -415,38 +417,17 @@
                 <h1 class="page-header">用户信息</h1>
             </div>
         </div>
-        <div class="row" style="margin-top:10px;">
-            <form id="frm" method="post" runat="server">
-                <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-                <asp:ObjectDataSource ID="userDataSource" runat="server" SelectMethod="Select" TypeName="userDataSource" UpdateMethod="Update" OnUpdating="userDataSource_Updating" DeleteMethod="Delete" OnDeleting="userDataSource_Deleting">
-                    <SelectParameters>
-                        <asp:FormParameter DefaultValue="allNumber" FormField="roles" Name="activate" Type="String" />
-                        <asp:FormParameter FormField="office" Name="office" Type="String" DefaultValue="allOffice" />
-                    </SelectParameters>
-                    <UpdateParameters>
-                        <asp:Parameter Name="Number" Type="String" />
-                        <asp:Parameter Name="name" Type="String" />
-                        <asp:Parameter Name="Gender" Type="String" />
-                        <asp:Parameter Name="contact" Type="String" />
-                        <asp:Parameter Name="office" Type="String" />
-                        <asp:Parameter Name="Password" Type="String" />
-                    </UpdateParameters>
-                    <DeleteParameters>
-                        <asp:Parameter Name="Number" Type="String" />
-                    </DeleteParameters>
-                </asp:ObjectDataSource>
-                <div>
-                    <div class="col-xs-12 search">
+        <div class="col-xs-12 search">
                         <div class="col-xs-4">
-                            <select id="role" name="roles" class="form-control" style="width:60%">
-                                <option value="allNumber">全部账号</option>
+                            <select id="Select1" name="roles" class="form-control" style="width:60%">
+                                <option value="">全部账号</option>
                                 <option value="1">已激活账号</option>
                                 <option value="0">未激活账号</option>
                             </select>
                         </div>
                         <div class="col-xs-4">
                             <select id="office" name="office" class="form-control" style="width:60%">
-                                <option value="allOffice">全部办公室</option>
+                                <option value="">全部办公室</option>
                                 <option value="登记处">登记处</option>
                                 <option value="放疗设备状态监测室">放疗设备状态监测室</option>
                                 <option value="加速器治疗室">加速器治疗室</option>
@@ -458,116 +439,48 @@
                             </select>
                         </div>
                         <div class="col-xs-4">
-                            <input type="submit" value="查询" class="btn btn-primary" />
+                            <input id="search" type="button" value="查询" class="btn btn-primary" />
                         </div>
                     </div>
-                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                        <ContentTemplate>
-                    <div class="col-xs-12">
-                        <asp:GridView ID="User" runat="server" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="False" AllowPaging="True" PageSize="6" DataSourceID="userDataSource" >
-                            <PagerSettings Mode="NextPreviousFirstLast" NextPageText="下一页" PreviousPageText="上一页" FirstPageText="首页" LastPageText="末页" />
-                            <Columns>
-                                <asp:TemplateField HeaderText="用户账号">
-                                    <EditItemTemplate>
-                                        <input name="Number" type="text" readonly="true" value="<%# Eval("Number") %>" />
-                                    </EditItemTemplate>
-                                    <ItemTemplate>
-                                        <asp:Label ID="userNumber" runat="server" Text='<%# Bind("Number") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:BoundField DataField="Name" HeaderText="姓名" />
-                                <asp:TemplateField HeaderText="性别">
-                                    <ItemTemplate>
-                                        <asp:Label ID="sexLabel" runat="server" Text='<%# GetGender(Eval("Gender")) %>'></asp:Label>
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:RadioButtonList ID="sexRadio" runat="server" RepeatColumns="2" CssClass="center" SelectedValue='<%# Bind("Gender") %>' >
-                                            <asp:ListItem Value="M" Text="男"></asp:ListItem>
-                                            <asp:ListItem Value="F" Text="女"></asp:ListItem>
-                                        </asp:RadioButtonList>
-                                    </EditItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="联系方式">
-                                    <EditItemTemplate>
-                                        <input type="text" value="<%# Eval("Contact") %>" id="contact" name="contact" />
-                                    </EditItemTemplate>
-                                    <ItemTemplate>
-                                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("Contact") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="办公室">
-                                    <EditItemTemplate>
-                                        <asp:DropDownList ID="office" runat="server" SelectedValue='<%# Bind("Office") %>' >
-                                            <asp:ListItem value="">--请选择办公室--</asp:ListItem>
-                                            <asp:ListItem value="登记处">登记处</asp:ListItem>
-                                            <asp:ListItem value="放疗设备状态监测室">放疗设备状态监测室</asp:ListItem>
-                                            <asp:ListItem value="加速器治疗室">加速器治疗室</asp:ListItem>
-                                            <asp:ListItem value="模具摆放室">模具摆放室</asp:ListItem>
-                                            <asp:ListItem value="模拟定位室">模拟定位室</asp:ListItem>
-                                            <asp:ListItem value="物理室">物理室</asp:ListItem>
-                                            <asp:ListItem value="医生工作室">医生工作室</asp:ListItem>
-                                            <asp:ListItem value="制模室">制模室</asp:ListItem>
-                                        </asp:DropDownList>
-                                    </EditItemTemplate>
-                                    <ItemTemplate>
-                                        <asp:Label ID="OfficeLabel" runat="server" Text='<%# Bind("Office") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:BoundField DataField="Password" HeaderText="用户密码" />
-                                <asp:TemplateField HeaderText="激活状态">
-                                    <ItemTemplate>
-                                        <asp:Label ID="ActivateLabel" runat="server" Text='<%# GetActive(Eval("Activate")) %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="编辑" ShowHeader="False">
-                                    <EditItemTemplate>
-                                        <asp:LinkButton ID="UpdateLinkButton" runat="server" CausesValidation="True" CommandName="Update" Text="更新" CssClass="btn btn-default"></asp:LinkButton>
-                                        &nbsp;<asp:LinkButton ID="CannelLinkButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="取消" CssClass="btn btn-default"></asp:LinkButton>
-                                    </EditItemTemplate>
-                                    <ItemTemplate>
-                                        <asp:LinkButton ID="EditLinkButton" runat="server" CausesValidation="False" CommandName="Edit" Text="编辑" CssClass="btn btn-default"></asp:LinkButton>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="激活用户">
-                                    <ItemTemplate>
-                                        <asp:LinkButton ID="Activate" runat="server" Text='<%# GetButtonText(Eval("Activate")) %>' OnClick="Activate_Click" CssClass="btn btn-default"></asp:LinkButton>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="删除用户" ShowHeader="False" HeaderStyle-Width="5%">
-                                    <ItemTemplate>
-                                        <asp:LinkButton ID="DeleteLinkButton" runat="server" CausesValidation="False" CommandName="Delete" Text="删除" OnClick="DeleteLinkButton_Click" CssClass="btn btn-default"></asp:LinkButton>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
+                    <div class="col-md-12">
+                <div class="panel panel-default mintablewidth">
+                    <div class="panel-heading mintablewidth">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        <span class="panel-title">用户信息</span>
+                        <input type="button" class="btn btn-primary btn-sm buttonToLeft floatRight" id="newGroup" data-toggle="modal" data-target="#myModal" value="新增" style="padding: 2.5px 10px;" />
+                        <input type="button" class="btn btn-primary btn-sm floatRight" id="changeUser" value="编辑" style="padding: 2.5px 10px;" />
+                        <input type="button" class="btn btn-primary btn-sm floatRight" id="closeEdit" value="结束编辑" style="padding: 2.5px 10px;display:none" />
+                        <input type="button" class="tohidden" id="EditGroup" data-toggle="modal" data-target="#editModal" />
                     </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
+                    <div id="tableArea" class="panel-body mintablewidth">
+                        <table id="UserTable" class="table table-striped table-hover" style="width:100%">
+                        </table>
+                    </div>
                 </div>
-            </form>
-            <input id="showAdd" type="button" value="新增用户" class="btn btn-primary" data-toggle="modal" data-target="#addUser" style="margin:15px;float:right;" />
-            <div class="modal fade changebindArea" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top:100px;">
-                <form id="addNewFrm" action="Root-userInformation.aspx" method="post">
-                    <div class="panel panel-default" style="max-width:520px;margin:auto;">
-                        <div class="panel-heading">
-                            新增用户
-                        </div>
-                        <div class="panel-body">
-                            <input type="hidden" name="ispostback" value="true" />
-                            <label id="error"></label>
-                            <div class="form-group">
-                                <table class="table">
-                                    <tbody style="text-align:center;">
+            </div>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">新增用户</h4>
+                        
+                    </div>
+                        <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
+                            <label id="error" class="tohidden"></label>
+                            <table id="addGroup" class="mytable table-bordered table-center">
+                                <tbody style="text-align:center;">
                                         <tr>
                                             <td style="width:30%;">账号</td>
                                             <td>
-                                                <input id="userNumber" class="form-control" name="userNumber" type="text" placeholder="请输入账号" />
+                                                <input id="userNumber" class="form-control IsEmpty number" name="userNumber" type="text" placeholder="请输入账号" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>姓名</td>
                                             <td>
-                                                <input id="name" name="userName" type="text" placeholder="请输入姓名" class="form-control" />
+                                                <input id="name" name="userName" type="text" placeholder="请输入姓名" class="form-control IsEmpty" />
                                             </td>
                                         </tr><tr>
                                             <td>性别</td>
@@ -585,25 +498,25 @@
                                         <tr>
                                             <td>密码</td>
                                             <td>
-                                                <input id="userPassword" name="userKey" type="password" placeholder="请输入密码" class="form-control" />
+                                                <input id="userPassword" name="userKey" type="password" placeholder="请输入密码" class="form-control userKey" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>确认密码</td>
                                             <td>
-                                                <input id="checkPassword" type="password" placeholder="请再次输入密码" class="form-control" />
+                                                <input id="checkPassword" type="password" placeholder="请再次输入密码" class="form-control checkPassword" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>联系方式</td>
                                             <td>
-                                                <input id="phoneContact" name="phoneNumber" type="text" placeholder="请输入联系方式" class="form-control" />
+                                                <input id="phoneContact" name="phoneNumber" type="text" placeholder="请输入联系方式" class="form-control contact" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>办公室</td>
                                             <td>
-                                                <select id="Select1" name="officeSelect" class="form-control" >
+                                                <select id="Select2" name="officeSelect" class="form-control office" >
                                                     <option value="">--请选择办公室--</option>
                                                     <option value="登记处">登记处</option>
                                                     <option value="放疗设备状态监测室">放疗设备状态监测室</option>
@@ -620,11 +533,11 @@
                                             <td>绑定角色</td>
                                             <td>
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" style="text-decoration:none;">
-                                                    <h4 class="panel-title">选择可见角色</h4>
+                                                    <h4 class="panel-title">选择角色</h4>
                                                 </a>
                                                 <div id="collapseOne" class="info-option panel-collapse collapse" aria-expanded="true">
                                                     <div class="form-group">
-                                                        <ul id="hidePart" class="list-inline" style="text-align:left;">
+                                                        <ul id="hidePart" class="list-inline checkRole" style="text-align:left;">
                                                             <li>
                                                                 <label class="control-label">
                                                                     <input id="allRole" type="checkbox" />
@@ -650,22 +563,109 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                                <div class="row" style="margin-bottom:10px;text-align:center;">
-                                    <div class="col-xs-6">
-                                        <input class="btn btn-default" id="cannel" type="button" value="取消" data-dismiss="modal" aria-label="Close" />
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <input class="btn btn-primary" type="submit" value="提交" />
-                                    </div>
-                                </div>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button id="cannelButton" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                            <input id="sureAdd" type="submit" class="btn btn-primary" value="确认" />
+                        </div>
+                </div>
+                                    <!-- /.modal-content -->
             </div>
-        </div>    
+                                <!-- /.modal-dialog -->
+        </div>
+
+         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
+                        <h4 class="modal-title">修改用户</h4>                     
+                    </div>
+                        <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
+                            <label id="editError" class="tohidden"></label>
+                             <table id="EditTable" class="mytable table-bordered table-center">
+                                 <tbody style="text-align:center;">
+                                        <tr>
+                                            <td style="width:30%;">账号</td>
+                                            <td>
+                                                <input id="numberEdit" class="form-control IsEmpty number" name="numberEdit" type="text" disabled/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>姓名</td>
+                                            <td>
+                                                <input id="nameEdit" name="nameEdit" type="text" class="form-control IsEmpty" />
+                                            </td>
+                                        </tr><tr>
+                                            <td>性别</td>
+                                            <td>
+                                                <div class="col-xs-4">
+                                                    <input id="genderEdit1" type="radio" name="genderEdit" checked="checked" value="M" />
+                                                    <label for="male">男</label>
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <input id="genderEdit2" type="radio" name="genderEdit" value="F" />
+                                                    <label for="female">女</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>密码</td>
+                                            <td>
+                                                <input id="pwdEdit" name="pwdEdit" type="text" class="form-control userKey" disabled/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>联系方式</td>
+                                            <td>
+                                                <input id="phoneEdit" name="phoneEdit" type="text" class="form-control contact" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>办公室</td>
+                                            <td>
+                                                <select id="officeEdit" name="officeEdit" class="form-control office" >
+                                                    <option value="">--请选择办公室--</option>
+                                                    <option value="登记处">登记处</option>
+                                                    <option value="放疗设备状态监测室">放疗设备状态监测室</option>
+                                                    <option value="加速器治疗室">加速器治疗室</option>
+                                                    <option value="模具摆放室">模具摆放室</option>
+                                                    <option value="模拟定位室">模拟定位室</option>
+                                                    <option value="物理室">物理室</option>
+                                                    <option value="医生工作室">医生工作室</option>
+                                                    <option value="制模室">制模室</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>激活状态</td>
+                                            <td>
+                                                <div class="col-xs-4">
+                                                    <input id="activateEdit1" type="radio" name="activateEdit" value="1"checked="checked" />
+                                                    <label for="activated">激活</label>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <input id="activateEdit2" type="radio" name="activateEdit" value="0" />
+                                                    <label for="unactivate">不激活</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cannelEdit" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                            <input id="deleteUser" class="btn btn-danger" type="button" value="删除用户" />
+                            <input id="sureEdit" type="submit" class="btn btn-primary" value="确认" />
+                        </div>
+                </div>
+                                    <!-- /.modal-content -->
+            </div>
+                                <!-- /.modal-dialog -->
+        </div>
+        
     </section>
   </div>
 
@@ -684,9 +684,10 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/jquery.min.js"></script>
+<!-- tablecreate -->
+<script src="../../js/Root/createTable.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -696,9 +697,8 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- Main js-->
-<script src="../../js/Root/RootMainJS.js"></script>
-    <script src="../../js/Root/userInformation.js" type="text/javascript"></script>
-    <script src="../../js/Root/chooseAll.js" type="text/javascript"></script>
+<script src="../../js/Root/userManageJS.js"></script>
+<script src="../../js/Root/chooseAll.js" type="text/javascript"></script>
 <!-- Main JavaScript -->
 </body>
 </html>

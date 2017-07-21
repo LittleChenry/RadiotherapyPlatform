@@ -205,7 +205,7 @@
 		}
 
 		this.each(function () {
-		    var $table = $(this).find("table");
+		    var $table = $(this).find("table").detach();
 		    $(this).empty().append($table);
 		    $table.empty();
 			var isCreateButton = args["createButton"];
