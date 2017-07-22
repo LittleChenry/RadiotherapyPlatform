@@ -39,11 +39,11 @@
         <form action="Register.aspx" method="post">
             <input type="hidden" name="ispostback" value="true" />
             <div class="form-group has-feedback">
-                <input id="userName" type="text" class="form-control isEmpty userName" placeholder="请输入账号" />
+                <input id="userName" name="userName" type="text" class="form-control isEmpty userName" placeholder="请输入账号" />
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="text" class="form-control isEmpty name" placeholder="请输入姓名" />
+                <input type="text" name="name" class="form-control isEmpty name" placeholder="请输入姓名" />
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
             <div class="form-input form-group has-feedback">
@@ -65,7 +65,7 @@
                </div>
         
             <div class="form-group has-feedback">
-                <input id="userKey" type="password" class="form-control isEmpty userKey" placeholder="请输入密码" />
+                <input id="userKey" type="password" name="userKey" class="form-control isEmpty userKey" placeholder="请输入密码" />
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">

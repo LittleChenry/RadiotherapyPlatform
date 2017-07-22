@@ -15,7 +15,7 @@ $(function () {
 
 $(function () {
     $("#search").bind("click", function () {
-        var activate = $("#role").val();
+        var activate = $("#Select1").val();
         var office = $("#office").val();
 
         $.ajax({

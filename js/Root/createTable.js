@@ -145,7 +145,7 @@
 			} else if (page == sumPage && sumPage > 1) {
 			    pagesChange.firstPage();
 			    pagesChange.prePage();
-			} else {
+			} else if(sumPage > 1) {
 			    pagesChange.firstPage();
 			    pagesChange.prePage();
 			    pagesChange.nextPage();
