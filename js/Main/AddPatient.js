@@ -186,7 +186,6 @@ function CheckEmpty() {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
-    alert(
     var form = new FormData(document.getElementById("frmaddpatient"));
     $.ajax({
         url: "Addpatient.ashx",
