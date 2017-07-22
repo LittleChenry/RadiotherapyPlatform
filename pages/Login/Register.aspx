@@ -27,11 +27,11 @@
     <div class="background-img-fixed" style="margin:auto;text-align:center;">
         <img src="../../img/hospital.png" />
     </div>
-    <div class="name-logo">
-        <img src="../../img/hospitallogo.png" style="margin-left:20px;width:30%;max-width: 500px;" />
+    <div style="margin-left:15px;margin-top:20px">
+        <img src="../../img/title-mini.png" />
     </div>
-    <div style="margin:auto;text-align:center;">
-        <img src="../../img/title.png" style="width:80%;max-width: 1300px;" />
+    <div style="margin-left:15px;margin-top:0px">
+        <img src="../../img/title-english-mini.png" />
     </div>
     <div class="register-box-body toCenter toDown slim">
         <h2 class="login-box-msg short">请注册</h2>
@@ -109,8 +109,13 @@
 
   </div>
   <!-- /.form-box -->
-</div>
 <!-- /.register-box -->
+<footer class="main-footer" style="margin:0px;position:fixed;bottom:0;width:100%;background-color:transparent;border:0px;color:#c1c1c1;font-size:16px;">
+    <div class="pull-right hidden-xs">
+        <b>Version</b> 2.0
+    </div>
+    <strong>Copyright &copy; 2017-2017 <a href="#">医院</a> .</strong> 保留所有权利
+</footer>
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/jquery.min.js"></script>

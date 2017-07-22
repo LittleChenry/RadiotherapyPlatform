@@ -11,6 +11,7 @@
 
 .toCenter {
     max-width: 400px;
+    min-width: 200px;
     width:26.666%;
     margin: 0 auto;
 }
