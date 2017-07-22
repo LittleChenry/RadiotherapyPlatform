@@ -444,13 +444,11 @@
                     <div class="panel-body">
                         <div>
                             <div class="row">
-                                <%--<form id="tablefrm" method="post" action="Root-EquipmentInspectionManage.aspx">--%>
                                     <input type="hidden" id="sumPage" value="0" />
                                     <input type="hidden" id="currentPage" value="0" />
                                     <div class="col-sm-12" id="tableArea">
 
                                     </div>
-                               <%-- </form>--%>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">&nbsp;</div>

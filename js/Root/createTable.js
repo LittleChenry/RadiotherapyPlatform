@@ -17,7 +17,8 @@
 			ignoreNull: false,
 			needDate: false,
 			createDate: "",
-			lessLength: 0
+			lessLength: 0,
+            pages: 1
 		}
 
 		var args = $.extend({},defaults,options);
@@ -30,7 +31,7 @@
 			sumPage = (sumPage - (length / rows)) == 0 ? sumPage : sumPage + 1;
 			area.append("<input id=sumPage type=hidden value=" + sumPage + " />")
 				.append("<input id=currentPage type=hidden value=1 />");
-
+			return sumPage;
 		}
 
 		function createButton(area){
@@ -136,11 +137,19 @@
 			}
 		}
 
-		function initBindPage(){
-			var sumPage = parseInt($("#sumPage").val());
-			if(sumPage > 1){
+		function initBindPage(page){
+		    var sumPage = parseInt($("#sumPage").val());
+			if(page == 1 && sumPage > 1){
 				pagesChange.nextPage();
 				pagesChange.lastPage();
+			} else if (page == sumPage && sumPage > 1) {
+			    pagesChange.firstPage();
+			    pagesChange.prePage();
+			} else {
+			    pagesChange.firstPage();
+			    pagesChange.prePage();
+			    pagesChange.nextPage();
+			    pagesChange.lastPage();
 			}
 		}
 		var pagesChange = {
@@ -201,21 +210,44 @@
 					$(this).addClass("disabled").unbind("click");
 					$(pagesChange.next).addClass("disabled").unbind("click");
 				});
-			}
+			},
+
+		    toPage: function toPage(page){
+		        var sum = parseInt($("#sumPage").val());
+		        if (page > sum || page < 0)
+		            return;
+		        createPage(_thiss, page);
+		        if (page == 0) {
+		            pagesChange.nextPage();
+		            pagesChange.lastPage();
+		            $(pagesChange.first).addClass("disabled").unbind("click");
+		            $(pagesChange.pre).addClass("disabled").unbind("click");
+		        } else if (page == sum) {
+		            pagesChange.firstPage();
+		            pagesChange.prePage();
+		            $(pagesChange.last).addClass("disabled").unbind("click");
+		            $(pagesChange.next).addClass("disabled").unbind("click");
+		        }
+		    }
 		}
 
 		this.each(function () {
+		    var page = args["pages"];
 		    var $table = $(this).find("table").detach();
 		    $(this).empty().append($table);
 		    $table.empty();
 			var isCreateButton = args["createButton"];
-			init($(this));//计算页数
+			var sumpages = init($(this));//计算页数
+			if (sumpages < page) {
+			    page = sumpages;
+			}
 			if(isCreateButton){
 				createButton($(this));
 			}
 			createHead($table);
-			createPage($table, 1);//创建第一页
-			initBindPage();
+			createPage($table, parseInt(page));//创建第一页
+			$("#currentPage").val(page);
+			initBindPage(page);
 		});
 	}
 })(jQuery);

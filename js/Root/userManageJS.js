@@ -1,9 +1,11 @@
-﻿$(function () {
+﻿var objuser = [];
+$(function () {
     $.ajax({
         type: "post",
         url: "getAllUser.ashx",
         dataType: "text",
         success: function (data) {
+            objuser = $.parseJSON(data);
             $("#tableArea").createTable($.parseJSON(data), {
                 headName: new Array("用户账号","姓名","性别","联系方式","办公室","用户密码","激活状态")
             });
@@ -28,7 +30,8 @@ $(function () {
                     $("#UserTable").empty();
                     return;
                 }
-                $("#tableArea").createTable($.parseJSON(data), {
+                objuser = $.parseJSON(data);
+                $("#tableArea").createTable(objuser, {
                     headName: new Array("用户账号", "姓名", "性别", "联系方式", "办公室", "用户密码", "激活状态")
                 });
             }
@@ -171,6 +174,7 @@ function editUser(){
     var phoneEdit = $("#phoneEdit").val();
     var officeEdit = $("#officeEdit").val();
     var activateEdit = $("input:radio[name='activateEdit']:checked").val();
+    var current = parseInt($("#currentPage").val());
     $.ajax({
         type: "post",
         url: "/RadiotherapyPlatform/pages/Root/editUser.ashx",
@@ -178,63 +182,57 @@ function editUser(){
         dataType: "text",
         success: function () {
             alert("修改成功");
-            var activate = $("#role").val();
-            var office = $("#office").val();
-
-            $.ajax({
-            type: "post",
-            url: "getAllUser.ashx",
-            dataType: "text",
-            data: {"activate":activate, "office":office},
-            success: function (data) {
-                if (data == "]") {
-                    var $table = $("#UserTable");
-                    $("#tableArea").empty().append($table);
-                    $("#UserTable").empty();
-                    return;
-                }
-                $("#tableArea").createTable($.parseJSON(data), {
-                    headName: new Array("用户账号", "姓名", "性别", "联系方式", "办公室", "用户密码", "激活状态")
-                });
-                $("#cannelEdit").trigger("click");
-            }
-        });
+            changeObj(numberEdit,nameEdit,genderEdit,phoneEdit,officeEdit,activateEdit);
+            $("#tableArea").createTable(objuser, {
+                headName: new Array("用户账号", "姓名", "性别", "联系方式", "办公室", "用户密码", "激活状态"),
+                pages: current
+            });
+            $("#cannelEdit").trigger("click");
         }
     });
 }
 
+function changeObj(num,name,gender,contact,office,activate) {
+    for (var i = 0; i < objuser.length; ++i) {
+        if (num == objuser[i].Number) {
+            objuser[i].Name = name;
+            objuser[i].Gender = (gender == "M" ? "男":"女");
+            objuser[i].Contact = contact;
+            objuser[i].Office = office;
+            objuser[i].Activate = (activate == 0?"未激活":"激活");
+            break;
+        }
+    }
+}
+
 function deleteUser(){
     var numberEdit = $("#numberEdit").val();
+    var current = parseInt($("#currentPage").val());
     $.ajax({
         type: "post",
         url: "/RadiotherapyPlatform/pages/Root/deleteUser.ashx",
         data: {"numberEdit":numberEdit},
         dataType: "text",
         success: function () {
+           
+            findObj(numberEdit);
+            $("#tableArea").createTable(objuser, {
+                headName: new Array("用户账号", "姓名", "性别", "联系方式", "办公室", "用户密码", "激活状态"),
+                pages:current
+            });
+            
             alert("删除成功");
-            var activate = $("#role").val();
-            var office = $("#office").val();
-
-            $.ajax({
-            type: "post",
-            url: "getAllUser.ashx",
-            dataType: "text",
-            data: {"activate":activate, "office":office},
-            success: function (data) {
-                if (data == "]") {
-                    var $table = $("#UserTable");
-                    $("#tableArea").empty().append($table);
-                    $("#UserTable").empty();
-                    return;
-                }
-                $("#tableArea").createTable($.parseJSON(data), {
-                    headName: new Array("用户账号", "姓名", "性别", "联系方式", "办公室", "用户密码", "激活状态")
-                });
-                $("#cannelEdit").trigger("click");
-            }
-        });
+            $("#cannelEdit").trigger("click");
         }
     });
+}
+
+function findObj(num) {
+    for (var i = 0; i < objuser.length; i++) {
+        if (num == objuser[i].Number) {
+            objuser.splice(i, 1);
+        }
+    }
 }
 //新增用户表单提交时的验证
 function checkAll(evt) {
@@ -435,7 +433,7 @@ function postNewUser(seleced) {
     var gender = $("input:radio[name='gender']:checked").val();
     var userPassword = $("#userPassword").val();
     var phoneContact = $("#phoneContact").val();
-    var office = $("#Select1").val();
+    var office = $("#Select2").val();
     var roles = seleced;
     var activate = $("input:radio[name='activate']:checked").val();
     $.ajax({
