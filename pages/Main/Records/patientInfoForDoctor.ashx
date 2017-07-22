@@ -77,11 +77,6 @@ public class patientInfoForDoctor : IHttpHandler {
        string sql = "select count(*) from treatment where Group_ID is NULL and Belongingdoctor=@userid";
         sqlOperation2.AddParameterWithValue("@userid", Convert.ToInt32(userID));
         int count2=int.Parse(sqlOperation2.ExecuteScalar(sql));
-        
-       if (Count == 0)
-       {
-           return "{\"PatientInfo\":false}";
-       }
        int i = 1;
        StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
        foreach (string element in array2)
@@ -122,7 +117,7 @@ public class patientInfoForDoctor : IHttpHandler {
            }
            reader.Close();
        }
-       if (count2 != 0)
+       if (count2 != 0 && Count!=0)
        {
            backText.Append(",");
        }

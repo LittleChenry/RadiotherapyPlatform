@@ -121,10 +121,12 @@ public class Addpatient : IHttpHandler {
             {
                 if (context.Request.Form["group"] == "allItem")
                 {
-                    string treatinsert = "insert into treatment(TreatmentName,Patient_ID,Progress,State) values(@ID,@PID,@progress,1)";
+                    string treatinsert = "insert into treatment(TreatmentName,Patient_ID,Progress,State,Belongingdoctor,Treatmentdescribe) values(@ID,@PID,@progress,0,@doc,@Treatmentdescribe)";
                     sqlOperation2.AddParameterWithValue("@progress", "0");
                     sqlOperation2.AddParameterWithValue("@ID", 1);
                     sqlOperation2.AddParameterWithValue("@PID", patient);
+                    sqlOperation2.AddParameterWithValue("@doc", doctorid);
+                    sqlOperation2.AddParameterWithValue("@Treatmentdescribe", "默认疗程");
                     intSuccess2 = sqlOperation2.ExecuteNonQuery(treatinsert);
                 }
                 else
