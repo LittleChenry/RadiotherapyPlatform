@@ -73,7 +73,7 @@ function Init(evt) {
     } else {
           createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
           var info = getfirstaccelerateInfomation(treatmentID);
-          if (info != "") {
+          if ((typeof (info) != "undefined")) {
               document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
               document.getElementById("idforappoint").value = info.appointid;
           }

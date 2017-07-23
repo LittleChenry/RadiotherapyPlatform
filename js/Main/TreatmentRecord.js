@@ -143,7 +143,7 @@ function Init(evt) {
                                 alert("记录成功！");
                                 document.getElementById("treatmentedit").disabled = "disabled";
                                 refresh(treatmentID);
-                                parent.window.location.reload();
+
                             } else {
                                 alert("上传失败！");
                             }
