@@ -104,28 +104,7 @@ function Init(evt) {
                    ReplacementRecord.rows[k + 1].cells[4].innerHTML = info[i].Result.split(",")[k];
                    ReplacementRecord.rows[k + 1].cells[5].innerHTML = info[i].Distance.split(",")[k];
                }
-               var boxes = document.getElementById("multipic_DRR");
-               var firstdrr = document.getElementById("firstdrr");
-               firstdrr.style.display = "none";
-               var pictures = info[i].ReferenceDRRPicture.split(",");
-               if (info[i].ReferenceDRRPicture == "") {
-                   boxes.innerHTML = "无";
-               } else {
-                   for (var k = 1; k < pictures.length; k++) {
-                       var div = document.createElement("DIV");
-                       div.className = "boxes";
-                       var div1 = document.createElement("DIV");
-                       div1.className = "imgnum";
-                       var img = document.createElement("IMG");
-                       img.addEventListener("click", showPicture, false);
-                       img.className = "img";
-                       img.src = pictures[k];
-                       img.style.display = "block";
-                       div1.appendChild(img);
-                       div.appendChild(div1);
-                       boxes.appendChild(div);
-                   }
-               }
+ 
                var boxes1 = document.getElementById("multipic_yanzheng");
                var firstyanzheng = document.getElementById("firstyanzheng");
                firstyanzheng.style.display = "none";
@@ -158,18 +137,7 @@ function Init(evt) {
                    + '<thead><tr><th>方向</th><th>原始中心(cm)</th><th>计划中心(cm)</th><th>移床参数(cm)</th><th>复位结果(cm)</th><th>差值(cm)</th></tr></thead>'
                    + '<tbody style="text-align:center;"><tr><td>x</td><td>' + info[i].OriginCenter.split(",")[0] + '</td><td>' + info[i].PlanCenter.split(",")[0] + '</td><td>' + info[i].Movement.split(",")[0] + '</td><td>' + info[i].Result.split(",")[0] + '</td><td>' + info[i].Distance.split(",")[0] + '</td></tr>'
                    + '<tr><td>y</td><td>' + info[i].OriginCenter.split(",")[1] + '</td><td>' + info[i].PlanCenter.split(",")[1] + '</td><td>' + info[i].Movement.split(",")[1] + '</td><td>' + info[i].Result.split(",")[1] + '</td><td>' + info[i].Distance.split(",")[1] + '</td></tr>'
-                   + '<tr><td>z</td><td>' + info[i].OriginCenter.split(",")[2] + '</td><td>' + info[i].PlanCenter.split(",")[2] + '</td><td>' + info[i].Movement.split(",")[2] + '</td><td>' + info[i].Result.split(",")[2] + '</td><td>' + info[i].Distance.split(",")[2] + '</td></tr></tbody></table></div></div>'
-                   + '<div class="single-row"><div class="item col-xs-8"><span class="col-xs-2" style="padding-left:0px;">参考DRR：</span></div></div>';
-               var pictures = info[i].ReferenceDRRPicture.split(",");
-               if (info[i].ReferenceDRRPicture == "") {
-                   content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes">无</div></div></div></div>';
-               } else {
-                   content = content + '<div class="single-row"><div class="item col-xs-12">';
-                   for (var k = 1; k < pictures.length; k++) {
-                       content = content + '<div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img  class="img"  src="' + pictures[k] + '" style="display:block" /></div></div>';
-                   }
-                   content = content + "</div></div>";
-               }
+                   + '<tr><td>z</td><td>' + info[i].OriginCenter.split(",")[2] + '</td><td>' + info[i].PlanCenter.split(",")[2] + '</td><td>' + info[i].Movement.split(",")[2] + '</td><td>' + info[i].Result.split(",")[2] + '</td><td>' + info[i].Distance.split(",")[2] + '</td></tr></tbody></table></div></div>';
                content = content + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">验证图像：</span></div></div>';
                var pictures1 = info[i].VerificationPicture.split(",");
                if (info[i].VerificationPicture == "") {
@@ -203,18 +171,7 @@ function Init(evt) {
                     + '<thead><tr><th>方向</th><th>原始中心(cm)</th><th>计划中心(cm)</th><th>移床参数(cm)</th><th>复位结果(cm)</th><th>差值(cm)</th></tr></thead>'
                     + '<tbody style="text-align:center;"><tr><td>x</td><td>' + info[i].OriginCenter.split(",")[0] + '</td><td>' + info[i].PlanCenter.split(",")[0] + '</td><td>' + info[i].Movement.split(",")[0] + '</td><td>' + info[i].Result.split(",")[0] + '</td><td>' + info[i].Distance.split(",")[0] + '</td></tr>'
                     + '<tr><td>y</td><td>' + info[i].OriginCenter.split(",")[1] + '</td><td>' + info[i].PlanCenter.split(",")[1] + '</td><td>' + info[i].Movement.split(",")[1] + '</td><td>' + info[i].Result.split(",")[1] + '</td><td>' + info[i].Distance.split(",")[1] + '</td></tr>'
-                    + '<tr><td>z</td><td>' + info[i].OriginCenter.split(",")[2] + '</td><td>' + info[i].PlanCenter.split(",")[2] + '</td><td>' + info[i].Movement.split(",")[2] + '</td><td>' + info[i].Result.split(",")[2] + '</td><td>' + info[i].Distance.split(",")[2] + '</td></tr></tbody></table></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-8"><span class="col-xs-2" style="padding-left:0px;">参考DRR：</span></div></div>';
-                var pictures = info[i].ReferenceDRRPicture.split(",");
-                if (info[i].ReferenceDRRPicture == "") {
-                    content = content + '<div class="single-row"><div class="item col-xs-12"><div class="imgbox multifile"><div class="boxes">无</div></div></div></div>';
-                } else {
-                    content = content + '<div class="single-row"><div class="item col-xs-12">';
-                    for (var k = 1; k < pictures.length; k++) {
-                        content = content + '<div class="imgbox multifile"><div class="boxes"><div class="imgnum"> <img  class="img"  src="' + pictures[k] + '" style="display:block" /></div></div></div>';
-                    }
-                    content = content + "</div></div>";
-                }
+                    + '<tr><td>z</td><td>' + info[i].OriginCenter.split(",")[2] + '</td><td>' + info[i].PlanCenter.split(",")[2] + '</td><td>' + info[i].Movement.split(",")[2] + '</td><td>' + info[i].Result.split(",")[2] + '</td><td>' + info[i].Distance.split(",")[2] + '</td></tr></tbody></table></div></div>';
                 content = content + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">验证图像：</span></div></div>';
                 var pictures1 = info[i].VerificationPicture.split(",");
                 if (info[i].VerificationPicture == "") {
@@ -241,7 +198,6 @@ function Init(evt) {
             var m = this.id;
             var ReplacementRecord = document.getElementById("ReplacementRecord")
             for (var k = 1; k < 4; k++) {
-                alert(m);
                 document.getElementById("OriginCenter"+k).value = info[m].OriginCenter.split(",")[k-1];
                 document.getElementById("PlanCenter" + k).value = info[m].PlanCenter.split(",")[k - 1];
                 document.getElementById("Movement" + k).value = info[m].Movement.split(",")[k - 1];
@@ -382,10 +338,7 @@ function dateformat(format) {
     return time;
 }
 function save() {
-    var boxgroup = document.getElementById("multipic_DRR");
-    var boxgroup1 = document.getElementById("multipic_yanzheng");
-    document.getElementById("cankaodrr").value = boxgroup.children.length - 1;
-    document.getElementById("yanzheng").value = boxgroup1.children.length - 1;
+
     if (document.getElementById("OriginCenter1").value == "" || document.getElementById("OriginCenter2").value == "" || document.getElementById("OriginCenter3").value == "") {
         window.alert("原始中心没有完善");
         evt.preventDefault();
@@ -406,11 +359,7 @@ function save() {
         evt.preventDefault();
         return;
     }
-    if (document.getElementById("cankaodrr").value == "0" || document.getElementById("yanzheng").value == "0") {
-        window.alert("参考DRR和验证图像未完善");
-        evt.preventDefault();
-        return;
-    }
+
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";

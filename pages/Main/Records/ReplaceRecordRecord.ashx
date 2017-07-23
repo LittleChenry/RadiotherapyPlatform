@@ -19,9 +19,6 @@ public class ReplaceRecordRecord : IHttpHandler {
     {
         string savePath = "";
         string savepath1 = "";
-        string savepath2 = "";
-        int first = Convert.ToInt32(context.Request.Form["cankaodrr"]);
-        int second = Convert.ToInt32(context.Request.Form["yanzheng"]);
         HttpFileCollection files =context.Request.Files;
         savePath = System.Web.HttpContext.Current.Server.MapPath("~/upload/replacerecord");
         if (!System.IO.Directory.Exists(savePath))
@@ -33,8 +30,7 @@ public class ReplaceRecordRecord : IHttpHandler {
         {
             for (int i = 0; i < files.Count; i++)
             {
-                if (i <= first)
-                {
+              
                     System.Web.HttpPostedFile postedFile = files[i];
                     string fileName = postedFile.FileName;//完整的路径
                     fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
@@ -45,22 +41,6 @@ public class ReplaceRecordRecord : IHttpHandler {
                         files[i].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
                         savepath1 = savepath1 + "," + "/RadiotherapyPlatform/upload/replacerecord/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
                     }
-
-                }
-                else
-                {
-                    System.Web.HttpPostedFile postedFile = files[i];
-                    string fileName = postedFile.FileName;//完整的路径
-                    fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
-                    string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
-                    string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
-                    if (files[i].ContentLength > 0)
-                    {
-                        files[i].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
-                        savepath2 = savepath2 + "," + "/RadiotherapyPlatform/upload/replacerecord/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
-                    }
-
-                }
 
             }
         }
@@ -76,15 +56,14 @@ public class ReplaceRecordRecord : IHttpHandler {
         string userID = context.Request.Form["userID"];
         int userid = Convert.ToInt32(userID);
         DateTime datetime = DateTime.Now;
-        string strSqlCommand = "UPDATE replacement SET Remarks=@remark,OriginCenter=@OriginCenter,PlanCenter=@PlanCenter,Movement=@Movement,ReferenceDRRPicture=@ReferenceDRRPicture,VerificationPicture=@VerificationPicture,Result=@Result,Distance=@distance,OperateTime=@datetime,Operate_User_ID=@userid where replacement.ID=@replacementID";
+        string strSqlCommand = "UPDATE replacement SET Remarks=@remark,OriginCenter=@OriginCenter,PlanCenter=@PlanCenter,Movement=@Movement,VerificationPicture=@VerificationPicture,Result=@Result,Distance=@distance,OperateTime=@datetime,Operate_User_ID=@userid where replacement.ID=@replacementID";
         //各参数赋予实际值
         sqlOperation.AddParameterWithValue("@replacementID", replacementID);
         sqlOperation.AddParameterWithValue("@OriginCenter", context.Request.Form["OriginCenter1"] + "," +context.Request.Form["OriginCenter2"] + "," + context.Request.Form["OriginCenter3"]);
         sqlOperation.AddParameterWithValue("@PlanCenter", context.Request.Form["PlanCenter1"] + "," + context.Request.Form["PlanCenter2"] + "," + context.Request.Form["PlanCenter3"]);
         sqlOperation.AddParameterWithValue("@Movement", context.Request.Form["Movement1"] + "," + context.Request.Form["Movement2"] + "," + context.Request.Form["Movement3"]);
         sqlOperation.AddParameterWithValue("@distance", context.Request.Form["distance1"] + "," + context.Request.Form["distance2"] + "," + context.Request.Form["distance3"]);
-        sqlOperation.AddParameterWithValue("@ReferenceDRRPicture", savepath1);
-        sqlOperation.AddParameterWithValue("@VerificationPicture", savepath2);
+        sqlOperation.AddParameterWithValue("@VerificationPicture", savepath1);
         sqlOperation.AddParameterWithValue("@Result", context.Request.Form["Result1"] + "," + context.Request.Form["Result2"] + "," + context.Request.Form["Result3"]);
         sqlOperation.AddParameterWithValue("@datetime", datetime);
         sqlOperation.AddParameterWithValue("@userid", userid);

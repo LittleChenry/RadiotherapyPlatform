@@ -50,7 +50,7 @@ function Init(evt) {
     document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
     var session = getSession();
     var flag;
-    if ((typeof (appointid) != "undefined")) {
+    if (appointid!= "undefined") {
         flag = judge(appointid, treatmentID);
     } else {
         flag = "success";

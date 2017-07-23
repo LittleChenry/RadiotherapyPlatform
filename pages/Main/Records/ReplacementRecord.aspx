@@ -177,26 +177,6 @@
                         </div>
                     </div>
                     <div class="single-row">
-                        <input type="hidden" id="cankaodrr" name="cankaodrr" value="0" />
-                        <div class="item col-xs-12">
-                            <span class="col-xs-2" style="padding-left:0px;">参考DRR：</span>
-                        </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-12">
-                            <div id="multipic_DRR" class="imgbox multifile">
-                                <div id="firstdrr" class="boxes">
-                                    <div class="imgnum">
-                                        <input disabled="disabled" type="file" name="f1" class="multifilepath filepath" />
-                                        <span class="closecamera closearea"><i class="fa fa-times"></i></span>
-                                        <img src="../../../img/camera.png" class="camera-picture" />
-                                        <img class="img"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single-row">
                         <input type="hidden" id="yanzheng" name="yanzheng" value="0" />
                         <div class="item col-xs-12">
                             <span class="col-xs-2" style="padding-left:0px;">验证图像：</span>
