@@ -102,6 +102,10 @@ function postInformation() {
 function getInformation() {
     if (xmlHttp.readyState == 4) {//正常响应
         if (xmlHttp.status == 200) {//正确接受响应数据
+            if ("{\"userRole\":[" == xmlHttp.responseText) {
+                alert("该用户没有角色,请找管理员");
+                return false;
+            }
             obj = eval("(" + xmlHttp.responseText + ")");
             if (obj != null) {
                 if (obj.userRole[0].Name.substring(0, 5) == "false") {
@@ -122,9 +126,13 @@ function getInformation() {
                     }
                 } else {
                     postToCs();//！！！！！！一般处理程序返回后台验证成功则向cs文件发送数据进行session记录
-                    if (obj.userRole.length == 1) {
-                        window.location.replace("../../pages/Root/RootMain.aspx?role=" + obj.userRole[0].Name);
+                    if (obj.userRole.length == 1 && obj.userRole.Type == "Root") {
+                        setSessionRole(obj.userRole[0].Name, obj.userRole[0].Type);
+                        window.location.replace("../../pages/Root/RootMain.aspx");
                         return;
+                    } else if (obj.userRole.length == 1 && obj.userRole.Type != "Root") {
+                        setSessionRole(obj.userRole[0].Name, obj.userRole[0].Type);
+                        window.location.replace("../../pages/Main/Main.aspx");
                     } else {
                         createSelect(obj.userRole);
                         document.getElementById("loginDiv").style.display = "none";

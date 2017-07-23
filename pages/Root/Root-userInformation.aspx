@@ -699,6 +699,7 @@
 <!-- Main js-->
 <script src="../../js/Root/userManageJS.js"></script>
 <script src="../../js/Root/chooseAll.js" type="text/javascript"></script>
+<script src="../../js/Root/RootMainJS.js"></script>
 <!-- Main JavaScript -->
 </body>
 </html>
