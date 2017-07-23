@@ -34,7 +34,6 @@
     </div>
     <div id="loginDiv" class="login-box-body toCenter toDown">
     <h2 class="login-box-msg">请登录</h2>
-
     <form method="post">
       <div class="form-group has-feedback">
         <input id="userNumber" type="text" class="form-control isEmpty userName" placeholder="请输入账号" />

@@ -126,23 +126,33 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span id="out-name" class="hidden-xs">Chenry</span>
+              <span id="out-name" class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "未登录" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 <p>
-                  <span id="in-name">Chenry</span>
-                  <small id="role">医师</small>
+                  <span id="in-name"><%=((UserInformation)Session["loginUser"]) == null ?  "未登录" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
+                  <small id="role"><%=((UserInformation)Session["loginUser"]) == null ?  "无" : ((UserInformation)Session["loginUser"]).GetUserRole() %></small>
                 </p>
               </li>
               <!-- Menu Body -->
               <li class="user-body">
                 <div class="row">
                   <div class="text-center">
-                    <span>操作成员:</span>
-                    <span id="operator">Peach、Chenry、jy</span>
+                    <div>
+                        <span>操作成员:</span>
+                        <a id="changeOperator" href="javascript:;"><span id="operator"></span></a>
+                    </div>
+                    <div>
+                        <span>操作设备:</span>
+                        <a id="changeEquipment" href="javascript:;"><span id="chosenEquipment"></span></a>
+                    </div>
+                    <div>
+                        <span>时间范围:</span>
+                        <a id="changeDate" href="javascript:;"><span id="dateRange"></span></a>
+                    </div>
                   </div>
                 </div>
                 <!-- /.row -->
