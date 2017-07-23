@@ -33,6 +33,21 @@ function Init(evt) {
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    var i=0;
+    var designInfo = getDesignInfo(treatmentID);
+    document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
+    readDosagePriority(designInfo[i].DosagePriority);
+    readDosage(designInfo[i].Dosage);
+    document.getElementById("technology").innerHTML = designInfo[i].technology;
+    document.getElementById("equipment").innerHTML = designInfo[i].equipment;
+    document.getElementById("PlanSystem").innerHTML = designInfo[i].PlanSystem;
+    document.getElementById("IlluminatedNumber").innerHTML = designInfo[i].IlluminatedNumber;
+    document.getElementById("Coplanar").innerHTML = charge1(designInfo[i].Coplanar);
+    document.getElementById("MachineNumbe").innerHTML = designInfo[i].MachineNumbe;
+    document.getElementById("ControlPoint").innerHTML = designInfo[i].ControlPoint;
+    document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
+    document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
+    document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
     var session = getSession();
     var flag = judge(appointid, treatmentID);
     var progress = patient.Progress.split(",");
@@ -267,6 +282,81 @@ function Init(evt) {
         checkAllTable(treatmentID);
     }, false);
 
+}
+function charge1(evt) {
+    if (evt == "0")
+        return "不是";
+    else
+        return "是";
+}
+function charge(evt) {
+    if (evt == "0")
+        return "不可行";
+    else
+        return "可行";
+}
+function getDesignInfo(treatID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "designConfirmInfo.ashx?treatID=" + treatID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var obj1 = eval("(" + json + ")");
+    return obj1.designInfo;
+}
+function readDosagePriority(DosagePriority) {
+    var table = document.getElementById("Priority");
+    var tbody = document.createElement("tbody");
+    for (var i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var tr = document.createElement("tr");
+        for (var j = 0; j < list.length; j++) {
+            var td = document.createElement("td");
+            var textNode = document.createTextNode(list[j]);
+            td.appendChild(textNode);
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
+    tbody.style.textAlign = "center";
+    table.appendChild(tbody);
+}
+function readDosage(DosagePriority) {
+    var table = document.getElementById("Dosage");
+    var tbody = document.createElement("tbody");
+    for (var i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var tr = document.createElement("tr");
+        for (var j = 0; j < list.length; j++) {
+            var td = document.createElement("td");
+            if (j == 2) {
+                var textNode = document.createTextNode("<");
+                td.appendChild(textNode);
+                tr.appendChild(td);
+            } else {
+                var textNode = document.createTextNode(list[j]);
+            }
+            td.appendChild(textNode);
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
+    tbody.style.textAlign = "center";
+    table.appendChild(tbody);
 }
 function getallfirst(treatmentID)
 {

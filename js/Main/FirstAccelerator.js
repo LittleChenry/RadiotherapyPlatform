@@ -36,8 +36,7 @@ function Init(evt) {
         var info = getfirstaccelerateInfomation(treatmentID);
         document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
         document.getElementById("chooseappoint").disabled = "disabled";
-        document.getElementById("operator").innerHTML = fixedInfo.fixedInfo[i].operate;
-        document.getElementById("date").innerHTML = fixedInfo.fixedInfo[i].OperateTime;
+
 
     } else {
         createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
