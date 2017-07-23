@@ -18,7 +18,8 @@
 			needDate: false,
 			createDate: "",
 			lessLength: 0,
-            pages: 1
+			pages: 1,
+		    needKey:false
 		}
 
 		var args = $.extend({},defaults,options);
@@ -81,6 +82,7 @@
 		function createPage(area, page){
 			var $tbody = area.find("tbody");
 			var ignoreNull = args["ignoreNull"];
+			var needKey = args["needKey"];
 
 			var needDate = args["needDate"];
 			var now = "";
@@ -121,12 +123,19 @@
 				for(x in jsonObj[i]){
 					if(ignoreNull && jsonObj[i][x] == null)
 						continue;
-					//$tr.append("<td>" + jsonObj[i][x] + "</td>");
-					tds.push("<td>" + jsonObj[i][x] + "</td>");
+				    //$tr.append("<td>" + jsonObj[i][x] + "</td>");
+					if (needKey && count == 0) {
+					    tds.push("<td><input type=hidden value=" + jsonObj[i][x] + " />");
+					} else if (needKey && count == 1) {
+					    tds.push(jsonObj[i][x] + "</td>");
+					} else {
+					    tds.push("<td>" + jsonObj[i][x] + "</td>");
+					}
 					count++;
 				}
 				var less = args["lessLength"];
-				if(less != 0){
+				if (less != 0) {
+				    if(needKey)count--;
 					while(count < less ){
 						tds.push("<td>&nbsp;</td>");
 						count++;
