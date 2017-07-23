@@ -23,7 +23,7 @@ public class getEquipmentModel : IHttpHandler {
         string model = context.Request.Form["model"];
 
         DataLayer sqlOperator = new DataLayer("sqlStr");
-        string sqlCommand = "SELECT MainItem,ChildItem,inspections.Explain,Reference,Cycle,TemplateID FROM inspections WHERE Cycle=@cycle AND TemplateID=@model ORDER BY MainItem";
+        string sqlCommand = "SELECT ID,MainItem,ChildItem,inspections.Explain,Reference,Cycle,TemplateID FROM inspections WHERE Cycle=@cycle AND TemplateID=@model ORDER BY MainItem";
         sqlOperator.AddParameterWithValue("@cycle", cycle);
         sqlOperator.AddParameterWithValue("@model", model);
         MySql.Data.MySqlClient.MySqlDataReader reader = null ;
@@ -33,7 +33,8 @@ public class getEquipmentModel : IHttpHandler {
         StringBuilder result = new StringBuilder("[");
         while (reader.Read())
         {
-            result.Append("{\"mainItem\":\"").Append(reader["MainItem"].ToString())
+            result.Append("{\"id\":\"").Append(reader["ID"].ToString())
+                .Append("\",\"mainItem\":\"").Append(reader["MainItem"].ToString())
                 .Append("\",\"childItem\":\"").Append(reader["ChildItem"].ToString())
                 .Append("\",\"explain\":\"").Append(reader["Explain"].ToString())
                 .Append("\",\"reference\":\"").Append(reader["Reference"].ToString())

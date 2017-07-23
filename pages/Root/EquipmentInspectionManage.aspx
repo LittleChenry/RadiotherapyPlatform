@@ -66,12 +66,13 @@
                         <span id="cycleTitle">&nbsp;</span>
                         <input type="button" value="修改" id="changeTable" class="floatRight btn btn-info btn-sm clearTBPadding tohidden" />
                         <input type="button" value="新增" id="addItem" class="floatRight btn btn-info btn-sm clearTBPadding tohidden" />
-                        <input type="button" value="确定" id="sureChange" class="floatRight btn btn-info btn-sm clearTBPadding" />
-                        <input type="button" value="取消" id="cannel" class="floatRight btn btn-info btn-sm clearTBPadding" />
+                        <input type="button" value="结束修改" id="cannel" class="floatRight btn btn-info btn-sm clearTBPadding" />
                         <input type="button" value="删除模板" id="deleteModel" class="floatRight btn btn-info btn-sm clearTBPadding tohidden" />
                     </div>
                     <div id="tableArea" class="panel-body">
-                        <table class="table table-striped table-hover"></table>
+                        <table class="table table-striped table-hover">
+
+                        </table>
                     </div>
                 </div>
             </div>
@@ -109,7 +110,7 @@
                                 <tr>
                                     <th class="noborder"><label for="roleDescription" class="height">说明</label></th>
                                     <td>
-                                        <textarea id="explain" class="form-control controlHeight rightValue"></textarea>
+                                        <textarea id="explain" style="resize: vertical;" class="form-control controlHeight rightValue"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
@@ -130,6 +131,33 @@
             </div>
         </div>
         <!-- /.row -->
+        <input type="button" class="tohidden" id="EditGroup" data-toggle="modal" data-target="#editModal" />
+
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
+                        <h4 class="modal-title">修改检查项目</h4>                     
+                    </div>
+                        <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
+                            <table class="mytable table-bordered table-center">
+                                <tbody id="editArea">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cannelEdit" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                            <input id="deleteGroup" class="btn btn-danger" type="button" value="删除该项" />
+                            <input id="sureEdit" type="submit" class="btn btn-primary" value="确认" />
+                        </div>
+                </div>
+                                    <!-- /.modal-content -->
+            </div>
+                                <!-- /.modal-dialog -->
+        </div>
+
     </section>
 
 
