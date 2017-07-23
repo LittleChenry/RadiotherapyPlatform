@@ -35,7 +35,9 @@ public class updateItem : IHttpHandler {
         sqlOperator.AddParameterWithValue("@id", id);
 
         sqlOperator.ExecuteNonQuery(sqlCommand);
-
+        sqlOperator.Close();
+        sqlOperator.Dispose();
+        sqlOperator = null;
 
     }
 

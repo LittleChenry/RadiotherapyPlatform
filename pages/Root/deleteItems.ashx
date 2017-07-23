@@ -24,5 +24,9 @@ public class deleteItems : IHttpHandler {
         string sqlCommand = "DELETE FROM inspections WHERE ID=@id";
         sqlOperator.AddParameterWithValue("@id", id);
         sqlOperator.ExecuteNonQuery(sqlCommand);
+
+        sqlOperator.Close();
+        sqlOperator.Dispose();
+        sqlOperator = null;
     }
 }

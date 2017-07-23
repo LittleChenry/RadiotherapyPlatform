@@ -82,7 +82,7 @@ function CreateMainItemSelect(name){
 
 function GetMainItem() {
     var xmlHttp = new XMLHttpRequest();
-    var url = "../../pages/Root/GetMainItem.ashx";
+    var url = "../../pages/Root/GetMainItems.ashx";
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     var json = xmlHttp.responseText;
