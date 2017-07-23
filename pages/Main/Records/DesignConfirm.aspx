@@ -172,17 +172,7 @@
                         审核意见：
                         <textarea id="advice" name="advice" class="form-area" style="width:80%;" disabled="disabled"></textarea>
                     </div>
-                </div>
-                <div class="single-row">
-                    <div class="col-xs-12">
-                        <div class="col-xs-2" style="padding-left:0px;">
-                            <span class="form-text" style="padding-left:0px;">上传计划文件：</span>
-                        </div>
-                        <div class="col-xs-10">
-                             <asp:FileUpload ID="fp_upload" runat="server" />
-                        </div>
-                    </div>
-                </div>
+                </div>              
             </div>
             <div class="paper-footer">
                 <div class="single-row">
