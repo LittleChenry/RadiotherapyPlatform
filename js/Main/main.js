@@ -635,7 +635,7 @@ function trAddClick(patient, userID) {
                         });
                         break;
                     case 15:
-                        if (LightLi(this, Progresses, "15", "14", "-1")) {
+                        if (LightLi(this, Progresses, "15", "13", "-1")) {
                             var url = "Records/TreatmentRecord.aspx?TreatmentID=" + e.data.ID + "&appointid=" + e.data.appointid;
                         } else {
                             var url = "Records/Blank.aspx";
@@ -1120,7 +1120,7 @@ function ProgressToString(pro) {
                 Progress += "复位验证、";
                 break;
             case 14:
-                Progress += "首次治疗预约、";
+                Progress += "加速器治疗、";
                 break;
             case 15:
                 Progress += "加速器治疗、";

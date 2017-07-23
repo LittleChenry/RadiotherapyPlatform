@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
+    <title>加速器治疗管理</title>
     <!-- css -->
     <link rel="stylesheet" href="../../../css/Main/Records.css"/>
     <!-- Bootstrap 3.3.6 -->
@@ -28,7 +28,7 @@
             <input type="hidden" id="progress" />
             <input type="hidden" id="idforappoint" value="0"/>
             <div class="paper-title">
-                首次加速器治疗预约
+                加速器治疗管理
             </div>
             <div class="paper-content">
                 <div class="content-title">
@@ -69,13 +69,27 @@
             </div>
             <div class="paper-content"> 
                 <div class="content-title">
-                    <span>加速器预约：</span>
+                    <span>加速器治疗管理：</span>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-10">
-                        <span class="form-text col-xs-2" style="padding-left:0px;">设备与时间：</span>
+                        <span class="form-text" style="padding-left:0px;">首次加速器治疗预约：</span>
                         <input id="appointtime"  name="appointtime" type="text" class="form-item" readonly="true" />
                         <button id="chooseappoint" class="btn btn-default" disabled="disabled" data-toggle="modal" data-target="#appoint">预约</button>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-8">
+                        <span class="form-text" style="padding-left:0px;">治疗总次数：</span>
+                        <input id="Text1"  name="appointtime" type="text" class="form-item" readonly="true" style="width:20%;"/>
+                        <button id="Button1" class="btn btn-success" disabled="disabled">更改</button>
+                        <button id="Button2" class="btn btn-warning" disabled="disabled">结束治疗</button>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-4">
+                        <span class="form-text" style="padding-left:0px;">已治疗次数：</span>
+                        <span id="" class="underline">12</span>
                     </div>
                 </div>
             </div>
