@@ -941,7 +941,7 @@ function trAddClickforJS(patient, userID) {
                         });
                         break;
                     case 15:
-                        if (LightLi(this, Progresses, "15", "14", "-1")) {
+                        if (LightLi(this, Progresses, "15", "13", "-1")) {
                             var url = "Records/TreatmentRecord.aspx?TreatmentID=" + e.data.ID + "&appointid=" + e.data.appointid;
                         } else {
                             var url = "Records/Blank.aspx";
