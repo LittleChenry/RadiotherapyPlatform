@@ -1,4 +1,5 @@
 ﻿var objuser = [];
+
 $(function () {
     $.ajax({
         type: "post",

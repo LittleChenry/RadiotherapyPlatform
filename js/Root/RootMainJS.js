@@ -8,7 +8,7 @@ $(function () {
     //用户注销处理
     $("#signOut").bind("click", function () {
         removeSession();//ajax 注销用户Session
-        window.location.replace("../../pages/Login/Login.aspx");
+        window.location.replace("/RadiotherapyPlatform/pages/Login/Login.aspx");
     });
 
     //
@@ -20,7 +20,10 @@ $(function () {
 function removeSession() {
     $.ajax({
         type: "GET",
-        url: "../../pages/Root/removeSession.ashx"
+        url: "/RadiotherapyPlatform/pages/Root/removeSession.ashx",
+        error: function () {
+            window.location.replace("/RadiotherapyPlatform/pages/Login/Login.aspx");
+        }
     });
 }
 
