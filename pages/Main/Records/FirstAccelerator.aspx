@@ -67,6 +67,83 @@
                     <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                 </div>
             </div>
+             <div class="paper-content">
+                  <div class="content-title">
+                    <span>计划详细信息：</span>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-12">
+                        <span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>
+                        <span id="Remarks" class="col-xs-10"></span>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-6" style="padding-left:0px;">
+                        <span class="form-text col-xs-4">靶区处方剂量：</span>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        <table id="Priority" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>靶区</th>
+                                    <th>外放/mm</th>
+                                    <th>PTV</th>
+                                    <th>单次量cGy</th>
+                                    <th>次数</th>
+                                    <th>总剂量cGy</th>
+                                    <th>体积/%</th>
+                                    <th>优先级</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-6" style="padding-left:0px;">
+                        <span class="form-text col-xs-4">危及器官限量：</span>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        <table id="Dosage" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>危及器官</th>
+                                    <th>剂量cGy</th>
+                                    <th>限制</th>
+                                    <th>体积/%</th>
+                                    <th>外放mm</th>
+                                    <th>PRV</th>
+                                    <th>剂量cGy</th>
+                                    <th>限制</th>
+                                    <th>体积/%</th>
+                                    <th>优先级</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">治疗技术：<span id="technology" class="underline"></span></div>
+                    <div class="item col-xs-4">放疗设备：<span id="equipment" class="underline"></span></div>
+                    <div class="item col-xs-4">计划系统：<span id="PlanSystem" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">射野数量：<span id="IlluminatedNumber" class="underline"></span></div>
+                    <div class="item col-xs-4">非共面照射：<span id="Coplanar" class="underline"></span></div>
+                    <div class="item col-xs-4">机器跳数：<span id="MachineNumbe" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">控制点数量：<span id="ControlPoint" class="underline"></span></div>
+                    <div class="item col-xs-4">计算网络：<span id="Grid" class="underline"></span></div>
+                    <div class="item col-xs-4">优化算法：<span id="Algorithm" class="underline"></span></div>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-4">计划可执行度：<span id="Feasibility" class="underline"></span></div>
+                </div>
+            </div>
             <div class="paper-content"> 
                 <div class="content-title">
                     <span>加速器治疗管理：</span>
@@ -81,15 +158,16 @@
                 <div class="single-row">
                     <div class="col-xs-8">
                         <span class="form-text" style="padding-left:0px;">治疗总次数：</span>
-                        <input id="Text1"  name="appointtime" type="text" class="form-item" readonly="true" style="width:20%;"/>
-                        <button id="Button1" class="btn btn-success" disabled="disabled">更改</button>
-                        <button id="Button2" class="btn btn-warning" disabled="disabled">结束治疗</button>
+                        <input id="totalnumber"  name="totalnumber" disabled="disabled"    type="number" class="form-item" style="width:20%;"/>
+                        <button id="changetotalnumber" type="button" class="btn btn-success"  disabled="disabled">更改</button>
+                        <button id="finish" type="button" class="btn btn-warning" disabled="disabled">结束治疗</button>
+                         <input id="finishthistreat" value="0" type="hidden" name="finishthistreat" class="form-item" />
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-4">
                         <span class="form-text" style="padding-left:0px;">已治疗次数：</span>
-                        <span id="" class="underline">12</span>
+                        <span id="finishedtimes" class="underline"></span>
                     </div>
                 </div>
             </div>

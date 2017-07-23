@@ -32,25 +32,90 @@ function Init(evt) {
     document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
     document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     var groupprogress = patient.Progress.split(",");
+    var i = 0;
+    var designInfo = getDesignInfo(treatmentID);
+    document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
+    readDosagePriority(designInfo[i].DosagePriority);
+    readDosage(designInfo[i].Dosage);
+    document.getElementById("technology").innerHTML = designInfo[i].technology;
+    document.getElementById("equipment").innerHTML = designInfo[i].equipment;
+    document.getElementById("PlanSystem").innerHTML = designInfo[i].PlanSystem;
+    document.getElementById("IlluminatedNumber").innerHTML = designInfo[i].IlluminatedNumber;
+    document.getElementById("Coplanar").innerHTML = charge1(designInfo[i].Coplanar);
+    document.getElementById("MachineNumbe").innerHTML = designInfo[i].MachineNumbe;
+    document.getElementById("ControlPoint").innerHTML = designInfo[i].ControlPoint;
+    document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
+    document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
+    document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
+    var total = gettotalnumber(treatmentID);
+    var totalnumber = total.split(",")[0];
+    var finshedtimes = total.split(",")[1];
+
+    if (totalnumber != "") {
+        document.getElementById("totalnumber").value = totalnumber;
+        if (finshedtimes != "") {
+            document.getElementById("finishedtimes").innerHTML = finshedtimes;
+        } else {
+            document.getElementById("finishedtimes").innerHTML = "0";
+        }
+
+    } else {
+        document.getElementById("totalnumber").value = 0;
+        document.getElementById("finishedtimes").innerHTML ="0";
+    }
     if (contains(groupprogress, "14")) {
         var info = getfirstaccelerateInfomation(treatmentID);
         document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
         document.getElementById("chooseappoint").disabled = "disabled";
-
+        document.getElementById("operator").innerHTML = info.username;
+        document.getElementById("date").innerHTML = info.ApplyTime;
 
     } else {
-        createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
-        var date = new Date();
-        document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-        document.getElementById("chooseappoint").addEventListener("click", function () {
-            CreateNewAppiontTable(event);
-        }, false);
-        document.getElementById("chooseProject").addEventListener("click", function () {
-            CreateNewAppiontTable(event);
-        }, false);//根据条件创建预约表
-        document.getElementById("sure").addEventListener("click", checkAllTable, false);
+          createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
+          var info = getfirstaccelerateInfomation(treatmentID);
+          if (info != "") {
+              document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
+              document.getElementById("idforappoint").value = info.appointid;
+          }
+            var date = new Date();
+            document.getElementById("operator").innerHTML = userName;
+            document.getElementById("date").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+            document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+            document.getElementById("chooseappoint").addEventListener("click", function () {
+                CreateNewAppiontTable(event);
+            }, false);
+            document.getElementById("chooseProject").addEventListener("click", function () {
+                CreateNewAppiontTable(event);
+            }, false);//根据条件创建预约表
+            document.getElementById("sure").addEventListener("click", checkAllTable, false);
+            $("#changetotalnumber").bind("click", function () {
+                if ($(this).html() == "更改") {
+                    $(this).text("保存");
+                    document.getElementById("totalnumber").removeAttribute("disabled");
 
+                } else {
+                    $(this).text("更改");
+                    document.getElementById("totalnumber").disabled = "disabled";
+                }
+            });
+            $("#finish").click(function () {
+                if (document.getElementById("finish").innerHTML == "结束治疗") {
+                    document.getElementById("finishthistreat").value = "1";
+                    document.getElementById("finish").innerHTML = "取消";
+                } else {
+                    document.getElementById("finishthistreat").value = "0";
+                    document.getElementById("finish").innerHTML = "结束治疗"
+                }
+            });  
     }
+}
+function gettotalnumber(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "gettreatmentnumber.ashx?treatmentID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    return json;
 }
 function contains(group, s) {
     for (var k = 0; k <= group.length - 1; k++) {
@@ -59,6 +124,81 @@ function contains(group, s) {
         }
     }
     return false;
+}
+function charge1(evt) {
+    if (evt == "0")
+        return "不是";
+    else
+        return "是";
+}
+function charge(evt) {
+    if (evt == "0")
+        return "不可行";
+    else
+        return "可行";
+}
+function getDesignInfo(treatID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "designConfirmInfo.ashx?treatID=" + treatID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var obj1 = eval("(" + json + ")");
+    return obj1.designInfo;
+}
+function readDosagePriority(DosagePriority) {
+    var table = document.getElementById("Priority");
+    var tbody = document.createElement("tbody");
+    for (var i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var tr = document.createElement("tr");
+        for (var j = 0; j < list.length; j++) {
+            var td = document.createElement("td");
+            var textNode = document.createTextNode(list[j]);
+            td.appendChild(textNode);
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
+    tbody.style.textAlign = "center";
+    table.appendChild(tbody);
+}
+function readDosage(DosagePriority) {
+    var table = document.getElementById("Dosage");
+    var tbody = document.createElement("tbody");
+    for (var i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var tr = document.createElement("tr");
+        for (var j = 0; j < list.length; j++) {
+            var td = document.createElement("td");
+            if (j == 2) {
+                var textNode = document.createTextNode("<");
+                td.appendChild(textNode);
+                tr.appendChild(td);
+            } else {
+                var textNode = document.createTextNode(list[j]);
+            }
+            td.appendChild(textNode);
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
+    tbody.style.textAlign = "center";
+    table.appendChild(tbody);
 }
 //设备下拉菜单
 function createfixEquipmachine(thiselement, item) {
@@ -92,43 +232,53 @@ function getfirstaccelerateInfomation(treatmentID) {
 function save() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentid = treatmentgroup.split("=")[1];
-    var appointid = document.getElementById("idforappoint").value;
-    if (document.getElementById("idforappoint").value == "0") {
-        window.alert("请预约时间与设备");
-        return;
-    }
-    if ((typeof (userID) == "undefined")) {
-        if (confirm("用户身份已经失效,是否选择重新登录?")) {
-            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        var appointid = document.getElementById("idforappoint").value;
+        var totalnumber = document.getElementById("totalnumber").value;
+        var finish = document.getElementById("finishthistreat").value;
+        if (document.getElementById("idforappoint").value == "0") {
+            window.alert("请预约时间与设备");
+            return;
         }
-    }
-    $.ajax({
-        type: "POST",
-        url: "FirstAcclerateRecord.ashx",
-        async: false,
-        data: {
-            id: appointid,
-            treatid: treatmentid
-          
-        },
-        dateType: "json",
-        success: function (data) {
-            if (data == "success") {
-                window.alert("申请成功");
-                window.location.reload();
-            }
-            if (data == "busy") {
-                window.alert("预约时间被占,需要重新预约");
-            }
-            if (data == "failure") {
-                window.alert("申请失败");
-            }
-        },
-        error: function () {
-            alert("error");
+        if (document.getElementById("totalnumber").value == 0) {
+            window.alert("总次数不能为0");
+            return;
         }
-    });
-}
+        if ((typeof (userID) == "undefined")) {
+            if (confirm("用户身份已经失效,是否选择重新登录?")) {
+                parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+            }
+        }
+        $.ajax({
+            type: "POST",
+            url: "FirstAcclerateRecord.ashx",
+            async: false,
+            data: {
+                id: appointid,
+                treatid: treatmentid,
+                isfinished: finish,
+                totalnumber: totalnumber,
+                user: userID
+
+            },
+            dateType: "json",
+            success: function (data) {
+                if (data == "success") {
+                    window.alert("申请成功");
+                    window.location.reload();
+                }
+                if (data == "busy") {
+                    window.alert("预约时间被占,需要重新预约");
+                }
+                if (data == "failure") {
+                    window.alert("申请失败");
+                }
+            },
+            error: function (data) {
+                alert("error");
+            }
+        });
+   
+    }
 
 //创建某设备某天的预约表
 function CreateCurrentEquipmentTbale(equiment, dateString) {
@@ -382,5 +532,14 @@ function compare(evt1, evt2) {
 
 }
 function remove() {
-    document.getElementById("chooseappoint").removeAttribute("disabled");
+    var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
+    var treatmentid = treatmentgroup.split("=")[1];
+    var total = gettotalnumber(treatmentid);
+    var totalnumber = total.split(",")[0];
+    var finshedtimes = total.split(",")[1];
+    if (parseInt(finshedtimes) == 0 || finshedtimes=="") {
+        document.getElementById("chooseappoint").removeAttribute("disabled");
+    }
+    document.getElementById("changetotalnumber").removeAttribute("disabled");
+    document.getElementById("finish").removeAttribute("disabled");
 }

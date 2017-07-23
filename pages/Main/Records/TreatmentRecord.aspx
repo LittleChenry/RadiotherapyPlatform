@@ -154,19 +154,12 @@
                      <button id="rest" disabled="disabled" type="button" data-toggle="modal" data-target="#appoint" class="btn btn-warning" >剩余加速器预约</button> 
                      </span>
                     </div>
-                   <div class="col-xs-5">
-                    <span class="form-text col-xs-12" style="padding-left:0px;">是否结束治疗：
-                        <input id="finishthistreat" value="0" type="hidden" name="finishthistreat" class="form-item" />
-                        <button id="finish" disabled="disabled" type="button" class="btn btn-warning" >结束</button>
-                    </span>
-                    </div>
-                </div>
-                <div class="single-row">
-                    <div class="col-xs-12" style="padding-left:40%;">
+                    <div class="col-xs-5" >
                         <button id="treatmentedit" disabled="disabled" type="button" class="btn btn-success" >记载放疗记录</button>
                         <button id="finishigrt"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button>
                     </div>
                 </div>
+        
                 </div>
             <div class="paper-footer">
            <div class="content-title">

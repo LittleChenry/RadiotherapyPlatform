@@ -8,7 +8,7 @@ function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
     var appoint = window.location.search.split("&")[1];//?后第一个变量信息
-
+    var appointid = appoint.split("=")[1];
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
     if ((typeof (userID) == "undefined")) {
@@ -57,7 +57,7 @@ function Init(evt) {
     }
     var progress = patient.Progress.split(",");
     if (flag == "success" && !contains(progress, "15")) {
-        if (session.assistant == "") {
+        if (session.assistant == "" && (session.role == "治疗技师" || session.role == "科主任")) {
             $("#operatorModal").modal({ backdrop: 'static' });
         }
     } else {
@@ -100,7 +100,8 @@ function Init(evt) {
             }
         });
     });
-    var totalnumber = gettotalnumber(treatmentID);
+    var total = gettotalnumber(treatmentID);
+    var totalnumber = total.split(",")[0];
     var firstdate = getfirstday(treatmentID).split(" ")[0];
     var date=new Date();
     var today=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
@@ -108,8 +109,8 @@ function Init(evt) {
     if (isNaN(dis)) {
         dis = 1;
     }
-    if (parseInt(totalnumber) != 0) {
-        document.getElementById("totalnumber").value = totalnumber;
+    if (totalnumber!="") {
+        document.getElementById("totalnumber").value = parseInt(totalnumber);
     }
     var allfirstnumber = parseInt(getallfirst(treatmentID));
     if (parseInt(totalnumber) - allfirstnumber <= 0) {
@@ -119,59 +120,9 @@ function Init(evt) {
         document.getElementById("rest").innerHTML = "剩余加速器预约(剩" + (parseInt(totalnumber) - allfirstnumber) + "次)";
         document.getElementById("rest").removeAttribute("disabled");
     }
-    $("#totalnumber").bind("input propertychange", function () {
-
-        var allfirstnumber = parseInt(getallfirst(treatmentID));
-        var totalnumber = document.getElementById("totalnumber").value;
-       
-        if (parseInt(totalnumber) - allfirstnumber <= 0) {
-            document.getElementById("rest").innerHTML = "剩余加速器预约(剩0次)";
-            document.getElementById("rest").disabled = "disabled";
-        } else {
-            document.getElementById("rest").innerHTML = "剩余加速器预约(剩" + (parseInt(totalnumber) - allfirstnumber) + "次)";
-            document.getElementById("rest").removeAttribute("disabled");
-        }
-    });
-
-
-    $("#finish").click(function () {
-        if (document.getElementById("finish").innerHTML == "结束") {
-            document.getElementById("finishthistreat").value = "1";
-            document.getElementById("finish").innerHTML = "取消";
-        } else {
-            document.getElementById("finishthistreat").value = "0";
-            document.getElementById("finish").innerHTML = "结束"
-        }
-    });
     $("#treatmentedit").click(function()
     {
-        var allfirstnumber = parseInt(getotheraccer(treatmentID));
-        if (allfirstnumber <=0){
-            alert("此病人已经没有预约,如果想结束治疗请点击结束再保存!");
-            evt.preventDefault();
-            return;
-        }
-        if (allfirstnumber == 1) {
-            if (confirm("此病人还剩下一次治疗机会,如果想继续预约请增加总次数!")) {
-
-            } else {
-                $.ajax({
-                    type: "POST",
-                    url: "treatmentRecordRecord.ashx",
-                    async: false,
-                    data: {
-                        treatmentID: treatmentID
-                    },
-                    dateType: "json",
-                    success: function (data) {
-
-                    },
-                    error: function () {
-                        alert("error");
-                    }
-                });
-
-                var session = getSession();
+              var session = getSession();
                 if (session.assistant != "") {
                     $.ajax({
                         type: "POST",
@@ -204,43 +155,7 @@ function Init(evt) {
                 } else {
                     alert("没有选择协助操作者");
                 }
-            }
-        } else {
-            var session = getSession();
-            if (session.assistant != "") {
-                $.ajax({
-                    type: "POST",
-                    url: "TreatmentRecord.ashx",
-                    async: false,
-                    data: {
-                        assistant: session.assistant,
-                        user: userID,
-                        totalnumber: document.getElementById("totalnumber").value,
-                        treatmentID: treatmentID,
-                        appoint: appointid,
-                        treatdays: dis,
-                        patientid: patient.ID
-                    },
-                    dateType: "json",
-                    success: function (data) {
-                        if (data == "success") {
-                            alert("记录成功！");
-                            document.getElementById("treatmentedit").disabled = "disabled";
-                            refresh(treatmentID);
-                            parent.window.location.reload();
-                        } else {
-                            alert("上传失败！");
-                        }
-                    },
-                    error: function () {
-                        alert("error");
-                    }
-                });
-            } else {
-                alert("没有选择协助操作者");
-            }
-        }
-    });
+            });
     $("#recordigrt").click(function()
     {
         var session = getSession();
@@ -593,39 +508,12 @@ function getmachineItem(item) {
     return Items;
 }
 function remove() {
-    document.getElementById("totalnumber").removeAttribute("disabled");
-    document.getElementById("finish").removeAttribute("disabled");
     document.getElementById("treatmentedit").removeAttribute("disabled");
     document.getElementById("finishigrt").removeAttribute("disabled");
 
 }
 function save() {
-    var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
-    var treatmentID = treatmentgroup.split("=")[1];
-    if (document.getElementById("finishthistreat").value != "1") {
-        window.alert("如需结束疗程治疗请先点击结束按钮,谢谢！");
-    } else {
-        $.ajax({
-            type: "POST",
-            url: "treatmentRecordRecord.ashx",
-            async: false,
-            data: {
-                treatmentID: treatmentID
-            },
-            dateType: "json",
-            success: function (data) {
-                if (data == "success") {
-                    alert("成功！");
-                } else {
-                    alert("失败！");
-                }
-            },
-            error: function () {
-                alert("error");
-            }
-        });
-        
-    }
+   
 }
 //创建某设备某天的预约表
 function CreateCurrentEquipmentTbale(equiment, dateString) {
@@ -795,7 +683,6 @@ function checkAllTable(treatmentID) {
                 window.alert("申请成功");
                 var allfirstnumber = parseInt(getallfirst(treatmentID));
                 var totalnumber = document.getElementById("totalnumber").value;
-
                 if (parseInt(totalnumber) - allfirstnumber <= 0) {
                     document.getElementById("rest").innerHTML = "剩余加速器预约(剩0次)";
                     document.getElementById("rest").disabled = "disabled";

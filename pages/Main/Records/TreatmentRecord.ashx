@@ -39,6 +39,7 @@ public class TreatmentRecord : IHttpHandler {
         string assistant = context.Request["assistant"];
         int treatdays = Convert.ToInt32(context.Request["treatdays"]);
         int patient = Convert.ToInt32(context.Request["patientid"]);
+
         string sqlcommand1 = "select IlluminatedNumber,MachineNumbe,DosagePriority from design,treatment where design.ID=treatment.Design_ID and treatment.ID=@treat";
         sqlOperation.AddParameterWithValue("treat", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand1);
