@@ -8,7 +8,7 @@ function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
     var appoint = window.location.search.split("&")[1];//?后第一个变量信息
-    var appointid = appoint.split("=")[1];
+
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
     if ((typeof (userID) == "undefined")) {
@@ -49,7 +49,12 @@ function Init(evt) {
     document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
     document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
     var session = getSession();
-    var flag = judge(appointid, treatmentID);
+    var flag;
+    if ((typeof (appointid) != "undefined")) {
+        flag = judge(appointid, treatmentID);
+    } else {
+        flag = "success";
+    }
     var progress = patient.Progress.split(",");
     if (flag == "success" && !contains(progress, "15")) {
         if (session.assistant == "") {
