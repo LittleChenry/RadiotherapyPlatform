@@ -353,4 +353,6 @@ function remove() {
     document.getElementById("MovementX").removeAttribute("disabled");
     document.getElementById("MovementY").removeAttribute("disabled");
     document.getElementById("MovementZ").removeAttribute("disabled");
+    document.getElementById("fp_upload").removeAttribute("disabled");
+    document.getElementById("fp_upload1").removeAttribute("disabled");
 }

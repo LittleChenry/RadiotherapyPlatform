@@ -43,7 +43,69 @@ public class designReviewRecord : IHttpHandler {
     }
      private string RecordPatientInformation(HttpContext context)
     {
-         try{
+        string savePath = "";
+        string savepath1 = "";
+        string savePath2 = "";
+        string savepath3 = "";
+        HttpFileCollection files = context.Request.Files;
+        savePath = System.Web.HttpContext.Current.Server.MapPath("~/upload/DesignPDF");
+        if (!System.IO.Directory.Exists(savePath))
+        {
+            System.IO.Directory.CreateDirectory(savePath);
+        }
+        savePath = savePath + "\\";
+        try
+        {
+
+            System.Web.HttpPostedFile postedFile = files[0];
+            string fileName = postedFile.FileName;//完整的路径
+            if (fileName == "")
+            {
+                savepath1 = "";
+            }
+            else
+            {
+                fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
+                string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
+                string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
+                files[0].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
+                savepath1 = "../../../upload/DesignPDF/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
+            }       
+        }
+        catch (System.Exception Ex)
+        {
+            context.Response.Write(Ex);
+        }
+        savePath2 = System.Web.HttpContext.Current.Server.MapPath("~/upload/PDF");
+        if (!System.IO.Directory.Exists(savePath2))
+        {
+            System.IO.Directory.CreateDirectory(savePath2);
+        }
+        savePath2 = savePath2 + "\\";
+        try
+        {
+
+            System.Web.HttpPostedFile postedFile = files[1];
+            string fileName = postedFile.FileName;//完整的路径
+            if (fileName == "")
+            {
+                savepath3 = "";
+            }
+            else
+            {
+                fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
+                string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
+                string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
+                files[0].SaveAs(savePath2 + DateTime.Now.ToString("yyyyMMdd") + fileName);
+                savepath3 = "../../../upload/PDF/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
+            }
+        }
+        catch (System.Exception Ex)
+        {
+            context.Response.Write(Ex);
+        }
+        try
+         {
              string treatid = context.Request.Form["hidetreatID"];
             int treatID = Convert.ToInt32(treatid);
             //string userID = "1";
@@ -76,8 +138,8 @@ public class designReviewRecord : IHttpHandler {
             string ReferenceCenter = x1 + "," + y1 + "," + z1;
             string TreatmentCenter = x2 + "," + y2 + "," + z2;
             string Movement = x3 + "," + y3 + "," + z3;
-            string strSqlCommand = "INSERT INTO review(ID,TechnologyConfirm,EquipmentConfirm,CoplanarConfirm,AngleConfirm,MachineNumbeConfirm,ControlPointConfirm,GridConfirm,FeasibilityConfirm,AlgorithmConfirm,Reoptimization,PlaceInformation,DRR,IsExport,ReferenceCenter,TreatmentCenter,Movement,_User_ID,ReviewTime,PlanSystemConfirm) " +
-                                    "VALUES(@ID,@confirmTechnology,@EquipmentConfirm,@CoplanarConfirm,@AngleConfirm,@MachineNumbeConfirm,@ControlPointConfirm,@GridConfirm,@FeasibilityConfirm,@AlgorithmConfirm,@Reoptimization,@PlaceInformation,@DRR,@IsExport,@ReferenceCenter,@TreatmentCenter,@Movement,@User_ID,@ReviewTime,@planSystemConfirm)";
+            string strSqlCommand = "INSERT INTO review(ID,TechnologyConfirm,EquipmentConfirm,CoplanarConfirm,AngleConfirm,MachineNumbeConfirm,ControlPointConfirm,GridConfirm,FeasibilityConfirm,AlgorithmConfirm,Reoptimization,PlaceInformation,DRR,IsExport,ReferenceCenter,TreatmentCenter,Movement,_User_ID,ReviewTime,PlanSystemConfirm,PDF1,PDF2) " +
+                                    "VALUES(@ID,@confirmTechnology,@EquipmentConfirm,@CoplanarConfirm,@AngleConfirm,@MachineNumbeConfirm,@ControlPointConfirm,@GridConfirm,@FeasibilityConfirm,@AlgorithmConfirm,@Reoptimization,@PlaceInformation,@DRR,@IsExport,@ReferenceCenter,@TreatmentCenter,@Movement,@User_ID,@ReviewTime,@planSystemConfirm,@PDF1,@PDF2)";
             sqlOperation.AddParameterWithValue("@ID", Count);
             sqlOperation.AddParameterWithValue("@confirmTechnology", Convert.ToInt32(context.Request.Form["TechnologyConfirm1"]));
             sqlOperation.AddParameterWithValue("@EquipmentConfirm", Convert.ToInt32(context.Request.Form["EquipmentConfirm1"]));
@@ -99,6 +161,8 @@ public class designReviewRecord : IHttpHandler {
             sqlOperation.AddParameterWithValue("@ReviewTime", datetime1);
             sqlOperation.AddParameterWithValue("@Movement", Movement);
             sqlOperation.AddParameterWithValue("@User_ID", userid);
+            sqlOperation.AddParameterWithValue("@PDF1", savepath1);
+            sqlOperation.AddParameterWithValue("@PDF2", savepath3);
             int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
             string select1 = "select Progress from treatment where ID=@treat";
             sqlOperation.AddParameterWithValue("@treat", treatID);
