@@ -231,7 +231,7 @@
                     </div>
                     <div class="form-group">
                         <span>密码：</span>
-                        <input type="text" class="form-control" id="OperatorPassword" />
+                        <input type="password" class="form-control" id="OperatorPassword" />
                     </div>
                 </div>
                 <div class="modal-footer">

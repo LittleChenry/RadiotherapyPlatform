@@ -199,3 +199,32 @@
 .tab-row {
     margin-bottom: 25px;
 }
+
+.outlist-content {
+    background-color: rgb(255, 255, 255);
+    overflow: auto;
+    border-right: 1px solid #c1c1c1;
+    border-left: 1px solid #c1c1c1;
+    width: 200px;
+}
+
+.outlist-title {
+    text-align: center;
+    min-height: 50px;
+    font-size: 18px;
+    padding-top: 12px;
+    background-color: #00C0EF;
+    color: white;
+}
+
+.outlist-ul {
+    text-align: center;
+}
+
+.outlist-ul > li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-height: 30px;
+    font-size: 16px;
+    border-bottom: 1px solid #c2c2c2;
+}

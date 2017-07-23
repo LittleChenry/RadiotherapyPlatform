@@ -9,11 +9,11 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- css -->
-    <link rel="stylesheet" href="../../css/Main/Records.css">
+  <link rel="stylesheet" href="../../css/Main/Records.css">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css">
-      <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css" />
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css" />
   <!-- DataTables -->
   <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
   <!-- Font Awesome -->
@@ -258,12 +258,35 @@
     <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <!--  style="background-image:url(../../img/hospital.png)" -->
-  <div class="content-wrapper">
-    <section id="addpatient-content" class="content table-responsive" style="background-color:#fff;width:1000px;">
-        <form id="frmaddpatient" name="frmaddpatient" method="post" runat="server">
-            <div class="paper">
+    <div class="content-wrapper">
+        <section id="choosepatient-content" class="outlist-content col-md-1 col-md-offset-2" style="padding:0px;width:200px;">
+            <div class="outlist-title">
+                外系统信息同步
+                <a href="javascript:;" style="color:white;"><i class="fa fa-fw fa-refresh"></i></a>
+            </div>
+            <div style="padding:3px 0px;">
+                <input class="form-control" type="text" placeholder="搜索" />
+            </div>
+            <table class="table table-condensed table-hover">
+                <tbody style="text-align:center;">
+                    <tr>
+                        <th>姓名</th>
+                        <th>病案号</th>
+                    </tr>
+                    <tr>
+                        <td>赵一雷</td>
+                        <td>2017072301</td>
+                    </tr>
+                    <tr>
+                        <td>王二江</td>
+                        <td>2017072302</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="addpatient-content" class="content table-responsive col-md-9" style="background-color:#fff;width:1000px;">
+            <form id="frmaddpatient" name="frmaddpatient" method="post" runat="server">
+                <div class="paper">
                 <div class="paper-title">
                     患者信息登记
                 </div>
@@ -273,176 +296,167 @@
                 <input type="hidden" id="regdoctor" name="regdoctor" />
                 <input id="patientID" type="hidden" name="patientID" />
                 <input id="treatID" type="hidden" name="treatID" />
-                <div class="paper-content">
-                    <div class="content-title">
-                        <span>基本信息：</span>
-                    </div>
-                    <div class="head-picture" style="margin-left:800px;top:175px;">
-                        <div class="imgbox">
-                            <div class="boxes">
-                                <div class="imgnum">
-                                    <input type="file" id="FileUpload" name="FileUpload" class="singlefilepath filepath" />
-                                    <!-- <asp:FileUpload id="FileUpload1" name="FileUpload" class="singlefilepath filepath" runat="server" /> -->
-                                    <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
-                                    <img id="background-photo" src="../../img/avatar.jpg" class="camera-picture" />
-                                    <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
-                                    <img src="" id="photo" class="img" />
+                    <div class="paper-content">
+                        <div class="content-title">
+                            <span>基本信息：</span>
+                        </div>
+                        <div class="head-picture" style="margin-left:800px;top:175px;">
+                            <div class="imgbox">
+                                <div class="boxes">
+                                    <div class="imgnum">
+                                        <input type="file" id="FileUpload" name="FileUpload" class="singlefilepath filepath" />
+                                        <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
+                                        <img id="background-photo" src="../../img/avatar.jpg" class="camera-picture" />
+                                        <img src="" id="photo" class="img" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="picture-remark">
+                                <p>上传头像</p>
+                                <p style="font-size:10px;">120*140像素</p>
+                            </div>
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-5">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">姓名：</span>
+                                <input id="userName" name="userName" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
+                            </div>
+                            <div class="item col-xs-5"> 
+                                <span class="col-xs-4">性别：</span>
+                                <span class="col-xs-4" style="padding-left:0px;">
+                                <input type="radio" name="Gender" id="male" value="M" />
+                                    男
+                                </span>
+                                <span class="col-xs-4" style="padding-left:0px;">
+                                <input type="radio" name="Gender" id="female" value="F" />
+                                    女
+                                </span>
+                            </div>
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-5">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">民族：</span>
+                                <input id="Nation" name="Nation"  class="form-item" type="text" AUTOCOMPLETE="OFF" />
+                            </div>
+                            <div class="col-xs-5">
+                                <span class="form-text col-xs-4">出生日期：</span>
+                                <input class="form-item" id="Birthday" name="Birthday"type="text" placeholder="选择日期" AUTOCOMPLETE="OFF"/>
+                            </div>
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-5">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">身份证号：</span>
+                                <input id="IDcardNumber"  name="IDcardNumber" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
+                            </div>
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-10">
+                                <span class="form-text col-xs-2" style="padding-left:0px;width:120.2px;">地址：</span>
+                                <select id="id_provSelect"  class="form-item col-xs-3" name="provSelect" onChange="loadCity(this.value);" style="width:196.4px;">
+                                    <option value="">请选择省份</option>
+                                </select>
+                                <select id="id_citySelect" class="form-item col-xs-3" name="citySelect" onChange="loadArea(this.value);" style="width:196.4px;">
+                                    <option value="">请选择城市</option>
+                                </select>
+                                <select id="id_areaSelect" class="form-item col-xs-3" name="areaSelect" style="width:196.4px;">
+                                    <option value="">请选择区域</option>
+                                </select>
+                            </div>
+                            <input type="hidden" name="provSelect_text" id="provSelect_text" />
+                            <input type="hidden" name="citySelect_text" id="citySelect_text" />
+                            <input type="hidden" name="areaSelect_text" id="areaSelect_text" />
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-10">
+                                <span class="form-text col-xs-2" style="padding-left:0px;width:120.2px;">详细地址：</span>
+                                <input id="addressmore" name="addressmore" class="form-item" type="text" AUTOCOMPLETE="OFF" style="width:52%;"/>
+                            </div>
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-5">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">联系电话1：</span>
+                                <input id="Number1" name="Number1" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
+                            </div>
+                            <div class="col-xs-5">
+                                <span class="form-text col-xs-4">联系电话2：</span>
+                                <input id="Number2" name="Number2" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
+                            </div>
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-5">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">身高：</span>
+                                <div class="group-item" style="padding:0px;">
+                                    <input type="number" id="height" name="height" class="form-group-input" />
+                                    <span class="input-group-addon">cm</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-5">
+                                <span class="form-text col-xs-4">体重：</span>
+                                <div class="group-item" style="padding:0px;">
+                                    <input type="number" id="weight" name="weight" class="form-group-input" />
+                                    <span class="input-group-addon">kg</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="picture-remark">
-                            <p>上传头像</p>
-                            <p style="font-size:10px;">120*140像素</p>
-                        </div>
                     </div>
-                    <div class="single-row">
-                        <div class="col-xs-5">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">姓名：</span>
-                            <input id="userName" name="userName" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
+                    <div class="paper-content">
+                        <div class="content-title">
+                            <span>病案信息：</span>
                         </div>
-                        <div class="item col-xs-5"> 
-                            <span class="col-xs-4">性别：</span>
-                            <span class="col-xs-4" style="padding-left:0px;">
-                                <input type="radio" name="Gender" id="male" value="M" />
-                                男
-                            </span>
-                            <span class="col-xs-4" style="padding-left:0px;">
-                                <input type="radio" name="Gender" id="female" value="F" />
-                                女
-                            </span>
-                        </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="col-xs-5">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">民族：</span>
-                            <input id="Nation" name="Nation"  class="form-item" type="text" AUTOCOMPLETE="OFF" />
-                        </div>
-                        <div class="col-xs-5">
-                            <span class="form-text col-xs-4">出生日期：</span>
-                            <input class="form-item" id="Birthday" name="Birthday"type="text" placeholder="选择日期" AUTOCOMPLETE="OFF"/>
-                        </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="col-xs-5">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">身份证号：</span>
-                            <input id="IDcardNumber"  name="IDcardNumber" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
-                        </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="col-xs-10">
-                            <span class="form-text col-xs-2" style="padding-left:0px;width:120.2px;">地址：</span>
-                            <select id="id_provSelect"  class="form-item col-xs-3" name="provSelect" onChange="loadCity(this.value);" style="width:196.4px;">
-                                <option value="">请选择省份</option>
-                            </select>
-                            <select id="id_citySelect" class="form-item col-xs-3" name="citySelect" onChange="loadArea(this.value);" style="width:196.4px;">
-                                <option value="">请选择城市</option>
-                            </select>
-                             <select id="id_areaSelect" class="form-item col-xs-3" name="areaSelect" style="width:196.4px;">
-                                <option value="">请选择区域</option>
-                            </select>
-                        </div>
-                        <input type="hidden" name="provSelect_text" id="provSelect_text" />
-                        <input type="hidden" name="citySelect_text" id="citySelect_text" />
-                        <input type="hidden" name="areaSelect_text" id="areaSelect_text" />
-                    </div>
-                    <div class="single-row">
-                        <div class="col-xs-10">
-                            <span class="form-text col-xs-2" style="padding-left:0px;width:120.2px;">详细地址：</span>
-                            <input id="addressmore" name="addressmore" class="form-item" type="text" AUTOCOMPLETE="OFF" style="width:52%;"/>
-                        </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="col-xs-5">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">联系电话1：</span>
-                            <input id="Number1" name="Number1" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
-                        </div>
-                        <div class="col-xs-5">
-                            <span class="form-text col-xs-4">联系电话2：</span>
-                            <input id="Number2" name="Number2" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
-                        </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="col-xs-5">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">身高：</span>
-                            <div class="group-item" style="padding:0px;">
-                                <input type="number" id="height" name="height" class="form-group-input" />
-                                <span class="input-group-addon">cm</span>
+                        <div class="single-row">
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">病案号：</span>
+                                <input id="RecordNumber" name="RecordNumber" type="text" class="form-item" AUTOCOMPLETE="OFF" />
+                            </div>
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4">住院号：</span>
+                                <input id="hospitalnumber" name="hospitalnumber" type="text" class="form-item" AUTOCOMPLETE="OFF" />
                             </div>
                         </div>
-                        <div class="col-xs-5">
-                            <span class="form-text col-xs-4">体重：</span>
-                            <div class="group-item" style="padding:0px;">
-                                <input type="number" id="weight" name="weight" class="form-group-input" />
-                                <span class="input-group-addon">kg</span>
+                        <div class="single-row">
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">所属医生：</span>
+                                <select id="doctor" name="doctor" class="form-item"></select>
+                            </div>
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4">所选分组：</span>
+                                <select id="group" name="group" class="form-item">
+                                    <option value="allItem">----分组选择-----</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">分中心负责人：</span>
+                                <input id="Sub" name="Sub" class="form-item" AUTOCOMPLETE="OFF"/>
+                            </div>
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4">分中心医院：</span>
+                                <input id="Hospital" name="Hospital" type="text" class="form-item" AUTOCOMPLETE="OFF" />
                             </div>
                         </div>
                     </div>
+                    <div class="paper-footer">
+                        <div class="single-row">
+                            <div class="item col-xs-6">登记人：<span id="operate" class="underline"></span></div>
+                            <div class="item col-xs-6">登记时间：<span id="date" class="underline"></span></div>
+                        </div>
+                    </div>
+                </div>          
+                <div class="row" style="text-align:center;margin-top:20px;">
+                    <button id="save" type="button" class="btn btn-block btn-success" style="margin:auto;width:20%;">保存</button>
                 </div>
-                <div class="paper-content">
-                    <div class="content-title">
-                        <span>病案信息：</span>
-                    </div>
-                    <div class="single-row">
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">病案号：</span>
-                            <input id="RecordNumber" name="RecordNumber" type="text" class="form-item" AUTOCOMPLETE="OFF" />
-                        </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4">住院号：</span>
-                            <input id="hospitalnumber" name="hospitalnumber" type="text" class="form-item" AUTOCOMPLETE="OFF" />
-                        </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">所属医生：</span>
-                            <select id="doctor" name="doctor" class="form-item"></select>
-                        </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4">所选分组：</span>
-                            <select id="group" name="group" class="form-item">
-                                <option value="allItem">----分组选择-----</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">分中心负责人：</span>
-                            <input id="Sub" name="Sub" class="form-item" AUTOCOMPLETE="OFF"/>
-                        </div>
-                         <div class="col-xs-6">
-                            <span class="form-text col-xs-4">分中心医院：</span>
-                            <input id="Hospital" name="Hospital" type="text" class="form-item" AUTOCOMPLETE="OFF" />
-                        </div>
-                    </div>
-
-                </div>
-                <div class="paper-footer">
-                    <div class="single-row">
-                        <div class="item col-xs-6">登记人：<span id="operate" class="underline"></span></div>
-                        <div class="item col-xs-6">登记时间：<span id="date" class="underline"></span></div>
-                    </div>
-                </div>
-            </div>          
-            <div class="row" style="text-align:center;margin-top:20px;">
-                <button id="save" type="button" class="btn btn-block btn-success" style="margin:auto;width:20%;">保存</button>
-            </div>
-
-        </form>
-    </section>
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.0
+            </form>
+        </section>
     </div>
-    <strong>Copyright &copy; 2017 <a href="#"> 医院</a> .</strong> 保留所有权利
-  </footer>
-
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 2.0
+        </div>
+        <strong>Copyright &copy; 2017 <a href="#"> 医院</a> .</strong> 保留所有权利
+    </footer>
+    <div class="control-sidebar-bg"></div>
 </div>
-<!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
@@ -470,6 +484,7 @@
 <script type="text/javascript" src="../../js/Main/TestChooseAddress.js"></script>
 <script>
     $("#addpatient-content").css("minHeight", $(document).height() - 101);
+    $("#choosepatient-content").css("minHeight", $(document).height() - 101);
     $("#Birthday").datepicker({ autoclose: true });
 </script>
 </body>
