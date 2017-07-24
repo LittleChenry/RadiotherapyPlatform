@@ -195,7 +195,6 @@ function CheckEmpty() {
         contentType: false,
         async: false,
         success: function (data) {
-            alert(data);
             alert("注册成功");
             window.location.reload();
         },
