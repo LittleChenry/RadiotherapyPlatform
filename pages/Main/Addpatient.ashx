@@ -39,6 +39,11 @@ public class Addpatient : IHttpHandler {
     {
         string savePath = "";
         string savepath1 = "";
+        int hospitalnumber = 0;
+        if (context.Request.Form["hospitalnumber"] != "")
+        {
+            hospitalnumber = Convert.ToInt32(context.Request.Form["hospitalnumber"]);
+        }
         HttpFileCollection files = context.Request.Files;
         savePath = System.Web.HttpContext.Current.Server.MapPath("~/upload/PatientPicture");
         if (!System.IO.Directory.Exists(savePath))
@@ -68,8 +73,7 @@ public class Addpatient : IHttpHandler {
         {
             context.Response.Write(Ex);
         }
-        try
-        {
+      
             int doctorid = Convert.ToInt32(context.Request.Form["doctor"]);
             int userID = Convert.ToInt32(context.Request.Form["userID"]);
             DateTime datetime = DateTime.Now;
@@ -110,7 +114,14 @@ public class Addpatient : IHttpHandler {
             sqlOperation.AddParameterWithValue("@Principal_User_ID", 1);
             sqlOperation.AddParameterWithValue("@Register_User_ID", userID);
             sqlOperation.AddParameterWithValue("@RegisterTime", datetime);
-            sqlOperation.AddParameterWithValue("@hospitalnumber", Convert.ToInt32(context.Request.Form["hospitalnumber"]));
+            if (context.Request.Form["hospitalnumber"] != "")
+            {
+                sqlOperation.AddParameterWithValue("@hospitalnumber", hospitalnumber);
+            }
+            else
+            {
+                sqlOperation.AddParameterWithValue("@hospitalnumber", null);
+            }
             int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
             string patientID = "select ID  from patient where Name=@Name and IdentificationNumber=@IdentificationNumber order by ID desc";
             sqlOperation1.AddParameterWithValue("@IdentificationNumber", context.Request.Form["IDcardNumber"]);
@@ -152,10 +163,5 @@ public class Addpatient : IHttpHandler {
                 return "failure";
             }
         }
-        catch (System.Exception Ex1)
-        {
-            return "error";
-        }
-    }
 
-}
+    }
