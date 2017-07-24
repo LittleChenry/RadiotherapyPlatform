@@ -79,7 +79,7 @@
                     </div>  
                     <div class="single-row">
                      <div class="col-xs-12" style="padding-left:40%;" >
-                          <a id="viewpdf" disabled="disabled" href="../../../upload/PDF/20170704景宇 1216073606.pdf" target="_blank" class="btn btn-default">查看计划PDF文档</a>
+                          <a href="javascript:;"   id="viewpdf"  target="_blank"   class="btn btn-default">查看计划PDF文档</a>
                      </div>
                     </div>
                 </div>

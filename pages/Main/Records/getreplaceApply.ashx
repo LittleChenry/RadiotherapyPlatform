@@ -41,7 +41,7 @@ public class getreplaceApply : IHttpHandler {
         int treatID = Convert.ToInt32(treat);
         string sqlCommand = "select replacementrequirements.Requirements as replacerequire,user.Name as doctor,replacement.ApplicationTime as ApplicationTime from treatment,user,replacement,replacementrequirements where treatment.ID=@treatid and replacement.Application_User_ID=user.ID and treatment.Replacement_ID=replacement.ID and replacement.ReplacementRequirements_ID=replacementrequirements.ID ";
         sqlOperation.AddParameterWithValue("@treatid", treatID);
-        string desgin = "select PDF1 from design,review where treatment.Review_ID=review.ID and treatment.ID=@treatid";
+        string desgin = "select PDF1 from treatment,review where treatment.Review_ID=review.ID and treatment.ID=@treatid";
         string pdf = sqlOperation.ExecuteScalar(desgin);
         string sqlCommand2 = "select ReferenceCenter,TreatmentCenter,Movement from review,treatment where treatment.Review_ID=review.ID and treatment.ID=@treatid";
         sqlOperation1.AddParameterWithValue("@treatid", treatID);
