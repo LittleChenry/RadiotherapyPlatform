@@ -11,6 +11,7 @@ function Init(evt) {
     var appointid = appoint.split("=")[1];
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
+    getUserName();
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
@@ -48,6 +49,15 @@ function Init(evt) {
     document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
     document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
     document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
+    var pdfgroup = getpdfgroup(treatmentID);
+    var pdf1 = pdfgroup.split(",")[0];
+    var pdf2 = pdfgroup.split(",")[1];
+    if (pdf1 != "") {
+        document.getElementById("viewpdf").href = pdf1;
+    }
+    if (pdf2 != "") {
+        document.getElementById("viewpdf2").href = pdf2;
+    }
     var session = getSession();
     var flag;
     if (appointid!= "undefined") {
@@ -109,18 +119,29 @@ function Init(evt) {
     if (isNaN(dis)) {
         dis = 1;
     }
+    if (appointid != "undefined") {
+        var treatconfirm = getconfirminfomation(treatmentID, appointid);
+        document.getElementById("treatdays").innerHTML = dis;
+        document.getElementById("treattimes").innerHTML = parseInt(treatconfirm.finishedtimes) + 1;
+        document.getElementById("treatnumber").innerHTML = treatconfirm.IlluminatedNumber;
+        document.getElementById("machinenumber").innerHTML = treatconfirm.MachineNumbe;
+        document.getElementById("singlenumber").innerHTML = treatconfirm.DosagePriority;
+        document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.DosagePriority)*(parseInt(treatconfirm.finishedtimes)+1);
+        document.getElementById("chief").innerHTML = userName;
+        document.getElementById("assist").innerHTML = session.assistant;
+    }
     if (totalnumber!="") {
         document.getElementById("totalnumber").value = parseInt(totalnumber);
     }
     var allfirstnumber = parseInt(getallfirst(treatmentID));
-    if (parseInt(totalnumber) - allfirstnumber <= 0) {
+    if ((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber=="") {
         document.getElementById("rest").innerHTML = "剩余加速器预约(剩0次)";
         document.getElementById("rest").disabled = "disabled";
     } else {
         document.getElementById("rest").innerHTML = "剩余加速器预约(剩" + (parseInt(totalnumber) - allfirstnumber) + "次)";
         document.getElementById("rest").removeAttribute("disabled");
     }
-    $("#treatmentedit").click(function()
+    $("#confirm").click(function ()
     {
               var session = getSession();
                 if (session.assistant != "") {
@@ -135,7 +156,8 @@ function Init(evt) {
                             treatmentID: treatmentID,
                             appoint: appointid,
                             treatdays: dis,
-                            patientid: patient.ID
+                            patientid: patient.ID,
+                            remark:document.getElementById("remarks").value
                         },
                         dateType: "json",
                         success: function (data) {
@@ -202,6 +224,24 @@ function Init(evt) {
         checkAllTable(treatmentID);
     }, false);
 
+}
+function getpdfgroup(treatmentID)
+{
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getallpdf.ashx?treatID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    return json;
+}
+function getconfirminfomation(treatmentID, appointid) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getconfirminfomation.ashx?treatID=" + treatmentID + "&appoint=" + appointid;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var obj1 = eval("(" + json + ")");
+    return obj1.Item[0];
 }
 function charge1(evt) {
     if (evt == "0")
@@ -304,7 +344,7 @@ function refresh(treatmentID) {
         num = num + parseInt(data[i].Singlenumber);
         content = content + '<tr>';
         content = content + '<td>' + data[i].TreatTime.split(" ")[0] + '</td><td>' + data[i].TreatedDays + '</td><td>' + data[i].TreatedTimes + '</td><td>' + data[i].IlluminatedNumber
-                  + '</td><td>' + data[i].MachineNumber + '</td><td>' + data[i].Singlenumber + '</td><td>' + num + '</td><td>' + data[i].treatusername + '</td><td>' + data[i].Assist_User + '</td>';
+                  + '</td><td>' + data[i].MachineNumber + '</td><td>' + data[i].Singlenumber + '</td><td>' + num + '</td><td>' + data[i].treatusername + '</td><td>' + data[i].Assist_User + '</td><td>' + data[i].Remarks + '</td>';
         if (data[i].checkusername != "") {
             content = content + '<td>' + data[i].checkusername + '已审核</td>';
         } else {
