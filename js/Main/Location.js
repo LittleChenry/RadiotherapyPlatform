@@ -69,7 +69,7 @@ function Init(evt) {
                 if (locationInfo[i].CTPictures == "") {
                     boxes.innerHTML = "无";
                 } else {
-                    for (var i = 1; i < pictures.length; i++) {
+                    for (var k = 1; k < pictures.length; k++) {
                         var div = document.createElement("DIV");
                         div.className = "boxes";
                         var div1 = document.createElement("DIV");
@@ -77,7 +77,7 @@ function Init(evt) {
                         var img = document.createElement("IMG");
                         img.addEventListener("click", showPicture, false);
                         img.className = "img";
-                        img.src = pictures[i];
+                        img.src = pictures[k];
                         img.style.display = "block";
                         div1.appendChild(img);
                         div.appendChild(div1);
@@ -86,6 +86,9 @@ function Init(evt) {
                 }
             }
             else {
+                if (locationInfo[i].Thickness == "") {
+                    continue;
+                }
                 var pictures = locationInfo[i].CTPictures.split(",");
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + locationInfo[i].Treatmentdescribe + '模拟定位记录</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
@@ -121,6 +124,9 @@ function Init(evt) {
         document.getElementById("hidetreatID").value = treatID;
         for (var i = 0; i < locationInfo.length; i++) {
             if (patient.Treatmentname != locationInfo[i].Treatmentname) {
+                if (locationInfo[i].Thickness == "") {
+                    continue;
+                }
                 var pictures = locationInfo[i].CTPictures.split(",");
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + locationInfo[i].Treatmentdescribe + '模拟定位记录</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
