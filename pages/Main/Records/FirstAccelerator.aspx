@@ -164,6 +164,24 @@
                          <input id="finishthistreat" value="0" type="hidden" name="finishthistreat" class="form-item" />
                     </div>
                 </div>
+                 <div id="logholder" class="single-row">
+                      <div class="col-xs-8">
+                           <span class="form-text" style="padding-left:0px;">修改日志：</span>
+                           <table  class="table table-bordered">
+                               <thead>
+                               <tr>
+                                  <th>修改天数</th>
+                                  <th>修改时间</th>
+                                   <th>修改人</th>
+                               </tr>
+                                 </thead>
+                               <tbody id="log">
+
+
+                               </tbody>
+                           </table>
+                          </div>
+                     </div>
                 <div class="single-row">
                     <div class="col-xs-4">
                         <span class="form-text" style="padding-left:0px;">已治疗次数：</span>
