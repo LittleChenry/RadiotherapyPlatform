@@ -24,7 +24,7 @@ public class getCheckRecord : IHttpHandler {
         string date = context.Request.Form["date"];
         string eid = context.Request.Form["equipmentID"];
 
-        string sqlCommand = "SELECT inspection.ChildItem,checkresult.IMRTRealValue,DATE_FORMAT(checkrecord.checkDate,'%e') checkDate FROM inspection LEFT JOIN checkresult ON inspection.ID=checkresult.Inspection_ID LEFT JOIN checkrecord ON checkresult.Record_ID=checkrecord.ID WHERE checkrecord.checkCycle='day' AND DATE_FORMAT(checkrecord.checkDate,'%Y-%m')=@date AND checkrecord.Equipment_ID=@eid";
+        string sqlCommand = "SELECT inspections.ChildItem,checkresults.RealValue,DATE_FORMAT(checkrecord.checkDate,'%e') checkDate FROM inspections LEFT JOIN checkresults ON inspections.ID=checkresults.Inspections_ID LEFT JOIN checkrecord ON checkresults.Record_ID=checkrecord.ID WHERE checkrecord.checkCycle='day' AND DATE_FORMAT(checkrecord.checkDate,'%Y-%m')=@date AND checkrecord.Equipment_ID=@eid";
         sqlOperator.AddParameterWithValue("@date", date);
         sqlOperator.AddParameterWithValue("@eid", eid);
 
@@ -44,7 +44,7 @@ public class getCheckRecord : IHttpHandler {
                 result.Append("{},");
             }
             result.Append("{\"").Append(reader["ChildItem"].ToString()).Append("\":\"")
-                  .Append(reader["IMRTRealValue"].ToString()).Append("\",");
+                  .Append(reader["RealValue"].ToString()).Append("\",");
         }
         else
         {
@@ -68,13 +68,13 @@ public class getCheckRecord : IHttpHandler {
                     result.Append("{},");
                 }
                 result.Append("{\"").Append(reader["ChildItem"].ToString()).Append("\":\"")
-                  .Append(reader["IMRTRealValue"].ToString()).Append("\",");
+                  .Append(reader["RealValue"].ToString()).Append("\",");
                 day = now;
             }
             else
             {
                 result.Append("\"").Append(reader["ChildItem"].ToString()).Append("\":\"")
-                      .Append(reader["IMRTRealValue"].ToString()).Append("\",");
+                      .Append(reader["RealValue"].ToString()).Append("\",");
             }
             lastDay = reader["checkDate"].ToString();
         }

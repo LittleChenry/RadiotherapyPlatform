@@ -19,7 +19,11 @@
 			createDate: "",
 			lessLength: 0,
 			pages: 1,
-		    needKey:false
+			needKey: false,
+			maxcols: 0,
+			link: false,
+			linkcols: 0,
+            linkdata: ""
 		}
 
 		var args = $.extend({},defaults,options);
@@ -83,6 +87,10 @@
 			var $tbody = area.find("tbody");
 			var ignoreNull = args["ignoreNull"];
 			var needKey = args["needKey"];
+			var max = args["maxcols"];
+			var link = args["link"];
+			var linkcols = args["linkcols"];
+			var linkdata = args["linkdata"];
 
 			var needDate = args["needDate"];
 			var now = "";
@@ -120,7 +128,9 @@
 				}
 				var count = 0;
 				var tds = new Array();
-				for(x in jsonObj[i]){
+				for (x in jsonObj[i]) {
+				    if (max != 0 && count > max)
+				        break;
 					if(ignoreNull && jsonObj[i][x] == null)
 						continue;
 				    //$tr.append("<td>" + jsonObj[i][x] + "</td>");
@@ -128,6 +138,8 @@
 					    tds.push("<td><input type=hidden value=" + jsonObj[i][x] + " />");
 					} else if (needKey && count == 1) {
 					    tds.push(jsonObj[i][x] + "</td>");
+					} else if (link && count == linkcols && jsonObj[i][linkdata] != null && jsonObj[i][linkdata] != "") {
+					    tds.push("<td>" + jsonObj[i][x] + "<br/><a href='" + jsonObj[i][linkdata] + "' target=_blank >文件</a>" + "</td>");
 					} else {
 					    tds.push("<td>" + jsonObj[i][x] + "</td>");
 					}

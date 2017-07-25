@@ -416,14 +416,12 @@
         <!-- /.row -->
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-5">
-                    <label for="equipment">检查设备:</label>
+                <div class="col-md-4">
                     <select id="equipment" class="form-control">
                         <option value="">--请选择检查设备--</option>
                     </select>
                 </div>
-                <div class="col-md-4 toCenter">
-                    <label for="cycle">检查周期:</label>
+                <div class="col-md-3 toCenter">
                         <select id="cycle" class="form-control">
                             <option value="">--请选择检查周期--</option>
                             <option value="day">日检</option>
@@ -431,14 +429,19 @@
                             <option value="year">年检</option>
                         </select>
                 </div>
-                <div class="col-md-3 toCenter">
+                <div class="col-md-3">
+                    <select id="model" class="form-control toCenter">
+                        <option value="">--请选择模板--</option>
+                    </select>
+                </div>
+                <div class="col-md-2 toCenter">
                     <input type="button" value="确定" id="sure" class="btn btn-primary btn-sm" />
                 </div>
             </div>
             <div class="col-md-12 todown minwid">
                 <div class="panel panel-default minwid">
                     <div class="panel-heading">
-                        <span id="cycleTitle">日检表</span>
+                        <span id="cycleTitle">&nbsp;</span>
                         <input type="button" value="填写该表" id="fillTable" class="floatRight btn btn-info btn-sm clearTBPadding" />
                         <input type="button" value="确定" id="sureFill" class="floatRight btn btn-info btn-sm clearTBPadding" />
                         <input type="button" value="取消" id="cannel" class="floatRight btn btn-info btn-sm clearTBPadding" />
@@ -466,8 +469,8 @@
                                     <div class="toright">
                                         <button type="button" id="firstPage" class="btn btn-primary btn-sm disabled">首页</button>
                                         <button type="button" id="prePage" class="btn btn-primary btn-sm disabled">上一页</button>
-                                        <button type="button" id="nexrPage" class="btn btn-primary btn-sm">下一页</button>
-                                        <button type="button" id="lastPage" class="btn btn-primary btn-sm">末页</button>
+                                        <button type="button" id="nexrPage" class="btn btn-primary btn-sm disabled">下一页</button>
+                                        <button type="button" id="lastPage" class="btn btn-primary btn-sm disabled">末页</button>
                                     </div>
                                 </div>
                             </div>

@@ -8,7 +8,7 @@ $(function () {
     var people = infors[1].split("=")[1];
     var equipmentName = infors[2].split("=")[1];
     var date = infors[3].split("=")[1];
-    $("h1.page-header").text(decodeURI(equipmentName) + "结果表");
+    $("h1.page-header").text((decodeURI(equipmentName)) + "结果表");
     GetInformation(ID, date, people);//获取具体检查结果
 });
 
@@ -28,26 +28,26 @@ function GetInformation(ID,date,people) {
 }
 
 function CreateTable(date) {
-    $("div > span.panel-title").text("检查日期:" + date + "  检查人:" + obj[0].name);
-    $("div > span.panel-title").after("<span style=float:right class=panel-title>功能状态:" + (obj[0].functionAll == 1 ? "正常" : "不正常") + "</h3>");
+    $("div > span.panel-title").text("检查日期:" + date + "  检查人:" + obj.other[0].people);
+    $("div > span.panel-title").after("<span style=float:right class=panel-title>功能状态:" + (obj.other[0].state == 1 ? "正常" : "不正常") + "</h3>");
     var currentRows = 0;
     var currentPage = 0;
     var $currentTable = CreateNewTable(0);
     var currentMainItem = "";
-    for (var i = 1; i < obj.length; ++i) {
+    for (var i = 1; i < obj.result.length; ++i) {
         if (currentRows >= 16) {
             currentPage++;
             currentRows = 0;
             $currentTable = CreateNewTable(currentPage);
         }
-        if (obj[i].MainItem != currentMainItem) {
-            var $td = ("<tr style=text-align:left><td colspan=8>" + obj[i].MainItem + "</td></tr>");
+        if (obj.result[i].MainItem != currentMainItem) {
+            var $td = ("<tr style=text-align:left><td colspan=8>" + obj.result[i].MainItem + "</td></tr>");
             $currentTable.children("tbody").append($td);
-            currentMainItem = obj[i].MainItem
+            currentMainItem = obj.result[i].MainItem
             ++currentRows;
         }
         
-        var $tr = ("<tr><td colspan=2>" + obj[i].ChildItem + "</td><td>" + obj[i].UIMRTRealValue + "</td><td>" + isOk(obj[i].UIMRTState) + "</td><td>" + obj[i].IMRTRealValue + "</td><td>" + isOk(obj[i].IMRTState) + "</td><td>" + obj[i].SRSRealValue + "</td><td>" + isOk(obj[i].SRSState) + "</td><td>" + functionIsOk(obj[i].FunctionalStatus) + "</td></tr>");
+        var $tr = ("<tr><td colspan=2>" + obj.result[i].ChildItem + "</td><td>" + obj.result[i].RealValue + "</td><td>" + isOk(obj.result[i].FunctionStatus) + "</td></tr>");
         $currentTable.children("tbody").append($tr);
         ++currentRows;    
     }
@@ -66,13 +66,13 @@ function functionIsOk(str) {
     if(str == ""){
         return "";
     }
-    return str == "1" ? "正常" : "不正常";
+    return (str == "1") ? "正常" : "不正常";
 }
 
 function CreateNewTable(page) {
     var table = $("<table id=table" + page + "></table>");
     table.addClass("table table-bordered table-center table-hover");
-    var thead = $("<thead><tr><th colspan=2>检查项目名</th><th>无调强检查值</th><th>无调强状态值</th><th>调强检查值</th><th>调强状态值</th><th>SRS/SBRT检查值</th><th>SRS/SBRT状态值</th><th>状态</th></tr></thead>");
+    var thead = $("<thead><tr><th colspan=2>检查项目名</th><th>检查值</th><th>状态值</th></tr></thead>");
     var tbody = $("<tbody id=body" + page + "></tbody>");
     table.append(thead).append(tbody);
     if (page > 0)
@@ -203,7 +203,7 @@ function isOk(type) {
             return "正常";
         case "2":
             return "一般";
-        case "3":
+        case "0":
             return "不正常";
         default:
             return type;

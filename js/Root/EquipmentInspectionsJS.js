@@ -214,7 +214,7 @@ function createTables(cycle,model){
 				async: false,
 				success: function(data){
 					currentModel = parseInt(data);
-					$("#cycleTitle").text(currentCycle + "-" + name);
+					$("#cycleTitle").text(cycleChinese(currentCycle) + "-" + name);
 				},
 				error: function(){
 					suc=false;
@@ -255,7 +255,11 @@ function showTable(cycle,model){
 			$("#tableArea").createTable(objData,{
 				headName: new Array("隶属项目","项目名称","说明","参考值"),
 				rows: 12,
-				needKey: true
+				needKey: true,
+				maxcols: 4,
+				link: true,
+				linkcols: 3,
+                linkdata:"files"
 			});
 		}
 	});
@@ -311,14 +315,32 @@ $(function(){
 			$error.show();
 			return false;
 		}
-		var datas = {"MainItem":"", "ChildItem":$("#childItem").val(), "checkWay":$("#Unit :selected").val(), "explain":$("#explain").val(), "reference":$("#Reference").val(), "cycle":currentCycle,"model": currentModel};
+		
 		var main = $("#MainItemSelect :selected").val();
 		main = (main == "writeNew") ? $("#MainItem").val() : main;
-		datas.MainItem = main;
+		var formDate = new FormData();
+		if ($("#file")[0].files[0] == null) {
+		    formDate.append("exist", "false");
+		} else {
+		    formDate.append("file", $("#file")[0].files[0]);
+		    formDate.append("exist", "true");
+		}
+		formDate.append("file", file);
+		formDate.append("MainItem",main);
+		formDate.append("ChildItem", $("#childItem").val());
+		formDate.append("checkWay", $("#Unit :selected").val());
+		formDate.append("explain", $("#explain").val());
+		formDate.append("reference", $("#Reference").val());
+		formDate.append("cycle", currentCycle);
+		formDate.append("model", currentModel);
 		$.ajax({
 			type: "post",
 			url: "addNewItemInModel.ashx",
-			data: datas,
+			data: formDate,
+		    // 告诉jQuery不要去处理发送的数据
+			processData: false,
+		    // 告诉jQuery不要去设置Content-Type请求头
+			contentType: false,
 			success: function(){
 			    showTable(currentCycle, currentModel);
 			    reAdd = false;
@@ -346,16 +368,34 @@ function tableBindClick(){
 		$("#EditGroup").trigger("click");
 	})
 }
-
-function createEditTable($tds){
+var oldlink = ""
+var del = false;
+function createEditTable($tds) {
+    oldlink = "";
+    del = false;
 	$editArea = $("#editArea");
 	var reference = $tds[3].innerText;
+	var link = $($tds[2]).find("a").attr("href");
+	var text = $tds[2].innerText.substring(0, $tds[2].innerText.length - 2);
+	if (link == null) {
+	    text = $tds[2].innerText;
+	} else {
+        oldlink = link;
+	}
 	var item = "<tr><th>隶属项目</th><td><select id=editMainItemSelect class=form-control /><input id=editMainItem type=text class='form-control controlHeight tohidden MainItemSelect' placeholder=请输入所属项目 /><input id=editID type=hidden value="+ $($tds[0]).find(":hidden").val() + " /></td></tr>"
 			 + "<tr><th>项目名称</th><td><input id=editName class=form-control type=text value="+$tds[1].innerText + " /></td></tr>"
 			 + "<tr><th>检查类型</th><td><select id=editTypeSelect class=form-control ><option value=NA>NA</option><option value=IsOk>功能正常</option><option value=write>填写</option></select></td></tr>"
-			 + "<tr><th>说明</th><td><textarea id=editexplain class=form-control style=resize:vertical; rows=5 >" + $tds[2].innerText + "</textarea></td></tr>"
+			 + "<tr><th rowspan=2>说明</th><td><textarea id=editexplain class=form-control style=resize:vertical; rows=5 >" + text + "</textarea>" + ((link == null) ? "" : ("<a id=editfile target=_blank href=" + link + " >文件</a><button id=filedelete type=button class=close>×</button>")) + "</td></tr>"
+             + "<tr><td><input id=changefile type=file></td></tr>"
 			 + "<tr><th>参考值</th><td><input id=editReference class=form-control type=text value="+ reference + " /></td></tr>";
 	$editArea.empty().append(item);
+	if (link != null) {
+	    $("#filedelete").bind("click", function () {
+	        $(this).prev("a").remove();
+	        $(this).remove();
+	        del = true;
+	    });
+	}
 	CreateMainItemSelect("editMainItemSelect");
 	$("#editMainItemSelect [value=" + $tds[0].innerText+"]").attr("selected", true);
 	if(reference == "NA"){
@@ -437,10 +477,12 @@ $(function(){
     $("#deleteGroup").bind("click",function(){
     	var current = parseInt($("#currentPage").val());
     	var id = $("#editID").val();
+    	var links = $("#editArea a")
+        var link = (links == null) ? "" : links.attr("href");
     	$.ajax({
     		type: "post",
     		url: "deleteItems.ashx",
-    		data: {"id":id},
+    		data: {"id":id, "link":link},
     		success: function(){
     			alert("删除成功");
     			changeObj(objData,id);
@@ -448,7 +490,11 @@ $(function(){
 				headName: new Array("隶属项目","项目名称","说明","参考值"),
 				rows: 12,
 				needKey: true,
-				pages: current
+				pages: current,
+				maxcols: 4,
+				link: true,
+				linkcols: 3,
+				linkdata: "files"
 			});
     			$("#cannelEdit").trigger("click");
     		}
@@ -482,20 +528,49 @@ $(function(){
 		mainItem == "writeNew" ? $("#editMainItem").val() : mainItem;
 		var childItem = $("#editName").val();
 		var type = $("#editTypeSelect :selected").val();
-		var explain = $("#editexplain").val();
+		var explain = $("#editexplain")[0].value;
+
 		var reference = $("#editReference").val();
-		var datas = {"id":id, "mainItem":mainItem, "childItem": childItem, "type": type, "explain" : explain, "reference": reference};
+		var link = $("#editArea a");
+		var formDate = new FormData();
+		if (del) {
+		    formDate.append("del", "true");
+		} else {
+		    formDate.append("del", "false");
+		}
+		if ($("#changefile")[0].files[0] == null) {
+		    formDate.append("exist", "false");
+		} else {
+		    formDate.append("exist", "true");
+		    formDate.append("file", $("#changefile")[0].files[0]);
+		}
+		formDate.append("id",id);
+		formDate.append("mainItem", mainItem);
+		formDate.append("childItem", childItem);
+		formDate.append("type", type);
+		formDate.append("explain", explain);
+		formDate.append("reference", reference);
+		formDate.append("oldlink", oldlink);
+		var datas = {"id": id, "mainItem": mainItem, "childItem": childItem, "type": type, "explain": explain, "reference": reference };
 		$.ajax({
 			type: "post",
 			url: "updateItem.ashx",
-			data: datas,
-			success:function(){
-				updateObj(datas);
+		    // 告诉jQuery不要去处理发送的数据
+			processData: false,
+		    // 告诉jQuery不要去设置Content-Type请求头
+			contentType: false,
+			data: formDate,
+			success:function(data){
+				updateObj(datas,data);
 				$("#tableArea").createTable(objData,{
 				headName: new Array("隶属项目","项目名称","说明","参考值"),
 				rows: 12,
 				needKey: true,
-				pages: current
+				pages: current,
+				maxcols: 4,
+				link: true,
+				linkcols: 3,
+				linkdata: "files"
 			});
 				alert("修改成功");
     			$("#cannelEdit").trigger("click");
@@ -504,13 +579,18 @@ $(function(){
 	});
 })
 
-function updateObj(datas){
+function updateObj(datas,file){
 	for(var i = 0;i < objData.length;i++){
 		if(objData[i].id == datas.id){
 			objData[i].mainItem = datas.mainItem;
 			objData[i].childItem = datas.childItem;
 			objData[i].explain = datas.explain;
 			objData[i].reference = datas.reference;
+			if (file != "") {
+			    objData[i].files = file;
+			} else {
+			    objData[i].files = null;
+			}
 			break;
 		}
 	}
