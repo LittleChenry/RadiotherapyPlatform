@@ -44,11 +44,11 @@ public class getfixmachine : IHttpHandler {
        
             
             
-        string countItem = "SELECT count(*) FROM equipment where TreatmentItem=@item";
+        string countItem = "SELECT count(*) FROM equipment where TreatmentItem=@item and State=1";
         sqlOperation.AddParameterWithValue("@item", item);
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
 
-        string sqlCommand = "SELECT ID,Name FROM equipment where TreatmentItem=@item";
+        string sqlCommand = "SELECT ID,Name FROM equipment where TreatmentItem=@item and State=1";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;

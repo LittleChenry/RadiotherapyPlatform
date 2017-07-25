@@ -65,9 +65,17 @@ public class GetEquipmentAppointment : IHttpHandler {
         reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
-            backString.Append("{\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\""
-                    + reader["End"].ToString() + "\",\"EuqipmentID\":\"" + equipmentID + "\",\"ID\":\"" + reader["ID"].ToString() + "\",\"State\":\"" + reader["State"].ToString()
-                 + "\",\"Euqipment\":\"");    
+            int time=int.Parse(reader["Begin"].ToString());
+            int hour=time/60;
+            int minute=time-(time/60)*60;
+            DateTime dt1 = Convert.ToDateTime(date+" "+hour+":"+minute+":"+"00");
+            DateTime dt2 = DateTime.Now;
+            if (DateTime.Compare(dt1, dt2) > 0)
+            {
+                backString.Append("{\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\""
+                        + reader["End"].ToString() + "\",\"EuqipmentID\":\"" + equipmentID + "\",\"ID\":\"" + reader["ID"].ToString() + "\",\"State\":\"" + reader["State"].ToString()
+                     + "\",\"Euqipment\":\"");
+               
             DataLayer sqlOperation2 = new DataLayer("sqlStr");
             string sqlCommand2 = "SELECT Name FROM equipment WHERE ID=@id";
             sqlOperation2.AddParameterWithValue("@id", equipmentID);
@@ -78,6 +86,7 @@ public class GetEquipmentAppointment : IHttpHandler {
             {
                 backString.Append(",");
             }
+            } 
             ++currentTimes;
         }
         reader.Close();

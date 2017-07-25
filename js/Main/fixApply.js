@@ -282,49 +282,54 @@ function saveTemplate(TemplateName) {
 function CreateCurrentEquipmentTbale(equiment, dateString) {
     var table = document.getElementById("apptiontTable");
     RemoveAllChild(table);
+    if (equiment.length != 0) {
     var tbody = document.createElement("tbody");
-    for (var i = 0; i < Math.ceil(equiment.length / 5) * 5 ; i++) {
-        var count = i % 5;
-        var tr;
-        if (count == 0) {
+        for (var i = 0; i < Math.ceil(equiment.length / 5) * 5 ; i++) {
+            var count = i % 5;
+            var tr;
+            if (count == 0) {
                 tr = document.createElement("tr");
-          }
-        if (i <=equiment.length-1) {
-            var td = document.createElement("td");
-            var sign = document.createElement("i");
-            td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
-            if (equiment[i].State == "0") {
-                if (compareWithToday(dateString)) {
-                    sign.className = "";
-                    td.addEventListener("click", chooseItem, false);
+            }
+            if (i <= equiment.length - 1) {
+                var td = document.createElement("td");
+                var sign = document.createElement("i");
+                td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+                if (equiment[i].State == "0") {
+                    if (compareWithToday(dateString)) {
+                        sign.className = "";
+                        td.addEventListener("click", chooseItem, false);
+                    } else {
+                        td.style.backgroundColor = "#C1C1C1";
+                        sign.className = "fa fa-fw fa-ban td-sign";
+                        td.addEventListener("click", hasChosen, false);
+                    }
                 } else {
                     td.style.backgroundColor = "#C1C1C1";
                     sign.className = "fa fa-fw fa-ban td-sign";
                     td.addEventListener("click", hasChosen, false);
                 }
-            } else {
-                td.style.backgroundColor = "#C1C1C1";
-                sign.className = "fa fa-fw fa-ban td-sign";
-                td.addEventListener("click", hasChosen, false);
-            }
-            var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
-            td.appendChild(text);
-            td.appendChild(sign);
-            tr.appendChild(td);
-        }
-        if (i == equiment.length) {
-            var k;
-            for ( k = equiment.length; k <= Math.ceil(equiment.length / 5) * 5 - 1; k++) {
-                var td = document.createElement("td");
-
+                var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+                td.appendChild(text);
+                td.appendChild(sign);
                 tr.appendChild(td);
             }
+            if (i == equiment.length) {
+                var k;
+                for (k = equiment.length; k <= Math.ceil(equiment.length / 5) * 5 - 1; k++) {
+                    var td = document.createElement("td");
+
+                    tr.appendChild(td);
+                }
+            }
+            if (count == 4) {
+                tbody.appendChild(tr);
+            }
         }
-        if (count == 4) {
-            tbody.appendChild(tr);
-        }
+        table.appendChild(tbody);
+    } else {
+        table.innerHTML = "今天已经不可以预约了,改天吧！";
+
     }
-    table.appendChild(tbody);
 }
 
 function chooseItem(){
@@ -412,6 +417,10 @@ function CreateNewAppiontTable(evt) {
     var currentIndex = equipmentName.selectedIndex;
     var equipmentID = equipmentName.options[currentIndex].value;
     var AppiontDate = document.getElementById("AppiontDate");
+    if (!compareWithToday(AppiontDate.value)) {
+        alert("不能选择小于当天的日期");
+        return;
+    }
     var date = AppiontDate.value;
     var xmlHttp = new XMLHttpRequest();
     var url = "GetEquipmentAppointment.ashx?equipmentID=" + equipmentID + "&date=" + date;

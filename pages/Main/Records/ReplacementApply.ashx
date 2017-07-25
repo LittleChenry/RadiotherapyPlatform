@@ -47,9 +47,7 @@ public class ReplacementApply : IHttpHandler {
         string strcommand = "select State from appointment where ID=@appointid";
         sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));
         string count = sqlOperation.ExecuteScalar(strcommand);
-        string strcommand2 = "select State from appointment where ID=@appointid+1";
-        string count1 = sqlOperation.ExecuteScalar(strcommand2);
-        if (count == "1" || count1=="1")
+        if (count == "1")
         {
             return "busy";
         }
@@ -57,27 +55,18 @@ public class ReplacementApply : IHttpHandler {
         {
             string strcommand1 = "update appointment set State=1 where ID=@appointid and State=0";
             int intSuccess = sqlOperation.ExecuteNonQuery(strcommand1);
-            string strcommand3 = "update appointment set State=1 where ID=@appointid+1 and State=0";
-            int intSuccess2 = sqlOperation.ExecuteNonQuery(strcommand3);
             if (intSuccess == 0)
             {
                 return "busy";
             }
             else
             {
-                if (intSuccess2 == 0)
-                {
-                    string strcommandback = "update appointment set State=0 where ID=@appointid and State=1";
-                    int ss = sqlOperation.ExecuteNonQuery(strcommandback);
-                    return "busy";
-                }
-                else
-                {
+                
                     strcommand = "select Patient_ID from treatment where ID=@treat";
                     sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
                     string patient_ID = sqlOperation.ExecuteScalar(strcommand);
 
-                    string finishappoint = "update appointment set Patient_ID=@Patient,Treatment_ID=@treat where ID=@appointid or ID=@appointid+1";
+                    string finishappoint = "update appointment set Patient_ID=@Patient,Treatment_ID=@treat where ID=@appointid";
                     sqlOperation.AddParameterWithValue("@Patient", Convert.ToInt32(patient_ID));
                     sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
                     int Success1 = sqlOperation.ExecuteNonQuery(finishappoint);
@@ -119,6 +108,3 @@ public class ReplacementApply : IHttpHandler {
 
         }
     }
-        
-
-}

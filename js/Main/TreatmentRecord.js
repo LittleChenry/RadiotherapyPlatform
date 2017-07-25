@@ -559,6 +559,7 @@ function save() {
 function CreateCurrentEquipmentTbale(equiment, dateString) {
     var table = document.getElementById("apptiontTable");
     RemoveAllChild1(table);
+    if (equiment.length != 0) {
     var tbody = document.createElement("tbody");
     var i;
     for (i = 0; i < Math.ceil(equiment.length / 5) * 5 ; i++) {
@@ -609,6 +610,10 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
     }
 
     table.appendChild(tbody);
+} else {
+    table.innerHTML = "今天已经不可以预约了,改天吧！";
+
+}
 }
 function compareWithToday(time) {
     var year = time.split("-")[0];
@@ -695,6 +700,10 @@ function CreateNewAppiontTable(evt) {
     var currentIndex = equipmentName.selectedIndex;
     var equipmentID = equipmentName.options[currentIndex].value;
     var AppiontDate = document.getElementById("AppiontDate");
+    if (!compareWithToday(AppiontDate.value)) {
+        alert("不能选择小于当天的日期");
+        return;
+    }
     var date = AppiontDate.value;
     var xmlHttp = new XMLHttpRequest();
     var url = "GetEquipmentAppointment.ashx?equipmentID=" + equipmentID + "&date=" + date;
