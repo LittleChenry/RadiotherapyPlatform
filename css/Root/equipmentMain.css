@@ -1,7 +1,5 @@
 ﻿/*设备检查管理模块*/
-#cycle {
-    width:52.3333%;
-}
+
 
 .toright {
     text-align:right;
@@ -124,7 +122,6 @@ label.height {
 }
 
 .fillText {
-    float: right;
     padding: 2px 4px;
     font-size: 14px;
     line-height: 1.42857143;
@@ -134,7 +131,9 @@ label.height {
     border: 1px solid #ccc;
     border-radius: 4px;
     display: table-cell;
-    width:7.5em;
+    width:12.5em;
+    margin:0 auto;
+
 }
 
 .minwid {

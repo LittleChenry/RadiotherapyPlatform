@@ -34,6 +34,7 @@ public class FirstAcclerateRecord : IHttpHandler {
         string totalnumber = context.Request["totalnumber"];
         string isfinished = context.Request["isfinished"];
         string user = context.Request["user"];
+        string username = context.Request["username"];
         string check = "select count(Appointment_ID) from treatmentrecord where ApplyUser is not NULL and Treatment_ID=@treat";
         sqlOperation.AddParameterWithValue("@treat", treatid);
         int checkcount = Convert.ToInt32(sqlOperation.ExecuteScalar(check));
@@ -46,17 +47,23 @@ public class FirstAcclerateRecord : IHttpHandler {
                 int Success = 0;
                 if (Convert.ToInt32(isfinished) == 1)
                 {
+                    string select = "select ChangeLog from treatment where ID=@treat";
+                    string log = sqlOperation.ExecuteScalar(select);
                     string select1 = "select Progress from treatment where ID=@treat";
                     string progress = sqlOperation.ExecuteScalar(select1);
                     //将诊断ID填入treatment表
-                    string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total where ID=@treat";
+                    string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log where ID=@treat";
                     sqlOperation.AddParameterWithValue("@progress", progress + ",14,15");
                     sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
+                    sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                     Success = sqlOperation.ExecuteNonQuery(inserttreat);
                 }
                 else
                 {
-                    string inserttreat = "update treatment set TotalNumber=@total where ID=@treat";
+                    string select = "select ChangeLog from treatment where ID=@treat";
+                    string log = sqlOperation.ExecuteScalar(select);
+                    string inserttreat = "update treatment set TotalNumber=@total,ChangeLog=@log where ID=@treat";
+                    sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                     sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
                     Success = sqlOperation.ExecuteNonQuery(inserttreat);
                 }
@@ -108,18 +115,24 @@ public class FirstAcclerateRecord : IHttpHandler {
                         int Success = 0;
                         if (Convert.ToInt32(isfinished) == 1)
                         {
+                            string select = "select ChangeLog from treatment where ID=@treat";
+                            string log = sqlOperation.ExecuteScalar(select);
                             string select1 = "select Progress from treatment where ID=@treat";
                             string progress = sqlOperation.ExecuteScalar(select1);
                             //将诊断ID填入treatment表
-                            string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total where ID=@treat";
+                            string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log where ID=@treat";
                             sqlOperation.AddParameterWithValue("@progress", progress + ",14,15");
+                            sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                             sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
                             Success = sqlOperation.ExecuteNonQuery(inserttreat);
                         }
                         else
                         {
-                            string inserttreat = "update treatment set TotalNumber=@total where ID=@treat";
+                            string select = "select ChangeLog from treatment where ID=@treat";
+                            string log = sqlOperation.ExecuteScalar(select);
+                            string inserttreat = "update treatment set TotalNumber=@total,ChangeLog=@log where ID=@treat";
                             sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
+                            sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                             Success = sqlOperation.ExecuteNonQuery(inserttreat);
                         }
                         if (Success > 0 && Success2 > 0)
@@ -174,18 +187,24 @@ public class FirstAcclerateRecord : IHttpHandler {
                     int Success = 0;
                     if (Convert.ToInt32(isfinished) == 1)
                     {
+                        string select = "select ChangeLog from treatment where ID=@treat";
+                        string log = sqlOperation.ExecuteScalar(select);
                         string select1 = "select Progress from treatment where ID=@treat";
                         string progress = sqlOperation.ExecuteScalar(select1);
                         //将诊断ID填入treatment表
-                        string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total where ID=@treat";
+                        string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log where ID=@treat";
                         sqlOperation.AddParameterWithValue("@progress", progress + ",14,15");
+                        sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                         sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
                         Success = sqlOperation.ExecuteNonQuery(inserttreat);
                     }
                     else
                     {
-                        string inserttreat = "update treatment set TotalNumber=@total where ID=@treat";
+                        string select = "select ChangeLog from treatment where ID=@treat";
+                        string log = sqlOperation.ExecuteScalar(select);
+                        string inserttreat = "update treatment set TotalNumber=@total,ChangeLog=@log where ID=@treat";
                         sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
+                        sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                         Success = sqlOperation.ExecuteNonQuery(inserttreat);
                     }
                     if (Success > 0 && Success2 > 0)

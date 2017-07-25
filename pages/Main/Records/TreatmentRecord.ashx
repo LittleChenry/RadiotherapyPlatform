@@ -39,7 +39,7 @@ public class TreatmentRecord : IHttpHandler {
         string assistant = context.Request["assistant"];
         int treatdays = Convert.ToInt32(context.Request["treatdays"]);
         int patient = Convert.ToInt32(context.Request["patientid"]);
-
+        string remark = context.Request["remark"];
         string sqlcommand1 = "select IlluminatedNumber,MachineNumbe,DosagePriority from design,treatment where design.ID=treatment.Design_ID and treatment.ID=@treat";
         sqlOperation.AddParameterWithValue("treat", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand1);
@@ -68,7 +68,7 @@ public class TreatmentRecord : IHttpHandler {
 
         string sqlcommand2 = "select count(*) from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL";
         int finishedtimes = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
-        string insert = "update treatmentrecord set TreatTime=@time,TreatedDays=@treatdays,TreatedTimes=@treattimes,Rest=@rest,Treat_User_ID=@user,IlluminatedNumber=@number1,MachineNumber=@number2,Assist_User=@assist,Singlenumber=@single where Appointment_ID=@appoint and Treatment_ID=@treat";
+        string insert = "update treatmentrecord set TreatTime=@time,TreatedDays=@treatdays,TreatedTimes=@treattimes,Rest=@rest,Treat_User_ID=@user,IlluminatedNumber=@number1,MachineNumber=@number2,Assist_User=@assist,Singlenumber=@single,Remarks=@remarks where Appointment_ID=@appoint and Treatment_ID=@treat";
         sqlOperation.AddParameterWithValue("@time", DateTime.Now);
         sqlOperation.AddParameterWithValue("@treatdays", treatdays);
         sqlOperation.AddParameterWithValue("@treattimes", finishedtimes + 1);
@@ -79,6 +79,7 @@ public class TreatmentRecord : IHttpHandler {
         sqlOperation.AddParameterWithValue("@assist", assistant);
         sqlOperation.AddParameterWithValue("@single", DosagePriority);
         sqlOperation.AddParameterWithValue("@appoint", appointid);
+        sqlOperation.AddParameterWithValue("@remarks", remark);
         int success = sqlOperation.ExecuteNonQuery(insert);
         if (success > 0)
         {

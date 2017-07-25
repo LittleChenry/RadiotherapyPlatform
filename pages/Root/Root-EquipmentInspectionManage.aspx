@@ -407,7 +407,7 @@
 
 
     <!-- Main content -->
-    <section class="content" style="overflow-x:auto;">
+        <section class="content" style="overflow-x:auto;">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">设备检查管理</h1>
@@ -418,8 +418,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-3">&nbsp;</div>
-                <div class="col-md-6 toCenter">
-                    <label for="cycle" style="margin-top:0.46em;float:left;">检查周期:</label>
+                <div class="col-md-3 toCenter">
                         <select id="cycle" class="form-control">
                             <option value="">请选择检查周期</option>
                             <option value="day">日检</option>
@@ -428,47 +427,37 @@
                         </select>
                 </div>
                 <div class="col-md-3 toCenter">
+                    <div class="col-xs-8">
+                        <select id="model" class="form-control">
+                            <option value="">请选择模板</option>
+                            <option value="add">新增模板</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3 toCenter">
                     <input type="button" value="确定" id="sure" class="btn btn-primary btn-sm" />
-                    <%--<input type="hidden" value="false" id="fillATable" />--%>
                 </div>
             </div>
             <div class="col-md-12 todown minw">
                 <div class="panel panel-default minw">
                     <div class="panel-heading">
-                        <span id="cycleTitle">日检表</span>
-                        <input type="button" value="修改" id="changeTable" class="floatRight btn btn-info btn-sm clearTBPadding" />
-                        <input type="button" value="新增" id="addItem" class="floatRight btn btn-info btn-sm clearTBPadding" />
-                        <input type="button" value="确定" id="sureChange" class="floatRight btn btn-info btn-sm clearTBPadding" />
-                        <input type="button" value="取消" id="cannel" class="floatRight btn btn-info btn-sm clearTBPadding" />
+                        <span id="cycleTitle">&nbsp;</span>
+                        <input type="button" value="修改" id="changeTable" class="floatRight btn btn-info btn-sm clearTBPadding tohidden" />
+                        <input type="button" value="新增" id="addItem" class="floatRight btn btn-info btn-sm clearTBPadding tohidden" />
+                        <input type="button" value="结束修改" id="cannel" class="floatRight btn btn-info btn-sm clearTBPadding" />
+                        <input type="button" value="删除模板" id="deleteModel" class="floatRight btn btn-info btn-sm clearTBPadding tohidden" />
                     </div>
-                    <div class="panel-body">
-                        <div>
-                            <div class="row">
-                                    <input type="hidden" id="sumPage" value="0" />
-                                    <input type="hidden" id="currentPage" value="0" />
-                                    <div class="col-sm-12" id="tableArea">
+                    <div id="tableArea" class="panel-body">
+                        <table class="table table-striped table-hover">
 
-                                    </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">&nbsp;</div>
-                                <div class="col-sm-6 todown">
-                                    <div class="toright">
-                                        <button type="button" id="firstPage" class="btn btn-primary btn-sm disabled">首页</button>
-                                        <button type="button" id="prePage" class="btn btn-primary btn-sm disabled">上一页</button>
-                                        <button type="button" id="nexrPage" class="btn btn-primary btn-sm">下一页</button>
-                                        <button type="button" id="lastPage" class="btn btn-primary btn-sm">末页</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </table>
                     </div>
                 </div>
             </div>
             <div class="col-md-12" id="middleArea"></div>
             <div class="col-md-12" id="topArea">
-                <form id="addItemFrm" method="post">
-                    <label id="error" class="error"></label>
+                <form id="addItemFrm" method="post" runat="server">
+                    <label id="error" class="error" style="display:none;"></label>
                         <table class="table table-bordered table-striped tableWidth">
                             <tbody>
                                 <tr>
@@ -487,31 +476,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="noborder"><label for="function2role" class="height">无调强检查</label></th>
-                                    <td>
-                                        <select id="UIMRTUnit" class="form-control">
-                                            <option value="NA">NA</option>
-                                            <option value="IsOK">功能正常</option>
-                                            <option value="write" selected="true">填写</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="noborder"><label for="roleDescription" class="height">无调强参考值</label></th>
-                                    <td>
-                                        <input id="UIMRTReference" type="text" class="form-control controlHeight rightValue" placeholder="请输入无调强参考值" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="noborder"><label for="roleDescription" class="height">无调强误差</label></th>
-                                    <td>
-                                        <input id="UIMRTError" type="text" class="form-control controlHeight rightValue" placeholder="请输入无调强误差" />
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th class="noborder"><label for="roleDescription" class="height">调强检查</label></th>
                                     <td>
-                                        <select id="IMRTUnit" class="form-control">
+                                        <select id="Unit" class="form-control">
                                             <option value="NA">NA</option>
                                             <option value="IsOK">功能正常</option>
                                             <option value="write" selected="true">填写</option>
@@ -519,47 +486,16 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="noborder"><label for="roleDescription" class="height">调强参考值</label></th>
+                                    <th class="noborder"><label for="roleDescription" class="height">说明</label></th>
                                     <td>
-                                        <input id="IMRTReference" type="text" class="form-control controlHeight rightValue" placeholder="请输入调强参考值" />
+                                        <textarea id="explain" style="resize: vertical;" class="form-control controlHeight rightValue"></textarea>
+                                        <input id="file" type="file" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="noborder"><label for="roleDescription" class="height">调强误差</label></th>
+                                    <th class="noborder"><label for="roleDescription" class="height">参考值</label></th>
                                     <td>
-                                        <input id="IMRTError" type="text" class="form-control controlHeight rightValue" placeholder="请输入调强误差" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="noborder"><label for="roleDescription" class="height">SRS/SBRT检查</label></th>
-                                    <td>
-                                        <select id="SRSUnit" class="form-control">
-                                            <option value="NA">NA</option>
-                                            <option value="IsOK">功能正常</option>
-                                            <option value="write" selected="true">填写</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="noborder"><label for="roleDescription" class="height">SRS/SBRT参考值</label></th>
-                                    <td>
-                                        <input id="SRSReference" type="text" class="form-control controlHeight rightValue" placeholder="请输入SRS参考值" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="noborder"><label for="roleDescription" class="height">SRS/SBRT误差</label></th>
-                                    <td>
-                                        <input id="SRSError" type="text" class="form-control controlHeight rightValue" placeholder="请输入SRS误差值" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="noborder"><label for="roleDescription" class="height">检查周期</label></th>
-                                    <td>
-                                        <select id="addCycle" class="form-control">
-                                            <option value="day">日检</option>
-                                            <option value="month">月检</option>
-                                            <option value="year">年检</option>
-                                        </select>
+                                        <input id="Reference" type="text" class="form-control controlHeight rightValue" placeholder="请输入调强参考值" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -574,6 +510,33 @@
             </div>
         </div>
         <!-- /.row -->
+        <input type="button" class="tohidden" id="EditGroup" data-toggle="modal" data-target="#editModal" />
+
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
+                        <h4 class="modal-title">修改检查项目</h4>                     
+                    </div>
+                        <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
+                            <table class="mytable table-bordered table-center">
+                                <tbody id="editArea">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cannelEdit" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                            <input id="deleteGroup" class="btn btn-danger" type="button" value="删除该项" />
+                            <input id="sureEdit" type="submit" class="btn btn-primary" value="确认" />
+                        </div>
+                </div>
+                                    <!-- /.modal-content -->
+            </div>
+                                <!-- /.modal-dialog -->
+        </div>
+
     </section>
   </div>
 
@@ -595,6 +558,8 @@
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/jquery.min.js"></script>
+<!-- createtable -->
+<script src="../../js/Root/createTable.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -606,6 +571,6 @@
 <!-- Main js-->
 <script src="../../js/Root/RootMainJS.js"></script>
 <!-- Main JavaScript -->
-<script src="../../js/Root/EquipmentInspectionJS.js"></script>
+<script src="../../js/Root/EquipmentInspectionsJS.js"></script>
 </body>
 </html>

@@ -33,7 +33,7 @@ public class getalltreatmentrecord : IHttpHandler {
         string sqlcommand1 = "select count(*) from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL";
         sqlOperation.AddParameterWithValue("treat", treatid);
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlcommand1));
-        string sqlcommand = "select ID,TreatTime,TreatedDays,TreatedTimes,Treat_User_ID,Check_User_ID,IlluminatedNumber,MachineNumber,Assist_User,Singlenumber from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL order by ID asc";
+        string sqlcommand = "select ID,TreatTime,TreatedDays,TreatedTimes,Treat_User_ID,Check_User_ID,IlluminatedNumber,MachineNumber,Assist_User,Singlenumber,Remarks from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL order by ID asc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand);
         int temp = 0;
        StringBuilder backText = new StringBuilder("{\"Item\":[");
@@ -50,7 +50,7 @@ public class getalltreatmentrecord : IHttpHandler {
                 checkusername = sqlOperation1.ExecuteScalar(checkuser);
 
             }
-            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"TreatTime\":\"" + reader["TreatTime"].ToString() + "\",\"treatusername\":\"" + treatusername + "\",\"checkusername\":\"" + checkusername + "\",\"TreatedDays\":\"" + reader["TreatedDays"].ToString() + "\",\"TreatedTimes\":\"" + reader["TreatedTimes"].ToString() + "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"MachineNumber\":\"" + reader["MachineNumber"].ToString() + "\",\"Assist_User\":\"" + reader["Assist_User"].ToString() + "\",\"Singlenumber\":\"" + reader["Singlenumber"].ToString() + "\"}");
+            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"TreatTime\":\"" + reader["TreatTime"].ToString() + "\",\"treatusername\":\"" + treatusername + "\",\"checkusername\":\"" + checkusername + "\",\"TreatedDays\":\"" + reader["TreatedDays"].ToString() + "\",\"TreatedTimes\":\"" + reader["TreatedTimes"].ToString() + "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"MachineNumber\":\"" + reader["MachineNumber"].ToString() + "\",\"Assist_User\":\"" + reader["Assist_User"].ToString() + "\",\"Singlenumber\":\"" + reader["Singlenumber"].ToString() + "\",\"Remarks\":\"" + reader["Remarks"].ToString() + "\"}");
             if (temp < count-1)
             {
 

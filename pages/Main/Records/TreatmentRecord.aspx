@@ -64,6 +64,17 @@
                         <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                     </div>
             </div>
+            <div class="paper-content">
+                    <div class="content-title">
+                        <span>信息查看：</span>
+                    </div>  
+                    <div class="single-row">
+                     <div class="col-xs-12" style="padding-left:30%;" >
+                          <a href="javascript:;"   id="viewpdf"  target="_blank"   class="btn btn-default">查看计划PDF文档</a>
+                          <a href="javascript:;"   id="viewpdf2"  target="_blank"   class="btn btn-default">查看复核PDF文档</a>
+                     </div>
+                    </div>
+                </div>
              <div class="paper-content">
                   <div class="content-title">
                     <span>计划详细信息：</span>
@@ -155,7 +166,7 @@
                      </span>
                     </div>
                     <div class="col-xs-5" >
-                        <button id="treatmentedit" disabled="disabled" type="button" class="btn btn-success" >记载放疗记录</button>
+                        <button id="treatmentedit" disabled="disabled" type="button"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>
                         <button id="finishigrt"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button>
                     </div>
                 </div>
@@ -175,10 +186,11 @@
                                     <th>放疗次数</th>
                                     <th>射野数(V)</th>
                                     <th>机器跳数</th>
-                                    <th>单次量(cGy)</th>
+                                    <th>单次剂量(cGy)</th>
                                     <th>累计剂量(cGy)</th>
                                     <th>主操作</th>
                                     <th>副操作</th>
+                                    <th>备注</th>
                                     <th>周剂量核对</th>
                                 </tr>
                             </thead>
@@ -229,6 +241,37 @@
                 </div>
                 <div class="modal-footer">
                     <button id="validate" type="button" class="btn btn-primary"  data-dismiss="modal">验证</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+           <div id="treatmentview" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">确认治疗信息窗口</h4>
+                </div>
+                <div class="modal-body">
+                <div class="single-row">
+                    <div class="item col-xs-4">放疗天数：<span id="treatdays" class="underline"></span></div>
+                    <div class="item col-xs-4">放疗次数：<span id="treattimes" class="underline"></span></div>
+                    <div class="item col-xs-4">射野数(V)：<span id="treatnumber" class="underline"></span></div>
+                </div>
+                 <div class="single-row">
+                    <div class="item col-xs-4">机器跳数：<span id="machinenumber" class="underline"></span></div>
+                    <div class="item col-xs-4">单次剂量(cGy)：<span id="singlenumber" class="underline"></span></div>
+                    <div class="item col-xs-4">累计剂量(cGy)：<span id="sumnumber" class="underline"></span></div>
+                </div>
+               <div class="single-row">
+                    <div class="item col-xs-4">主操作：<span id="chief" class="underline"></span></div>
+                    <div class="item col-xs-4">副操作：<span id="assist" class="underline"></span></div>
+                   <div class="item col-xs-4">备注：<input id="remarks" type="text" class="form-item" /></div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirm" type="button" class="btn btn-primary"  data-dismiss="modal">确定提交</button>
+                     <button id="cancel" type="button" class="btn btn-primary"  data-dismiss="modal">取消提交</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

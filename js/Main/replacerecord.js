@@ -38,7 +38,9 @@ function Init(evt) {
     document.getElementById("requireID").innerHTML = replacerecordinfo.replacerequire;
     document.getElementById("ApplicationUser").innerHTML = replacerecordinfo.ApplicationUser;
     document.getElementById("ApplicationTime").innerHTML = replacerecordinfo.ApplicationTime;
-    document.getElementById("viewpdf").href = replacerecordinfo.pdf;
+    if (replacerecordinfo.pdf != "") {
+        document.getElementById("viewpdf").href = replacerecordinfo.pdf;
+    }
     document.getElementById("OriginCenter1").value = replacerecordinfo.data.split(",")[0];
     document.getElementById("OriginCenter2").value = replacerecordinfo.data.split(",")[1];
     document.getElementById("OriginCenter3").value = replacerecordinfo.data.split(",")[2];

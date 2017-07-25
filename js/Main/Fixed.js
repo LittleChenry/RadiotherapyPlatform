@@ -47,33 +47,37 @@ function Init(evt) {
                 document.getElementById("fixedEquipment").innerHTML = fixedInfo.fixedInfo[i].fixedEquipment;
                 document.getElementById("ApplicationUser").innerHTML = fixedInfo.fixedInfo[i].ApplicationUser;
                 document.getElementById("ApplicationTime").innerHTML = fixedInfo.fixedInfo[i].ApplicationTime;              
-                    document.getElementById("BodyPositionDetail").value = fixedInfo.fixedInfo[i].BodyPositionDetail;          
-                    document.getElementById("Remarks").value = fixedInfo.fixedInfo[i].Remarks;
-                    document.getElementById("operator").innerHTML = fixedInfo.fixedInfo[i].operate;
-                    document.getElementById("date").innerHTML = fixedInfo.fixedInfo[i].OperateTime;
-                    var boxesgroup = document.getElementsByClassName("boxes");
-                    boxesgroup[0].style.display = "none";
-                    var boxes = document.getElementById("multipic");
-                    var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
-                    if (fixedInfo.fixedInfo[i].Pictures == "") {
-                        boxes.innerHTML = "无";
-                    } else {
-                        for (var i = 1; i < pictures.length; i++) {
-                            var div = document.createElement("DIV");
-                            div.className = "boxes";
-                            var div1 = document.createElement("DIV");
-                            div1.className = "imgnum";
-                            var img = document.createElement("IMG");
-                            img.addEventListener("click",showPicture,false);
-                            img.className = "img";
-                            img.src = pictures[i];
-                            img.style.display = "block";
-                            div1.appendChild(img);
-                            div.appendChild(div1);
-                            boxes.appendChild(div);
-                        }
+                document.getElementById("BodyPositionDetail").value = fixedInfo.fixedInfo[i].BodyPositionDetail;          
+                document.getElementById("Remarks").value = fixedInfo.fixedInfo[i].Remarks;
+                document.getElementById("operator").innerHTML = fixedInfo.fixedInfo[i].operate;
+                document.getElementById("date").innerHTML = fixedInfo.fixedInfo[i].OperateTime;
+                var boxesgroup = document.getElementsByClassName("boxes");
+                boxesgroup[0].style.display = "none";
+                var boxes = document.getElementById("multipic");
+                var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
+                if (fixedInfo.fixedInfo[i].Pictures == "") {
+                    boxes.innerHTML = "无";
+                } else {
+                    for (var k = 1; k < pictures.length; k++) {
+                        var div = document.createElement("DIV");
+                        div.className = "boxes";
+                        var div1 = document.createElement("DIV");
+                        div1.className = "imgnum";
+                        var img = document.createElement("IMG");
+                        img.addEventListener("click",showPicture,false);
+                        img.className = "img";
+                        img.src = pictures[k];
+                        img.style.display = "block";
+                        div1.appendChild(img);
+                        div.appendChild(div1);
+                        boxes.appendChild(div);
                     }
-            }else{
+                }
+            } else {
+                if (fixedInfo.fixedInfo[i].BodyPositionDetail == "") {
+                    alert(fixedInfo.fixedInfo[i].Treatmentname);
+                    continue;
+                }
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + fixedInfo.fixedInfo[i].Treatmentdescribe + '体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
@@ -106,6 +110,9 @@ function Init(evt) {
         document.getElementById("hidetreatID").value = treatID;
         for (var i = 0; i < fixedInfo.fixedInfo.length; i++) {
             if (patient.Treatmentname != fixedInfo.fixedInfo[i].Treatmentname) {
+                if (fixedInfo.fixedInfo[i].BodyPositionDetail == "") {
+                    continue;
+                }
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + fixedInfo.fixedInfo[i].Treatmentdescribe + '体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'

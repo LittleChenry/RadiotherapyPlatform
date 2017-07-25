@@ -4,10 +4,30 @@ var tableNumber = 0;
 var currentRows = 0;
 var currentMainItem = "";
 var radiosNum = 0;
+var currentModel = "";
+
+$(function () {
+    $("#cycle").bind("change", function () {
+        var cycle = $(this).find(":selected").val();
+        $.ajax({
+            type: "post",
+            url: "../../pages/Root/getModel.ashx",
+            data: {"cycle":cycle},
+            success: function (data) {
+                var jsonobj = $.parseJSON(data);
+                var options = new Array();
+                for (var i = 0; i < jsonobj.length; ++i) {
+                    options.push("<option value=" + jsonobj[i].id + " >" + jsonobj[i].Name + "</option>");
+                }
+                $("#model").empty().append("<option value=''>--请选择模板--</option>").append(options.join(''));
+            }
+        });
+    });
+});
 
 function Init() {
     CreateEquipment();//创建设备选择下拉菜单
-    CreateTable("day");//创建日检表
+    //CreateTable("day");//创建日检表
 
     document.getElementById("sure").addEventListener("click", CreateCurrentTable, false);//根据条件生成表格按钮点击事件
     document.getElementById("fillTable").addEventListener("click", FillInTable, false);//修改表
@@ -53,8 +73,16 @@ function CreateCurrentTable(evt) {
             cycName = "年检表";
             break;
     }
-    document.getElementById("cycleTitle").innerHTML = cycName;
-    CreateTable(cycle);
+
+    var models = $("#model :selected").val();
+    if (models == "" || cycle == "") {
+        return false;
+    }
+
+    document.getElementById("cycleTitle").innerHTML = cycName + "-" + $("#model :selected").text();
+
+    currentModel = models;
+    CreateTable(cycle,models);
     var currentPage = document.getElementById("currentPage");
     var sumPage = document.getElementById("sumPage");
     if (parseInt(currentPage.value) == (parseInt(sumPage.value) - 1)) {//只有一页时
@@ -67,7 +95,7 @@ function CreateCurrentTable(evt) {
 }
 
 //按检查周期选择创建表格
-function CreateTable(cycle) {
+function CreateTable(cycle,model) {
     var tableArea = document.getElementById("tableArea");
     RemoveAllChild(tableArea);
     tableNumber = 0;
@@ -81,7 +109,7 @@ function CreateTable(cycle) {
     document.getElementById("firstPage").removeEventListener("click", transToFirst, false);
     document.getElementById("prePage").removeEventListener("click", transToPre, false);
 
-    GetCurrentInformation(cycle);
+    GetCurrentInformation(cycle,model);
     for (var i = 0; i < obj.length; i++) {
         CreateByData(obj[i]);
     }
@@ -117,15 +145,10 @@ function CreateByData(data) {
     var ID = data.ID;
     var MainItem = data.MainItem;
     var ChildItem = data.ChildItem;
-    var UIMRTReference = data.UIMRTReference;
-    var UIMRTError = data.UIMRTError;
-    var UIMRTUnit = data.UIMRTUnit;
-    var IMRTReference = data.IMRTReference;
-    var IMRTError = data.IMRTError;
-    var IMRTUnit = data.IMRTUnit;
-    var SRSReference = data.SRSReference;
-    var SRSError = data.SRSError;
-    var SRSUnit = data.SRSUnit;
+    var Explain = data.Explain;
+    var Reference = data.Reference;
+    var files = data.files;
+
     var ishas = false;
 
     var tbody = document.getElementById("body" + tableNumber);
@@ -133,13 +156,13 @@ function CreateByData(data) {
     tbody.appendChild(tr);
     if (MainItem != currentMainItem) {
         var MainItemTD = document.createElement("TD");
-        MainItemTD.colSpan = 8;
+        MainItemTD.colSpan = 6;
         MainItemTD.style.textAlign = "left";
         MainItemTD.appendChild(document.createTextNode(MainItem));
         MainItemTD.className = "ItemName";
         tr.appendChild(MainItemTD);
         tr = document.createElement("TR");
-        tbody.appendChild(tr);;
+        tbody.appendChild(tr);
         ++currentRows;
         currentMainItem = MainItem;
     }
@@ -153,86 +176,32 @@ function CreateByData(data) {
     hidden.value = ID;
     Item.appendChild(hidden);
     tr.appendChild(Item);
+
+    var exp = document.createElement("TD");
+    exp.appendChild(document.createTextNode(Explain));
+    if (files != null && files != "") {
+        var alink = document.createElement("A");
+        alink.appendChild(document.createTextNode("说明文件"));
+        alink.href = files;
+        alink.target = "_blank";
+        exp.appendChild(document.createElement("BR"));
+        exp.appendChild(alink);
+    }
+    tr.appendChild(exp);
+
     var tdUIMRTRef = document.createElement("TD");
-    if (UIMRTUnit == "NA") {
+    if (Reference == "NA") {
         tdUIMRTRef.appendChild(document.createTextNode("NA"));
-    } else if (UIMRTUnit == "IsOK") {
-        tdUIMRTRef.appendChild(document.createTextNode("功能是否正常"));
+    } else if (Reference == "IsOK") {
+        tdUIMRTRef.appendChild(document.createTextNode("功能正常"));
     } else {
-        tdUIMRTRef.appendChild(document.createTextNode(UIMRTReference));
+        tdUIMRTRef.appendChild(document.createTextNode(Reference));
     }
     tr.appendChild(tdUIMRTRef);
 
-    var tdUIMRTError = document.createElement("TD");
-    if (UIMRTUnit == "NA") {
-        tdUIMRTError.appendChild(document.createTextNode("NA"));
-    } else if (UIMRTUnit == "IsOK") {
-        tdUIMRTError.appendChild(document.createTextNode("功能是否正常"));
-    } else {
-        tdUIMRTError.appendChild(document.createTextNode(UIMRTError));
-    }
-    tr.appendChild(tdUIMRTError);
-
-    var tdUIMRTValue = document.createElement("TD");
-    tdUIMRTValue.className = "fillValue";
-    var tdUIMRTState = document.createElement("TD");
-    tdUIMRTState.className = "chooseState";
-    tr.appendChild(tdUIMRTValue);
-    tr.appendChild(tdUIMRTState);
-
-    var tdIMRTRef = document.createElement("TD");
-    if (IMRTUnit == "NA") {
-        tdIMRTRef.appendChild(document.createTextNode("NA"));
-    } else if (IMRTUnit == "IsOK") {
-        tdIMRTRef.appendChild(document.createTextNode("功能是否正常"));
-    } else {
-        tdIMRTRef.appendChild(document.createTextNode(IMRTReference));
-    }
-    tr.appendChild(tdIMRTRef);
-
-    var tdIMRTError = document.createElement("TD");
-    if (IMRTUnit == "NA") {
-        tdIMRTError.appendChild(document.createTextNode("NA"));
-    } else if (IMRTUnit == "IsOK") {
-        tdIMRTError.appendChild(document.createTextNode("功能是否正常"));
-    } else {
-        tdIMRTError.appendChild(document.createTextNode(IMRTError));
-    }
-    tr.appendChild(tdIMRTError);
-
-    var tdIMRTValue = document.createElement("TD");
-    tdIMRTValue.className = "fillValue";
-    var tdIMRTState = document.createElement("TD");
-    tdIMRTState.className = "chooseState";
-    tr.appendChild(tdIMRTValue);
-    tr.appendChild(tdIMRTState);
-
-    var tdSRSRef = document.createElement("TD");
-    if (SRSUnit == "NA") {
-        tdSRSRef.appendChild(document.createTextNode("NA"));
-    } else if (SRSUnit == "IsOK") {
-        tdSRSRef.appendChild(document.createTextNode("功能是否正常"));
-    } else {
-        tdSRSRef.appendChild(document.createTextNode(SRSReference));
-    }
-    tr.appendChild(tdSRSRef);
-
-    var tdSRSError = document.createElement("TD");
-    if (SRSUnit == "NA") {
-        tdSRSError.appendChild(document.createTextNode("NA"));
-    } else if (SRSUnit == "IsOK") {
-        tdSRSError.appendChild(document.createTextNode("功能是否正常"));
-    } else {
-        tdSRSError.appendChild(document.createTextNode(SRSError));
-    }
-    tr.appendChild(tdSRSError);
-
-    var tdSRSValue = document.createElement("TD");
-    tdSRSValue.className = "fillValue";
-    var tdSRSState = document.createElement("TD");
-    tdSRSState.className = "chooseState";
-    tr.appendChild(tdSRSValue);
-    tr.appendChild(tdSRSState);
+    var tdValue = document.createElement("TD");
+    tdValue.className = "fillValue";
+    tr.appendChild(tdValue);
 
     var functionState = document.createElement("TD");
     functionState.className = "functionState";
@@ -256,43 +225,15 @@ function CreateNewTable(tid) {
     tr.appendChild(name);
 
     var thUIMRTRef = document.createElement("TH");
-    thUIMRTRef.appendChild(document.createTextNode("无调强参考值"));
+    thUIMRTRef.appendChild(document.createTextNode("说明"));
     tr.appendChild(thUIMRTRef);
     var thUIMRTError = document.createElement("TH");
-    thUIMRTError.appendChild(document.createTextNode("无调强误差值"));
+    thUIMRTError.appendChild(document.createTextNode("参考值"));
     tr.appendChild(thUIMRTError);
-    var thUIMRTRealValue = document.createElement("TH");
-    thUIMRTRealValue.appendChild(document.createTextNode("无调强实际值"));
-    tr.appendChild(thUIMRTRealValue);
-    var thUIMRTState = document.createElement("TH");
-    thUIMRTState.appendChild(document.createTextNode("无调强状态值"));
-    tr.appendChild(thUIMRTState);
 
-    var thIMRTRef = document.createElement("TH");
-    thIMRTRef.appendChild(document.createTextNode("调强参考值"));
-    tr.appendChild(thIMRTRef);
-    var thIMRTError = document.createElement("TH");
-    thIMRTError.appendChild(document.createTextNode("调强误差值"));
-    tr.appendChild(thIMRTError);
-    var thIMRTRealValue = document.createElement("TH");
-    thIMRTRealValue.appendChild(document.createTextNode("调强实际值"));
-    tr.appendChild(thIMRTRealValue);
-    var thIMRTState = document.createElement("TH");
-    thIMRTState.appendChild(document.createTextNode("调强状态值"));
-    tr.appendChild(thIMRTState);
-
-    var thSRSRef = document.createElement("TH");
-    thSRSRef.appendChild(document.createTextNode("SRS/SBRT参考值"));
-    tr.appendChild(thSRSRef);
-    var thSRSError = document.createElement("TH");
-    thSRSError.appendChild(document.createTextNode("SRS/SBRT误差值"));
-    tr.appendChild(thSRSError);
-    var thSRSRealValue = document.createElement("TH");
-    thSRSRealValue.appendChild(document.createTextNode("SRS/SBRT实际值"));
-    tr.appendChild(thSRSRealValue);
-    var thSRSState = document.createElement("TH");
-    thSRSState.appendChild(document.createTextNode("SRS/SbRT状态值"));
-    tr.appendChild(thSRSState);
+    var value = document.createElement("TH");
+    value.appendChild(document.createTextNode("实际值"));
+    tr.appendChild(value);
 
     var functionState = document.createElement("TH");
     functionState.appendChild(document.createTextNode("功能状态"));
@@ -321,12 +262,16 @@ function RemoveAllChild(area) {
 }
 
 //获取数据库设备检查表数据
-function GetCurrentInformation(cycle) {
+function GetCurrentInformation(cycle,model) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "../../pages/Root/GetInspection.ashx?cycle=" + cycle;
+    var url = "../../pages/Root/GetInspection.ashx?cycle=" + cycle + "&model="+model;
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     var json = xmlHttp.responseText;
+    if (json == "]") {
+        obj = [];
+        return;
+    }
     obj = eval("(" + json + ")");
 }
 
@@ -443,28 +388,13 @@ function FillInTable(evt) {
     for (var i = 0; i < allTD.length; ++i) {
         switch (allTD[i].className) {
             case "fillValue":
-                if (allTD[i - 1].innerHTML == "NA" || allTD[i - 1].innerHTML == "功能是否正常")
+                if (allTD[i - 1].innerText == "NA" || allTD[i - 1].innerText == "功能正常")
                     break;
                 var inputText = document.createElement("INPUT");
                 inputText.type = "text";
-                inputText.className = "fillText checkEmpty";
-                inputText.addEventListener("blur", checkContent, false);
+                inputText.className = "fillText checkEmpty form-control";
+                //inputText.addEventListener("blur", checkContent, false);
                 allTD[i].appendChild(inputText);
-                break;
-            case "chooseState":
-                if (allTD[i - 2].innerHTML == "NA")
-                    break;
-                var select = document.createElement("SELECT");
-                select.options[0] = new Option("请选择");
-                select.options[0].value = 0;
-                select.options[1] = new Option("正常");
-                select.options[1].value = 1;
-                select.options[2] = new Option("一般");
-                select.options[2].value = 2;
-                select.options[3] = new Option("不正常");
-                select.options[3].value = 3;
-                
-                allTD[i].appendChild(select);
                 break;
             case "functionState":
                 var radio0 = document.createElement("INPUT");
@@ -509,7 +439,7 @@ function reupdate() {
     var title = document.getElementById("cycleTitle").innerHTML;
     var cycName;
 
-    switch (title) {
+    switch (title.substring(0,3)) {
         case "日检表":
             cycName = "day";
             break;
@@ -520,7 +450,7 @@ function reupdate() {
             cycName = "year";
             break;
     }
-    CreateTable(cycName);
+    CreateTable(cycName,currentModel);
 }
 
 function sureFill(evt) {
@@ -532,7 +462,6 @@ function sureFill(evt) {
     }
     if (!choosed) {
         alert("请选择功能状态");
-        radio[0].fouse();
         return;
     }
     if (!checkTable()) {
@@ -541,57 +470,13 @@ function sureFill(evt) {
             return;
     }
     var obj = [];
-    var content = { "ID": "", "UIMRTRealValue": "", "UIMRTState": "", "IMRTRealValue": "", "IMRTState": "", "SRSRealValue": "", "SRSState": "", "FunctionalStatus": "" };
+    var content = { "ID": "", "RealValue": "", "FunctionalStatus": "" };
     var allTr = document.getElementById("tableArea").getElementsByTagName("TR");
     for (var i = 0; i < allTr.length; ++i) {
         if (allTr[i].firstChild.getElementsByTagName("INPUT")[0] != undefined) {
             var tds = allTr[i].getElementsByTagName("TD");
             content.ID = tds[0].getElementsByTagName("INPUT")[0].value;
-            if (tds[1].innerHTML != "NA" && tds[1].innerHTML != "功能是否正常") {
-                content.UIMRTRealValue = tds[3].firstChild.value;
-            } else if (tds[1].innerHTML == "NA") {
-                content.UIMRTRealValue = "NA";
-            } else if (tds[1].innerHTML == "功能是否正常") {
-                //content.UIMRTRealValue = tds[4].firstChild.options[tds[4].firstChild.selectedIndex].value;
-                content.UIMRTRealValue = ((tds[4].firstChild.options[tds[4].firstChild.selectedIndex].value == 0) ? "":tds[4].firstChild.options[tds[4].firstChild.selectedIndex].innerText);
-            }
-
-            if (tds[1].innerHTML != "NA") {
-                content.UIMRTState = tds[4].firstChild.options[tds[4].firstChild.selectedIndex].value;
-            } else {
-                content.UIMRTState = "NA";
-            }
-
-            if (tds[5].innerHTML != "NA" && tds[5].innerHTML != "功能是否正常") {
-                content.IMRTRealValue = tds[7].firstChild.value;
-            } else if (tds[5].innerHTML == "NA") {
-                content.IMRTRealValue = "NA";
-            } else if (tds[5].innerHTML == "功能是否正常") {
-                content.IMRTRealValue = ((tds[8].firstChild.options[tds[8].firstChild.selectedIndex].value == 0) ? "":tds[8].firstChild.options[tds[8].firstChild.selectedIndex].innerText);
-            }
-
-            if (tds[5].innerHTML != "NA") {
-                content.IMRTState = tds[8].firstChild.options[tds[8].firstChild.selectedIndex].value;
-            } else {
-                content.IMRTState = "NA";
-            }
-
-            if (tds[9].innerHTML != "NA" && tds[9].innerHTML != "功能是否正常") {
-                content.SRSRealValue = tds[11].firstChild.value;
-            } else if (tds[9].innerHTML == "NA") {
-                content.SRSRealValue = "NA";
-            } else if (tds[9].innerHTML == "功能是否正常") {
-                //content.SRSRealValue = tds[12].firstChild.options[tds[12].firstChild.selectedIndex].value;
-                content.SRSRealValue = ( tds[12].firstChild.options[tds[12].firstChild.selectedIndex].value==0)? "":tds[12].firstChild.options[tds[12].firstChild.selectedIndex].innerText;
-            }
-
-            if (tds[9].innerHTML != "NA") {
-                content.SRSState = tds[12].firstChild.options[tds[12].firstChild.selectedIndex].value;
-            } else {
-                content.SRSState = "NA";
-            }
-
-            var radios = tds[13].getElementsByTagName("INPUT");
+            var radios = tds[4].getElementsByTagName("INPUT");
             if (radios[0].checked == true) {
                 content.FunctionalStatus = 1;
             } else if (radios[1].checked == true) {
@@ -599,8 +484,16 @@ function sureFill(evt) {
             } else {
                 content.FunctionalStatus = -1;
             }
+            if (tds[2].innerHTML != "NA" && tds[2].innerHTML != "功能正常") {
+                content.RealValue = tds[3].firstChild.value;
+            } else if (tds[2].innerHTML == "NA") {
+                content.RealValue = "NA";
+            } else if (tds[2].innerHTML == "功能正常") {
+                content.RealValue = (content.FunctionalStatus == -1 ? "" : statusToChinese(content.FunctionalStatus));
+            }
+
             obj.push(content);
-            content = { "ID": "", "UIMRTRealValue": "", "UIMRTState": "", "IMRTRealValue": "", "IMRTState": "", "SRSRealValue": "", "SRSState": "", "FunctionalStatus": "" };
+            content = { "ID": "", "RealValue": "", "FunctionalStatus": "" };
         }
     }
 
@@ -608,6 +501,14 @@ function sureFill(evt) {
     postDate(jsonStr);
     alert("提交成功");
     reupdate();
+}
+
+function statusToChinese(status) {
+    if (status == "0") {
+        return "不正常";
+    } else if(status == "1") {
+        return "正常";
+    }
 }
 
 function checkTable() {
@@ -630,7 +531,7 @@ function checkTable() {
 function checkContent(evt) {
     removeClass("invalid", this);
     var value = this.value;
-    if (value == "NA" || value == "功能是否正常")
+    if (value == "NA" || value == "功能正常")
         return;
     var rep = /(\d{1,3}(\.\d{1,3})?\s*([a-z]{1,5}|%{1}|°{1})) ?(\d{1,3}(\.\d{1,3})?\s*([a-z]{1,5}|%{1}|°{1}))? ?(\d{1,3}(\.\d{1,3})?\s*([a-z]{1,5}|%{1}|°{1}))? *$/g;
     if (!rep.test(value)) {
@@ -671,7 +572,7 @@ function postDate(jsonStr) {
     var title = document.getElementById("cycleTitle").innerHTML;
     var cycName;
 
-    switch (title) {
+    switch (title.substring(0,3)) {
         case "日检表":
             cycName = "day";
             break;
@@ -699,7 +600,7 @@ function postDate(jsonStr) {
     var url = "../../pages/Root/RecordEquipmentCheck.ashx";
     xmlHttp.open("POST", url, true);
     xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    var content = "date=" + jsonStr + "&cycle=" + cycName + "&equipment=" + equipmentID + "&functionState=" + choosed;
+    var content = "date=" + jsonStr + "&cycle=" + cycName + "&equipment=" + equipmentID + "&functionState=" + choosed + "&model="+currentModel;
     xmlHttp.send(content);
 }
 

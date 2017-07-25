@@ -22,13 +22,12 @@ public class GetInspection : IHttpHandler {
     {
         DataLayer sqlOperation = new DataLayer("sqlStr");
         string cycle = context.Request.QueryString["cycle"];
-        string sqlCommand = "SELECT count(ID) FROM Inspection WHERE Cycle=@cycle";
+        string model = context.Request.QueryString["model"];
+        sqlOperation.AddParameterWithValue("@model", model);
         sqlOperation.AddParameterWithValue("@cycle", cycle);
-        int sum = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
-        sqlCommand = "SELECT * FROM Inspection WHERE Cycle=@cycle ORDER BY MainItem";
+        string sqlCommand = "SELECT * FROM Inspections WHERE Cycle=@cycle AND TemplateID=@model ORDER BY MainItem";
         StringBuilder backString = new StringBuilder("[");
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
-        int count = 1;
         while (reader.Read())
         {
             backString.Append("{\"MainItem\":\"");
@@ -37,29 +36,16 @@ public class GetInspection : IHttpHandler {
             backString.Append(reader["ID"].ToString());
             backString.Append("\",\"ChildItem\":\"");
             backString.Append(reader["ChildItem"].ToString());
-            backString.Append("\",\"UIMRTReference\":\"");
-            backString.Append(reader["UIMRTReference"].ToString());
-            backString.Append("\",\"UIMRTUnit\":\"");
-            backString.Append(reader["UIMRTUnit"].ToString());
-            backString.Append("\",\"UIMRTError\":\"");
-            backString.Append(reader["UIMRTError"].ToString());
-            backString.Append("\",\"IMRTReference\":\"");
-            backString.Append(reader["IMRTReference"].ToString());
-            backString.Append("\",\"IMRTUnit\":\"");
-            backString.Append(reader["IMRTUnit"].ToString());
-            backString.Append("\",\"IMRTError\":\"");
-            backString.Append(reader["IMRTError"].ToString());
-            backString.Append("\",\"SRSReference\":\"");
-            backString.Append(reader["SRSReference"].ToString());
-            backString.Append("\",\"SRSUnit\":\"");
-            backString.Append(reader["SRSUnit"].ToString());
-            backString.Append("\",\"SRSError\":\"");
-            backString.Append(reader["SRSError"].ToString());
-            backString.Append("\"}");
-            if (count < sum)
-                backString.Append(",");
-            ++count;
+            backString.Append("\",\"Explain\":\"");
+            backString.Append(reader["Explain"].ToString().Replace("\r\n",""));
+            backString.Append("\",\"Reference\":\"");
+            backString.Append(reader["Reference"].ToString());
+            backString.Append("\",\"files\":\"");
+            backString.Append(reader["files"].ToString());
+            backString.Append("\"},");
+
         }
+        backString.Remove(backString.Length - 1, 1);
         backString.Append("]");
         sqlOperation.Close();
         sqlOperation.Dispose();

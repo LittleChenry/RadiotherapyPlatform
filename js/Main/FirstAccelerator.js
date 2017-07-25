@@ -50,7 +50,6 @@ function Init(evt) {
     var total = gettotalnumber(treatmentID);
     var totalnumber = total.split(",")[0];
     var finshedtimes = total.split(",")[1];
-
     if (totalnumber != "") {
         document.getElementById("totalnumber").value = totalnumber;
         if (finshedtimes != "") {
@@ -63,6 +62,22 @@ function Init(evt) {
         document.getElementById("totalnumber").value = 0;
         document.getElementById("finishedtimes").innerHTML ="0";
     }
+   var log=getLog(treatmentID);
+   if (log == "") {
+       document.getElementById("logholder").style.display = "none";
+   } else {
+       var loggroup = log.split(";");
+       var content = '';
+       for (var k = 1; k < loggroup.length; k++) {
+           var loggroupk = loggroup[k].split(",");
+           content = content + '<tr style="text-align:center">';
+           content = content + '<td>' + loggroupk[2] + '</td><td>' + loggroupk[1] + '</td><td>' + loggroupk[0] + '</td>';
+           content = content + '</tr>';
+          
+       }
+       $("#log").append(content);
+   }
+
     if (contains(groupprogress, "14")) {
         var info = getfirstaccelerateInfomation(treatmentID);
         document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
@@ -108,6 +123,14 @@ function Init(evt) {
                 }
             });  
     }
+}
+function getLog(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getalllog.ashx?treatmentID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    return json;
 }
 function gettotalnumber(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
@@ -257,7 +280,8 @@ function save() {
                 treatid: treatmentid,
                 isfinished: finish,
                 totalnumber: totalnumber,
-                user: userID
+                user: userID,
+                username: userName
 
             },
             dateType: "json",

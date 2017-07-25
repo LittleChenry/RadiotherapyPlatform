@@ -22,7 +22,7 @@ public class GetMainItems : IHttpHandler {
     {
         StringBuilder backString = new StringBuilder("[");
         DataLayer sqlOperation = new DataLayer("sqlStr");
-        string sqlCommand = "SELECT count(DISTINCT MainItem) FROM inspection";
+        string sqlCommand = "SELECT count(DISTINCT MainItem) FROM inspections";
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
         if (count == 0)
         {
