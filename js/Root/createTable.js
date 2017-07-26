@@ -6,21 +6,21 @@
 (function ($) {
 	$.fn.createTable = function(jsonObj, options){
 		var defaults = {
-			rows: 10,
-			headName: new Array(),
-			first: "firstPage",
+			rows: 10,//一页行数
+			headName: new Array(),//表头名
+			first: "firstPage",//按钮id
 			pre: "prePage",
 			next: "nextPage",
 			last: "lastPage",
-			createButton: true,
-			buttonClass:"btn btn-primary btn-sm disabled",
-			ignoreNull: false,
-			needDate: false,
-			createDate: "",
-			lessLength: 0,
-			pages: 1,
-			needKey: false,
-			maxcols: 0,
+			createButton: true,//是否创建翻页按钮
+			buttonClass:"btn btn-primary btn-sm disabled",//按钮样式
+			ignoreNull: false,//是否忽略null值
+			needDate: false,//是否需要日期
+			createDate: "",//创建日期月份格式xxxx-xx
+			lessLength: 0,//每行最小列数，0不开启该功能
+			pages: 1,//创建第几页
+			needKey: false,//是否需要在第一列添加hidden记录id
+			maxcols: 0,//一行最大几列，0不开启
 			link: false,
 			linkcols: 0,
             linkdata: ""
@@ -261,6 +261,9 @@
 			var sumpages = init($(this));//计算页数
 			if (sumpages < page) {
 			    page = sumpages;
+			}
+			if (page < 1) {
+			    page = 1;
 			}
 			if(isCreateButton){
 				createButton($(this));
