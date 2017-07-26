@@ -1830,7 +1830,7 @@ function getTaskWarning(){
         async: false,
         dateType: "text",
         success: function (data) {
-            alert(data);
+            //alert(data);
             taskwarning = $.parseJSON(data);
         },
         error: function () {
@@ -1849,14 +1849,14 @@ function TaskWarning(patient){
     if (patient.PatientInfo != "") {
         for (var i = 0; i < patient.PatientInfo.length; i++) {
             var progress = patient.PatientInfo[i].Progress.split(",");
-            for (var i = 0; i < progress.length; i++) {
-                progress[i] = parseInt(progress[i]);
+            for (var j = 0; j < progress.length; j++) {
+                progress[j] = parseInt(progress[j]);
             }
             var progressInt = BubbleSort(progress)
             var currentProgress = progressInt[progressInt.length - 1];
-            for (var i = 0; i < TaskWarning.Item.length; i++) {
-                if (currentProgress == TaskWarning.Item[i].Progress) {
-                    SingleTask(TaskWarning.Item[i].light, TaskWarning.Item[i].serious, patient.PatientInfo[i], currentProgress);
+            for (var k = 0; k < TaskWarning.Item.length; k++) {
+                if (currentProgress == TaskWarning.Item[k].Progress) {
+                    SingleTask(TaskWarning.Item[k].light, TaskWarning.Item[k].serious, patient.PatientInfo[i], currentProgress);
                 }
             }
         }
@@ -1888,34 +1888,22 @@ function SingleTask(light, serious, singlepatient, currentProgress){
             completedTime = new Date(singlepatient.designSubmitTime);
             break;
         case 10:
-            completedTime = new Date(singlepatient.ConfirmTime);
+            completedTime = new Date(singlepatient.confirmTime);
             break;
     }
-    var flag = TimeCompare(currentTime, completedTime, light, serious);
-    if (flag == 1) {
-        singletask = '<li><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
-            + singlepatient.Name + '，' + singlepatient.treat + '，' + ProgressNumToName(currentProgress)
-            + '</a></li>';
-    }else{
-        if (flag == 2) {
+    var TimeDifference = (currentTime.getTime() - completedTime.getTime())/3600000;
+    if (TimeDifference > light) {
+        if (TimeDifference < serious) {
+            singletask = '<li><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
+                + singlepatient.Name + '，' + singlepatient.treat + '，' + ProgressNumToName(currentProgress + 1) + '，已搁置' + TimeDifference.toFixed(1) + '小时'
+                + '</a></li>';
+        }else{
             singletask = '<li><a href="javascript:;"><i class="fa fa-warning text-red"></i>'
-                + singlepatient.Name + '，' + singlepatient.treat + '，' + ProgressNumToName(currentProgress)
+                + singlepatient.Name + '，' + singlepatient.treat + '，' + ProgressNumToName(currentProgress + 1) + '，已搁置' + TimeDifference.toFixed(1) + '小时'
                 + '</a></li>';
         }
     }
     WarningTaskContent.append(singletask);
-}
-
-function TimeCompare(currentTime, completedTime, light, serious){
-    var TimeDifference = (currentTime.getTime() - completedTime.getTime())/3600000;
-    if (TimeDifference > light) {
-        if (TimeDifference < serious) {
-            return 1;
-        }else{
-            return 2;
-        }
-    }
-    return 0;
 }
 
 function chooseEquipment() {
