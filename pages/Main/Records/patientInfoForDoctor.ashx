@@ -89,6 +89,10 @@ public class patientInfoForDoctor : IHttpHandler {
            MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
            while (reader.Read())
            {
+               string progress = reader["Progress"].ToString();
+               string[] strArray = progress.Split(',');
+               string LoadCTTime = "";
+               string designSubmitTime = "";
                string result = "";
                if (reader["DiagnosisRecord_ID"] is DBNull)
                {
@@ -104,10 +108,21 @@ public class patientInfoForDoctor : IHttpHandler {
                    string Description = sqlOperation1.ExecuteScalar(sqlCommand4);
                    result = TumorName + Description;
                }
- 
+               if (Array.LastIndexOf(strArray, "6") > 0 && Array.LastIndexOf(strArray, "7") < 0)
+               {
+                   string sqlCommand6 = "select ct.OperateTime  from location,treatment,ct where location.ID=treatment.Location_ID and treatment.ID =@treatID and location.CT_ID=ct.ID";
+                   sqlOperation1.AddParameterWithValue("@treatID", reader["treatid"].ToString());
+                   LoadCTTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+               }
+               if (Array.LastIndexOf(strArray, "9") > 0 && Array.LastIndexOf(strArray, "10") < 0)
+               {
+                   string sqlCommand6 = "select design.SubmitTime  from design,treatment where design.ID=treatment.Design_ID and treatment.ID =@treatID ";
+                   sqlOperation1.AddParameterWithValue("@treatID", reader["treatid"].ToString());
+                   designSubmitTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+               }
                backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result +
                     "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + groupname
-                    + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\"}");
+                    + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\"}");
 
                if (i < Count)
                {
@@ -126,7 +141,10 @@ public class patientInfoForDoctor : IHttpHandler {
        int temp=0;
        while (reader3.Read())
        {
-          
+           string progress = reader3["Progress"].ToString();
+           string[] strArray = progress.Split(',');
+           string LoadCTTime = "";
+           string designSubmitTime = "";
            string result = "";
            if (reader3["DiagnosisRecord_ID"] is DBNull)
            {
@@ -142,10 +160,21 @@ public class patientInfoForDoctor : IHttpHandler {
                string Description = sqlOperation1.ExecuteScalar(sqlCommand4);
                result = TumorName + Description;
            }
-
+           if (Array.LastIndexOf(strArray, "6") > 0 && Array.LastIndexOf(strArray, "7") < 0)
+           {
+               string sqlCommand6 = "select ct.OperateTime  from location,treatment,ct where location.ID=treatment.Location_ID and treatment.ID =@treatID and location.CT_ID=ct.ID";
+               sqlOperation1.AddParameterWithValue("@treatID", reader3["treatid"].ToString());
+               LoadCTTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+           }
+           if (Array.LastIndexOf(strArray, "9") > 0 && Array.LastIndexOf(strArray, "10") < 0)
+           {
+               string sqlCommand6 = "select design.SubmitTime  from design,treatment where design.ID=treatment.Design_ID and treatment.ID =@treatID ";
+               sqlOperation1.AddParameterWithValue("@treatID", reader3["treatid"].ToString());
+               designSubmitTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+           }
            backText.Append("{\"Name\":\"" + reader3["Name"].ToString() + "\",\"diagnosisresult\":\"" + result +
                 "\",\"Radiotherapy_ID\":\"" + reader3["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader3["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + ""
-                + "\",\"Progress\":\"" + reader3["Progress"].ToString() + "\",\"doctor\":\"" + reader3["doctor"].ToString() + "\",\"treatID\":\"" + reader3["treatid"].ToString() + "\"}");
+                + "\",\"Progress\":\"" + reader3["Progress"].ToString() + "\",\"doctor\":\"" + reader3["doctor"].ToString() + "\",\"treatID\":\"" + reader3["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\"}");
 
            if (temp < count2-1)
            {
