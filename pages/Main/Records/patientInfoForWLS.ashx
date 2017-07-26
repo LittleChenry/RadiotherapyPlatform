@@ -48,7 +48,7 @@ public class patientInfoForWLS : IHttpHandler
         }
 
         int i = 1;
-        string sqlCommand2 = "select treatment.ID as treatid,patient.*,user.Name as doctor,Progress,treatment.Treatmentdescribe,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and Progress like '%10%' and Progress not in(select Progress from treatment where Progress like '%11%') order by patient.ID desc";
+        string sqlCommand2 = "select treatment.ID as treatid,patient.*,user.Name as doctor,Progress,treatment.Treatmentdescribe,DiagnosisRecord_ID,ConfirmTime from design,treatment,patient,user where design.ID=treatment.Design_ID and patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and Progress like '%10%' and Progress not in(select Progress from treatment where Progress like '%11%') order by patient.ID desc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
 
@@ -71,7 +71,7 @@ public class patientInfoForWLS : IHttpHandler
             }
             backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"Progress\":\"" + reader["Progress"].ToString() +
                     "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString()
-                    + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\"}");
+                    + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"confirmTime\":\"" + reader["ConfirmTime"].ToString() + "\"}");
 
             if (i < count)
             {

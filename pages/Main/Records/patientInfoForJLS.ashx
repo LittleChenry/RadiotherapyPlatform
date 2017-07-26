@@ -39,6 +39,7 @@ public class patientInfoForJLS : IHttpHandler {
     }
     private string getfixrecordinfo(HttpContext context)
     {
+        String userid = context.Request.QueryString["userID"];
         string sqlCommand = "SELECT count(*) from treatment where (Progress like '%5%' and Progress not in(select Progress from treatment where Progress like '%6%'))or ((Progress like '%8%' or Progress like '%7%') and Progress not in (select Progress from treatment where Progress like '%9%'))";       
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
         if (count == 0)
@@ -53,6 +54,38 @@ public class patientInfoForJLS : IHttpHandler {
 
         while (reader.Read())
         {
+            string progress = reader["Progress"].ToString();
+            string[] strArray = progress.Split(',');
+            string locationTime = "";
+            string designApplyTime = "";
+            string receiveTime = "";
+            if (Array.LastIndexOf(strArray, "8") > 0)
+            {
+                string sqlCommand5 = "select Receive_User_ID from design,treatment where design.ID=treatment.Design_ID and treatment.ID =@treatID";
+                sqlOperation1.AddParameterWithValue("@treatID", reader["treatid"].ToString());
+                string receiveID = sqlOperation1.ExecuteScalar(sqlCommand5);
+                if (receiveID != userid)
+                {
+                    count--;
+                    continue;
+                }
+                string sqlCommand8 = "select ReceiveTime from design,treatment where design.ID=treatment.Design_ID and treatment.ID =@treatID";
+                receiveTime = sqlOperation1.ExecuteScalar(sqlCommand8);
+            }
+            if (Array.LastIndexOf(strArray, "5") > 0 && Array.LastIndexOf(strArray, "6") < 0)
+            {
+                string sqlCommand6 = "select OperateTime from location,treatment where location.ID=treatment.Location_ID and treatment.ID =@treatID";
+                sqlOperation1.AddParameterWithValue("@treatID", reader["treatid"].ToString());
+                locationTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+
+            }
+            if (Array.LastIndexOf(strArray, "7") > 0 && Array.LastIndexOf(strArray, "8") < 0)
+            {
+                string sqlCommand7 = "select ApplicationTime from design,treatment where design.ID=treatment.Design_ID and treatment.ID =@treatID";
+                sqlOperation1.AddParameterWithValue("@treatID", reader["treatid"].ToString());
+                designApplyTime = sqlOperation1.ExecuteScalar(sqlCommand7);
+
+            }
             string result="";
             if (reader["DiagnosisRecord_ID"] is DBNull)
             {
@@ -69,8 +102,8 @@ public class patientInfoForJLS : IHttpHandler {
                 result = TumorName + Description;
             }          
             backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"Progress\":\"" + reader["Progress"].ToString() +
-                    "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() 
-                    + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\"}");
+                    "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString()
+                    + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"locationTime\":\"" + locationTime + "\",\"receiveTime\":\"" + receiveTime + "\",\"designApplyTime\":\"" + designApplyTime + "\"}");
 
             if (i < count)
             {
