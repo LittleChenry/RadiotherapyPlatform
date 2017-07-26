@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RootMain.aspx.cs" Inherits="pages_Root_RootMain" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="EquipmentErrorrInformation.aspx.cs" Inherits="pages_Root_EquipmentErrorrInformation" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
-    <meta charset="utf-8" />
+<head runat="server">
+<meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!--Tell the brower to be responsive to screen width -->
     <meta content="Width=device-width, initial-scale=1, maxmum-scale=1, user-scalable=no" name="viewport" />
@@ -21,7 +21,9 @@
 
     <!-- Main Css -->
     <link rel="stylesheet" href="../../css/Root/rootMain.css" />
-    <title>放疗质控系统</title>
+    <link rel="stylesheet" href="../../css/Root/equipmentMain.css" />
+
+    <title>设备维修编码管理</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -296,7 +298,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul id="menu" class="sidebar-menu">
         <li class="header">管理员导航</li>
-        <li class="active">
+        <li>
           <a href="RootMain.aspx">
             <i class="fa fa-coffee fa-fw"></i> <span>主页</span>
             <span class="pull-right-container">
@@ -357,7 +359,7 @@
             <li><a href="Root-EquipmentInspectionResult.aspx"><i class="fa fa-circle-o"></i> 设备检查结果</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview active">
           <a href="#">
             <i class="fa fa-sitemap fa-fw"></i>
             <span>设备维修</span>
@@ -366,7 +368,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="EquipmentErrorrInformation.aspx"><i class="fa fa-circle-o"></i> 维修描述管理</a></li>
+            <li class="active"><a href="EquipmentErrorrInformation.aspx"><i class="fa fa-circle-o"></i> 维修描述管理</a></li>
             <li><a href="EquipmentTypeManage.aspx"><i class="fa fa-circle-o"></i>设备维修</a></li>
             <li><a href="Root-EquipmentInspectionManage.aspx"><i class="fa fa-circle-o"></i> 设备维修记录</a></li>
           </ul>
@@ -417,134 +419,116 @@
       <section class="content">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="page-header">欢迎使用本系统</h1>
+                <h1 class="page-header">维修描述管理</h1>
             </div>
             <!-- /.col-md-12 -->
         </div>
         <!-- /.row -->
         <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <span class="module-title">消息模块</span>
-                    </div>
-                    <div class="panel-body">
-                        <p><a href="#">消息标题1</a></p>
-                        <p><a href="#">消息标题2</a></p>
-                        <p><a href="#">消息标题3</a></p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
+            <div class="col-md-12">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-4">
+                     <div class="form-group input-group">
+                        <input type="text" id="searchInput" class="form-control" value="" placeholder="请输入编码或者名称"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" style="height:34px" type="button" id="search">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
                     </div>
                 </div>
             </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <span class="module-title">账号申请</span>
+
+            <div class="col-md-12">
+                <div class="panel panel-default mintablewidth">
+                    <div class="panel-heading mintablewidth">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        <span class="panel-title">维修信息维护</span>
+                         <input type="button" class="btn btn-primary btn-sm buttonToLeft floatRight" id="newInformation" data-toggle="modal" data-target="#myModal" value="新增" style="padding: 2.5px 10px;" />
+                        <input type="button" class="btn btn-primary btn-sm floatRight" id="changeInformation" value="编辑" style="padding: 2.5px 10px;" />
+                        <input type="button" class="btn btn-primary btn-sm floatRight" id="closeEdit" value="结束编辑" style="padding: 2.5px 10px;display:none" />
+                        <input type="button" class="tohidden" id="EditInformation" data-toggle="modal" data-target="#editModal" />
                     </div>
-                    <div class="panel-body">
-                        <p>姓名1</p>
-                        <p>姓名2</p>
-                        <p>姓名3</p>
+                    <div id="tableArea" class="panel-body mintablewidth">
+                        <table id="informationTable" class="table table-striped table-hover" style="width:100%">
+
+                        </table>
                     </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
+                                        <h4 class="modal-title" id="myModalLabel">新增</h4>
+                        
+                                    </div>
+                                    <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
+                                        <label id="error" class="tohidden"></label>
+                                        <table class="mytable table-bordered table-center">
+                                            <tbody id="addrow">
+                                                <tr>
+                                                    <th>名称</th>
+                                                    <td>
+                                                        <input type="text" class="form-control" style="margin-right:0.8em" value="" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>编码</th>
+                                                    <td>
+                                                        <input type="text" class="form-control" style="margin-right:0.8em" value="" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>描述</th>
+                                                    <td>
+                                                        <input type="text" class="form-control" style="margin-right:0.8em" value="" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button id="cannelButton" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                                        <input id="sureAdd" type="submit" class="btn btn-primary" value="确认" />
+                                    </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                     </div>
+
+         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
+                        <h4 class="modal-title">修改</h4>                     
                     </div>
+                        <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
+                            <input id="editID" type="hidden" value="" />
+                            <table class="mytable table-bordered table-center">
+                                <tbody id="editArea">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cannelEdit" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                            <button id="deleteInformation" type="button" class="btn btn-danger">删除</button>
+                            <input id="sureEdit" type="submit" class="btn btn-primary" value="确认" />
+                        </div>
                 </div>
+                                    <!-- /.modal-content -->
             </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <span class="module-title">设备状态</span>
-                    </div>
-                    <div class="panel-body">
-                        <p>设备1状态</p>
-                        <p>设备2状态</p>
-                        <p>设备3状态</p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
+                                <!-- /.modal-dialog -->
         </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <span class="module-title">科室工作</span>
-                    </div>
-                    <div class="panel-body">
-                        <p>登记处</p>
-                        <p>医师</p>
-                        <p>模拟技师</p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
                 </div>
             </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <span class="module-title">违规操作</span>
-                    </div>
-                    <div class="panel-body">
-                        <p>违规操作1</p>
-                        <p>违规操作2</p>
-                        <p>违规操作3</p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <span class="module-title">操作指南</span>
-                    </div>
-                    <div class="panel-body">
-                        <p><a href="#">操作1</a></p>
-                        <p><a href="#">操作2</a></p>
-                        <p><a href="#">操作3</a></p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
+            <!-- body col-md-12-->
         </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        <span class="module-title">友情链接</span>
-                    </div>
-                    <div class="panel-body">
-                        <p><a href="#">链接1</a></p>
-                        <p><a href="#">链接2</a></p>
-                        <p><a href="#">链接3</a></p>
-                    </div>
-                    <div class="panel-footer">
-                        <a href="#" style="text-decoration:none;">更多</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-        </div>
-        <!-- /.row -->
-          </section>
-    </div>
+      </section>
+  </div>
 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -564,6 +548,8 @@
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/jquery.min.js"></script>
+<!-- tablecreate -->
+<script src="../../js/Root/createTable.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -574,6 +560,6 @@
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- Main js-->
 <script src="../../js/Root/RootMainJS.js"></script>
-
+<script src="../../js/Root/errorInformationJS.js"></script>
 </body>
 </html>

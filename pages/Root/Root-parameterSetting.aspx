@@ -374,7 +374,7 @@
             </span>
           </a>
         </li>
-        <li>
+        <li class="active">
             <a href="Root-parameterSetting.aspx">
                 <i class="fa fa-group"></i> <span>基本信息管理</span>
                 <span class="pull-right-container">
@@ -411,7 +411,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-3">&nbsp;</div>
+                <div class="col-md-4">&nbsp;</div>
                 <div class="col-md-4">
                     <div class="form-group input-group">
                         <select id="tableSelect" class="form-control">
