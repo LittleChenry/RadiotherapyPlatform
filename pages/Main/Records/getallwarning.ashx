@@ -27,13 +27,13 @@ public class getallwarning : IHttpHandler {
         string countItem = "SELECT count(*) FROM warning";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
 
-        string sqlCommand = "SELECT WarningItem,WarningType,WarningTime FROM warning";
+        string sqlCommand = "SELECT WarningItem,WarningLightTime,WarningSeriousTime,Progress FROM warning";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;
         while (reader.Read())
         {
-            backText.Append("{\"WarningItem\":\"" + reader["WarningItem"].ToString() + "\",\"WarningType\":\"" + reader["WarningType"].ToString() + "\",\"WarningTime\":\"" + reader["WarningTime"].ToString() + "\"}");
+            backText.Append("{\"WarningItem\":\"" + reader["WarningItem"].ToString() + "\",\"light\":\"" + reader["WarningLightTime"].ToString() + "\",\"serious\":\"" + reader["WarningSeriousTime"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\"}");
             if (i < count)
             {
 
