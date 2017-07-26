@@ -30,7 +30,7 @@ function Init(evt) {
     document.getElementById("diaguser").innerHTML = patient.RegisterDoctor;
     var select1 = document.getElementById("DensityConversion");
     createDnsityItem(select1);
-    var info = getimportCTInfomation(treatmentID);
+    var info = getimportCTInfomation(treatmentID);    
     $("#current-tab").text(patient.Treatmentdescribe + "CT图像信息填写");
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '6')) {
@@ -62,6 +62,10 @@ function Init(evt) {
             }
         }
     } else {
+        var location = getLocation(treatmentID);
+        document.getElementById("Thickness").value = location.Thickness;
+        document.getElementById("ReferenceScale").value = location.ReferenceScale;
+        document.getElementById("Number").value = location.Number;
         var date = new Date();
         document.getElementById("treatmentID").value = treatmentID;
         document.getElementById("userID").value = userID;
@@ -114,6 +118,15 @@ function getimportCTInfomation(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 
+}
+function getLocation(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "GetLocation.ashx?treatmentID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var obj1 = eval("(" + json + ")");
+    return obj1.info[0];
 }
 //获取所有待等待体位固定申请疗程号以及所属患者ID与其他信息
 function getfixPatientInfo(treatmentID) {
