@@ -129,6 +129,9 @@ function RolesToPatients() {
         var parameters = new Array();
         patient = getPatient(session.userID, session.role, parameters);
         Paging(patient, session.role, session.userID);
+        if (session.role == "医师" || session.role == "剂量师" || session.role == "物理师") {
+            TaskWarning(patient);
+        }
     }
     return patient;
 }
@@ -216,27 +219,6 @@ function Paging(patient, role, userID) {
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
-                    if (i < patient.PatientInfo.length - 1) {
-                        if (patient.PatientInfo[i].treatID == patient.PatientInfo[i + 1].treatID) {
-                            TreatmentID = patient.PatientInfo[i].treatID;
-                            Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-                            Name = patient.PatientInfo[i].Name;
-                            treat = patient.PatientInfo[i].treat;
-                            diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
-                            Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
-                            Task = "复位验证";
-                            date = patient.PatientInfo[i].date;
-                            doctor = patient.PatientInfo[i].doctor;
-                            Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
-                            begin = toTime(patient.PatientInfo[i].begin);
-                            end = toTime(patient.PatientInfo[i + 1].end);
-                            var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Task + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td>"
-                                + "<td>" + doctor + "</td></tr>";
-                            tbody += tr;
-                            i++;
-                            continue;
-                        }
-                    }
                     TreatmentID = patient.PatientInfo[i].treatID;
                     Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
                     Name = patient.PatientInfo[i].Name;
@@ -343,14 +325,14 @@ function Paging(patient, role, userID) {
                 var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>预约项目</th><th>预约时间</th><th>是否完成</th><th>疗程</th><th>诊断结果</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "治疗技师":
                 var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>预约时间</th><th>是否完成</th><th>完成次数</th><th>累次剂量</th>'
                     + '<th>总次数</th><th>疗程</th><th>诊断结果</th><th>主治医生</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="9" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="10" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "科主任":
@@ -1136,6 +1118,66 @@ function ProgressToString(pro) {
     return Progress.substring(0, Progress.length - 1);
 }
 
+function ProgressNumToName(progressNum){
+    var Progress;
+    switch (progressNum) {
+        case 0:
+            Progress = "登记信息";
+            break;
+        case 1:
+            Progress = "病情诊断";
+            break;
+        case 2:
+            Progress = "体位固定申请";
+            break;
+        case 3:
+            Progress = "模拟定位申请";
+            break;
+        case 4:
+            Progress = "体位固定";
+            break;
+        case 5:
+            Progress = "模拟定位";
+            break;
+        case 6:
+            Progress = "CT图像导入";
+            break;
+        case 7:
+            Progress = "计划申请";
+            break;
+        case 8:
+            Progress = "计划领取";
+            break;
+        case 9:
+            Progress = "计划提交";
+            break;
+        case 10:
+            Progress = "计划确认";
+            break;
+        case 11:
+            Progress = "计划复核";
+            break;
+        case 12:
+            Progress = "复位申请";
+            break;
+        case 13:
+            Progress = "复位验证";
+            break;
+        case 14:
+            Progress = "加速器治疗";
+            break;
+        case 15:
+            Progress = "加速器治疗";
+            break;
+        case 16:
+            Progress = "总结随访";
+            break;
+        default:
+            Progress = "无";
+    }
+    return Progress;
+}
+
 function saveTreatment() {
     var diagnose = "";
     var fixed = "";
@@ -1780,13 +1822,109 @@ function getPatient(userID, role, parameters) {
     return patient;
 }
 
+function getTaskWarning(){
+    var taskwarning;
+    $.ajax({
+        type: "GET",
+        url: "../../pages/Main/Records/getallwarning.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            alert(data);
+            taskwarning = $.parseJSON(data);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+    return taskwarning;
+}
+
+function TaskWarning(patient){
+    var TaskWarning = getTaskWarning();
+    var WarningTaskContent = $("#TaskWarning-content");
+    var WarningTask = $("#WarningTask");
+    var WarningNum = $("#WarningNum");
+    WarningTaskContent.html("");
+    if (patient.PatientInfo != "") {
+        for (var i = 0; i < patient.PatientInfo.length; i++) {
+            var progress = patient.PatientInfo[i].Progress.split(",");
+            for (var i = 0; i < progress.length; i++) {
+                progress[i] = parseInt(progress[i]);
+            }
+            var progressInt = BubbleSort(progress)
+            var currentProgress = progressInt[progressInt.length - 1];
+            for (var i = 0; i < TaskWarning.Item.length; i++) {
+                if (currentProgress == TaskWarning.Item[i].Progress) {
+                    SingleTask(TaskWarning.Item[i].light, TaskWarning.Item[i].serious, patient.PatientInfo[i], currentProgress);
+                }
+            }
+        }
+    }
+    var TaskWarningNum = WarningTaskContent.find("li").length;
+    WarningTask.html("你有"+ TaskWarningNum +"条工作任务预警");
+    WarningNum.html(TaskWarningNum);
+}
+
+function SingleTask(light, serious, singlepatient, currentProgress){
+    var WarningTaskContent = $("#TaskWarning-content");
+    var singletask;
+    var currentTime = new Date();
+    var completedTime;
+    switch(currentProgress){
+        case 5:
+            completedTime = new Date(singlepatient.locationTime);
+            break;
+        case 6:
+            completedTime = new Date(singlepatient.LoadCTTime);
+            break;
+        case 7:
+            completedTime = new Date(singlepatient.designApplyTime);
+            break;
+        case 8:
+            completedTime = new Date(singlepatient.receiveTime);
+            break;
+        case 9:
+            completedTime = new Date(singlepatient.designSubmitTime);
+            break;
+        case 10:
+            completedTime = new Date(singlepatient.ConfirmTime);
+            break;
+    }
+    var flag = TimeCompare(currentTime, completedTime, light, serious);
+    if (flag == 1) {
+        singletask = '<li><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
+            + singlepatient.Name + '，' + singlepatient.treat + '，' + ProgressNumToName(currentProgress)
+            + '</a></li>';
+    }else{
+        if (flag == 2) {
+            singletask = '<li><a href="javascript:;"><i class="fa fa-warning text-red"></i>'
+                + singlepatient.Name + '，' + singlepatient.treat + '，' + ProgressNumToName(currentProgress)
+                + '</a></li>';
+        }
+    }
+    WarningTaskContent.append(singletask);
+}
+
+function TimeCompare(currentTime, completedTime, light, serious){
+    var TimeDifference = (currentTime.getTime() - completedTime.getTime())/3600000;
+    if (TimeDifference > light) {
+        if (TimeDifference < serious) {
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+    return 0;
+}
+
 function chooseEquipment() {
     $("#chooseMachine").modal({ backdrop: 'static' });
     var session = getSession();
     $("#equipmentType").html("");
     switch (session.role) {
         case "模拟技师":
-            var options = '<option value="">----选择项目----</option><option value="体位固定">体位固定</option><option value="模拟定位">CT模拟</option>';
+            var options = '<option value="">----选择项目----</option><option value="体位固定">体位固定</option><option value="模拟定位">CT模拟</option><option value="复位模拟">复位验证</option>';
             $("#equipmentType").append(options);
             break;
         case "治疗技师":

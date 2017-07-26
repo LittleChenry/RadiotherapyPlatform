@@ -130,44 +130,16 @@
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">10</span>
+                            <span id="WarningNum" class="label label-warning">0</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">你有10条工作任务预警</li>
+                            <li id="WarningTask" class="header">你有0条工作任务预警</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
+                                <ul id="TaskWarning-content" class="menu">
                                     <li>
                                         <a href="javascript:;">
-                                            <i class="fa fa-warning text-red"></i> 5 new members joined today
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                                            page and may cause design problems
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-warning text-red"></i> 5 new members joined today
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                                            page and may cause design problems
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-warning text-red"></i> 5 new members joined today
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                                            page and may cause design problems
+                                            <i class="fa fa-warning text-red"></i>无
                                         </a>
                                     </li>
                                 </ul>
@@ -253,15 +225,15 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                            <span id="Span1" class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "未登录" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
+                            <span id="out-name" class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "未登录" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
                                 <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                 <p>
-                                    <span id="Span2"><%=((UserInformation)Session["loginUser"]) == null ?  "未登录" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
-                                    <small id="Small1"><%=((UserInformation)Session["loginUser"]) == null ?  "无" : ((UserInformation)Session["loginUser"]).GetUserRole() %></small>
+                                    <span id="in-name"><%=((UserInformation)Session["loginUser"]) == null ?  "未登录" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
+                                    <small id="role"><%=((UserInformation)Session["loginUser"]) == null ?  "无" : ((UserInformation)Session["loginUser"]).GetUserRole() %></small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
@@ -270,15 +242,15 @@
                                     <div class="text-center">
                                         <div>
                                             <span>操作成员:</span>
-                                            <a id="A1" href="javascript:;"><span id="Span3"></span></a>
+                                            <a id="changeOperator" href="javascript:;"><span id="operator"></span></a>
                                         </div>
                                         <div>
                                             <span>操作设备:</span>
-                                            <a id="A2" href="javascript:;"><span id="Span4"></span></a>
+                                            <a id="changeEquipment" href="javascript:;"><span id="chosenEquipment"></span></a>
                                         </div>
                                         <div>
                                             <span>时间范围:</span>
-                                            <a id="A3" href="javascript:;"><span id="Span5"></span></a>
+                                            <a id="changeDate" href="javascript:;"><span id="dateRange"></span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -290,7 +262,7 @@
                                     <a href="../Login/changeRole.aspx" class="btn btn-default btn-flat">切换角色</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a id="A4" href="javascript:;" class="btn btn-default btn-flat">注销</a>
+                                    <a id="signOut" href="javascript:;" class="btn btn-default btn-flat">注销</a>
                                 </div>
                             </li>
                         </ul>
