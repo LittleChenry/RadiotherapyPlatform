@@ -53,7 +53,7 @@
                     <li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope-o"></i>
-                            <span id="NoticeNum" class="label label-success">4</span>
+                            <span id="NoticeNum" class="label label-success">0</span>
                         </a>
                         <ul class="dropdown-menu">
                         <li class="header">通知公告</li>
@@ -63,9 +63,9 @@
                                 <li>
                                     <a href="#">
                                         <h4>
-                                            <i class="fa fa-hand-pointer-o"></i>消息标题
+                                            <i class="fa fa-hand-pointer-o"></i>无
                                         </h4>
-                                        <p class="pull-right"><i class="fa fa-user"></i> admin &nbsp;<i class="fa fa-clock-o"></i> 5 mins</p>
+                                        <p class="pull-right"><i class="fa fa-user"></i> &nbsp;<i class="fa fa-clock-o"></i></p>
                                     </a>
                                 </li>
                             </ul>
@@ -544,6 +544,12 @@
 <script src="../../js/Main/main.js"></script>
 
 <script type="text/javascript">
+    //$("#patient-table-content").slimScroll({  
+    //    size: '8px',
+    //    color: '#888888',
+    //    wheelStep: 4,
+    //    height: $(document).height() - 190
+    //});
     $("#startdate").datepicker({ autoclose: true });
     $("#enddate").datepicker({ autoclose: true });
 </script>
