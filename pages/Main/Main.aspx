@@ -63,14 +63,14 @@
                                 <li>
                                     <a href="#">
                                         <h4>
-                                            <i class="fa fa-hand-pointer-o"></i>无
+                                            无
                                         </h4>
                                         <p class="pull-right"><i class="fa fa-user"></i> &nbsp;<i class="fa fa-clock-o"></i></p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">查看全部</a></li>
+                        <li class="footer"><a id="allNotice" href="javascript:;" target="_blank">查看全部</a></li>
                         </ul>
                     </li>
                     <!-- Notifications: style can be found in dropdown.less -->
@@ -86,7 +86,7 @@
                                 <ul id="TaskWarning-content" class="menu">
                                     <li>
                                         <a href="javascript:;">
-                                            <i class="fa fa-warning text-red"></i>无
+                                            无
                                         </a>
                                     </li>
                                 </ul>

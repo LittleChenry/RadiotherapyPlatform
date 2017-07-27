@@ -64,6 +64,8 @@ public class getSession : IHttpHandler, IRequiresSessionState
               .Append(beg)
               .Append("\",\"endTime\":\"")
               .Append(end)
+              .Append("\",\"roleName\":\"")
+              .Append(user.getRoleName())
               .Append("\"}");
         return result.ToString();
     }

@@ -7,10 +7,10 @@ $(document).ready(function () {
     $("#patient-table-content").height($(document).height() - 190);
     $("#record-iframe").width($("#record-content").width());
     $("#progress-iframe").width($("#progress-content").width());
-    Notice();
     var session = getSession();
     functions = session.progress.split(" ");
     var patient = RolesToPatients(session);
+    Notice(session.roleName);
 
     $("#patient-search").bind('input propertychange', function () {
         //alert(patient.PatientInfo.length);
@@ -1907,11 +1907,11 @@ function SingleTask(light, serious, singlepatient, currentProgress){
     WarningTaskContent.append(singletask);
 }
 
-function getNotice(){
+function getNotice(role){
     var notice;
     $.ajax({
         type: "GET",
-        url: "../../pages/Main/Records/getNews.ashx",
+        url: "../../pages/Main/Records/getNews.ashx?role=" + role,
         async: false,
         dateType: "text",
         success: function (data) {
@@ -1925,10 +1925,11 @@ function getNotice(){
     return notice;
 }
 
-function Notice(){
-    var notice = getNotice();
+function Notice(role){
+    var notice = getNotice(role);
     var NoticeContent = $("#Notice");
     var NoticeNum = $("#NoticeNum");
+    var allNotice = $("#allNotice");
     NoticeContent.html("");
     for (var i = 0; i < notice.patientInfo.length; i++) {
         var singleNotice = '<li><a href="Notice.aspx?ID=' + notice.patientInfo[i].ID + '" target="_blank"><h4>';
@@ -1946,6 +1947,7 @@ function Notice(){
         NoticeContent.append(singleNotice);
     }
     NoticeNum.html(NoticeContent.find("li").length);
+    allNotice.attr("href", "newsList.aspx?role=" + role);
 }
 
 function formatTime(time){
