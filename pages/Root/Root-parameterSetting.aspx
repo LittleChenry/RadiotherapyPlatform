@@ -575,6 +575,8 @@
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- Main js-->
 <script src="../../js/Root/RootMainJS.js"></script>
+<!-- SlimScroll -->
+<script src="../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- Main JavaScript -->
 <script src="../../js/Root/parameterSettingJS.js"></script>
 </body>

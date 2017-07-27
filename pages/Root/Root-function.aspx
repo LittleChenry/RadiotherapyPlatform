@@ -503,6 +503,8 @@
 <script src="../../plugin/AdminLTE/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
+<!-- SlimScroll -->
+<script src="../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- Main js-->
 <script src="../../js/Root/RootMainJS.js"></script>
 <!-- Main JavaScript -->
