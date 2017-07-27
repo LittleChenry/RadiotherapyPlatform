@@ -108,7 +108,6 @@ function createfixEquipmachine(thiselement, item) {
 }
 function getmachineItem(item) {
     var xmlHttp = new XMLHttpRequest();
-    alert(item);
     var url = "getfixmachine.ashx?item=" + item;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);

@@ -392,6 +392,12 @@
                 </span>
             </a>
         </li>
+          <li>
+              <a href="Root-setWarning.aspx">
+                  <i class="fa fa-group"></i><span>流程预警设置</span>
+                  <span class="pull-right-container"></span>
+              </a>
+          </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-group fa-fw"></i>
