@@ -15,6 +15,7 @@ public class handlerSetRole : IHttpHandler, IRequiresSessionState
         UserInformation user = (UserInformation)(context.Session["loginUser"]);
         user.setUserRole(context.Request.QueryString["role"]);
         user.setProgress(progress);
+        user.setRoleName(des);
         context.Session["loginUser"] = user;
         context.Response.Write("");
     }

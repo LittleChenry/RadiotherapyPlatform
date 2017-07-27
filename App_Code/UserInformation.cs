@@ -11,6 +11,7 @@ public class UserInformation
     private int userID;//便于查询数据库
     private string userNumber;
     private string userName;
+    private string roleName;
     private string userRole;
     private string assistant;
     private LinkedList<int> progress;
@@ -56,6 +57,16 @@ public class UserInformation
     public string GetUserName()
     {
         return userName;
+    }
+
+    public void setRoleName(string name)
+    {
+        this.roleName = name;
+    }
+
+    public string getRoleName()
+    {
+        return this.roleName;
     }
 
     public KeyValuePair<int, string> getEquipment()
