@@ -30,14 +30,12 @@ public class getNews : IHttpHandler {
         }
     }
     private string getfixrecordinfo(HttpContext context)
-    {
-        
-        string sqlCommand = "SELECT count(*) from news order by Important desc,Releasetime desc limit 0,5";
-        int count = int.Parse(sqlOperation2.ExecuteScalar(sqlCommand));
+    {           
+        int count = 5;
         int i = 1;
         string sqlCommand1 = "select news.* from news order by Important desc,Releasetime desc limit 0,5";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand1);
-        StringBuilder backText = new StringBuilder("{\"patientInfo\":[");
+        StringBuilder backText = new StringBuilder("{\"patientInfo\":["+count);
         while (reader.Read())
         {
             string date2 = reader["Releasetime"].ToString();
