@@ -1937,7 +1937,7 @@ function Notice(){
         }else{
             singleNotice +='<i class="fa fa-tag"></i>';
         }
-        singleNotice += limitString(notice.patientInfo[i].Title, 15);
+        singleNotice += limitString(notice.patientInfo[i].Title, 18);
         singleNotice += '</h4><p class="pull-right"><i class="fa fa-user"></i>'
         singleNotice += notice.patientInfo[i].Release_User_Name;
         singleNotice += '&nbsp;<i class="fa fa-clock-o"></i>';
