@@ -75,7 +75,6 @@ function Init(evt) {
                 }
             } else {
                 if (fixedInfo.fixedInfo[i].BodyPositionDetail == "") {
-                    alert(fixedInfo.fixedInfo[i].Treatmentname);
                     continue;
                 }
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
