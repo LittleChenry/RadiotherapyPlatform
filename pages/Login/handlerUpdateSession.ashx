@@ -32,6 +32,7 @@ public class handlerUpdateSession : IHttpHandler, IRequiresSessionState
         user.setEquipment(new KeyValuePair<int, string>());
         user.setBeginTime("");
         user.setEndTime("");
+        user.setRoleName(role);
         context.Session["loginUser"] = user;
     }
 

@@ -7,6 +7,7 @@ $(document).ready(function () {
     $("#patient-table-content").height($(document).height() - 190);
     $("#record-iframe").width($("#record-content").width());
     $("#progress-iframe").width($("#progress-content").width());
+    Notice();
     var session = getSession();
     functions = session.progress.split(" ");
     var patient = RolesToPatients(session);
@@ -1904,6 +1905,71 @@ function SingleTask(light, serious, singlepatient, currentProgress){
         }
     }
     WarningTaskContent.append(singletask);
+}
+
+function getNotice(){
+    var notice;
+    $.ajax({
+        type: "GET",
+        url: "../../pages/Main/Records/getNews.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            //alert(data);
+            notice = $.parseJSON(data);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+    return notice;
+}
+
+function Notice(){
+    var notice = getNotice();
+    var NoticeContent = $("#Notice");
+    var NoticeNum = $("#NoticeNum");
+    NoticeContent.html("");
+    for (var i = 0; i < notice.patientInfo.length; i++) {
+        var singleNotice = '<li><a href="Notice.aspx?ID=' + notice.patientInfo[i].ID + '" target="_blank"><h4>';
+        if (notice.patientInfo[i].Important == '1') {
+            singleNotice += '<i class="fa fa-hand-pointer-o"></i>';
+        }else{
+            singleNotice +='<i class="fa fa-tag"></i>';
+        }
+        singleNotice += limitString(notice.patientInfo[i].Title, 18);
+        singleNotice += '</h4><p class="pull-right"><i class="fa fa-user"></i>'
+        singleNotice += notice.patientInfo[i].Release_User_Name;
+        singleNotice += '&nbsp;<i class="fa fa-clock-o"></i>';
+        singleNotice += formatTime(notice.patientInfo[i].Releasetime);
+        singleNotice += '</p>';
+        NoticeContent.append(singleNotice);
+    }
+    NoticeNum.html(NoticeContent.find("li").length);
+}
+
+function formatTime(time){
+    NoticeTime = new Date(time).Format("yyyy-MM-dd");
+    currentTime = new Date().Format("yyyy-MM-dd");
+    preDate = new Date(new Date().getTime() - 24*60*60*1000).Format("yyyy-MM-dd");
+    if (NoticeTime == currentTime) {
+        return "今天";
+    }else{
+        if (NoticeTime == preDate) {
+            return "昨天";
+        }
+    }
+    return NoticeTime;
+}
+
+function limitString(str, num){
+    var ls;
+    if (str.length > num) {
+        ls = str.substring(0, num -1) + "…";
+        return ls;
+    }else{
+        return str;
+    }
 }
 
 function chooseEquipment() {

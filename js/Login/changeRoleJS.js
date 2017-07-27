@@ -7,7 +7,8 @@ $(function () {
 $(function () {
     $("#login").bind("click", function () {
         var selectRole = $("#userRole").val();
-        updateSession(selectRole);
+        var roleName = $("#userRole").text();
+        updateSession(selectRole,roleName);
         if(selectRole == "Root"){
             window.location.href = "../../pages/Root/RootMain.aspx";
         }else{
@@ -38,11 +39,11 @@ function fillRoles(roles) {
 }
 
 //更新session中用户当前角色
-function updateSession(selectRole){
+function updateSession(selectRole,rolename){
     $.ajax({
         type: "POST",
         async: false,
         url: "handlerUpdateSession.ashx",
-        data: { "role": selectRole }
+        data: { "role": selectRole, "roleName":rolename }
     });
 }

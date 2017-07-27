@@ -39,7 +39,7 @@ public class getNews : IHttpHandler {
         while (reader.Read())
         {
             backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Release_User_ID\":\"" + reader["Release_User_ID"].ToString() + "\",\"Title\":\"" + reader["Title"] + "\",\"Important\":\"" + reader["Important"] +
-                 "\",\"Permission\":\"" + reader["Permission"].ToString() + "\",\"Releasetime\":\"" + reader["Permission"].ToString() + "\",\"Release_UserName\":\"" + reader["username"].ToString() + "\"}");
+                 "\",\"Permission\":\"" + reader["Permission"].ToString() + "\",\"Releasetime\":\"" + reader["Releasetime"].ToString() + "\",\"Release_User_Name\":\"" + reader["username"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");
