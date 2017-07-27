@@ -35,7 +35,7 @@ public class getNews : IHttpHandler {
         int i = 1;
         string sqlCommand1 = "select news.* from news order by Important desc,Releasetime desc limit 0,5";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand1);
-        StringBuilder backText = new StringBuilder("{\"patientInfo\":["+count);
+        StringBuilder backText = new StringBuilder("{\"patientInfo\":[");
         while (reader.Read())
         {
             string date2 = reader["Releasetime"].ToString();
