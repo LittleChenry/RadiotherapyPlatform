@@ -421,9 +421,9 @@
                             <table id="warningTable" class="table table-striped table-hover" style="width: 100%">
                                 <thead id="thead">
                                     <tr>
-                                        <td>预警项目</td>
-                                        <td>黄色预警</td>
-                                        <td>红色预警</td>
+                                        <th>预警项目</th>
+                                        <th>黄色预警/小时</th>
+                                        <th>红色预警/小时</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
