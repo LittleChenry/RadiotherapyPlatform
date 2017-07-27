@@ -491,7 +491,8 @@
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- Main js-->
 <script src="../../js/Root/RootMainJS.js"></script>
-
+<!-- SlimScroll -->
+<script src="../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 
 <!-- bootstrap datepicker -->
 <script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
