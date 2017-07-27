@@ -30,10 +30,18 @@ public class getNews : IHttpHandler {
         }
     }
     private string getfixrecordinfo(HttpContext context)
-    {           
-        int count = 5;
+    {
+        string role = context.Request["role"];
+        string Count = "select count(*) from news where news.Permission like @role";
+        sqlOperation2.AddParameterWithValue("@role", "%" + role + "%");
+        int count = int.Parse(sqlOperation2.ExecuteScalar(Count));
+        if (count >= 5)
+        {
+            count = 5;
+        }
         int i = 1;
-        string sqlCommand1 = "select news.*,user.Name as username from news,user where user.ID=news.Release_User_ID order by Important desc,Releasetime desc limit 0,5";
+        string sqlCommand1 = "select news.*,user.Name as username from news,user where user.ID=news.Release_User_ID and news.Permission like @role order by Important desc,Releasetime desc limit 0,5";
+        sqlOperation2.AddParameterWithValue("@role", "%" + role + "%");
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand1);
         StringBuilder backText = new StringBuilder("{\"patientInfo\":[");
         while (reader.Read())
