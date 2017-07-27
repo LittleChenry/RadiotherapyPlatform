@@ -33,16 +33,13 @@ public class getNews : IHttpHandler {
     {           
         int count = 5;
         int i = 1;
-        string sqlCommand1 = "select news.* from news order by Important desc,Releasetime desc limit 0,5";
+        string sqlCommand1 = "select news.*,user.Name as username from news,user where user.ID=news.Release_User_ID order by Important desc,Releasetime desc limit 0,5";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand1);
         StringBuilder backText = new StringBuilder("{\"patientInfo\":[");
         while (reader.Read())
         {
-            string date2 = reader["Releasetime"].ToString();
-            DateTime dt2 = Convert.ToDateTime(date2);
-            string date3 = dt2.ToString("yyyy-MM-dd HH:mm");
             backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Release_User_ID\":\"" + reader["Release_User_ID"].ToString() + "\",\"Title\":\"" + reader["Title"] + "\",\"Important\":\"" + reader["Important"] +
-                 "\",\"Permission\":\"" + reader["Permission"].ToString() + "\",\"Releasetime\":\"" + date3 +  "\"}");
+                 "\",\"Permission\":\"" + reader["Permission"].ToString() + "\",\"Releasetime\":\"" + reader["Permission"].ToString() + "\",\"Release_UserName\":\"" + reader["username"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");
