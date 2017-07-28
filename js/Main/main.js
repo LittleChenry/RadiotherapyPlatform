@@ -10,6 +10,7 @@ $(document).ready(function () {
     var session = getSession();
     functions = session.progress.split(" ");
     var patient = RolesToPatients(session);
+    adjustTable();
     Notice(session.roleName);
 
     $("#patient-search").bind('input propertychange', function () {
@@ -121,7 +122,8 @@ function RolesToPatients() {
             parameters[1] = session.beginTime;
             parameters[2] = session.endTime;
             patient = getPatient(session.userID, session.role, parameters);
-            Paging(patient, session.role, session.userID);
+            var sortPatient = patientSort(patient);
+            Paging(sortPatient, session.role, session.userID);
             $("#chosenEquipment").html(session.equipmentName);
             $("#dateRange").html(session.beginTime + "~~" + session.endTime);
         }
@@ -129,12 +131,13 @@ function RolesToPatients() {
     } else {
         var parameters = new Array();
         patient = getPatient(session.userID, session.role, parameters);
-        Paging(patient, session.role, session.userID);
+        var sortPatient = patientSort(patient);
+        Paging(sortPatient, session.role, session.userID);
         if (session.role == "医师" || session.role == "剂量师" || session.role == "物理师") {
-            TaskWarning(patient);
+            TaskWarning(sortPatient);
         }
     }
-    return patient;
+    return sortPatient;
 }
 
 function Paging(patient, role, userID) {
@@ -146,7 +149,7 @@ function Paging(patient, role, userID) {
         switch (role) {
             case "医师":
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
-                var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
+                var thead = '<thead><tr><th><i class="fa fa-fw fa-toggle-on"></i></th><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
@@ -159,8 +162,15 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = patient.PatientInfo[i].groupname;
-                    var tr = "<tr id='" + TreatmentID + "'><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
+                    var tr = "<tr id='" + TreatmentID + "'class='" + TreatmentID + "_";
+                    if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
+                        tr += "Child";
+                    }else{
+                        tr += "Parent";
+                    }
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + treat + "</td><td>" + diagnosisresult + "</td><td>" + Progress
                         + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
+                    tr += trtemp;
                     tbody += tr;
                 }
                 tbody += '</tbody>';
@@ -352,6 +362,70 @@ function Paging(patient, role, userID) {
         $("#patient_info").text("共0条记录");
     }
     Recover();
+}
+
+function adjustTable(){
+    var table = $("#patient-table");
+    var tbody = table.find("tbody");
+    var trs = tbody.find("tr");
+    trs.each(function(index, element){
+        if ($(this).attr("class").split("_")[1] == "Parent") {
+            if ($(this).next().attr("class").split("_")[1] == "Child") {
+                $(this).find("td").find("i")[0].className = "fa fa-fw fa-angle-double-down";
+            }
+            $(this).find("td").unbind("click").click(function(){
+                stopBubble(this);
+                CollapseTr(this);
+            });
+        }else{
+            $(this).css("display","none");
+        }
+    });
+}
+
+function CollapseTr(element){
+    if ($(element).find("i")[0].className == "fa fa-fw fa-angle-double-down") {
+        $(element).find("i")[0].className = "fa fa-fw fa-angle-double-up";
+        $(element).parent().nextAll().each(function(){
+            if ($(this).attr("class").split("_")[1] == "Child") {
+                $(this).fadeIn(360);
+            }else{
+                return false;
+            }
+        });
+    }else{
+        $(element).find("i")[0].className = "fa fa-fw fa-angle-double-down";
+        $(element).parent().nextAll().each(function(){
+            if ($(this).attr("class").split("_")[1] == "Child") {
+                $(this).fadeOut(360);
+            }else{
+                return false;
+            }
+        });
+    }
+    
+}
+
+function openTr(){
+    var table = $("#patient-table");
+    tbody = table.find("tbody");
+    trs = tbody.find("tr");
+    trs.each(function(index, element){
+        $(this).css("display",null);
+    });
+}
+
+function closeTr(){
+    var table = $("#patient-table");
+    tbody = table.find("tbody");
+    trs = tbody.find("tr");
+    trs.each(function(index, element){
+        if ($(this).attr("class").split("_")[1] == "Child") {
+            $(this).css("display","none");
+        }else{
+            $(this).css("display",null);
+        }
+    });
 }
 
 function trAddClick(patient, userID) {
@@ -2090,4 +2164,37 @@ function isInArray(arr, value) {
         }
     }
     return false;
+}
+
+function patientSort(patient){
+    var sortPatient = new Array();
+    var count = 0;
+    for (var j = 0; j < patient.PatientInfo.length; j++) {
+        var flag = 0;
+        for (var k = 0; k < sortPatient.length; k++) {
+            if (sortPatient[k].Radiotherapy_ID == patient.PatientInfo[j].Radiotherapy_ID) {
+                flag = 1;
+            }
+        }
+        if (flag == 0) {
+            sortPatient[count++] = patient.PatientInfo[j];
+            for (var i = j + 1; i < patient.PatientInfo.length; i++) {
+                
+                if (flag == 0 && sortPatient[count - 1].Radiotherapy_ID == patient.PatientInfo[i].Radiotherapy_ID) {
+                    sortPatient[count++] = patient.PatientInfo[i];
+                }
+            }
+        }
+    }
+    var patientGroup = { PatientInfo: sortPatient };
+    return patientGroup;
+}
+
+function stopBubble(e) {
+    if (e && e.stopPropagation) {//非IE浏览器
+    　　e.stopPropagation();
+    }
+    else {//IE浏览器
+    window.event.cancelBubble = true;
+    }
 }
