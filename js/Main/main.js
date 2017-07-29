@@ -71,55 +71,6 @@ function RolesToPatients() {
     if (session.role == "模拟技师" || session.role == "治疗技师") {
         if (session.equipmentID == "0") {
             chooseEquipment();
-            $("#getSelectedPatient").unbind("click").click(function () {
-                var equipmentID = $("#equipment").val();
-                var equipmentName = $("#equipment option:selected").html();
-                var startdate = $("#startdate").val();
-                var enddate = $("#enddate").val();
-                var currentTime = new Date().Format("yyyy-MM-dd");
-                if (!equipmentID) {
-                    alert("设备不能为空！");
-                    return false;
-                }
-                if (!startdate) {
-                    alert("开始日期不能为空！");
-                    return false;
-                }
-                if (!enddate) {
-                    alert("结束日期不能为空！");
-                    return false;
-                }
-                if (startdate > enddate) {
-                    alert("结束日期不能小于开始日期！");
-                    return false;
-                }
-                if (startdate < currentTime) {
-                    alert("开始日期不能小于当天日期！");
-                    return false;
-                }
-                $("#chosenEquipment").html(equipmentName);
-                $("#dateRange").html(startdate + "~~" + enddate);
-                var parameters = new Array();
-                parameters[0] = equipmentID;
-                parameters[1] = startdate;
-                parameters[2] = enddate;
-                patient = getPatient(session.userID, session.role, parameters);
-                Paging(patient, session.role, session.userID);
-                $.ajax({
-                    type: "POST",
-                    async: false,
-                    url: "../../pages/Main/Records/setEquipment.ashx",
-                    data: {
-                        id: $("#equipment").val(),
-                        name: $("#equipment option:selected").html(),
-                        beginTime: $("#startdate").val(),
-                        endTime: $("#enddate").val()
-                    },
-                    error: function () {
-                        alert("error");
-                    }
-                });
-            });
         } else {
             var parameters = new Array();
             parameters[0] = session.equipmentID;
@@ -131,6 +82,55 @@ function RolesToPatients() {
             $("#chosenEquipment").html(session.equipmentName);
             $("#dateRange").html(session.beginTime + "~~" + session.endTime);
         }
+        $("#getSelectedPatient").unbind("click").click(function () {
+            var equipmentID = $("#equipment").val();
+            var equipmentName = $("#equipment option:selected").html();
+            var startdate = $("#startdate").val();
+            var enddate = $("#enddate").val();
+            var currentTime = new Date().Format("yyyy-MM-dd");
+            if (!equipmentID) {
+                alert("设备不能为空！");
+                return false;
+            }
+            if (!startdate) {
+                alert("开始日期不能为空！");
+                return false;
+            }
+            if (!enddate) {
+                alert("结束日期不能为空！");
+                return false;
+            }
+            if (startdate > enddate) {
+                alert("结束日期不能小于开始日期！");
+                return false;
+            }
+            if (startdate < currentTime) {
+                alert("开始日期不能小于当天日期！");
+                return false;
+            }
+            $("#chosenEquipment").html(equipmentName);
+            $("#dateRange").html(startdate + "~~" + enddate);
+            var parameters = new Array();
+            parameters[0] = equipmentID;
+            parameters[1] = startdate;
+            parameters[2] = enddate;
+            patient = getPatient(session.userID, session.role, parameters);
+            Paging(patient, session.role, session.userID);
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: "../../pages/Main/Records/setEquipment.ashx",
+                data: {
+                    id: $("#equipment").val(),
+                    name: $("#equipment option:selected").html(),
+                    beginTime: $("#startdate").val(),
+                    endTime: $("#enddate").val()
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        });
 
     } else {
         var parameters = new Array();
@@ -483,7 +483,7 @@ function adjustTable(){
         if ($(this).hasClass("chose")) {
             $(this).removeClass("chose");
         }
-        if ($(this).attr("class").split("_")[1] == "Parent") {
+        if ($(this).next().length > 0 && $(this).attr("class").split("_")[1] == "Parent") {
             if ($(this).next().attr("class").split("_")[1] == "Child") {
                 $(this).find("td").find("i")[0].className = "fa fa-fw fa-angle-double-down";
             }
@@ -497,7 +497,9 @@ function adjustTable(){
                 }
             });
         }else{
-            $(this).css("display","none");
+            if ($(this).next().length > 0) {
+                $(this).css("display","none");
+            }
         }
     });
 }
@@ -2258,6 +2260,15 @@ function tem(userID, type) {
         var tr = '<tr id="Template_'+ template[i].ID +'"><td style="text-align:center;"><label><input type="radio" name="singleTemplate" class="minimal"></label></td><td>'+ template[i].Name +'</td></tr>';
         tbody.append(tr);
     }
+    tbody.find("tr").each(function(){
+        $(this).find("td").each(function(index, element){
+            if (index == 1) {
+                $(this).unbind("click").click(function(){
+                    $(this).prev().find(".iCheck-helper").click();
+                });
+            }
+        });
+    });
     var tr = '<tr><td></td><td></td></tr>';
     tbody.append(tr);
     $('input[type="radio"].minimal').iCheck({
