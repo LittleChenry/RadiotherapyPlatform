@@ -1,20 +1,15 @@
 ﻿#container_page {
-	width: 1002px;
+	width: 1000px;
 	text-align: left;
 	min-height: 100%; /* For IE */
-	margin-top: 0;
-	margin-right: auto;
-	margin-bottom: 0;
-	margin-left: auto;
+    margin:0 auto;
 	background-color: #FFFFFF;
 	
 }
 #container_content {
-	width: 1002px;
+	width: auto;
 	background-color: #FFFFFF;
-    margin:0 auto;
-    padding-top:5px;
-    padding-bottom:5px;
+    padding:5px 30px;
     font-size:large;
 }
 #head {
@@ -45,4 +40,8 @@ td.image {
 
 #describe {
     margin-bottom:20px;
+}
+
+body {
+    margin:0px;
 }

@@ -408,21 +408,21 @@ function Paging(patient, role, userID) {
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td><i></i></td><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "剂量师":
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td><i></i></td><td colspan="6" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "物理师":
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td><i></i></td><td colspan="6" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "模拟技师":
@@ -436,28 +436,28 @@ function Paging(patient, role, userID) {
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>预约时间</th><th>是否完成</th><th>完成次数</th><th>累次剂量</th>'
                     + '<th>总次数</th><th>疗程</th><th>诊断结果</th><th>主治医生</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="11" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td><i></i></td><td colspan="10" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "科主任":
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td><i></i></td><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "登记处人员":
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td><i></i></td><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             default:
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>疗程</th><th>诊断结果</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td><i></i></td><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
         }
         $("#patient_info").text("共0条记录");
@@ -2256,19 +2256,24 @@ function tem(userID, type) {
     var template = Templatechoose(userID, type);
     var tbody = $("#TemplateTable tbody");
     tbody.html("");
-    for (var i = 0; i < template.length; i++) {
-        var tr = '<tr id="Template_'+ template[i].ID +'"><td style="text-align:center;"><label><input type="radio" name="singleTemplate" class="minimal"></label></td><td>'+ template[i].Name +'</td></tr>';
+    if (template != "") {
+        for (var i = 0; i < template.length; i++) {
+            var tr = '<tr id="Template_'+ template[i].ID +'"><td style="text-align:center;"><label><input type="radio" name="singleTemplate" class="minimal"></label></td><td>'+ template[i].Name +'</td></tr>';
+            tbody.append(tr);
+        }
+        tbody.find("tr").each(function(){
+            $(this).find("td").each(function(index, element){
+                if (index == 1) {
+                    $(this).unbind("click").click(function(){
+                        $(this).prev().find(".iCheck-helper").click();
+                    });
+                }
+            });
+        });
+    }else{
+        var tr = '<tr><td colspan="2" style="text-align:center;">无模板</td></tr>';
         tbody.append(tr);
     }
-    tbody.find("tr").each(function(){
-        $(this).find("td").each(function(index, element){
-            if (index == 1) {
-                $(this).unbind("click").click(function(){
-                    $(this).prev().find(".iCheck-helper").click();
-                });
-            }
-        });
-    });
     var tr = '<tr><td></td><td></td></tr>';
     tbody.append(tr);
     $('input[type="radio"].minimal').iCheck({

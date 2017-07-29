@@ -144,6 +144,7 @@ $(function(){
     });
 });
 
+var canDelete = true;
 //创建编辑用户的modal内容
 function createEditArea($tr){
     var $tds = $tr.find("td");
@@ -164,7 +165,12 @@ function createEditArea($tr){
     }
 
 
-    $("#deleteUser").bind("click",function(){
+    $("#deleteUser").bind("click", function () {
+        if (canDelete) {
+            canDelete = false;
+        } else {
+            return;
+        }
         deleteUser();
     });
 }
@@ -221,9 +227,12 @@ function deleteUser(){
                 headName: new Array("用户账号", "姓名", "性别", "联系方式", "办公室", "用户密码", "激活状态"),
                 pages:current
             });
-            
+            canDelete = true;
             alert("删除成功");
             $("#cannelEdit").trigger("click");
+        },
+        error: function () {
+            canDelete = true;
         }
     });
 }
