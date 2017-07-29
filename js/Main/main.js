@@ -166,7 +166,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
-                    var tr = "<tr id='" + TreatmentID + "'class='" + TreatmentID + "_";
+                    var tr = "<tr id='" + TreatmentID + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
                     }else{
@@ -196,7 +196,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
-                    var tr = "<tr id='" + TreatmentID + "'class='" + TreatmentID + "_";
+                    var tr = "<tr id='" + TreatmentID + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
                     }else{
@@ -226,7 +226,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
-                    var tr = "<tr id='" + TreatmentID + "'class='" + TreatmentID + "_";
+                    var tr = "<tr id='" + TreatmentID + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
                     }else{
@@ -260,7 +260,7 @@ function Paging(patient, role, userID) {
                     Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
                     begin = toTime(patient.PatientInfo[i].begin);
                     end = toTime(patient.PatientInfo[i].end);
-                    var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='" + TreatmentID + "_";
+                    var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
                     }else{
@@ -295,7 +295,7 @@ function Paging(patient, role, userID) {
                     finishedtimes = patient.PatientInfo[i].finishedtimes;
                     totalnumber = patient.PatientInfo[i].totalnumber;
                     totaltimes = patient.PatientInfo[i].totaltimes;
-                    var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='" + TreatmentID + "_";
+                    var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
                     }else{
@@ -325,7 +325,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
-                    var tr = "<tr id='" + TreatmentID + "'class='" + TreatmentID + "_";
+                    var tr = "<tr id='" + TreatmentID + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
                     }else{
@@ -355,7 +355,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
-                    var tr = "<tr id='" + TreatmentID + "'class='" + TreatmentID + "_";
+                    var tr = "<tr id='" + TreatmentID + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
                     }else{
@@ -385,7 +385,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
-                    var tr = "<tr id='" + TreatmentID + "'class='" + TreatmentID + "_";
+                    var tr = "<tr id='" + TreatmentID + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
                     }else{
@@ -480,11 +480,8 @@ function adjustTable(){
         }
     });
     trs.each(function(index, element){
-        if ($(this).hasClass("chose")) {
-            $(this).removeClass("chose");
-        }
-        if ($(this).next().length > 0 && $(this).attr("class").split("_")[1] == "Parent") {
-            if ($(this).next().attr("class").split("_")[1] == "Child") {
+        if ($(this).next().length > 0 && $(this).hasClass("Parent")) {
+            if ($(this).next().hasClass("Child")) {
                 $(this).find("td").find("i")[0].className = "fa fa-fw fa-angle-double-down";
             }
             $(this).find("td").each(function(index, element){
@@ -500,6 +497,9 @@ function adjustTable(){
             if ($(this).next().length > 0) {
                 $(this).css("display","none");
             }
+            if (!$(this).hasClass("Parent")) {
+                $(this).css("display","none");
+            }
         }
     });
 }
@@ -508,7 +508,7 @@ function CollapseTr(element){
     if ($(element).find("i")[0].className == "fa fa-fw fa-angle-double-down") {
         $(element).find("i")[0].className = "fa fa-fw fa-angle-double-up";
         $(element).parent().nextAll().each(function(){
-            if ($(this).attr("class").split("_")[1] == "Child") {
+            if ($(this).hasClass("Child")) {
                 $(this).fadeIn(360);
             }else{
                 return false;
@@ -517,7 +517,7 @@ function CollapseTr(element){
     }else{
         $(element).find("i")[0].className = "fa fa-fw fa-angle-double-down";
         $(element).parent().nextAll().each(function(){
-            if ($(this).attr("class").split("_")[1] == "Child") {
+            if ($(this).hasClass("Child")) {
                 $(this).fadeOut(180);
             }else{
                 return false;
@@ -543,7 +543,7 @@ function closeTr(){
     tbody = table.find("tbody");
     trs = tbody.find("tr");
     trs.each(function(index, element){
-        if ($(this).attr("class").split("_")[1] == "Child") {
+        if ($(this).hasClass("Child")) {
             $(this).fadeOut(180);
         }
         if ($(this).find("td").find("i")[0].className != ""){
