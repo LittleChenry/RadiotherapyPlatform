@@ -20,6 +20,8 @@
   <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/iCheck/all.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -511,12 +513,6 @@
                 </div>
                 <div class="modal-body">
                     <table id="TemplateTable" class="table">
-                        <thead>
-                            <tr>
-                                <td>选择</td>
-                                <td>模板名称</td>
-                            </tr>
-                        </thead>
                         <tbody></tbody>
                     </table>
                 </div>
@@ -542,6 +538,8 @@
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="../../plugin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
 <!-- DataTables -->
@@ -553,8 +551,8 @@
 <script src="../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="../../plugin/AdminLTE/plugins/fastclick/fastclick.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="../../plugin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="../../plugin/AdminLTE/plugins/iCheck/icheck.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../plugin/AdminLTE/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->

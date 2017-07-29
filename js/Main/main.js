@@ -24,9 +24,9 @@ $(document).ready(function () {
         window.location.replace("../Login/Login.aspx");
     });
     $("#save").unbind("click").click(function () {
+        $("#record-iframe")[0].contentWindow.save();
         $('#save').attr("disabled", "disabled");
         $('#saveTemplate-list').attr("disabled", "disabled");
-        $("#record-iframe")[0].contentWindow.save();
         RolesToPatients();
         adjustTable();
         Recover();
@@ -2249,10 +2249,15 @@ function tem(userID, type) {
     var tbody = $("#TemplateTable tbody");
     tbody.html("");
     for (var i = 0; i < template.length; i++) {
-        var radio = '<label><input type="radio" name="r1" class="minimal"></label>';
-        var tr = '<tr id="Template_'+ template[i].ID +'"><td>'+ template[i].Name +'</td></tr>';
+        var tr = '<tr id="Template_'+ template[i].ID +'"><td style="text-align:center;"><label><input type="radio" name="singleTemplate" class="minimal"></label></td><td>'+ template[i].Name +'</td></tr>';
         tbody.append(tr);
     }
+    var tr = '<tr><td></td><td></td></tr>';
+    tbody.append(tr);
+    $('input[type="radio"].minimal').iCheck({
+        checkboxClass: 'icheckbox_minimal-blue',
+        radioClass: 'iradio_minimal-blue'
+    });
     /*var template = Templatechoose(userID, type);
     var templateList = document.getElementById("templateul");
     templateList.innerHTML = "";
