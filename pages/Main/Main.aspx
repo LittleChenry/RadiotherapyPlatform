@@ -359,13 +359,7 @@
         <nav class="tab-nav" style="padding-top:3px;">
             <div>
             <button id="edit" class="btn btn-success" disabled="disabled"><i class="fa fa-fw fa-edit"></i>编辑</button>
-            <div class="btn-group">
-                <button id="chooseTemplate" type="button" class="btn btn-success" data-toggle="dropdown" disabled="disabled"><i class="fa fa-fw fa-send"></i>选择模板</button>
-                <button id="Template-List" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" disabled="disabled">
-                    <span class="caret"></span>
-                </button>
-                <ul id="templateul" class="dropdown-menu" role="menu"></ul>
-            </div>
+            <button id="chooseTemplate" class="btn btn-success" data-toggle="modal" data-target="#TemplateList" disabled="disabled"><i class="fa fa-fw fa-send"></i>选择模板</button>
             <div class="btn-group">
                 <button id="save" type="button" class="btn btn-success"  disabled="disabled"><i class="fa fa-fw fa-save"></i>保存</button>
                 <button id="saveTemplate-list" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" disabled="disabled">
@@ -504,6 +498,31 @@
                 </div>
                 <div class="modal-footer">
                     <button id="saveTemplate" type="button" class="btn btn-primary" data-dismiss="modal">保存模板</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="TemplateList" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">选择模板</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="TemplateTable" class="table">
+                        <thead>
+                            <tr>
+                                <td>选择</td>
+                                <td>模板名称</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="confirm" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
