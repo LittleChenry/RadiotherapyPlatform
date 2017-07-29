@@ -480,12 +480,15 @@ function adjustTable(){
         }
     });
     trs.each(function(index, element){
+        if ($(this).hasClass("chose")) {
+            $(this).removeClass("chose");
+        }
         if ($(this).attr("class").split("_")[1] == "Parent") {
             if ($(this).next().attr("class").split("_")[1] == "Child") {
                 $(this).find("td").find("i")[0].className = "fa fa-fw fa-angle-double-down";
             }
             $(this).find("td").each(function(index, element){
-                if (index == 0) {
+                if (index == 0 && $(this).find("i")[0].className != "") {
                     $(this).unbind("click").click(function(){
                         stopBubble(this);
                         CollapseTr(this);
