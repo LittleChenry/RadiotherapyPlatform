@@ -25,6 +25,27 @@ function Init() {
     document.getElementById("operate").innerHTML = userName;
     document.getElementById("date").innerHTML = getNowFormatDate();
     loadProvince('');
+    var $radio1 = $('input[name="RecordNumber"]:eq(0)');
+    var $radio2 = $('input[name="RecordNumber"]:eq(1)');
+    $radio2.bind('click', function () {
+        $('#ishospital').css("display", "none");
+    });
+    $radio1.bind('click', function () {
+        $('#ishospital').css("display", "block");
+    });
+    $("#IDcardNumber").bind("input propertychange", function () {
+        if (isCardNo()) {
+            $(this).css("background", "yellow");
+        } else {
+            $(this).css("background", "white");
+        }
+        if ($(this).prop("value") == "") {
+            $(this).css("background", "white");
+        }
+    });
+
+
+
 }
 function getNowFormatDate() {
     var date = new Date();
@@ -128,6 +149,7 @@ function CheckEmpty() {
         window.alert("民族不能为空");
         return;
     }
+
     if (document.getElementById("IDcardNumber").value == "") {
         window.alert("身份证不能为空");
         return;
@@ -164,8 +186,9 @@ function CheckEmpty() {
         window.alert("身份证格式不正确");
         return;
     }
-    if (document.getElementById("RecordNumber").value == "") {
-        window.alert("病案号不能为空");
+    var $radio1 = $('input[name="RecordNumber"]:eq(0)');
+    if ($radio1.prop("checked") && document.getElementById("hospitalnumber").value=="") {
+        window.alert("住院号不能为空");
         return;
     }
     
