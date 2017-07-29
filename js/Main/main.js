@@ -2258,21 +2258,10 @@ function tem(userID, type) {
         checkboxClass: 'icheckbox_minimal-blue',
         radioClass: 'iradio_minimal-blue'
     });
-    /*var template = Templatechoose(userID, type);
-    var templateList = document.getElementById("templateul");
-    templateList.innerHTML = "";
-    for (var i = 0; i < template.length; i++) {
-        var list = document.createElement("li");
-        var a = document.createElement("a");
-        a.id = "a" + i;
-        a.innerHTML = template[i].Name;
-        list.appendChild(a);
-        templateList.appendChild(list);
-        var id = template[i].ID;
-        $("#a" + i).unbind("click").click({ id: id }, function (e) {
-            $("#record-iframe")[0].contentWindow.chooseTempalte(e.data.id);
-        });
-    }*/
+    $("#confirm-Template").click(function(){
+        var tbody = $("#TemplateTable tbody");
+        $("#record-iframe")[0].contentWindow.chooseTempalte($(".checked").parent().parent().parent().attr("id").split("_")[1]);
+    });
 }
 
 function Templatechoose(userID, type) {
