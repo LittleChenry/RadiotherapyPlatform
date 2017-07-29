@@ -76,7 +76,7 @@ function Init(evt) {
                     }
                 }
             } else {
-                if (fixedInfo.fixedInfo[i].BodyPositionDetail == "") {
+                if (fixedInfo.fixedInfo[i].operate == "") {
                     continue;
                 }
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
@@ -115,7 +115,7 @@ function Init(evt) {
         document.getElementById("hidetreatID").value = treatID;
         for (var i = 0; i < fixedInfo.fixedInfo.length; i++) {
             if (patient.Treatmentname != fixedInfo.fixedInfo[i].Treatmentname) {
-                if (fixedInfo.fixedInfo[i].BodyPositionDetail == "") {
+                if (fixedInfo.fixedInfo[i].operate == "") {
                     continue;
                 }
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");

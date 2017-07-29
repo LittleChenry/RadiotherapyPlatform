@@ -75,25 +75,25 @@ public class LocationInfo : IHttpHandler
                     operate = sqlOperation.ExecuteScalar(sqlCommand);
                     
                 }
-                string enmethod="";
+                string enmethod = "allItem";
                 if (reader["Enhance"].ToString()=="0")
                 {
 
-                    enmethod = "";
+                    enmethod = "allItem";
                 }
                 else
                 {
-                    string sqlCommand4 = "select enhancemethod.Method as method from location,enhancemethod,treatment where location.ID=treatment.Location_ID and location.EnhanceMethod_ID =enhancemethod.ID and location.ApplicationTime=@apptime and treatment.Patient_ID=@patient";
+                    string sqlCommand4 = "select enhancemethod.ID as method from location,enhancemethod,treatment where location.ID=treatment.Location_ID and location.EnhanceMethod_ID =enhancemethod.ID and location.ApplicationTime=@apptime and treatment.Patient_ID=@patient";
                     sqlOperation.AddParameterWithValue("@apptime", reader["apptime"].ToString());
                     enmethod = sqlOperation.ExecuteScalar(sqlCommand4);
 
                 }
                 backText.Append("{\"Thickness\":\"" + reader["Thickness"].ToString() + "\",\"ReferenceNumber\":\"" + reader["ReferenceNumber"].ToString() +"\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString()+
                         "\",\"ReferenceScale\":\"" + reader["ReferenceScale"].ToString() + "\",\"Number\":\"" + reader["Number"].ToString() +
-                         "\",\"modelID\":\"" + reader["mname"].ToString() + "\",\"requireID\":\"" + reader["Requirements"].ToString() + "\",\"operate\":\"" + operate +
+                         "\",\"modelID\":\"" + reader["mname"].ToString() + "\",\"requireID\":\"" + reader["LocationRequirements_ID"].ToString() + "\",\"operate\":\"" + operate +
                          "\",\"body\":\"" + reader["BodyPosition"].ToString() + "\",\"fixedEquipment\":\"" + reader["fename"].ToString() +
                          "\",\"ApplicationTime\":\"" + date1 + "\",\"ApplicationUser\":\"" + reader["doctor"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
-                         "\",\"ScanPart\":\"" + reader["partname"].ToString() + "\",\"ScanMethod\":\"" + reader["Method"].ToString() +
+                         "\",\"ScanPart\":\"" + reader["ScanPart_ID"].ToString() + "\",\"ScanMethod\":\"" + reader["ScanMethod_ID"].ToString() +
                          "\",\"UpperBound\":\"" + reader["UpperBound"].ToString() + "\",\"LowerBound\":\"" + reader["LowerBound"].ToString() + "\",\"locationID\":\"" + reader["locationid"].ToString() +
                          "\",\"Enhance\":\"" + reader["Enhance"].ToString() + "\",\"EnhanceMethod\":\"" + enmethod +
                          "\",\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"BodyPositionDetail\":\"" + reader["BodyPositionDetail"].ToString() +

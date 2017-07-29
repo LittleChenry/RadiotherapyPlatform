@@ -12,50 +12,62 @@ function Init(evt) {
     }
     getUserName();
     var treatID = window.location.search.split("=")[1];
-    document.getElementById("treatID").innerHTML = treatID;
+    //document.getElementById("treatID").innerHTML = treatID;
 
     var patient = getPatientInfo(treatID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
-    document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
-    document.getElementById("nation").innerHTML = patient.Nation;
+    //document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
+    //document.getElementById("nation").innerHTML = patient.Nation;
     document.getElementById("age").innerHTML = patient.Age;
-    document.getElementById("address").innerHTML = patient.Address;
-    document.getElementById("hospital").innerHTML = patient.Hospital;
-    document.getElementById("contact").innerHTML = patient.Contact1;
-    document.getElementById("contact2").innerHTML = patient.Contact2;
+    //document.getElementById("address").innerHTML = patient.Address;
+    //document.getElementById("hospital").innerHTML = patient.Hospital;
+    //document.getElementById("contact").innerHTML = patient.Contact1;
+    //document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
-    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
-    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    //document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    //document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    var select1 = document.getElementById("scanpart");
+    createscanpartItem(select1);
+    var select2 = document.getElementById("scanmethod");
+    createscanmethodItem(select2);
+    var select3 = document.getElementById("special");
+    createspecialItem(select3);
+    var add = document.getElementsByName("add");
+    if (add[0].checked) {
+        var select4 = document.getElementById("addmethod");
+        createaddmethodItem(select4);
+    } else {
+        document.getElementById("addmethod").disabled = "true";
+
+    }
     $("#current-tab").text(patient.Treatmentdescribe + "模拟定位记录");
     var locationInfo = getDignoseInfo(treatID);
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '5')) {
         for (var i = 0; i < locationInfo.length; i++) {
             if (patient.Treatmentname == locationInfo[i].Treatmentname) {
-                document.getElementById("modelID").innerHTML = locationInfo[i].modelID;
-                document.getElementById("fixedEquipment").innerHTML = locationInfo[i].fixedEquipment;
-                document.getElementById("body").innerHTML = locationInfo[i].body + "，" + locationInfo[i].BodyPositionDetail;
-                //document.getElementById("AnnexDescription").innerHTML = locationInfo[i].AnnexDescription;
-                //
-                document.getElementById("ScanPart").innerHTML = locationInfo[i].ScanPart;
-                document.getElementById("ScanMethod").innerHTML = locationInfo[i].ScanMethod;
-                document.getElementById("requireID").innerHTML = locationInfo[i].requireID;
-                document.getElementById("UpperBound").innerHTML = locationInfo[i].UpperBound;
-                document.getElementById("LowerBound").innerHTML = locationInfo[i].LowerBound;
+       
+                document.getElementById("remark").value = locationInfo[i].Remarks;
+                var add = document.getElementsByName("add");
+              
+                document.getElementById("scanpart").value = locationInfo[i].ScanPart;
+                document.getElementById("scanmethod").value = locationInfo[i].ScanMethod;
+                document.getElementById("special").value = locationInfo[i].requireID;
+                document.getElementById("up").value = locationInfo[i].UpperBound;
+                document.getElementById("down").value = locationInfo[i].LowerBound;
 
                 if (locationInfo[i].Enhance == 1) {
-                    document.getElementById("Enhance").innerHTML = "增强，" + locationInfo[i].EnhanceMethod;
+                    add[0].checked = "true";
+                    document.getElementById("addmethod").value = locationInfo[i].EnhanceMethod;
                 } else {
-                    document.getElementById("Enhance").innerHTML = "不增强";
-                }
-                document.getElementById("ApplicationUser").innerHTML = locationInfo[i].ApplicationUser;
-                document.getElementById("ApplicationTime").innerHTML = locationInfo[i].ApplicationTime;
-                document.getElementById("Remarks").innerHTML = locationInfo[i].Remarks;
+                    add[1].checked = "true";
+                    document.getElementById("enhancemethod").style.display = "none";
+                }              
                 document.getElementById("Thickness").value = locationInfo[i].Thickness;
                 document.getElementById("Number").value = locationInfo[i].Number;
                 document.getElementById("ReferenceNumber").value = locationInfo[i].ReferenceNumber;
@@ -153,25 +165,31 @@ function Init(evt) {
                     $(this).bind("click", showPicture);
                 });
             } else {
-                document.getElementById("modelID").innerHTML = locationInfo[i].modelID;
-                document.getElementById("fixedEquipment").innerHTML = locationInfo[i].fixedEquipment;
-                document.getElementById("body").innerHTML = locationInfo[i].body + "，" + locationInfo[i].BodyPositionDetail;
-                //document.getElementById("AnnexDescription").innerHTML = locationInfo[i].AnnexDescription;
-                //
-                document.getElementById("ScanPart").innerHTML = locationInfo[i].ScanPart;
-                document.getElementById("ScanMethod").innerHTML = locationInfo[i].ScanMethod;
-                document.getElementById("requireID").innerHTML = locationInfo[i].requireID;
-                document.getElementById("UpperBound").innerHTML = locationInfo[i].UpperBound;
-                document.getElementById("LowerBound").innerHTML = locationInfo[i].LowerBound;
+                document.getElementById("remark").value = locationInfo[i].Remarks;
+                var add = document.getElementsByName("add");
+
+                document.getElementById("scanpart").value = locationInfo[i].ScanPart;
+                document.getElementById("scanmethod").value = locationInfo[i].ScanMethod;
+                document.getElementById("special").value = locationInfo[i].requireID;
+                document.getElementById("up").value = locationInfo[i].UpperBound;
+                document.getElementById("down").value = locationInfo[i].LowerBound;
 
                 if (locationInfo[i].Enhance == 1) {
-                    document.getElementById("Enhance").innerHTML = "增强，" + locationInfo[i].EnhanceMethod;
+                    add[0].checked = "true";
+                    document.getElementById("addmethod").value = locationInfo[i].EnhanceMethod;
                 } else {
-                    document.getElementById("Enhance").innerHTML = "不增强";
+                    add[1].checked = "true";
+                    document.getElementById("enhancemethod").style.display = "none";
                 }
-                document.getElementById("ApplicationUser").innerHTML = locationInfo[i].ApplicationUser;
-                document.getElementById("ApplicationTime").innerHTML = locationInfo[i].ApplicationTime;
-                document.getElementById("Remarks").innerHTML = locationInfo[i].Remarks;
+                var $radio1 = $('input[name="add"]:eq(0)');
+                var $radio2 = $('input[name="add"]:eq(1)');
+                $radio2.bind('click', function () {
+                    document.getElementById("enhancemethod").style.display = "none";
+                });
+                $radio1.bind('click', function () {
+                    document.getElementById("enhancemethod").style.display = "block";
+                });
+               
             }
         }
     }
@@ -192,6 +210,102 @@ function isInArray(arr, value) {
         }
     }
     return false;
+}
+function createscanpartItem(thiselement) {
+    var scanpartItem = JSON.parse(getscanpartItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--扫描部位--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < scanpartItem.length; i++) {
+        if (scanpartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(scanpartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(scanpartItem[i].ID);
+        }
+    }
+}
+
+function getscanpartItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getscanpart.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+//扫描部位
+function createscanmethodItem(thiselement) {
+    var scanmethodItem = JSON.parse(getscanmethodItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--扫描方式--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < scanmethodItem.length; i++) {
+        if (scanmethodItem[i] != "") {
+            thiselement.options[i + 1] = new Option(scanmethodItem[i].Method);
+            thiselement.options[i + 1].value = parseInt(scanmethodItem[i].ID);
+        }
+    }
+}
+function getscanmethodItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getscanmethod.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+//扫描特殊要求
+function createspecialItem(thiselement) {
+    var specialItem = JSON.parse(getspecialItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--特殊要求--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < specialItem.length; i++) {
+        if (specialItem[i] != "") {
+            thiselement.options[i + 1] = new Option(specialItem[i].Requirements);
+            thiselement.options[i + 1].value = parseInt(specialItem[i].ID);
+        }
+    }
+}
+function getspecialItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getscanspecial.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+//增强方式
+function createaddmethodItem(thiselement) {
+    var addmethodItem = JSON.parse(getaddmethodItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--增强方式--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < addmethodItem.length; i++) {
+        if (addmethodItem[i] != "") {
+            thiselement.options[i + 1] = new Option(addmethodItem[i].Method);
+            thiselement.options[i + 1].value = parseInt(addmethodItem[i].ID);
+        }
+    }
+}
+function forchange() {
+    var add = document.getElementsByName("add");
+    if (add[0].checked) {
+        var select4 = document.getElementById("addmethod");
+        select4.removeAttribute("disabled");
+        createaddmethodItem(select4);
+    }
+    if (add[1].checked) {
+        document.getElementById("addmethod").disabled = "true";
+
+    }
+}
+function getaddmethodItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getaddmethod.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
 }
 function getNowFormatDate() {
     var date = new Date();
@@ -288,7 +402,40 @@ function dateformat(format) {
     return time;
 }
 function save() {
-
+    var special = document.getElementById("special").value;
+    var addgroup = document.getElementsByName("add");
+    var add;
+    if (addgroup[0].checked == true) {
+        add = addgroup[0].value;
+    } else {
+        add = addgroup[1].value;
+    }
+    if (document.getElementById("scanpart").value == "allItem") {
+        window.alert("请选择扫描部位");
+        return;
+    }
+    if (document.getElementById("scanmethod").value == "allItem") {
+        window.alert("请选择扫描方式");
+        return;
+    }
+    if (document.getElementById("up").value == "") {
+        window.alert("请填写上界");
+        return;
+    }
+    if (document.getElementById("down").value == "") {
+        window.alert("请填写下界");
+        return;
+    }
+    if (add == "1") {
+        if (document.getElementById("addmethod").value == "allItem") {
+            window.alert("请选择增强方式");
+            return;
+        }
+    }
+    if (special == "allItem") {
+        window.alert("请选择特殊要求");
+        return;
+    }
     if (document.getElementById("Thickness").value == "") {
         alert("请填写层厚");
         return;
@@ -332,6 +479,15 @@ function save() {
 }
 
 function remove() {
+    document.getElementById("scanmethod").removeAttribute("disabled");
+    document.getElementById("scanpart").removeAttribute("disabled");
+    document.getElementById("up").removeAttribute("disabled");
+    document.getElementById("down").removeAttribute("disabled");
+    document.getElementById("special").removeAttribute("disabled");
+    document.getElementById("remark").removeAttribute("disabled");
+    document.getElementById("yes").removeAttribute("disabled");
+    document.getElementById("No").removeAttribute("disabled");
+    document.getElementById("addmethod").removeAttribute("disabled");
     document.getElementById("Thickness").removeAttribute("disabled");
     document.getElementById("Number").removeAttribute("disabled");
     document.getElementById("ReferenceNumber").removeAttribute("disabled");

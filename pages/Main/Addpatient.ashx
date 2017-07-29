@@ -80,12 +80,21 @@ public class Addpatient : IHttpHandler {
             DateTime date = DateTime.Now;
             string date1 = date.ToString("yyyy-MM-dd");
             string date2 = date.ToString("yyyyMMdd");
-            string count = "select max(Radiotherapy_ID) from patient where RegisterTime LIKE @time ";
+            string item = "select count(*) from patient where RegisterTime LIKE @time ";
             sqlOperation1.AddParameterWithValue("@time", "%" + date1 + "%");
-            int Count = Convert.ToInt32(sqlOperation1.ExecuteScalar(count));
-
-            int treatID = Count + 1;
-         
+            int Item = Convert.ToInt32(sqlOperation1.ExecuteScalar(item));
+            int treatID;
+            if (Item == 0)
+            {
+                treatID = Convert.ToInt32(date2 + "01");
+            }
+            else{
+                string count = "select max(Radiotherapy_ID) from patient where RegisterTime LIKE @time ";
+                sqlOperation1.AddParameterWithValue("@time", "%" + date1 + "%");
+                count = sqlOperation1.ExecuteScalar(count);
+                int Count = Convert.ToInt32(count);          
+                treatID = Count + 1;
+            }
             string strSqlCommand = "INSERT INTO patient(IdentificationNumber,Hospital,RecordNumber,Picture,Name,Gender,Age,Birthday,Nation,Address,Contact1,Contact2,Height,RegisterDoctor,Weight,Register_User_ID,RegisterTime,SubCenterPrincipal_ID,Radiotherapy_ID,Principal_User_ID,Hospital_ID,Ishospital) VALUES("
              + "@IdentificationNumber,@Hospital,@RecordNumber,@Picture,@Name,@Gender,@Age,@Birthday,@Nation,@Address,@Contact1,@Contact2,@Height,@doctorid,@Weight,@Register_User_ID,@RegisterTime,@SubCenterPrincipal_ID,@Radiotherapy_ID,@Principal_User_ID,@hospitalnumber,@Ishospital)";
             //各参数赋予实际值

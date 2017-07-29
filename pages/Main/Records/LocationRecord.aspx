@@ -39,67 +39,20 @@
                     <div class="content-title">
                         <span>基本信息：</span>
                     </div>
-                    <div class="single-row">
+                   <div class="single-row">
                         <div class="item col-xs-3">姓名：<span id="username" class="underline"></span></div>
                         <div class="item col-xs-3">性别：<span id="sex" class="underline"></span></div>
-                        <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>
-                        <div class="item col-xs-3">民族：<span id="nation" class="underline"></span></div>
+                        <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>                   
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-6">身份证号：<span id="idnumber" class="underline"></span></div>
-                        <div class="item col-xs-6">家庭地址：<span id="address" class="underline"></span></div>
+                       <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                       <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                       <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-6">联系方式1：<span id="contact" class="underline"></span></div>
-                        <div class="item col-xs-6">联系方式2：<span id="contact2" class="underline"></span></div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-6">分中心医院：<span id="hospital" class="underline"></span></div>
-                    </div>
-                </div>
-                <div class="paper-content">
-                    <div class="content-title">
-                        <span>病案信息：</span>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
-                        <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
-                        <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
                         <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
-                        <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                     </div>
-                </div>
-                <div class="paper-content">
-                    <div class="content-title">
-                        <span>模拟定位申请信息：</span>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-4">固定装置：<span id="fixedEquipment" class="underline"></span></div>
-                        <div class="item col-xs-4">固定模具：<span id="modelID" class="underline"></span></div>
-                        <div class="item col-xs-4">特殊要求：<span id="requireID" class="underline"></span></div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-12">体位：<span id="body" class="underline"></span></div>   
-                    </div>                    
-                     <div class="single-row">
-                        
-                        <div class="item col-xs-4">扫描部位：<span id="ScanPart" class="underline"></span></div>
-                        <div class="item col-xs-4">扫描方式：<span id="ScanMethod"  class="underline"></span></div>
-                         <div class="item col-xs-4">上界：<span id="UpperBound" class="underline"></span></div>
-                    </div>
-                     <div class="single-row">
-                        <div class="item col-xs-4">下界：<span id="LowerBound" class="underline"></span></div>
-                        <div class="item col-xs-4">增强：<span id="Enhance" class="underline"></span></div>  
-                        <div class="item col-xs-4">备注：<span id="Remarks" class="underline"></span></div>
-                    </div>
-                     <div class="single-row">
-                         <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
-                         <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>   
-                    </div>
-                </div>
+                </div>               
                 <div class="paper-content">
                     <div class="content-title">
                         <span>模拟定位记录：</span>
@@ -111,6 +64,53 @@
                     </div>
                     <div id="tab-content" class="tab-content">
                         <div class="tab-pane active" id="tab">
+                   <div class="single-row">
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4" style="padding-left:0px;">扫描部位：</span>
+                        <select id="scanpart" name="scanpart" class="form-item" disabled="disabled"></select>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4">扫描方式：</span>
+                        <select id="scanmethod" name="scanmethod" class="form-item" disabled="disabled"></select>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4" style="padding-left:0px;">上界：</span>
+                        <input id="up" name="up" type="text" class="form-item" disabled="disabled"/>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4">下界：</span>
+                        <input id="down" name="down" type="text" class="form-item" disabled="disabled"/>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4" style="padding-left:0px;">是否增强：</span>
+                        <span>
+                            <input  id="yes" type="radio" name="add" checked="true" style="width:20pt" onclick="forchange()" value="1" disabled="disabled"/>
+                            是
+                            <input id="No" type="radio" name="add"  style="width:20pt" onclick="forchange()" value="0" disabled="disabled"/>
+                            否
+                        </span>
+                    </div>
+                    <div  id="enhancemethod" class="col-xs-6">
+                        <span class="form-text col-xs-4">增强方式：</span>
+                        <select id="addmethod" name="addmethod" class="form-item" disabled="disabled"></select>
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-6">
+                        <span class="form-text col-xs-4" style="padding-left:0px;">特殊要求：</span>
+                        <select id="special" name="special" class="form-item" disabled="disabled"></select>
+                    </div>
+                </div>
+                 <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        <span class="col-xs-2" style="padding-left:0px;"> 申请备注：</span>                     
+                        <textarea id="remark" name="remark" class="form-area col-xs-10" disabled="disabled"></textarea>
+                    </div>
+                </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">层厚：</span>
