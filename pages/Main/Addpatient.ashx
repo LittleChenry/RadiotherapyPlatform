@@ -95,6 +95,7 @@ public class Addpatient : IHttpHandler {
                 int Count = Convert.ToInt32(count);          
                 treatID = Count + 1;
             }
+
             string strSqlCommand = "INSERT INTO patient(IdentificationNumber,Hospital,RecordNumber,Picture,Name,Gender,Age,Birthday,Nation,Address,Contact1,Contact2,Height,RegisterDoctor,Weight,Register_User_ID,RegisterTime,SubCenterPrincipal_ID,Radiotherapy_ID,Principal_User_ID,Hospital_ID,Ishospital) VALUES("
              + "@IdentificationNumber,@Hospital,@RecordNumber,@Picture,@Name,@Gender,@Age,@Birthday,@Nation,@Address,@Contact1,@Contact2,@Height,@doctorid,@Weight,@Register_User_ID,@RegisterTime,@SubCenterPrincipal_ID,@Radiotherapy_ID,@Principal_User_ID,@hospitalnumber,@Ishospital)";
             //各参数赋予实际值
@@ -155,9 +156,9 @@ public class Addpatient : IHttpHandler {
                     sqlOperation2.AddParameterWithValue("@doc", doctorid);
                     sqlOperation2.AddParameterWithValue("@Treatmentdescribe", "疗程1");
                     intSuccess2 = sqlOperation2.ExecuteNonQuery(treatinsert);
-                    
+
                 }
-                
+
             }
             if (intSuccess2 > 0)
             {
