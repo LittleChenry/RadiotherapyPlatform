@@ -24,7 +24,10 @@ $(document).ready(function () {
         window.location.replace("../Login/Login.aspx");
     });
     $("#save").unbind("click").click(function () {
-        $("#record-iframe")[0].contentWindow.save(this);
+        var result = $("#record-iframe")[0].contentWindow.save();
+        if (result == false) {
+            return false;
+        }
         $('#save').attr("disabled", "disabled");
         $('#saveTemplate-list').attr("disabled", "disabled");
         RolesToPatients();
