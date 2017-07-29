@@ -35,7 +35,7 @@ public class getpathologySecondItem : IHttpHandler {
         int i = 1;
         while (reader.Read())
         {
-            backText.Append("{\"ID\":\"" + i + "\",\"Name\":\"" + reader["group2"].ToString() + "\"}");
+            backText.Append("{\"ID\":\"" + reader["group2"].ToString() + "\",\"Name\":\"" + reader["group2"].ToString() + "\"}");
             if (i < count)
             {
 

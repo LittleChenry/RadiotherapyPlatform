@@ -27,6 +27,8 @@
         <div class="paper">
             <input type="hidden" id="progress" name="progress" />
             <input type="hidden" id="diaguserid" name="diaguserid" />
+               <input type="hidden" id="diagid" name="diaguserid" />
+            <input type="hidden" id="diagid2" name="diaguserid" />
             <div class="paper-title">
                 病情诊断
             </div>
@@ -35,40 +37,19 @@
                     <span>基本信息：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-3">姓名：<span id="username" class="underline"></span></div>
-                    <div class="item col-xs-3">性别：<span id="sex" class="underline"></span></div>
-                    <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>
-                    <div class="item col-xs-3">民族：<span id="nation" class="underline"></span></div>
+                    <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
+                    <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
+                    <div class="item col-xs-4">年龄：<span id="age" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-6">身份证号：<span id="idnumber" class="underline"></span></div>
-                    <div class="item col-xs-6">家庭地址：<span id="address" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-6">联系方式1：<span id="contact" class="underline"></span></div>
-                    <div class="item col-xs-6">联系方式2：<span id="contact2" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-6">分中心医院：<span id="hospital" class="underline"></span></div>
+                     <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                    <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
                 </div>
             </div>
+            
             <div class="paper-content">
                 <div class="content-title">
-                    <span>病案信息：</span>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
-                    <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
-                    <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">病案号：<span id="RecordNumber" class="underline"></span></div>
-                    <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>                
-                </div>
-            </div>
-            <div class="paper-content">
-                <div class="content-title">
-                    <span>病情诊断：</span>
+                    <span>添加诊断：</span>
                 </div>
                 <div class="single-row tab-row">
                     <ul id="tabs" class="nav nav-tabs">
@@ -77,16 +58,57 @@
                 </div>
                 <div id="tab-content" class="tab-content">
                     <div class="tab-pane active" id="tab">
+                          <div class="single-row">
+                            <div id="bingqing" class="col-xs-12">
+                                <span class="form-text col-xs-2" style="padding-left:0px;width:120.2px;">病情诊断结果：</span>
+                                <select id="bingqing1"  class="form-item col-xs-3" disabled="disabled"  onChange="loadone();" style="width:196.4px;">
+                                    <option value="">无</option>
+                                </select>
+                                <select id="bingqing2" class="form-item col-xs-3" disabled="disabled"  onChange="loadtwo();" style="width:196.4px;">
+                                    <option value="">无</option>
+                                </select>
+                                <select id="bingqing3" class="form-item col-xs-3" disabled="disabled"  onChange="loadthree();"  style="width:196.4px;">
+                                    <option value="">无</option>
+                                </select>
+                            </div>
+                            <input type="hidden"  id="copybingqing1" value=""/>
+                            <input type="hidden"  id="copybingqing2" value="" />
+                            <input type="hidden"  id="copybingqing3" value="" />
+                        </div>
+                         <div class="single-row">
+                            <div id="bingli" class="col-xs-12">
+                                <span class="form-text col-xs-2" style="padding-left:0px;width:120.2px;">病理诊断结果：</span>
+                                <select id="bingli1"  class="form-item col-xs-3" disabled="disabled"  onChange="loadonenext();" style="width:196.4px;">
+                                    <option value="">无</option>
+                                </select>
+                                <select id="bingli2" class="form-item col-xs-3" disabled="disabled"  onChange="loadtwonext();" style="width:196.4px;">
+                                    <option value="">无</option>
+                                </select>
+                            </div>
+                            <input type="hidden"  id="copybingli1" value=""/>
+                            <input type="hidden"  id="copybingli2" value="" />
+                        </div>
+
                         <div class="single-row">
-                            <div class="item col-xs-4">
-                                患病部位：
+                            <div class="item col-xs-6">
+                                病变部位：
                                 <select id="part" name="part" class="form-item" disabled="disabled"></select>
                             </div>
-                            <div class="item col-xs-4">
-                                诊断结果：
-                                <select id="diagresult" name="part" class="form-item" disabled="disabled"></select>
+                            <div class="item col-xs-6">
+                               照射部位：
+                                <select id="newpart" name="part" class="form-item" disabled="disabled"></select>
                             </div>                                  
-
+                        </div>
+                        
+                        <div class="single-row">
+                            <div class="item col-xs-6">
+                                疗程编辑：
+                                <input id="treatname" class="form-item" disabled="disabled" />
+                            </div>
+                            <div class="item col-xs-6">
+                                治疗目标：
+                                <select id="Aim"  class="form-item" disabled="disabled"></select>
+                            </div>                                  
                         </div>
                         <div class="single-row">
                             <div class="item area-group col-xs-12">

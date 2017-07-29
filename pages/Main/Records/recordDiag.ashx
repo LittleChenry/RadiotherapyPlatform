@@ -35,20 +35,39 @@ public class recordDiag : IHttpHandler {
         {
             string treatID = context.Request["treatid"];
             string part = context.Request["part"];
-            string diagresult = context.Request["diagresult"];
+            string newpart = context.Request["newpart"];
             string diaguserid = context.Request["diaguserid"];
             string remark = context.Request["remark"];
-           
+            string treatname = context.Request["treatname"];
+            string Aim = context.Request["Aim"];
+            string copybingli1 = context.Request["copybingli1"];
+            string copybingli2 = context.Request["copybingli2"];
+            string copybingqing1 = context.Request["copybingqing1"];
+            string copybingqing2 = context.Request["copybingqing2"];
+            string copybingqing3 = context.Request["copybingqing3"];
 
+            string selectcode1 = "select ID from icdcode where Group1=@group1 and Group2=@group2 and Chinese=@group3";
+            sqlOperation.AddParameterWithValue("@group1", copybingqing1);
+            sqlOperation.AddParameterWithValue("@group2", copybingqing2);
+            sqlOperation.AddParameterWithValue("@group3", copybingqing3);
+            int code1 = Convert.ToInt32(sqlOperation.ExecuteScalar(selectcode1));
+
+            string selectcode2 = "select ID from morphol where Groupsecond=@group3 and Groupfirst=@group4 ";
+            sqlOperation.AddParameterWithValue("@group3", copybingli1);
+            sqlOperation.AddParameterWithValue("@group4", copybingli2);
+            int code2 = Convert.ToInt32(sqlOperation.ExecuteScalar(selectcode2));
             DateTime date = DateTime.Now;
             string date1 = date.ToString();
             //将信息写入数据库，并返回是否成功
-            string strSqlCommand = "insert into diagnosisrecord(Part_ID,DiagnosisResult_ID,Diagnosis_User_ID,Time,Remarks)" +
-                                    "values(@Part_ID,@DiagnosisResult_ID,@Diagnosis_User_ID,@Time,@Remarks)";
+            string strSqlCommand = "insert into diagnosisrecord(Part_ID,LightPart_ID,DiagnosisResult_ID,PathologyResult,TreatAim_ID,Diagnosis_User_ID,Time,Remarks)" +
+                                    "values(@Part_ID,@LightPart_ID,@DiagnosisResult_ID,@PathologyResult,@TreatAim_ID,@Diagnosis_User_ID,@Time,@Remarks)";
 
-            sqlOperation1.AddParameterWithValue("@DiagnosisResult_ID", Convert.ToInt32(diagresult));
-            sqlOperation1.AddParameterWithValue("@Diagnosis_User_ID", Convert.ToInt32(diaguserid));
             sqlOperation1.AddParameterWithValue("@Part_ID", Convert.ToInt32(part));
+            sqlOperation1.AddParameterWithValue("@LightPart_ID", Convert.ToInt32(newpart));
+            sqlOperation1.AddParameterWithValue("@DiagnosisResult_ID", code1);
+            sqlOperation1.AddParameterWithValue("@PathologyResult", code2);
+            sqlOperation1.AddParameterWithValue("@TreatAim_ID", Convert.ToInt32(Aim));
+            sqlOperation1.AddParameterWithValue("@Diagnosis_User_ID", Convert.ToInt32(diaguserid));
             sqlOperation1.AddParameterWithValue("@Time", date1);
             sqlOperation1.AddParameterWithValue("@Remarks", remark);
 
@@ -62,8 +81,9 @@ public class recordDiag : IHttpHandler {
             {
                 diagno = Convert.ToInt32(reader["ID"].ToString());
             }
-            string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID where ID=@treatid";
+            string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe where ID=@treatid";
             sqlOperation2.AddParameterWithValue("@treatid", treatID);
+            sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
             sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
             sqlOperation2.AddParameterWithValue("@Progress", "0,1");
             int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
