@@ -99,13 +99,9 @@ public class patientInfoForZLJS : IHttpHandler {
             }
             else
             {
-                string sqlCommand3 = "select TumorName from diagnosisrecord,diagnosisresult where diagnosisrecord.ID=@ID and diagnosisrecord.DiagnosisResult_ID =diagnosisresult.ID";
+                string sqlCommand3 = "select Chinese from diagnosisrecord,icdcode where diagnosisrecord.ID=@ID and diagnosisrecord.DiagnosisResult_ID =icdcode.ID";
                 sqlOperation1.AddParameterWithValue("@ID", reader["DiagnosisRecord_ID"].ToString());
-                string TumorName = sqlOperation1.ExecuteScalar(sqlCommand3);
-                string sqlCommand4 = "select Description from diagnosisrecord,diagnosisresult where diagnosisrecord.ID=@ID and diagnosisrecord.DiagnosisResult_ID =diagnosisresult.ID";
-                sqlOperation1.AddParameterWithValue("@ID", reader["DiagnosisRecord_ID"].ToString());
-                string Description = sqlOperation1.ExecuteScalar(sqlCommand4);
-                result = TumorName + Description;
+                result = sqlOperation1.ExecuteScalar(sqlCommand3);
             }
             string da = reader["Date"].ToString();
             DateTime dt1 = Convert.ToDateTime(da);
