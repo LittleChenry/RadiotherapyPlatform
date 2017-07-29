@@ -29,7 +29,7 @@ public class Getfinishedfix : IHttpHandler {
         int count=Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
         StringBuilder backText = new StringBuilder("{\"info\":[");
         int i = 1;
-        string sqlCommand2 = "select treatment.Treatmentname as treatmentname,Treatmentdescribe,material.Name as materialName,material.ID as materialID,FixedRequirements_ID as RequirementsID,fixedrequirements.Requirements as fixedrequire,fixedequipment.ID as fixedequipid,fixedequipment.Name as fixedequipname,BodyPosition,equipment.Name as equipname,Begin,End,Date,ApplicationTime,user.Name as username from treatment,fixed,fixedequipment,fixedrequirements,material,user,appointment,equipment where treatment.Patient_ID=@patient and treatment.Fixed_ID=fixed.ID and fixed.Appointment_ID=appointment.ID  and material.ID=fixed.Model_ID  and fixed.FixedEquipment_ID=fixedequipment.ID  and fixed.FixedRequirements_ID=fixedrequirements.ID and fixed.Application_User_ID=user.ID and appointment.Equipment_ID=equipment.ID";
+        string sqlCommand2 = "select treatment.Treatmentname as treatmentname,RemarksApply,Treatmentdescribe,material.Name as materialName,material.ID as materialID,FixedRequirements_ID as RequirementsID,fixedrequirements.Requirements as fixedrequire,fixedequipment.ID as fixedequipid,fixedequipment.Name as fixedequipname,BodyPosition,equipment.Name as equipname,Begin,End,Date,ApplicationTime,user.Name as username from treatment,fixed,fixedequipment,fixedrequirements,material,user,appointment,equipment where treatment.Patient_ID=@patient and treatment.Fixed_ID=fixed.ID and fixed.Appointment_ID=appointment.ID  and material.ID=fixed.Model_ID  and fixed.FixedEquipment_ID=fixedequipment.ID  and fixed.FixedRequirements_ID=fixedrequirements.ID and fixed.Application_User_ID=user.ID and appointment.Equipment_ID=equipment.ID";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand2);
         while (reader.Read())
         {
@@ -41,7 +41,7 @@ public class Getfinishedfix : IHttpHandler {
             string date3 = dt2.ToString("yyyy-MM-dd HH:mm");
             backText.Append("{\"materialName\":\"" + reader["materialName"].ToString() + "\",\"treatmentname\":\"" + reader["treatmentname"] + "\",\"materialID\":\"" + reader["materialID"] + "\",\"require\":\"" + reader["RequirementsID"] + "\",\"fixedrequire\":\"" + reader["fixedrequire"] +
                  "\",\"fixedequipname\":\"" + reader["fixedequipname"].ToString() + "\",\"fixedequipid\":\"" + reader["fixedequipid"].ToString() + "\",\"BodyPosition\":\"" + reader["BodyPosition"].ToString() + "\",\"equipname\":\"" + reader["equipname"].ToString() +
-                 "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"] +
+                 "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"] + "\",\"Remarks\":\"" + reader["RemarksApply"] +
                  "\",\"Date\":\"" + date1 + "\",\"ApplicationTime\":\"" + date3 + "\",\"username\":\"" + reader["username"].ToString() + "\"}");
             if (i < count)
             {

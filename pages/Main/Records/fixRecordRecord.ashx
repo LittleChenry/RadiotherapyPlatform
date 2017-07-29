@@ -88,11 +88,14 @@ public class fixRecordRecord : IHttpHandler {
             bool state = true;
 
 
-            string strSqlCommand = "UPDATE  fixed  SET Pictures=@picture,BodyPositionDetail=@detail,AnnexDescription=@description,Remarks=@remarks,OperateTime=@datetime,Operate_User_ID=@userid where fixed.ID=@fixedID";
+            string strSqlCommand = "UPDATE  fixed  SET Pictures=@picture,BodyPosition=@detail,Model_ID=@modelID,HeadRest_ID=@HeadRest_ID,FixedRequirements_ID=@FixedRequirements_ID,FixedEquipment_ID=@FixedEquipment_ID,Remarks=@remarks,OperateTime=@datetime,Operate_User_ID=@userid where fixed.ID=@fixedID";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@fixedID", FixedID);
-            sqlOperation.AddParameterWithValue("@detail", context.Request.Form["BodyPositionDetail"]);
-            sqlOperation.AddParameterWithValue("@description", context.Request.Form["AnnexDescription"]);
+            sqlOperation.AddParameterWithValue("@detail", context.Request.Form["bodypost"]);
+            sqlOperation.AddParameterWithValue("@modelID", Convert.ToInt32(context.Request.Form["modelselect"]));
+            sqlOperation.AddParameterWithValue("@HeadRest_ID", Convert.ToInt32(context.Request.Form["Head"]));
+            sqlOperation.AddParameterWithValue("@FixedRequirements_ID", Convert.ToInt32(context.Request.Form["specialrequest"]));
+            sqlOperation.AddParameterWithValue("@FixedEquipment_ID", Convert.ToInt32(context.Request.Form["fixEquip"]));
             sqlOperation.AddParameterWithValue("@remarks", context.Request.Form["Remarks"]);
             sqlOperation.AddParameterWithValue("@datetime", datetime);
             sqlOperation.AddParameterWithValue("@userid", userid);

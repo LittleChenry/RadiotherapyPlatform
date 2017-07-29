@@ -64,6 +64,16 @@ public class patientInfoForMNJS : IHttpHandler {
 
         while (reader.Read())
         {
+            string progress = reader["Progress"].ToString();
+            string[] strArray = progress.Split(',');
+            if (reader["Task"].ToString() == "模拟定位" && Array.LastIndexOf(strArray, "4") < 0)
+            {
+                continue;
+            }
+            if (reader["Task"].ToString() == "复位模拟" && (Array.LastIndexOf(strArray, "5") < 0 || Array.LastIndexOf(strArray, "4") < 0 ))
+            {
+                continue;
+            }
             string result="";
             if (reader["DiagnosisRecord_ID"] is DBNull)
             {

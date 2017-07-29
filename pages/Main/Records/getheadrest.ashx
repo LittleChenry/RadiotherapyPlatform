@@ -1,19 +1,10 @@
-﻿<%@ WebHandler Language="C#" Class="getmodel" %>
+﻿<%@ WebHandler Language="C#" Class="getheadrest" %>
 
 using System;
 using System.Web;
 using System.Text;
-/* ***********************************************************
- * FileName:getmodel.ashx
- * Writer: xubxiao
- * create Date: 2017-5-5
- * ReWriter:
- * Rewrite Date:
- * impact :
- * 获取数据库中模具参考值
- * **********************************************************/
+public class getheadrest : IHttpHandler {
 
-public class getmodel : IHttpHandler {
     DataLayer sqlOperation = new DataLayer("sqlStr");
     public void ProcessRequest(HttpContext context)
     {
@@ -34,10 +25,10 @@ public class getmodel : IHttpHandler {
     }
     private string getmodelItem()
     {
-        string countItem = "SELECT count(*) FROM material where Amount>0";
+        string countItem = "SELECT count(*) FROM headrest";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
 
-        string sqlCommand = "SELECT * FROM material  where Amount>0";
+        string sqlCommand = "SELECT * FROM headrest";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;

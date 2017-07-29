@@ -31,7 +31,7 @@ public class getNews : IHttpHandler {
     }
     private string getfixrecordinfo(HttpContext context)
     {
-        string role = context.Request["role"];
+        string role = context.Request.QueryString["role"];
         string Count = "select count(*) from news where news.Permission like @role";
         sqlOperation2.AddParameterWithValue("@role", "%" + role + "%");
         int count = int.Parse(sqlOperation2.ExecuteScalar(Count));

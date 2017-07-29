@@ -19,20 +19,20 @@ function Init(evt) {
     var patient = getfixPatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
-    document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
-    document.getElementById("nation").innerHTML = patient.Nation;
+    //document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
+    //document.getElementById("nation").innerHTML = patient.Nation;
     document.getElementById("age").innerHTML = patient.Age;
-    document.getElementById("address").innerHTML = patient.Address;
-    document.getElementById("hospital").innerHTML = patient.Hospital;
-    document.getElementById("contact").innerHTML = patient.Contact1;
-    document.getElementById("contact2").innerHTML = patient.Contact2;
+    //document.getElementById("address").innerHTML = patient.Address;
+    //document.getElementById("hospital").innerHTML = patient.Hospital;
+    //document.getElementById("contact").innerHTML = patient.Contact1;
+    //document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
-    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
-    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    //document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    //document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     createmodelselectItem(document.getElementById("modelselect"));
     createspecialrequestItem(document.getElementById("specialrequest"));
     createfixEquipItem(document.getElementById("fixEquip"));
@@ -47,6 +47,7 @@ function Init(evt) {
                 document.getElementById("specialrequest").value = info[i].require;
                 document.getElementById("fixEquip").value = info[i].fixedequipid;
                 document.getElementById("bodyPost").value = info[i].BodyPosition;
+                document.getElementById("Remarks").value = info[i].Remarks;
                 document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
                 document.getElementById("applyuser").innerHTML = info[i].username;
                 document.getElementById("time").innerHTML = info[i].ApplicationTime;
@@ -57,7 +58,9 @@ function Init(evt) {
                     + '<div class="item col-xs-6">固定装置：<span class="underline">' + info[i].fixedequipname + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">体位:<span class="underline">' + info[i].BodyPosition + '</span></div>'
                     + '<div class="item col-xs-6">特殊要求：<span class="underline">' + info[i].fixedrequire + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
+                    + '<div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
@@ -83,7 +86,9 @@ function Init(evt) {
                     + '<div class="item col-xs-6">固定装置：<span class="underline">' + info[i].fixedequipname + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">体位:<span class="underline">' + info[i].BodyPosition + '</span></div>'
                     + '<div class="item col-xs-6">特殊要求：<span class="underline">' + info[i].fixedrequire + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';
+                    + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
+                    + '<div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
@@ -98,6 +103,7 @@ function Init(evt) {
                 document.getElementById("specialrequest").value = info[k].require;
                 document.getElementById("fixEquip").value = info[k].fixedequipid;
                 document.getElementById("bodyPost").value = info[k].BodyPosition;
+                document.getElementById("Remarks").value = info[k].Remarks;
             }
         });
     });
@@ -172,6 +178,7 @@ function chooseTempalte(templateID) {
     document.getElementById("specialrequest").value = obj1.templateInfo[0].FixedRequirements_ID;
     document.getElementById("fixEquip").value = obj1.templateInfo[0].FixedEquipment_ID;
     document.getElementById("bodyPost").value = obj1.templateInfo[0].BodyPosition;
+    document.getElementById("Remarks").value = obj1.templateInfo[0].Remarks;
 }
 function save() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
@@ -179,7 +186,8 @@ function save() {
     var model = document.getElementById("modelselect").value;
     var special=document.getElementById("specialrequest").value;
     var time=document.getElementById("time").value;
-    var bodypost= document.getElementById("bodyPost").value;
+    var bodypost = document.getElementById("bodyPost").value;
+    var Remarks = document.getElementById("Remarks").value;
     var fixequip = document.getElementById("fixEquip").value;
     var appointid = document.getElementById("idforappoint").value;
     if (document.getElementById("modelselect").value == "allItem") {
@@ -217,6 +225,7 @@ function save() {
             model: model,
             fixreq: special,
             user: userID,
+            Remarks:Remarks,
             fixequip: fixequip,
             bodypost: bodypost
         },
@@ -244,7 +253,8 @@ function saveTemplate(TemplateName) {
     var model = document.getElementById("modelselect").value;
     var special = document.getElementById("specialrequest").value;  
     var bodypost = document.getElementById("bodyPost").value;
-    var fixequip = document.getElementById("fixEquip").value;   
+    var fixequip = document.getElementById("fixEquip").value;
+    var Remarks = document.getElementById("Remarks").value;
     if (document.getElementById("modelselect").value == "allItem") {
         window.alert("模具没有选择");
         return;
@@ -267,7 +277,7 @@ function saveTemplate(TemplateName) {
         }
     }
     var xmlHttp = new XMLHttpRequest();
-    var url = "fixedApplytemplate.ashx?templatename=" + TemplateName + "&model=" + model + "&fixreq=" + special + "&user=" + userID + "&fixequip=" + fixequip + "&bodypost=" + bodypost;
+    var url = "fixedApplytemplate.ashx?templatename=" + TemplateName + "&model=" + model + "&fixreq=" + special + "&user=" + userID + "&fixequip=" + fixequip + "&bodypost=" + bodypost + "&Remarks=" + Remarks;
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     var result = xmlHttp.responseText;
@@ -551,6 +561,7 @@ function remove() {
     document.getElementById("modelselect").removeAttribute("disabled");
     document.getElementById("specialrequest").removeAttribute("disabled"); 
     document.getElementById("fixEquip").removeAttribute("disabled");
+    document.getElementById("Remarks").removeAttribute("disabled");
     document.getElementById("bodyPost").removeAttribute("disabled");
     document.getElementById("appointtime").removeAttribute("disabled");
     document.getElementById("chooseappoint").removeAttribute("disabled");

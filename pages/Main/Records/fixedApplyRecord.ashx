@@ -37,7 +37,7 @@ public class fixedApplyRecord : IHttpHandler {
         string user = context.Request["user"];
         string fixequip = context.Request["fixequip"];
         string bodypost = context.Request["bodypost"];
-
+        string Remarks = context.Request["Remarks"];
         string strcommand = "select State from appointment where ID=@appointid";
         sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));
         string count = sqlOperation.ExecuteScalar(strcommand);
@@ -63,14 +63,15 @@ public class fixedApplyRecord : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@Patient", Convert.ToInt32(patient_ID));
                 int Success1 = sqlOperation.ExecuteNonQuery(finishappoint);
                //将信息写入数据库，并返回是否成功
-                string strSqlCommand = "INSERT INTO fixed(Appointment_ID,Model_ID,FixedRequirements_ID,Application_User_ID,ApplicationTime,BodyPosition,FixedEquipment_ID) " +
-                                        "VALUES(@Appointment_ID,@Model_ID,@FixedRequirements_ID,@Application_User_ID,@ApplicationTime,@BodyPosition,@FixedEquipment_ID)";
+                string strSqlCommand = "INSERT INTO fixed(Appointment_ID,Model_ID,FixedRequirements_ID,Application_User_ID,ApplicationTime,BodyPosition,RemarksApply,FixedEquipment_ID) " +
+                                        "VALUES(@Appointment_ID,@Model_ID,@FixedRequirements_ID,@Application_User_ID,@ApplicationTime,@BodyPosition,@RemarksApply,@FixedEquipment_ID)";
                 sqlOperation1.AddParameterWithValue("@Appointment_ID", Convert.ToInt32(appoint));
                 sqlOperation1.AddParameterWithValue("@Model_ID", Convert.ToInt32(model));
                 sqlOperation1.AddParameterWithValue("@FixedRequirements_ID", Convert.ToInt32(fixreq));
                 sqlOperation1.AddParameterWithValue("@Application_User_ID", Convert.ToInt32(user));
                 sqlOperation1.AddParameterWithValue("@ApplicationTime", DateTime.Now);
                 sqlOperation1.AddParameterWithValue("@BodyPosition", bodypost);
+                sqlOperation1.AddParameterWithValue("@RemarksApply", Remarks);
                 sqlOperation1.AddParameterWithValue("@FixedEquipment_ID", fixequip);
                 int Success2 = sqlOperation1.ExecuteNonQuery(strSqlCommand);
 

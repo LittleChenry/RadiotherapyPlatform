@@ -80,17 +80,12 @@ public class Addpatient : IHttpHandler {
             DateTime date = DateTime.Now;
             string date1 = date.ToString("yyyy-MM-dd");
             string date2 = date.ToString("yyyyMMdd");
-            string count = "select count(ID) from patient where RegisterTime LIKE @time ";
+            string count = "select max(Radiotherapy_ID) from patient where RegisterTime LIKE @time ";
             sqlOperation1.AddParameterWithValue("@time", "%" + date1 + "%");
             int Count = Convert.ToInt32(sqlOperation1.ExecuteScalar(count));
-            string add = Count.ToString();
-            if (Count < 10)
-            {
-                add = "0" + Count;
-            }
-            int treatID = 0;
-            string treatid = date2 + add;
-            treatID = Convert.ToInt32(treatid);
+
+            int treatID = Count + 1;
+         
             string strSqlCommand = "INSERT INTO patient(IdentificationNumber,Hospital,RecordNumber,Picture,Name,Gender,Age,Birthday,Nation,Address,Contact1,Contact2,Height,RegisterDoctor,Weight,Register_User_ID,RegisterTime,SubCenterPrincipal_ID,Radiotherapy_ID,Principal_User_ID,Hospital_ID,Ishospital) VALUES("
              + "@IdentificationNumber,@Hospital,@RecordNumber,@Picture,@Name,@Gender,@Age,@Birthday,@Nation,@Address,@Contact1,@Contact2,@Height,@doctorid,@Weight,@Register_User_ID,@RegisterTime,@SubCenterPrincipal_ID,@Radiotherapy_ID,@Principal_User_ID,@hospitalnumber,@Ishospital)";
             //各参数赋予实际值

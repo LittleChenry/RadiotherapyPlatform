@@ -41,51 +41,17 @@
                     <div class="single-row">
                         <div class="item col-xs-3">姓名：<span id="username" class="underline"></span></div>
                         <div class="item col-xs-3">性别：<span id="sex" class="underline"></span></div>
-                        <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>
-                        <div class="item col-xs-3">民族：<span id="nation" class="underline"></span></div>
+                        <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>                   
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-6">身份证号：<span id="idnumber" class="underline"></span></div>
-                        <div class="item col-xs-6">家庭地址：<span id="address" class="underline"></span></div>
+                       <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                       <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                       <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-6">联系方式1：<span id="contact" class="underline"></span></div>
-                        <div class="item col-xs-6">联系方式2：<span id="contact2" class="underline"></span></div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-6">分中心医院：<span id="hospital" class="underline"></span></div>
-                    </div>
-                </div>
-                <div class="paper-content">
-                    <div class="content-title">
-                        <span>病案信息：</span>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
-                        <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
-                        <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
                         <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
-                        <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
                     </div>
-                </div>  
-                <div class="paper-content"> 
-                    <div class="content-title">
-                        <span>体位固定申请信息：</span>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-4">固定装置：<span id="fixedEquipment" class="underline"></span></div>
-                        <div class="item col-xs-4">固定模具：<span id="modelID" class="underline"></span></div> 
-                        <div class="item col-xs-4">体位：<span id="body" class="underline"></span></div>  
-                    </div>               
-                    <div class="single-row">
-                        <div class="item col-xs-4">特殊要求：<span id="requireID" class="underline"></span></div>
-                        <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
-                        <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>   
-                    </div>
-                </div>
+                </div>                  
                 <div class="paper-content">
                     <div class="content-title">
                         <span>体位固定记录：</span>
@@ -97,12 +63,37 @@
                     </div>
                     <div id="tab-content" class="tab-content">
                         <div class="tab-pane active" id="tab">
-                            <div class="single-row">
-                                <div class="item area-group col-xs-12">
-                                    <span class="col-xs-2" style="padding-left:0px;">体位详细描述：</span>
-                                    <textarea id="BodyPositionDetail" class="form-area col-xs-10" name="BodyPositionDetail" disabled="disabled"></textarea>
+                           <div class="single-row">
+                                <div class="col-xs-6">
+                                    <span class="form-text col-xs-4" style="padding-left:0px;">模具：</span>
+                                    <select id="modelselect" name="modelselect" class="form-item" disabled="disabled"></select>
                                 </div>
-                            </div>                   
+                                <div class="col-xs-6">
+                                    <span class="form-text col-xs-4">固定装置：</span>
+                                    <select id="fixEquip" name="fixEquip" class="form-item" disabled="disabled"></select>
+                                </div>
+                            </div>
+                            <div class="single-row">
+                                <div class="col-xs-6">
+                                    <span class="form-text col-xs-4" style="padding-left:0px;">体位：</span>
+                                    <select id="bodyPost" name="bodyPost" class="form-item" disabled="disabled">
+                                        <option value="allItem">----选择体位-----</option>
+                                        <option value="仰卧">仰卧</option>
+                                        <option value="俯卧">俯卧</option>
+                                        <option value="侧卧">侧卧</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-6">
+                                    <span class="form-text col-xs-4">特殊要求：</span>
+                                    <select id="specialrequest" name="specialrequest" class="form-item" disabled="disabled"></select>
+                                </div>
+                            </div>  
+                            <div class="single-row">
+                                <div class="col-xs-6">
+                                    <span class="form-text col-xs-4" style="padding-left:0px;">头枕：</span>
+                                    <select id="Head" name="Head" class="form-item" disabled="disabled"></select>
+                                </div>                                
+                            </div>  
                             <div class="single-row">
                                 <div class="item area-group col-xs-12">
                                     <span class="col-xs-2" style="padding-left:0px;">备注：</span>

@@ -21,33 +21,35 @@ function Init(evt) {
     var patient = getPatientInfo(treatID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
-    document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
-    document.getElementById("nation").innerHTML = patient.Nation;
+    //document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
+    //document.getElementById("nation").innerHTML = patient.Nation;
     document.getElementById("age").innerHTML = patient.Age;
-    document.getElementById("address").innerHTML = patient.Address;
-    document.getElementById("hospital").innerHTML = patient.Hospital;
-    document.getElementById("contact").innerHTML = patient.Contact1;
-    document.getElementById("contact2").innerHTML = patient.Contact2;
+    //document.getElementById("address").innerHTML = patient.Address;
+    //document.getElementById("hospital").innerHTML = patient.Hospital;
+    //document.getElementById("contact").innerHTML = patient.Contact1;
+    //document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
-    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
-    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    //document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    //document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    createmodelselectItem(document.getElementById("modelselect"));
+    createspecialrequestItem(document.getElementById("specialrequest"));
+    createfixEquipItem(document.getElementById("fixEquip"));
+    createheadrestItem(document.getElementById("Head"));
     $("#current-tab").text(patient.Treatmentdescribe + "体位固定记录");
     var fixedInfo = getFixedInfo(treatID);
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '4')) {
         for (var i = 0; i < fixedInfo.fixedInfo.length; i++) {
             if (patient.Treatmentname == fixedInfo.fixedInfo[i].Treatmentname) {
-                document.getElementById("body").innerHTML = fixedInfo.fixedInfo[i].body;
-                document.getElementById("requireID").innerHTML = fixedInfo.fixedInfo[i].requireID;
-                document.getElementById("modelID").innerHTML = fixedInfo.fixedInfo[i].modelID;
-                document.getElementById("fixedEquipment").innerHTML = fixedInfo.fixedInfo[i].fixedEquipment;
-                document.getElementById("ApplicationUser").innerHTML = fixedInfo.fixedInfo[i].ApplicationUser;
-                document.getElementById("ApplicationTime").innerHTML = fixedInfo.fixedInfo[i].ApplicationTime;              
-                document.getElementById("BodyPositionDetail").value = fixedInfo.fixedInfo[i].BodyPositionDetail;          
+                document.getElementById("modelselect").value =  fixedInfo.fixedInfo[i].modelID;
+                document.getElementById("specialrequest").value = fixedInfo.fixedInfo[i].requireID;
+                document.getElementById("fixEquip").value = fixedInfo.fixedInfo[i].fixedEquipment;
+                document.getElementById("bodyPost").value = fixedInfo.fixedInfo[i].body;
+                document.getElementById("Head").value = fixedInfo.fixedInfo[i].headrest;
                 document.getElementById("Remarks").value = fixedInfo.fixedInfo[i].Remarks;
                 document.getElementById("operator").innerHTML = fixedInfo.fixedInfo[i].operate;
                 document.getElementById("date").innerHTML = fixedInfo.fixedInfo[i].OperateTime;
@@ -80,7 +82,11 @@ function Init(evt) {
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + fixedInfo.fixedInfo[i].Treatmentdescribe + '体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'"><div class="single-row">'
-                    + '<div class="item col-xs-12">体位详细描述：<span class="underline">'+ fixedInfo.fixedInfo[i].BodyPositionDetail +'</span></div></div>'
+                    + '<div class="item col-xs-6">模具：<span class="underline">' + fixedInfo.fixedInfo[i].modelname + '</span></div>'
+                    + '<div class="item col-xs-6">固定装置：<span class="underline">' +  fixedInfo.fixedInfo[i].fixedEquipmentname+ '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">体位:<span class="underline">' + fixedInfo.fixedInfo[i].body + '</span></div>'
+                    + '<div class="item col-xs-6">特殊要求：<span class="underline">' + fixedInfo.fixedInfo[i].requirename + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">头枕:<span class="underline">' + fixedInfo.fixedInfo[i].headrestname + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">'+ fixedInfo.fixedInfo[i].Remarks +'</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">体位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
@@ -115,7 +121,11 @@ function Init(evt) {
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + fixedInfo.fixedInfo[i].Treatmentdescribe + '体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
-                    + '<div class="item col-xs-12">体位详细描述：<span class="underline">' + fixedInfo.fixedInfo[i].BodyPositionDetail + '</span></div></div>'
+                    + '<div class="item col-xs-6">模具：<span class="underline">' + fixedInfo.fixedInfo[i].modelname + '</span></div>'
+                    + '<div class="item col-xs-6">固定装置：<span class="underline">' + fixedInfo.fixedInfo[i].fixedEquipmentname + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">体位:<span class="underline">' + fixedInfo.fixedInfo[i].body + '</span></div>'
+                    + '<div class="item col-xs-6">特殊要求：<span class="underline">' + fixedInfo.fixedInfo[i].requirename + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">头枕:<span class="underline">' + fixedInfo.fixedInfo[i].headrestname + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + fixedInfo.fixedInfo[i].Remarks + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">体位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
@@ -136,24 +146,110 @@ function Init(evt) {
                     $(this).bind("click", showPicture);
                 });
             } else {
-                document.getElementById("body").innerHTML = fixedInfo.fixedInfo[i].body;
-                document.getElementById("requireID").innerHTML = fixedInfo.fixedInfo[i].requireID;
-                document.getElementById("modelID").innerHTML = fixedInfo.fixedInfo[i].modelID;
-                document.getElementById("fixedEquipment").innerHTML = fixedInfo.fixedInfo[i].fixedEquipment;
-                document.getElementById("ApplicationUser").innerHTML = fixedInfo.fixedInfo[i].ApplicationUser;
-                document.getElementById("ApplicationTime").innerHTML = fixedInfo.fixedInfo[i].ApplicationTime;
-                var BodyPositionDetail = "固定装置：" + fixedInfo.fixedInfo[i].fixedEquipment + "；固定模具：" + fixedInfo.fixedInfo[i].modelID + "；体位：" + fixedInfo.fixedInfo[i].body + "；特殊要求：" + fixedInfo.fixedInfo[i].requireID;
-                document.getElementById("BodyPositionDetail").value = BodyPositionDetail;
+                document.getElementById("modelselect").value = fixedInfo.fixedInfo[i].modelID;
+                document.getElementById("specialrequest").value = fixedInfo.fixedInfo[i].requireID;
+                document.getElementById("fixEquip").value = fixedInfo.fixedInfo[i].fixedEquipment;
+                document.getElementById("bodyPost").value = fixedInfo.fixedInfo[i].body;              
             }
         }
     }
     $("#tab-content").find("button").each(function () {
         $(this).bind("click", function () {
             var k = this.id;
-            document.getElementById("BodyPositionDetail").value = fixedInfo.fixedInfo[k].BodyPositionDetail;
+            document.getElementById("modelselect").value = fixedInfo.fixedInfo[k].modelID;
+            document.getElementById("specialrequest").value = fixedInfo.fixedInfo[k].requireID;
+            document.getElementById("fixEquip").value = fixedInfo.fixedInfo[k].fixedEquipment;
+            document.getElementById("bodyPost").value = fixedInfo.fixedInfo[k].body;
+            document.getElementById("Head").value = fixedInfo.fixedInfo[k].headrest;
             document.getElementById("Remarks").value = fixedInfo.fixedInfo[k].Remarks;
         });
     });
+}
+function createheadrestItem(thiselement) {
+    var modelItem = JSON.parse(getrestItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("-------头枕选择-------");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < modelItem.length; i++) {
+        if (modelItem[i] != "") {
+            thiselement.options[i + 1] = new Option(modelItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(modelItem[i].ID);
+        }
+    }
+
+}
+function getrestItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getheadrest.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+function createmodelselectItem(thiselement) {
+    var modelItem = JSON.parse(getmodelItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("-------模具选择-------");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < modelItem.length; i++) {
+        if (modelItem[i] != "") {
+            thiselement.options[i + 1] = new Option(modelItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(modelItem[i].ID);
+        }
+    }
+
+}
+function getmodelItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getmodel.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+//第二页的特殊要求下拉菜单
+function createspecialrequestItem(thiselement) {
+    var specialItem = JSON.parse(getspecialItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("-------特殊要求-------");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < specialItem.length; i++) {
+        if (specialItem[i] != "") {
+            thiselement.options[i + 1] = new Option(specialItem[i].Requirements);
+            thiselement.options[i + 1].value = parseInt(specialItem[i].ID);
+        }
+    }
+
+}
+function getspecialItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getspecial.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+//第二页获取固定装置下拉菜单
+function createfixEquipItem(thiselement) {
+    var fixequipItem = JSON.parse(getfixequipItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("-------固定装置-------");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < fixequipItem.length; i++) {
+        if (fixequipItem[i] != "") {
+            thiselement.options[i + 1] = new Option(fixequipItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(fixequipItem[i].ID);
+        }
+    }
+
+}
+function getfixequipItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getfixequip.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
 }
 function isInArray(arr, value) {
     for (var i = 0; i < arr.length; i++) {
@@ -279,17 +375,24 @@ function dateformat(format) {
     return time;
 }
 function save() {
-    
-    if (document.getElementById("BodyPositionDetail").value == "") {
-        alert("请填写体位详细描述");
-        return;
-    }    
-    if (document.getElementById("Remarks").value == "") {
-        alert("请填写备注");
+    if (document.getElementById("modelselect").value == "allItem") {
+        window.alert("模具没有选择");
         return;
     }
-    if (document.getElementById("Remarks").value == "") {
-        alert("请填写备注");
+    if (document.getElementById("specialrequest").value == "allItem") {
+        window.alert("特殊要求没有选择");
+        return;
+    }
+    if (document.getElementById("bodyPost").value == "allItem") {
+        window.alert("体位没有选择");
+        return;
+    }
+    if (document.getElementById("fixEquip").value == "allItem") {
+        window.alert("固定装置没有选择");
+        return;
+    }
+    if (document.getElementById("Head").value == "allItem") {
+        window.alert("头枕没有选择");
         return;
     }
     if ((typeof (userID) == "undefined")) {
@@ -306,7 +409,7 @@ function save() {
         async: false,
         contentType: false,
         success: function (data) {
-            alert("更新成功");
+            alert("保存成功");
             window.location.reload();
         },
         error: function (e) {
@@ -318,6 +421,10 @@ function save() {
     });
 }
 function remove() {
-    document.getElementById("BodyPositionDetail").removeAttribute("disabled");
+    document.getElementById("modelselect").removeAttribute("disabled");
+    document.getElementById("specialrequest").removeAttribute("disabled");
+    document.getElementById("fixEquip").removeAttribute("disabled");
+    document.getElementById("bodyPost").removeAttribute("disabled");
     document.getElementById("Remarks").removeAttribute("disabled");
+    document.getElementById("Head").removeAttribute("disabled");
 }
