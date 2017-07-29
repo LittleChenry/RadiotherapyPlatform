@@ -91,8 +91,8 @@ public class Addpatient : IHttpHandler {
             int treatID = 0;
             string treatid = date2 + add;
             treatID = Convert.ToInt32(treatid);
-            string strSqlCommand = "INSERT INTO patient(IdentificationNumber,Hospital,RecordNumber,Picture,Name,Gender,Age,Birthday,Nation,Address,Contact1,Contact2,Height,RegisterDoctor,Weight,Register_User_ID,RegisterTime,SubCenterPrincipal_ID,Radiotherapy_ID,Principal_User_ID,Hospital_ID) VALUES("
-             + "@IdentificationNumber,@Hospital,@RecordNumber,@Picture,@Name,@Gender,@Age,@Birthday,@Nation,@Address,@Contact1,@Contact2,@Height,@doctorid,@Weight,@Register_User_ID,@RegisterTime,@SubCenterPrincipal_ID,@Radiotherapy_ID,@Principal_User_ID,@hospitalnumber)";
+            string strSqlCommand = "INSERT INTO patient(IdentificationNumber,Hospital,RecordNumber,Picture,Name,Gender,Age,Birthday,Nation,Address,Contact1,Contact2,Height,RegisterDoctor,Weight,Register_User_ID,RegisterTime,SubCenterPrincipal_ID,Radiotherapy_ID,Principal_User_ID,Hospital_ID,Ishospital) VALUES("
+             + "@IdentificationNumber,@Hospital,@RecordNumber,@Picture,@Name,@Gender,@Age,@Birthday,@Nation,@Address,@Contact1,@Contact2,@Height,@doctorid,@Weight,@Register_User_ID,@RegisterTime,@SubCenterPrincipal_ID,@Radiotherapy_ID,@Principal_User_ID,@hospitalnumber,@Ishospital)";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@IdentificationNumber", context.Request.Form["IDcardNumber"]);
             sqlOperation.AddParameterWithValue("@Hospital", context.Request.Form["Hospital"]);
@@ -114,6 +114,7 @@ public class Addpatient : IHttpHandler {
             sqlOperation.AddParameterWithValue("@Principal_User_ID", 1);
             sqlOperation.AddParameterWithValue("@Register_User_ID", userID);
             sqlOperation.AddParameterWithValue("@RegisterTime", datetime);
+            sqlOperation.AddParameterWithValue("@Ishospital", context.Request.Form["RecordNumber"]);
             if (context.Request.Form["hospitalnumber"] != "")
             {
                 sqlOperation.AddParameterWithValue("@hospitalnumber", hospitalnumber);
@@ -137,7 +138,7 @@ public class Addpatient : IHttpHandler {
                     sqlOperation2.AddParameterWithValue("@ID", 1);
                     sqlOperation2.AddParameterWithValue("@PID", patient);
                     sqlOperation2.AddParameterWithValue("@doc", doctorid);
-                    sqlOperation2.AddParameterWithValue("@Treatmentdescribe", "默认疗程");
+                    sqlOperation2.AddParameterWithValue("@Treatmentdescribe", "疗程1");
                     intSuccess2 = sqlOperation2.ExecuteNonQuery(treatinsert);
                 }
                 else
@@ -148,7 +149,7 @@ public class Addpatient : IHttpHandler {
                     sqlOperation2.AddParameterWithValue("@ID", 1);
                     sqlOperation2.AddParameterWithValue("@PID", patient);
                     sqlOperation2.AddParameterWithValue("@doc", doctorid);
-                    sqlOperation2.AddParameterWithValue("@Treatmentdescribe", "默认疗程");
+                    sqlOperation2.AddParameterWithValue("@Treatmentdescribe", "疗程1");
                     intSuccess2 = sqlOperation2.ExecuteNonQuery(treatinsert);
                     
                 }

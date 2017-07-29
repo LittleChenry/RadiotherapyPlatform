@@ -450,12 +450,17 @@
                         <div class="content-title">
                             <span>病案信息：</span>
                         </div>
-                        <div class="single-row">
+                          <div class="single-row">
                             <div class="col-xs-6">
-                                <span class="form-text col-xs-4" style="padding-left:0px;">病案号：</span>
-                                <input id="RecordNumber" name="RecordNumber" type="text" class="form-item" AUTOCOMPLETE="OFF" />
+                                <span class="form-text col-xs-4" style="padding-left:0px;">是否住院：</span>
+                                <span class="col-xs-2" style="padding-left:0px;">
+                                <input  name="RecordNumber" type="radio" value="1"  />是
+                                </span>
+                                 <span class="col-xs-2" style="padding-left:0px;">
+                                <input  name="RecordNumber" type="radio" value="0"  />否
+                               </span>
                             </div>
-                            <div class="col-xs-6">
+                            <div id="ishospital" class="col-xs-6">
                                 <span class="form-text col-xs-4">住院号：</span>
                                 <input id="hospitalnumber" name="hospitalnumber" type="text" class="form-item" AUTOCOMPLETE="OFF" />
                             </div>
