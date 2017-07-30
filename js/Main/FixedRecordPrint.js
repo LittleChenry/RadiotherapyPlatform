@@ -1,4 +1,4 @@
-﻿/**
+﻿ /**
  *
  */
 
@@ -21,8 +21,53 @@ function print() {
                .replace(reg2, "<br />")
                .replace(reg3, "<br />");
 
-        var $p = $("<span class=col-xs-10>" + content + "</span>");
+        var $p = $("<span class='form-text col-xs-4'>" + content + "</span>");
         $($text[i]).replaceWith($p);
+    }
+
+    var $selects = $printArea.find("select");
+    var $oldSelect = $("#needPrint").find("select");
+    for (var i = 0; i < $selects.length; ++i) {
+        var _this = $($selects[i]);
+        var parent = _this.parent();
+        var val = $($oldSelect[i]).find(":selected").text();
+        _this.remove();
+        var span = "<span class='form-text col-xs-4'>" + val + "</span>";
+        parent.append(span);
+    }
+
+    var inputs = $printArea.find("input:not([type=hidden])").filter(":not([type=radio])");
+    for (var i = 0; i < inputs.length; ++i) {
+        var _thiss = $(inputs[i]);
+        var vals = _thiss.val();
+        var nextSpan = _thiss.next(".input-group-addon");
+        var nexttext = "";
+        if (nextSpan.length != 0) {
+            nexttext = nextSpan.text();
+            nextSpan.remove();
+        }
+        var span = "<span class='form-text col-xs-4'>" + vals + nexttext + "</span>";
+        _thiss.parent().append(span);
+        _thiss.remove();
+    }
+
+    var radios = $printArea.find("input[type=radio]");
+    var currentName = "";
+    var getit = false;
+    for (var i = 0; i < radios.length; ++i) {
+        if (radios[i].name == currentName && getit == true) {
+            continue;
+        } else if (radios[i].name != currentName) {
+            currentName = radios[i].name;
+            getit = false;
+        }
+        var thisRadio = $(radios[i]);
+        var radiotext = "";
+        if (thisRadio.attr("checked") == "checked") {
+            radiotext = thisRadio.val();
+            getit = true;
+        }
+        thisRadio.parent().empty().append((radiotext == "1" ? "<span class='form-text col-xs-4'>是</span>" : "<span class='form-text col-xs-4'>否</span>"));
     }
 
     $("#printArea .paper").css("border", "0px");
