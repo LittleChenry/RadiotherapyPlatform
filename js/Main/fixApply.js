@@ -178,7 +178,7 @@ function chooseTempalte(templateID) {
     document.getElementById("specialrequest").value = obj1.templateInfo[0].FixedRequirements_ID;
     document.getElementById("fixEquip").value = obj1.templateInfo[0].FixedEquipment_ID;
     document.getElementById("bodyPost").value = obj1.templateInfo[0].BodyPosition;
-    document.getElementById("Remarks").value = obj1.templateInfo[0].Remarks;
+    document.getElementById("Remarks").value = obj1.templateInfo[0].RemarksApply;
 }
 function save() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
@@ -192,23 +192,23 @@ function save() {
     var appointid = document.getElementById("idforappoint").value;
     if (document.getElementById("modelselect").value == "allItem") {
         window.alert("模具没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("specialrequest").value == "allItem") {
         window.alert("特殊要求没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("bodyPost").value == "allItem") {
         window.alert("体位没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("fixEquip").value == "allItem") {
         window.alert("固定装置没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("idforappoint").value == "allItem") {
         window.alert("设备没有预约");
-        return;
+        return false;
     }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -257,19 +257,19 @@ function saveTemplate(TemplateName) {
     var Remarks = document.getElementById("Remarks").value;
     if (document.getElementById("modelselect").value == "allItem") {
         window.alert("模具没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("specialrequest").value == "allItem") {
         window.alert("特殊要求没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("bodyPost").value == "allItem") {
         window.alert("体位没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("fixEquip").value == "allItem") {
         window.alert("固定装置没有选择");
-        return;
+        return false;
     } 
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {

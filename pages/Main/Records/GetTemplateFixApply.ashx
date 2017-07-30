@@ -42,7 +42,7 @@ public class GetTemplateFixApply : IHttpHandler {
         StringBuilder backText = new StringBuilder("{\"templateInfo\":[");
         while (reader.Read())
         {
-            backText.Append("{\"Model_ID\":\"" + reader["Model_ID"].ToString() + "\",\"FixedRequirements_ID\":\"" + reader["FixedRequirements_ID"] + "\",\"BodyPosition\":\"" + reader["BodyPosition"] + "\",\"FixedEquipment_ID\":\"" + reader["FixedEquipment_ID"] + "\"}");           
+            backText.Append("{\"Model_ID\":\"" + reader["Model_ID"].ToString() + "\",\"FixedRequirements_ID\":\"" + reader["FixedRequirements_ID"] + "\",\"BodyPosition\":\"" + reader["BodyPosition"] + "\",\"FixedEquipment_ID\":\"" + reader["FixedEquipment_ID"] + "\",\"RemarksApply\":\"" + reader["RemarksApply"] + "\"}");           
         }
         backText.Append("]}");
         reader.Close();
