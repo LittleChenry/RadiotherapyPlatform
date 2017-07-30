@@ -25,6 +25,13 @@
 <body style="width:auto;min-width:900px;margin:auto;">
    <section class="content">
         <div class="paper">
+            <form id="saveDesignSubmit" method="post" runat="server">
+                <input type="hidden" name="ispostback" value="true" />             
+                <input type="hidden"  id="hidetreatID" name="hidetreatID" />
+                <input type="hidden"  id="userID" name="userID" />
+                <input type="hidden" id="diaguserid" name="diaguserid" />
+                 <input type="hidden" id="a1" name="a1" />
+                 <input type="hidden" id="a2" name="a2" />
             <input type="hidden" id="progress" />
             <div class="paper-title">
                  治疗计划提交
@@ -50,6 +57,7 @@
                   </div>
             </div>
             <div class="paper-content">
+
                 <div class="content-title">
                     <span>计划信息：</span>
                 </div>
@@ -119,11 +127,8 @@
                 </div>
             </div>
             <div class="paper-content"> 
-                <form id="saveDesignSubmit" method="post" runat="server">
-                    <input type="hidden" name="ispostback" value="true" />             
-                    <input type="hidden"  id="hidetreatID" name="hidetreatID" />
-                    <input type="hidden"  id="userID" name="userID" />
-                    <input type="hidden" id="diaguserid" name="diaguserid" />
+                
+                    
                     <div class="content-title">
                         <span>提交计划信息：</span>
                     </div>
@@ -182,7 +187,7 @@
                     </div>
                         </div>
                       </div> 
-                </form>
+                
             </div>
             <div class="paper-footer">
                 <div class="single-row">
@@ -190,6 +195,7 @@
                     <div class="item col-xs-6">提交日期：<span  id="time" class="underline"></span></div>
                 </div>
             </div>
+            </form>
         </div>
     </section>
     <!-- jQuery 2.2.3 -->

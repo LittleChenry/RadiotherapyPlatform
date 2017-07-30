@@ -84,7 +84,13 @@ function isInArray(arr, value) {
     }
     return false;
 }
-
+function hosttext(str) {
+    if (str == "") {
+        return "未住院";
+    } else {
+        return ("住院,住院号:" + str);
+    }
+}
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "designConfirmInfo.ashx?treatID=" + treatID;
@@ -261,8 +267,18 @@ function save() {
         async: false,
         contentType: false,
         success: function (data) {
-            alert("保存成功");
-            window.location.reload();
+            if (data == "success") {
+                alert("保存成功");
+                window.location.reload();
+            }
+            if (data == "back") {
+                alert("已回退到计划领取");
+                window.location.reload();
+            }
+            if (data == "failure") {
+                alert("操作失败");
+                window.location.reload();
+            }
         },
         error: function (e) {
             window.location.href = "Error.aspx";

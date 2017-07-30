@@ -55,6 +55,13 @@ function isInArray(arr, value) {
     }
     return false;
 }
+function hosttext(str) {
+    if (str == "") {
+        return "未住院";
+    } else {
+        return ("住院,住院号:" + str);
+    }
+}
 function receiveDesign(treatID) {
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {

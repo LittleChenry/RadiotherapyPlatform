@@ -478,7 +478,111 @@ function save() {
     });
 
 }
+function chooseTempalte(templateID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "GetTemplateDiag.ashx?templateID=" + templateID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var diagnosisInfo = eval("(" + json + ")");
+    document.getElementById("bingqing1").value = diagnosisInfo.diagnosisInfo[0].diagnosisresultName1.split(",")[0];
+    loadone();
+    document.getElementById("bingqing2").value = diagnosisInfo.diagnosisInfo[0].diagnosisresultName1.split(",")[1];
+    loadtwo();
+    document.getElementById("bingqing3").value = diagnosisInfo.diagnosisInfo[0].diagnosisresultName1.split(",")[2];
+    loadthree();
+    document.getElementById("bingli1").value = diagnosisInfo.diagnosisInfo[0].diagnosisresultName2.split(",")[0];
+    loadonenext();
+    document.getElementById("bingli2").value = diagnosisInfo.diagnosisInfo[0].diagnosisresultName2.split(",")[1];
+    loadtwonext();
+    document.getElementById("part").value = diagnosisInfo.diagnosisInfo[0].partID;
+    document.getElementById("newpart").value = diagnosisInfo.diagnosisInfo[0].LightPart_ID;
+    document.getElementById("Aim").value = diagnosisInfo.diagnosisInfo[0].treatmentaimID;
+    document.getElementById("remark").value = diagnosisInfo.diagnosisInfo[0].Remarks;
+   
+}
+function saveTemplate(TemplateName) {
+    if ((typeof (userID) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
+    var treatID = window.location.search.split("=")[1];
+    var time = document.getElementById("time");
+    var remark = document.getElementById("remark");
+    var part = document.getElementById("part");
+    var newpart = document.getElementById("newpart");
+    var Aim = document.getElementById("Aim");
+    var treatname = document.getElementById("treatname");
+    var copybingli1 = document.getElementById("copybingli1");
+    var copybingli2 = document.getElementById("copybingli2");
+    var copybingqing1 = document.getElementById("copybingqing1");
+    var copybingqing2 = document.getElementById("copybingqing2");
+    var copybingqing3 = document.getElementById("copybingqing3");
+    if (part.value == "allItem") {
+        window.alert("请选择病变部位");
+        return false;
 
+    }
+    if (newpart.value == "allItem") {
+        window.alert("请选择照射部位");
+        return false;
+
+    }
+    if (Aim.value == "allItem") {
+        window.alert("请选择照射部位");
+        return false;
+
+    }
+    if (treatname.value == "") {
+        window.alert("疗程不能为空");
+        return false;
+
+    }
+    if (copybingli1.value == "" || copybingli2.value == "") {
+        window.alert("病理诊断未填写完整");
+        return false;
+
+    }
+    if (copybingqing1.value == "" || copybingqing2.value == "" || copybingqing3.value == "") {
+        window.alert("病情诊断未填写完整");
+        return false;
+
+    }
+    $.ajax({
+        type: "POST",
+        url: "recordDiagtemplate.ashx",
+        async: false,
+        data: {
+            treatid: treatID,
+            treatname: treatname.value,
+            diaguserid: userID,
+            remark: remark.value,
+            part: part.value,
+            newpart: newpart.value,
+            TemplateName:TemplateName,
+            Aim: Aim.value,
+            copybingli1: copybingli1.value,
+            copybingli2: copybingli2.value,
+            copybingqing1: copybingqing1.value,
+            copybingqing2: copybingqing2.value,
+            copybingqing3: copybingqing3.value
+
+        },
+        dateType: "json",
+        success: function (data) {
+            if (data == "success") {
+                window.alert("模板保存成功");
+            } else {
+                window.alert("模板保存失败");
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+
+}
 function getUserID() {
     var xmlHttp = new XMLHttpRequest();
     var url = "GetUserID.ashx";

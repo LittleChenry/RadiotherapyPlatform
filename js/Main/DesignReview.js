@@ -132,6 +132,13 @@ function isInArray(arr, value) {
     }
     return false;
 }
+function hosttext(str) {
+    if (str == "") {
+        return "未住院";
+    } else {
+        return ("住院,住院号:" + str);
+    }
+}
 function getReviewInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "ReviewInfo.ashx?treatID=" + treatID;

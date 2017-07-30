@@ -41,7 +41,7 @@ public class designSubmitRecord : IHttpHandler {
     {
         try{
             string ctid = context.Request.Form["hidetreatID"];
-            int CTID = Convert.ToInt32(ctid);
+            int CTID = Convert.ToInt32(ctid);            
             //string userID = "1";
             string userID = context.Request.Form["userID"];
             int userid = Convert.ToInt32(userID);
@@ -56,7 +56,43 @@ public class designSubmitRecord : IHttpHandler {
             {
                 return "message";
             }
-            string strSqlCommand = "UPDATE  design  SET PlanSystem_ID=@PlanSystem_ID,IlluminatedNumber=@IlluminatedNumber,Coplanar=@Coplanar,MachineNumbe=@MachineNumbe,ControlPoint=@ControlPoint,Grid_ID=@Grid_ID,Algorithm_ID=@Algorithm_ID,Feasibility=@Feasibility,SubmitTime=@datetime,Submit_User_ID=@userid where design.ID=@ctID";
+            string aa = context.Request.Form["a1"];
+            string bb = context.Request.Form["a2"];
+            string DosagePriority = "";
+            int a1 = Convert.ToInt32(aa);
+            int i = 0;
+            while (i <= a1)
+            {
+                string ii = Convert.ToString(i);
+                string Prioritytype = context.Request.Form["Prioritytype" + ii];
+                string Priorityout = context.Request.Form["Priorityout" + ii];
+                string Prioritptv = context.Request.Form["Prioritptv" + ii];
+                string Prioritcgy = context.Request.Form["Prioritcgy" + ii];
+                string Priorittime = context.Request.Form["Priorittime" + ii];
+                string Prioritsum = context.Request.Form["Prioritsum" + ii];
+                string Prioritremark = context.Request.Form["Prioritremark" + ii];
+                string Priorit = context.Request.Form["Priorit" + ii];
+                DosagePriority = DosagePriority + Prioritytype + "," + Priorityout + "," + Prioritptv + "," + Prioritcgy + "," + Priorittime + "," + Prioritsum + "," + Prioritremark + "," + Priorit + ";";
+                i++;
+            }
+            int b1 = Convert.ToInt32(bb);
+            int j = 0;
+            DosagePriority = DosagePriority + "&";
+            while (j <= b1)
+            {
+                string jj = Convert.ToString(j);
+                string type = context.Request.Form["type" + jj];
+                string dv = context.Request.Form["dv" + jj];
+                string number = context.Request.Form["number" + jj];
+                string outt = context.Request.Form["out" + jj];
+                string prv = context.Request.Form["prv" + jj];
+                string num = context.Request.Form["num" + jj];
+                string numbers = context.Request.Form["numbers" + jj];
+                string pp = context.Request.Form["pp" + jj];
+                DosagePriority = DosagePriority + type + "," + dv + ",<," + number + "," + outt + "," + prv + "," + num + ",<," + numbers + "," + pp + ";";
+                j++;
+            }
+            string strSqlCommand = "UPDATE  design  SET PlanSystem_ID=@PlanSystem_ID,DosagePriority=@DosagePriority,IlluminatedNumber=@IlluminatedNumber,Coplanar=@Coplanar,MachineNumbe=@MachineNumbe,ControlPoint=@ControlPoint,Grid_ID=@Grid_ID,Algorithm_ID=@Algorithm_ID,Feasibility=@Feasibility,SubmitTime=@datetime,Submit_User_ID=@userid where design.ID=@ctID";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@PlanSystem_ID", Convert.ToInt32(context.Request.Form["PlanSystem"]));
             sqlOperation.AddParameterWithValue("@IlluminatedNumber", context.Request.Form["IlluminatedNumber"]);
@@ -68,6 +104,7 @@ public class designSubmitRecord : IHttpHandler {
             sqlOperation.AddParameterWithValue("@Algorithm_ID", Convert.ToInt32(context.Request.Form["Algorithm"]));
             sqlOperation.AddParameterWithValue("@Feasibility", Convert.ToInt32(context.Request.Form["Feasibility"]));
             sqlOperation.AddParameterWithValue("@datetime", datetime);
+            sqlOperation.AddParameterWithValue("@DosagePriority", DosagePriority);
             sqlOperation.AddParameterWithValue("@ctID", designID);
             sqlOperation.AddParameterWithValue("@userid", userid);
 

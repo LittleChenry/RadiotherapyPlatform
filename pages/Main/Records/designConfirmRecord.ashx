@@ -55,33 +55,59 @@ public class designConfirmRecord : IHttpHandler {
             if (state == "审核通过")
             {
                 state1 = true;
-            }
-            string strSqlCommand = "UPDATE  design  SET State=@state,Checkadvice=@advice,ConfirmTime=@datetime,Confirm_User_ID=@userid where design.ID=@ctID";
-            //各参数赋予实际值
-            sqlOperation.AddParameterWithValue("@state", state1);
-            sqlOperation.AddParameterWithValue("@advice", context.Request.Form["advice"]);
-            //sqlOperation.AddParameterWithValue("@Remarks", context.Request.Form["Remarks"]);        
-            sqlOperation.AddParameterWithValue("@datetime", datetime);
-            sqlOperation.AddParameterWithValue("@ctID", designID);
-            sqlOperation.AddParameterWithValue("@userid", userid);
-            int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);     
-            string select1 = "select Progress from treatment where ID=@treat";
-            sqlOperation.AddParameterWithValue("@treat", CTID);
-            string progress = sqlOperation.ExecuteScalar(select1);
-            string inserttreat = "update treatment set Progress=@progress where ID=@treat";
-            sqlOperation2.AddParameterWithValue("@progress", progress+",10");
-            sqlOperation2.AddParameterWithValue("@treat", CTID);
-            int Success = sqlOperation2.ExecuteNonQuery(inserttreat);
-
-
-            if (intSuccess > 0 && Success > 0)
-            {
-                return "success";
+                string strSqlCommand = "UPDATE  design  SET State=@state,Checkadvice=@advice,ConfirmTime=@datetime,Confirm_User_ID=@userid where design.ID=@ctID";
+                //各参数赋予实际值
+                sqlOperation.AddParameterWithValue("@state", state1);
+                sqlOperation.AddParameterWithValue("@advice", context.Request.Form["advice"]);
+                //sqlOperation.AddParameterWithValue("@Remarks", context.Request.Form["Remarks"]);        
+                sqlOperation.AddParameterWithValue("@datetime", datetime);
+                sqlOperation.AddParameterWithValue("@ctID", designID);
+                sqlOperation.AddParameterWithValue("@userid", userid);
+                int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
+                string select1 = "select Progress from treatment where ID=@treat";
+                sqlOperation.AddParameterWithValue("@treat", CTID);
+                string progress = sqlOperation.ExecuteScalar(select1);
+                string inserttreat = "update treatment set Progress=@progress where ID=@treat";
+                sqlOperation2.AddParameterWithValue("@progress", progress + ",10");
+                sqlOperation2.AddParameterWithValue("@treat", CTID);
+                int Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+                if (intSuccess > 0 && Success > 0)
+                {
+                    return "success";
+                 }
+                else
+                {
+                    return "failure";
+                }
             }
             else
             {
-                return "failure";
+                state1 = false;
+                string strSqlCommand = "UPDATE  design  SET State=@state,Checkadvice=@advice,ConfirmTime=@datetime,Confirm_User_ID=@userid where design.ID=@ctID";
+                //各参数赋予实际值
+                sqlOperation.AddParameterWithValue("@state", state1);
+                sqlOperation.AddParameterWithValue("@advice", context.Request.Form["advice"]);
+                //sqlOperation.AddParameterWithValue("@Remarks", context.Request.Form["Remarks"]);        
+                sqlOperation.AddParameterWithValue("@datetime", datetime);
+                sqlOperation.AddParameterWithValue("@ctID", designID);
+                sqlOperation.AddParameterWithValue("@userid", userid);
+                int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
+              
+                string inserttreat = "update treatment set Progress=@progress,isback=1 where ID=@treat";
+                sqlOperation2.AddParameterWithValue("@progress", "0,1,2,3,4,5,6,7");
+                sqlOperation2.AddParameterWithValue("@treat", CTID);
+                int Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+                if (intSuccess > 0 && Success > 0)
+                {
+                    return "back";
+                }
+                else
+                {
+                    return "failure";
+                }
             }
+
+            
         }
         catch (System.Exception Ex1)
         {
