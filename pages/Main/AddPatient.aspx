@@ -530,10 +530,11 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- js -->
+<script src="../../js/Main/HeaderOperate.js"></script>
 <script src="../../js/Main/AddPatient.js"></script>
- <script src="../../js/Main/addimgs.js"></script>
-<script type="text/javascript" src="../../js/Main/TestAddress.js"></script>
-<script type="text/javascript" src="../../js/Main/TestChooseAddress.js"></script>
+<script src="../../js/Main/addimgs.js"></script>
+<script src="../../js/Main/TestAddress.js"></script>
+<script src="../../js/Main/TestChooseAddress.js"></script>
 <script>
     $("#addpatient-content").css("minHeight", $(document).height() - 101);
     $("#choosepatient-content").css("minHeight", $(document).height() - 101);

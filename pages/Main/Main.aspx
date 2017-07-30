@@ -559,7 +559,7 @@
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- js -->
 <script src="../../js/Main/main.js"></script>
-
+<script src="../../js/Main/HeaderOperate.js"></script>
 <script type="text/javascript">
     //$("#patient-table-content").slimScroll({  
     //    size: '8px',

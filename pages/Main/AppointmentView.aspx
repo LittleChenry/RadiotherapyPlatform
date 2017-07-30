@@ -302,7 +302,7 @@
     <section class="content">
          <div class="row">
             <div class="col-xs-12">
-                <h1 class="page-header">基本信息管理</h1>
+                <h1 class="page-header">预约视图</h1>
             </div>
         </div>
         <div class="row">
@@ -379,6 +379,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- Main javascript -->
+<script src="../../js/Main/HeaderOperate.js"></script>
 <script src="../../js/Main/AppiontmentViewJS.js"></script>
 </body>
 </html>

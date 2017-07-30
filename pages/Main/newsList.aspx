@@ -362,6 +362,7 @@
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- js -->
 <script src="../../js/Main/newsList.js"></script>
+<script src="../../js/Main/HeaderOperate.js"></script>
 <script>
     $("#notice-content").css("minHeight", $(document).height() - 101);
 </script>

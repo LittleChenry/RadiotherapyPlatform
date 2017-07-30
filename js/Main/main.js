@@ -11,17 +11,12 @@ $(document).ready(function () {
     functions = session.progress.split(" ");
     var patient = RolesToPatients();
     adjustTable();
-    Notice(session.roleName);
 
     $("#patient-search").bind('input propertychange', function () {
         //alert(patient.PatientInfo.length);
         var Searchedpatients = Search($("#patient-search").val(), patient, session.role);
         Paging(Searchedpatients, session.role, session.userID);
         adjustTable();
-    });
-    $("#signOut").bind("click", function () {
-        removeSession();//ajax 注销用户Session
-        window.location.replace("../Login/Login.aspx");
     });
     $("#save").unbind("click").click(function () {
         var result = $("#record-iframe")[0].contentWindow.save();
@@ -1952,75 +1947,6 @@ function Search(str, patient, role) {
     return patientGroup;
 }
 
-function getProgressActive() {
-    var ul = $("#progress-iframe").contents().find("#ul-progress a");
-    var indexs = new Array();
-    var count = 0;
-    var activeProgress = ul.each(function (index, element) {
-        if ($(this).find('li').hasClass("progress-active")) {
-            indexs[count++] = index;
-        }
-    });
-    return indexs;
-}
-
-function getActive() {
-    var ul = $("#page-index-content li");
-    var active;
-    ul.each(function (index, element) {
-        if ($(this).hasClass("active")) {
-            active = index - 2;
-        }
-    });
-    return active;
-}
-
-function getChose() {
-    var tr = $("#patient-table-body tr");
-    tr.each(function (index, element) {
-        if ($(this).hasClass("chose")) {
-            return index;
-        } else {
-            return null;
-        }
-    });
-}
-
-function getPatient(userID, role, parameters) {
-    var xmlHttp = new XMLHttpRequest();
-    var xmlHttp = new XMLHttpRequest();
-    switch (role) {
-        case "医师":
-            var url = "Records/patientInfoForDoctor.ashx?userID=" + userID;
-            break;
-        case "剂量师":
-            var url = "Records/patientInfoForJLS.ashx?userID=" + userID;
-            break;
-        case "物理师":
-            var url = "Records/patientInfoForWLS.ashx?userID=" + userID;
-            break;
-        case "模拟技师":
-            var url = "Records/patientInfoForMNJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
-            break;
-        case "治疗技师":
-            var url = "Records/patientInfoForZLJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
-            break;
-        case "登记处人员":
-            var url = "Records/GetPatientInfo.ashx?";
-            break;
-        case "科主任":
-            var url = "Records/GetPatientInfo.ashx?";
-            break;
-        default:
-            var url = "Records/GetPatientInfo.ashx?";
-    }
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-    var json = xmlHttp.responseText;
-    var patient = eval("(" + json + ")");
-    return patient;
-}
-
 function getTaskWarning(){
     var taskwarning;
     $.ajax({
@@ -2105,71 +2031,73 @@ function SingleTask(light, serious, singlepatient, currentProgress){
     WarningTaskContent.append(singletask);
 }
 
-function getNotice(role){
-    var notice;
-    $.ajax({
-        type: "GET",
-        url: "../../pages/Main/Records/getNews.ashx?role=" + role,
-        async: false,
-        dateType: "text",
-        success: function (data) {
-            //alert(data);
-            notice = $.parseJSON(data);
-        },
-        error: function () {
-            alert("error");
+function getProgressActive() {
+    var ul = $("#progress-iframe").contents().find("#ul-progress a");
+    var indexs = new Array();
+    var count = 0;
+    var activeProgress = ul.each(function (index, element) {
+        if ($(this).find('li').hasClass("progress-active")) {
+            indexs[count++] = index;
         }
     });
-    return notice;
+    return indexs;
 }
 
-function Notice(role){
-    var notice = getNotice(role);
-    var NoticeContent = $("#Notice");
-    var NoticeNum = $("#NoticeNum");
-    var allNotice = $("#allNotice");
-    NoticeContent.html("");
-    for (var i = 0; i < notice.patientInfo.length; i++) {
-        var singleNotice = '<li><a href="Notice.aspx?ID=' + notice.patientInfo[i].ID + '" target="_blank"><h4>';
-        if (notice.patientInfo[i].Important == '1') {
-            singleNotice += '<i class="fa fa-hand-pointer-o"></i>';
-        }else{
-            singleNotice +='<i class="fa fa-tag"></i>';
+function getActive() {
+    var ul = $("#page-index-content li");
+    var active;
+    ul.each(function (index, element) {
+        if ($(this).hasClass("active")) {
+            active = index - 2;
         }
-        singleNotice += limitString(notice.patientInfo[i].Title, 18);
-        singleNotice += '</h4><p class="pull-right"><i class="fa fa-user"></i>'
-        singleNotice += notice.patientInfo[i].Release_User_Name;
-        singleNotice += '&nbsp;<i class="fa fa-clock-o"></i>';
-        singleNotice += formatTime(notice.patientInfo[i].Releasetime);
-        singleNotice += '</p>';
-        NoticeContent.append(singleNotice);
-    }
-    NoticeNum.html(NoticeContent.find("li").length);
-    allNotice.attr("href", "newsList.aspx?role=" + role);
+    });
+    return active;
 }
 
-function formatTime(time){
-    NoticeTime = new Date(time).Format("yyyy-MM-dd");
-    currentTime = new Date().Format("yyyy-MM-dd");
-    preDate = new Date(new Date().getTime() - 24*60*60*1000).Format("yyyy-MM-dd");
-    if (NoticeTime == currentTime) {
-        return "今天";
-    }else{
-        if (NoticeTime == preDate) {
-            return "昨天";
+function getChose() {
+    var tr = $("#patient-table-body tr");
+    tr.each(function (index, element) {
+        if ($(this).hasClass("chose")) {
+            return index;
+        } else {
+            return null;
         }
-    }
-    return NoticeTime;
+    });
 }
 
-function limitString(str, num){
-    var ls;
-    if (str.length > num) {
-        ls = str.substring(0, num -1) + "…";
-        return ls;
-    }else{
-        return str;
+function getPatient(userID, role, parameters) {
+    var xmlHttp = new XMLHttpRequest();
+    var xmlHttp = new XMLHttpRequest();
+    switch (role) {
+        case "医师":
+            var url = "Records/patientInfoForDoctor.ashx?userID=" + userID;
+            break;
+        case "剂量师":
+            var url = "Records/patientInfoForJLS.ashx?userID=" + userID;
+            break;
+        case "物理师":
+            var url = "Records/patientInfoForWLS.ashx?userID=" + userID;
+            break;
+        case "模拟技师":
+            var url = "Records/patientInfoForMNJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
+            break;
+        case "治疗技师":
+            var url = "Records/patientInfoForZLJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
+            break;
+        case "登记处人员":
+            var url = "Records/GetPatientInfo.ashx?";
+            break;
+        case "科主任":
+            var url = "Records/GetPatientInfo.ashx?";
+            break;
+        default:
+            var url = "Records/GetPatientInfo.ashx?";
     }
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var patient = eval("(" + json + ")");
+    return patient;
 }
 
 function chooseEquipment() {
