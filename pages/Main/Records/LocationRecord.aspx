@@ -40,9 +40,9 @@
                         <span>基本信息：</span>
                     </div>
                    <div class="single-row">
-                        <div class="item col-xs-3">姓名：<span id="username" class="underline"></span></div>
-                        <div class="item col-xs-3">性别：<span id="sex" class="underline"></span></div>
-                        <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>                   
+                        <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
+                        <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
+                        <div class="item col-xs-4">年龄：<span id="age" class="underline"></span></div>                   
                     </div>
                     <div class="single-row">
                        <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
