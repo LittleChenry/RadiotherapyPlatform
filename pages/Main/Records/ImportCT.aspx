@@ -24,7 +24,7 @@
 </head>
 <body style="width:auto;min-width:900px;margin:auto;">
    <section class="content">
-        <div class="paper">
+        <div class="paper" id="needPrint">
             <input type="hidden" id="progress" />
             <div class="paper-title">
                  CT图像信息导入
@@ -122,10 +122,15 @@
         </div>
          
     </section>
+    <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">
+                
+    </section>
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="../../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
+    <!-- JQuery PrintArea -->
+    <script src="../../../plugin/AdminLTE/jquery.PrintArea.js"></script>
     <!-- DataTables -->
     <script src="../../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
@@ -142,6 +147,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <!-- javascript -->
+    <script src="../../../js/Main/FixedRecordPrint.js"></script>
      <script src="../../../js/Main/importCT.js" type="text/javascript"></script>
      <!-- Page script -->
     <script type="text/javascript">
