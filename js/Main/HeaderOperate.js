@@ -66,7 +66,7 @@ function Notice(role){
         NoticeContent.append(singleNotice);
     }
     NoticeNum.html(NoticeContent.find("li").length);
-    allNotice.attr("href", "newsList.aspx?role=" + role);
+    allNotice.attr("href", "NewsList.aspx?role=" + role);
 }
 
 function formatTime(time){
