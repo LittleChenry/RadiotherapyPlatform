@@ -132,6 +132,12 @@
                         </div>
                     </div>
                     <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        <span class="col-xs-2" style="padding-left:0px;"> 记录备注：</span>                     
+                        <textarea id="Remarks" name="Remarks" class="form-area col-xs-10" disabled="disabled"></textarea>
+                    </div>
+                    </div>
+                    <div class="single-row">
                         <div class="item col-xs-12">
                             <span class="col-xs-2" style="padding-left:0px;">定位图片：</span>
                         </div>

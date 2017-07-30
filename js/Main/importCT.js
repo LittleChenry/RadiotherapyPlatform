@@ -13,21 +13,21 @@ function Init(evt) {
     var patient = getfixPatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
-    document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
-    document.getElementById("nation").innerHTML = patient.Nation;
+    //document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
+    //document.getElementById("nation").innerHTML = patient.Nation;
     document.getElementById("age").innerHTML = patient.Age;
-    document.getElementById("address").innerHTML = patient.Address;
-    document.getElementById("hospital").innerHTML = patient.Hospital;
-    document.getElementById("contact").innerHTML = patient.Contact1;
-    document.getElementById("contact2").innerHTML = patient.Contact2;
-    document.getElementById("treatID").innerHTML = patient.treatID;
+    //document.getElementById("address").innerHTML = patient.Address;
+    //document.getElementById("hospital").innerHTML = patient.Hospital;
+    //document.getElementById("contact").innerHTML = patient.Contact1;
+    //document.getElementById("contact2").innerHTML = patient.Contact2;
+    //document.getElementById("treatID").innerHTML = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
-    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
-    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
-    document.getElementById("diaguser").innerHTML = patient.RegisterDoctor;
+    //document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
+    //document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     var select1 = document.getElementById("DensityConversion");
     createDnsityItem(select1);
     var info = getimportCTInfomation(treatmentID);    
@@ -250,7 +250,11 @@ function save() {
         contentType: false,
         async: false,
         success: function (data) {
-            alert("保存成功");
+            if (data == "success") {
+                alert("保存成功");
+            } else {
+                alert("保存失败");
+            }
             window.location.reload();
         },
         error: function (e) {

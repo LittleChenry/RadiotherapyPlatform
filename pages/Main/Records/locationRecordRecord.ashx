@@ -87,10 +87,27 @@ public class locationRecordRecord : IHttpHandler {
             int userid = Convert.ToInt32(userID);
             DateTime datetime = DateTime.Now;
             //bool state = false;
-            string strSqlCommand = "UPDATE  location  SET CT_ID=@locationID,CTPictures=@picture,Thickness=@thickness,Number=@number,ReferenceNumber=@ReferenceNumber,ReferenceScale=@ReferenceScale,OperateTime=@datetime,Operate_User_ID=@userid where location.ID=@locationID";
+           
+            string strSqlCommand = "UPDATE  location  SET ScanPart_ID=@ScanPart_ID,ScanMethod_ID=@ScanMethod_ID,RemarksRecords=@RemarksRecords,EnhanceMethod_ID=@EnhanceMethod_ID,Enhance=@Enhance,Remarks=@Remarks,LowerBound=@LowerBound,UpperBound=@UpperBound,LocationRequirements_ID=@LocationRequirements_ID,CT_ID=@locationID,CTPictures=@picture,Thickness=@thickness,Number=@number,ReferenceNumber=@ReferenceNumber,ReferenceScale=@ReferenceScale,OperateTime=@datetime,Operate_User_ID=@userid where location.ID=@locationID";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@locationID", LocationID);
             sqlOperation.AddParameterWithValue("@thickness", context.Request.Form["Thickness"]);
+            sqlOperation.AddParameterWithValue("@ScanPart_ID", Convert.ToInt32(context.Request.Form["scanpart"]));
+            sqlOperation.AddParameterWithValue("@ScanMethod_ID", Convert.ToInt32(context.Request.Form["scanmethod"]));
+            sqlOperation.AddParameterWithValue("@LocationRequirements_ID", Convert.ToInt32(context.Request.Form["special"]));
+            sqlOperation.AddParameterWithValue("@Enhance", Convert.ToInt32(context.Request.Form["add"]));
+            if (Convert.ToInt32(context.Request.Form["add"]) == 1)
+            {
+                sqlOperation.AddParameterWithValue("@EnhanceMethod_ID", Convert.ToInt32(context.Request.Form["addmethod"]));
+            }
+            else
+            {
+                sqlOperation.AddParameterWithValue("@EnhanceMethod_ID", null);
+            }
+            sqlOperation.AddParameterWithValue("@RemarksRecords", context.Request.Form["Remarks"]);
+            sqlOperation.AddParameterWithValue("@UpperBound", context.Request.Form["up"]);
+            sqlOperation.AddParameterWithValue("@LowerBound", context.Request.Form["down"]);
+            sqlOperation.AddParameterWithValue("@Remarks", context.Request.Form["remark"]);
             sqlOperation.AddParameterWithValue("@number", context.Request.Form["Number"]);
             sqlOperation.AddParameterWithValue("@ReferenceNumber", context.Request.Form["ReferenceNumber"]);
             sqlOperation.AddParameterWithValue("@ReferenceScale", context.Request.Form["ReferenceScale"]);
