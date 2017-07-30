@@ -33,6 +33,7 @@ function Init(evt) {
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     var texthos = hosttext(patient.Hospital_ID);
     document.getElementById("hospitalid").innerHTML = texthos;
+    document.getElementById("lightpart").innerHTML = patient.lightpartname;
     document.getElementById("aa").value = aa;
     document.getElementById("bb").value = bb;
     var select1 = document.getElementById("technology");
