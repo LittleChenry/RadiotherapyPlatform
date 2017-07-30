@@ -34,7 +34,7 @@
                 <div class="content-title">
                     <span>基本信息：</span>
                 </div>
-                <div class="single-row">
+                      <div class="single-row">
                     <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
                     <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
                     <div class="item col-xs-4">年龄：<span id="age" class="underline"></span></div>
@@ -46,7 +46,8 @@
                 </div>
                   <div class="single-row">
                         <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
-                        <div class="item col-xs-4">住院情况：<span id="hospitalid" class="underline"></span></div>
+                      <div class="item col-xs-4">照射部位：<span id="lightpart" class="underline"></span></div>
+                        <div class="item col-xs-4">住院情况：<span id="hospitalid" class="underline"></span></div> 
                   </div>
             </div>
             <div class="paper-content">

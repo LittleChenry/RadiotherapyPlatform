@@ -17,38 +17,46 @@ function Init(evt) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
+    var special= getsplitandyizhu(treatmentID);
+    document.getElementById("enjoin").value = special.SpecialEnjoin;
+    document.getElementById("split").innerHTML = special.SplitWay;
     var patient = getPatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
-    document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
-    document.getElementById("nation").innerHTML = patient.Nation;
     document.getElementById("age").innerHTML = patient.Age;
-    document.getElementById("address").innerHTML = patient.Address;
-    document.getElementById("hospital").innerHTML = patient.Hospital;
-    document.getElementById("contact").innerHTML = patient.Contact1;
-    document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
-    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
-    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
-    var i=0;
+    var texthos = hosttext(patient.Hospital_ID);
+    document.getElementById("hospitalid").innerHTML = texthos;
+    document.getElementById("lightpart").innerHTML = patient.lightpartname;
+    var i = 0;
+    var replacerecordinfo = getreplacerecordInfo(treatmentID);
+    var boxes = document.getElementById("multipic");
+    var pictures = replacerecordinfo.picture.split(",");
+    if (replacerecordinfo.picture == "") {
+        boxes.innerHTML = "无";
+    } else {
+        for (var k = 1; k < pictures.length; k++) {
+            var div = document.createElement("DIV");
+            div.className = "boxes";
+            var div1 = document.createElement("DIV");
+            div1.className = "imgnum";
+            var img = document.createElement("IMG");
+            img.addEventListener("click", showPicture, false);
+            img.className = "img";
+            img.src = pictures[k];
+            img.style.display = "block";
+            div1.appendChild(img);
+            div.appendChild(div1);
+            boxes.appendChild(div);
+        }
+    }
     var designInfo = getDesignInfo(treatmentID);
-    document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
     readDosagePriority(designInfo[i].DosagePriority);
-    readDosage(designInfo[i].Dosage);
-    document.getElementById("technology").innerHTML = designInfo[i].technology;
-    document.getElementById("equipment").innerHTML = designInfo[i].equipment;
-    document.getElementById("PlanSystem").innerHTML = designInfo[i].PlanSystem;
-    document.getElementById("IlluminatedNumber").innerHTML = designInfo[i].IlluminatedNumber;
-    document.getElementById("Coplanar").innerHTML = charge1(designInfo[i].Coplanar);
-    document.getElementById("MachineNumbe").innerHTML = designInfo[i].MachineNumbe;
-    document.getElementById("ControlPoint").innerHTML = designInfo[i].ControlPoint;
-    document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
-    document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
-    document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
+    
     var pdfgroup = getpdfgroup(treatmentID);
     var pdf1 = pdfgroup.split(",")[0];
     var pdf2 = pdfgroup.split(",")[1];
@@ -225,6 +233,32 @@ function Init(evt) {
     }, false);
 
 }
+function getsplitandyizhu(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getalllog.ashx?treatmentID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var json = json.replace(/\n/g, "\\n");
+    var obj1 = eval("(" + json + ")");
+    return obj1.Item[0];
+}
+function hosttext(str) {
+    if (str == "") {
+        return "未住院";
+    } else {
+        return ("住院,住院号:" + str);
+    }
+}
+function getreplacerecordInfo(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getreplaceApply.ashx?treatmentID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var obj1 = eval("(" + json + ")");
+    return obj1.replace[0];
+}
 function getpdfgroup(treatmentID)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -288,36 +322,7 @@ function readDosagePriority(DosagePriority) {
     tbody.style.textAlign = "center";
     table.appendChild(tbody);
 }
-function readDosage(DosagePriority) {
-    var table = document.getElementById("Dosage");
-    var tbody = document.createElement("tbody");
-    for (var i = table.rows.length - 1; i > 0; i--) {
-        table.deleteRow(i);
-    }
-    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
-    var lists = new Array();
-    lists = DosagePriority.split(";");
-    for (var i = 0; i < lists.length; i++) {
-        var list = new Array();
-        list = lists[i].split(",");
-        var tr = document.createElement("tr");
-        for (var j = 0; j < list.length; j++) {
-            var td = document.createElement("td");
-            if (j == 2) {
-                var textNode = document.createTextNode("<");
-                td.appendChild(textNode);
-                tr.appendChild(td);
-            } else {
-                var textNode = document.createTextNode(list[j]);
-            }
-            td.appendChild(textNode);
-            tr.appendChild(td);
-        }
-        tbody.appendChild(tr);
-    }
-    tbody.style.textAlign = "center";
-    table.appendChild(tbody);
-}
+
 function getallfirst(treatmentID)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -798,4 +803,8 @@ function judge(appointid,treatmentID) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     return json;
+}
+function showPicture() {
+    $("#myModal").modal("show");
+    $("#pic").attr("src", this.src);
 }

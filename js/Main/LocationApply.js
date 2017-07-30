@@ -267,33 +267,33 @@ function save() {
     var remark = document.getElementById("remark").value;
     if (document.getElementById("scanpart").value == "allItem") {
         window.alert("请选择扫描部位");
-        return;
+        return false;
     }
     if (document.getElementById("scanmethod").value == "allItem") {
         window.alert("请选择扫描方式");
-        return;
+        return false;
     }
     if (document.getElementById("up").value == "") {
         window.alert("请填写上界");
-        return;
+        return false;
     }
     if (document.getElementById("down").value == "") {
         window.alert("请填写下界");
-        return;
+        return false;
     }
     if (add== "1") {
         if (document.getElementById("addmethod").value == "allItem") {
             window.alert("请选择增强方式");
-            return;
+            return false;
         }
     }
     if (special == "allItem") {
         window.alert("请选择特殊要求");
-        return;
+        return false;
     }
     if (document.getElementById("idforappoint").value == "0") {
         window.alert("请预约时间与设备");
-        return;
+        return false;
     }
     $.ajax({
         type: "POST",
@@ -320,9 +320,11 @@ function save() {
             }
             if (data == "busy") {
                 window.alert("预约时间被占,需要重新预约");
+                return false;
             }
             if (data == "failure") {
                 window.alert("申请失败");
+                return false;
             }
         },
         error: function () {

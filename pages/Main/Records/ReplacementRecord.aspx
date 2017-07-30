@@ -26,60 +26,35 @@
             <div class="paper-title">
                 复位记录
             </div>
-                <div class="paper-content">
-                    <div class="content-title">
-                        <span>基本信息：</span>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-3">姓名：<span id="username" class="underline"></span></div>
-                        <div class="item col-xs-3">性别：<span id="sex" class="underline"></span></div>
-                        <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>
-                        <div class="item col-xs-3">民族：<span id="nation" class="underline"></span></div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-6">身份证号：<span id="idnumber" class="underline"></span></div>
-                        <div class="item col-xs-6">家庭地址：<span id="address" class="underline"></span></div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-6">联系方式1：<span id="contact" class="underline"></span></div>
-                        <div class="item col-xs-6">联系方式2：<span id="contact2" class="underline"></span></div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-6">分中心医院：<span id="hospital" class="underline"></span></div>
-                    </div>
+                     <div class="paper-content">
+                <div class="content-title">
+                    <span>基本信息：</span>
                 </div>
-                <div class="paper-content">
-                    <div class="content-title">
-                        <span>病案信息：</span>
-                    </div>
-                   <div class="single-row">
+                      <div class="single-row">
+                    <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
+                    <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
+                    <div class="item col-xs-4">年龄：<span id="age" class="underline"></span></div>
+                </div>
+                 <div class="single-row">
                         <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
-                        <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
-                        <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
-                        <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
-                        <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
-                    </div>
-                </div>  
-                <div class="paper-content"> 
-                    <div class="content-title">
-                        <span>复位申请信息：</span>
-                    </div>        
-                    <div class="single-row">
-                        <div class="item col-xs-4">复位要求：<span id="requireID" class="underline"></span></div>
-                        <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
-                        <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>   
-                    </div>
+                       <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                       <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
                 </div>
+                  <div class="single-row">
+                        <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
+                      <div class="item col-xs-4">照射部位：<span id="lightpart" class="underline"></span></div>
+                        <div class="item col-xs-4">住院情况：<span id="hospitalid" class="underline"></span></div> 
+                  </div>
+            </div>
                 <div class="paper-content">
                     <div class="content-title">
-                        <span>计划信息查看：</span>
+                        <span>参考信息：</span>
                     </div>  
                     <div class="single-row">
                      <div class="col-xs-12" style="padding-left:40%;" >
                           <a href="javascript:;"   id="viewpdf"  target="_blank"   class="btn btn-default">查看计划PDF文档</a>
+                          <button type="button" class="btn btn-default" id="CTpicture" data-toggle="modal" data-target="#ctpicture">查看模拟定位图片</button>
+                     
                      </div>
                     </div>
                 </div>
@@ -99,6 +74,13 @@
                     </div>
                      <div id="tab-content" class="tab-content">
                     <div class="tab-pane active" id="tab">
+                   <div class="single-row">
+                    <div class="col-xs-5">
+                        <span class="form-text col-xs-5" style="padding-left:0px;">复位要求：</span>
+                           <select name="replacementrequire" id="replacementrequire" disabled="disabled" class="form-item" >
+                           </select>
+                    </div>
+                </div>
                     <div class="single-row">
                         <div class="col-xs-6" style="padding-left:0px;">
                             <span class="form-text col-xs-12">参数变化(按照PDF填写)：</span>
@@ -187,7 +169,7 @@
                             <div id="multipic_yanzheng" class="imgbox multifile">
                                 <div id="firstyanzheng" class="boxes">
                                     <div class="imgnum">
-                                        <input disabled="disabled" type="file" name="f2" class="multifilepath1 filepath" />
+                                        <input disabled="disabled" accept="image/*" type="file" name="f2" class="multifilepath1 filepath" />
                                         <span class="closecamera closearea"><i class="fa fa-times"></i></span>
                                         <img src="../../../img/camera.png" class="camera-picture" />
                                         <img class="img"/>
@@ -213,14 +195,20 @@
                 </div> 
             </form> 
      </div>
-   <div class="modal fade" id="viewpdfwindow" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:700px;margin:50px auto;">
+   <div class="modal fade" id="ctpicture" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:700px;margin:50px auto;">
             <div class="panel panel-default" style="max-width:1000px;margin:auto;">
                 <div class="panel-heading">
-                    <h4 class="modal-title">查看系统计划计划窗口</h4>
+                    <h4 class="modal-title">CT模拟图片查看</h4>
                 </div>
-                <div class="panel-body">
-                   CPDF
+                <div id="ctpictureshow" class="panel-body">
+                 <div class="single-row">
+                        <div class="item col-xs-12">
+                            <div id="multipic" class="imgbox multifile">
+                                
+                            </div>
+                        </div>
                     </div>
+                   </div>
             </div>
         </div>
          <button id="showPic" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="display:none;"></button>

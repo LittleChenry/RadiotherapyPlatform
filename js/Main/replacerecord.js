@@ -15,29 +15,42 @@ function Init(evt) {
     }
     getUserName();
     var patient = getPatientInfo(treatmentID);
-    document.getElementById("hidetreatID").value = treatmentID;
     document.getElementById("userID").value = userID;
+    document.getElementById("hidetreatID").value = treatmentID;
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
-    document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
-    document.getElementById("nation").innerHTML = patient.Nation;
     document.getElementById("age").innerHTML = patient.Age;
-    document.getElementById("address").innerHTML = patient.Address;
-    document.getElementById("hospital").innerHTML = patient.Hospital;
-    document.getElementById("contact").innerHTML = patient.Contact1;
-    document.getElementById("contact2").innerHTML = patient.Contact2;
-    document.getElementById("treatID").innerHTML = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
-    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
-    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    var texthos = hosttext(patient.Hospital_ID);
+    document.getElementById("hospitalid").innerHTML = texthos;
+    document.getElementById("lightpart").innerHTML = patient.lightpartname;
+    createrequireItem(document.getElementById("replacementrequire"));
     var replacerecordinfo = getreplacerecordInfo(treatmentID);
-    document.getElementById("requireID").innerHTML = replacerecordinfo.replacerequire;
-    document.getElementById("ApplicationUser").innerHTML = replacerecordinfo.ApplicationUser;
-    document.getElementById("ApplicationTime").innerHTML = replacerecordinfo.ApplicationTime;
+    document.getElementById("replacementrequire").value = replacerecordinfo.requireID;
+    var boxes = document.getElementById("multipic");
+    var pictures = replacerecordinfo.picture.split(",");
+    if (replacerecordinfo.picture == "") {
+        boxes.innerHTML = "无";
+    } else {
+        for (var k = 1; k < pictures.length; k++) {
+            var div = document.createElement("DIV");
+            div.className = "boxes";
+            var div1 = document.createElement("DIV");
+            div1.className = "imgnum";
+            var img = document.createElement("IMG");
+            img.addEventListener("click", showPicture, false);
+            img.className = "img";
+            img.src = pictures[k];
+            img.style.display = "block";
+            div1.appendChild(img);
+            div.appendChild(div1);
+            boxes.appendChild(div);
+        }
+    }
     if (replacerecordinfo.pdf != "") {
         document.getElementById("viewpdf").href = replacerecordinfo.pdf;
     }
@@ -211,6 +224,13 @@ function Init(evt) {
         });
     });
 }
+function hosttext(str) {
+    if (str == "") {
+        return "未住院";
+    } else {
+        return ("住院,住院号:" + str);
+    }
+}
 function contains(group, s) {
     for (var k = 0; k <= group.length - 1; k++) {
         if (group[k] == s) {
@@ -340,26 +360,26 @@ function dateformat(format) {
     return time;
 }
 function save() {
-
+    if (document.getElementById("replacementrequire").value == "allItem") {
+        alert("复位要求未选择");
+        return false;
+    }
     if (document.getElementById("OriginCenter1").value == "" || document.getElementById("OriginCenter2").value == "" || document.getElementById("OriginCenter3").value == "") {
         window.alert("原始中心没有完善");
-        evt.preventDefault();
-        return;
+        return false;
     }
     if (document.getElementById("PlanCenter1").value == "" || document.getElementById("PlanCenter2").value == "" || document.getElementById("PlanCenter3").value == "") {
         window.alert("计划中心没有完善");
         evt.preventDefault();
-        return;
+        return false;
     }
     if (document.getElementById("Movement1").value == "" || document.getElementById("Movement2").value == "" || document.getElementById("Movement3").value == "") {
         window.alert("移床参数没有完善");
-        evt.preventDefault();
-        return;
+        return false;
     }
     if (document.getElementById("Result1").value == "" || document.getElementById("Result2").value == "" || document.getElementById("Result3").value == "") {
         window.alert("复位结果没有完善");
-        evt.preventDefault();
-        return;
+        return false;
     }
 
     if ((typeof (userID) == "undefined")) {
@@ -381,6 +401,7 @@ function save() {
         },
         error: function (e) {
             window.location.href = "Error.aspx";
+            return false;
         },
     });
 }
@@ -401,4 +422,27 @@ function remove() {
     }
     document.getElementById("Remarks").removeAttribute("disabled");
     document.getElementById("viewpdf").removeAttribute("disabled");
+    document.getElementById("replacementrequire").removeAttribute("disabled");
+}
+//第二页的复位要求选择下拉菜单
+function createrequireItem(thiselement) {
+    var requireItem = JSON.parse(getrequireItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--复位要求--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < requireItem.length; i++) {
+        if (requireItem[i] != "") {
+            thiselement.options[i + 1] = new Option(requireItem[i].Requirements);
+            thiselement.options[i + 1].value = parseInt(requireItem[i].ID);
+        }
+    }
+
+}
+function getrequireItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getrequire.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
 }

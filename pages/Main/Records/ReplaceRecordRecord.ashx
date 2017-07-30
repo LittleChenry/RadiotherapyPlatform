@@ -56,10 +56,11 @@ public class ReplaceRecordRecord : IHttpHandler {
         string userID = context.Request.Form["userID"];
         int userid = Convert.ToInt32(userID);
         DateTime datetime = DateTime.Now;
-        string strSqlCommand = "UPDATE replacement SET Remarks=@remark,OriginCenter=@OriginCenter,PlanCenter=@PlanCenter,Movement=@Movement,VerificationPicture=@VerificationPicture,Result=@Result,Distance=@distance,OperateTime=@datetime,Operate_User_ID=@userid where replacement.ID=@replacementID";
+        string strSqlCommand = "UPDATE replacement SET ReplacementRequirements_ID=@replacerequire,Remarks=@remark,OriginCenter=@OriginCenter,PlanCenter=@PlanCenter,Movement=@Movement,VerificationPicture=@VerificationPicture,Result=@Result,Distance=@distance,OperateTime=@datetime,Operate_User_ID=@userid where replacement.ID=@replacementID";
         //各参数赋予实际值
+        sqlOperation.AddParameterWithValue("@replacerequire", context.Request.Form["replacementrequire"]);
         sqlOperation.AddParameterWithValue("@replacementID", replacementID);
-        sqlOperation.AddParameterWithValue("@OriginCenter", context.Request.Form["OriginCenter1"] + "," +context.Request.Form["OriginCenter2"] + "," + context.Request.Form["OriginCenter3"]);
+        sqlOperation.AddParameterWithValue("@OriginCenter", context.Request.Form["OriginCenter1"] + "," + context.Request.Form["OriginCenter2"] + "," + context.Request.Form["OriginCenter3"]);
         sqlOperation.AddParameterWithValue("@PlanCenter", context.Request.Form["PlanCenter1"] + "," + context.Request.Form["PlanCenter2"] + "," + context.Request.Form["PlanCenter3"]);
         sqlOperation.AddParameterWithValue("@Movement", context.Request.Form["Movement1"] + "," + context.Request.Form["Movement2"] + "," + context.Request.Form["Movement3"]);
         sqlOperation.AddParameterWithValue("@distance", context.Request.Form["distance1"] + "," + context.Request.Form["distance2"] + "," + context.Request.Form["distance3"]);
@@ -69,7 +70,7 @@ public class ReplaceRecordRecord : IHttpHandler {
         sqlOperation.AddParameterWithValue("@userid", userid);
         sqlOperation.AddParameterWithValue("@remark", context.Request.Form["Remarks"]);
         int intSuccess1 = sqlOperation.ExecuteNonQuery(strSqlCommand);
-        string strSqlCommand1 = "UPDATE  appointment  SET Completed=1 where Treatment_ID=@treatid and Task='模拟定位'";
+        string strSqlCommand1 = "UPDATE  appointment  SET Completed=1 where Treatment_ID=@treatid and Task='复位模拟'";
         int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand1);
         string select1 = "select Progress from treatment where ID=@treatid";
         string progress = sqlOperation.ExecuteScalar(select1);

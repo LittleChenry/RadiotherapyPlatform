@@ -52,19 +52,23 @@ public class FirstAcclerateRecord : IHttpHandler {
                     string select1 = "select Progress from treatment where ID=@treat";
                     string progress = sqlOperation.ExecuteScalar(select1);
                     //将诊断ID填入treatment表
-                    string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log where ID=@treat";
+                    string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log,SplitWay_ID=@split,SpecialEnjoin=@remark where ID=@treat";
                     sqlOperation.AddParameterWithValue("@progress", progress + ",14,15");
                     sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
                     sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
+                    sqlOperation.AddParameterWithValue("@split", context.Request["splitway"]);
+                    sqlOperation.AddParameterWithValue("@remark", context.Request["remarks"]);
                     Success = sqlOperation.ExecuteNonQuery(inserttreat);
                 }
                 else
                 {
                     string select = "select ChangeLog from treatment where ID=@treat";
                     string log = sqlOperation.ExecuteScalar(select);
-                    string inserttreat = "update treatment set TotalNumber=@total,ChangeLog=@log where ID=@treat";
+                    string inserttreat = "update treatment set TotalNumber=@total,ChangeLog=@log,SplitWay_ID=@split,SpecialEnjoin=@remark where ID=@treat";
                     sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                     sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
+                    sqlOperation.AddParameterWithValue("@split", context.Request["splitway"]);
+                    sqlOperation.AddParameterWithValue("@remark", context.Request["remarks"]);
                     Success = sqlOperation.ExecuteNonQuery(inserttreat);
                 }
                 if (Success > 0)
@@ -96,6 +100,7 @@ public class FirstAcclerateRecord : IHttpHandler {
                     }
                     else
                     {
+                        return context.Request["remarks"];
                         string strcommand2 = "select Patient_ID from treatment where ID=@treat";
                         sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
                         string patient_ID = sqlOperation.ExecuteScalar(strcommand2);
@@ -120,19 +125,23 @@ public class FirstAcclerateRecord : IHttpHandler {
                             string select1 = "select Progress from treatment where ID=@treat";
                             string progress = sqlOperation.ExecuteScalar(select1);
                             //将诊断ID填入treatment表
-                            string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log where ID=@treat";
+                            string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log,SplitWay_ID=@split,SpecialEnjoin=@remark where ID=@treat";
                             sqlOperation.AddParameterWithValue("@progress", progress + ",14,15");
                             sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                             sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
+                            sqlOperation.AddParameterWithValue("@split", context.Request["splitway"]);
+                            sqlOperation.AddParameterWithValue("@remark", context.Request["remarks"]);
                             Success = sqlOperation.ExecuteNonQuery(inserttreat);
                         }
                         else
                         {
                             string select = "select ChangeLog from treatment where ID=@treat";
                             string log = sqlOperation.ExecuteScalar(select);
-                            string inserttreat = "update treatment set TotalNumber=@total,ChangeLog=@log where ID=@treat";
+                            string inserttreat = "update treatment set TotalNumber=@total,ChangeLog=@log,SplitWay_ID=@split,SpecialEnjoin=@remark where ID=@treat";
                             sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
                             sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
+                            sqlOperation.AddParameterWithValue("@split", context.Request["splitway"]);
+                            sqlOperation.AddParameterWithValue("@remark", context.Request["remarks"]);
                             Success = sqlOperation.ExecuteNonQuery(inserttreat);
                         }
                         if (Success > 0 && Success2 > 0)
@@ -192,19 +201,23 @@ public class FirstAcclerateRecord : IHttpHandler {
                         string select1 = "select Progress from treatment where ID=@treat";
                         string progress = sqlOperation.ExecuteScalar(select1);
                         //将诊断ID填入treatment表
-                        string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log where ID=@treat";
+                        string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log,SplitWay_ID=@split,SpecialEnjoin=@remark where ID=@treat";
                         sqlOperation.AddParameterWithValue("@progress", progress + ",14,15");
                         sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                         sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
+                        sqlOperation.AddParameterWithValue("@split", context.Request["splitway"]);
+                        sqlOperation.AddParameterWithValue("@remark", context.Request["remarks"]);
                         Success = sqlOperation.ExecuteNonQuery(inserttreat);
                     }
                     else
                     {
                         string select = "select ChangeLog from treatment where ID=@treat";
                         string log = sqlOperation.ExecuteScalar(select);
-                        string inserttreat = "update treatment set TotalNumber=@total,ChangeLog=@log where ID=@treat";
+                        string inserttreat = "update treatment set TotalNumber=@total,ChangeLog=@log,ChangeLog=@log,SplitWay_ID=@split,SpecialEnjoin=@remark where ID=@treat";
                         sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
                         sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
+                        sqlOperation.AddParameterWithValue("@split", context.Request["splitway"]);
+                        sqlOperation.AddParameterWithValue("@remark", context.Request["remarks"]);
                         Success = sqlOperation.ExecuteNonQuery(inserttreat);
                     }
                     if (Success > 0 && Success2 > 0)

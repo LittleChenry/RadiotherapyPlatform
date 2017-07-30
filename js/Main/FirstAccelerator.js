@@ -17,20 +17,15 @@ function Init(evt) {
     var patient = getFAPatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
-    document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
-    document.getElementById("nation").innerHTML = patient.Nation;
     document.getElementById("age").innerHTML = patient.Age;
-    document.getElementById("address").innerHTML = patient.Address;
-    document.getElementById("hospital").innerHTML = patient.Hospital;
-    document.getElementById("contact").innerHTML = patient.Contact1;
-    document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
-    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
-    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    var texthos = hosttext(patient.Hospital_ID);
+    document.getElementById("hospitalid").innerHTML = texthos;
+    document.getElementById("lightpart").innerHTML = patient.lightpartname;
     var groupprogress = patient.Progress.split(",");
     var i = 0;
     var designInfo = getDesignInfo(treatmentID);
@@ -47,6 +42,7 @@ function Init(evt) {
     document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
     document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
     document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
+    createSplitway(document.getElementById("splitway"));
     var total = gettotalnumber(treatmentID);
     var totalnumber = total.split(",")[0];
     var finshedtimes = total.split(",")[1];
@@ -62,7 +58,10 @@ function Init(evt) {
         document.getElementById("totalnumber").value = 0;
         document.getElementById("finishedtimes").innerHTML ="0";
     }
-   var log=getLog(treatmentID);
+    var logjson = getLog(treatmentID);
+
+    var log = logjson.ChangeLog;
+    
    if (log == "") {
        document.getElementById("logholder").style.display = "none";
    } else {
@@ -77,7 +76,8 @@ function Init(evt) {
        }
        $("#log").append(content);
    }
-
+   document.getElementById("splitway").value = logjson.SplitWay_ID;
+   document.getElementById("remarks").value = logjson.SpecialEnjoin;
     if (contains(groupprogress, "14")) {
         var info = getfirstaccelerateInfomation(treatmentID);
         document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
@@ -124,13 +124,43 @@ function Init(evt) {
             });  
     }
 }
+function createSplitway(thiselement) {
+    var getsplitwayItem = JSON.parse(getsplitway()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("-- 分割方式--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < getsplitwayItem.length; i++) {
+        if (getsplitwayItem[i] != "") {
+            thiselement.options[i+1] = new Option(getsplitwayItem[i].Ways);
+            thiselement.options[i+1].value = parseInt(getsplitwayItem[i].ID);
+        }
+    }
+}
+function getsplitway() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getsplitwayItem.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+
+function hosttext(str) {
+    if (str == "") {
+        return "未住院";
+    } else {
+        return ("住院,住院号:" + str);
+    }
+}
 function getLog(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getalllog.ashx?treatmentID=" + treatmentID;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    return json;
+    var json = json.replace(/\n/g, "\\n");
+    var obj1 = eval("(" + json + ")");
+    return obj1.Item[0];
 }
 function gettotalnumber(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
@@ -258,13 +288,18 @@ function save() {
         var appointid = document.getElementById("idforappoint").value;
         var totalnumber = document.getElementById("totalnumber").value;
         var finish = document.getElementById("finishthistreat").value;
+     
+        if (document.getElementById("splitway").value == "allItem") {
+            window.alert("请选择分割方式");
+            return false;
+        }
         if (document.getElementById("idforappoint").value == "0") {
             window.alert("请预约时间与设备");
-            return;
+            return false;
         }
         if (document.getElementById("totalnumber").value == 0) {
             window.alert("总次数不能为0");
-            return;
+            return false;
         }
         if ((typeof (userID) == "undefined")) {
             if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -281,7 +316,9 @@ function save() {
                 isfinished: finish,
                 totalnumber: totalnumber,
                 user: userID,
-                username: userName
+                username: userName,
+                splitway: document.getElementById("splitway").value,
+                remarks: document.getElementById("remarks").value
 
             },
             dateType: "json",
@@ -575,4 +612,6 @@ function remove() {
     }
     document.getElementById("changetotalnumber").removeAttribute("disabled");
     document.getElementById("finish").removeAttribute("disabled");
+    document.getElementById("splitway").removeAttribute("disabled");
+    document.getElementById("remarks").removeAttribute("disabled");
 }

@@ -25,6 +25,7 @@ function Init(evt) {
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     var texthos = hosttext(patient.Hospital_ID);
     document.getElementById("hospitalid").innerHTML = texthos;
+    document.getElementById("lightpart").innerHTML = patient.lightpartname;
     createrequireItem(document.getElementById("replacementrequire"));
     var info = getReplaceInfomation(treatmentID);
     $("#current-tab").text(patient.Treatmentdescribe + "复位申请");
@@ -160,9 +161,11 @@ function save() {
             }
             if (data == "busy") {
                 window.alert("预约时间被占,需要重新预约");
+                return false;
             }
             if (data == "failure") {
                 window.alert("申请失败");
+                return false;
             }
         },
         error: function () {

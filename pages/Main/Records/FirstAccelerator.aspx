@@ -34,38 +34,21 @@
                 <div class="content-title">
                     <span>基本信息：</span>
                 </div>
-                <div class="single-row">
-                    <div class="item col-xs-3">姓名：<span id="username" class="underline"></span></div>
-                    <div class="item col-xs-3">性别：<span id="sex" class="underline"></span></div>
-                    <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>
-                    <div class="item col-xs-3">民族：<span id="nation" class="underline"></span></div>
+                      <div class="single-row">
+                    <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
+                    <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
+                    <div class="item col-xs-4">年龄：<span id="age" class="underline"></span></div>
                 </div>
-                <div class="single-row">
-                    <div class="item col-xs-6">身份证号：<span id="idnumber" class="underline"></span></div>
-                    <div class="item col-xs-6">家庭地址：<span id="address" class="underline"></span></div>
+                 <div class="single-row">
+                        <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                       <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                       <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
                 </div>
-                <div class="single-row">
-                    <div class="item col-xs-6">联系方式1：<span id="contact" class="underline"></span></div>
-                    <div class="item col-xs-6">联系方式2：<span id="contact2" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-6">分中心医院：<span id="hospital" class="underline"></span></div>
-                </div>
-            </div>
-            <div class="paper-content">
-                <div class="content-title">
-                    <span>病案信息：</span>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
-                    <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
-                    <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
-                    <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
-                    <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
-                </div>
+                  <div class="single-row">
+                        <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
+                      <div class="item col-xs-4">照射部位：<span id="lightpart" class="underline"></span></div>
+                        <div class="item col-xs-4">住院情况：<span id="hospitalid" class="underline"></span></div> 
+                  </div>
             </div>
              <div class="paper-content">
                   <div class="content-title">
@@ -157,11 +140,15 @@
                 </div>
                 <div class="single-row">
                     <div class="col-xs-8">
-                        <span class="form-text" style="padding-left:0px;">治疗总次数：</span>
+                        <span class="form-text col-xs-3" style="padding-left:0px;">治疗总次数：</span>
                         <input id="totalnumber"  name="totalnumber" disabled="disabled"    type="number" class="form-item" style="width:20%;"/>
                         <button id="changetotalnumber" type="button" class="btn btn-success"  disabled="disabled">更改</button>
                         <button id="finish" type="button" class="btn btn-warning" disabled="disabled">结束治疗</button>
                          <input id="finishthistreat" value="0" type="hidden" name="finishthistreat" class="form-item" />
+                    </div>
+                     <div class="col-xs-4">
+                        <span class="form-text" style="padding-left:0px;">已治疗次数：</span>
+                        <span id="finishedtimes" class="underline"></span>
                     </div>
                 </div>
                  <div id="logholder" class="single-row">
@@ -176,20 +163,25 @@
                                </tr>
                                  </thead>
                                <tbody id="log">
-
-
                                </tbody>
                            </table>
                           </div>
                      </div>
-                <div class="single-row">
-                    <div class="col-xs-4">
-                        <span class="form-text" style="padding-left:0px;">已治疗次数：</span>
-                        <span id="finishedtimes" class="underline"></span>
+               <div class="single-row">
+                    <div class="col-xs-8">
+                        <span class="form-text col-xs-3" style="padding-left:0px;">分割方式：</span>
+                           <select  id="splitway" disabled="disabled" class="col-xs-3 form-item" name="splitway">
+                           </select>
                     </div>
-                </div>
+               </div>
+              <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                      <span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span>
+                          <textarea id="remarks" name="remarks" class="form-area col-xs-10" disabled="disabled"></textarea>
+                          </div>                                                                 
+                      </div>
             </div>
-            <div class="paper-content">
+             <div class="paper-content">
                 <div class="content-title">
                     <span>放射治疗知情同意：</span>
                 </div>

@@ -192,23 +192,23 @@ function save() {
     var appointid = document.getElementById("idforappoint").value;
     if (document.getElementById("modelselect").value == "allItem") {
         window.alert("模具没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("specialrequest").value == "allItem") {
         window.alert("特殊要求没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("bodyPost").value == "allItem") {
         window.alert("体位没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("fixEquip").value == "allItem") {
         window.alert("固定装置没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("idforappoint").value == "allItem") {
         window.alert("设备没有预约");
-        return;
+        return false;
     }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -237,9 +237,11 @@ function save() {
             }
             if (data == "busy") {
                 window.alert("预约时间被占,需要重新预约");
+                return false;
             }
             if (data == "failure") {
                 window.alert("申请失败");
+                return false;
             }
         },
         error: function () {

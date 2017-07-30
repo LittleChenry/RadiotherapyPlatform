@@ -29,62 +29,45 @@
             <div class="paper-title">
                  放射治疗记录
             </div>
-            <div class="paper-content">
+                <div class="paper-content">
                 <div class="content-title">
                     <span>基本信息：</span>
                 </div>
-                <div class="single-row">
+                      <div class="single-row">
                     <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
                     <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
                     <div class="item col-xs-4">年龄：<span id="age" class="underline"></span></div>
                 </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">民族：<span id="nation" class="underline"></span></div>
-                    <div class="item col-xs-4">身份证号：<span id="idnumber" class="underline"></span></div>
-                    <div class="item col-xs-4">地址：<span id="address" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">联系方式1：<span id="contact" class="underline"></span></div>
-                    <div class="item col-xs-4">联系方式2：<span id="contact2" class="underline"></span></div>
-                    <div class="item col-xs-4">分中心医院：<span id="hospital" class="underline"></span></div>
-                </div>
-            </div>
-            <div class="paper-content">
-                <div class="content-title">
-                    <span>病案信息：</span>
-                </div>
-                <div class="single-row">
+                 <div class="single-row">
                         <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
-                        <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
-                        <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                       <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                       <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
+                </div>
+                  <div class="single-row">
                         <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
-                        <div class="item col-xs-4">所属医生：<span id="Reguser" class="underline"></span></div>
-                    </div>
+                      <div class="item col-xs-4">照射部位：<span id="lightpart" class="underline"></span></div>
+                        <div class="item col-xs-4">住院情况：<span id="hospitalid" class="underline"></span></div> 
+                  </div>
             </div>
             <div class="paper-content">
                     <div class="content-title">
-                        <span>信息查看：</span>
+                        <span>参考信息：</span>
                     </div>  
                     <div class="single-row">
                      <div class="col-xs-12" style="padding-left:30%;" >
                           <a href="javascript:;"   id="viewpdf"  target="_blank"   class="btn btn-default">查看计划PDF文档</a>
                           <a href="javascript:;"   id="viewpdf2"  target="_blank"   class="btn btn-default">查看复核PDF文档</a>
+                         <button type="button" class="btn btn-default" id="CTpicture" data-toggle="modal" data-target="#ct">查看模拟定位图片</button>
                      </div>
                     </div>
                 </div>
              <div class="paper-content">
                   <div class="content-title">
-                    <span>计划详细信息：</span>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-12">
-                        <span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>
-                        <span id="Remarks" class="col-xs-10"></span>
-                    </div>
-                </div>
+                    <span>计划信息：</span>
+                </div>   
+                  <div class="single-row">
+                     <div class="item col-xs-6">分割方式：<span id="split"  class="underline"></span></div>
+                  </div>
                 <div class="single-row">
                     <div class="col-xs-6" style="padding-left:0px;">
                         <span class="form-text col-xs-4">靶区处方剂量：</span>
@@ -108,50 +91,13 @@
                         </table>
                     </div>
                 </div>
-                <div class="single-row">
-                    <div class="col-xs-6" style="padding-left:0px;">
-                        <span class="form-text col-xs-4">危及器官限量：</span>
+                 <div class="single-row">
+                        <div class="item area-group col-xs-12">
+                            <span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span>
+                            <textarea id="enjoin" disabled="disabled" name="enjoin" class="form-area col-xs-10" ></textarea>
+                        </div>                                                                 
                     </div>
                 </div>
-                <div class="single-row">
-                    <div class="item area-group col-xs-12">
-                        <table id="Dosage" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>危及器官</th>
-                                    <th>剂量cGy</th>
-                                    <th>限制</th>
-                                    <th>体积/%</th>
-                                    <th>外放mm</th>
-                                    <th>PRV</th>
-                                    <th>剂量cGy</th>
-                                    <th>限制</th>
-                                    <th>体积/%</th>
-                                    <th>优先级</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">治疗技术：<span id="technology" class="underline"></span></div>
-                    <div class="item col-xs-4">放疗设备：<span id="equipment" class="underline"></span></div>
-                    <div class="item col-xs-4">计划系统：<span id="PlanSystem" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">射野数量：<span id="IlluminatedNumber" class="underline"></span></div>
-                    <div class="item col-xs-4">非共面照射：<span id="Coplanar" class="underline"></span></div>
-                    <div class="item col-xs-4">机器跳数：<span id="MachineNumbe" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">控制点数量：<span id="ControlPoint" class="underline"></span></div>
-                    <div class="item col-xs-4">计算网络：<span id="Grid" class="underline"></span></div>
-                    <div class="item col-xs-4">优化算法：<span id="Algorithm" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">计划可执行度：<span id="Feasibility" class="underline"></span></div>
-                </div>
-            </div>
             <div class="paper-content">
                 <div class="content-title">
                     <span>填写放射治疗记录与IGRT记录：</span>
@@ -333,6 +279,36 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="ct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:700px;margin:50px auto;">
+            <div class="panel panel-default" style="max-width:1000px;margin:auto;">
+                <div class="panel-heading">
+                    <h4 class="modal-title">CT模拟图片查看</h4>
+                </div>
+                <div id="ctpictureshow" class="panel-body">
+                 <div class="single-row">
+                        <div class="item col-xs-12">
+                            <div id="multipic" class="imgbox multifile">
+                                
+                            </div>
+                        </div>
+                    </div>
+                   </div>
+            </div>
+        </div>
+        <button id="showPic" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="display:none;"></button>
+        <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">查看图片</h4>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" id="pic" class="showPicture" />
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </section>
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
