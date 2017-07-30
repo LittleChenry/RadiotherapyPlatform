@@ -1,36 +1,28 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="NewsList.aspx.cs" Inherits="pages_Main_NewsList" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="EquipmentView.aspx.cs" Inherits="pages_Main_EquipmentView" %>
 
 <!DOCTYPE html>
 
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>放疗质控系统</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css">
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css" />
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+ <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--Tell the brower to be responsive to screen width -->
+    <meta content="Width=device-width, initial-scale=1, maxmum-scale=1, user-scalable=no" name="viewport" />
+    <!--Boostrap -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css" />
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css" />
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <!-- Main Css -->
+    <link rel="stylesheet" href="../../css/Root/rootMain.css" />
+    <%--<link rel="stylesheet" href="../../css/Main/appointmentCss.css" />--%>
+    <title>设备预约管理</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
 <div class="wrapper">
@@ -174,7 +166,7 @@
                         <span>患者汇总</span>
                     </a>
                 </li>
-                <li class="treeview">
+                <li class="active treeview">
                     <a href="EquipmentView.aspx">
                         <i class="fa fa-clock-o"></i>
                         <span>设备预约管理</span>
@@ -192,7 +184,7 @@
                         <span>患者登记</span>
                     </a>
                 </li>
-                <li class="active treeview">
+                <li class="treeview">
                     <a href="NewsList.aspx?role=<%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).getRoleName() %>">
                         <i class="fa fa-bell-o"></i>
                         <span>通知公告</span>
@@ -231,50 +223,73 @@
             </ul>
         </section>
     </aside>
-
-    <div class="content-wrapper">        
-        <section id="notice-content" class="table-responsive" style="background-color:#fff;min-width:1000px;margin:auto">
-            <input id="type" type="hidden" />
-            <div style="text-align:center;">
-                <h2>通知公告</h2>
+  <div class="content-wrapper">
+    <section class="content">
+         <div class="row">
+            <div class="col-xs-12">
+                <h1 class="page-header">设备预约管理</h1>
             </div>
-            <div class="panel-body">
-                <table class="table" >
-                    <thead>
-                        <tr>
-                            <th style="width:4%"></th>
-                            <th style="width:70%">消息标题</th>
-                            <th style="width:13%">发布人</th>
-                            <th style="width:13%">发布时间</th>
-                        </tr>
-                    </thead>
-                    <tbody id="infomanagetable"></tbody>
-                </table>
-                <div class="table-button pull-right">
-                    <button class="btn btn-primary btn-sm firstpage" id="firstPage">首页</button>
-                    <button class="btn btn-primary btn-sm firstpage" id="previousPage">上一页</button>
-                    <button class="btn btn-primary btn-sm firstpage" id="nextPage">下一页</button>
-                    <button class="btn btn-primary btn-sm firstpage" id="lastPage">尾页</button>
-                    <input type="hidden" id="currentPage" />
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-4">
+                    <div class="form-group input-group">
+                        <select id="equipmentSelect" class="form-control">
+                            
+                        </select>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" style="height:34px" type="button" id="sureTable">
+                                确定
+                            </button>
+                        </span>
+                    </div>
                 </div>
             </div>
-        </section>
-    </div>
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 2.0
+            <!-- 搜索框 -->
+            <div class="col-md-12">
+                <div class="panel panel-default mintablewidth">
+                    <div class="panel-heading mintablewidth">
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                        <span class="panel-title">预约表</span>
+                    </div>
+                    <div id="tableArea" class="panel-body mintablewidth">
+                        <table id="appointTable" class="table table-bordered table-hover dataTable" style="width:100%;text-align:center;">
+                            <thead id="thead">
+
+                            </thead>
+                            <tbody id="tbody">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
         </div>
-        <strong>Copyright &copy; 2017 <a href="#"> 医院</a> .</strong> 保留所有权利
-    </footer>
-    <div class="control-sidebar-bg"></div>
+        <!-- body row-->
+    </section>
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 2.0
+    </div>
+    <strong>Copyright &copy; 2017 <a href="#"> 医院</a> .</strong> 保留所有权利
+  </footer>
+
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
 </div>
+<!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
-      <!-- bootstrap datepicker -->
-    <script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- DataTables -->
 <script src="../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
@@ -288,11 +303,8 @@
 <script src="../../plugin/AdminLTE/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
-<!-- js -->
-<script src="../../js/Main/newsList.js"></script>
+<!-- Main javascript -->
 <script src="../../js/Main/HeaderOperate.js"></script>
-<script>
-    $("#notice-content").css("minHeight", $(document).height() - 101);
-</script>
+<script src="../../js/Main/EquipmentView.js"></script>
 </body>
 </html>

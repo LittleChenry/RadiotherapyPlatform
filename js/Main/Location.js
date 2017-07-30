@@ -53,6 +53,7 @@ function Init(evt) {
             if (patient.Treatmentname == locationInfo[i].Treatmentname) {
        
                 document.getElementById("remark").value = locationInfo[i].Remarks;
+                document.getElementById("Remarks").value = locationInfo[i].Remarksrecord;
                 var add = document.getElementsByName("add");
               
                 document.getElementById("scanpart").value = locationInfo[i].ScanPart;
@@ -108,6 +109,7 @@ function Init(evt) {
                     + '<div class="item col-xs-6">层数：<span class="underline">' + locationInfo[i].Number + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + locationInfo[i].ReferenceNumber + '</span></div>'
                     + '<div class="item col-xs-6">体表参考刻度：<span class="underline">' + locationInfo[i].ReferenceScale + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">记录备注：<span class="underline">' + locationInfo[i].Remarksrecord + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">定位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
                 if (locationInfo[i].CTPictures == "") {
@@ -146,6 +148,7 @@ function Init(evt) {
                     + '<div class="item col-xs-6">层数：<span class="underline">' + locationInfo[i].Number + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">参考中心层面：<span class="underline">' + locationInfo[i].ReferenceNumber + '</span></div>'
                     + '<div class="item col-xs-6">体表参考刻度：<span class="underline">' + locationInfo[i].ReferenceScale + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-12">记录备注：<span class="underline">' + locationInfo[i].Remarksrecord + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">定位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
                 if (locationInfo[i].CTPictures == "") {
@@ -200,6 +203,7 @@ function Init(evt) {
             document.getElementById("Number").value = locationInfo[k].Number;
             document.getElementById("ReferenceNumber").value = locationInfo[k].ReferenceNumber;
             document.getElementById("ReferenceScale").value = locationInfo[k].ReferenceScale;
+            document.getElementById("Remarks").value = locationInfo[k].Remarksrecord;
         });
     });
 }
@@ -412,45 +416,45 @@ function save() {
     }
     if (document.getElementById("scanpart").value == "allItem") {
         window.alert("请选择扫描部位");
-        return;
+        return false;
     }
     if (document.getElementById("scanmethod").value == "allItem") {
         window.alert("请选择扫描方式");
-        return;
+        return false;
     }
     if (document.getElementById("up").value == "") {
         window.alert("请填写上界");
-        return;
+        return false;
     }
     if (document.getElementById("down").value == "") {
         window.alert("请填写下界");
-        return;
+        return false;
     }
     if (add == "1") {
         if (document.getElementById("addmethod").value == "allItem") {
             window.alert("请选择增强方式");
-            return;
+            return false;
         }
     }
     if (special == "allItem") {
         window.alert("请选择特殊要求");
-        return;
+        return false;
     }
     if (document.getElementById("Thickness").value == "") {
         alert("请填写层厚");
-        return;
+        return false;
     }
     if (document.getElementById("Number").value == "") {
         alert("请填写层数");
-        return;
+        return false;
     }
     if (document.getElementById("ReferenceNumber").value == "") {
         alert("请填写参考中心层面");
-        return;
+        return false;
     }
     if (document.getElementById("ReferenceScale").value == "") {
         alert("请填写体表参考刻度");
-        return;
+        return false;
     }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -464,17 +468,18 @@ function save() {
         data: form,
         processData: false,
         contentType: false,
-        async: false,
+        async: false,      
         success: function (data) {
-            alert("保存成功");
+            if (data == "success") {
+                alert("保存成功");
+            } else {
+                alert("保存失败");
+            }
             window.location.reload();
         },
         error: function (e) {
             window.location.href = "Error.aspx";
-        },
-        failure: function (e) {
-            window.location.href = "Error.aspx";
-        }
+        },       
     });
 }
 
@@ -485,6 +490,7 @@ function remove() {
     document.getElementById("down").removeAttribute("disabled");
     document.getElementById("special").removeAttribute("disabled");
     document.getElementById("remark").removeAttribute("disabled");
+    document.getElementById("Remarks").removeAttribute("disabled");
     document.getElementById("yes").removeAttribute("disabled");
     document.getElementById("No").removeAttribute("disabled");
     document.getElementById("addmethod").removeAttribute("disabled");

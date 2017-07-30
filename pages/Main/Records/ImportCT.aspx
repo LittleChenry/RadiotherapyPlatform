@@ -24,7 +24,7 @@
 </head>
 <body style="width:auto;min-width:900px;margin:auto;">
    <section class="content">
-        <div class="paper">
+        <div class="paper" id="needPrint">
             <input type="hidden" id="progress" />
             <div class="paper-title">
                  CT图像信息导入
@@ -34,38 +34,19 @@
                     <span>基本信息：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-3">姓名：<span id="username" class="underline"></span></div>
-                    <div class="item col-xs-3">性别：<span id="sex" class="underline"></span></div>
-                    <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>
-                    <div class="item col-xs-3">民族：<span id="nation" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-6">身份证号：<span id="idnumber" class="underline"></span></div>
-                    <div class="item col-xs-6">家庭地址：<span id="address" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-6">联系方式1：<span id="contact" class="underline"></span></div>
-                    <div class="item col-xs-6">联系方式2：<span id="contact2" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-6">分中心医院：<span id="hospital" class="underline"></span></div>
-                </div>
-            </div>
-            <div class="paper-content">
-                <div class="content-title">
-                    <span>病案信息：</span>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
-                    <div class="item col-xs-4">病案号：<span id="RecordNumber"  class="underline"></span></div>
-                    <div class="item col-xs-4">住院号：<span id="hospitalid" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
-                    <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
-                    <div class="item col-xs-4">所属医生：<span id="diaguser" class="underline"></span></div>
-                </div>
-            </div>
+                        <div class="item col-xs-3">姓名：<span id="username" class="underline"></span></div>
+                        <div class="item col-xs-3">性别：<span id="sex" class="underline"></span></div>
+                        <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>                   
+                    </div>
+                    <div class="single-row">
+                       <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                       <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                       <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
+                    </div>
+                    <div class="single-row">
+                        <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
+                    </div>
+                </div>                        
             <div class="paper-content"> 
                 <form id="saveImportCT" method="post" runat="server">
                     <input type="hidden" name="ispostback" value="true" />
@@ -141,10 +122,15 @@
         </div>
          
     </section>
+    <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">
+                
+    </section>
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="../../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
+    <!-- JQuery PrintArea -->
+    <script src="../../../plugin/AdminLTE/jquery.PrintArea.js"></script>
     <!-- DataTables -->
     <script src="../../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
@@ -161,6 +147,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <!-- javascript -->
+    <script src="../../../js/Main/FixedRecordPrint.js"></script>
      <script src="../../../js/Main/importCT.js" type="text/javascript"></script>
      <!-- Page script -->
     <script type="text/javascript">

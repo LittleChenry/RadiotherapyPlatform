@@ -40,9 +40,9 @@
                         <span>基本信息：</span>
                     </div>
                    <div class="single-row">
-                        <div class="item col-xs-3">姓名：<span id="username" class="underline"></span></div>
-                        <div class="item col-xs-3">性别：<span id="sex" class="underline"></span></div>
-                        <div class="item col-xs-3">年龄：<span id="age" class="underline"></span></div>                   
+                        <div class="item col-xs-4">姓名：<span id="username" class="underline"></span></div>
+                        <div class="item col-xs-4">性别：<span id="sex" class="underline"></span></div>
+                        <div class="item col-xs-4">年龄：<span id="age" class="underline"></span></div>                   
                     </div>
                     <div class="single-row">
                        <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
@@ -130,6 +130,12 @@
                             <span class="form-text col-xs-4">体表参考刻度：</span>
                             <input id="ReferenceScale" class="form-item col-xs-6" type="number" name="ReferenceScale" disabled="disabled"/>
                         </div>
+                    </div>
+                    <div class="single-row">
+                    <div class="item area-group col-xs-12">
+                        <span class="col-xs-2" style="padding-left:0px;"> 记录备注：</span>                     
+                        <textarea id="Remarks" name="Remarks" class="form-area col-xs-10" disabled="disabled"></textarea>
+                    </div>
                     </div>
                     <div class="single-row">
                         <div class="item col-xs-12">
