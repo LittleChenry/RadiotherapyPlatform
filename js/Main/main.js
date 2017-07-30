@@ -111,6 +111,7 @@ function RolesToPatients() {
             parameters[2] = enddate;
             patient = getPatient(session.userID, session.role, parameters);
             Paging(patient, session.role, session.userID);
+            adjustTable();
             $.ajax({
                 type: "POST",
                 async: false,
