@@ -22,25 +22,17 @@ function Init(evt) {
     //alert("jy");
     //document.getElementById("username").value = userID; 
     var treatID = window.location.search.split("=")[1];
-    document.getElementById("treatID").innerHTML = treatID;
-
     var patient = getPatientInfo(treatID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
-    document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
-    document.getElementById("nation").innerHTML = patient.Nation;
     document.getElementById("age").innerHTML = patient.Age;
-    document.getElementById("address").innerHTML = patient.Address;
-    document.getElementById("hospital").innerHTML = patient.Hospital;
-    document.getElementById("contact").innerHTML = patient.Contact1;
-    document.getElementById("contact2").innerHTML = patient.Contact2;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
-    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
-    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    var texthos = hosttext(patient.Hospital_ID);
+    document.getElementById("hospitalid").innerHTML = texthos;
     document.getElementById("aa").value = aa;
     document.getElementById("bb").value = bb;
     var select1 = document.getElementById("technology");
@@ -131,6 +123,13 @@ function Init(evt) {
             document.getElementById("Prioritsum" + e.data.i).value = parseInt(document.getElementById("Prioritcgy" + e.data.i).value) * parseInt(document.getElementById("Priorittime" + e.data.i).value);
         }
     });
+}
+function hosttext(str) {
+    if (str == "") {
+        return "未住院";
+    } else {
+        return ("住院,住院号:" + str);
+    }
 }
 function isInArray(arr, value) {
     for (var i = 0; i < arr.length; i++) {

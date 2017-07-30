@@ -17,21 +17,14 @@ function Init(evt) {
     var patient = getReplacePatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
-    document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
-    document.getElementById("nation").innerHTML = patient.Nation;
     document.getElementById("age").innerHTML = patient.Age;
-    document.getElementById("address").innerHTML = patient.Address;
-    document.getElementById("hospital").innerHTML = patient.Hospital;
-    document.getElementById("contact").innerHTML = patient.Contact1;
-    document.getElementById("contact2").innerHTML = patient.Contact2;
-    document.getElementById("treatID").value = patient.treatID;
     document.getElementById("progress").value = patient.Progress;
     document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
     document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
     document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
-    document.getElementById("RecordNumber").innerHTML = patient.RecordNumber;
-    document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
+    var texthos = hosttext(patient.Hospital_ID);
+    document.getElementById("hospitalid").innerHTML = texthos;
     createrequireItem(document.getElementById("replacementrequire"));
     var info = getReplaceInfomation(treatmentID);
     $("#current-tab").text(patient.Treatmentdescribe + "复位申请");
@@ -95,6 +88,13 @@ function contains(group, s) {
     }
     return false;
 }
+function hosttext(str) {
+    if (str =="") {
+        return "未住院";
+    } else {
+        return ("住院,住院号:" + str);
+    }
+}
 //设备下拉菜单
 function createfixEquipmachine(thiselement, item) {
     var machineItem = JSON.parse(getmachineItem(item)).Item;
@@ -131,11 +131,11 @@ function save() {
     var require = document.getElementById("replacementrequire").value;
     if (require == "allItem") {
         window.alert("请填写复位要求");
-        return;
+        return false;
     }
     if (document.getElementById("idforappoint").value == "0") {
         window.alert("请预约时间与设备");
-        return;
+        return false;
     }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
