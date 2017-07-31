@@ -164,6 +164,7 @@ function getfixInfomation(treatmentID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    var json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 }
@@ -173,6 +174,7 @@ function chooseTempalte(templateID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    var json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     document.getElementById("modelselect").value = obj1.templateInfo[0].Model_ID;
     document.getElementById("specialrequest").value = obj1.templateInfo[0].FixedRequirements_ID;

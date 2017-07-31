@@ -283,6 +283,7 @@ function getFixedInfo(treatID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    var json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1;
 }
@@ -369,23 +370,23 @@ function dateformat(format) {
 function save() {
     if (document.getElementById("modelselect").value == "allItem") {
         window.alert("模具没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("specialrequest").value == "allItem") {
         window.alert("特殊要求没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("bodyPost").value == "allItem") {
         window.alert("体位没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("fixEquip").value == "allItem") {
         window.alert("固定装置没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("Head").value == "allItem") {
         window.alert("头枕没有选择");
-        return;
+        return false;
     }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -409,6 +410,7 @@ function save() {
         },
         failure: function (e) {
             alert("更新失败！！");
+            return false;
         }
     });
 }

@@ -125,6 +125,7 @@ function getLocation(treatmentID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    var json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.info[0];
 }
@@ -219,27 +220,27 @@ function dateformat(format) {
 function save() {
     if (document.getElementById("DensityConversion").value == "allItem") {
         alert("请选择CT电子密度转换方式");
-        return;
+        return false;
     }
     if (document.getElementById("SequenceNaming").value == "") {
         alert("请填写CT序列命名");
-        return;
+        return false;
     }
     if (document.getElementById("Thickness").value == "") {
         alert("请填写层厚");
-        return;
+        return false;
     }
     if (document.getElementById("Number").value == "") {
         alert("请填写层数");
-        return;
+        return false;
     }
     if (document.getElementById("ReferenceScale").value == "") {
         alert("请选择参考中心层面");
-        return;
+        return false;
     }
     if (document.getElementById("MultimodalImage").value == "allItem") {
         alert("请选择多模态图像");
-        return;
+        return false;
     }
     var form = new FormData(document.getElementById("saveImportCT"));
     $.ajax({
@@ -254,6 +255,7 @@ function save() {
                 alert("保存成功");
             } else {
                 alert("保存失败");
+                return false;
             }
             window.location.reload();
         },

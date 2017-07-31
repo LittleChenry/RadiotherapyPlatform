@@ -343,6 +343,7 @@ function getDignoseInfo(treatID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    var json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.locationInfo;
 }
@@ -474,6 +475,7 @@ function save() {
                 alert("保存成功");
             } else {
                 alert("保存失败");
+                return false;
             }
             window.location.reload();
         },

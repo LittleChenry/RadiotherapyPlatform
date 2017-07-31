@@ -160,6 +160,7 @@ function getDignoseInfo(treatid) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    var json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1;
 }
@@ -470,6 +471,7 @@ function save() {
                 askForBack();
             } else {
                 window.alert("诊断失败");
+                return false;
             }
         },
         error: function () {
@@ -484,6 +486,7 @@ function chooseTempalte(templateID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    var json = json.replace(/\n/g, "\\n");
     var diagnosisInfo = eval("(" + json + ")");
     document.getElementById("bingqing1").value = diagnosisInfo.diagnosisInfo[0].diagnosisresultName1.split(",")[0];
     loadone();
@@ -575,6 +578,7 @@ function saveTemplate(TemplateName) {
                 window.alert("模板保存成功");
             } else {
                 window.alert("模板保存失败");
+                return false;
             }
         },
         error: function () {

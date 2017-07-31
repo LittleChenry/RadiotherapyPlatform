@@ -200,6 +200,7 @@ function getDesignInfo(treatID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    var json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.designInfo;
 }
@@ -719,11 +720,11 @@ function getUserID() {
 function save() {
     if (document.getElementById("technology").value == "allItem") {
         window.alert("治疗技术没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("equipment").value == "allItem") {
         window.alert("放疗设备没有选择");
-        return;
+        return false;
     }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -753,11 +754,11 @@ function save() {
 function saveTemplate(TemplateName) {
     if (document.getElementById("technology").value == "allItem") {
         window.alert("治疗技术没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("equipment").value == "allItem") {
         window.alert("放疗设备没有选择");
-        return;
+        return false;
     }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
