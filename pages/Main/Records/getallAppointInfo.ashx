@@ -89,8 +89,7 @@ public class getallAppointInfo : IHttpHandler {
         }
         else
         {
-            backText.Append("\"otheraccelerate\":");
-            backText.Append("\"\"}");
+            backText.Append("\"otheraccelerate\":\"\"\"}");
         }
         backText.Remove(backText.Length - 3, 1);
         return backText.ToString();
