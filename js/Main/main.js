@@ -598,6 +598,7 @@ function trAddClick(patient, userID) {
                             });
                             $(this).find('span').removeClass().addClass("fa fa-arrow-circle-right");
                             checkEdit("1");
+                            tem(userID, 1);
                         });
                         break;
                     case 2:

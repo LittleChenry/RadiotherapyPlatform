@@ -21,7 +21,6 @@
 
     <!-- Main Css -->
     <link rel="stylesheet" href="../../css/Root/rootMain.css" />
-    <%--<link rel="stylesheet" href="../../css/Main/appointmentCss.css" />--%>
     <title>设备预约管理</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
@@ -223,66 +222,73 @@
             </ul>
         </section>
     </aside>
-  <div class="content-wrapper">
-    <section class="content">
-         <div class="row">
-            <div class="col-xs-12">
-                <h1 class="page-header">设备预约管理</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">&nbsp;</div>
-                <div class="col-md-4">
-                    <div class="form-group input-group">
-                        <select id="equipmentSelect" class="form-control">
-                            
-                        </select>
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" style="height:34px" type="button" id="sureTable">
-                                确定
-                            </button>
-                        </span>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>设备预约管理</h1>
+        </section>
+        <section class="content">
+            <div class="row">
+            <div class="col-md-3">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">选择设备</h3>
+                    </div>
+                    <div class="box-body">
+                        <strong><i class="fa fa-book margin-r-5"></i> 选择项目</strong>
+                        <select id="equipmentType" class="form-control"></select>
+                        <hr>
+                        <strong><i class="fa fa-fw fa-dashboard"></i> 选择设备</strong>
+                        <select id="equipment" class="form-control"></select>
+                    </div>
+                    <div class="box-footer">
+                        <button id="sureTable" class="btn btn-primary pull-right" type="button">查询<i class="fa fa-fw fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">设备详情</h3>
+                    </div>
+                    <div class="box-body">
+                        <strong><i class="fa fa-fw fa-user"></i> 设备信息</strong>
+                        <p id="EquipmentInfo" class="text-muted">111</p>
+                        <hr>
+                        <strong><i class="fa fa-fw fa-unlock-alt"></i> 状态</strong>
+                        <p id="EquipmentState" class="text-muted">222</p>
+                        <hr>
+                        <strong><i class="fa fa-fw fa-clock-o"></i> 工作时间</strong>
+                        <p id="EquipmentTime" class="text-muted">333</p>
                     </div>
                 </div>
             </div>
-            <!-- 搜索框 -->
-            <div class="col-md-12">
-                <div class="panel panel-default mintablewidth">
-                    <div class="panel-heading mintablewidth">
-                        <i class="fa fa-bar-chart-o fa-fw"></i>
-                        <span class="panel-title">预约表</span>
-                    </div>
-                    <div id="tableArea" class="panel-body mintablewidth">
-                        <table id="appointTable" class="table table-bordered table-hover dataTable" style="width:100%;text-align:center;">
-                            <thead id="thead">
-
-                            </thead>
-                            <tbody id="tbody">
-
-                            </tbody>
-                        </table>
+            <div class="col-md-9">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#patientView" data-toggle="tab">患者视图</a></li>
+                        <li><a href="#appointView" data-toggle="tab">预约视图</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="active tab-pane" id="patientView">
+                        
+                        </div>
+                        <div class="tab-pane" id="appointView">
+                            <table id="appointTable" class="table table-bordered table-hover dataTable">
+                                <thead id="thead"></thead>
+                                <tbody id="tbody"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-        </div>
-        <!-- body row-->
-    </section>
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.0
+        </section>
     </div>
-    <strong>Copyright &copy; 2017 <a href="#"> 医院</a> .</strong> 保留所有权利
-  </footer>
-
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 2.0
+        </div>
+        <strong>Copyright &copy; 2017 <a href="#"> 医院</a> .</strong> 保留所有权利
+    </footer>
+    <div class="control-sidebar-bg"></div>
 </div>
-<!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
@@ -305,6 +311,7 @@
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
 <!-- Main javascript -->
 <script src="../../js/Main/HeaderOperate.js"></script>
+<script src="../../js/Main/AppiontmentViewJS.js"></script>
 <script src="../../js/Main/EquipmentView.js"></script>
 </body>
 </html>
