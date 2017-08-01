@@ -241,7 +241,7 @@
                         <select id="equipment" class="form-control"></select>
                     </div>
                     <div class="box-footer">
-                        <button id="sureTable" class="btn btn-primary pull-right" type="button">查询<i class="fa fa-fw fa-search"></i></button>
+                        <button id="sureEquipment" class="btn btn-primary pull-right" type="button">查询<i class="fa fa-fw fa-search"></i></button>
                     </div>
                 </div>
                 <div class="box box-primary">
@@ -249,14 +249,14 @@
                         <h3 class="box-title">设备详情</h3>
                     </div>
                     <div class="box-body">
-                        <strong><i class="fa fa-fw fa-user"></i> 设备信息</strong>
-                        <p id="EquipmentInfo" class="text-muted">111</p>
+                        <strong><i class="fa fa-fw fa-info-circle"></i> 设备信息</strong>
+                        <p id="EquipmentInfo" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
                         <hr>
                         <strong><i class="fa fa-fw fa-unlock-alt"></i> 状态</strong>
-                        <p id="EquipmentState" class="text-muted">222</p>
+                        <p id="EquipmentState" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
                         <hr>
                         <strong><i class="fa fa-fw fa-clock-o"></i> 工作时间</strong>
-                        <p id="EquipmentTime" class="text-muted">333</p>
+                        <p id="EquipmentTime" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
                     </div>
                 </div>
             </div>
@@ -313,5 +313,9 @@
 <script src="../../js/Main/HeaderOperate.js"></script>
 <script src="../../js/Main/AppiontmentViewJS.js"></script>
 <script src="../../js/Main/EquipmentView.js"></script>
+<script>
+    $(".nav-tabs-custom").css("minHeight", $(document).height() - 200);
+    //$(".nav-tabs-custom").css("marginBottom", 0);
+</script>
 </body>
 </html>
