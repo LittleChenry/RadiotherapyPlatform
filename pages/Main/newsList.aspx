@@ -232,30 +232,34 @@
         </section>
     </aside>
 
-    <div class="content-wrapper">        
-        <section id="notice-content" class="table-responsive" style="background-color:#fff;min-width:1000px;margin:auto">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>通知公告</h1>
+        </section>
+        <section id="notice-content" class="content">
             <input id="type" type="hidden" />
-            <div style="text-align:center;">
-                <h2>通知公告</h2>
-            </div>
-            <div class="panel-body">
-                <table class="table" >
-                    <thead>
-                        <tr>
-                            <th style="width:4%"></th>
-                            <th style="width:70%">消息标题</th>
-                            <th style="width:13%">发布人</th>
-                            <th style="width:13%">发布时间</th>
-                        </tr>
-                    </thead>
-                    <tbody id="infomanagetable"></tbody>
-                </table>
-                <div class="table-button pull-right">
-                    <button class="btn btn-primary btn-sm firstpage" id="firstPage">首页</button>
-                    <button class="btn btn-primary btn-sm firstpage" id="previousPage">上一页</button>
-                    <button class="btn btn-primary btn-sm firstpage" id="nextPage">下一页</button>
-                    <button class="btn btn-primary btn-sm firstpage" id="lastPage">尾页</button>
-                    <input type="hidden" id="currentPage" />
+            <div class="box">
+                <div class="box-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width:4%"></th>
+                                <th style="width:70%">消息标题</th>
+                                <th style="width:13%">发布人</th>
+                                <th style="width:13%">发布时间</th>
+                            </tr>
+                        </thead>
+                        <tbody id="infomanagetable"></tbody>
+                    </table>
+                </div>
+                <div class="box-footer">
+                    <div class="table-button pull-right">
+                        <button class="btn btn-primary btn-sm firstpage" id="firstPage">首页</button>
+                        <button class="btn btn-primary btn-sm firstpage" id="previousPage">上一页</button>
+                        <button class="btn btn-primary btn-sm firstpage" id="nextPage">下一页</button>
+                        <button class="btn btn-primary btn-sm firstpage" id="lastPage">尾页</button>
+                        <input type="hidden" id="currentPage" />
+                    </div>
                 </div>
             </div>
         </section>
@@ -273,8 +277,8 @@
 <script src="../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
-      <!-- bootstrap datepicker -->
-    <script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- DataTables -->
 <script src="../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
@@ -291,8 +295,5 @@
 <!-- js -->
 <script src="../../js/Main/newsList.js"></script>
 <script src="../../js/Main/HeaderOperate.js"></script>
-<script>
-    $("#notice-content").css("minHeight", $(document).height() - 101);
-</script>
 </body>
 </html>

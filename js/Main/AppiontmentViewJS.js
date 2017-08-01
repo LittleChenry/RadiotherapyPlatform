@@ -1,46 +1,13 @@
-﻿/**
- *
- */
-
-var day;
+﻿var day;
 var month;
 var year;
 
-/**
- * 将当前所有可用设备填入下拉框
- */
-$(function () {
-    $.ajax({
-        type: "post",
-        url: "../../pages/Root/GetEquipment.ashx",
-        dataType: "text",
-        success: function (data) {
-            var jsonObj = $.parseJSON(data);
-            var firstID = createEquipmentSelect(jsonObj);
-            createBody(firstID);
-        }
-    })
-});
-
 $(function () {
     $("#sureTable").bind("click", function () {
-        var id = $("#equipmentSelect").val();
+        var id = $("#equipment").val();
         createBody(id);
     });
 });
-
-/**
- * 创建下拉菜单
- * @param jsonObj 设备数据
- * @return 下拉菜单第一个设备id
- */
-function createEquipmentSelect(jsonObj) {
-    var select = $("#equipmentSelect");
-    for (var i = 0; i < jsonObj.length; ++i) {
-        select.append("<option value=" + jsonObj[i].ID + ">" + jsonObj[i].Name + "</option>");
-    }
-    return jsonObj[0].ID;
-}
 
 /**
  * 创建表头
