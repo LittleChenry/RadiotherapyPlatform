@@ -92,14 +92,14 @@ function createdate(jsonObj, isDouble) {
         if (jsonObj[i].State == 1) {
             var row = i % size;//第几行
             var col = computeDays(currentDate, jsonObj[i].Date);
-            if (isDouble && i != (jsonObj.length - 1) && jsonObj[i].Date == jsonObj[i + 1].Date && jsonObj[i].PatientID == jsonObj[i + 1].PatientID) {
-                $($($tr[row]).find("td")[col + arr[row]]).attr("rowspan", "2").text("复位验证 : " + jsonObj[i].PatientName);
-                $($($tr[row + 1]).find("td")[col + arr[row + 1]]).remove();
-                arr[row + 1] = arr[row + 1] - 1;
-                i++;
-            } else {
+            //if (isDouble && i != (jsonObj.length - 1) && jsonObj[i].Date == jsonObj[i + 1].Date && jsonObj[i].PatientID == jsonObj[i + 1].PatientID) {
+            //    $($($tr[row]).find("td")[col + arr[row]]).attr("rowspan", "2").text("复位验证 : " + jsonObj[i].PatientName);
+            //    $($($tr[row + 1]).find("td")[col + arr[row + 1]]).remove();
+            //    arr[row + 1] = arr[row + 1] - 1;
+            //    i++;
+            //} else {
                 $($tr[row]).find("td")[col + arr[row]].innerText = jsonObj[i].PatientName + " : " + jsonObj[i].Task;
-            }
+            //}
         }
     }
 }
