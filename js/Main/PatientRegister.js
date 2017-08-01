@@ -31,8 +31,21 @@ function getPatientInfo(treatID) {
     writePatientInfo(patientInfo);
 }
 function writePatientInfo(PatientInfo) {
-    document.getElementById("RecordNumber").value = PatientInfo.patientInfo[0].RecordNumber;
     document.getElementById("userName").value = PatientInfo.patientInfo[0].Name;
+    $('input[name="RecordNumber"]:eq(1)').bind("click", function () {
+        $("#ishospital").css("display", "none");
+    });
+    $('input[name="RecordNumber"]:eq(0)').bind("click", function () {
+        $("#ishospital").css("display", "block");
+      
+    });
+    if (PatientInfo.patientInfo[0].Ishospital == "0") {
+        $('input[name="RecordNumber"]:eq(1)').attr("checked", true);
+        $("#ishospital").css("display", "none");
+    } else {
+        $('input[name="RecordNumber"]:eq(0)').attr("checked", true);
+        $("#hospitalnumber").attr("value", PatientInfo.patientInfo[0].Hospital_ID);
+    }
     document.getElementById(sex(PatientInfo.patientInfo[0].Gender)).checked = true;
     document.getElementById("IDcardNumber").value =  PatientInfo.patientInfo[0].IDcardNumber;
     document.getElementById("Address").value =  PatientInfo.patientInfo[0].Address;   
@@ -150,64 +163,65 @@ function CheckInput(evt) {
 }
 //检查是否为空
 function save() {   
-   
+    var $radio1 = $('input[name="RecordNumber"]:eq(0)');
+    if ($radio1.prop("checked") && document.getElementById("hospitalnumber").value == "") {
+        window.alert("住院号不能为空");
+        return;
+    }
     if (document.getElementById("userName").value=="") {
         window.alert("姓名不能为空");
-        return; 
+        return false; 
     }
     if (document.getElementById("IDcardNumber").value=="") {
         window.alert("身份证不能为空");
-        return;            
+        return false;            
     }
-    if (document.getElementById("RecordNumber").value=="") {
-        window.alert("病案号不能为空");
-        return;           
-    }
+ 
     if (document.getElementById("userName").value=="") {
         window.alert("姓名不能为空");
-        return;   
+        return false;   
     }
     if (document.getElementById("Hospital").value=="") {
         window.alert("就诊医院不能为空");
-        return;   
+        return false;   
                 
     }         
     if (document.getElementById("Birthday").value=="") {
         window.alert("出生日期不能为空");
-        return;   
+        return false;   
                
     }
     if (document.getElementById("Nation").value=="") {
         window.alert("民族不能为空");
-        return;                  
+        return false;                  
     }
     if (document.getElementById("Address").value=="") {
         window.alert("地址不能为空");
-        return;                
+        return false;                
     }
     if (document.getElementById("Number1").value=="") {
         window.alert("电话1不能为空");
-        return;                  
+        return false;                  
     } 
     if (isCardNo()) {
         window.alert("身份证格式不正确");
-        return;
+        return false;
     }      
     if (document.getElementById("height").value=="") {
         window.alert("身高不能为空");
-        return;                  
+        return false;                  
     }
     if (document.getElementById("weight").value=="") {
         window.alert("体重不能为空");
-        return;                 
+        return false;                 
     }
     if (document.getElementById("Sub").value == "") {
         window.alert("请输入分中心负责人"); 
-        return;   
+        return false;   
     }
     if (document.getElementById("doctor").value == "allItem") {
         window.alert("请选择医生");        
-        return;   
+        return false;   
     }
     var form = new FormData(document.getElementById("frmRegist"));
     $.ajax({
@@ -223,10 +237,8 @@ function save() {
         },
         error: function (e) {
             window.location.href = "Error.aspx";
-        },
-        failure: function (e) {
-            alert("更新失败！！");
         }
+ 
     });
 }
     

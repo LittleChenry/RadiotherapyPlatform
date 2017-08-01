@@ -57,7 +57,7 @@ public class patientInfo : IHttpHandler
                  "\",\"Sub\":\"" + reader["SubCenterPrincipal_ID"].ToString() + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString() + "\",\"Picture\":\"" + reader["Picture"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() +
                  "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"Birthday\":\"" + date1 + 
                  "\",\"Nation\":\"" + reader["Nation"].ToString() + "\",\"Address\":\"" + reader["Address"].ToString() + "\",\"Contact1\":\"" + reader["Contact1"].ToString() + "\",\"doctor\":\"" + reader["RegisterDoctor"].ToString() + "\",\"Registeruser\":\"" + reader["username"].ToString() +
-                 "\",\"Contact2\":\"" + reader["Contact2"].ToString() + "\",\"Height\":\"" + reader["Height"].ToString() + "\",\"Weight\":\"" + reader["Weight"].ToString() + "\",\"date\":\"" + date3 + "\"}");
+                 "\",\"Contact2\":\"" + reader["Contact2"].ToString() + "\",\"Ishospital\":\"" + reader["Ishospital"].ToString() + "\",\"Hospital_ID\":\"" + reader["Hospital_ID"].ToString() + "\",\"Height\":\"" + reader["Height"].ToString() + "\",\"Weight\":\"" + reader["Weight"].ToString() + "\",\"date\":\"" + date3 + "\"}");
            
         }
         backText.Append("]}");

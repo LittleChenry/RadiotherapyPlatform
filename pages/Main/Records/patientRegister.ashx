@@ -80,11 +80,10 @@ public class patientRegister : IHttpHandler
         try
         {
             int doctorid = Convert.ToInt32(context.Request.Form["doctor"]);
-            string strSqlCommand = "UPDATE patient SET IdentificationNumber=@IdentificationNumber,Hospital=@Hospital,RecordNumber=@RecordNumber,Picture=@Picture,Name=@Name,Gender=@Gender,Age=@Age,Birthday=@Birthday,Nation=@Nation,Address=@Address,Contact1=@Contact1,Contact2=@Contact2,Height=@Height,Weight=@Weight where ID=@patientID";
+            string strSqlCommand = "UPDATE patient SET IdentificationNumber=@IdentificationNumber,Hospital=@Hospital,Picture=@Picture,Name=@Name,Gender=@Gender,Age=@Age,Birthday=@Birthday,Nation=@Nation,Address=@Address,Contact1=@Contact1,Contact2=@Contact2,Height=@Height,Weight=@Weight,Ishospital=@Ishospital,Hospital_ID=@Hospital_ID where ID=@patientID";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@IdentificationNumber", context.Request.Form["IDcardNumber"]);
             sqlOperation.AddParameterWithValue("@Hospital", context.Request.Form["Hospital"]);
-            sqlOperation.AddParameterWithValue("@RecordNumber", context.Request.Form["RecordNumber"]);
             sqlOperation.AddParameterWithValue("@Picture", savepath1);
             sqlOperation.AddParameterWithValue("@Name", context.Request.Form["userName"]);
             sqlOperation.AddParameterWithValue("@Gender", context.Request.Form["Gender"]);
@@ -96,6 +95,8 @@ public class patientRegister : IHttpHandler
             sqlOperation.AddParameterWithValue("@Contact2", context.Request.Form["Number2"]);
             sqlOperation.AddParameterWithValue("@Height", context.Request.Form["height"]);
             sqlOperation.AddParameterWithValue("@Weight", context.Request.Form["weight"]);
+            sqlOperation.AddParameterWithValue("@Hospital_ID", context.Request.Form["hospitalnumber"]);
+            sqlOperation.AddParameterWithValue("@Ishospital", context.Request.Form["RecordNumber"]);
             sqlOperation.AddParameterWithValue("@patientID", context.Request.Form["patientID"]);
             int Success = sqlOperation.ExecuteNonQuery(strSqlCommand);
             if (context.Request.Form["group"] != "allItem")

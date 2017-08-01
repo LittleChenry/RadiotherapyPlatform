@@ -279,7 +279,7 @@
                             <div class="imgbox">
                                 <div class="boxes">
                                     <div class="imgnum">
-                                        <input type="file" id="FileUpload" name="FileUpload" class="singlefilepath filepath" />
+                                        <input type="file" accept="image/jpg,image/png" id="FileUpload" name="FileUpload" class="singlefilepath filepath" />
                                         <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
                                         <img id="background-photo" src="../../img/avatar.jpg" class="camera-picture" />
                                         <img src="" id="photo" class="img" />
@@ -311,7 +311,7 @@
                         <div class="single-row">
                             <div class="col-xs-5">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">民族：</span>
-                                <input id="Nation" name="Nation"  class="form-item" type="text" AUTOCOMPLETE="OFF" />
+                                <input id="Nation" value="汉" name="Nation"  class="form-item" type="text" AUTOCOMPLETE="OFF" />
                             </div>
                             <div class="col-xs-5">
                                 <span class="form-text col-xs-4">出生日期：</span>

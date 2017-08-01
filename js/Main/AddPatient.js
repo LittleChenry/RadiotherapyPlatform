@@ -196,14 +196,6 @@ function CheckEmpty() {
         window.alert("请选择医生");
         return;
     }
-    if (document.getElementById("Hospital").value == "") {
-        window.alert("就诊医院不能为空");
-        return;
-    }  
-    if (document.getElementById("Sub").value == "") {
-        window.alert("请输入分中心负责人");
-        return;
-    }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
