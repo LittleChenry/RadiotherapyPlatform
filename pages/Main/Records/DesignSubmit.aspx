@@ -159,7 +159,7 @@
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">机器跳数：</span>
-                            <input id="MachineNumbe" name="MachineNumbe" type="number" class="form-item" disabled="disabled"/>
+                            <input id="MachineNumbe" step="0.01" name="MachineNumbe" type="number" class="form-item" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
