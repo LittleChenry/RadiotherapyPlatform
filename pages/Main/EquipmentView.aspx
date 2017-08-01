@@ -172,12 +172,6 @@
                     </a>
                 </li>
                 <li class="treeview">
-                    <a href="AppointmentView.aspx">
-                        <i class="fa fa-list-alt"></i>
-                        <span>预约视图</span>
-                    </a>
-                </li>
-                <li class="treeview">
                     <a href="AddPatient.aspx">
                         <i class="fa fa-pencil"></i>
                         <span>患者登记</span>
@@ -228,53 +222,85 @@
         </section>
         <section class="content">
             <div class="row">
-            <div class="col-md-3">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">选择设备</h3>
-                    </div>
-                    <div class="box-body">
-                        <strong><i class="fa fa-book margin-r-5"></i> 选择项目</strong>
-                        <select id="equipmentType" class="form-control"></select>
-                        <hr>
-                        <strong><i class="fa fa-fw fa-dashboard"></i> 选择设备</strong>
-                        <select id="equipment" class="form-control"></select>
-                    </div>
-                    <div class="box-footer">
-                        <button id="sureEquipment" class="btn btn-primary pull-right" type="button">查询<i class="fa fa-fw fa-search"></i></button>
-                    </div>
-                </div>
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">设备详情</h3>
-                    </div>
-                    <div class="box-body">
-                        <strong><i class="fa fa-fw fa-info-circle"></i> 设备信息</strong>
-                        <p id="EquipmentInfo" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
-                        <hr>
-                        <strong><i class="fa fa-fw fa-unlock-alt"></i> 状态</strong>
-                        <p id="EquipmentState" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
-                        <hr>
-                        <strong><i class="fa fa-fw fa-clock-o"></i> 工作时间</strong>
-                        <p id="EquipmentTime" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div class="nav-tabs-custom">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#patientView" data-toggle="tab">患者视图</a></li>
-                        <li><a href="#appointView" data-toggle="tab">预约视图</a></li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="active tab-pane" id="patientView">
-                        
+                <div class="col-md-3">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">选择设备</h3>
                         </div>
-                        <div class="tab-pane" id="appointView">
-                            <table id="appointTable" class="table table-bordered table-hover dataTable">
-                                <thead id="thead"></thead>
-                                <tbody id="tbody"></tbody>
-                            </table>
+                        <div class="box-body">
+                            <strong><i class="fa fa-book margin-r-5"></i> 选择项目</strong>
+                            <select id="equipmentType" class="form-control"></select>
+                            <hr>
+                            <strong><i class="fa fa-fw fa-dashboard"></i> 选择设备</strong>
+                            <select id="equipment" class="form-control"></select>
+                        </div>
+                        <div class="box-footer">
+                            <button id="sureEquipment" class="btn btn-primary pull-right" type="button">查询<i class="fa fa-fw fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">设备详情</h3>
+                        </div>
+                        <div class="box-body">
+                            <strong><i class="fa fa-fw fa-info-circle"></i> 设备信息</strong>
+                            <div>
+                                <p id="EquipmentInfo" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
+                            </div>
+                            <hr>
+                            <strong><i class="fa fa-fw fa-unlock-alt"></i> 状态</strong>
+                            <div>
+                                <p id="EquipmentState" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
+                            </div>
+                            <hr>
+                            <strong><i class="fa fa-fw fa-clock-o"></i> 工作时间</strong>
+                            <div>
+                                <p id="EquipmentTime" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#patientView" data-toggle="tab">患者视图</a></li>
+                            <li><a href="#appointView" data-toggle="tab">预约视图</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="patientView">
+                                <div class="col-md-6">
+                                    <table id="viewPatients" class="table" style="text-align:center;">
+                                        <thead>
+                                            <tr>
+                                                <th>疗程号</th>
+                                                <th>姓名</th>
+                                                <th>疗程</th>
+                                                <th>诊断结果</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <table id="viewAppoints" class="table" style="text-align:center;">
+                                        <thead>
+                                            <tr>
+                                                <th>预约项目</th>
+                                                <th>预约时间</th>
+                                                <th>是否完成</th>
+                                                <th>更改时间</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="appointView">
+                                <table id="appointTable" class="table table-bordered table-hover dataTable">
+                                    <thead id="thead"></thead>
+                                    <tbody id="tbody"></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

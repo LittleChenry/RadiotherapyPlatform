@@ -181,12 +181,6 @@
                         <span>设备预约管理</span>
                     </a>
                 </li>
-                <li class="treeview">
-                    <a href="AppointmentView.aspx">
-                        <i class="fa fa-list-alt"></i>
-                        <span>预约视图</span>
-                    </a>
-                </li>
                 <li class="active treeview">
                     <a href="AddPatient.aspx">
                         <i class="fa fa-pencil"></i>
