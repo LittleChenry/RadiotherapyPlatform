@@ -2,13 +2,6 @@
 var month;
 var year;
 
-$(function () {
-    $("#sureTable").bind("click", function () {
-        var id = $("#equipment").val();
-        createBody(id);
-    });
-});
-
 /**
  * 创建表头
  */
@@ -29,6 +22,14 @@ $(function () {
 
     $thead.append(str);
 });
+
+/**
+ **创建函数
+ */
+function appointView(){
+    var id = $("#equipment").val();
+    createBody(id);
+}
 
 /**
  * 创建表格
