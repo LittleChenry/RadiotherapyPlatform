@@ -49,12 +49,12 @@ public class getallpatientforchange : IHttpHandler {
         int h = DateTime.Now.Hour;
         int s = DateTime.Now.Minute;
         int time = h * 60 + s;
-        string sqlCommand = "select count(*) from appointment where Equipment_ID=@equip and  (Date>@date1 or (Date=@date1 and Begin>@begintime))  and State=1 and Completed is  NULL";
+        string sqlCommand = "select count(distinct(Treatment_ID)) from appointment where Equipment_ID=@equip and  (Date>@date1 or (Date=@date1 and Begin>@begintime))  and State=1 and Completed is  NULL ";
         sqlOperation.AddParameterWithValue("@equip", equipid);
         sqlOperation.AddParameterWithValue("@begintime", time);
         sqlOperation.AddParameterWithValue("@date1", date1);
         int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlCommand));
-        string allpatient = "select * from appointment where Equipment_ID=@equip and  (Date>@date1 or (Date=@date1 and Begin>@begintime))  and State=1 and Completed is  NULL";
+        string allpatient = "select distinct(Treatment_ID),Patient_ID from appointment where Equipment_ID=@equip and  (Date>@date1 or (Date=@date1 and Begin>@begintime))  and State=1 and Completed is  NULL ";
         MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(allpatient);
         while (reader1.Read())
         {
@@ -64,8 +64,7 @@ public class getallpatientforchange : IHttpHandler {
             string patientname = "select Name from patient where ID=@patient";
             sqlOperation1.AddParameterWithValue("@patient", Convert.ToInt32(reader1["Patient_ID"].ToString()));
             string pname = sqlOperation1.ExecuteScalar(patientname);
-            backText.Append("{\"Begin\":\"" + reader1["Begin"].ToString() + "\",\"End\":\"" + reader1["End"].ToString() +
-               "\",\"treatmentscribe\":\"" + treatmentscribe + "\",\"pname\":\"" + pname + "\",\"Date\":\"" + reader1["Date"].ToString() + "\",\"Treatment_ID\":\"" + reader1["Treatment_ID"].ToString() + "\"}");
+            backText.Append("{\"treatmentscribe\":\"" + treatmentscribe + "\",\"pname\":\"" + pname + "\",\"Treatment_ID\":\"" + reader1["Treatment_ID"].ToString() + "\"}");
             if (i < count - 1)
             {
                 backText.Append(",");
