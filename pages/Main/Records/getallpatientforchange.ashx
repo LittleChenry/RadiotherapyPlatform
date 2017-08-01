@@ -41,7 +41,7 @@ public class getallpatientforchange : IHttpHandler {
         }
         reader.Close();
         backText.Append(",");
-        backText.Append("patientinfo:[");
+        backText.Append("\"patientinfo\":[");
         string date1= DateTime.Now.ToString("yyyy-MM-dd");
         int h = DateTime.Now.Hour;
         int s = DateTime.Now.Minute;
