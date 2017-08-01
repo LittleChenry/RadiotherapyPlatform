@@ -15,12 +15,58 @@ function patientView(){
 	var equipmentID = $("#equipment").val();
 	var ViewPatient = getViewPatient(equipmentID);
 	var viewPatientsBody = $("#viewPatients").find("tbody");
+	viewPatientsBody.html("");
 	var viewAppointsBody = $("#viewAppoints").find("tbody");
 	showEquipmentInfo(ViewPatient.equipmentinfo);
-	for (var i = 0; i < ViewPatient.patientinfo.length; i++) {
-		var tr = '<tr id="viewpatient_'+ ViewPatient.patientinfo[i].Treatment_ID +'"><td></td><td>'+ ViewPatient.patientinfo[i].pname +'</td><td>'+ ViewPatient.patientinfo[i].treatmentscribe +'</td><td></td></tr>'
+	if (ViewPatient.patientinfo != "") {
+		for (var i = 0; i < ViewPatient.patientinfo.length; i++) {
+			var tr = '<tr id="viewpatient_'+ ViewPatient.patientinfo[i].Treatment_ID +'"><td>'+ ViewPatient.patientinfo[i].Radiotherapy_ID +'</td><td>'
+				+ ViewPatient.patientinfo[i].pname +'</td><td>'+ ViewPatient.patientinfo[i].treatmentscribe
+				+'</td><td>'+ ViewPatient.patientinfo[i].DiagnosisResult +'</td></tr>'
+			viewPatientsBody.append(tr);
+		}
+	}else{
+		var tr = '<tr><td colspan="4">暂无预约</td></tr>';
 		viewPatientsBody.append(tr);
 	}
+	viewPatientsBody.find("tr").each(function(index, element){
+		if ($(this).attr("id") != "") {
+			$(this).unbind("click").click(function(){
+				$(this).parent().find("tr").each(function(){
+					$(this).removeClass("chose");
+				});
+				$(this).addClass("chose");
+				viewAppointsBody.html("");
+				var appoints = getAppointments($(this).attr("id").split("_")[1]);
+				for (var i = 0; i < appoints.appoint.length; i++) {
+					var appointDate = new Date(appoints.appoint[i].Date);
+					var completed = (appoints.appoint[i].Completed == "1") ? "已完成" : "未完成";
+					var tr = '<tr id="apoint_'+ appoints.appoint[i].appointid +'"><td>'+ appoints.appoint[i].Task + '</td>'
+						+'<td>' + appointDate.Format("yyyy-MM-dd") + ' ' + toTime(appoints.appoint[i].Begin) + ' - ' + toTime(appoints.appoint[i].End) + '</td>'
+						+'<td>' + completed +'</td><td></td></tr>';
+					viewAppointsBody.append(tr);
+				}
+			});
+		}
+	});
+}
+
+function getAppointments(treatmentID){
+	var appoints;
+    $.ajax({
+        type: "GET",
+        url: "../../pages/Main/Records/getappointinfo.ashx?treatID=" + treatmentID,
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            //alert(data);
+            appoints = $.parseJSON(data);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+    return appoints;
 }
 
 function showEquipmentInfo(equipmentinfo){
@@ -107,6 +153,24 @@ function chooseEquipment() {
             alert("error");
         }
     });
+}
+
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1,
+        "d+": this.getDate(),
+        "h+": this.getHours(),
+        "m+": this.getMinutes(),
+        "s+": this.getSeconds(),
+        "q+": Math.floor((this.getMonth() + 3) / 3),
+        "S": this.getMilliseconds()
+    };
+    if (/(y+)/.test(fmt))
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
 }
 
 function toTime(minute) {

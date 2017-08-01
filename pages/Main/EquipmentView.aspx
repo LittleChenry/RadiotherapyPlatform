@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css" />
 
     <!-- Main Css -->
-    <link rel="stylesheet" href="../../css/Root/rootMain.css" />
+    <link rel="stylesheet" href="../../css/Main/main.css">
     <title>设备预约管理</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
@@ -288,7 +288,7 @@
                                                 <th>预约项目</th>
                                                 <th>预约时间</th>
                                                 <th>是否完成</th>
-                                                <th>更改时间</th>
+                                                <th>操作</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -296,10 +296,12 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="appointView">
-                                <table id="appointTable" class="table table-bordered table-hover dataTable">
-                                    <thead id="thead"></thead>
-                                    <tbody id="tbody"></tbody>
-                                </table>
+                                <div class="col-md-12">
+                                    <table id="appointTable" class="table table-bordered table-hover dataTable">
+                                        <thead id="thead"></thead>
+                                        <tbody id="tbody"></tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
