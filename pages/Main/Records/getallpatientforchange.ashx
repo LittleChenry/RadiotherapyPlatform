@@ -61,10 +61,22 @@ public class getallpatientforchange : IHttpHandler {
             string treatinfo = "select Treatmentdescribe from treatment where ID=@treat";
             sqlOperation1.AddParameterWithValue("@treat", Convert.ToInt32(reader1["Treatment_ID"].ToString()));
             string treatmentscribe = sqlOperation1.ExecuteScalar(treatinfo);
+            string diag = "select DiagnosisRecord_ID from treatment where ID=@treat";
+
+            string diagid = sqlOperation1.ExecuteScalar(diag);
+            string result = "select DiagnosisResult_ID from diagnosisrecord where ID=@diagid";
+            sqlOperation1.AddParameterWithValue("@diagid", Convert.ToInt32(diagid));
+            string resultid = sqlOperation1.ExecuteScalar(result);
+            string sqlCommand3 = "select Chinese from icdcode where ID=@icdID";
+            sqlOperation1.AddParameterWithValue("@icdID", Convert.ToInt32(resultid));
+            string result1 = sqlOperation1.ExecuteScalar(sqlCommand3);
             string patientname = "select Name from patient where ID=@patient";
             sqlOperation1.AddParameterWithValue("@patient", Convert.ToInt32(reader1["Patient_ID"].ToString()));
             string pname = sqlOperation1.ExecuteScalar(patientname);
-            backText.Append("{\"treatmentscribe\":\"" + treatmentscribe + "\",\"pname\":\"" + pname + "\",\"Treatment_ID\":\"" + reader1["Treatment_ID"].ToString() + "\"}");
+            string radio = "select Radiotherapy_ID from patient where ID=@patient";
+
+            string radioid = sqlOperation1.ExecuteScalar(radio);
+            backText.Append("{\"treatmentscribe\":\"" + treatmentscribe + "\",\"pname\":\"" + pname + "\",\"Treatment_ID\":\"" + reader1["Treatment_ID"].ToString() + "\",\"Radiotherapy_ID\":\"" + radioid + "\",\"DiagnosisResult\":\"" + result1 + "\"}");
             if (i < count - 1)
             {
                 backText.Append(",");
