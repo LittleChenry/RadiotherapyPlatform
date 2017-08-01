@@ -25,15 +25,18 @@ public class getallpatientforchange : IHttpHandler {
         string equipid = context.Request["equipment"];
         DataLayer sqlOperation = new DataLayer("sqlStr");
         DataLayer sqlOperation1 = new DataLayer("sqlStr");
-        string selectequip = "select ID,Name,State,TreatmentItem from equipment where ID=@equip ";
+        string selectequip = "select * from equipment where ID=@equip ";
         sqlOperation.AddParameterWithValue("@equip", equipid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(selectequip);
           StringBuilder backText = new StringBuilder("{\"equipmentinfo\":");
         int i = 0;
         if (reader.Read())
         {
-            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() +
-              "\",\"State\":\"" + reader["State"].ToString() + "\",\"TreatmentItem\":\"" + reader["TreatmentItem"].ToString() + "\"}");
+            string typeselect = "select Type from equipmenttype where ID=@id";
+            sqlOperation1.AddParameterWithValue("@id", reader["EquipmentType"].ToString());
+            string type=sqlOperation1.ExecuteScalar(typeselect);
+            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() + "\",\"Timelength\":\"" + reader["Timelength"].ToString() + "\",\"BeginTimeAM\":\"" + reader["BeginTimeAM"].ToString() + "\",\"EndTimeAM\":\"" + reader["EndTimeAM"].ToString() + "\",\"BegTimePM\":\"" + reader["BegTimePM"].ToString() +
+              "\",\"EndTimePM\":\"" + reader["EndTimeTPM"].ToString() + "\",\"type\":\"" + type + "\",\"State\":\"" + reader["State"].ToString() + "\",\"TreatmentItem\":\"" + reader["TreatmentItem"].ToString() + "\"}");
         }
         else
         {
