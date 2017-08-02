@@ -179,9 +179,10 @@
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
-                            <button class="btn btn-success" type="button">继续疗程</button>
-                            <button class="btn btn-warning" type="button">暂停疗程</button>
-                            <button class="btn btn-danger" type="button">结束疗程</button>
+                            <button id="addTreatment" class="btn btn-info" type="button">新增疗程</button>
+                            <button id="startTreatment" class="btn btn-success" type="button">继续疗程</button>
+                            <button id="pauseTreatment" class="btn btn-warning" type="button">暂停疗程</button>
+                            <button id="stopTreatment" class="btn btn-danger" type="button">结束疗程</button>
                         </div>
                     </div>
                 </div>
