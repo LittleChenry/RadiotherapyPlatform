@@ -257,9 +257,11 @@
     </section>
     <section id="progress-content" class="col-xs-2" style="padding:0px;">
         <div class="layout-main-tab">
-        <nav class="tab-nav" style="padding-left:0px;padding-top:3px;">
+        <nav class="tab-nav" style="padding-left:0px;padding-top:5px;">
             <div style="text-align:center;">
-                <div class="btn-group">
+                <span>疗程状态：</span>
+                <span id="patient-status">无</span>
+                <%--<div class="btn-group">
                     <button id="patient-status" type="button" class="btn btn-success"><i class="fa fa-fw fa-forward"></i>进行中</button>
                     <button id="manageTreatment" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" disabled="disabled">
                     <span class="caret"></span>
@@ -269,7 +271,7 @@
                         <li><a id="pauseTreatment">暂停疗程</a></li>
                         <li><a id="stopTreatment">结束疗程</a></li>
                     </ul>
-                </div>
+                </div>--%>
             </div>
         </nav>
         </div>

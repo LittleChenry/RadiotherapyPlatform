@@ -48,7 +48,7 @@ public class patientInfoForJLS : IHttpHandler {
         }
         
         int i = 1;
-        string sqlCommand2 = "select treatment.ID as treatid,patient.*,user.Name as doctor,isback,Progress,treatment.Treatmentdescribe,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and ((Progress like '%5%' and Progress not in(select Progress from treatment where Progress like '%6%'))or ((Progress like '%8%' or Progress like '%7%') and Progress not in (select Progress from treatment where Progress like '%9%'))) order by patient.ID desc";   
+        string sqlCommand2 = "select treatment.State as treatstate,treatment.ID as treatid,patient.*,user.Name as doctor,isback,Progress,treatment.Treatmentdescribe,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and ((Progress like '%5%' and Progress not in(select Progress from treatment where Progress like '%6%'))or ((Progress like '%8%' or Progress like '%7%') and Progress not in (select Progress from treatment where Progress like '%9%'))) order by patient.ID desc";   
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
 
@@ -102,8 +102,8 @@ public class patientInfoForJLS : IHttpHandler {
                 string sqlCommand3 = "select Chinese from diagnosisrecord,icdcode where diagnosisrecord.ID=@ID and diagnosisrecord.DiagnosisResult_ID =icdcode.ID";
                 sqlOperation1.AddParameterWithValue("@ID", reader["DiagnosisRecord_ID"].ToString());
                 result = sqlOperation1.ExecuteScalar(sqlCommand3);
-            }          
-            backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"Progress\":\"" + reader["Progress"].ToString() +
+            }
+            backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"state\":\"" + reader["treatstate"].ToString() +
                     "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"isback\":\"" + reader["isback"].ToString() + "\",\"advice\":\"" + advice
                     + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"locationTime\":\"" + locationTime + "\",\"receiveTime\":\"" + receiveTime + "\",\"designApplyTime\":\"" + designApplyTime + "\"}");
 
