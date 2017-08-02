@@ -212,6 +212,33 @@
             </form>
         </div>
     </section>
+    <div class="modal fade" id="changeAppoint" tabindex="-1">
+            <div class="panel panel-default" style="max-width:800px;margin:auto;">
+                <div class="panel-heading">
+                    <h4 class="modal-title">修改预约时间</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="panel-row">
+                        <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
+                        <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                        <div class="col-xs-2">
+                            <button id="chooseProject" class="btn btn-default">查询该项</button>
+                        </div>
+                    </div>
+                    <div class="panel-row">
+                        <table id="apptiontTable" class="table table-bordered col-xs-12"></table>
+                    </div>
+                    <div class="panel-row">
+                        <div style="text-align:center" class="col-xs-6">
+                            <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal" aria-label="Close" >取消</button>
+                        </div>
+                        <div  style="text-align:center" class="col-xs-6">
+                            <button class="btn btn-default" id="sure" type="button" data-dismiss="modal">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -238,6 +265,7 @@
     <script type="text/javascript">
         $("#datepicker").datepicker({ autoclose: true });
         $("#Birthday").datepicker({ autoclose: true });
+        $("#AppiontDate").datepicker({ autoclose: true });
     </script>
 </body>
 </html>
