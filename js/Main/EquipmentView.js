@@ -9,6 +9,10 @@
 		appointView();
 		patientView();
 	});
+	document.getElementById("chooseProject").addEventListener("click", function () {
+	    CreateNewAppiontTable(event);
+	}, false);//根据条件创建预约表
+
 });
 
 function patientView(){
@@ -44,7 +48,12 @@ function patientView(){
 					var completed = (appoints.appoint[i].Completed == "1") ? "已完成" : "未完成";
 					var tr = '<tr id="apoint_'+ appoints.appoint[i].appointid +'"><td>'+ appoints.appoint[i].Task + '</td>'
 						+'<td>' + appointDate.Format("yyyy-MM-dd") + ' , ' + toTime(appoints.appoint[i].Begin) + ' - ' + toTime(appoints.appoint[i].End) + '</td>'
-						+'<td>' + completed +'</td><td><button class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button><button class="btn btn-warning" type="button" onclick="cancelAppoint(this)" style="margin-left:4px;">取消</button></td></tr>';
+						+ '<td>' + completed +'</td>';
+					if (appoints.appoint[i].Completed == "1") {
+					    tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+					} else {
+					    tr = tr + '<td><button  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+					}   
 					viewAppointsBody.append(tr);
 				}
 			});
@@ -52,13 +61,159 @@ function patientView(){
 	});
 }
 
-function changeAppoint(e){
-	$("#changeAppoint").modal({ backdrop: 'static' });
+function changeAppoint(e) {
+    var $e = $(e);
+    var item = $e.parent().parent().children().first().text();
+    var oldappoint = $e.parent().parent().attr("ID").split("_")[1];
+    if (item == "体位固定") {
+        createfixEquipmachine(document.getElementById("equipmentName"), "Fixed")
+    }
+    if (item == "模拟定位") {
+        createfixEquipmachine(document.getElementById("equipmentName"), "Location")
+    }
+    if (item == "加速器") {
+        createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator")
+    }
+    if (item == "复位模拟") {
+        createfixEquipmachine(document.getElementById("equipmentName"), "Replacement")
+    }
+    var date = new Date();
+    var date = date.Format('yyyy-MM-dd');
+    document.getElementById("AppiontDate").value = date;
+    CreateNewAppiontTable(e);
+    $("#sure").bind("click", function () {
+        $(this).unbind("click");
+        var choseid = ChoseID();
+        var appoint = choseid.split("_");
+        var newappoint = appoint[0];
+        if (item == "体位固定") {
+            $.ajax({
+                type: "POST",
+                url: "Records/changeFixAppoint.ashx",
+                async: false,
+                data: {
+                    oldappoint: oldappoint,
+                    newappoint: newappoint 
+                },
+                dateType: "json",
+                success: function (data) {
+                    if (data == "success") {
+                        window.alert("修改成功");
+                        $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
+                        $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
+                    }
+                    if (data == "busy") {
+                        window.alert("预约时间被占,需要重新预约");
+                        return false;
+                    }
+                    if (data == "failure") {
+                        window.alert("修改失败");
+                        return false;
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        }
+        if (item == "模拟定位") {
+            $.ajax({
+                type: "POST",
+                url: "Records/changeLocateAppoint.ashx",
+                async: false,
+                data: {
+                    oldappoint: oldappoint,
+                    newappoint: newappoint
+                },
+                dateType: "json",
+                success: function (data) {
+                    if (data == "success") {
+                        window.alert("修改成功");
+                        $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
+                        $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
+                    }
+                    if (data == "busy") {
+                        window.alert("预约时间被占,需要重新预约");
+                        return false;
+                    }
+                    if (data == "failure") {
+                        window.alert("修改失败");
+                        return false;
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        }
+        if (item == "复位模拟") {
+            $.ajax({
+                type: "POST",
+                url: "Records/changeReplaceAppoint.ashx",
+                async: false,
+                data: {
+                    oldappoint: oldappoint,
+                    newappoint: newappoint
+                },
+                dateType: "json",
+                success: function (data) {
+                    if (data == "success") {
+                        window.alert("修改成功");
+                        $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
+                        $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
+                    }
+                    if (data == "busy") {
+                        window.alert("预约时间被占,需要重新预约");
+                        return false;
+                    }
+                    if (data == "failure") {
+                        window.alert("修改失败");
+                        return false;
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        }
+        if (item == "加速器") {
+            $.ajax({
+                type: "POST",
+                url: "Records/changeAccerateAppoint.ashx",
+                async: false,
+                data: {
+                    oldappoint: oldappoint,
+                    newappoint: newappoint
+                },
+                dateType: "json",
+                success: function (data) {
+                    if (data == "success") {
+                        window.alert("修改成功");
+                        $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
+                        $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
+                    }
+                    if (data == "busy") {
+                        window.alert("预约时间被占,需要重新预约");
+                        return false;
+                    }
+                    if (data == "failure") {
+                        window.alert("修改失败");
+                        return false;
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        }
+
+
+
+
+    });
+    $("#changeAppoint").modal({ backdrop: 'static' });
 }
 
-function cancelAppoint(e){
-
-}
 
 function getAppointments(treatmentID){
 	var appoints;
@@ -187,3 +342,190 @@ function toTime(minute) {
     var min = parseInt(minute) - hour * 60;
     return hour.toString() + ":" + (min < 10 ? "0" : "") + min.toString();
 }
+//设备下拉菜单
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var min = date.getMinutes();
+    if (min < 10) {
+        min = "0" + min;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + min;
+
+    return currentdate;
+}
+
+function createfixEquipmachine(thiselement, item) {
+    var machineItem = JSON.parse(getmachineItem(item)).Item;
+    thiselement.options.length = 0;
+    for (var i = 0; i < machineItem.length; i++) {
+        if (machineItem[i] != "") {
+            thiselement.options[i] = new Option(machineItem[i].Name);
+            thiselement.options[i].value = parseInt(machineItem[i].ID);
+        }
+    }
+}
+function getmachineItem(item) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "Records/getfixmachine.ashx?item=" + item;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+//创建某设备某天的预约表
+function CreateCurrentEquipmentTbale(equiment, dateString) {
+    var table = document.getElementById("apptiontTable");
+    RemoveAllChild(table);
+    if (equiment.length != 0) {
+        var tbody = document.createElement("tbody");
+        for (var i = 0; i < Math.ceil(equiment.length / 5) * 5 ; i++) {
+            var count = i % 5;
+            var tr;
+            if (count == 0) {
+                tr = document.createElement("tr");
+            }
+            if (i <= equiment.length - 1) {
+                var td = document.createElement("td");
+                var sign = document.createElement("i");
+                td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+                if (equiment[i].State == "0") {
+                    if (compareWithToday(dateString)) {
+                        sign.className = "";
+                        td.addEventListener("click", chooseItem, false);
+                    } else {
+                        td.style.backgroundColor = "#C1C1C1";
+                        sign.className = "fa fa-fw fa-ban td-sign";
+                        td.addEventListener("click", hasChosen, false);
+                    }
+                } else {
+                    td.style.backgroundColor = "#C1C1C1";
+                    sign.className = "fa fa-fw fa-ban td-sign";
+                    td.addEventListener("click", hasChosen, false);
+                }
+                var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+                td.appendChild(text);
+                td.appendChild(sign);
+                tr.appendChild(td);
+            }
+            if (i == equiment.length) {
+                var k;
+                for (k = equiment.length; k <= Math.ceil(equiment.length / 5) * 5 - 1; k++) {
+                    var td = document.createElement("td");
+
+                    tr.appendChild(td);
+                }
+            }
+            if (count == 4) {
+                tbody.appendChild(tr);
+            }
+        }
+        table.appendChild(tbody);
+    } else {
+        table.innerHTML = "今天已经不可以预约了,改天吧！";
+
+    }
+}
+
+function chooseItem() {
+    if (ChoseID() == null) {
+        if (this.lastChild.className) {
+            this.className = "";
+            this.lastChild.className = "";
+        } else {
+            this.className = "chosen";
+            this.lastChild.className = "fa fa-fw fa-check td-sign";
+        }
+    } else {
+        if (this.lastChild.className) {
+            this.className = "";
+            this.lastChild.className = "";
+        } else {
+            alert("只能选择一个时间段！");
+        }
+    }
+
+}
+
+function ChoseID() {
+    var td_id = null;
+    var table = document.getElementById("apptiontTable");
+    for (var i = 0; i < table.rows.length; i++) {
+        for (var j = 0; j < table.rows[i].cells.length; j++) {
+            var cell = table.rows[i].cells[j];
+            if (cell.className != "") {
+                td_id = cell.id;
+            }
+        }
+    }
+    return td_id;
+}
+
+function hasChosen() {
+    alert("该时间段已被预约！");
+}
+//清楚所有子节点
+function RemoveAllChild(area) {
+    while (area.hasChildNodes()) {
+        var first = area.firstChild;
+        if (first != null && first != undefined)
+            area.removeChild(first);
+    }
+}
+//根据日期创建新表
+function CreateNewAppiontTable(evt) {
+    var equipmentName = document.getElementById("equipmentName");
+    var currentIndex = equipmentName.selectedIndex;
+    var equipmentID = equipmentName.options[currentIndex].value;
+    var AppiontDate = document.getElementById("AppiontDate");
+    if (!compareWithToday(AppiontDate.value)) {
+        alert("不能选择小于当天的日期");
+        return;
+    }
+    var date = AppiontDate.value;
+    var xmlHttp = new XMLHttpRequest();
+    var url = "Records/GetEquipmentAppointment.ashx?equipmentID=" + equipmentID + "&date=" + date;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    thisObj = eval("(" + json + ")");
+    CreateCurrentEquipmentTbale(thisObj, date);
+}
+function checkAllTable() {
+    var choseid = ChoseID();
+    var appoint = choseid.split("_");
+    document.getElementById("idforappoint").value = appoint[0];
+    document.getElementById("appointtime").value = appoint[3] + " " + appoint[1] + " " + appoint[2];
+}
+function compareWithToday(time) {
+    var year = time.split("-")[0];
+    var month = time.split("-")[1];
+    var day = time.split("-")[2];
+    var date = new Date();
+    if (parseInt(year) < parseInt(date.getFullYear())) {
+        return false;
+    } else {
+        if (parseInt(month) < parseInt(date.getMonth() + 1)) {
+            return false;
+        } else {
+            if (parseInt(day) < parseInt(date.getDate())) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+}
+
+
+

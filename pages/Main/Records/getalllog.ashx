@@ -27,15 +27,20 @@ public class getalllog : IHttpHandler {
     {
         string treatID=context.Request.QueryString["treatmentID"];
         int treatid = Convert.ToInt32(treatID);
-        string command = "select ChangeLog,SpecialEnjoin,SplitWay_ID from treatment where ID=@treat";
+        string command = "select ChangeLog,SpecialEnjoin,SplitWay_ID from treatment where ID=@treat ";
         sqlOperation.AddParameterWithValue("@treat", treatid);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(command);
         if (reader.Read())
         {
-            string select = "select Ways from splitway where ID=@id";
-            sqlOperation1.AddParameterWithValue("@id", reader["SplitWay_ID"].ToString());
-            string result = sqlOperation1.ExecuteScalar(select);
+            string result = "";
+            if (reader["SplitWay_ID"].ToString() != "")
+            {
+                string select = "select Ways from splitway where ID=@id";
+                sqlOperation1.AddParameterWithValue("@id", reader["SplitWay_ID"].ToString());
+                 result = sqlOperation1.ExecuteScalar(select);
+            }
+            
             backText.Append("{\"ChangeLog\":\"" + reader["ChangeLog"].ToString() + "\",\"SpecialEnjoin\":\"" + reader["SpecialEnjoin"].ToString() + "\",\"SplitWay_ID\":\"" + reader["SplitWay_ID"].ToString() + "\",\"SplitWay\":\"" + result + "\"}");
         }
 

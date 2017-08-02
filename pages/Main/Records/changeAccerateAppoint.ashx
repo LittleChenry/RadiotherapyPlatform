@@ -26,14 +26,11 @@ public class changeAccerateAppoint : IHttpHandler {
     public string AddFixRecord(HttpContext context)
     {
         //获取表单信息
+        string appoint = context.Request["newappoint"];
         string oldappoint = context.Request["oldappoint"];
-        string appoint = context.Request["id"];
-        string treatid = context.Request["treatid"];
-        if (appoint != "")
-        {
-            string strcommand = "select State from appointment where ID=@appointid";
-            sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));
-            string count = sqlOperation.ExecuteScalar(strcommand);
+        string strcommand = "select State from appointment where ID=@appointid";
+        sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));
+        string count = sqlOperation.ExecuteScalar(strcommand);
             if (count == "1")
             {
                 return "busy";
@@ -48,6 +45,9 @@ public class changeAccerateAppoint : IHttpHandler {
                 }
                 else
                 {
+                    string asktreat = "select Treatment_ID from appointment where ID=@oldappointid";
+                    sqlOperation.AddParameterWithValue("@oldappointid", Convert.ToInt32(context.Request["oldappoint"]));
+                    string treatid = sqlOperation.ExecuteScalar(asktreat);
                     string strcommand2 = "select Patient_ID from treatment where ID=@treat";
                     sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
                     string patient_ID = sqlOperation.ExecuteScalar(strcommand2);
@@ -77,27 +77,7 @@ public class changeAccerateAppoint : IHttpHandler {
                 }
             }
 
-        }
-        else
-        {
-            string updatefixappoint = "update treatmentrecord set Appointment_ID=NULL where Appointment_ID=@appoint and Treatment_ID=@treat";
-            sqlOperation.AddParameterWithValue("@appoint", oldappoint);
-            int updatesuccess = sqlOperation.ExecuteNonQuery(updatefixappoint);
-
-            if (updatesuccess > 0)
-            {
-
-                string deleteappoint = "update appointment set Patient_ID=NULL,Treatment_ID=NULL,state=0 where ID=@appoint";
-                sqlOperation.AddParameterWithValue("appoint", Convert.ToInt32(oldappoint));
-                int Success = sqlOperation.ExecuteNonQuery(deleteappoint);
-                if (Success > 0)
-                {
-                    return "success";
-                }
-            }
-
-            return "failure";
-        }
+      
     }
 
 

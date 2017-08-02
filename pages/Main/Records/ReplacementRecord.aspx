@@ -169,7 +169,7 @@
                             <div id="multipic_yanzheng" class="imgbox multifile">
                                 <div id="firstyanzheng" class="boxes">
                                     <div class="imgnum">
-                                        <input disabled="disabled" accept="image/*" type="file" name="f2" class="multifilepath1 filepath" />
+                                        <input disabled="disabled" accept="image/jpeg,image/png" type="file" name="f2" class="multifilepath1 filepath" />
                                         <span class="closecamera closearea"><i class="fa fa-times"></i></span>
                                         <img src="../../../img/camera.png" class="camera-picture" />
                                         <img class="img"/>

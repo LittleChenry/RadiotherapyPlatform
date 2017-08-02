@@ -45,16 +45,12 @@ public class getallpatientforchange : IHttpHandler {
         reader.Close();
         backText.Append(",");
         backText.Append("\"patientinfo\":[");
-        string date1= DateTime.Now.ToString("yyyy-MM-dd");
-        int h = DateTime.Now.Hour;
-        int s = DateTime.Now.Minute;
-        int time = h * 60 + s;
-        string sqlCommand = "select count(distinct(Treatment_ID)) from appointment where Equipment_ID=@equip and  (Date>@date1 or (Date=@date1 and Begin>@begintime))  and State=1 and Completed is  NULL ";
+        string date1= DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
+        string sqlCommand = "select count(distinct(Treatment_ID)) from appointment where Equipment_ID=@equip and Date>=@date1  and State=1 and Completed is  NULL ";
         sqlOperation.AddParameterWithValue("@equip", equipid);
-        sqlOperation.AddParameterWithValue("@begintime", time);
         sqlOperation.AddParameterWithValue("@date1", date1);
         int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlCommand));
-        string allpatient = "select distinct(Treatment_ID),Patient_ID from appointment where Equipment_ID=@equip and  (Date>@date1 or (Date=@date1 and Begin>@begintime))  and State=1 and Completed is  NULL ";
+        string allpatient = "select distinct(Treatment_ID),Patient_ID from appointment where Equipment_ID=@equip and  Date>=@date1  and State=1 and Completed is  NULL ";
         MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(allpatient);
         while (reader1.Read())
         {

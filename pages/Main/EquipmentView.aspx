@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css" />
+       <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datepicker/datepicker3.css"/>
     <!-- Ionicons -->
     <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css" />
     <!-- Theme style -->
@@ -309,25 +311,34 @@
             </div>
         </section>
     </div>
-    <div id="changeAppoint" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">更改预约时间</h4>
+<div class="modal fade" id="changeAppoint" tabindex="-1">
+            <div class="panel panel-default" style="max-width:800px;margin:auto;">
+                <div class="panel-heading">
+                    <h4 class="modal-title">修改预约时间</h4>
                 </div>
-                <div class="modal-body">
-                    <table id="" class="table">
-                        <tbody></tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button id="confirm-Template" type="button" class="btn btn-primary" data-dismiss="modal">更改</button>
+                <div class="panel-body">
+                    <div class="panel-row">
+                        <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
+                        <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                        <div class="col-xs-2">
+                            <button id="chooseProject" class="btn btn-default">查询该项</button>
+                        </div>
+                    </div>
+                    <div class="panel-row">
+                        <table id="apptiontTable" class="table table-bordered col-xs-12"></table>
+                    </div>
+                    <div class="panel-row">
+                        <div style="text-align:center" class="col-xs-6">
+                            <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal" aria-label="Close" >取消</button>
+                        </div>
+                        <div  style="text-align:center" class="col-xs-6">
+                            <button class="btn btn-default" id="sure" type="button" data-dismiss="modal">确定</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.0
@@ -362,7 +373,7 @@
 <script src="../../js/Main/EquipmentView.js"></script>
 <script>
     $(".nav-tabs-custom").css("minHeight", $(document).height() - 200);
-    //$(".nav-tabs-custom").css("marginBottom", 0);
+    $("#AppiontDate").datepicker({ autoclose: true });
 </script>
 </body>
 </html>

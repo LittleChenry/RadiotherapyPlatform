@@ -27,10 +27,8 @@ public class changeLocateAppoint : IHttpHandler {
     public string AddFixRecord(HttpContext context)
     {
         //获取表单信息
-        string appoint = context.Request["id"];
-        string treatid = context.Request["treatid"];
-        if (appoint != "")
-        {
+        string appoint = context.Request["newappoint"];
+        string oldappoint = context.Request["oldappoint"];
             string strcommand = "select State from appointment where ID=@appointid";
             sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));
             string count = sqlOperation.ExecuteScalar(strcommand);
@@ -48,6 +46,9 @@ public class changeLocateAppoint : IHttpHandler {
                 }
                 else
                 {
+                    string asktreat = "select Treatment_ID from appointment where ID=@oldappointid";
+                    sqlOperation.AddParameterWithValue("@oldappointid", Convert.ToInt32(context.Request["oldappoint"]));
+                    string treatid = sqlOperation.ExecuteScalar(asktreat);
                     string strcommand2 = "select Patient_ID from treatment where ID=@treat";
                     sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
                     string patient_ID = sqlOperation.ExecuteScalar(strcommand2);
@@ -58,13 +59,8 @@ public class changeLocateAppoint : IHttpHandler {
 
                     string search = "select Location_ID from treatment where ID=@treat";
                     string locate = sqlOperation.ExecuteScalar(search);
-
-                    string search1 = "select Appointment_ID from location where ID=@locate";
-                    sqlOperation.AddParameterWithValue("@locate", Convert.ToInt32(locate));
-                    string oldappoint = sqlOperation.ExecuteScalar(search1);
-
-
                     string updatefixappoint = "update location set Appointment_ID=@appointid where ID=@locate";
+                    sqlOperation.AddParameterWithValue("@locate", Convert.ToInt32(locate));
                     int updatesuccess = sqlOperation.ExecuteNonQuery(updatefixappoint);
 
                     if (updatesuccess > 0)
@@ -84,38 +80,7 @@ public class changeLocateAppoint : IHttpHandler {
                 }
             }
 
-        }
-        else
-        {
-            string search = "select Location_ID from treatment where ID=@treat";
-            sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
-            string locate = sqlOperation.ExecuteScalar(search);
-
-            string search1 = "select Appointment_ID from location where ID=@locate";
-            sqlOperation.AddParameterWithValue("@locate", Convert.ToInt32(locate));
-            string oldappoint = sqlOperation.ExecuteScalar(search1);
-
-
-            string updatefixappoint = "update location set Appointment_ID=NULL where ID=@locate";
-            int updatesuccess = sqlOperation.ExecuteNonQuery(updatefixappoint);
-
-            if (updatesuccess > 0)
-            {
-
-                string deleteappoint = "update appointment set Patient_ID=NULL,Treatment_ID=NULL,state=0 where ID=@appoint";
-                sqlOperation.AddParameterWithValue("appoint", Convert.ToInt32(oldappoint));
-                int Success = sqlOperation.ExecuteNonQuery(deleteappoint);
-                if (Success > 0)
-                {
-                    return "success";
-                }
-            }
-
-            return "failure";
-
-            
-            
-        }
+      
     }
 
 }

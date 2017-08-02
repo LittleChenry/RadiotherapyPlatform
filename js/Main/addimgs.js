@@ -21,7 +21,7 @@
         $(this).nextAll(".img").attr("src",srcs);    //this指的是input
         $(this).nextAll(".img").show();  //fireBUg查看第二次换图片不起做用*/
         var htmlImg = "<div class='boxes'><div class='imgnum'>"+
-        "<input type='file' accept='image/*' name='img" + Date.parse(new Date()) + "' class='multifilepath filepath'/>" +
+        "<input type='file' accept='image/jpeg,image/png' name='img" + Date.parse(new Date()) + "' class='multifilepath filepath'/>" +
         "<span class='closecamera closearea'><i class='fa fa-times'></i></span>" +
         "<img src='../../../img/camera.png' class='camera-picture'><img class='img'/></div></div>";
         $(this).parent().parent().before(htmlImg);
@@ -44,7 +44,7 @@ function change() {
     $(this).nextAll(".img").attr("src", srcs);    //this指的是input
     $(this).nextAll(".img").show();  //fireBUg查看第二次换图片不起做用*/
     var htmlImg = "<div class='boxes'><div class='imgnum'>"+
-        "<input type='file' accept='image/*' name='img" + Date.parse(new Date()) + "' class='multifilepath filepath'/>" +
+        "<input type='file' accept='image/jpeg,image/png' name='img" + Date.parse(new Date()) + "' class='multifilepath filepath'/>" +
         "<span class='closecamera closearea'><i class='fa fa-times'></i></span>" +
         "<img src='../../../img/camera.png' class='camera-picture'><img class='img'/></div></div>";
     $(this).parent().parent().before(htmlImg);

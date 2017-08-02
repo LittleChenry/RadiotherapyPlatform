@@ -110,7 +110,7 @@
                                     <div id="multipic" class="imgbox multifile">
                                         <div class="boxes">
                                             <div class="imgnum">
-                                                <input type="file" accept="image/*" name="f1" class="multifilepath filepath" />
+                                                <input type="file" accept="image/jpeg,image/png" name="f1" class="multifilepath filepath" />
                                                 <span class="closecamera closearea"><i class="fa fa-times"></i></span>
                                                 <img src="../../../img/camera.png" class="camera-picture" />
                                                 <img class="img"/>
