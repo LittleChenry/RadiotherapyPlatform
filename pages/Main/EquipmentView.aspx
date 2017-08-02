@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
- <meta charset="utf-8" />
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!--Tell the brower to be responsive to screen width -->
     <meta content="Width=device-width, initial-scale=1, maxmum-scale=1, user-scalable=no" name="viewport" />
@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css" />
 
     <!-- Main Css -->
-    <link rel="stylesheet" href="../../css/Main/main.css">
+    <link rel="stylesheet" href="../../css/Main/main.css" />
     <title>设备预约管理</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
@@ -267,7 +267,7 @@
                             <li><a href="#appointView" data-toggle="tab">预约视图</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="active tab-pane" id="patientView">
+                            <div class="active tab-pane" id="patientView" style="overflow:hidden;">
                                 <div class="col-md-6">
                                     <table id="viewPatients" class="table" style="text-align:center;">
                                         <thead>
@@ -295,7 +295,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="appointView">
+                            <div class="tab-pane" id="appointView" style="overflow:hidden;">
                                 <div class="col-md-12">
                                     <table id="appointTable" class="table table-bordered table-hover dataTable">
                                         <thead id="thead"></thead>
@@ -308,6 +308,25 @@
                 </div>
             </div>
         </section>
+    </div>
+    <div id="changeAppoint" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">更改预约时间</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="" class="table">
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="confirm-Template" type="button" class="btn btn-primary" data-dismiss="modal">更改</button>
+                </div>
+            </div>
+        </div>
     </div>
     <footer class="main-footer">
         <div class="pull-right hidden-xs">

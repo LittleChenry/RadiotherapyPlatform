@@ -17,6 +17,7 @@ function patientView(){
 	var viewPatientsBody = $("#viewPatients").find("tbody");
 	viewPatientsBody.html("");
 	var viewAppointsBody = $("#viewAppoints").find("tbody");
+	viewAppointsBody.html("");
 	showEquipmentInfo(ViewPatient.equipmentinfo);
 	if (ViewPatient.patientinfo != "") {
 		for (var i = 0; i < ViewPatient.patientinfo.length; i++) {
@@ -42,13 +43,21 @@ function patientView(){
 					var appointDate = new Date(appoints.appoint[i].Date);
 					var completed = (appoints.appoint[i].Completed == "1") ? "已完成" : "未完成";
 					var tr = '<tr id="apoint_'+ appoints.appoint[i].appointid +'"><td>'+ appoints.appoint[i].Task + '</td>'
-						+'<td>' + appointDate.Format("yyyy-MM-dd") + ' ' + toTime(appoints.appoint[i].Begin) + ' - ' + toTime(appoints.appoint[i].End) + '</td>'
-						+'<td>' + completed +'</td><td></td></tr>';
+						+'<td>' + appointDate.Format("yyyy-MM-dd") + ' , ' + toTime(appoints.appoint[i].Begin) + ' - ' + toTime(appoints.appoint[i].End) + '</td>'
+						+'<td>' + completed +'</td><td><button class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button><button class="btn btn-warning" type="button" onclick="cancelAppoint(this)" style="margin-left:4px;">取消</button></td></tr>';
 					viewAppointsBody.append(tr);
 				}
 			});
 		}
 	});
+}
+
+function changeAppoint(e){
+	$("#changeAppoint").modal({ backdrop: 'static' });
+}
+
+function cancelAppoint(e){
+
 }
 
 function getAppointments(treatmentID){
