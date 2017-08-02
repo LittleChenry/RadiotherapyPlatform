@@ -86,130 +86,128 @@ function changeAppoint(e) {
         var choseid = ChoseID();
         var appoint = choseid.split("_");
         var newappoint = appoint[0];
-        if (item == "体位固定") {
-            $.ajax({
-                type: "POST",
-                url: "Records/changeFixAppoint.ashx",
-                async: false,
-                data: {
-                    oldappoint: oldappoint,
-                    newappoint: newappoint 
-                },
-                dateType: "json",
-                success: function (data) {
-                    if (data == "success") {
-                        window.alert("修改成功");
-                        $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
-                        $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
+        if (choseid != null) {
+            if (item == "体位固定") {
+                $.ajax({
+                    type: "POST",
+                    url: "Records/changeFixAppoint.ashx",
+                    async: false,
+                    data: {
+                        oldappoint: oldappoint,
+                        newappoint: newappoint
+                    },
+                    dateType: "json",
+                    success: function (data) {
+                        if (data == "success") {
+                            window.alert("修改成功");
+                            $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
+                            $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
+                        }
+                        if (data == "busy") {
+                            window.alert("预约时间被占,需要重新预约");
+                            return false;
+                        }
+                        if (data == "failure") {
+                            window.alert("修改失败");
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        alert("error");
                     }
-                    if (data == "busy") {
-                        window.alert("预约时间被占,需要重新预约");
-                        return false;
+                });
+            }
+            if (item == "模拟定位") {
+                $.ajax({
+                    type: "POST",
+                    url: "Records/changeLocateAppoint.ashx",
+                    async: false,
+                    data: {
+                        oldappoint: oldappoint,
+                        newappoint: newappoint
+                    },
+                    dateType: "json",
+                    success: function (data) {
+                        if (data == "success") {
+                            window.alert("修改成功");
+                            $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
+                            $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
+                        }
+                        if (data == "busy") {
+                            window.alert("预约时间被占,需要重新预约");
+                            return false;
+                        }
+                        if (data == "failure") {
+                            window.alert("修改失败");
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        alert("error");
                     }
-                    if (data == "failure") {
-                        window.alert("修改失败");
-                        return false;
+                });
+            }
+            if (item == "复位模拟") {
+                $.ajax({
+                    type: "POST",
+                    url: "Records/changeReplaceAppoint.ashx",
+                    async: false,
+                    data: {
+                        oldappoint: oldappoint,
+                        newappoint: newappoint
+                    },
+                    dateType: "json",
+                    success: function (data) {
+                        if (data == "success") {
+                            window.alert("修改成功");
+                            $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
+                            $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
+                        }
+                        if (data == "busy") {
+                            window.alert("预约时间被占,需要重新预约");
+                            return false;
+                        }
+                        if (data == "failure") {
+                            window.alert("修改失败");
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        alert("error");
                     }
-                },
-                error: function () {
-                    alert("error");
-                }
-            });
+                });
+            }
+            if (item == "加速器") {
+                $.ajax({
+                    type: "POST",
+                    url: "Records/changeAccerateAppoint.ashx",
+                    async: false,
+                    data: {
+                        oldappoint: oldappoint,
+                        newappoint: newappoint
+                    },
+                    dateType: "json",
+                    success: function (data) {
+                        if (data == "success") {
+                            window.alert("修改成功");
+                            $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
+                            $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
+                        }
+                        if (data == "busy") {
+                            window.alert("预约时间被占,需要重新预约");
+                            return false;
+                        }
+                        if (data == "failure") {
+                            window.alert("修改失败");
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
         }
-        if (item == "模拟定位") {
-            $.ajax({
-                type: "POST",
-                url: "Records/changeLocateAppoint.ashx",
-                async: false,
-                data: {
-                    oldappoint: oldappoint,
-                    newappoint: newappoint
-                },
-                dateType: "json",
-                success: function (data) {
-                    if (data == "success") {
-                        window.alert("修改成功");
-                        $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
-                        $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
-                    }
-                    if (data == "busy") {
-                        window.alert("预约时间被占,需要重新预约");
-                        return false;
-                    }
-                    if (data == "failure") {
-                        window.alert("修改失败");
-                        return false;
-                    }
-                },
-                error: function () {
-                    alert("error");
-                }
-            });
-        }
-        if (item == "复位模拟") {
-            $.ajax({
-                type: "POST",
-                url: "Records/changeReplaceAppoint.ashx",
-                async: false,
-                data: {
-                    oldappoint: oldappoint,
-                    newappoint: newappoint
-                },
-                dateType: "json",
-                success: function (data) {
-                    if (data == "success") {
-                        window.alert("修改成功");
-                        $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
-                        $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
-                    }
-                    if (data == "busy") {
-                        window.alert("预约时间被占,需要重新预约");
-                        return false;
-                    }
-                    if (data == "failure") {
-                        window.alert("修改失败");
-                        return false;
-                    }
-                },
-                error: function () {
-                    alert("error");
-                }
-            });
-        }
-        if (item == "加速器") {
-            $.ajax({
-                type: "POST",
-                url: "Records/changeAccerateAppoint.ashx",
-                async: false,
-                data: {
-                    oldappoint: oldappoint,
-                    newappoint: newappoint
-                },
-                dateType: "json",
-                success: function (data) {
-                    if (data == "success") {
-                        window.alert("修改成功");
-                        $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
-                        $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
-                    }
-                    if (data == "busy") {
-                        window.alert("预约时间被占,需要重新预约");
-                        return false;
-                    }
-                    if (data == "failure") {
-                        window.alert("修改失败");
-                        return false;
-                    }
-                },
-                error: function () {
-                    alert("error");
-                }
-            });
-        }
-
-
-
-
     });
     $("#changeAppoint").modal({ backdrop: 'static' });
 }
