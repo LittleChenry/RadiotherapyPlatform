@@ -40,7 +40,7 @@ public class patientInfo : IHttpHandler
         int treatid = Convert.ToInt32(context.Request.QueryString["treatID"]);
 
 
-        string sqlCommand = "select Group_ID,Belongingdoctor,patient.*,user.Name as username from user,treatment,patient where patient.Register_User_ID=user.ID and patient.ID=treatment.Patient_ID and treatment.ID=@treatID";
+        string sqlCommand = "select Group_ID,Belongingdoctor,patient.*,user.Name as username,treatment.* from user,treatment,patient where patient.Register_User_ID=user.ID and patient.ID=treatment.Patient_ID and treatment.ID=@treatID";
         sqlOperation2.AddParameterWithValue("@treatID", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"patientInfo\":[");
@@ -55,7 +55,7 @@ public class patientInfo : IHttpHandler
             string date3 = dt2.ToString("yyyy-MM-dd HH:mm");
             backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"group\":\"" + reader["Group_ID"].ToString() + "\",\"IDcardNumber\":\"" + reader["IdentificationNumber"] + "\",\"Hospital\":\"" + reader["Hospital"] +
                  "\",\"Sub\":\"" + reader["SubCenterPrincipal_ID"].ToString() + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString() + "\",\"Picture\":\"" + reader["Picture"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() +
-                 "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"Birthday\":\"" + date1 + 
+                 "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"Birthday\":\"" + date1 + "\",\"State\":\"" + reader["State"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
                  "\",\"Nation\":\"" + reader["Nation"].ToString() + "\",\"Address\":\"" + reader["Address"].ToString() + "\",\"Contact1\":\"" + reader["Contact1"].ToString() + "\",\"doctor\":\"" + reader["RegisterDoctor"].ToString() + "\",\"Registeruser\":\"" + reader["username"].ToString() +
                  "\",\"Contact2\":\"" + reader["Contact2"].ToString() + "\",\"Ishospital\":\"" + reader["Ishospital"].ToString() + "\",\"Hospital_ID\":\"" + reader["Hospital_ID"].ToString() + "\",\"Height\":\"" + reader["Height"].ToString() + "\",\"Weight\":\"" + reader["Weight"].ToString() + "\",\"date\":\"" + date3 + "\"}");
            
