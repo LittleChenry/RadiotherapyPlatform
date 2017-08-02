@@ -550,7 +550,7 @@ function closeTr(){
 
 function trAddClick(patient, userID) {
     for (var i = 0; i < patient.PatientInfo.length; i++) {
-        $("#" + patient.PatientInfo[i].treatID + "").click({ appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+        $("#" + patient.PatientInfo[i].treatID + "").click({state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
             checkAddTreatment(e.data.Radiotherapy_ID);
             OperateAttrDisabled();
@@ -560,7 +560,7 @@ function trAddClick(patient, userID) {
                 $(this).find('span').removeClass();
             });
             $("#record-iframe").attr('src', "Records/Blank.aspx");
-            //$("#patient-status").text(e.data.state);
+            $("#patient-status").html(StateNumToString(e.data.state));
             var tr = $("#patient-table tbody tr");
             tr.each(function (index, element) {
                 if ($(this).hasClass("chose")) {
@@ -572,8 +572,8 @@ function trAddClick(patient, userID) {
             ul.each(function (index, element) {
                 switch (index) {
                     case 0:
-                        $(this).find('li').removeClass().addClass("progress-finished");
-                        $(this).find('i').removeClass().addClass("fa fa-fw fa-check");
+                        $(this).find('li').removeClass().addClass("progress-info");
+                        $(this).find('i').removeClass().addClass("fa fa-fw fa-info-circle");
                         $(this).click(function () {
                             $("#record-iframe").attr('src', "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
@@ -857,7 +857,7 @@ function trAddClick(patient, userID) {
 
 function trAddClickforJS(patient, userID) {
     for (var i = 0; i < patient.PatientInfo.length; i++) {
-        $("#" + patient.PatientInfo[i].treatID + "_" + patient.PatientInfo[i].appointid).click({ appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+        $("#" + patient.PatientInfo[i].treatID + "_" + patient.PatientInfo[i].appointid).click({state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
             checkAddTreatment(e.data.Radiotherapy_ID);
             OperateAttrDisabled();
@@ -867,7 +867,7 @@ function trAddClickforJS(patient, userID) {
                 $(this).find('span').removeClass();
             });
             $("#record-iframe").attr('src', "Records/Blank.aspx");
-            //$("#patient-status").text(e.data.state);
+            $("#patient-status").html(StateNumToString(e.data.state));
             var tr = $("#patient-table tbody tr");
             tr.each(function (index, element) {
                 if ($(this).hasClass("chose")) {
@@ -879,8 +879,8 @@ function trAddClickforJS(patient, userID) {
             ul.each(function (index, element) {
                 switch (index) {
                     case 0:
-                        $(this).find('li').removeClass().addClass("progress-finished");
-                        $(this).find('i').removeClass().addClass("fa fa-fw fa-check");
+                        $(this).find('li').removeClass().addClass("progress-info");
+                        $(this).find('i').removeClass().addClass("fa fa-fw fa-info-circle");
                         $(this).click(function () {
                             $("#record-iframe").attr('src', "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
@@ -2266,4 +2266,22 @@ function stopBubble(e) {
     else {//IE浏览器
     window.event.cancelBubble = true;
     }
+}
+
+function StateNumToString(str){
+    var state;
+    switch(str){
+        case "0":
+            state = "进行中";
+            break;
+        case "1":
+            state = "暂停中";
+            break;
+        case "2":
+            state = "已结束";
+            break;
+        default:
+            state = "无";
+    }
+    return state;
 }

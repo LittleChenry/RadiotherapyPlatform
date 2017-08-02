@@ -159,8 +159,48 @@
                         </div>
                         <div class="item col-xs-6">
                             分中心负责人：
-                            <input id="Sub" name="Sub" type="text" class="form-item"></input>
+                            <input id="Sub" name="Sub" type="text" class="form-item" />
                         </div>
+                    </div>
+                </div>
+                <div class="paper-content">
+                    <div class="content-title">
+                        <span>疗程信息：</span>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-6">
+                            当前疗程：
+                            <span></span>
+                        </div>
+                        <div class="col-xs-6">
+                            疗程状态：
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-6">
+                            <button class="btn btn-success" type="button">继续疗程</button>
+                            <button class="btn btn-warning" type="button">暂停疗程</button>
+                            <button class="btn btn-danger" type="button">结束疗程</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="paper-content">
+                    <div class="content-title">
+                        <span>预约信息：</span>
+                    </div>
+                    <div class="single-row">
+                        <table id="viewAppoints" class="table" style="text-align:center;">
+                            <thead>
+                                <tr>
+                                    <th>预约项目</th>
+                                    <th>预约时间</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="paper-footer">
