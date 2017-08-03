@@ -65,13 +65,18 @@ public class getallcompletedtreat : IHttpHandler {
             }
             reader4.Close();
             if(reader["DiagnosisRecord_ID"].ToString() != "")
-            {
-                string commandtemp="select part.Name as partname,user.Name as username,TumorName,diagnosisresult.Description as des,Remarks from user,part,diagnosisrecord,diagnosisresult where diagnosisresult.ID=diagnosisrecord.DiagnosisResult_ID and diagnosisrecord.Diagnosis_User_ID=user.ID and diagnosisrecord.Part_ID=part.ID and diagnosisrecord.ID=@diag";
+            {  
+                string sqlCommand3 = "select Chinese from diagnosisrecord,icdcode where diagnosisrecord.ID=@ID and diagnosisrecord.DiagnosisResult_ID =icdcode.ID";
+                sqlOperation1.AddParameterWithValue("@ID", reader["DiagnosisRecord_ID"].ToString());
+                string result = sqlOperation1.ExecuteScalar(sqlCommand3);
+                string sqlCommand4 = "select Groupfirst from diagnosisrecord,morphol where diagnosisrecord.ID=@ID and diagnosisrecord.PathologyResult =morphol.ID";
+                string result1 = sqlOperation1.ExecuteScalar(sqlCommand4);
+                string commandtemp = "select part.Name as partname,user.Name as username,lightpart.Name as lightpartname,treataim.Aim as aim,DiagnosisResult_ID,Remarks from user,part,diagnosisrecord,lightpart,treataim where treataim.ID=diagnosisrecord.TreatAim_ID and lightpart.ID=diagnosisrecord.LightPart_ID and diagnosisrecord.Diagnosis_User_ID=user.ID and diagnosisrecord.Part_ID=part.ID and diagnosisrecord.ID=@diag";
                 sqlOperation1.AddParameterWithValue("@diag",Convert.ToInt32(reader["DiagnosisRecord_ID"].ToString()));
                 MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(commandtemp);
                 if(reader1.Read())
                 {
-                    diagnosecomplete = "患病部位：" + reader1["partname"].ToString() + "。诊断结果：" + reader1["TumorName"].ToString() + reader1["des"].ToString() + "。诊断备注：" + reader1["Remarks"].ToString(); 
+                    diagnosecomplete = "患病部位：" + reader1["partname"].ToString() + "。病情诊断结果：" + result + "。病理诊断结果：" + result1 + "。照射部位：" + reader1["lightpartname"].ToString() + "。治疗目标：" + reader1["aim"].ToString() + "。诊断备注：" + reader1["Remarks"].ToString(); 
                 }
                 reader1.Close();
             }
