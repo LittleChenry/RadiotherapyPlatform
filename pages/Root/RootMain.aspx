@@ -357,7 +357,7 @@
             <li><a href="Root-EquipmentInspectionResult.aspx"><i class="fa fa-circle-o"></i> 设备检查结果</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <%--<li class="treeview">
           <a href="#">
             <i class="fa fa-sitemap fa-fw"></i>
             <span>设备维修</span>
@@ -370,7 +370,7 @@
             <li><a href="EquipmentTypeManage.aspx"><i class="fa fa-circle-o"></i>设备维修</a></li>
             <li><a href="Root-EquipmentInspectionManage.aspx"><i class="fa fa-circle-o"></i> 设备维修记录</a></li>
           </ul>
-        </li>
+        </li>--%>
         <li>
           <a href="Root-function.aspx">
             <i class="fa fa-coffee fa-fw"></i> <span>功能管理</span>
@@ -426,7 +426,7 @@
                 <h1 class="page-header">欢迎使用本系统</h1>
             </div>
             <!-- /.col-md-12 -->
-        </div>
+     <%--   </div>
         <!-- /.row -->
         <div class="row">
             <div class="col-md-4">
@@ -545,7 +545,7 @@
                         <a href="#" style="text-decoration:none;">更多</a>
                     </div>
                 </div>
-            </div>
+            </div>--%>
             <!-- /.col-md-4 -->
         </div>
         <!-- /.row -->
