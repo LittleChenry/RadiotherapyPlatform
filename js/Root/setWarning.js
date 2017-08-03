@@ -50,9 +50,9 @@ function createTable(warningObj){
 function createEditArea($tr){
 	$("#editTBody").empty();
 	$tds = $tr.find("td");
-	$("#editTBody").append("<tr><td>预警项目</td><td><input id=item type=text disabled=true class=form-control style=margin-right:0.8em value=" + $tds[0].innerText + " /></td></tr>")
-            .append("<tr><td>黄色预警</td><td><input id=light type=text class=form-control style=margin-right:0.8em value=" + $tds[1].innerText + " /></td><td>小时</td></tr>")
-            .append("<tr><td>红色预警</td><td><input id=serious type=text class=form-control style=margin-right:0.8em value=" + $tds[2].innerText + " /></td><td>小时</td></tr>");
+	$("#editTBody").append("<tr><th>预警项目</th><td><input id=item type=text disabled=true class=form-control style=margin-right:0.8em value=" + $tds[0].innerText + " /></td></tr>")
+            .append("<tr><th>黄色预警</th><td><input id=light type=text class=form-control style=margin-right:0.8em value=" + $tds[1].innerText + " /></td><td>小时</td></tr>")
+            .append("<tr><th>红色预警</th><td><input id=serious type=text class=form-control style=margin-right:0.8em value=" + $tds[2].innerText + " /></td><td>小时</td></tr>");
 
     $("#light").bind("blur", function(){
 		var light = $("#light").val();

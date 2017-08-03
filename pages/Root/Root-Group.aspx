@@ -47,229 +47,103 @@
 
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li><!-- start message -->
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Support Team
-                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <!-- end message -->
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="../../plugin/AdminLTE/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        AdminLTE Design Team
-                        <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="../../plugin/AdminLTE/dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Developers
-                        <small><i class="fa fa-clock-o"></i> Today</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="../../plugin/AdminLTE/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Sales Department
-                        <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="../../plugin/AdminLTE/dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Reviewers
-                        <small><i class="fa fa-clock-o"></i> 2 days</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                </ul>
+              <!-- Messages: style can be found in dropdown.less-->
+              <li class="dropdown messages-menu">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-envelope-o"></i>
+                      <span id="NoticeNum" class="label label-success">0</span>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li class="header">通知公告</li>
+                      <li>
+                          <ul id="Notice" class="menu">
+                              <li>
+                                  <a href="#">
+                                      <h4>无
+                                      </h4>
+                                      <p class="pull-right"><i class="fa fa-user"></i>&nbsp;<i class="fa fa-clock-o"></i></p>
+                                  </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="footer"><a id="allNotice" href="javascript:;" target="_blank">查看全部</a></li>
+                  </ul>
               </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
-            </ul>
-          </li>
-          <!-- Notifications: style can be found in dropdown.less -->
-          <li class="dropdown notifications-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                      page and may cause design problems
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-red"></i> 5 new members joined
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-user text-red"></i> You changed your username
-                    </a>
-                  </li>
-                </ul>
+              <li class="dropdown notifications-menu">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-bell-o"></i>
+                      <span id="WarningNum" class="label label-warning">0</span>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li id="WarningTask" class="header">你有0条工作任务预警</li>
+                      <li>
+                          <ul id="TaskWarning-content" class="menu">
+                              <li>
+                                  <a href="javascript:;">无
+                                  </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="footer"><a href="javascript:;">请及时处理</a></li>
+                  </ul>
               </li>
-              <li class="footer"><a href="#">View all</a></li>
-            </ul>
-          </li>
-          <!-- Tasks: style can be found in dropdown.less -->
-          <li class="dropdown tasks-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-flag-o"></i>
-              <span class="label label-danger">9</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 9 tasks</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        Design some buttons
-                        <small class="pull-right">20%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">20% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        Create a nice theme
-                        <small class="pull-right">40%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">40% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        Some task I need to do
-                        <small class="pull-right">60%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        Make beautiful transitions
-                        <small class="pull-right">80%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">80% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                </ul>
+              <li class="dropdown tasks-menu">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-flag-o"></i>
+                      <span class="label label-danger">9</span>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li class="header">设备动态</li>
+                      <li>
+                          <ul class="menu">
+                              <li>
+                                  <a href="javascript:;">
+                                      <h3>Design some buttons
+                                                <small class="pull-right">20%</small>
+                                      </h3>
+                                      <div class="progress xs">
+                                          <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                              <span class="sr-only">20% Complete</span>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="footer">
+                          <a href="javascript:;">查看详情</a>
+                      </li>
+                  </ul>
               </li>
-              <li class="footer">
-                <a href="#">View all tasks</a>
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                      <span class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <!-- User image -->
+                      <li class="user-header">
+                          <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                          <p>
+                              <span class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
+                              <small id="role">管理员</small>
+                          </p>
+                      </li>
+                      <!-- Menu Body -->
+                      <!-- Menu Footer-->
+                      <li class="user-footer">
+                          <div class="pull-left">
+                              <a href="../Login/changeRole.aspx" class="btn btn-default btn-flat">切换角色</a>
+                          </div>
+                          <div class="pull-right">
+                              <a id="signOut" href="#" class="btn btn-default btn-flat">注销</a>
+                          </div>
+                      </li>
+                  </ul>
               </li>
-            </ul>
-          </li>
-          <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs"><%=((UserInformation)Session["loginUser"]).GetUserName() %></span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <img src="../../plugin/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                
-                <p>
-                  <span class="hidden-xs"><%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).GetUserName() %></span>
-                  <small id="role">管理员</small>
-                </p>
-              </li>
-              <!-- Menu Body -->
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="../Login/changeRole.aspx" class="btn btn-default btn-flat">切换角色</a>
-                </div>
-                <div class="pull-right">
-                  <a id="signOut" href="#" class="btn btn-default btn-flat">注销</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <!-- Control Sidebar Toggle Button -->
-        </ul>
+          </ul>
       </div>
     </nav>
   </header>
@@ -301,16 +175,16 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul id="menu" class="sidebar-menu">
         <li class="header">管理员导航</li>
-        <li>
+        <li class="">
           <a href="RootMain.aspx">
-            <i class="fa fa-coffee fa-fw"></i> <span>主页</span>
+            <i class="fa fa-coffee"></i> <span>主页</span>
             <span class="pull-right-container">
             </span>
           </a>
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-pencil-square-o fa-fw"></i> <span>消息模块</span>
+            <i class="fa fa-envelope-o"></i> <span>消息模块</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -322,7 +196,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-user fa-fw"></i> <span>用户管理</span>
+            <i class="fa fa-user"></i> <span>用户管理</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -335,7 +209,7 @@
 
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-group fa-fw"></i>
+            <i class="fa fa-user-plus"></i>
             <span>角色管理</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -348,7 +222,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-sitemap fa-fw"></i>
+            <i class="fa fa-briefcase"></i>
             <span>设备管理</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -356,16 +230,29 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="Root-equipment.aspx"><i class="fa fa-circle-o"></i> 设备管理</a></li>
-              <li><a href="EquipmentTypeManage.aspx"><i class="fa fa-circle-o"></i>设备类型管理</a></li>
+            <li><a href="EquipmentTypeManage.aspx"><i class="fa fa-circle-o"></i>设备类型管理</a></li>
             <li><a href="Root-EquipmentInspectionManage.aspx"><i class="fa fa-circle-o"></i> 设备检查管理</a></li>
             <li><a href="Root_EquipmentInspection.aspx"><i class="fa fa-circle-o"></i> 设备检查</a></li>
             <li><a href="Root-EquipmentInspectionResult.aspx"><i class="fa fa-circle-o"></i> 设备检查结果</a></li>
           </ul>
         </li>
-
+        <%--<li class="treeview">
+          <a href="#">
+            <i class="fa fa-sitemap fa-fw"></i>
+            <span>设备维修</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="EquipmentErrorrInformation.aspx"><i class="fa fa-circle-o"></i> 维修描述管理</a></li>
+            <li><a href="EquipmentTypeManage.aspx"><i class="fa fa-circle-o"></i>设备维修</a></li>
+            <li><a href="Root-EquipmentInspectionManage.aspx"><i class="fa fa-circle-o"></i> 设备维修记录</a></li>
+          </ul>
+        </li>--%>
         <li>
           <a href="Root-function.aspx">
-            <i class="fa fa-coffee fa-fw"></i> <span>功能管理</span>
+            <i class="fa fa-cart-plus"></i> <span>功能管理</span>
             <span class="pull-right-container">
             </span>
           </a>
@@ -379,20 +266,20 @@
         </li>
         <li>
             <a href="Root-parameterSetting.aspx">
-                <i class="fa fa-group"></i> <span>基本信息管理</span>
+                <i class="fa fa-bars"></i> <span>基本信息管理</span>
                 <span class="pull-right-container">
                 </span>
             </a>
         </li>
-        <li>
+          <li>
               <a href="Root-setWarning.aspx">
-                  <i class="fa fa-group"></i><span>流程预警设置</span>
+                  <i class="fa fa-warning"></i><span>流程预警设置</span>
                   <span class="pull-right-container"></span>
               </a>
           </li>
-          <li class="treeview">
+        <li class="treeview">
           <a href="#">
-            <i class="fa fa-group fa-fw"></i>
+            <i class="fa fa-bar-chart"></i>
             <span>数据统计</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
