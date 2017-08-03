@@ -96,6 +96,8 @@ function Init(evt) {
             success: function (data) {
                 if (data != "fail") {
                     alert("验证成功！");
+                    document.getElementById("assist").innerHTML = data;
+                    document.getElementById("chief").innerHTML = userName;
                     $.ajax({
                         type: "POST",
                         url: "setAssistant.ashx",
@@ -103,6 +105,7 @@ function Init(evt) {
                         success: function()
                         {
                             $("#operator", window.parent.document).html(data);
+                            
                         },
                         error: function () {
                             alert("error");
