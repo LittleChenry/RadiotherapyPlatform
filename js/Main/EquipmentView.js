@@ -212,7 +212,6 @@ function changeAppoint(e) {
     $("#changeAppoint").modal({ backdrop: 'static' });
 }
 
-
 function getAppointments(treatmentID){
 	var appoints;
     $.ajax({
@@ -373,6 +372,7 @@ function createfixEquipmachine(thiselement, item) {
         }
     }
 }
+
 function getmachineItem(item) {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/getfixmachine.ashx?item=" + item;
@@ -452,7 +452,6 @@ function chooseItem() {
             alert("只能选择一个时间段！");
         }
     }
-
 }
 
 function ChoseID() {
@@ -470,7 +469,7 @@ function ChoseID() {
 }
 
 function hasChosen() {
-    alert("该时间段已被预约！");
+	alert("该时间段已被预约！");
 }
 //清楚所有子节点
 function RemoveAllChild(area) {
@@ -499,12 +498,14 @@ function CreateNewAppiontTable(evt) {
     thisObj = eval("(" + json + ")");
     CreateCurrentEquipmentTbale(thisObj, date);
 }
+
 function checkAllTable() {
     var choseid = ChoseID();
     var appoint = choseid.split("_");
     document.getElementById("idforappoint").value = appoint[0];
     document.getElementById("appointtime").value = appoint[3] + " " + appoint[1] + " " + appoint[2];
 }
+
 function compareWithToday(time) {
     var year = time.split("-")[0];
     var month = time.split("-")[1];
@@ -524,6 +525,3 @@ function compareWithToday(time) {
         }
     }
 }
-
-
-

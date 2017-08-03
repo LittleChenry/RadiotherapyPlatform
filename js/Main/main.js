@@ -36,9 +36,6 @@ $(document).ready(function () {
         $("#chooseTemplate").removeAttr("disabled");
         $('#edit').attr("disabled", "disabled");
     });
-    $("#saveTreatment").unbind("click").bind("click", function () {
-        saveTreatment();
-    });
     $("#saveTemplate-button").unbind("click").bind("click", function () {
         Template();
     });
@@ -550,9 +547,9 @@ function closeTr(){
 
 function trAddClick(patient, userID) {
     for (var i = 0; i < patient.PatientInfo.length; i++) {
-        $("#" + patient.PatientInfo[i].treatID + "").click({state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+        $("#" + patient.PatientInfo[i].treatID + "").click({Radiotherapy_ID:patient.PatientInfo[i].Radiotherapy_ID, state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
-            checkAddTreatment(e.data.Radiotherapy_ID);
+            //checkAddTreatment(e.data.Radiotherapy_ID);
             OperateAttrDisabled();
             //$("#addTreatment").removeAttr("disabled");
             var ul = $("#progress-iframe").contents().find("#ul-progress a");
@@ -575,7 +572,7 @@ function trAddClick(patient, userID) {
                         $(this).find('li').removeClass().addClass("progress-info");
                         $(this).find('i').removeClass().addClass("fa fa-fw fa-info-circle");
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID);
+                            $("#record-iframe").attr('src', "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID + "&Radiotherapy_ID=" + e.data.Radiotherapy_ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -857,9 +854,9 @@ function trAddClick(patient, userID) {
 
 function trAddClickforJS(patient, userID) {
     for (var i = 0; i < patient.PatientInfo.length; i++) {
-        $("#" + patient.PatientInfo[i].treatID + "_" + patient.PatientInfo[i].appointid).click({state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+        $("#" + patient.PatientInfo[i].treatID + "_" + patient.PatientInfo[i].appointid).click({Radiotherapy_ID:patient.PatientInfo[i].Radiotherapy_ID, state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
-            checkAddTreatment(e.data.Radiotherapy_ID);
+            //checkAddTreatment(e.data.Radiotherapy_ID);
             OperateAttrDisabled();
             //$("#addTreatment").removeAttr("disabled");
             var ul = $("#progress-iframe").contents().find("#ul-progress a");
@@ -882,7 +879,7 @@ function trAddClickforJS(patient, userID) {
                         $(this).find('li').removeClass().addClass("progress-info");
                         $(this).find('i').removeClass().addClass("fa fa-fw fa-info-circle");
                         $(this).click(function () {
-                            $("#record-iframe").attr('src', "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID);
+                            $("#record-iframe").attr('src', "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID + "&Radiotherapy_ID=" + e.data.Radiotherapy_ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();
@@ -1372,407 +1369,6 @@ function ProgressNumToName(progressNum){
             Progress = "无";
     }
     return Progress;
-}
-
-function saveTreatment() {
-    var diagnose = "";
-    var fixed = "";
-    var location = "";
-    var design = ""
-    var replace = "";
-    var treatmentname = "";
-    var review = "";
-    var group = "";
-    var Radiotherapy_ID = $("#Radiotherapy_ID").val();
-    var Treatmentdescribe = $("#newname").val();
-    $("#diagnose").find("td").each(function () {
-        if ($(this).find("i")[0].className != "") {
-            var temp = $(this).attr("id").split("_");
-            diagnose = temp[1];
-            group = temp[2];
-        }
-    });
-    $("#fixed").find("td").each(function () {
-        if ($(this).find("i")[0].className != "") {
-            var temp = $(this).attr("id").split("_");
-            fixed = temp[1];
-        }
-    });
-    $("#location").find("td").each(function () {
-        if ($(this).find("i")[0].className != "") {
-            var temp = $(this).attr("id").split("_");
-            location = temp[1];
-        }
-    });
-    $("#design").find("td").each(function () {
-        if ($(this).find("i")[0].className != "") {
-            var temp = $(this).attr("id").split("_");
-            design = temp[1];
-            review = temp[2];
-        }
-    });
-    $("#replace").find("td").each(function () {
-        if ($(this).find("i")[0].className != "") {
-            var temp = $(this).attr("id").split("_");
-            replace = temp[1];
-        }
-    });
-    treatmentname = $("#register").find("td").length;
-    //alert("diagnose:" + diagnose + ",fixed:" + fixed + ",location:" + location + ",design:" + design + ",replace:" + replace + ",treatmentname:" + treatmentname + ",review:" + review + ",group:" + group + ",Radiotherapy_ID:" + Radiotherapy_ID);
-    $("#addTreatmentRecord").html("");
-    $.ajax({
-        type: "post",
-        url: "../../pages/main/records/AddTreatment.ashx",
-        async: true,
-        datetype: "json",
-        data: {
-            diagnose: diagnose,
-            fixed: fixed,
-            location: location,
-            design: design,
-            replace: replace,
-            treatmentname: treatmentname,
-            Treatmentdescribe: Treatmentdescribe,
-            review: review,
-            group: group,
-            Radiotherapy_ID: Radiotherapy_ID
-
-        },
-        success: function (data) {
-            alert("新增成功！");
-            $("#addTreatmentRecord").html("");
-            var patient = getpatient();
-            paging(patient);
-        },
-        error: function () {
-            alert("error");
-        }
-    });
-}
-
-function checkAddTreatment(Radiotherapy_ID) {
-    $("#manageTreatment").attr("disabled", "disabled");
-    for (var i = 0; i < functions.length; i++) {
-        if (functions[i].toString() == "18") {
-            $("#manageTreatment").removeAttr("disabled");
-            $("#Radiotherapy_ID").val(Radiotherapy_ID);
-            $("#addTreatment").unbind("click").click({ Radiotherapy_ID: Radiotherapy_ID }, function (e) {
-                $("#registerDetail").html("未选择");
-                $("#diagnoseDetail").html("未选择");
-                $("#fixedDetail").html("未选择");
-                $("#locationDetail").html("未选择");
-                $("#designDetail").html("未选择");
-                $("#replaceDetail").html("未选择");
-                $.ajax({
-                    type: "POST",
-                    url: "../../pages/Main/Records/getallcompletedtreat.ashx",
-                    async: true,
-                    dateType: "text",
-                    data: { Radiotherapy_ID: e.data.Radiotherapy_ID },
-                    success: function (data) {
-                        var table = $("#addTreatmentRecord");
-                        table.html("");
-                        var thead = '<thead><tr id="progress"><th>流程</th></tr></thead>';
-                        var tbody = '<tbody><tr id="register"><td>患者登记<i></i></td></tr>' +
-                            '<tr id="diagnose"><td>病情诊断<i></i></td></tr>' +
-                            '<tr id="fixed"><td>体位固定<i></i></td></tr><tr id="location"><td>CT模拟<i></i></td></tr>' +
-                            '<tr id="design"><td>计划设计<i></i></td></tr><tr id="replace"><td>复位验证<i></i></td></tr></tbody>';
-                        table.append(thead);
-                        table.append(tbody);
-                        obj = $.parseJSON(data);
-                        var newTreatname = obj.treatinfo.length + 1;
-                        $("#newname").val("疗程" + newTreatname);
-                        for (var i = 0; i < obj.treatinfo.length; i++) {
-                            var th = '<th>疗程' + obj.treatinfo[i].Treatmentdescribe + '</th>';
-                            $("#progress").append(th);
-
-                            var td0 = '<td id="register_' + i + '"><i></i></td>';
-                            $("#register").append(td0);
-                            $("#register_" + i).click({ i: i }, function (e) {
-                                if ($(this).find("i")[0].className != "") {
-                                    $(this).find("i").removeClass();
-                                    $(this).parent().nextAll().each(function () {
-                                        $(this).find("td").each(function () {
-                                            $(this).find("i").removeClass();
-                                        });
-                                    });
-                                    $("#registerDetail").html("未选择");
-                                    $("#diagnoseDetail").html("未选择");
-                                    $("#fixedDetail").html("未选择");
-                                    $("#locationDetail").html("未选择");
-                                    $("#designDetail").html("未选择");
-                                    $("#replaceDetail").html("未选择");
-                                } else {
-                                    var currentrowselected = 0;
-                                    $(this).parent().find("td").each(function () {
-                                        if ($(this).find("i")[0].className != "") {
-                                            currentrowselected = 1;
-                                        }
-                                    });
-                                    if (currentrowselected == 0) {
-                                        $(this).find("i").addClass("fa fa-fw fa-check");
-                                        $("#registerDetail").html("");
-                                        var details = obj.treatinfo[e.data.i].rigester.split("。");
-                                        for (var i = 0; i < details.length; i++) {
-                                            var p = '<p>' + details[i] + '</p>';
-                                            $("#registerDetail").append(p);
-                                        }
-                                    } else {
-                                        alert("每一行只能选择一个模块复用！");
-                                    }
-                                }
-                            });
-
-                            if (obj.treatinfo[i].diagnose != "") {
-                                var td1 = '<td id="diagnose_' + obj.treatinfo[i].diagnose + '_' + obj.treatinfo[i].group + '_' + i + '"><i></i></td>';
-                                $("#diagnose").append(td1);
-                                $("#diagnose_" + obj.treatinfo[i].diagnose + "_" + obj.treatinfo[i].group + "_" + i).click({ i: i }, function (e) {
-                                    if ($(this).find("i")[0].className != "") {
-                                        $(this).find("i").removeClass();
-                                        $(this).parent().nextAll().each(function () {
-                                            $(this).find("td").each(function () {
-                                                $(this).find("i").removeClass();
-                                            });
-                                        });
-                                        $("#diagnoseDetail").html("未选择");
-                                        $("#fixedDetail").html("未选择");
-                                        $("#locationDetail").html("未选择");
-                                        $("#designDetail").html("未选择");
-                                        $("#replaceDetail").html("未选择");
-                                    } else {
-                                        var currentrowselected = 0;
-                                        var prerowselected = 0;
-                                        $(this).parent().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
-                                                currentrowselected = 1;
-                                            }
-                                        });
-                                        $(this).parent().prev().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
-                                                prerowselected = 1;
-                                            }
-                                        });
-                                        if (currentrowselected == 0) {
-                                            if (prerowselected == 1) {
-                                                $(this).find("i").addClass("fa fa-fw fa-check");
-                                                $("#diagnoseDetail").html("");
-                                                var details = obj.treatinfo[e.data.i].diagnosecomplete.split("。");
-                                                for (var i = 0; i < details.length; i++) {
-                                                    var p = '<p>' + details[i] + '</p>';
-                                                    $("#diagnoseDetail").append(p);
-                                                }
-                                            } else {
-                                                alert("上一行还未选择复用模块！");
-                                            }
-                                        } else {
-                                            alert("每一行只能选择一个模块复用！");
-                                        }
-                                    }
-                                });
-                            } else {
-                                var td1 = '<td style="background-color:#E1E4E6"><i></i></td>';
-                                $("#diagnose").append(td1);
-                            }
-
-                            if (obj.treatinfo[i].fixed != "") {
-                                var td2 = '<td id="fixed_' + obj.treatinfo[i].fixed + '_' + i + '"><i></i></td>';
-                                $("#fixed").append(td2);
-                                $("#fixed_" + obj.treatinfo[i].fixed + "_" + i).click({ i: i }, function (e) {
-                                    if ($(this).find("i")[0].className != "") {
-                                        $(this).find("i").removeClass();
-                                        $(this).parent().nextAll().each(function () {
-                                            $(this).find("td").each(function () {
-                                                $(this).find("i").removeClass();
-                                            });
-                                        });
-                                        $("#fixedDetail").html("未选择");
-                                        $("#locationDetail").html("未选择");
-                                        $("#designDetail").html("未选择");
-                                        $("#replaceDetail").html("未选择");
-                                    } else {
-                                        var currentrowselected = 0;
-                                        var prerowselected = 0;
-                                        $(this).parent().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
-                                                currentrowselected = 1;
-                                            }
-                                        });
-                                        $(this).parent().prev().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
-                                                prerowselected = 1;
-                                            }
-                                        });
-                                        if (currentrowselected == 0) {
-                                            if (prerowselected == 1) {
-                                                $(this).find("i").addClass("fa fa-fw fa-check");
-                                                $("#fixedDetail").html("");
-                                                var details = obj.treatinfo[e.data.i].fixcomplete.split("。");
-                                                for (var i = 0; i < details.length; i++) {
-                                                    var p = '<p>' + details[i] + '</p>';
-                                                    $("#fixedDetail").append(p);
-                                                }
-                                            } else {
-                                                alert("上一行还未选择复用模块！");
-                                            }
-                                        } else {
-                                            alert("每一行只能选择一个模块复用！");
-                                        }
-                                    }
-                                });
-                            } else {
-                                var td2 = '<td style="background-color:#E1E4E6"><i></i></td>';
-                                $("#fixed").append(td2);
-                            }
-
-                            if (obj.treatinfo[i].location != "") {
-                                var td3 = '<td id="location_' + obj.treatinfo[i].location + '_' + i + '"><i></i></td>';
-                                $("#location").append(td3);
-                                $("#location_" + obj.treatinfo[i].location + "_" + i).click({ i: i }, function (e) {
-                                    if ($(this).find("i")[0].className != "") {
-                                        $(this).find("i").removeClass();
-                                        $(this).parent().nextAll().each(function () {
-                                            $(this).find("td").each(function () {
-                                                $(this).find("i").removeClass();
-                                            });
-                                        });
-                                        $("#locationDetail").html("未选择");
-                                        $("#designDetail").html("未选择");
-                                        $("#replaceDetail").html("未选择");
-                                    } else {
-                                        var currentrowselected = 0;
-                                        var prerowselected = 0;
-                                        $(this).parent().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
-                                                currentrowselected = 1;
-                                            }
-                                        });
-                                        $(this).parent().prev().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
-                                                prerowselected = 1;
-                                            }
-                                        });
-                                        if (currentrowselected == 0) {
-                                            if (prerowselected == 1) {
-                                                $(this).find("i").addClass("fa fa-fw fa-check");
-                                                $("#locationDetail").html("");
-                                                var details = obj.treatinfo[e.data.i].locationcomplete.split("。");
-                                                for (var i = 0; i < details.length; i++) {
-                                                    var p = '<p>' + details[i] + '</p>';
-                                                    $("#locationDetail").append(p);
-                                                }
-                                            } else {
-                                                alert("上一行还未选择复用模块！");
-                                            }
-                                        } else {
-                                            alert("每一行只能选择一个模块复用！");
-                                        }
-                                    }
-                                });
-                            } else {
-                                var td3 = '<td style="background-color:#E1E4E6"><i></i></td>';
-                                $("#location").append(td3);
-                            }
-
-                            if (obj.treatinfo[i].design != "") {
-                                var td4 = '<td id="design_' + obj.treatinfo[i].design + '_' + obj.treatinfo[i].review + '_' + i + '"><i></i></td>';
-                                $("#design").append(td4);
-                                $("#design_" + obj.treatinfo[i].design + "_" + obj.treatinfo[i].review + "_" + i).click({ i: i }, function (e) {
-                                    if ($(this).find("i")[0].className != "") {
-                                        $(this).find("i").removeClass();
-                                        $(this).parent().nextAll().each(function () {
-                                            $(this).find("td").each(function () {
-                                                $(this).find("i").removeClass();
-                                            });
-                                        });
-                                        $("#designDetail").html("未选择");
-                                        $("#replaceDetail").html("未选择");
-                                    } else {
-                                        var currentrowselected = 0;
-                                        var prerowselected = 0;
-                                        $(this).parent().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
-                                                currentrowselected = 1;
-                                            }
-                                        });
-                                        $(this).parent().prev().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
-                                                prerowselected = 1;
-                                            }
-                                        });
-                                        if (currentrowselected == 0) {
-                                            if (prerowselected == 1) {
-                                                $(this).find("i").addClass("fa fa-fw fa-check");
-                                                $("#designDetail").html("");
-                                                var details = obj.treatinfo[e.data.i].designcomplete.split("。");
-                                                for (var i = 0; i < details.length; i++) {
-                                                    var p = '<p>' + details[i] + '</p>';
-                                                    $("#designDetail").append(p);
-                                                }
-                                            } else {
-                                                alert("上一行还未选择复用模块！");
-                                            }
-                                        } else {
-                                            alert("每一行只能选择一个模块复用！");
-                                        }
-                                    }
-                                });
-                            } else {
-                                var td4 = '<td style="background-color:#E1E4E6"><i></i></td>';
-                                $("#design").append(td4);
-                            }
-
-                            if (obj.treatinfo[i].replace != "") {
-                                var td5 = '<td id="replace_' + obj.treatinfo[i].replace + '_' + i + '"><i></i></td>';
-                                $("#replace").append(td5);
-                                $("#replace_" + obj.treatinfo[i].replace + "_" + i).click({ i: i }, function (e) {
-                                    if ($(this).find("i")[0].className != "") {
-                                        $(this).find("i").removeClass();
-                                        $("#replaceDetail").html("未选择");
-                                    } else {
-                                        var currentrowselected = 0;
-                                        var prerowselected = 0;
-                                        $(this).parent().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
-                                                currentrowselected = 1;
-                                            }
-                                        });
-                                        $(this).parent().prev().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
-                                                prerowselected = 1;
-                                            }
-                                        });
-                                        if (currentrowselected == 0) {
-                                            if (prerowselected == 1) {
-                                                $(this).find("i").addClass("fa fa-fw fa-check");
-                                                $("#replaceDetail").html("");
-                                                var details = obj.treatinfo[e.data.i].replacecomplete.split("。");
-                                                for (var i = 0; i < details.length; i++) {
-                                                    var p = '<p>' + details[i] + '</p>';
-                                                    $("#replaceDetail").append(p);
-                                                }
-                                            } else {
-                                                alert("上一行还未选择复用模块！");
-                                            }
-                                        } else {
-                                            alert("每一行只能选择一个模块复用！");
-                                        }
-                                    }
-                                });
-                            } else {
-                                var td5 = '<td style="background-color:#E1E4E6"><i></i></td>';
-                                $("#replace").append(td5);
-                            }
-                        }
-                    },
-                    error: function () {
-                        alert("error");
-                    }
-                });
-            });
-            return true;
-        }
-    }
-    return false;
 }
 
 function checkEdit(str) {

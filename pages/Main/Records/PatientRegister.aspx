@@ -18,12 +18,14 @@
     <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
     <!-- Ionicons -->
     <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../../plugin/AdminLTE/dist/css/AdminLTE.min.css" />
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
 </head>
 <body style="width:auto;width:900px;margin:auto;">
-    <section class="content">
+    <section>
         <div class="paper">
             <div class="paper-title">
                 患者信息登记
@@ -170,19 +172,16 @@
                     <div class="single-row">
                         <div class="col-xs-6">
                             当前疗程：
-                            <span></span>
+                            <span id="currentTreatment"></span>
                         </div>
                         <div class="col-xs-6">
                             疗程状态：
-                            <span></span>
+                            <span id="treatmentState"></span>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <button id="addTreatment" class="btn btn-info" type="button">新增疗程</button>
-                            <button id="startTreatment" class="btn btn-success" type="button">继续疗程</button>
-                            <button id="pauseTreatment" class="btn btn-warning" type="button">暂停疗程</button>
-                            <button id="stopTreatment" class="btn btn-danger" type="button">结束疗程</button>
                         </div>
                     </div>
                 </div>
@@ -240,6 +239,81 @@
                 </div>
             </div>
         </div>
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" style="overflow-y:auto">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">新增疗程</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            新疗程名:
+                            <input id="newname" type="text" maxlength="8" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="pull-right" style="margin:10px;">默认数字编号，最多8个字。</div>
+                    <table id="addTreatmentRecord" class="table table-bordered" ></table>
+                    <input id="Radiotherapy_ID" type="text" hidden="hidden" />
+                    <div class="panel box box-primary">
+                        <div class="box-header">
+                            <h4 class="box-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
+                                    新疗程预览
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false">
+                            <div class="box-body">
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-3" style="text-align:center;">登记信息：</div>
+                                    <div class="col-xs-9">
+                                        <span id="registerDetail">未选择</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-3" style="text-align:center;">病情诊断：</div>
+                                    <div class="col-xs-9">
+                                        <span id="diagnoseDetail">未选择</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-3" style="text-align:center;">体位固定：</div>
+                                    <div class="col-xs-9">
+                                        <span id="fixedDetail">未选择</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-3" style="text-align:center;">CT模拟：</div>
+                                    <div class="col-xs-9">
+                                        <span id="locationDetail">未选择</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-3" style="text-align:center;">计划设计：</div>
+                                    <div class="col-xs-9">
+                                        <span id="designDetail">未选择</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col-xs-3" style="text-align:center;">复位验证：</div>
+                                    <div class="col-xs-9">
+                                        <span id="replaceDetail">未选择</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="saveTreatment" type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
