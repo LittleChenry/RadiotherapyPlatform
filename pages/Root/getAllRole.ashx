@@ -25,14 +25,14 @@ public class getAllRole : IHttpHandler {
     {
         string sqlCommand = "SELECT DISTINCT Name,Description FROM role";
 
-        StringBuilder text = new StringBuilder("[");
+        StringBuilder text = new StringBuilder("{\"role\":[");
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
             text.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"Description\":\"" + reader["Description"].ToString()
                 + "\"},");
         }
-        text.Remove(text.Length - 1, 1).Append("]");
+        text.Remove(text.Length - 1, 1).Append("]}");
         reader.Close();
         sqlOperation.Close();
         sqlOperation.Dispose();

@@ -367,18 +367,18 @@
                             <table id="addGroup" class="mytable table-bordered table-center">
                                 <tbody style="text-align:center;">
                                         <tr>
-                                            <td style="width:30%;">账号</td>
+                                            <th style="width:30%;">账号</th>
                                             <td>
                                                 <input id="userNumber" class="form-control IsEmpty number" name="userNumber" type="text" placeholder="请输入账号" />
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>姓名</td>
+                                            <th>姓名</th>
                                             <td>
                                                 <input id="name" name="userName" type="text" placeholder="请输入姓名" class="form-control IsEmpty" />
                                             </td>
                                         </tr><tr>
-                                            <td>性别</td>
+                                            <th>性别</th>
                                             <td>
                                                 <div class="col-xs-4">
                                                     <input id="male" type="radio" name="gender" checked="checked" value="M" />
@@ -391,25 +391,25 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>密码</td>
+                                            <th>密码</th>
                                             <td>
                                                 <input id="userPassword" name="userKey" type="password" placeholder="请输入密码" class="form-control userKey" />
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>确认密码</td>
+                                            <th>确认密码</th>
                                             <td>
                                                 <input id="checkPassword" type="password" placeholder="请再次输入密码" class="form-control checkPassword" />
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>联系方式</td>
+                                            <th>联系方式</th>
                                             <td>
                                                 <input id="phoneContact" name="phoneNumber" type="text" placeholder="请输入联系方式" class="form-control contact" />
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>办公室</td>
+                                            <th>办公室</th>
                                             <td>
                                                 <select id="Select2" name="officeSelect" class="form-control office" >
                                                     <option value="">--请选择办公室--</option>
@@ -425,7 +425,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>绑定角色</td>
+                                            <th>绑定角色</th>
                                             <td>
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" style="text-decoration:none;">
                                                     <h4 class="panel-title">选择角色</h4>
@@ -446,7 +446,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>激活状态</td>
+                                            <th>激活状态</th>
                                             <td>
                                                 <div class="col-xs-4">
                                                     <input id="activated" type="radio" name="activate" value="1"checked="checked" />
@@ -483,18 +483,18 @@
                              <table id="EditTable" class="mytable table-bordered table-center">
                                  <tbody style="text-align:center;">
                                         <tr>
-                                            <td style="width:30%;">账号</td>
+                                            <th style="width:30%;">账号</th>
                                             <td>
                                                 <input id="numberEdit" class="form-control IsEmpty number" name="numberEdit" type="text" disabled/>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>姓名</td>
+                                            <th>姓名</th>
                                             <td>
                                                 <input id="nameEdit" name="nameEdit" type="text" class="form-control IsEmpty" />
                                             </td>
                                         </tr><tr>
-                                            <td>性别</td>
+                                            <th>性别</th>
                                             <td>
                                                 <div class="col-xs-4">
                                                     <input id="genderEdit1" type="radio" name="genderEdit" checked="checked" value="M" />
@@ -507,19 +507,19 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>密码</td>
+                                            <th>密码</th>
                                             <td>
                                                 <input id="pwdEdit" name="pwdEdit" type="text" class="form-control userKey" disabled/>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>联系方式</td>
+                                            <th>联系方式</th>
                                             <td>
                                                 <input id="phoneEdit" name="phoneEdit" type="text" class="form-control contact" />
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>办公室</td>
+                                            <th>办公室</th>
                                             <td>
                                                 <select id="officeEdit" name="officeEdit" class="form-control office" >
                                                     <option value="">--请选择办公室--</option>
@@ -535,7 +535,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>激活状态</td>
+                                            <th>激活状态</th>
                                             <td>
                                                 <div class="col-xs-4">
                                                     <input id="activateEdit1" type="radio" name="activateEdit" value="1"checked="checked" />

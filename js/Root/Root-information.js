@@ -14,7 +14,7 @@ $(function () {
         type: "post",
         url: "getAllRole.ashx",
         success: function (data) {
-            var roleObj = $.parseJSON(data);
+            var roleObj = $.parseJSON(data).role;
             var ul = $("#all-options");
             for (var i = 0; i < roleObj.length; i++) {
                 var li = $("<li><label><input type=checkbox name=role value=" + roleObj[i].Name + " /><span>"
