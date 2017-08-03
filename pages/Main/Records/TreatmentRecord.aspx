@@ -120,11 +120,10 @@
                 </div>
                 <div  id="ask" class="single-row">
                      <div  class="col-xs-7">
-                      (备注：请确定已经预约完所有加速治疗再进行此次加速治疗)
+                      （备注：请预约完剩余次数，再进行此次加速治疗记录）
                     </div>
                 </div>
             </div>
-             
             <div class="paper-content">
                 <div class="content-title">
                     <span>放射治疗记录：</span>
