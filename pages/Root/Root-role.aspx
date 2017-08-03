@@ -472,7 +472,7 @@
                     </asp:UpdatePanel>
                 </div>
             </form>
-            <input id="showAdd" type="button" value="新增角色" class="btn btn-outline btn-primary" data-toggle="modal" data-target="#addRole" style="margin:15px;float:right;" />
+            <input id="showAdd" type="button" value="新增角色" class="btn btn-primary" data-toggle="modal" data-target="#addRole" style="margin:15px;float:right;" />
             <div class="modal fade changebindArea" id="addRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top:100px;">
                 <form id="addRoleFrm" method="post" action="Root-role.aspx">
                     <div class="panel panel-default" style="max-width:520px;margin:auto;">

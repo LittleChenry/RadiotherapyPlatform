@@ -471,27 +471,7 @@
                                     <li>
                                         <label><input id="allRole" type="checkbox" />全部人员</label>
                                     </li>
-                                    <li>
-                                        <label><input type="checkbox" name="role" value="YS" /><span>医师</span></label>
-                                    </li>
-                                    <li>
-                                        <label><input type="checkbox" name="role" value="WLS" /><span>物理师</span></label>
-                                    </li>
-                                    <li>
-                                        <label><input type="checkbox" name="role" value="MNJS" /><span>模拟技师</span></label>
-                                    </li>
-                                    <li>
-                                        <label><input type="checkbox" name="role" value="YJS" /><span>药剂师</span></label>
-                                    </li>
-                                    <li>
-                                        <label><input type="checkbox" name="role" value="DJCRY" /><span>登记处人员</span></label>
-                                    </li>
-                                    <li>
-                                        <label><input type="checkbox" name="role" value="JLS" /><span>剂量师</span></label>
-                                    </li>
-                                    <li>
-                                        <label><input type="checkbox" name="role" value="ROOT" /><span>管理员</span></label>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                         </div>

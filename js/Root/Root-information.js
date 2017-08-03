@@ -9,7 +9,21 @@
  * **********************************************************/
 
 window.addEventListener("load", checkControl, false);
-
+$(function () {
+    $.ajax({
+        type: "post",
+        url: "getAllRole.ashx",
+        success: function (data) {
+            var roleObj = $.parseJSON(data);
+            var ul = $("#all-options");
+            for (var i = 0; i < roleObj.length; i++) {
+                var li = $("<li><label><input type=checkbox name=role value=" + roleObj[i].Name + " /><span>"
+                    + roleObj[i].Description + "</span></label></li>");
+                ul.append(li);
+            }
+        }
+    });
+});
 var isAllgood;
 
 function checkControl() {
