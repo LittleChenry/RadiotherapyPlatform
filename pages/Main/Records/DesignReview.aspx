@@ -6,25 +6,25 @@
 <head id="Head1" runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>治疗计划复核</title>
-    <!-- css -->
-    <link rel="stylesheet" href="../../../css/Main/Records.css"/>
+  <!-- css -->
+    <link rel="stylesheet" href="/RadiotherapyPlatform/css/Main/Records.css"/>
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/bootstrap/css/bootstrap.min.css"/>
     <!-- DataTables -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
     <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datepicker/datepicker3.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datepicker/datepicker3.css"/>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
     <!-- Ionicons -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
 </head>
 <body style="width:auto;min-width:900px;margin:auto;">
    <section class="content">
-        <div class="paper">
+        <div class="paper" id="needPrint">
              <form id="saveReview" method="post" runat="server">
             <input type="hidden" name="ispostback" value="true" />
             <input type="hidden"  id="hidetreatID" name="hidetreatID" />
@@ -289,7 +289,7 @@
                         </div>
                     </div>
                 </div>
-                 <div class="single-row">
+                 <div id="pdfplan" class="single-row">
                     <div class="col-xs-12">
                         <span class="form-text col-xs-2" style="padding-left:0px;">计划PDF上传：</span>
                         <div class="group-item col-xs-3">                        
@@ -297,7 +297,7 @@
                         </div>                       
                     </div>
                 </div>
-                <div class="single-row">
+                <div  id="reviewplan" class="single-row">
                     <div class="col-xs-12">
                         <span class="form-text col-xs-2" style="padding-left:0px;">复核PDF上传：</span>
                         <div class="group-item col-xs-3">                        
@@ -315,6 +315,9 @@
                  </form>
         </div>
     </section>
+    <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">
+                
+    </section>
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -328,12 +331,14 @@
     <script src="../../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
     <script src="../../../plugin/AdminLTE/plugins/fastclick/fastclick.js"></script>
+         <script src="../../../plugin/AdminLTE/jquery.PrintArea.js"></script>
     <!-- Bootstrap 3.3.6 -->
     <script src="../../../plugin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../../../plugin/AdminLTE/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
+    <script src="../../../js/Main/ReviewPrint.js"></script>
     <!-- javascript -->
     <script src="../../../js/Main/DesignReview.js" type="text/javascript"></script>
     <!-- Page script -->

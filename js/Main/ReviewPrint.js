@@ -1,6 +1,6 @@
-﻿ /**
- *
- */
+﻿/**
+*
+*/
 
 function print() {
     var $printArea = $("#printArea");
@@ -41,12 +41,18 @@ function print() {
         var _thiss = $(inputs[i]);
         var vals = _thiss.val();
         var nextSpan = _thiss.next(".input-group-addon");
+        var prevSpan = _thiss.prev(".input-group-addon");
         var nexttext = "";
+        var prevtext = "";
         if (nextSpan.length != 0) {
             nexttext = nextSpan.text();
             nextSpan.remove();
         }
-        var span = "<span class='form-text col-xs-4'>" + vals + nexttext + "</span>";
+        if (prevSpan.length != 0) {
+            prevtext = prevSpan.text();
+            prevSpan.remove();
+        }
+        var span = "<span class='form-text col-xs-4'>" +prevtext+':'+vals + nexttext + "</span>";
         _thiss.parent().append(span);
         _thiss.remove();
     }
@@ -72,12 +78,14 @@ function print() {
 
     $("#printArea .paper").css("border", "0px");
     $("#printArea .tab-row").css("display", "none");
-    $("#printArea .img").removeClass("img").css("height","140px");
+    $("#printArea .img").removeClass("img").css("height", "140px");
     $("#printArea .boxes").removeClass("boxes").css("margin", "0px 16px 16px 0px");
     $("#printArea .area-group").removeClass("area-group");
     //$("#printArea button").css("display", "none");
     $("#printArea :button").css("display", "none");
+    $("#printArea #pdfplan").css("display", "none");
+    $("#printArea #reviewplan").css("display", "none");
     $printArea.show();
-    $printArea.printArea({"mode":"popup","popClose":true});
+    $printArea.printArea({ "mode": "popup", "popClose": true });
     $printArea.hide();
 }
