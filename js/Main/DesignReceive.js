@@ -76,8 +76,10 @@ function receiveDesign(treatID) {
     xmlHttp.send();
     var result = xmlHttp.responseText;
     if (result == "success") {
-        window.alert("领取成功");
-        window.location.reload();
+        window.alert("领取成功");       
+        parent.window.RolesToPatients();
+        parent.window.adjustTable();
+        parent.window.Recover();
     }
     if (result == "failure"){
         window.alert("领取失败");
