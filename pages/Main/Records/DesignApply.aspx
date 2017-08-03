@@ -71,7 +71,7 @@
                 <div class="tab-pane active" id="tab">
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
-                       <span class="col-xs-3" style="padding-left:0px;">特殊情况(放疗史)：</span>
+                       <span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>
                         <textarea id="Remarks" name="Remarks" class="form-area" style="width:80%;" disabled="disabled"></textarea>
                     </div>
                 </div>
