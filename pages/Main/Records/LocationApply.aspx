@@ -104,7 +104,7 @@
                         <span class="form-text col-xs-3" style="padding-left:0px;">设备与时间：</span>
                         <input id="appointtime" name="appoint" type="text" readonly="true" class="form-item" disabled="disabled" />
                         <input id="idforappoint"  value="0" type="hidden" />
-                        <input id="chooseappoint" type="button" class="btn btn-default" value="预约"  data-toggle="modal" data-target="#appoint" disabled="disabled"/>
+                        <button id="chooseappoint" type="button" class="btn btn-default"   data-toggle="modal" data-target="#appoint" disabled="disabled">预约</button>
                     </div>
                 </div>
                 <div class="single-row">

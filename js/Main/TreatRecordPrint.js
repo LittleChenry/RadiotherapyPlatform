@@ -1,6 +1,6 @@
-﻿ /**
- *
- */
+﻿/**
+*
+*/
 
 function print() {
     var $printArea = $("#printArea");
@@ -72,12 +72,13 @@ function print() {
 
     $("#printArea .paper").css("border", "0px");
     $("#printArea .tab-row").css("display", "none");
-    $("#printArea .img").removeClass("img").css("height","140px");
+    $("#printArea .img").removeClass("img").css("height", "140px");
     $("#printArea .boxes").removeClass("boxes").css("margin", "0px 16px 16px 0px");
     $("#printArea .area-group").removeClass("area-group");
     //$("#printArea button").css("display", "none");
-    $("#printArea :button").css("display", "none");
+    $("#printArea #operate").css("display", "none");
+    $("#printArea #referinfo").css("display", "none");
     $printArea.show();
-    $printArea.printArea({"mode":"popup","popClose":true});
+    $printArea.printArea({ "mode": "popup", "popClose": true });
     $printArea.hide();
 }

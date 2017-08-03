@@ -7,24 +7,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>治疗计划提交</title>
     <!-- css -->
-    <link rel="stylesheet" href="../../../css/Main/Records.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/css/Main/Records.css"/>
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/bootstrap/css/bootstrap.min.css"/>
     <!-- DataTables -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
     <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datepicker/datepicker3.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datepicker/datepicker3.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
     <!-- Ionicons -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
 </head>
 <body style="width:auto;min-width:900px;margin:auto;">
    <section class="content">
-        <div class="paper">
+        <div class="paper" id="needPrint">
             <form id="saveDesignSubmit" method="post" runat="server">
                 <input type="hidden" name="ispostback" value="true" />             
                 <input type="hidden"  id="hidetreatID" name="hidetreatID" />
@@ -33,7 +33,7 @@
                  <input type="hidden" id="a1" name="a1" />
                  <input type="hidden" id="a2" name="a2" />
             <input type="hidden" id="progress" />
-            <div class="paper-title">
+            <div class="paper-title" >
                  治疗计划提交
             </div>
             <div class="paper-content">
@@ -63,13 +63,13 @@
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-12">
-                        <span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>
-                        <span id="Remarks" class="col-xs-10"></span>
+                        <span class="col-xs-3" style="padding-left:0px;">特殊情况(放疗史)：</span>
+                        <span id="Remarks" class="col-xs-9"></span>
                     </div>
                 </div>
                 <div class="single-row">
                     <div class="col-xs-6" style="padding-left:0px;">
-                        <span class="form-text col-xs-4">靶区处方剂量：</span>
+                        <span class="form-text col-xs-5">靶区处方剂量：</span>
                     </div>
                 </div>
                 <div class="single-row">
@@ -92,7 +92,7 @@
                 </div>
                 <div class="single-row">
                     <div class="col-xs-6" style="padding-left:0px;">
-                        <span class="form-text col-xs-4">危及器官限量：</span>
+                        <span class="form-text col-xs-5">危及器官限量：</span>
                     </div>
                 </div>
                 <div class="single-row">
@@ -198,6 +198,11 @@
             </form>
         </div>
     </section>
+      <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">
+                
+    </section>
+     
+    
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -207,6 +212,8 @@
     <script src="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
     <!-- bootstrap datepicker -->
     <script src="../../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
+       <!-- JQuery PrintArea -->
+    <script src="../../../plugin/AdminLTE/jquery.PrintArea.js"></script>
     <!-- SlimScroll -->
     <script src="../../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
@@ -217,6 +224,7 @@
     <script src="../../../plugin/AdminLTE/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
+       <script src="../../../js/Main/FixedRecordPrint.js"></script>
     <!-- javascript -->
     <script src="../../../js/Main/DesignSubmit.js" type="text/javascript"></script>
     <!-- Page script -->

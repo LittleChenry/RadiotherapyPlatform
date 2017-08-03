@@ -7,24 +7,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
      <!-- css -->
-    <link rel="stylesheet" href="../../../css/Main/Records.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/css/Main/Records.css"/>
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/bootstrap/css/bootstrap.min.css"/>
     <!-- DataTables -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
     <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datepicker/datepicker3.css"/>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
     <!-- Ionicons -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
 </head>
 <body style="width:auto;min-width:900px;margin:auto;">
     <section class="content">
-        <div class="paper">
+        <div class="paper" id="needPrint">
             <input type="hidden" id="progress" />
             <input type="hidden" id="idforappoint" />
             <div class="paper-title">
@@ -113,6 +113,9 @@
             </div>
         </div>
       </section>
+     <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">
+                
+    </section>
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -120,6 +123,8 @@
     <!-- DataTables -->
     <script src="../../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
+        <!-- JQuery PrintArea -->
+    <script src="../../../plugin/AdminLTE/jquery.PrintArea.js"></script>
     <!-- bootstrap datepicker -->
     <script src="../../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
     <!-- SlimScroll -->
@@ -132,6 +137,7 @@
     <script src="../../../plugin/AdminLTE/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
+     <script src="../../../js/Main/FixedRecordPrint.js"></script>
     <!-- javascript -->
     <script src="../../../js/Main/ReplacementApply.js" type="text/javascript"></script>
     <!-- Page script -->
