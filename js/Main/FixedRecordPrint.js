@@ -35,7 +35,7 @@ function print() {
         var span = "<span class='form-text col-xs-4'>" + val + "</span>";
         parent.append(span);
     }
-
+    $("#printArea :button").remove();
     var inputs = $printArea.find("input:not([type=hidden])").filter(":not([type=radio])");
     for (var i = 0; i < inputs.length; ++i) {
         var _thiss = $(inputs[i]);
@@ -46,7 +46,7 @@ function print() {
             nexttext = nextSpan.text();
             nextSpan.remove();
         }
-        var span = "<span class='form-text col-xs-4'>" + vals + nexttext + "</span>";
+        var span = "<span class=form-text style=position:absolute>" + vals + nexttext + "</span>";
         _thiss.parent().append(span);
         _thiss.remove();
     }
@@ -76,7 +76,7 @@ function print() {
     $("#printArea .boxes").removeClass("boxes").css("margin", "0px 16px 16px 0px");
     $("#printArea .area-group").removeClass("area-group");
     //$("#printArea button").css("display", "none");
-    $("#printArea :button").css("display", "none");
+    
     $printArea.show();
     $printArea.printArea({"mode":"popup","popClose":true});
     $printArea.hide();
