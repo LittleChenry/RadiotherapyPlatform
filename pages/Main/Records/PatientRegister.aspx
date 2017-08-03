@@ -212,12 +212,14 @@
             </form>
         </div>
     </section>
-    <div class="modal fade" id="changeAppoint" tabindex="-1">
-            <div class="panel panel-default" style="max-width:800px;margin:auto;">
-                <div class="panel-heading">
+    <div id="changeAppoint" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="width:700px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">修改预约时间</h4>
                 </div>
-                <div class="panel-body">
+                <div class="modal-body" style="overflow:hidden;">
                     <div class="panel-row">
                         <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
                         <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
@@ -226,19 +228,16 @@
                         </div>
                     </div>
                     <div class="panel-row">
-                        <table id="apptiontTable" class="table table-bordered col-xs-12"></table>
+                        <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
                     </div>
-                    <div class="panel-row">
-                        <div style="text-align:center" class="col-xs-6">
-                            <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal" aria-label="Close" >取消</button>
-                        </div>
-                        <div  style="text-align:center" class="col-xs-6">
-                            <button class="btn btn-default" id="sure" type="button" data-dismiss="modal">确定</button>
-                        </div>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" id="sure" type="button" data-dismiss="modal">确定</button>
                 </div>
             </div>
         </div>
+    </div>
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog" style="overflow-y:auto">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

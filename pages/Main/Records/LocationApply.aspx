@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
     <!-- Ionicons -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/dist/css/AdminLTE.min.css"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
@@ -135,29 +137,28 @@
                 </div>
             </div>
         </div>
-         <div class="modal fade" id="appoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:700px;margin:50px auto;">
-            <div class="panel panel-default" style="max-width:1000px;margin:auto;">
-                <div class="panel-heading">
-                    <h4 class="modal-title">预约设备与时间窗口</h4>
-                </div>
-                <div class="panel-body">
-                    <div class="panel-row">
-                        <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
-                        <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
-                        <div class="col-xs-2">
-                            <button id="chooseProject" class="btn btn-default">查询该项</button>
+        <div id="appoint" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document" style="width:700px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">预约设备与时间窗口</h4>
+                    </div>
+                    <div class="modal-body" style="overflow:hidden;">
+                        <div class="panel-row">
+                            <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
+                            <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                            <div class="col-xs-2">
+                                <button id="chooseProject" class="btn btn-default">查询该项</button>
+                            </div>
+                        </div>
+                        <div class="panel-row">
+                            <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
                         </div>
                     </div>
-                    <div class="panel-row">
-                        <table id="apptiontTable" class="table table-bordered col-xs-12"></table>
-                    </div>
-                    <div class="panel-row">
-                        <div class="col-xs-6">
-                            <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal" aria-label="Close" >取消</button>
-                        </div>
-                        <div class="col-xs-6">
-                            <button class="btn btn-default" id="sure" type="button" data-dismiss="modal">确定</button>
-                        </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal">取消</button>
+                        <button class="btn btn-primary" id="sure" type="button" data-dismiss="modal">确定</button>
                     </div>
                 </div>
             </div>

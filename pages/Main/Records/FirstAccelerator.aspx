@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
     <!-- Ionicons -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/dist/css/AdminLTE.min.css"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
@@ -133,7 +135,7 @@
                 </div>
                 <div class="single-row">
                     <div class="col-xs-10">
-                        <span class="form-text col-xs-2"   style="padding-left:0px;">首次加速器治疗预约：</span>
+                        <span class="form-text col-xs-3" style="padding-left:0px;">首次加速器治疗预约：</span>
                         <input id="appointtime"  name="appointtime" type="text" class="form-item" readonly="true" />
                         <button id="chooseappoint" class="btn btn-default" disabled="disabled" data-toggle="modal" data-target="#appoint">预约</button>
                     </div>
@@ -141,10 +143,10 @@
                 <div class="single-row">
                     <div class="col-xs-8">
                         <span class="form-text col-xs-3" style="padding-left:0px;">治疗总次数：</span>
-                        <input id="totalnumber"  name="totalnumber" disabled="disabled"    type="number" class="form-item" style="width:20%;"/>
+                        <input id="totalnumber" name="totalnumber" disabled="disabled" type="number" class="form-item" style="width:20%;"/>
                         <button id="changetotalnumber" type="button" class="btn btn-success"  disabled="disabled">更改</button>
                         <button id="finish" type="button" class="btn btn-warning" disabled="disabled">结束治疗</button>
-                         <input id="finishthistreat" value="0" type="hidden" name="finishthistreat" class="form-item" />
+                        <input id="finishthistreat" value="0" type="hidden" name="finishthistreat" class="form-item" />
                     </div>
                      <div class="col-xs-4">
                         <span class="form-text" style="padding-left:0px;">已治疗次数：</span>
@@ -198,12 +200,15 @@
                     <div class="item col-xs-6">预约时间：<span id="date" class="underline"></span></div>
                 </div>
             </div>
-            <div class="modal fade" id="appoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:700px;margin:50px auto;">
-                <div class="panel panel-default" style="max-width:1000px;margin:auto;">
-                    <div class="panel-heading">
+        </div>
+       <div id="appoint" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document" style="width:700px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">预约设备与时间窗口</h4>
                     </div>
-                    <div class="panel-body">
+                    <div class="modal-body" style="overflow:hidden;">
                         <div class="panel-row">
                             <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
                             <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
@@ -212,16 +217,12 @@
                             </div>
                         </div>
                         <div class="panel-row">
-                            <table id="apptiontTable" class="table table-bordered col-xs-12"></table>
+                            <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
                         </div>
-                        <div class="panel-row">
-                            <div class="col-xs-6">
-                                <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal" aria-label="Close" >取消</button>
-                            </div>
-                            <div class="col-xs-6">
-                                <button class="btn btn-default" id="sure" type="button" data-dismiss="modal">确定</button>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal">取消</button>
+                        <button class="btn btn-primary" id="sure" type="button" data-dismiss="modal">确定</button>
                     </div>
                 </div>
             </div>
