@@ -446,14 +446,14 @@
                     <div style="float:right">
                         <label id="error"></label>
                     </div>
-                    <div class="panel panel-default" style="margin:auto;width:40%;">
+                    <div class="panel panel-default" style="margin:auto;">
                         <div class="panel-heading">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" style="text-decoration:none;">
                                 <h4 class="panel-title" style="text-align:center;">选项</h4>
                             </a>
                         </div>
                         <div id="collapseOne" class="info-option panel-collapse collapse">
-                            <div class="form-group">
+                            <div class="form-group" style="padding:30px 0px 0px 30px;">
                                 <span class="option-title">是否置顶</span>
                                 <ul class="nav options">
                                     <li>
@@ -465,7 +465,7 @@
                                 </ul>
                             </div>
                             
-                            <div class="form-group">
+                            <div class="form-group" style="padding:30px 0px 0px 30px;">
                                 <span class="option-title">可见角色</span>
                                 <ul id="all-options" class="nav options roles">
                                     <li>
@@ -478,7 +478,7 @@
                     </div>
                     <div class="form-group">
                         <input id="selectedRole" type="hidden" value="" name="selectedRole" />
-                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="发布" style="margin:auto;width:40%;" />
+                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="发布" style="margin:auto;" />
                     </div>
                 </form>
             </div>
