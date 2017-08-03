@@ -43,24 +43,70 @@ function patientView(){
 				$(this).addClass("chose");
 				viewAppointsBody.html("");
 				var appoints = getAppointments($(this).attr("id").split("_")[1]);
+				var session = getSession();
+				if ((typeof (session) == "undefined")) {
+				    if (confirm("用户身份已经失效,是否选择重新登录?")) {
+				        parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+				    }
+				}
+				var flag = 1;
 				for (var i = 0; i < appoints.appoint.length; i++) {
-					var appointDate = new Date(appoints.appoint[i].Date);
-					var completed = (appoints.appoint[i].Completed == "1") ? "已完成" : "未完成";
-					var tr = '<tr id="apoint_'+ appoints.appoint[i].appointid +'"><td>'+ appoints.appoint[i].Task + '</td>'
-						+'<td>' + appointDate.Format("yyyy-MM-dd") + ' , ' + toTime(appoints.appoint[i].Begin) + ' - ' + toTime(appoints.appoint[i].End) + '</td>'
-						+ '<td>' + completed +'</td>';
-					if (appoints.appoint[i].Completed == "1") {
-					    tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
-					} else {
-					    tr = tr + '<td><button  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
-					}   
-					viewAppointsBody.append(tr);
+				    var appointDate = new Date(appoints.appoint[i].Date);
+				    var completed = (appoints.appoint[i].Completed == "1") ? "已完成" : "未完成";
+				    var tr = '<tr id="apoint_' + appoints.appoint[i].appointid + '"><td>' + appoints.appoint[i].Task + '</td>'
+                        + '<td>' + appointDate.Format("yyyy-MM-dd") + ' , ' + toTime(appoints.appoint[i].Begin) + ' - ' + toTime(appoints.appoint[i].End) + '</td>'
+                        + '<td>' + completed + '</td>';
+				    if (appoints.appoint[i].Task != "加速器" && session.roleName == "YS") {
+				        if (appoints.appoint[i].Completed == "1") {
+				            tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+				        } else {
+				            tr = tr + '<td><button  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+				        }
+				    } else {
+				        if (appoints.appoint[i].Task == "加速器" && session.roleName == "ZLJS" && flag == 0) {
+				            if (appoints.appoint[i].Completed == "1") {
+				                tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+				            } else {
+				                tr = tr + '<td><button  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+				            }
+				        } else {
+				            if (appoints.appoint[i].Task == "加速器" && session.roleName == "YS" && flag == 1) {
+				                if (appoints.appoint[i].Completed == "1") {
+				                    tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+				                } else {
+				                    tr = tr + '<td><button  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+				                }
+				                flag = 0;
+				            } else {
+				                tr = tr + '<td><button disabled="disabled"  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+				            }
+				        }
+				    }
+				    if (appoints.appoint[i].Task == "加速器") {
+				        flag = 0;
+				    }
+				    viewAppointsBody.append(tr);
 				}
 			});
 		}
 	});
 }
-
+function getSession() {
+    var Session;
+    $.ajax({
+        type: "GET",
+        url: "Records/getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            Session = $.parseJSON(data);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+    return Session;
+}
 function changeAppoint(e) {
     var $e = $(e);
     var item = $e.parent().parent().children().first().text();
