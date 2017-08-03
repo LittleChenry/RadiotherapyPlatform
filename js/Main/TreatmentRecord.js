@@ -147,47 +147,56 @@ function Init(evt) {
     var allfirstnumber = parseInt(getallfirst(treatmentID));
     if ((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber=="") {
         document.getElementById("rest").innerHTML = "剩余加速器预约(剩0次)";
+        $("#ask").css("display", "none");
         document.getElementById("rest").disabled = "disabled";
     } else {
         document.getElementById("rest").innerHTML = "剩余加速器预约(剩" + (parseInt(totalnumber) - allfirstnumber) + "次)";
+        $("#ask").css("display", "block");
         document.getElementById("rest").removeAttribute("disabled");
     }
+
     $("#confirm").click(function ()
     {
-              var session = getSession();
-                if (session.assistant != "") {
-                    $.ajax({
-                        type: "POST",
-                        url: "TreatmentRecord.ashx",
-                        async: false,
-                        data: {
-                            assistant: session.assistant,
-                            user: userID,
-                            totalnumber: document.getElementById("totalnumber").value,
-                            treatmentID: treatmentID,
-                            appoint: appointid,
-                            treatdays: dis,
-                            patientid: patient.ID,
-                            remark:document.getElementById("remarks").value
-                        },
-                        dateType: "json",
-                        success: function (data) {
-                            if (data == "success") {
-                                alert("记录成功！");
-                                document.getElementById("treatmentedit").disabled = "disabled";
-                                refresh(treatmentID);
+        var allfirstnumber = parseInt(getallfirst(treatmentID));
+        if ((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber == "") {
+            var session = getSession();
+            if (session.assistant != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "TreatmentRecord.ashx",
+                    async: false,
+                    data: {
+                        assistant: session.assistant,
+                        user: userID,
+                        totalnumber: document.getElementById("totalnumber").value,
+                        treatmentID: treatmentID,
+                        appoint: appointid,
+                        treatdays: dis,
+                        patientid: patient.ID,
+                        remark: document.getElementById("remarks").value
+                    },
+                    dateType: "json",
+                    success: function (data) {
+                        if (data == "success") {
+                            alert("记录成功！");
+                            document.getElementById("treatmentedit").disabled = "disabled";
+                            refresh(treatmentID);
 
-                            } else {
-                                alert("上传失败！");
-                            }
-                        },
-                        error: function () {
-                            alert("error");
+                        } else {
+                            alert("上传失败！");
                         }
-                    });
-                } else {
-                    alert("没有选择协助操作者");
-                }
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            } else {
+                alert("没有选择协助操作者");
+            }
+        } else {
+            alert("请预约完所有加速治疗再进行治疗");
+            return false;
+        }   
             });
     $("#recordigrt").click(function()
     {
@@ -742,9 +751,11 @@ function checkAllTable(treatmentID) {
                 var totalnumber = document.getElementById("totalnumber").value;
                 if (parseInt(totalnumber) - allfirstnumber <= 0) {
                     document.getElementById("rest").innerHTML = "剩余加速器预约(剩0次)";
+                    $("#ask").css("display", "none");
                     document.getElementById("rest").disabled = "disabled";
                 } else {
                     document.getElementById("rest").innerHTML = "剩余加速器预约(剩" + (parseInt(totalnumber) - allfirstnumber) + "次)";
+                    $("#ask").css("display", "block");
                     document.getElementById("rest").removeAttribute("disabled");
                 }
             }

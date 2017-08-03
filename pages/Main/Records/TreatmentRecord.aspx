@@ -116,9 +116,15 @@
                     <div class="col-xs-5" >
                         <button id="treatmentedit" disabled="disabled" type="button"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>
                         <button id="finishigrt"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button>
+                   </div>
+                </div>
+                <div  id="ask" class="single-row">
+                     <div  class="col-xs-7">
+                      (备注：请确定已经预约完所有加速治疗再进行此次加速治疗)
                     </div>
                 </div>
             </div>
+             
             <div class="paper-content">
                 <div class="content-title">
                     <span>放射治疗记录：</span>
