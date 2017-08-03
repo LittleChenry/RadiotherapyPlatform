@@ -2,6 +2,7 @@
 var docandgroup;
 window.addEventListener("load", Init, false);
 //初始化 
+var userID;
 
 function Init(evt) {
     var treatID = window.location.search.split("&")[0].split("=")[1];
@@ -20,16 +21,47 @@ function Init(evt) {
     document.forms[0].addEventListener("reset", resetForm, false);//添加表单rest事件函数
     var viewAppointsBody = $("#viewAppoints").find("tbody");
     var appoints = getAppointments(treatID);
+    var session = getSession();
+    if ((typeof (session) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
+    var flag=1;
     for (var i = 0; i < appoints.appoint.length; i++) {
         var appointDate = new Date(appoints.appoint[i].Date);
         var completed = (appoints.appoint[i].Completed == "1") ? "已完成" : "未完成";
         var tr = '<tr id="apoint_' + appoints.appoint[i].appointid + '"><td>' + appoints.appoint[i].Task + '</td>'
             + '<td>' + appointDate.Format("yyyy-MM-dd") + ' , ' + toTime(appoints.appoint[i].Begin) + ' - ' + toTime(appoints.appoint[i].End) + '</td>'
-            + '<td>' + completed + '</td>';
-        if (appoints.appoint[i].Completed == "1") {
-            tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+            + '<td>' + completed + '</td>'; 
+        if (appoints.appoint[i].Task != "加速器" && session.roleName == "YS") {
+            if (appoints.appoint[i].Completed == "1") {
+                tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+            } else {
+                tr = tr + '<td><button  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+            }
         } else {
-            tr = tr + '<td><button  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+            if (appoints.appoint[i].Task == "加速器" && session.roleName == "ZLJS" && flag == 0) {
+                if (appoints.appoint[i].Completed == "1") {
+                    tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+                } else {
+                    tr = tr + '<td><button  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+                }
+            } else {
+                if (appoints.appoint[i].Task == "加速器" && session.roleName == "YS" && flag == 1) {
+                    if (appoints.appoint[i].Completed == "1") {
+                        tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+                    } else {
+                        tr = tr + '<td><button  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+                    }
+                    flag = 0;
+                } else {
+                    tr = tr + '<td><button disabled="disabled"  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
+                }
+            }
+        }
+        if (appoints.appoint[i].Task == "加速器") {
+            flag = 0;
         }
         viewAppointsBody.append(tr);
     }
@@ -37,6 +69,23 @@ function Init(evt) {
         saveTreatment();
     });
     checkAddTreatment(Radiotherapy_ID);
+}
+
+function getSession() {
+    var Session;
+    $.ajax({
+        type: "GET",
+        url: "getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            Session = $.parseJSON(data);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+    return Session;
 }
 function getAppointments(treatmentID) {
     var appoints;
