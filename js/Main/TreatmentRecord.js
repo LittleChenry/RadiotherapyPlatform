@@ -67,6 +67,7 @@ function Init(evt) {
         document.getElementById("viewpdf2").href = pdf2;
     }
     var session = getSession();
+   
     var flag;
     if (appointid!= "undefined") {
         flag = judge(appointid, treatmentID);
@@ -152,7 +153,10 @@ function Init(evt) {
     } else {
         document.getElementById("rest").innerHTML = "剩余加速器预约(剩" + (parseInt(totalnumber) - allfirstnumber) + "次)";
         $("#ask").css("display", "block");
-        document.getElementById("rest").removeAttribute("disabled");
+        if (session.roleName == "ZLJS") {
+           document.getElementById("rest").removeAttribute("disabled");
+        }
+   
     }
 
     $("#confirm").click(function ()
@@ -231,7 +235,8 @@ function Init(evt) {
             alert("没有选择协助操作者");
         }
     });
-    createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator");
+    var type = geteuqipmenttype(treatmentID);
+    createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator",type);
     var date = new Date();
     document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
     document.getElementById("rest").addEventListener("click", function () {
@@ -243,6 +248,15 @@ function Init(evt) {
     document.getElementById("sure").addEventListener("click", function () {
         checkAllTable(treatmentID);
     }, false);
+
+}
+function geteuqipmenttype(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "geteuqipmenttype.ashx?treatmentID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
 
 }
 function getsplitandyizhu(treatmentID) {
@@ -546,8 +560,8 @@ function sex(evt) {
         return "男";
 }
 //设备下拉菜单
-function createfixEquipmachine(thiselement, item) {
-    var machineItem = JSON.parse(getmachineItem(item)).Item;
+function createfixEquipmachine(thiselement, item,type) {
+    var machineItem = JSON.parse(getmachineItem(item,type)).Item;
     thiselement.options.length = 0;
     for (var i = 0; i < machineItem.length; i++) {
         if (machineItem[i] != "") {
@@ -556,9 +570,9 @@ function createfixEquipmachine(thiselement, item) {
         }
     }
 }
-function getmachineItem(item) {
+function getmachineItem(item, type) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getfixmachine.ashx?item=" + item;
+    var url = "getaccermachine.ashx?item=" + item + "&type=" + type;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var Items = xmlHttp.responseText;

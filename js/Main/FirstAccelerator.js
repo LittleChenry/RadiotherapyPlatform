@@ -86,7 +86,8 @@ function Init(evt) {
         document.getElementById("date").innerHTML = info.ApplyTime;
 
     } else {
-          createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
+           var type  = geteuqipmenttype(treatmentID);
+          createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2], type);
           var info = getfirstaccelerateInfomation(treatmentID);
           if ((typeof (info) != "undefined")) {
               document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
@@ -123,6 +124,15 @@ function Init(evt) {
                 }
             });  
     }
+}
+function geteuqipmenttype(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "geteuqipmenttype.ashx?treatmentID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
+
 }
 function createSplitway(thiselement) {
     var getsplitwayItem = JSON.parse(getsplitway()).Item;
@@ -254,8 +264,8 @@ function readDosage(DosagePriority) {
     table.appendChild(tbody);
 }
 //设备下拉菜单
-function createfixEquipmachine(thiselement, item) {
-    var machineItem = JSON.parse(getmachineItem(item)).Item;
+function createfixEquipmachine(thiselement, item,type) {
+    var machineItem = JSON.parse(getmachineItem(item,type)).Item;
     thiselement.options.length = 0;
     for (var i = 0; i < machineItem.length; i++) {
         if (machineItem[i] != "") {
@@ -264,9 +274,9 @@ function createfixEquipmachine(thiselement, item) {
         }
     }
 }
-function getmachineItem(item) {
+function getmachineItem(item,type) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getfixmachine.ashx?item=" + item;
+    var url = "getaccermachine.ashx?item=" + item+"&type="+type;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var Items = xmlHttp.responseText;

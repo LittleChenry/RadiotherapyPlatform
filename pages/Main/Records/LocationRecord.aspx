@@ -114,21 +114,21 @@
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">层厚：</span>
-                            <input id="Thickness" class="form-item col-xs-6" type="number" name="Thickness" disabled="disabled"/>
+                            <input id="Thickness" step="0.01" class="form-item col-xs-6" type="number" name="Thickness" disabled="disabled"/>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">层数：</span>
-                            <input id="Number" class="form-item col-xs-6" type="number" name="Number" disabled="disabled"/>
+                            <input id="Number" step="0.01" class="form-item col-xs-6" type="number" name="Number" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">参考中心层面：</span>
-                            <input id="ReferenceNumber" class="form-item col-xs-6" type="number" name="ReferenceNumber" disabled="disabled"/>
+                            <input id="ReferenceNumber" step="0.01" class="form-item col-xs-6" type="number" name="ReferenceNumber" disabled="disabled"/>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">体表参考刻度：</span>
-                            <input id="ReferenceScale" class="form-item col-xs-6" type="number" name="ReferenceScale" disabled="disabled"/>
+                            <input id="ReferenceScale" step="0.01" class="form-item col-xs-6" type="number" name="ReferenceScale" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
