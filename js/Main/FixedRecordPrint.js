@@ -25,6 +25,10 @@ function print() {
         $($text[i]).replaceWith($p);
     }
 
+    var $pagetitle = $(".paper-title");
+    var hospital = '<div>江苏省人民医院</div>';
+    $pagetitle.before(hospital);
+
     var $selects = $printArea.find("select");
     var $oldSelect = $("#needPrint").find("select");
     for (var i = 0; i < $selects.length; ++i) {
@@ -79,5 +83,6 @@ function print() {
     
     $printArea.show();
     $printArea.printArea({"mode":"popup","popClose":true});
+    $pagetitle.prev().remove();
     $printArea.hide();
 }
