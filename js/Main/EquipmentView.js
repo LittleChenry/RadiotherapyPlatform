@@ -108,6 +108,7 @@ function getSession() {
     return Session;
 }
 function changeAppoint(e) {
+    var treatID=$("#viewPatients tbody tr.chose").attr("ID").split("_")[1];
     var $e = $(e);
     var item = $e.parent().parent().children().first().text();
     var oldappoint = $e.parent().parent().attr("ID").split("_")[1];
@@ -118,7 +119,8 @@ function changeAppoint(e) {
         createfixEquipmachine(document.getElementById("equipmentName"), "Location")
     }
     if (item == "加速器") {
-        createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator")
+        var type = geteuqipmenttype(treatID);
+        createaccerEquipmachine(document.getElementById("equipmentName"), "Accelerator", type)
     }
     if (item == "复位模拟") {
         createfixEquipmachine(document.getElementById("equipmentName"), "Replacement")
@@ -275,7 +277,15 @@ function getAppointments(treatmentID){
     });
     return appoints;
 }
+function geteuqipmenttype(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "Records/geteuqipmenttype.ashx?treatmentID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
 
+}
 function showEquipmentInfo(equipmentinfo){
 	var EquipmentInfo = $("#EquipmentInfo");
 	var EquipmentState = $("#EquipmentState");
@@ -418,7 +428,24 @@ function createfixEquipmachine(thiselement, item) {
         }
     }
 }
-
+function createaccerEquipmachine(thiselement, item, type) {
+    var machineItem = JSON.parse(getmachineItem1(item, type)).Item;
+    thiselement.options.length = 0;
+    for (var i = 0; i < machineItem.length; i++) {
+        if (machineItem[i] != "") {
+            thiselement.options[i] = new Option(machineItem[i].Name);
+            thiselement.options[i].value = parseInt(machineItem[i].ID);
+        }
+    }
+}
+function getmachineItem1(item, type) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "Records/getaccermachine.ashx?item=" + item + "&type=" + type;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
+}
 function getmachineItem(item) {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/getfixmachine.ashx?item=" + item;
