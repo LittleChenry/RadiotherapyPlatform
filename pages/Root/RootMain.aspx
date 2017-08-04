@@ -248,7 +248,7 @@
         </li>--%>
           <li class="treeview">
           <a href="#">
-            <i class="fa fa-envelope-o"></i> <span>诊断结果管理</span>
+            <i class="fa fa-plus-square"></i> <span>诊断结果管理</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

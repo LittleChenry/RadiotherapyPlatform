@@ -252,6 +252,18 @@
             <li><a href="Root-EquipmentInspectionManage.aspx"><i class="fa fa-circle-o"></i> 设备维修记录</a></li>
           </ul>
         </li>--%>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-plus-square"></i> <span>诊断结果管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="morphol.aspx"><i class="fa fa-circle-o"></i> 病理诊断结果管理</a></li>
+            <li><a href="icdcode.aspx"><i class="fa fa-circle-o"></i> 病情诊断结果管理</a></li>
+          </ul>
+        </li>
         <li>
           <a href="Root-function.aspx">
             <i class="fa fa-cart-plus"></i> <span>功能管理</span>
