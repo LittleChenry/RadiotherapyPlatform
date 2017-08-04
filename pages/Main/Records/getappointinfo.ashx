@@ -28,7 +28,7 @@ public class getappointinfo : IHttpHandler {
         string selectallappoint = "select count(*) from appointment where Treatment_ID=@treatid";
         sqlOperation.AddParameterWithValue("@treatid", treat);
         int count=int.Parse(sqlOperation.ExecuteScalar(selectallappoint));
-        string selectall = "select appointment.ID as appointid,equipment.Name as equipname,Begin,End,Date,Completed,Task from equipment,appointment where appointment.Equipment_ID=equipment.ID and Treatment_ID=@treatid";
+        string selectall = "select appointment.ID as appointid,equipment.Name as equipname,Begin,End,Date,Completed,Task from equipment,appointment where appointment.Equipment_ID=equipment.ID and Treatment_ID=@treatid order by Date,Begin";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(selectall);
         StringBuilder backText = new StringBuilder("{\"appoint\":[");
         int i=0;
