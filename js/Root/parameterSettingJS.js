@@ -95,6 +95,27 @@ function selectCreate(type,page) {
         case "ReplacementRequirements":
             createReplacementRequirements(page);
             break;
+        case "lightpart":
+            createLightPart(page);
+            break;
+        case "treataim":
+            createTreatAim(page);
+            break;
+        case "headrest":
+            createHeadRest(page);
+            break;
+        case "pendulumfieldinfo":
+            createPendulumFieldInfo(page);
+            break;
+        case "planoptimizedegree":
+            createPlanOptimizeDegree(page);
+            break;
+        case "drr":
+            createDrr(page);
+            break;
+        case "exportotradiotherapynetwork":
+            createExportoTradiotherapyNetwork(page);
+            break;
         default:
             break;
     }
@@ -160,6 +181,27 @@ function createPage(page) {
             break;
         case "ReplacementRequirements":
             createReplacementRequirementsTable(page);
+            break;
+        case "lightpart":
+            createLightPartTable(page);
+            break;
+        case "treataim":
+            createTreatAimTable(page);
+            break;
+        case "headrest":
+            createHeadRestTable(page);
+            break;
+        case "pendulumfieldinfo":
+            createPendulumFieldInfoTable(page);
+            break;
+        case "planoptimizedegree":
+            createPlanOptimizeDegreeTable(page);
+            break;
+        case "drr":
+            createDrrTable(page);
+            break;
+        case "exportotradiotherapynetwork":
+            createExportoTradiotherapyNetworkTable(page);
             break;
         default:
             break;
@@ -1244,3 +1286,310 @@ function createReplacementRequirementsTable(page) {
 
     $tbody.append(tr);
 }
+
+/**
+ * lightpart照射部位  ->1
+ */
+function createLightPart(page) {
+    $("#thead").empty()
+               .append("<tr><th>照射部位</th></tr>");
+    $("#tbody").empty();
+    //新增表格
+    initAddLightPart();
+    $.ajax({
+        type : "post",
+        url : "getParameterTable.ashx",
+        data : {table:"lightpart"},
+        dataType : "text",
+        success : function(data){
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createLightPartTable(page);
+            initBindPage();
+        }
+    });
+}
+
+//2
+function initAddLightPart(){
+    $("#addrow").empty()
+                .append("<tr><th>照射部位</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+//3
+function createLightPartTable(page){
+    var $tbody = $("#tbody");
+    $tbody.empty();
+    var tr = "";
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+/**
+ * treataim治疗目标  ->1
+ */
+ function createTreatAim(page){
+    $("#thead").empty()
+               .append("<tr><th>治疗目标</th></tr>");
+    $("#tbody").empty();
+    //新增表格
+    initAddTreatAim();
+    $.ajax({
+        type : "post",
+        url : "getParameterTable.ashx",
+        data : {table:"treataim"},
+        dataType : "text",
+        success : function(data){
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createTreatAimTable(page);
+            initBindPage();
+        }
+    });
+ }
+ //2
+ function initAddTreatAim(){
+    $("#addrow").empty()
+                .append("<tr><th>治疗目标</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+ }
+ //3
+ function createTreatAimTable(page){
+    var $tbody = $("#tbody");
+    $tbody.empty();
+    var tr = "";
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Aim + "<input type=hidden value=" + jsonObj[i].ID 
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+ }
+ /**
+ * headrest头枕  ->1
+ */
+ function createHeadRest(page){
+    $("#thead").empty()
+               .append("<tr><th>头枕</th></tr>");
+    $("#tbody").empty();
+    //新增表格
+    initAddHeadRest();
+    $.ajax({
+        type : "post",
+        url : "getParameterTable.ashx",
+        data : {table:"headrest"},
+        dataType : "text",
+        success : function(data){
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createHeadRestTable(page);
+            initBindPage();
+        }
+    });
+ }
+ //2
+ function initAddHeadRest(){
+     $("#addrow").empty()
+                .append("<tr><th>头枕</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+ }
+ //3
+ function createHeadRestTable(page){
+    var $tbody = $("#tbody");
+    $tbody.empty();
+    var tr = "";
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+ }
+ /**
+ * pendulumfieldinfo 摆位野信息  ->1
+ */
+ function createPendulumFieldInfo(page){
+    $("#thead").empty()
+               .append("<tr><th>摆位野信息</th></tr>");
+    $("#tbody").empty();
+    //新增表格
+    initAddPendulumFieldInfo();
+    $.ajax({
+        type : "post",
+        url : "getParameterTable.ashx",
+        data : {table:"pendulumfieldinfo"},
+        dataType : "text",
+        success : function(data){
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createPendulumFieldInfoTable(page);
+            initBindPage();
+        }
+    });
+ }
+ //2
+ function initAddPendulumFieldInfo(){
+    $("#addrow").empty()
+                .append("<tr><th>摆位野信息</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+ }
+ //3
+ function createPendulumFieldInfoTable(page){
+    var $tbody = $("#tbody");
+    $tbody.empty();
+    var tr = "";
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+ }
+
+ /**
+ * planoptimizedegree 放疗计划再优化程度  ->1
+ */
+ function createPlanOptimizeDegree(page){
+    $("#thead").empty()
+               .append("<tr><th>放疗计划再优化程度</th></tr>");
+    $("#tbody").empty();
+    //新增表格
+    initAddPlanOptimizeDegree();
+    $.ajax({
+        type : "post",
+        url : "getParameterTable.ashx",
+        data : {table:"planoptimizedegree"},
+        dataType : "text",
+        success : function(data){
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createPlanOptimizeDegreeTable(page);
+            initBindPage();
+        }
+    });
+ }
+ //2
+ function initAddPlanOptimizeDegree(){
+    $("#addrow").empty()
+                .append("<tr><th>放疗计划再优化程度</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+ }
+ //3
+ function createPlanOptimizeDegreeTable(page){
+    var $tbody = $("#tbody");
+    $tbody.empty();
+    var tr = "";
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+ }
+
+ /**
+ * drr drr  ->1
+ */
+ function createDrr(page){
+    $("#thead").empty()
+               .append("<tr><th>DRR</th></tr>");
+    $("#tbody").empty();
+    //新增表格
+    initAddDrr();
+    $.ajax({
+        type : "post",
+        url : "getParameterTable.ashx",
+        data : {table:"drr"},
+        dataType : "text",
+        success : function(data){
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createDrrTable(page);
+            initBindPage();
+        }
+    });
+ }
+ //2
+ function initAddDrr(){
+    $("#addrow").empty()
+                .append("<tr><th>DRR</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+ }
+ //3
+ function createDrrTable(page){
+    var $tbody = $("#tbody");
+    $tbody.empty();
+    var tr = "";
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+ }
+
+ /**
+ * exportotradiotherapynetwork 计划和图像导出到放疗网络  ->1
+ */
+ function createExportoTradiotherapyNetwork(page){
+    $("#thead").empty()
+               .append("<tr><th>计划和图像导出到放疗网络</th></tr>");
+    $("#tbody").empty();
+    //新增表格
+    initAddExportoTradiotherapyNetwork();
+    $.ajax({
+        type : "post",
+        url : "getParameterTable.ashx",
+        data : {table:"exportotradiotherapynetwork"},
+        dataType : "text",
+        success : function(data){
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createExportoTradiotherapyNetworkTable(page);
+            initBindPage();
+        }
+    });
+ }
+ //2
+ function initAddExportoTradiotherapyNetwork(){
+    $("#addrow").empty()
+                .append("<tr><th>计划和图像导出到放疗网络</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+ }
+ //3
+ function createExportoTradiotherapyNetworkTable(page){
+    var $tbody = $("#tbody");
+    $tbody.empty();
+    var tr = "";
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
+           + " />"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+ }

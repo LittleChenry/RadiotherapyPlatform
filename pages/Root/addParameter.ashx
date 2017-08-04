@@ -68,6 +68,27 @@ public class addParameter : IHttpHandler {
             case "ReplacementRequirements":
                 addReplacementRequirements(value);
                 break;
+            case "lightpart":
+                addLightPart(value);
+                break;
+            case "treataim":
+                addTreatAim(value);
+                break;
+            case "headrest":
+                addHeadRest(value);
+                break;
+            case "pendulumfieldinfo":
+                addPendulumFieldInfo(value);
+                break;
+            case "planoptimizedegree":
+                addPlanOptimizeDegree(value);
+                break;
+            case "drr":
+                addDrr(value);
+                break;
+            case "exportotradiotherapynetwork":
+                addExportoTradiotherapyNetwork(value);
+                break;
             default:
                 break;
         }
@@ -206,6 +227,67 @@ public class addParameter : IHttpHandler {
         string sqlCommand = "INSERT INTO ReplacementRequirements(Requirements) VALUES(@Requirements)";
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Requirements", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addLightPart(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO lightpart(Name) VALUES(@Name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name",values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addTreatAim(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO treataim(Aim) VALUES(@Aim)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Aim", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addHeadRest(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO headrest(Name) VALUES(@Name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addPendulumFieldInfo(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO pendulumfieldinfo(Name) VALUES(@Name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+    private void addPlanOptimizeDegree(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO planoptimizedegree(Name) VALUES(@Name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addDrr(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO drr(Name) VALUES(@Name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+    private void addExportoTradiotherapyNetwork(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO exportotradiotherapynetwork(Name) VALUES(@Name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
         sqlOperation.ExecuteNonQuery(sqlCommand);
     }
 }

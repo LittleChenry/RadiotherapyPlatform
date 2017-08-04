@@ -54,7 +54,20 @@ public class getParameterTable : IHttpHandler {
                 return selectAlgorithm();
             case "ReplacementRequirements":
                 return selectReplacementRequirements();
-                
+            case "lightpart":
+                return selectLightPart();
+            case "treataim":
+                return selectTreatAim();
+            case "headrest":
+                return selectHeadRest();
+            case "pendulumfieldinfo":
+                return selectPendulumFieldInfo();
+            case "planoptimizedegree":
+                return selectPlanOptimizeDegree();
+            case "drr":
+                return selectDrr();
+            case "exportotradiotherapynetwork":
+                return selectExportoTradiotherapyNetwork();
         }
         return "";
     }
@@ -360,6 +373,130 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Requirements\":\"")
                       .Append(reader["Requirements"].ToString())
+                      .Append("\"},");
+        }
+        backString.Remove(backString.Length - 1, 1)
+                  .Append("]");
+        return backString.ToString();
+    }
+
+    private string selectLightPart()
+    {
+        StringBuilder backString = new StringBuilder("[");
+        string sqlCommand = "SELECT * FROM lightpart";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
+        {
+            backString.Append("{\"ID\":\"")
+                      .Append(reader["ID"].ToString())
+                      .Append("\",\"Name\":\"")
+                      .Append(reader["Name"].ToString())
+                      .Append("\"},");
+        }
+        backString.Remove(backString.Length - 1, 1)
+                  .Append("]");
+        return backString.ToString(); 
+    }
+
+    private string selectTreatAim()
+    {
+        StringBuilder backString = new StringBuilder("[");
+        string sqlCommand = "SELECT * FROM treataim";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
+        {
+            backString.Append("{\"ID\":\"")
+                      .Append(reader["ID"].ToString())
+                      .Append("\",\"Aim\":\"")
+                      .Append(reader["Aim"].ToString())
+                      .Append("\"},");
+        }
+        backString.Remove(backString.Length - 1, 1)
+                  .Append("]");
+        return backString.ToString();
+    }
+
+    private string selectHeadRest() 
+    {
+        StringBuilder backString = new StringBuilder("[");
+        string sqlCommand = "SELECT * FROM headrest";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
+        {
+            backString.Append("{\"ID\":\"")
+                      .Append(reader["ID"].ToString())
+                      .Append("\",\"Name\":\"")
+                      .Append(reader["Name"].ToString())
+                      .Append("\"},");
+        }
+        backString.Remove(backString.Length - 1, 1)
+                  .Append("]");
+        return backString.ToString();
+    }
+
+    private string selectPendulumFieldInfo()
+    {
+        StringBuilder backString = new StringBuilder("[");
+        string sqlCommand = "SELECT * FROM pendulumfieldinfo";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
+        {
+            backString.Append("{\"ID\":\"")
+                      .Append(reader["ID"].ToString())
+                      .Append("\",\"Name\":\"")
+                      .Append(reader["Name"].ToString())
+                      .Append("\"},");
+        }
+        backString.Remove(backString.Length - 1, 1)
+                  .Append("]");
+        return backString.ToString();
+    }
+    private string selectPlanOptimizeDegree() 
+    {
+        StringBuilder backString = new StringBuilder("[");
+        string sqlCommand = "SELECT * FROM planoptimizedegree";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
+        {
+            backString.Append("{\"ID\":\"")
+                      .Append(reader["ID"].ToString())
+                      .Append("\",\"Name\":\"")
+                      .Append(reader["Name"].ToString())
+                      .Append("\"},");
+        }
+        backString.Remove(backString.Length - 1, 1)
+                  .Append("]");
+        return backString.ToString();
+    }
+    private string selectDrr()
+    {
+        StringBuilder backString = new StringBuilder("[");
+        string sqlCommand = "SELECT * FROM drr";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
+        {
+            backString.Append("{\"ID\":\"")
+                      .Append(reader["ID"].ToString())
+                      .Append("\",\"Name\":\"")
+                      .Append(reader["Name"].ToString())
+                      .Append("\"},");
+        }
+        backString.Remove(backString.Length - 1, 1)
+                  .Append("]");
+        return backString.ToString();
+    }
+
+    private string selectExportoTradiotherapyNetwork()
+    {
+        StringBuilder backString = new StringBuilder("[");
+        string sqlCommand = "SELECT * FROM exportotradiotherapynetwork";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
+        {
+            backString.Append("{\"ID\":\"")
+                      .Append(reader["ID"].ToString())
+                      .Append("\",\"Name\":\"")
+                      .Append(reader["Name"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)

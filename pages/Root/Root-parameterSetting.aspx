@@ -309,7 +309,7 @@
                 <div class="col-md-4">
                     <div class="form-group input-group">
                         <select id="tableSelect" class="form-control">
-                            <option value="part">患病部位</option>
+                            <option value="part">病变部位</option>
                             <option value="DiagnosisResult">诊断结果</option>
                             <option value="FixedEquipment">固定装置</option>
                             <option value="FixedRequirements">固定要求</option>
@@ -324,6 +324,13 @@
                             <option value="Grid">计算网格</option>
                             <option value="Algorithm">优化算法</option>
                             <option value="ReplacementRequirements">复位要求</option>
+                            <option value="lightpart">照射部位</option>
+                            <option value="treataim">治疗目标</option>
+                            <option value="headrest">头枕</option>
+                            <option value="pendulumfieldinfo">摆位野信息</option>
+                            <option value="planoptimizedegree">放疗计划再优化程度</option>
+                            <option value="drr">DRR</option>
+                            <option value="exportotradiotherapynetwork">计划和图像导出到放疗网络</option>
                         </select>
                         <span class="input-group-btn">
                             <button class="btn btn-default" style="height:34px" type="button" id="sureTable">

@@ -71,6 +71,27 @@ public class parameterEdit : IHttpHandler {
             case "ReplacementRequirements":
                 updateReplacementRequirements(id, value);
                 break;
+            case "lightpart":
+                updateLightPart(id,value);
+                break;
+            case "treataim":
+                updateTreatAim(id,value);
+                break;
+            case "headrest":
+                updateHeadRest(id, value);
+                break;
+            case "pendulumfieldinfo":
+                updatePendulumFieldInfo(id, value);
+                break;
+            case "planoptimizedegree":
+                updatePlanOptimizeDegree(id, value);
+                break;
+            case "drr":
+                updateDrr(id, value);
+                break;
+            case "exportotradiotherapynetwork":
+                updateExportoTradiotherapyNetwork(id, value);
+                break;
             default:
                 break;
         }
@@ -253,6 +274,87 @@ public class parameterEdit : IHttpHandler {
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Requirements", values[0]);
+        sqlOperation.AddParameterWithValue("@id", id);
+
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void updateLightPart(string id, string value) 
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "UPDATE lightpart set Name=@Name WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@id", id);
+
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void updateTreatAim(string id, string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "UPDATE treataim set Aim=@Aim WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Aim", values[0]);
+        sqlOperation.AddParameterWithValue("@id", id);
+
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void updateHeadRest(string id, string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "UPDATE headrest set Name=@Name WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@id", id);
+
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void updatePendulumFieldInfo(string id, string value) 
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "UPDATE pendulumfieldinfo set Name=@Name WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@id", id);
+
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+    private void updatePlanOptimizeDegree(string id, string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "UPDATE planoptimizedegree set Name=@Name WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@id", id);
+
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+    private void updateDrr(string id, string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "UPDATE drr set Name=@Name WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@id", id);
+
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+    private void updateExportoTradiotherapyNetwork(string id, string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "UPDATE exportotradiotherapynetwork set Name=@Name WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
         sqlOperation.AddParameterWithValue("@id", id);
 
         sqlOperation.ExecuteNonQuery(sqlCommand);
