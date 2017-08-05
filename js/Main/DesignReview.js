@@ -30,7 +30,14 @@ function Init(evt) {
     var texthos = hosttext(patient.Hospital_ID);
     document.getElementById("hospitalid").innerHTML = texthos;
     document.getElementById("lightpart").innerHTML = patient.lightpartname;
-
+    var select1 = document.getElementById("degree");
+    createdegreeItem(select1);
+    var select2 = document.getElementById("placeinfo");
+    createplaceinfoItem(select2);
+    var select3 = document.getElementById("drr");
+    createdrrItem(select3);
+    var select4 = document.getElementById("import");
+    createimportItem(select4);
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '10')) {
         var designInfo = getDesignInfo(treatID);
@@ -70,6 +77,10 @@ function Init(evt) {
                     document.getElementById("Reoptimization").innerHTML = charge2(reviewInfo[i].Reoptimization);
                     document.getElementById("PlaceInformation").innerHTML = charge2(reviewInfo[i].PlaceInformation);
                     document.getElementById("DRR").innerHTML = charge2(reviewInfo[i].DRR);
+                    document.getElementById("degree").value = reviewInfo[i].degree;
+                    document.getElementById("placeinfo").value = reviewInfo[i].placeinfo;
+                    document.getElementById("drr").value = reviewInfo[i].drrin;
+                    document.getElementById("import").value = reviewInfo[i].import;
                     getreference(reviewInfo[i].ReferenceCenter);
                     gettreatment(reviewInfo[i].TreatmentCenter);
                     getmovement(reviewInfo[i].Movement);
@@ -123,6 +134,98 @@ function Init(evt) {
             document.getElementById("MovementZ").value = parseInt(document.getElementById("ReferenceCenterZ").value) - parseInt(document.getElementById("TreatmentCenterZ").value);
         }
     });
+}
+function createdegreeItem(thiselement) {
+    var PartItem = JSON.parse(getdegreeItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--优化程度选择--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+        }
+    }
+
+
+}
+//第二步部位项数据库调取
+function getdegreeItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getdegree.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+function createplaceinfoItem(thiselement) {
+    var PartItem = JSON.parse(getplaceinfoItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--信息选择--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+        }
+    }
+
+
+}
+//第二步部位项数据库调取
+function getplaceinfoItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getplaceinfo.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+function createdrrItem(thiselement) {
+    var PartItem = JSON.parse(getdrrItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--drr选择--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+        }
+    }
+
+
+}
+//第二步部位项数据库调取
+function getdrrItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getdrr.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+function createimportItem(thiselement) {
+    var PartItem = JSON.parse(getimportItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--导出选择--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+        }
+    }
+
+
+}
+//第二步部位项数据库调取
+function getimportItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getimport.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
 }
 function isInArray(arr, value) {
     for (var i = 0; i < arr.length; i++) {
@@ -306,6 +409,22 @@ function getmovement(ReferenceCenter) {
     document.getElementById("MovementZ").value = Reference[2];
 }
 function save() {
+    if (document.getElementById("degree").value == "allItem") {
+        window.alert("再优化程度没有选择");
+        return false;
+    }
+    if (document.getElementById("placeinfo").value == "allItem") {
+        window.alert("摆位野信息没有选择");
+        return false;
+    }
+    if (document.getElementById("drr").value == "allItem") {
+        window.alert("drr没有选择");
+        return false;
+    }
+    if (document.getElementById("import").value == "allItem") {
+        window.alert("导出信息没有选择");
+        return false;
+    }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
@@ -320,7 +439,12 @@ function save() {
         async: false,
         contentType: false,
         success: function (data) {
-            alert("保存成功");
+            if (data == "success") {
+                alert("保存成功");
+            } else {
+                alert("保存失败");
+                return false;
+            }
             window.location.reload();
         },
         error: function (e) {
@@ -357,4 +481,8 @@ function remove() {
     document.getElementById("MovementZ").removeAttribute("disabled");
     document.getElementById("fp_upload").removeAttribute("disabled");
     document.getElementById("fp_upload1").removeAttribute("disabled");
+    document.getElementById("degree").removeAttribute("disabled");
+    document.getElementById("placeinfo").removeAttribute("disabled");
+    document.getElementById("drr").removeAttribute("disabled");
+    document.getElementById("import").removeAttribute("disabled");
 }

@@ -740,7 +740,12 @@ function save() {
         async: false,
         contentType: false,
         success: function (data) {
-            alert("保存成功");
+            if (data == "success") {
+                alert("保存成功");
+            } else {
+                alert("保存失败");
+                return false;
+            }
             window.location.reload();
         },
         error: function (e) {

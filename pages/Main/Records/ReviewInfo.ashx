@@ -60,7 +60,8 @@ public class ReviewInfo : IHttpHandler {
                 "\",\"FeasibilityConfirm\":\"" + reader["FeasibilityConfirm"] + "\",\"Reoptimization\":\"" + reader["Reoptimization"] +
                 "\",\"ReferenceCenter\":\"" + reader["ReferenceCenter"] + "\",\"TreatmentCenter\":\"" + reader["TreatmentCenter"] +
                 "\",\"Movement\":\"" + reader["Movement"] + "\",\"PlaceInformation\":\"" + reader["PlaceInformation"] + "\",\"reviewID\":\"" + reader["reviewid"] +
-                "\",\"DRR\":\"" + reader["DRR"] + "\",\"IsExport\":\"" + reader["IsExport"] + "\",\"Treatmentname\":\"" + reader["Treatmentname"] + "\"}");
+                "\",\"DRR\":\"" + reader["DRR"] + "\",\"IsExport\":\"" + reader["IsExport"] + "\",\"Treatmentname\":\"" + reader["Treatmentname"] +
+                "\",\"placeinfo\":\"" + reader["placeinfo"] + "\",\"degree\":\"" + reader["degree"] + "\",\"drrin\":\"" + reader["drrin"] + "\",\"import\":\"" + reader["import"] + "\"}");
             if (i < count)
             {
                 backText.Append(",");

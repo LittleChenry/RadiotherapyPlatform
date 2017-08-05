@@ -188,7 +188,9 @@
                                 <tr>
                                     <td>11</td>
                                     <td>放疗计划再优化程度</td>
-                                   <td id="Td1" ></td>
+                                    <td id="Td1" >
+                                        <select id="degree" name="degree" class="form-item" disabled="disabled"></select>
+                                    </td>
                                     <td id="Reoptimization">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
                                         <button id="confirmReoptimization" class="btn btn-block btn-success" type="button" onclick="confirm(this, Reoptimization, confirmReoptimization1, confirmReoptimization, cancelconfirmReoptimization)" disabled="disabled">通过</button>
@@ -198,7 +200,9 @@
                                 <tr>
                                     <td>12</td>
                                     <td>摆位野信息</td>
-                                    <td id="Td2" ></td>
+                                    <td id="Td2" >
+                                        <select id="placeinfo" name="placeinfo" class="form-item" disabled="disabled"></select>
+                                    </td>
                                     <td id="PlaceInformation">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
                                         <button id="confirmPlaceInformation" class="btn btn-block btn-success" type="button"  onclick="confirm(this, PlaceInformation, confirmPlaceInformation1, confirmPlaceInformation, cancelconfirmPlaceInformation)" disabled="disabled">通过</button>
@@ -208,7 +212,9 @@
                                 <tr>
                                     <td>13</td>
                                     <td>DRR</td>
-                                    <td id="Td4" ></td>
+                                    <td id="Td4" >
+                                       <select id="drr" name="drr" class="form-item" disabled="disabled"></select>
+                                    </td>
                                     <td id="DRR">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
                                         <button id="confirmDRR" class="btn btn-block btn-success" type="button"  onclick="confirm(this, DRR, confirmDRR1, confirmDRR, cancelconfirmDRR)" disabled="disabled">通过</button>
@@ -218,7 +224,9 @@
                                 <tr>
                                     <td>14</td>
                                     <td>计划和图像导出到放疗网络</td>
-                                    <td id="Td6" ></td>
+                                    <td id="Td6" >
+                                        <select id="import" name="import" class="form-item" disabled="disabled"></select>
+                                    </td>
                                     <td id="IsExport">否</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
                                         <button id="confirmIsExport" class="btn btn-block btn-success" type="button" onclick="confirm(this, IsExport, confirmIsExport1, confirmIsExport, cancelconfirmIsExport)" disabled="disabled">是</button>

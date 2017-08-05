@@ -138,12 +138,17 @@ public class designReviewRecord : IHttpHandler {
             string ReferenceCenter = x1 + "," + y1 + "," + z1;
             string TreatmentCenter = x2 + "," + y2 + "," + z2;
             string Movement = x3 + "," + y3 + "," + z3;
-            string strSqlCommand = "INSERT INTO review(ID,TechnologyConfirm,EquipmentConfirm,CoplanarConfirm,AngleConfirm,MachineNumbeConfirm,ControlPointConfirm,GridConfirm,FeasibilityConfirm,AlgorithmConfirm,Reoptimization,PlaceInformation,DRR,IsExport,ReferenceCenter,TreatmentCenter,Movement,_User_ID,ReviewTime,PlanSystemConfirm,PDF1,PDF2) " +
-                                    "VALUES(@ID,@confirmTechnology,@EquipmentConfirm,@CoplanarConfirm,@AngleConfirm,@MachineNumbeConfirm,@ControlPointConfirm,@GridConfirm,@FeasibilityConfirm,@AlgorithmConfirm,@Reoptimization,@PlaceInformation,@DRR,@IsExport,@ReferenceCenter,@TreatmentCenter,@Movement,@User_ID,@ReviewTime,@planSystemConfirm,@PDF1,@PDF2)";
+            string strSqlCommand = "INSERT INTO review(ID,TechnologyConfirm,EquipmentConfirm,CoplanarConfirm,AngleConfirm,MachineNumbeConfirm,ControlPointConfirm,GridConfirm,FeasibilityConfirm,AlgorithmConfirm,Reoptimization,PlaceInformation,DRR,IsExport,ReferenceCenter,TreatmentCenter,Movement,_User_ID,ReviewTime,PlanSystemConfirm,PDF1,PDF2,degree,placeinfo,drrin,import) " +
+                                    "VALUES(@ID,@confirmTechnology,@EquipmentConfirm,@CoplanarConfirm,@AngleConfirm,@MachineNumbeConfirm,@ControlPointConfirm,@GridConfirm,@FeasibilityConfirm,@AlgorithmConfirm,@Reoptimization,@PlaceInformation,@DRR,@IsExport,@ReferenceCenter,@TreatmentCenter,@Movement,@User_ID,@ReviewTime,@planSystemConfirm,@PDF1,@PDF2,@degree,@placeinfo,@drrin,@import)";
             sqlOperation.AddParameterWithValue("@ID", Count);
             sqlOperation.AddParameterWithValue("@confirmTechnology", Convert.ToInt32(context.Request.Form["TechnologyConfirm1"]));
             sqlOperation.AddParameterWithValue("@EquipmentConfirm", Convert.ToInt32(context.Request.Form["EquipmentConfirm1"]));
 
+            sqlOperation.AddParameterWithValue("@degree", Convert.ToInt32(context.Request.Form["degree"]));
+            sqlOperation.AddParameterWithValue("@placeinfo", Convert.ToInt32(context.Request.Form["placeinfo"]));
+            sqlOperation.AddParameterWithValue("@drrin", Convert.ToInt32(context.Request.Form["drr"]));
+            sqlOperation.AddParameterWithValue("@import", Convert.ToInt32(context.Request.Form["import"]));
+           
             sqlOperation.AddParameterWithValue("@AngleConfirm", Convert.ToInt32(context.Request.Form["confirmAngle1"]));
             sqlOperation.AddParameterWithValue("@CoplanarConfirm", Convert.ToInt32(context.Request.Form["confirmCoplanar1"]));
             sqlOperation.AddParameterWithValue("@MachineNumbeConfirm", Convert.ToInt32(context.Request.Form["confirmMachineNumbe1"]));

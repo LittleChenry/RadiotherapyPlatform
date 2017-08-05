@@ -1,9 +1,9 @@
-﻿<%@ WebHandler Language="C#" Class="getEqForDesign" %>
+﻿<%@ WebHandler Language="C#" Class="getdegree" %>
 
 using System;
 using System.Web;
 using System.Text;
-public class getEqForDesign : IHttpHandler {
+public class getdegree : IHttpHandler {
 
     DataLayer sqlOperation = new DataLayer("sqlStr");
     public void ProcessRequest(HttpContext context)
@@ -12,6 +12,7 @@ public class getEqForDesign : IHttpHandler {
         string backString = getprinItem();
         sqlOperation.Close();
         sqlOperation.Dispose();
+        sqlOperation = null;
         context.Response.Write(backString);
     }
 
@@ -24,16 +25,16 @@ public class getEqForDesign : IHttpHandler {
     }
     private string getprinItem()
     {
-        string countItem = "SELECT count(*) FROM equipmenttype,equipment where equipmenttype.ID=equipment.EquipmentType and equipment.TreatmentItem='加速器' ";
+        string countItem = "SELECT count(*) FROM planoptimizedegree";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
 
-        string sqlCommand = "SELECT equipmenttype.* FROM equipmenttype,equipment where equipmenttype.ID=equipment.EquipmentType and equipment.TreatmentItem='加速器' ";
+        string sqlCommand = "SELECT ID,Name FROM planoptimizedegree";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
-        StringBuilder backText = new StringBuilder("{\"item\":[");
+        StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;
         while (reader.Read())
         {
-            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Type"].ToString() + "\"}");
+            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() + "\"}");
             if (i < count)
             {
 
@@ -41,6 +42,7 @@ public class getEqForDesign : IHttpHandler {
             }
             i++;
         }
+        reader.Close();
         backText.Append("]}");
         return backText.ToString();
     }
