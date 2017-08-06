@@ -68,6 +68,8 @@ public class getParameterTable : IHttpHandler {
                 return selectDrr();
             case "exportotradiotherapynetwork":
                 return selectExportoTradiotherapyNetwork();
+            case "splitway":
+                return selectSpiltWay();
         }
         return "";
     }
@@ -497,6 +499,26 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\"},");
+        }
+        backString.Remove(backString.Length - 1, 1)
+                  .Append("]");
+        return backString.ToString();
+    }
+
+    private string selectSpiltWay()
+    {
+        StringBuilder backString = new StringBuilder("[");
+        string sqlCommand = "SELECT * FROM splitway";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
+        {
+            backString.Append("{\"ID\":\"")
+                      .Append(reader["ID"].ToString())
+                      .Append("\",\"Ways\":\"")
+                      .Append(reader["Ways"].ToString())
+                      .Append("\",\"Interal\":\"")
+                      .Append(reader["Interal"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)

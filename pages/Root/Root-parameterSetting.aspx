@@ -343,6 +343,7 @@
                             <option value="planoptimizedegree">放疗计划再优化程度</option>
                             <option value="drr">DRR</option>
                             <option value="exportotradiotherapynetwork">计划和图像导出到放疗网络</option>
+                            <option value="splitway">分割方式</option>
                         </select>
                         <span class="input-group-btn">
                             <button class="btn btn-default" style="height:34px" type="button" id="sureTable">

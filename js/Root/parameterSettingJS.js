@@ -116,6 +116,9 @@ function selectCreate(type,page) {
         case "exportotradiotherapynetwork":
             createExportoTradiotherapyNetwork(page);
             break;
+        case "splitway":
+            createSpiltWay(page);
+            break;
         default:
             break;
     }
@@ -202,6 +205,9 @@ function createPage(page) {
             break;
         case "exportotradiotherapynetwork":
             createExportoTradiotherapyNetworkTable(page);
+            break;
+        case "splitway":
+            createSpiltWayTable(page);
             break;
         default:
             break;
@@ -1593,3 +1599,65 @@ function createLightPartTable(page){
 
     $tbody.append(tr);
  }
+
+ /**
+ * spiltway 分割方式 1
+ */
+function createSpiltWay(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>分割方式</th>"
+                       + "<th>时间间隔(/天)</th>" 
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddSpiltWay();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "splitway" },
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createSpiltWayTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+/**
+ * 生成表格指定页（每页12行）-->2
+ * @param page 指定页数
+ */
+function createSpiltWayTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Ways + "<input type=hidden value=" + jsonObj[i].ID
+           + " /></td><td>" + jsonObj[i].Interal
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ *  3
+ */
+function initAddSpiltWay() {
+    $("#addrow").empty()
+                .append("<tr><th>分割方式</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr><tr><th>时间间隔(/天)</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
