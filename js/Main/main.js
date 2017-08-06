@@ -71,6 +71,7 @@ function RolesToPatients() {
             patient = getPatient(session.userID, session.role, parameters);
             var sortPatient = patientSort(patient);
             Paging(sortPatient, session.role, session.userID);
+            adjustTable();
             $("#chosenEquipment").html(session.equipmentName);
             $("#dateRange").html(session.beginTime + "~~" + session.endTime);
         }
@@ -107,11 +108,12 @@ function RolesToPatients() {
             parameters[1] = startdate;
             parameters[2] = enddate;
             patient = getPatient(session.userID, session.role, parameters);
-            Paging(patient, session.role, session.userID);
+            var sortPatient = patientSort(patient);
+            Paging(sortPatient, session.role, session.userID);
             adjustTable();
             $.ajax({
                 type: "POST",
-                async: false,
+                async: true,
                 url: "../../pages/Main/Records/setEquipment.ashx",
                 data: {
                     id: $("#equipment").val(),
@@ -130,6 +132,7 @@ function RolesToPatients() {
         patient = getPatient(session.userID, session.role, parameters);
         var sortPatient = patientSort(patient);
         Paging(sortPatient, session.role, session.userID);
+        adjustTable();
         if (session.role == "医师" || session.role == "剂量师" || session.role == "物理师") {
             TaskWarning(sortPatient);
         }
