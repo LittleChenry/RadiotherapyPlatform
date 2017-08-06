@@ -72,7 +72,7 @@ public class GetEquipmentAppointmentForAccer : IHttpHandler {
             reader = sqlOperation.ExecuteReader(sqlCommand);
             while (reader.Read())
             {
-                    backString.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"State\":\"" + reader["State"].ToString());
+                    backString.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"State\":\"" + reader["State"].ToString()+"\",");
 
                     if (k == 0)
                     {
