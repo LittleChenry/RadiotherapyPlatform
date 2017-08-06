@@ -183,17 +183,6 @@
                           </div>                                                                 
                       </div>
             </div>
-             <div class="paper-content">
-                <div class="content-title">
-                    <span>放射治疗知情同意：</span>
-                </div>
-                <div class="single-row">
-                    <span class="col-xs-12">上述为放射治疗信息，已告知本人和/或家属。</span>
-                </div>
-                <div class="single-row">
-                    <span class="col-xs-12">受检者或家属签名：</span>
-                </div>
-            </div>
             <div class="paper-footer">
                 <div class="single-row">
                     <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
