@@ -89,6 +89,9 @@ public class addParameter : IHttpHandler {
             case "exportotradiotherapynetwork":
                 addExportoTradiotherapyNetwork(value);
                 break;
+            case "splitway":
+                addSplitWay(value);
+                break;
             default:
                 break;
         }
@@ -288,6 +291,16 @@ public class addParameter : IHttpHandler {
         string sqlCommand = "INSERT INTO exportotradiotherapynetwork(Name) VALUES(@Name)";
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addSplitWay(string value) 
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO splitway(Ways,Interal) VALUES(@Ways,@Interal)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Ways", values[0]);
+        sqlOperation.AddParameterWithValue("@Interal",values[1]);
         sqlOperation.ExecuteNonQuery(sqlCommand);
     }
 }

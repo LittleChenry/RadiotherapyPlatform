@@ -92,6 +92,9 @@ public class parameterEdit : IHttpHandler {
             case "exportotradiotherapynetwork":
                 updateExportoTradiotherapyNetwork(id, value);
                 break;
+            case "splitway":
+                updateSplitWay(id, value);
+                break;
             default:
                 break;
         }
@@ -355,6 +358,18 @@ public class parameterEdit : IHttpHandler {
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@id", id);
+
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+    private void updateSplitWay(string id, string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "UPDATE splitway set Ways=@Ways,Interal=@Interal WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Ways", values[0]);
+        sqlOperation.AddParameterWithValue("@Interal",values[1]);
         sqlOperation.AddParameterWithValue("@id", id);
 
         sqlOperation.ExecuteNonQuery(sqlCommand);
