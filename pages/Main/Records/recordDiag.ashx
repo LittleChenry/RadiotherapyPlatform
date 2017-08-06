@@ -2,6 +2,7 @@
 
 using System;
 using System.Web;
+using System.Collections;
 
 public class recordDiag : IHttpHandler {
     DataLayer sqlOperation = new DataLayer("sqlStr");
@@ -81,21 +82,48 @@ public class recordDiag : IHttpHandler {
             {
                 diagno = Convert.ToInt32(reader["ID"].ToString());
             }
-            string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe where ID=@treatid";
-            sqlOperation2.AddParameterWithValue("@treatid", treatID);
-            sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
-            sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
-            sqlOperation2.AddParameterWithValue("@Progress", "0,1");
-            int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
-
-            if (intSuccess > 0 && intSuccess1 > 0)
+            reader.Close();
+            string select1 = "select Progress from treatment where ID=@treatid";
+            sqlOperation.AddParameterWithValue("@treatid", treatID);
+            string progress = sqlOperation.ExecuteScalar(select1);
+            string[] group = progress.Split(',');
+            bool exists = ((IList)group).Contains("1");
+            if (!exists)
             {
-                return "success";
+                string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe where ID=@treatid";
+                sqlOperation2.AddParameterWithValue("@treatid", treatID);
+                sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
+                sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
+                sqlOperation2.AddParameterWithValue("@Progress", "0,1");
+                int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
+                if (intSuccess > 0 && intSuccess1 > 0)
+                {
+                    return "success";
+                }
+                else
+                {
+                    return "failure";
+                }
+
             }
             else
             {
-                return "failure";
+                string strSqlCommand1 = "update treatment set DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe where ID=@treatid";
+                sqlOperation2.AddParameterWithValue("@treatid", treatID);
+                sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
+                sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);  
+                int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
+                if (intSuccess > 0 && intSuccess1 > 0)
+                {
+                    return "success";
+                }
+                else
+                {
+                    return "failure";
+                }
             }
+
+            
         }
         catch (System.Exception Ex1)
         {
