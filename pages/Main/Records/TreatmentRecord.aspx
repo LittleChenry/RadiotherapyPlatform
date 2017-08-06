@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datepicker/datepicker3.css"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/FontAwesome/css/font-awesome.min.css" />
     <!-- Ionicons -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
     <!-- Theme style -->
@@ -273,7 +274,6 @@
         <div id="appoint"  class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document" style="width:800px;">
                 <div class="modal-content"  >
-                    <div id="loading" style="display:none"><img src="/RadiotherapyPlatform/img/load.gif" alt=""/>正在加载数据,请稍候...</div>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">预约设备与时间窗口</h4>
@@ -288,9 +288,11 @@
                             </div>
                         </div>
 
-                        <div class="panel-row"  style="overflow:scroll;overflow-x:auto">
-                            <table id="apptiontTable" class="table table-bordered " >
-                             
+                        <div class="panel-row" style="overflow:auto;margin-bottom:0px;">
+                            <div id="loading" style="display:none;font-size:30px;">
+                                <i class="icon-spinner icon-spin icon-2x"></i>
+                            </div>
+                            <table id="apptiontTable" class="table table-bordered table-hover" >
                             </table>
                         </div>
                     </div>

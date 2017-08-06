@@ -241,12 +241,11 @@ function Init(evt) {
     createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator",type);
     var date = new Date();
     document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    $("#rest").bind("click", function () {
-        $(this).unbind("click");
+    $("#rest").unbind("click").bind("click", function () {
         CreateNewAppiontTable();
+
     });
-    $("#chooseProject").bind("click", function () {
-        $(this).unbind("click");
+    $("#chooseProject").unbind("click").bind("click", function () {
         CreateNewAppiontTable();
     });
     $("#sure").bind("click", function () {
@@ -353,8 +352,7 @@ function readDosagePriority(DosagePriority) {
     table.appendChild(tbody);
 }
 
-function getallfirst(treatmentID)
-{
+function getallfirst(treatmentID){
     var xmlHttp = new XMLHttpRequest();
     var url = "getallfirstappoint.ashx?treatmentID=" + treatmentID;
     xmlHttp.open("GET", url, false);
@@ -362,6 +360,7 @@ function getallfirst(treatmentID)
     var json = xmlHttp.responseText;
     return json;
 }
+
 function getotheraccer(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getotheraccer.ashx?treatmentID=" + treatmentID;
@@ -370,6 +369,7 @@ function getotheraccer(treatmentID) {
     var json = xmlHttp.responseText;
     return json;
 }
+
 function refresh(treatmentID) {
     var data = getalltreatmentrecord(treatmentID);
     RemoveAllChild(document.getElementById("treatment"));
@@ -415,8 +415,8 @@ function refresh(treatmentID) {
 
         });
     }); 
-
 }
+
 function getalltreatmentrecord(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getalltreatmentrecord.ashx?treatmentID=" + treatmentID;
@@ -426,6 +426,7 @@ function getalltreatmentrecord(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.Item;
 }
+
 function refresh1(treatmentID) {
     var data = getalligrt(treatmentID);
     RemoveAllChild(document.getElementById("IGRT"));
@@ -437,7 +438,7 @@ function refresh1(treatmentID) {
          content = content + "</tr>";
     }
        $("#IGRT").append(content);
-    }
+}
 
 function getalligrt(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
@@ -448,8 +449,8 @@ function getalligrt(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.Item;
 }
-function getfirstday(treatmentID)
-{
+
+function getfirstday(treatmentID){
     var xmlHttp = new XMLHttpRequest();
     var url = "getfirstday.ashx?treatmentID=" +treatmentID;
     xmlHttp.open("GET", url, false);
@@ -457,6 +458,7 @@ function getfirstday(treatmentID)
     var json = xmlHttp.responseText;
     return json;
 }
+
 function GetDateDiff(startDate, endDate) {
     var startTime = new Date(Date.parse(startDate.replace(/-/g, "/"))).getTime();
     var endTime = new Date(Date.parse(endDate.replace(/-/g, "/"))).getTime();
@@ -472,9 +474,11 @@ function contains(group, s) {
     }
     return false;
 }
+
 function tankuang() {
     $("#operatorModal").modal({ backdrop: 'static' });
 }
+
 function getSession(){
     var Session;
     $.ajax({
@@ -501,6 +505,7 @@ function getPatientInfo(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.patient[0];
 }
+
 function gettotalnumber(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "gettreatmentnumber.ashx?treatmentID=" +treatmentID;
@@ -509,6 +514,7 @@ function gettotalnumber(treatmentID) {
     var json = xmlHttp.responseText;
     return json;
 }
+
 function toTime(minute) {
     var hour = parseInt(parseInt(minute) / 60);
     var min = parseInt(minute) - hour * 60;
@@ -538,6 +544,7 @@ function getUserName() {
     }
     xmlHttp.send();
 }
+
 function getUserID() {
     var xmlHttp = new XMLHttpRequest();
     var url = "GetUserID.ashx";
@@ -554,8 +561,6 @@ function getUserID() {
 
     xmlHttp.send();
 }
-
-
 
 function sex(evt) {
     if (evt == "F")
@@ -574,6 +579,7 @@ function createfixEquipmachine(thiselement, item,type) {
         }
     }
 }
+
 function getmachineItem(item, type) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getaccermachine.ashx?item=" + item + "&type=" + type;
@@ -582,11 +588,12 @@ function getmachineItem(item, type) {
     var Items = xmlHttp.responseText;
     return Items;
 }
+
 function remove() {
     document.getElementById("treatmentedit").removeAttribute("disabled");
     document.getElementById("finishigrt").removeAttribute("disabled");
-
 }
+
 function save() {
    
 }
@@ -635,27 +642,28 @@ function CreateCurrentEquipmentTbale(equiment, dateString,times) {
         }
         $tr.append(text);
     }
-
 }
+
 function choosebadItem() {
     alert("此处不能预约");
-   
 }
+
 function dataconverse(date) {
     var date = date.split(" ")[0];
     date = date.replace( /\//g,"-");
     return date;
 }
+
 function chooseotherItem() {
    alert("只能点击初始天的预约");
 }
-function clickrow(element)
-{
+
+function clickrow(element){
     $this = $(element);
     $this.parent().siblings().removeClass("trchose");
-    $this.parent().addClass("trchose");
-    
+    $this.parent().addClass("trchose"); 
 }
+
 function dateAdd(dd, n) {
     var strs = new Array();
     strs = dd.split("-");
@@ -678,6 +686,7 @@ function dateAdd(dd, n) {
     var strdate = strMonth + "-" + strDay;
     return strdate;
 }
+
 function dateAdd2(dd, n) {
     var strs = new Array();
     strs = dd.split("-");
@@ -700,6 +709,7 @@ function dateAdd2(dd, n) {
     var strdate = strYear+"-"+strMonth + "-" + strDay;
     return strdate;
 }
+
 function compareWithToday(time) {
     var year = time.split("-")[0];
     var month = time.split("-")[1];
@@ -719,6 +729,7 @@ function compareWithToday(time) {
         }
     }
 }
+
 function getReplace(equiment, dateString) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatid = treatmentgroup.split("=")[1];
@@ -792,8 +803,8 @@ function chooseItem(thiselement) {
             alert("请先取消其他选择！");
         }
     }
-
 }
+
 function ChoseID() {
     var td_id = null;
     var table = document.getElementById("apptiontTable");
@@ -805,6 +816,7 @@ function ChoseID() {
     }
    return td_id;
 }
+
 function ChoseAllID() {
     var td_id = "";
     var table = document.getElementById("apptiontTable");
@@ -818,6 +830,7 @@ function ChoseAllID() {
     }
     return td_id;
 }
+
 function hasChosen() {
     alert("该时间段不能预约！");
 }
@@ -860,7 +873,7 @@ function CreateNewAppiontTable() {
     $.ajax({
         type: "POST",
         url: "GetEquipmentAppointmentForAccer.ashx",
-        async: false,
+        async: true,
         data: {
             equipmentID: equipmentID,
             date: date,
@@ -870,15 +883,15 @@ function CreateNewAppiontTable() {
         success: function (data) {
             thisObj = eval("(" + data + ")");
             CreateCurrentEquipmentTbale(thisObj, date, times);
+            //setTimeout("alert('5 seconds!')",5000);
             $("#loading").hide();
         },
         error: function () {
             $("#loading").hide();
         }
     });
-   
-  
 }
+
 function computetimes(date, rest, splitday) {
     var k = 1;
     splitday = parseInt(splitday);
@@ -903,8 +916,8 @@ function computetimes(date, rest, splitday) {
 
     }
     return count;
-
 }
+
 function getsplitday(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "Getsplitday.ashx?treatid=" + treatmentID;
@@ -913,6 +926,7 @@ function getsplitday(treatmentID) {
     var json = xmlHttp.responseText;
     return json;
 }
+
 function checkAllTable(treatmentID) {
     var choseid = ChoseAllID();
     $.ajax({
@@ -955,8 +969,8 @@ function checkAllTable(treatmentID) {
             alert("error");
         }
     });
-    
 }
+
 function getreplacetime(treatid) {
     var xmlHttp = new XMLHttpRequest();
     var url = "Getreplacetime.ashx?treatid=" + treatid;
@@ -964,7 +978,6 @@ function getreplacetime(treatid) {
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     return json;
-
 }
 //比较加速器与复位申请时间
 function compare(evt1, evt2) {
@@ -993,8 +1006,8 @@ function compare(evt1, evt2) {
 
     }
     return true;
-
 }
+
 function judge(appointid,treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "judge.ashx?appointid=" + appointid+"&treat="+treatmentID;
@@ -1003,6 +1016,7 @@ function judge(appointid,treatmentID) {
     var json = xmlHttp.responseText;
     return json;
 }
+
 function showPicture() {
     $("#myModal").modal("show");
     $("#pic").attr("src", this.src);
