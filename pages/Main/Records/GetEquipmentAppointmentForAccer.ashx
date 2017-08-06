@@ -72,9 +72,7 @@ public class GetEquipmentAppointmentForAccer : IHttpHandler {
             reader = sqlOperation.ExecuteReader(sqlCommand);
             while (reader.Read())
             {
-                    backString.Append("{\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\""
-                            + reader["End"].ToString() + "\",\"EuqipmentID\":\"" + equipmentID + "\",\"ID\":\"" + reader["ID"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"State\":\"" + reader["State"].ToString()
-                         + "\",\"Euqipment\":\"");
+                    backString.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"State\":\"" + reader["State"].ToString()+"\",");
 
                     if (k == 0)
                     {
@@ -93,7 +91,7 @@ public class GetEquipmentAppointmentForAccer : IHttpHandler {
                         patientname = sqlOperation2.ExecuteScalar(sqlCommandtemp);
                     }
                     sqlOperation2.Close();
-                    backString.Append(name + "\",\"patientname\":\"" + patientname + "\"}");
+                    backString.Append("\"patientname\":\"" + patientname + "\"}");
                     if (currentTimes < times)
                     {
                         backString.Append(",");

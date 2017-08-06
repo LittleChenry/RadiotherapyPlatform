@@ -40,7 +40,7 @@ function createPatient(evt) {
     var diagnosisInfo = getDignoseInfo(treatID);
     $("#current-tab").text(patient.Treatmentdescribe + "诊断");
     var groupprogress = patient.Progress.split(",");
-    if (contains(groupprogress,"1")) {
+    if (contains(groupprogress, "1")) {
         for (var i = 0; i < diagnosisInfo.diagnosisInfo.length; i++) {
             if (patient.Treatmentname == diagnosisInfo.diagnosisInfo[i].Treatmentname) {
                 document.getElementById("operator").innerHTML = diagnosisInfo.diagnosisInfo[i].username;
@@ -60,6 +60,9 @@ function createPatient(evt) {
                 document.getElementById("treatname").value = diagnosisInfo.diagnosisInfo[i].Treatmentdescribe;
                 document.getElementById("Aim").value = diagnosisInfo.diagnosisInfo[i].treatmentaimID;
                 document.getElementById("remark").value = diagnosisInfo.diagnosisInfo[i].Remarks;
+                if (diagnosisInfo.diagnosisInfo[i].userID == userID) {
+                    window.parent.document.getElementById("edit").removeAttribute("disabled");
+                }
             } else {
                 var tab = '<li class=""><a href="#tab'+ i +'" data-toggle="tab" aria-expanded="false">'+ diagnosisInfo.diagnosisInfo[i].Treatmentdescribe +'诊断</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
