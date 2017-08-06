@@ -240,17 +240,19 @@ function Init(evt) {
     var type = geteuqipmenttype(treatmentID);
     createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator",type);
     var date = new Date();
-    document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-    document.getElementById("rest").addEventListener("click", function () {
-        CreateNewAppiontTable(event);
-    }, false);
-    document.getElementById("chooseProject").addEventListener("click", function () {
-        CreateNewAppiontTable(event);
-    }, false);//根据条件创建预约表
-    document.getElementById("sure").addEventListener("click", function () {
+    document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    $("#rest").bind("click", function () {
+        $(this).unbind("click");
+        CreateNewAppiontTable();
+    });
+    $("#chooseProject").bind("click", function () {
+        $(this).unbind("click");
+        CreateNewAppiontTable();
+    });
+    $("#sure").bind("click", function () {
+        $(this).unbind("click");
         checkAllTable(treatmentID);
-    }, false);
-
+    });
 }
 function geteuqipmenttype(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
@@ -829,19 +831,21 @@ function RemoveAllChild1(area) {
     }
 }
 //根据日期创建新表
-function CreateNewAppiontTable(evt) {
-    evt.preventDefault();
+function CreateNewAppiontTable() {
+    $("#loading").show();
     var equipmentName = document.getElementById("equipmentName");
     var currentIndex = equipmentName.selectedIndex;
     var equipmentID = equipmentName.options[currentIndex].value;
     var AppiontDate = document.getElementById("AppiontDate");
     if (!compareWithToday(AppiontDate.value)) {
         alert("不能选择小于当天的日期");
+        $("#loading").hide();
         return;
     }
     var isweek = new Date(AppiontDate.value).getDay();
     if (isweek == 0 || isweek == 6) {
         alert("不能选择周六日作为起始天");
+        $("#loading").hide();
         return;
     }
     var date = AppiontDate.value;
@@ -853,13 +857,27 @@ function CreateNewAppiontTable(evt) {
     var splitday = getsplitday(treatmentID);
     interal = parseInt(splitday);
     times = computetimes(date, rest, splitday);
-    var xmlHttp = new XMLHttpRequest();
-    var url = "GetEquipmentAppointmentForAccer.ashx?equipmentID=" + equipmentID + "&date=" + date + "&times=" + times;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-    var json = xmlHttp.responseText;
-    thisObj = eval("(" + json + ")");
-    CreateCurrentEquipmentTbale(thisObj, date,times);
+    $.ajax({
+        type: "POST",
+        url: "GetEquipmentAppointmentForAccer.ashx",
+        async: false,
+        data: {
+            equipmentID: equipmentID,
+            date: date,
+            times: times
+        },
+        dateType: "json",
+        success: function (data) {
+            thisObj = eval("(" + data + ")");
+            CreateCurrentEquipmentTbale(thisObj, date, times);
+            $("#loading").hide();
+        },
+        error: function () {
+            $("#loading").hide();
+        }
+    });
+   
+  
 }
 function computetimes(date, rest, splitday) {
     var k = 1;
@@ -907,6 +925,9 @@ function checkAllTable(treatmentID) {
 
         },
         dateType: "json",
+        beforeSend: function () {
+            $("#loading").show();
+        },
         success: function (data) {
             if (data == "success") {
                 window.alert("申请成功");
@@ -930,6 +951,7 @@ function checkAllTable(treatmentID) {
             }
         },
         error: function () {
+            $("#loading").hide();
             alert("error");
         }
     });

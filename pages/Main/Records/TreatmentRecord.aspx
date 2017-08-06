@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
 </head>
 <body style="width:auto;min-width:900px;margin:auto;">
+    
     <section class="content">
         <div class="paper" id="needPrint">
             <input type="hidden" id="progress" name="progress"/>
@@ -272,6 +273,7 @@
         <div id="appoint"  class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document" style="width:800px;">
                 <div class="modal-content"  >
+                    <div id="loading" style="display:none"><img src="/RadiotherapyPlatform/img/load.gif" alt=""/>正在加载数据,请稍候...</div>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">预约设备与时间窗口</h4>
@@ -286,7 +288,7 @@
                             </div>
                         </div>
 
-                        <div class="panel-row"  style="overflow:scroll;overflow-x:auto;overflow-y:auto">
+                        <div class="panel-row"  style="overflow:scroll;overflow-x:auto">
                             <table id="apptiontTable" class="table table-bordered " >
                              
                             </table>
@@ -299,6 +301,7 @@
                 </div>
             </div>
         </div>
+       
         <div id="ct" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document" style="width:700px;">
                 <div class="modal-content">
@@ -338,6 +341,7 @@
                 </div>
             </div>
         </div>
+        
     </section>
     <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">
                 

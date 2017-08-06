@@ -24,9 +24,9 @@ public class GetEquipmentAppointmentForAccer : IHttpHandler {
     private string getInformation(HttpContext context)
     {
         DataLayer sqlOperation = new DataLayer("sqlStr");
-        string dateorigin = context.Request.QueryString["date"];
-        string equipmentID = context.Request.QueryString["equipmentID"];
-        string alltotal = context.Request.QueryString["times"];
+        string dateorigin = context.Request["date"];
+        string equipmentID = context.Request["equipmentID"];
+        string alltotal = context.Request["times"];
         int alltotalnumber = int.Parse(alltotal);
         DateTime datefirst = Convert.ToDateTime(dateorigin);
         string date = ""; 
