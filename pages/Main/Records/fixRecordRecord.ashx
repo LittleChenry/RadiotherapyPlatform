@@ -3,6 +3,7 @@
 using System;
 using System.Web;
 using System.Text;
+using System.Collections;
 public class fixRecordRecord : IHttpHandler {
     private DataLayer sqlOperation = new DataLayer("sqlStr");
     private DataLayer sqlOperation1 = new DataLayer("sqlStr");
@@ -108,13 +109,22 @@ public class fixRecordRecord : IHttpHandler {
             string select1 = "select Progress from treatment where ID=@treatid";
             sqlOperation.AddParameterWithValue("@treatid", treatID);
             string progress = sqlOperation.ExecuteScalar(select1);
-            string fID = "UPDATE treatment SET Progress=@fixedID where ID=@treatid";
+            string[] group = progress.Split(',');
+            bool exists = ((IList)group).Contains("4");
+            int Success = 0;
+            if (!exists)
+            {
+                string fID = "UPDATE treatment SET Progress=@fixedID where ID=@treatid";
 
-            sqlOperation2.AddParameterWithValue("@treatid", treatID);
+                sqlOperation2.AddParameterWithValue("@treatid", treatID);
 
-            sqlOperation2.AddParameterWithValue("@fixedID", progress+",4");
-            int Success = sqlOperation2.ExecuteNonQuery(fID);
-        
+                sqlOperation2.AddParameterWithValue("@fixedID", progress + ",4");
+                Success = sqlOperation2.ExecuteNonQuery(fID);
+            }
+            else
+            {
+                Success = 1;
+            }
             if (intSuccess > 0 && Success>0 &&  ss > 0)
             {
                     return "success";

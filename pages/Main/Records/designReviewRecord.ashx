@@ -3,6 +3,7 @@
 using System;
 using System.Web;
 using System.Text;
+using System.Collections;
 public class designReviewRecord : IHttpHandler {
   private DataLayer sqlOperation = new DataLayer("sqlStr");
     private DataLayer sqlOperation1 = new DataLayer("sqlStr");
@@ -172,11 +173,24 @@ public class designReviewRecord : IHttpHandler {
             string select1 = "select Progress from treatment where ID=@treat";
             sqlOperation.AddParameterWithValue("@treat", treatID);
             string progress = sqlOperation.ExecuteScalar(select1);
-            string inserttreat = "update treatment set Review_ID=@Design_ID,Progress=@progress where ID=@treat";
-            sqlOperation2.AddParameterWithValue("@progress", progress + ",11");
-            sqlOperation2.AddParameterWithValue("@Design_ID", Count);
-            sqlOperation2.AddParameterWithValue("@treat", treatID);
-            int Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+            string[] group = progress.Split(',');
+            bool exists = ((IList)group).Contains("11");
+            int Success = 0;
+            if (!exists)
+            {
+                string inserttreat = "update treatment set Review_ID=@Design_ID,Progress=@progress where ID=@treat";
+                sqlOperation2.AddParameterWithValue("@progress", progress + ",11");
+                sqlOperation2.AddParameterWithValue("@Design_ID", Count);
+                sqlOperation2.AddParameterWithValue("@treat", treatID);
+                Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+            }
+            else
+            {
+                string inserttreat = "update treatment set Review_ID=@Design_ID where ID=@treat";
+                sqlOperation2.AddParameterWithValue("@Design_ID", Count);
+                sqlOperation2.AddParameterWithValue("@treat", treatID);
+                Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+            }
             if (intSuccess > 0 && Success > 0)
             {
                 return "success";

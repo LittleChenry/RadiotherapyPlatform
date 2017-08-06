@@ -2,7 +2,8 @@
 
 using System;
 using System.Web;
-  using System.Text;
+using System.Text;
+using System.Collections;
 public class designConfirmRecord : IHttpHandler {
     private DataLayer sqlOperation = new DataLayer("sqlStr");
     private DataLayer sqlOperation1 = new DataLayer("sqlStr");
@@ -67,10 +68,20 @@ public class designConfirmRecord : IHttpHandler {
                 string select1 = "select Progress from treatment where ID=@treat";
                 sqlOperation.AddParameterWithValue("@treat", CTID);
                 string progress = sqlOperation.ExecuteScalar(select1);
-                string inserttreat = "update treatment set Progress=@progress where ID=@treat";
-                sqlOperation2.AddParameterWithValue("@progress", progress + ",10");
-                sqlOperation2.AddParameterWithValue("@treat", CTID);
-                int Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+                string[] group = progress.Split(',');
+                bool exists = ((IList)group).Contains("10");
+                int Success = 0;
+                if (!exists)
+                {
+                    string inserttreat = "update treatment set Progress=@progress where ID=@treat";
+                    sqlOperation2.AddParameterWithValue("@progress", progress + ",10");
+                    sqlOperation2.AddParameterWithValue("@treat", CTID);
+                    Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+                }
+                else
+                {
+                    Success = 1;
+                }
                 if (intSuccess > 0 && Success > 0)
                 {
                     return "success";

@@ -3,6 +3,7 @@
 using System;
 using System.Web;
 using System.Text;
+using System.Collections;
 public class locationRecordRecord : IHttpHandler {
      private DataLayer sqlOperation = new DataLayer("sqlStr");
     private DataLayer sqlOperation1 = new DataLayer("sqlStr");
@@ -119,16 +120,28 @@ public class locationRecordRecord : IHttpHandler {
             sqlOperation1.AddParameterWithValue("@state", 1);
             sqlOperation1.AddParameterWithValue("@treat", treatID);
             int intSuccess2 = sqlOperation1.ExecuteNonQuery(strSqlCommand1);
-            string strSqlCommand2 = "INSERT INTO ct(ID) VALUES(@loc)";
-            sqlOperation2.AddParameterWithValue("@loc", LocationID);
-            int intSuccess = sqlOperation2.ExecuteNonQuery(strSqlCommand2);
+            int intSuccess = 0;
             string select1 = "select Progress from treatment where ID=@treat";
             sqlOperation.AddParameterWithValue("@treat", treatID);
             string progress = sqlOperation.ExecuteScalar(select1);
-            string strSqlCommand3 = "UPDATE  treatment  SET Progress=@Progress where Treatment.ID=@tr";
-            sqlOperation3.AddParameterWithValue("@Progress", progress+",5");
-            sqlOperation3.AddParameterWithValue("@tr", treatID);
-            int intSuccess3 = sqlOperation3.ExecuteNonQuery(strSqlCommand3);
+            string[] group = progress.Split(',');
+            bool exists = ((IList)group).Contains("5");
+            int intSuccess3 = 0;
+            if (!exists)
+            {
+                string strSqlCommand2 = "INSERT INTO ct(ID) VALUES(@loc)";
+                sqlOperation2.AddParameterWithValue("@loc", LocationID);
+                intSuccess = sqlOperation2.ExecuteNonQuery(strSqlCommand2);
+                string strSqlCommand3 = "UPDATE  treatment  SET Progress=@Progress where Treatment.ID=@tr";
+                sqlOperation3.AddParameterWithValue("@Progress", progress + ",5");
+                sqlOperation3.AddParameterWithValue("@tr", treatID);
+                intSuccess3 = sqlOperation3.ExecuteNonQuery(strSqlCommand3);
+            }
+            else 
+            {
+                intSuccess = 1;
+                intSuccess3 = 1; 
+            }
             if (intSuccess > 0 && intSuccess1 > 0 && intSuccess2 > 0 && intSuccess3 > 0)
             {
                 return "success";

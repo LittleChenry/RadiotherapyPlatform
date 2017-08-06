@@ -3,6 +3,7 @@
 using System;
 using System.Web;
 using System.Text;
+using System.Collections;
 public class importCTRecord : IHttpHandler {
     private DataLayer sqlOperation = new DataLayer("sqlStr");
     public void ProcessRequest(HttpContext context)
@@ -57,9 +58,19 @@ public class importCTRecord : IHttpHandler {
             int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
             string select1 = "select Progress from treatment where ID=@treat";
             string progress = sqlOperation.ExecuteScalar(select1);
-            string strSqlCommand2 = "UPDATE  treatment  SET Progress=@progress where treatment.ID=@treat";
-            sqlOperation.AddParameterWithValue("@progress", progress + ",6");
-            int intSuccess2 = sqlOperation.ExecuteNonQuery(strSqlCommand2);
+            string[] group = progress.Split(',');
+            bool exists = ((IList)group).Contains("6");
+            int intSuccess2 = 0;
+            if (!exists)
+            {
+                string strSqlCommand2 = "UPDATE  treatment  SET Progress=@progress where treatment.ID=@treat";
+                sqlOperation.AddParameterWithValue("@progress", progress + ",6");
+                intSuccess2 = sqlOperation.ExecuteNonQuery(strSqlCommand2);
+            }
+            else
+            {
+                intSuccess2 = 1;
+            }
             if (intSuccess > 0 & intSuccess2 > 0)
             {
                     return "success";
