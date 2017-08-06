@@ -28,7 +28,9 @@ public class getallfirstappoint : IHttpHandler {
         int treat = int.Parse(treatid);
         int count = 0;
         int appointid=0;
-        string sqlcommand = "select Treat_User_ID,Appointment_ID from treatmentrecord where Treatment_ID=@treat order by Appointment_ID desc";
+        string date="";
+        string begin="";
+        string sqlcommand = "select Treat_User_ID,Appointment_ID,Date,Begin from treatmentrecord,appointment where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment.ID order by Date desc,Begin desc";
         sqlOperation.AddParameterWithValue("treat", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand);
         while (reader.Read())
@@ -40,14 +42,17 @@ public class getallfirstappoint : IHttpHandler {
             else
             {
                 appointid = int.Parse(reader["Appointment_ID"].ToString());
+                date = reader["Date"].ToString();
+                begin = reader["Begin"].ToString();
                 break;
             }  
         }
         reader.Close();
         if (appointid != 0)
         {
-            string sqlcommand1 = "select Treat_User_ID from treatmentrecord where Treatment_ID=@treat and Appointment_ID<=@appoint order by Appointment_ID asc";
-            sqlOperation.AddParameterWithValue("@appoint", appointid);
+            string sqlcommand1 = "select Treat_User_ID from treatmentrecord,appointment where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment.ID and (Date<@date or (Date=@date and Begin<=@begin)) order by Date,Begin asc";
+            sqlOperation.AddParameterWithValue("@date", date);
+            sqlOperation.AddParameterWithValue("@begin", begin);
             MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(sqlcommand1);
             while (reader1.Read())
             {
@@ -56,10 +61,10 @@ public class getallfirstappoint : IHttpHandler {
                     count++;
                 }
 
-            } 
+            }
             reader1.Close();
         }
-       
+
         return count+"";
     }
 

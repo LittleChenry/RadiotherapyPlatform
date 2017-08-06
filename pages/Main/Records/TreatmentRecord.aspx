@@ -8,6 +8,7 @@
     <title>放射治疗记录</title>
      <!-- css -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/css/Main/Records.css"/>
+    <link rel="stylesheet" href="/RadiotherapyPlatform/css/Main/accerateappoint.css"/>
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/bootstrap/css/bootstrap.min.css"/>
     <!-- DataTables -->
@@ -268,23 +269,27 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        <div id="appoint" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document" style="width:700px;">
-                <div class="modal-content">
+        <div id="appoint"  class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document" style="width:800px;">
+                <div class="modal-content"  >
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">预约设备与时间窗口</h4>
                     </div>
-                    <div class="modal-body" style="overflow:hidden;">
+                    <div class="modal-body">
                         <div class="panel-row">
                             <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
-                            <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                            <div class="item col-xs-5">初始时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                            
                             <div class="col-xs-2">
                                 <button id="chooseProject" class="btn btn-default">查询该项</button>
                             </div>
                         </div>
-                        <div class="panel-row">
-                            <table id="apptiontTable" class="table table-bordered col-xs-12"></table>
+
+                        <div class="panel-row"  style="overflow:scroll;overflow-x:auto;overflow-y:auto">
+                            <table id="apptiontTable" class="table table-bordered " >
+                             
+                            </table>
                         </div>
                     </div>
                     <div class="modal-footer">

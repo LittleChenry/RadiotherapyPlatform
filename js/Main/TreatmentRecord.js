@@ -4,6 +4,8 @@ var userID;
 var require;
 var rowcount = 1;
 var obj = [];
+var interal=1;
+var times=20;
 function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
@@ -587,64 +589,114 @@ function save() {
    
 }
 //创建某设备某天的预约表
-function CreateCurrentEquipmentTbale(equiment, dateString) {
+function CreateCurrentEquipmentTbale(equiment, dateString,times) {
     var table = document.getElementById("apptiontTable");
     RemoveAllChild1(table);
-    if (equiment.length != 0) {
-    var tbody = document.createElement("tbody");
-    var i;
-    for (i = 0; i < Math.ceil(equiment.length / 5) * 5 ; i++) {
-        var count = i % 5;
-        var tr;
-        if (count == 0) {
-            tr = document.createElement("tr");
-        }
-        var td = document.createElement("td");
-        var sign = document.createElement("i");
-        if (i <= equiment.length - 1) {
-            td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
-            if (equiment[i].State == "0") {
-                if (getReplace(equiment[i], dateString)) {
-                    if (compareWithToday(dateString)) {
-                        sign.className = "";
-                        td.addEventListener("click", chooseItem, false);
-                    } else {
-                        td.style.backgroundColor = "#C1C1C1";
-                        sign.className = "fa fa-fw fa-ban td-sign";
-                        td.addEventListener("click", hasChosen, false);
-                    }
-                } else {
-                    td.style.backgroundColor = "#C1C1C1";
-                    sign.className = "fa fa-fw fa-exclamation-circle";
-                    td.addEventListener("click", hasChosen, false);
-                }
+    var $table = $("#apptiontTable");
+    $table.css("width", times * 100 + "px");
+    var context='<thead><tr><th>时刻/日期</th>'
+    for (var k = 0; k < times; k++) {
+        var datetemp = dateAdd(dateString, k);
+        context = context + '<th>' + datetemp + '</th>';
+    }
+    context = context + '</tr></thead>' ;
+    $table.append(context);
+    var timeinfo = equiment.timeinfo;
+    var length = timeinfo.length;
+    var context2='<tbody>';
+    for (var i = 0; i < length; i++) {
+        context2 = context2 + '<tr id="rows_' + i + '"  ><td  onclick="clickrow(this)">' + toTime(timeinfo[i].Begin) + ' - ' + toTime(timeinfo[i].End) + '</td></tr>';
+    }
+    context2 = context2 + '</tbody>';
+    $table.append(context2);
+    var equip = equiment.equipmentinfo;
+    var length2=equip.length;
+    for (var k = 0; k < length2; k++) {
+        var rest = k % length;
+        var $tr = $("#rows_" + rest);
+        if (k < length) {
+            if (equip[k].State == "0") {
+                var date=dataconverse(equip[k].Date);
+                var text = '<td id="' + equip[k].ID +'_'+date+'" onclick="chooseItem(this)"><i></i></td>';
             } else {
-                td.style.backgroundColor = "#C1C1C1";
-                sign.className = "fa fa-fw fa-ban td-sign";
-                td.addEventListener("click", hasChosen, false);
+                var date = dataconverse(equip[k].Date);
+                var text = '<td style="backgroundColor:#C1C1C1" onclick="choosebadItem(this)" id="' + equip[k].ID + '_' + date + '">已预约<i class="fa fa-fw fa-ban td-sign"></i></td>';
             }
-            var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
-            td.appendChild(text);
-            td.appendChild(sign);
-            tr.appendChild(td);
-        }
-        if (i == equiment.length) {
-            var k;
-            for (k = equiment.length; k <= Math.ceil(equiment.length / 5) * 5 - 1; k++) {
-                var td = document.createElement("td");
-                tr.appendChild(td);
+        } else {
+            if (equip[k].State == "0") {
+                var date = dataconverse(equip[k].Date);
+                var text = '<td id="' + equip[k].ID + '_' + date + '" onclick="chooseotherItem(this)"><i></i></td>';
+            } else {
+                var date = dataconverse(equip[k].Date);
+                var text = '<td style="backgroundColor:#C1C1C1" onclick="chooseotherItem(this)" id="' + equip[k].ID + '_' + date + '">已预约<i class="fa fa-fw fa-ban td-sign"></i></td>';
             }
         }
-        if (count == 4) {
-            tbody.appendChild(tr);
-        }
+        $tr.append(text);
     }
 
-    table.appendChild(tbody);
-} else {
-    table.innerHTML = "今天已经不可以预约了,改天吧！";
-
 }
+function choosebadItem() {
+    alert("此处不能预约");
+   
+}
+function dataconverse(date) {
+    var date = date.split(" ")[0];
+    date = date.replace( /\//g,"-");
+    return date;
+}
+function chooseotherItem() {
+   alert("只能点击初始天的预约");
+}
+function clickrow(element)
+{
+    $this = $(element);
+    $this.parent().siblings().removeClass("trchose");
+    $this.parent().addClass("trchose");
+    
+}
+function dateAdd(dd, n) {
+    var strs = new Array();
+    strs = dd.split("-");
+    var y = strs[0];
+    var m = strs[1];
+    var d = strs[2];
+    var t = new Date(y, m - 1, d);
+    var str = t.getTime() + n * (1000 * 60 * 60 * 24);
+    var newdate = new Date();
+    newdate.setTime(str);
+    var strYear = newdate.getFullYear();
+    var strDay = newdate.getDate();
+    if (strDay < 10) {
+        strDay = "0" + strDay;
+    }
+    var strMonth = newdate.getMonth() + 1;
+    if (strMonth < 10) {
+        strMonth = "0" + strMonth;
+    }
+    var strdate = strMonth + "-" + strDay;
+    return strdate;
+}
+function dateAdd2(dd, n) {
+    var strs = new Array();
+    strs = dd.split("-");
+    var y = strs[0];
+    var m = strs[1];
+    var d = strs[2];
+    var t = new Date(y, m - 1, d);
+    var str = t.getTime() + n * (1000 * 60 * 60 * 24);
+    var newdate = new Date();
+    newdate.setTime(str);
+    var strYear = newdate.getFullYear();
+    var strDay = newdate.getDate();
+    if (strDay < 10) {
+        strDay = "0" + strDay;
+    }
+    var strMonth = newdate.getMonth() + 1;
+    if (strMonth < 10) {
+        strMonth = "0" + strMonth;
+    }
+    var strdate = strYear+"-"+strMonth + "-" + strDay;
+    return strdate;
 }
 function compareWithToday(time) {
     var year = time.split("-")[0];
@@ -679,21 +731,63 @@ function getReplace(equiment, dateString) {
     return compare(fixtimebiaozhun, group);
 }
 
-function chooseItem() {
+function chooseItem(thiselement) {
+    var $element = $(thiselement);
     if (ChoseID() == null) {
-        if (this.lastChild.className) {
-            this.className = "";
-            this.lastChild.className = "";
+        if (thiselement.lastChild.className) {
+            thiselement.className = "";
+            thiselement.lastChild.className = "";
+            var k=interal-1;
+            while(k<times-1)
+            {
+                $element.nextAll().eq(k).removeClass();
+                $element.nextAll().eq(k).children(":last").removeClass();
+                k++;
+            }
+        
         } else {
-            this.className = "chosen";
-            this.lastChild.className = "fa fa-fw fa-check td-sign";
+            var k = interal - 1;
+            while (k < times-1) {
+                if ($element.nextAll().eq(k).children(":last").hasClass("fa fa-fw fa-ban td-sign")) {
+                    alert("不能在此外预约，请保证滚动预约没有障碍!");
+                    return;
+                }
+              
+                 k = k + interal;
+            }
+            k = interal - 1;
+            thiselement.className = "chosen";
+            thiselement.lastChild.className = "fa fa-fw fa-check td-sign";
+            while (k < times-1) {
+                var isweek=new Date($element.nextAll().eq(k).attr("ID").split("_")[1]).getDay();
+                if (!(isweek == 0 || isweek == 6)) {
+                    $element.nextAll().eq(k).addClass("chosen");
+                    $element.nextAll().eq(k).children(":last").addClass("fa fa-fw fa-check td-sign");
+                } else {
+                    if (isweek == 0) {
+                        k = k + 1;
+                        continue;
+                    }else
+                    {
+                        k = k + 2;
+                        continue;
+                    }
+                }
+                k=k + interal;
+            }
         }
     } else {
-        if (this.lastChild.className) {
-            this.className = "";
-            this.lastChild.className = "";
+        if (thiselement.lastChild.className) {
+            thiselement.className = "";
+            thiselement.lastChild.className = "";
+            var k = interal - 1;
+            while (k < times-1) {
+                $element.nextAll().eq(k).removeClass();
+                $element.nextAll().eq(k).children(":last").removeClass();
+                k = k + interal;
+            }
         } else {
-            alert("只能选择一个时间段！");
+            alert("请先取消其他选择！");
         }
     }
 
@@ -702,16 +796,26 @@ function ChoseID() {
     var td_id = null;
     var table = document.getElementById("apptiontTable");
     for (var i = 0; i < table.rows.length; i++) {
-        for (var j = 0; j < table.rows[i].cells.length; j++) {
-            var cell = table.rows[i].cells[j];
+            var cell = table.rows[i].cells[1];
             if (cell.className != "") {
                 td_id = cell.id;
+            }
+    }
+   return td_id;
+}
+function ChoseAllID() {
+    var td_id = "";
+    var table = document.getElementById("apptiontTable");
+    for (var i = 0; i < table.rows.length; i++) {
+        for (var j = 0; j < table.rows[i].cells.length; j++) {
+            var cell = table.rows[i].cells[j];
+            if (cell.className == "chosen") {
+                td_id = td_id + "," + cell.id.split("_")[0];
             }
         }
     }
     return td_id;
 }
-
 function hasChosen() {
     alert("该时间段不能预约！");
 }
@@ -735,25 +839,70 @@ function CreateNewAppiontTable(evt) {
         alert("不能选择小于当天的日期");
         return;
     }
+    var isweek = new Date(AppiontDate.value).getDay();
+    if (isweek == 0 || isweek == 6) {
+        alert("不能选择周六日作为起始天");
+        return;
+    }
     var date = AppiontDate.value;
+    var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
+    var treatmentID = treatmentgroup.split("=")[1];
+    var allfirstnumber = parseInt(getallfirst(treatmentID));
+    var totalnumber = document.getElementById("totalnumber").value;
+    var rest = parseInt(totalnumber) - allfirstnumber;
+    var splitday = getsplitday(treatmentID);
+    interal = parseInt(splitday);
+    times = computetimes(date, rest, splitday);
     var xmlHttp = new XMLHttpRequest();
-    var url = "GetEquipmentAppointment.ashx?equipmentID=" + equipmentID + "&date=" + date;
+    var url = "GetEquipmentAppointmentForAccer.ashx?equipmentID=" + equipmentID + "&date=" + date + "&times=" + times;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     thisObj = eval("(" + json + ")");
-    CreateCurrentEquipmentTbale(thisObj, date);
+    CreateCurrentEquipmentTbale(thisObj, date,times);
+}
+function computetimes(date, rest, splitday) {
+    var k = 1;
+    splitday = parseInt(splitday);
+    var count = 1;
+    date = dateAdd2(date, splitday);
+    while (k < rest) {
+        var isweek = new Date(date).getDay();
+        if (!(isweek == 0 || isweek == 6)) {
+            k = k + 1;
+            count = count + splitday;
+            date = dateAdd2(date, splitday);
+        } else {
+            if (isweek == 0) {
+                count=count+1;
+                date = dateAdd2(date, 1);
+            } else 
+            {
+                count = count + 2;
+                date =dateAdd2(date, 2);
+            }
+        }
+
+    }
+    return count;
+
+}
+function getsplitday(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "Getsplitday.ashx?treatid=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    return json;
 }
 function checkAllTable(treatmentID) {
-    var choseid = ChoseID();
-    var appoint = choseid.split("_");
-    var appointid = appoint[0];
+    var choseid = ChoseAllID();
     $.ajax({
         type: "POST",
         url: "AccerateAppoint.ashx",
         async: false,
         data: {
-            id: appointid,
+            appoint: choseid,
             treatid: treatmentID
 
         },
@@ -774,7 +923,7 @@ function checkAllTable(treatmentID) {
                 }
             }
             if (data == "busy") {
-                window.alert("预约时间被占,需要重新预约");
+                window.alert("预约部分被占,需要重新预约");
             }
             if (data == "failure") {
                 window.alert("申请失败");
