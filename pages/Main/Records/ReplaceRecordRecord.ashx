@@ -3,6 +3,7 @@
 using System;
 using System.Web;
 using System.Text;
+using System.Collections;
 public class ReplaceRecordRecord : IHttpHandler {
     private DataLayer sqlOperation = new DataLayer("sqlStr");
     public void ProcessRequest (HttpContext context) {
@@ -74,9 +75,20 @@ public class ReplaceRecordRecord : IHttpHandler {
         int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand1);
         string select1 = "select Progress from treatment where ID=@treatid";
         string progress = sqlOperation.ExecuteScalar(select1);
-        string strSqlCommand2 = "UPDATE  treatment  SET Progress=@progress where ID=@treatid ";
-        sqlOperation.AddParameterWithValue("@progress", progress + ",13");
-        int intSuccess2 = sqlOperation.ExecuteNonQuery(strSqlCommand2);
+        string[] group = progress.Split(',');
+        bool exists = ((IList)group).Contains("13");
+        
+        int intSuccess2 = 0;
+        if (!exists)
+        {
+            string strSqlCommand2 = "UPDATE  treatment  SET Progress=@progress where ID=@treatid ";
+            sqlOperation.AddParameterWithValue("@progress", progress + ",13");
+            intSuccess2 = sqlOperation.ExecuteNonQuery(strSqlCommand2);
+        }
+        else
+        {
+            intSuccess2 = 1;
+        }
         if (intSuccess > 0 && intSuccess2 > 0 && intSuccess1 > 0)
         {
 
