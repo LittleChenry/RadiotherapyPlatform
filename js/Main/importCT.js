@@ -10,6 +10,8 @@ function Init(evt) {
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
     getUserName();
+    document.getElementById("treatmentID").value = treatmentID;
+    document.getElementById("userID").value = userID;
     var patient = getfixPatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
@@ -36,6 +38,7 @@ function Init(evt) {
     if (isInArray(progress, '6')) {
         for (var i = 0; i < info.length; i++) {
             if (info[i].Treatmentname == patient.Treatmentname) {
+                
                 document.getElementById("DensityConversion").value = info[i].DensityConversion_ID;
                 document.getElementById("SequenceNaming").value = info[i].SequenceNaming;;
                 document.getElementById("Thickness").value = info[i].Thickness;
@@ -45,6 +48,9 @@ function Init(evt) {
                 document.getElementById("Number").value = info[i].Number;
                 document.getElementById("applyuser").innerHTML = info[i].username;
                 document.getElementById("time").innerHTML = info[i].OperateTime;
+                if (info[i].userID == userID || info[i].userID == "") {
+                    window.parent.document.getElementById("edit").removeAttribute("disabled");                   
+                }
 
             } else {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + 'CT图像信息填写</a></li>';

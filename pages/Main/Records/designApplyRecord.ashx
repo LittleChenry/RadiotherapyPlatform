@@ -40,7 +40,8 @@ public class designApplyRecord : IHttpHandler {
     }
     private string RecordPatientInformation(HttpContext context)
     {
-        try{
+        try
+        {
             string treatid = context.Request.Form["hidetreatID"];
             int treatID = Convert.ToInt32(treatid);
             //string userID = "1";
@@ -97,56 +98,77 @@ public class designApplyRecord : IHttpHandler {
                 DosagePriority = DosagePriority + type + "," + dv + ",<," + number + "," + outt + "," + prv + "," + num + ",<," + numbers + "," + pp + ";";
                 j++;
             }
-            string strSqlCommand = "INSERT INTO Design(RadiotherapyHistory,DosagePriority,Technology_ID,Equipment_ID,Application_User_ID,ApplicationTime) " +
-                                    "VALUES(@RadiotherapyHistory,@DosagePriority,@Technology_ID,@Equipment_ID,@Application_User_ID,@ApplicationTime)";
-           // sqlOperation.AddParameterWithValue("@ID", Count);
-            sqlOperation.AddParameterWithValue("@RadiotherapyHistory", context.Request.Form["Remarks"]);
-            sqlOperation.AddParameterWithValue("@Technology_ID", Convert.ToInt32(context.Request.Form["technology"]));
-            sqlOperation.AddParameterWithValue("@Equipment_ID", Convert.ToInt32(context.Request.Form["equipment"]));
-            sqlOperation.AddParameterWithValue("@DosagePriority", DosagePriority);
-            sqlOperation.AddParameterWithValue("@ApplicationTime", date1);
-            sqlOperation.AddParameterWithValue("@Application_User_ID", userid);
-            int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-            string maxnumber = "select ID from design where Application_User_ID=@Application_User_ID and ApplicationTime=@ApplicationTime";
-            sqlOperation1.AddParameterWithValue("@ApplicationTime", date1);
-            sqlOperation1.AddParameterWithValue("@Application_User_ID", userid);
-            string count = sqlOperation1.ExecuteScalar(maxnumber);
-            int Count = Convert.ToInt32(count);
             string select1 = "select Progress from treatment where ID=@treat";
             sqlOperation.AddParameterWithValue("@treat", treatID);
-            string progress = sqlOperation.ExecuteScalar(select1);
-            string[] group = progress.Split(',');
+            string progress1 = sqlOperation.ExecuteScalar(select1);
+            string[] group = progress1.Split(',');
             bool exists = ((IList)group).Contains("7");
-            int Success = 0;
             if (!exists)
             {
+                string strSqlCommand = "INSERT INTO Design(RadiotherapyHistory,DosagePriority,Technology_ID,Equipment_ID,Application_User_ID,ApplicationTime) " +
+                                        "VALUES(@RadiotherapyHistory,@DosagePriority,@Technology_ID,@Equipment_ID,@Application_User_ID,@ApplicationTime)";
+                // sqlOperation.AddParameterWithValue("@ID", Count);
+                sqlOperation.AddParameterWithValue("@RadiotherapyHistory", context.Request.Form["Remarks"]);
+                sqlOperation.AddParameterWithValue("@Technology_ID", Convert.ToInt32(context.Request.Form["technology"]));
+                sqlOperation.AddParameterWithValue("@Equipment_ID", Convert.ToInt32(context.Request.Form["equipment"]));
+                sqlOperation.AddParameterWithValue("@DosagePriority", DosagePriority);
+                sqlOperation.AddParameterWithValue("@ApplicationTime", date1);
+                sqlOperation.AddParameterWithValue("@Application_User_ID", userid);
+                int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
+                string maxnumber = "select ID from design where Application_User_ID=@Application_User_ID and ApplicationTime=@ApplicationTime";
+                sqlOperation1.AddParameterWithValue("@ApplicationTime", date1);
+                sqlOperation1.AddParameterWithValue("@Application_User_ID", userid);
+                string count = sqlOperation1.ExecuteScalar(maxnumber);
+                int Count = Convert.ToInt32(count);
+                string select = "select Progress from treatment where ID=@treat";
+                sqlOperation.AddParameterWithValue("@treat", treatID);
+                string progress = sqlOperation.ExecuteScalar(select);
+
+                int Success = 0;
+
                 string inserttreat = "update treatment set Design_ID=@Design_ID,Progress=@progress where ID=@treat";
                 sqlOperation2.AddParameterWithValue("@progress", progress + ",7");
                 sqlOperation2.AddParameterWithValue("@Design_ID", Count);
                 sqlOperation2.AddParameterWithValue("@treat", treatID);
                 Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+
+                if (intSuccess > 0 && Success > 0)
+                {
+                    return "success";
+                }
+                else
+                {
+                    return "failure";
+                }
             }
             else
             {
-                string inserttreat = "update treatment set Design_ID=@Design_ID where ID=@treat";
-                sqlOperation2.AddParameterWithValue("@Design_ID", Count);
-                sqlOperation2.AddParameterWithValue("@treat", treatID);
-                Success = sqlOperation2.ExecuteNonQuery(inserttreat);
-            }
-            if (intSuccess > 0 && Success > 0)
-            {
-                return "success";
-            }
-            else
-            {
-                return "failure";
+                string select = "select design.ID from treatment,design where treatment.ID=@treat and design.ID=treatment.Design_ID";
+                sqlOperation.AddParameterWithValue("@treat", treatID);
+                string design = sqlOperation.ExecuteScalar(select);
+                string strSqlCommand = "update Design set RadiotherapyHistory=@RadiotherapyHistory,DosagePriority=@DosagePriority,Technology_ID=@Technology_ID,Equipment_ID=@Equipment_ID,Application_User_ID=@Application_User_ID,ApplicationTime=@ApplicationTime where design.ID=@designid"; 
+                // sqlOperation.AddParameterWithValue("@ID", Count);
+                sqlOperation.AddParameterWithValue("@designid", Convert.ToInt32(design));
+                sqlOperation.AddParameterWithValue("@RadiotherapyHistory", context.Request.Form["Remarks"]);
+                sqlOperation.AddParameterWithValue("@Technology_ID", Convert.ToInt32(context.Request.Form["technology"]));
+                sqlOperation.AddParameterWithValue("@Equipment_ID", Convert.ToInt32(context.Request.Form["equipment"]));
+                sqlOperation.AddParameterWithValue("@DosagePriority", DosagePriority);
+                sqlOperation.AddParameterWithValue("@ApplicationTime", date1);
+                sqlOperation.AddParameterWithValue("@Application_User_ID", userid);
+                int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
+                if (intSuccess > 0)
+                {
+                    return "success";
+                }
+                else
+                {
+                    return "failure";
+                }
             }
         }
         catch (System.Exception Ex1)
         {
             return "error";
         }
-
-   
-}
+    }
 }

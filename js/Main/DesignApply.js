@@ -1,12 +1,12 @@
 ﻿window.addEventListener("load", Init, false);
 
-
+var treatID;
 
 var userName;
 var userID;
 var aa = 0;
 var bb = 0;
-
+var ti = 0;
 function Init(evt) {
 
 
@@ -21,8 +21,10 @@ function Init(evt) {
     //此处为分页代码
     //alert("jy");
     //document.getElementById("username").value = userID; 
-    var treatID = window.location.search.split("=")[1];
+    treatID = window.location.search.split("=")[1];
     var patient = getPatientInfo(treatID);
+    document.getElementById("userID").value = userID;
+    document.getElementById("hidetreatID").value = treatID;
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
     document.getElementById("age").innerHTML = patient.Age;
@@ -43,6 +45,7 @@ function Init(evt) {
     $("#current-tab").text(patient.Treatmentdescribe + "计划申请");
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '7')) {
+        ti = 1;
         var designInfo = getDesignInfo(treatID);
         for (var i = 0; i < designInfo.length; i++) {
             if (patient.Treatmentname == designInfo[i].treatmentname) {
@@ -53,6 +56,9 @@ function Init(evt) {
                 document.getElementById("equipment").value = designInfo[i].equipment;
                 document.getElementById("applyuser").innerHTML = designInfo[i].doctor;
                 document.getElementById("time").innerHTML = designInfo[i].apptime;
+                if (designInfo[i].userID == userID) {
+                    window.parent.document.getElementById("edit").removeAttribute("disabled");
+                }
             } else {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].Treatmentdescribe + '计划申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>' +
@@ -816,8 +822,24 @@ function dateformat(format) {
 }
 function remove() {
     document.getElementById("Remarks").removeAttribute("disabled");
-     //document.getElementById("Priority").removeAttribute("disabled");
+    //document.getElementById("Priority").removeAttribute("disabled");
     //document.getElementById("Dosage").removeAttribute("disabled");
     document.getElementById("technology").removeAttribute("disabled");
     document.getElementById("equipment").removeAttribute("disabled");
+    if (ti == 1) {
+        var patient = getPatientInfo(treatID);
+        var designInfo = getDesignInfo(treatID);
+        var item = "Priority";
+        var table = document.getElementById(item);
+        var item1 = "Dosage";
+        var table1 = document.getElementById(item1);
+        for (var i = 0; i < designInfo.length; i++) {
+            if (patient.Treatmentname == designInfo[i].treatmentname) {
+                addDosagePriority1(designInfo[i].DosagePriority);
+                addDosage1(designInfo[i].Dosage);
+                table.rows[0].cells[table.rows[0].cells.length - 1].children[0].href = "javascript:addDosagePriority();";
+                table1.rows[0].cells[table1.rows[0].cells.length - 1].children[0].href = "javascript:addDosage();";
+            }
+        }
+    }
 }

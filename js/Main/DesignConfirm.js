@@ -71,6 +71,10 @@ function Init(evt) {
                     document.getElementById("state").value = charge2(designInfo[i].State);
                     document.getElementById("applyuser").innerHTML = designInfo[i].ConfirmUser;
                     document.getElementById("time").innerHTML = designInfo[i].ConfirmTime;
+                    if (designInfo[i].userID == userID) {
+                        window.parent.document.getElementById("edit").removeAttribute("disabled");
+
+                    }
                 }
             }
         }

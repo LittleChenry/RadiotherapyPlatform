@@ -105,7 +105,7 @@ public class designConfirmInfo : IHttpHandler {
                   "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() +
                    "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() +
                    "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\",\"Grid_ID\":\"" + reader["gridname"].ToString() + "\",\"Algorithm_ID\":\"" + reader["algorithmname"].ToString() +
-                   "\",\"Feasibility\":\"" + reader["Feasibility"].ToString() + "\"}");
+                   "\",\"Feasibility\":\"" + reader["Feasibility"].ToString() + "\",\"userID\":\"" + reader["Confirm_User_ID"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");

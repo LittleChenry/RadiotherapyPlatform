@@ -3,6 +3,8 @@ window.addEventListener("load", Init, false);
 
 var userName;
 var userID;
+var ti = 0;
+var treatID;
 function Init(evt) {
 
     //获得当前执行人姓名与ID
@@ -16,9 +18,11 @@ function Init(evt) {
     //此处为分页代码
     //alert("jy");
     //document.getElementById("username").value = userID; 
-    var treatID = window.location.search.split("=")[1];
+    treatID = window.location.search.split("=")[1];
 
     var patient = getPatientInfo(treatID);
+    document.getElementById("userID").value = userID;
+    document.getElementById("hidetreatID").value = treatID;
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
     document.getElementById("age").innerHTML = patient.Age;
@@ -40,11 +44,12 @@ function Init(evt) {
     $("#current-tab").text(patient.Treatmentdescribe + "计划提交");
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '9')) {
+        ti = 1;
         for (var i = 0; i < designInfo.length; i++) {
             if (designInfo[i].Treatmentname == patient.Treatmentname) {
                 document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
-                readDosagePriority(designInfo[i].DosagePriority);
-                readDosage(designInfo[i].Dosage);
+                addDosagePriority1(designInfo[i].DosagePriority);
+                addDosage1(designInfo[i].Dosage);
                 document.getElementById("technology").innerHTML = designInfo[i].technology;
                 document.getElementById("equipment").innerHTML = designInfo[i].equipment;
                 document.getElementById("ApplicationUser").innerHTML = designInfo[i].doctor;
@@ -62,6 +67,10 @@ function Init(evt) {
                 document.getElementById("Feasibility").value = designInfo[i].Feasibility;
                 document.getElementById("applyuser").innerHTML = designInfo[i].SubmitUser;
                 document.getElementById("time").innerHTML = designInfo[i].SubmitTime;
+                if (designInfo[i].userID == userID) {
+                    window.parent.document.getElementById("edit").removeAttribute("disabled");
+     
+                }
             } else {
                 if (designInfo[i].SubmitUser == "") {
                     continue;
@@ -81,9 +90,9 @@ function Init(evt) {
             }
         }
     } else {
-        document.getElementById("userID").value = userID;
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("time").innerHTML = getNowFormatDate();
+        document.getElementById("userID").value = userID;        
         document.getElementById("hidetreatID").value = treatID;
             for (var i = 0; i < designInfo.length; i++) {
                 if (designInfo[i].Treatmentname != patient.Treatmentname) {
@@ -541,5 +550,6 @@ function remove() {
     document.getElementById("ControlPoint").removeAttribute("disabled");
     document.getElementById("Grid").removeAttribute("disabled");
     document.getElementById("Algorithm").removeAttribute("disabled");
-    document.getElementById("Feasibility").removeAttribute("disabled");    
+    document.getElementById("Feasibility").removeAttribute("disabled");
+    
 }

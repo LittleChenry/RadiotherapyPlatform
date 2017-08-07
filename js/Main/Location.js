@@ -13,7 +13,8 @@ function Init(evt) {
     getUserName();
     var treatID = window.location.search.split("=")[1];
     //document.getElementById("treatID").innerHTML = treatID;
-
+    document.getElementById("userID").value = userID;
+    document.getElementById("hidetreatID").value = treatID;
     var patient = getPatientInfo(treatID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
@@ -51,7 +52,9 @@ function Init(evt) {
     if (isInArray(progress, '5')) {
         for (var i = 0; i < locationInfo.length; i++) {
             if (patient.Treatmentname == locationInfo[i].Treatmentname) {
-       
+                if (locationInfo[i].userID == userID || locationInfo[i].userID == "") {
+                    window.parent.document.getElementById("edit").removeAttribute("disabled");
+                }
                 document.getElementById("remark").value = locationInfo[i].Remarks;
                 document.getElementById("Remarks").value = locationInfo[i].Remarksrecord;
                 var add = document.getElementsByName("add");

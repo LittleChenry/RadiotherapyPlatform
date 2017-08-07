@@ -1,6 +1,7 @@
 ﻿window.addEventListener("load", Init, false);
 var userName;
 var userID;
+var ti = 0;
 var number = 0;
 var obj = [];
 function Init(evt) {
@@ -51,6 +52,7 @@ function Init(evt) {
     var progress = patient.Progress.split(",");
 
     if (isInArray(progress, '3')) {
+        ti = 1;
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatname == patient.Treatmentname) {
                 document.getElementById("scanmethod").value = info[i].scanmethodID;
@@ -70,6 +72,10 @@ function Init(evt) {
                 document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
                 document.getElementById("applyuser").innerHTML = info[i].username;
                 document.getElementById("time").innerHTML = info[i].ApplicationTime;
+                if (info[i].userID == userID) {
+                    window.parent.document.getElementById("edit").removeAttribute("disabled");
+                    document.getElementById("idforappoint").value = info[i].appointid;                 
+                }
             } else {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '模拟定位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
@@ -763,6 +769,8 @@ function remove() {
     document.getElementById("yes").removeAttribute("disabled");
     document.getElementById("No").removeAttribute("disabled");
     document.getElementById("addmethod").removeAttribute("disabled");
-    document.getElementById("appointtime").removeAttribute("disabled");
-    document.getElementById("chooseappoint").removeAttribute("disabled");
+    if (ti == 0) {
+        document.getElementById("appointtime").removeAttribute("disabled");
+        document.getElementById("chooseappoint").removeAttribute("disabled");
+    }
 }

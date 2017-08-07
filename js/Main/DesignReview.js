@@ -88,6 +88,10 @@ function Init(evt) {
                     document.getElementById("IsExport").innerHTML = charge2(reviewInfo[i].IsExport);
                     document.getElementById("applyuser").innerHTML = reviewInfo[i].name;
                     document.getElementById("time").innerHTML = reviewInfo[i].ReviewTime;
+                    if (reviewInfo[i].userID == userID) {
+                        window.parent.document.getElementById("edit").removeAttribute("disabled");
+
+                    }
                 }
             }
         }

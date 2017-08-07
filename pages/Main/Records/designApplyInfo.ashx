@@ -60,7 +60,7 @@ public class designApplyInfo : IHttpHandler {
             string Dosage = Do.Split(new char[1] { '&' })[1];
             backText.Append("{\"apptime\":\"" + date1 +
                  "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"designID\":\"" + reader["designid"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
-                  "\",\"technology\":\"" + reader["teID"].ToString() + "\",\"equipment\":\"" + reader["eqID"].ToString() + "\",\"technologyname\":\"" + reader["tname"].ToString() + "\",\"equipmentname\":\"" + reader["eqname"].ToString() +
+                  "\",\"technology\":\"" + reader["teID"].ToString() + "\",\"equipment\":\"" + reader["eqID"].ToString() + "\",\"technologyname\":\"" + reader["tname"].ToString() + "\",\"equipmentname\":\"" + reader["eqname"].ToString() +"\",\"userID\":\"" + reader["Application_User_ID"].ToString()+
                   "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\"}");
 
             if (i < count)

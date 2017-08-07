@@ -89,7 +89,7 @@ public class locationRecordRecord : IHttpHandler {
             DateTime datetime = DateTime.Now;
             //bool state = false;
            
-            string strSqlCommand = "UPDATE  location  SET ScanPart_ID=@ScanPart_ID,ScanMethod_ID=@ScanMethod_ID,RemarksRecords=@RemarksRecords,EnhanceMethod_ID=@EnhanceMethod_ID,Enhance=@Enhance,Remarks=@Remarks,LowerBound=@LowerBound,UpperBound=@UpperBound,LocationRequirements_ID=@LocationRequirements_ID,CT_ID=@locationID,CTPictures=@picture,Thickness=@thickness,Number=@number,ReferenceNumber=@ReferenceNumber,ReferenceScale=@ReferenceScale,OperateTime=@datetime,Operate_User_ID=@userid where location.ID=@locationID";
+            string strSqlCommand = "UPDATE  location  SET ScanPart_ID=@ScanPart_ID,ScanMethod_ID=@ScanMethod_ID,RemarksRecords=@RemarksRecords,EnhanceMethod_ID=@EnhanceMethod_ID,Enhance=@Enhance,Remarks=@Remarks,LowerBound=@LowerBound,UpperBound=@UpperBound,LocationRequirements_ID=@LocationRequirements_ID,CTPictures=@picture,Thickness=@thickness,Number=@number,ReferenceNumber=@ReferenceNumber,ReferenceScale=@ReferenceScale,OperateTime=@datetime,Operate_User_ID=@userid where location.ID=@locationID";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@locationID", LocationID);
             sqlOperation.AddParameterWithValue("@thickness", context.Request.Form["Thickness"]);
@@ -132,13 +132,16 @@ public class locationRecordRecord : IHttpHandler {
                 string strSqlCommand2 = "INSERT INTO ct(ID) VALUES(@loc)";
                 sqlOperation2.AddParameterWithValue("@loc", LocationID);
                 intSuccess = sqlOperation2.ExecuteNonQuery(strSqlCommand2);
+                string strSqlCommand4 = "UPDATE  location  SET CT_ID=@loc where location.ID=@locationID";
+                sqlOperation2.AddParameterWithValue("@locationID", LocationID);
+                int intSuccesss = sqlOperation2.ExecuteNonQuery(strSqlCommand4);
                 string strSqlCommand3 = "UPDATE  treatment  SET Progress=@Progress where Treatment.ID=@tr";
                 sqlOperation3.AddParameterWithValue("@Progress", progress + ",5");
                 sqlOperation3.AddParameterWithValue("@tr", treatID);
                 intSuccess3 = sqlOperation3.ExecuteNonQuery(strSqlCommand3);
             }
             else 
-            {
+            {              
                 intSuccess = 1;
                 intSuccess3 = 1; 
             }

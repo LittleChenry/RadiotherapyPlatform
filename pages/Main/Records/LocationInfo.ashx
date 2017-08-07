@@ -89,7 +89,7 @@ public class LocationInfo : IHttpHandler
 
                 }
                 backText.Append("{\"Thickness\":\"" + reader["Thickness"].ToString() + "\",\"ReferenceNumber\":\"" + reader["ReferenceNumber"].ToString() +"\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString()+
-                        "\",\"ReferenceScale\":\"" + reader["ReferenceScale"].ToString() + "\",\"Number\":\"" + reader["Number"].ToString() +
+                        "\",\"ReferenceScale\":\"" + reader["ReferenceScale"].ToString() + "\",\"Number\":\"" + reader["Number"].ToString() + "\",\"userID\":\"" + reader["opid"].ToString() +
                          "\",\"modelID\":\"" + reader["mname"].ToString() + "\",\"requireID\":\"" + reader["LocationRequirements_ID"].ToString() + "\",\"operate\":\"" + operate +
                          "\",\"body\":\"" + reader["BodyPosition"].ToString() + "\",\"fixedEquipment\":\"" + reader["fename"].ToString() +
                          "\",\"ApplicationTime\":\"" + date1 + "\",\"ApplicationUser\":\"" + reader["doctor"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +

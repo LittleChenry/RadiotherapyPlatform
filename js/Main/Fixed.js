@@ -19,6 +19,8 @@ function Init(evt) {
     getUserName();
     var treatID = window.location.search.split("=")[1];
     var patient = getPatientInfo(treatID);
+    document.getElementById("hidetreatID").value = treatID;
+    document.getElementById("userID").value = userID;
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
     //document.getElementById("idnumber").innerHTML = patient.IdentificationNumber;
@@ -45,6 +47,10 @@ function Init(evt) {
     if (isInArray(progress, '4')) {
         for (var i = 0; i < fixedInfo.fixedInfo.length; i++) {
             if (patient.Treatmentname == fixedInfo.fixedInfo[i].Treatmentname) {
+                if (fixedInfo.fixedInfo[i].userID == userID || fixedInfo.fixedInfo[i].userID =="") {
+                    window.parent.document.getElementById("edit").removeAttribute("disabled");
+                }
+                
                 document.getElementById("modelselect").value =  fixedInfo.fixedInfo[i].modelID;
                 document.getElementById("specialrequest").value = fixedInfo.fixedInfo[i].requireID;
                 document.getElementById("fixEquip").value = fixedInfo.fixedInfo[i].fixedEquipment;
@@ -402,16 +408,18 @@ function save() {
         async: false,
         contentType: false,
         success: function (data) {
-            alert("保存成功");
+            if (data == "success") {
+                alert("保存成功");
+            } else {
+                alert("保存失败");
+                return false;
+            }
             window.location.reload();
         },
         error: function (e) {
             window.location.href = "Error.aspx";
         },
-        failure: function (e) {
-            alert("更新失败！！");
-            return false;
-        }
+       
     });
 }
 function remove() {

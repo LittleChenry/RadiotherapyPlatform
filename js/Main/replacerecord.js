@@ -144,6 +144,10 @@ function Init(evt) {
                document.getElementById("Remarks").value = info[i].Remarks;
                document.getElementById("operator").innerHTML = info[i].username;
                document.getElementById("date").innerHTML = info[i].OperateTime;
+               if (info[i].userID == userID) {
+                   window.parent.document.getElementById("edit").removeAttribute("disabled");
+
+               }
            } else {
                var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '复位记录</a></li>';
                var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'

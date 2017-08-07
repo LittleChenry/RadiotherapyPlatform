@@ -63,13 +63,15 @@ public class FixInfo : IHttpHandler
                     date2 = dt2.ToString("yyyy-MM-dd HH:mm");
                 }
                 string operate = null;
+                string operateid = null;
                 if (reader["Operate_User_ID"] is DBNull)
                 {
-
-                    operate = null;
+                    operateid = "";
+                    operate = "";
                 }
                 else
                 {
+                    operateid = reader["Operate_User_ID"].ToString();
                     string sqlCommand3 = "select user.Name from fixed,user,treatment where fixed.ID=treatment.Fixed_ID and fixed.Operate_User_ID =user.ID and fixed.OperateTime = @OperateTime and treatment.Patient_ID=@patient";
                     sqlOperation1.AddParameterWithValue("@treatid", treatID);
                     sqlOperation1.AddParameterWithValue("@patient", patientid);
@@ -90,7 +92,7 @@ public class FixInfo : IHttpHandler
                     headname = sqlOperation1.ExecuteScalar(sqlCommand4);
 
                 }
-                backText.Append("{\"modelID\":\"" + reader["Model_ID"].ToString() + "\",\"requireID\":\"" + reader["FixedRequirements_ID"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() +
+                backText.Append("{\"modelID\":\"" + reader["Model_ID"].ToString() + "\",\"requireID\":\"" + reader["FixedRequirements_ID"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"userID\":\"" + operateid +
                      "\",\"body\":\"" + reader["BodyPosition"].ToString() + "\",\"fixedEquipment\":\"" + reader["FixedEquipment_ID"].ToString() + "\",\"operate\":\"" + operate + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
                      "\",\"ApplicationTime\":\"" + date1 + "\",\"ApplicationUser\":\"" + reader["doctor"].ToString() + "\",\"BodyPositionDetail\":\"" + reader["BodyPositionDetail"].ToString() + "\",\"headrest\":\"" + reader["HeadRest_ID"].ToString() +
                      "\",\"AnnexDescription\":\"" + reader["AnnexDescription"].ToString() + "\",\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"Pictures\":\"" + reader["Pictures"].ToString() + "\",\"OperateTime\":\"" + date2 + "\",\"headrestname\":\"" + headname+

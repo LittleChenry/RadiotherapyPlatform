@@ -134,7 +134,7 @@ public class designSubmitInfo : IHttpHandler {
                    "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() +
                    "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\",\"Grid_ID\":\"" + reader["Grid_ID"].ToString() + "\",\"Algorithm_ID\":\"" + reader["Algorithm_ID"].ToString() +
                    "\",\"Feasibility\":\"" + reader["Feasibility"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"gridname\":\""+ gridname +
-                   "\",\"PlanSystemname\":\"" + planname + "\",\"algorithmname\":\"" + alname + "\",\"designID\":\"" + reader["designid"].ToString() + "\"}");
+                   "\",\"PlanSystemname\":\"" + planname + "\",\"algorithmname\":\"" + alname + "\",\"designID\":\"" + reader["designid"].ToString() + "\",\"userID\":\"" + reader["Submit_User_ID"].ToString() + "\"}");
 
             if (i < count)
             {

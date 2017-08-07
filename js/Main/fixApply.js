@@ -4,6 +4,7 @@ var userID;
 var number = 0;
 var obj = [];
 var treatID;
+var ti = 0;
 function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
@@ -40,7 +41,7 @@ function Init(evt) {
     $("#current-tab").text(patient.Treatmentdescribe + "体位固定申请");
     var groupprogress = patient.Progress.split(",");
     if (contains(groupprogress, "2")) {
-       
+        ti = 1;
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatmentname == patient.Treatmentname) {
                 document.getElementById("modelselect").value = info[i].materialID;
@@ -51,6 +52,11 @@ function Init(evt) {
                 document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
                 document.getElementById("applyuser").innerHTML = info[i].username;
                 document.getElementById("time").innerHTML = info[i].ApplicationTime;
+                
+                if (info[i].userID == userID) {
+                    window.parent.document.getElementById("edit").removeAttribute("disabled");
+                    document.getElementById("idforappoint").value = info[i].appointid;
+                }
             } else {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '体位固定申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
@@ -563,10 +569,12 @@ function compareWithToday(time) {
 }
 function remove() {
     document.getElementById("modelselect").removeAttribute("disabled");
-    document.getElementById("specialrequest").removeAttribute("disabled"); 
+    document.getElementById("specialrequest").removeAttribute("disabled");
     document.getElementById("fixEquip").removeAttribute("disabled");
     document.getElementById("Remarks").removeAttribute("disabled");
     document.getElementById("bodyPost").removeAttribute("disabled");
-    document.getElementById("appointtime").removeAttribute("disabled");
-    document.getElementById("chooseappoint").removeAttribute("disabled");
+    if (ti == 0) {
+        document.getElementById("appointtime").removeAttribute("disabled");
+        document.getElementById("chooseappoint").removeAttribute("disabled");
+    }
 }
