@@ -3,6 +3,7 @@ var userName;
 var userID;
 var number = 0;
 var obj = [];
+var flag = 0;
 function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
@@ -31,12 +32,17 @@ function Init(evt) {
     $("#current-tab").text(patient.Treatmentdescribe + "复位申请");
     var groupprogress = patient.Progress.split(",");
     if (contains(groupprogress, "12")) {
+        flag = 1;
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatmentname == patient.Treatmentname) {
                 document.getElementById("replacementrequire").value = info[i].requirement;
                 document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date.split(" ")[0] + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
                 document.getElementById("applyuser").innerHTML = info[i].username;
                 document.getElementById("time").innerHTML = info[i].ApplicationTime;
+                if (info[i].userid == userID) {
+                    window.parent.document.getElementById("edit").removeAttribute("disabled");
+                    document.getElementById("idforappoint").value = info[i].appointid;
+                }
             } else {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '复位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
@@ -134,7 +140,7 @@ function save() {
         window.alert("请填写复位要求");
         return false;
     }
-    if (document.getElementById("idforappoint").value == "0") {
+    if (document.getElementById("idforappoint").value == "") {
         window.alert("请预约时间与设备");
         return false;
     }
@@ -168,7 +174,7 @@ function save() {
                 return false;
             }
         },
-        error: function () {
+        error: function (data) {
             alert("error");
         }
     });
@@ -404,5 +410,7 @@ function getrequireItem() {
 }
 function remove() {
     document.getElementById("replacementrequire").removeAttribute("disabled");
-    document.getElementById("chooseappoint").removeAttribute("disabled");
+    if (flag == 0) {
+        document.getElementById("chooseappoint").removeAttribute("disabled");
+    }
 }

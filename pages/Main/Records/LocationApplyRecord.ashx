@@ -120,18 +120,17 @@ public class LocationApplyRecord : IHttpHandler {
             }
 
         }else{
-            string time = DateTime.Now.ToString();
-            string strSqlCommand = "INSERT INTO location(Appointment_ID,ScanPart_ID,ScanMethod_ID,UpperBound,Enhance,EnhanceMethod_ID,LowerBound,LocationRequirements_ID,Remarks,Application_User_ID,ApplicationTime) " +
-                                            "VALUES(@Appointment_ID,@ScanPart_ID,@ScanMethod_ID,@UpperBound,@Enhance,@EnhanceMethod_ID,@LowerBound,@LocationRequirements_ID,@Remarks,@Application_User_ID,@ApplicationTime)";
-            sqlOperation1.AddParameterWithValue("@Appointment_ID", Convert.ToInt32(appoint));
+            string locateapply = "select Location_ID from treatment where treatment.ID=@treatid";
+            sqlOperation.AddParameterWithValue("@treatid", treatid);
+            int locateapplyid = int.Parse(sqlOperation.ExecuteScalar(locateapply));
+            string strupdate = "update location set ScanPart_ID=@ScanPart_ID,ScanMethod_ID=@ScanMethod_ID,UpperBound=@UpperBound,LowerBound=@LowerBound,Enhance=@Enhance,EnhanceMethod_ID=@EnhanceMethod_ID,LocationRequirements_ID=@LocationRequirements_ID,Remarks=@Remarks where ID=@locateapplyid";
+            sqlOperation1.AddParameterWithValue("@locateapplyid", locateapplyid);
             sqlOperation1.AddParameterWithValue("@ScanPart_ID", Convert.ToInt32(scanpart));
             sqlOperation1.AddParameterWithValue("@ScanMethod_ID", Convert.ToInt32(scanmethod));
             sqlOperation1.AddParameterWithValue("@UpperBound", up);
-            sqlOperation1.AddParameterWithValue("@ApplicationTime", time);
             sqlOperation1.AddParameterWithValue("@LowerBound", down);
             sqlOperation1.AddParameterWithValue("@LocationRequirements_ID", Convert.ToInt32(requirement));
             sqlOperation1.AddParameterWithValue("@Remarks", remark);
-            sqlOperation1.AddParameterWithValue("@Application_User_ID", Convert.ToInt32(user));
             sqlOperation1.AddParameterWithValue("@Enhance", Convert.ToInt32(add));
             if (Convert.ToInt32(add) == 1)
             {
@@ -142,20 +141,8 @@ public class LocationApplyRecord : IHttpHandler {
                 sqlOperation1.AddParameterWithValue("@EnhanceMethod_ID", null);
             }
 
-            int Success2 = sqlOperation1.ExecuteNonQuery(strSqlCommand);
-
-
-            string maxnumber = "select ID from  location where Appointment_ID=@appointid and ApplicationTime=@Application_User_ID order by ID desc";
-            sqlOperation.AddParameterWithValue("@Application_User_ID", time);
-            sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));
-            string maxfixid = sqlOperation.ExecuteScalar(maxnumber);
-            
-            //将诊断ID填入treatment表
-            string inserttreat = "update treatment set Location_ID=@Location_ID where ID=@treat";
-            sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
-            sqlOperation.AddParameterWithValue("@Location_ID", Convert.ToInt32(maxfixid));
-            int Success = sqlOperation.ExecuteNonQuery(inserttreat);
-            if (Success > 0 && Success2 > 0)
+            int Success2 = sqlOperation1.ExecuteNonQuery(strupdate);
+            if ( Success2 > 0)
             {
                 return "success";
             }

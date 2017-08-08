@@ -96,6 +96,7 @@ function Init(evt) {
             document.getElementById("distance2").value = "";
         } else {
             document.getElementById("distance2").value = parseInt(document.getElementById("Result2").value) - parseInt(document.getElementById("Movement2").value);
+        
         }
     });
     $('#Result3').bind('input propertychange', function () {
@@ -105,19 +106,86 @@ function Init(evt) {
             document.getElementById("distance3").value = parseInt(document.getElementById("Result3").value) - parseInt(document.getElementById("Movement3").value);
         }
     });
+
+    $('#OriginCenter1').bind('input propertychange', function () {
+        if (document.getElementById("PlanCenter1").value == "") {
+            document.getElementById("Movement1").value = "";
+            document.getElementById("distance1").value = "";
+        } else {
+            document.getElementById("Movement1").value = parseInt(document.getElementById("OriginCenter1").value) - parseInt(document.getElementById("PlanCenter1").value);
+            document.getElementById("distance1").value = parseInt(document.getElementById("Result1").value) - parseInt(document.getElementById("Movement1").value);
+        }
+    });
+    $('#OriginCenter2').bind('input propertychange', function () {
+        if (document.getElementById("PlanCenter2").value == "") {
+            document.getElementById("Movement2").value = "";
+            document.getElementById("distance2").value = "";
+        } else {
+            document.getElementById("Movement2").value = parseInt(document.getElementById("OriginCenter2").value) - parseInt(document.getElementById("PlanCenter2").value);
+            document.getElementById("distance2").value = parseInt(document.getElementById("Result2").value) - parseInt(document.getElementById("Movement2").value);
+        }
+    });
+    $('#OriginCenter3').bind('input propertychange', function () {
+        if (document.getElementById("PlanCenter3").value == "") {
+            document.getElementById("Movement3").value = "";
+            document.getElementById("distance3").value = "";
+        } else {
+            document.getElementById("Movement3").value = parseInt(document.getElementById("OriginCenter3").value) - parseInt(document.getElementById("PlanCenter3").value);
+            document.getElementById("distance3").value = parseInt(document.getElementById("Result3").value) - parseInt(document.getElementById("Movement3").value);
+        }
+    });
+    $('#PlanCenter1').bind('input propertychange', function () {
+        if (document.getElementById("OriginCenter1").value == "") {
+            document.getElementById("Movement1").value = "";
+            document.getElementById("distance1").value = "";
+        } else {
+            document.getElementById("Movement1").value = parseInt(document.getElementById("OriginCenter1").value) - parseInt(document.getElementById("PlanCenter1").value);
+            document.getElementById("distance1").value = parseInt(document.getElementById("Result1").value) - parseInt(document.getElementById("Movement1").value);
+        }
+    });
+    $('#PlanCenter2').bind('input propertychange', function () {
+        if (document.getElementById("OriginCenter2").value == "") {
+            document.getElementById("Movement2").value = "";
+            document.getElementById("distance2").value = "";
+        } else {
+            document.getElementById("Movement2").value = parseInt(document.getElementById("OriginCenter2").value) - parseInt(document.getElementById("PlanCenter2").value);
+            document.getElementById("distance2").value = parseInt(document.getElementById("Result2").value) - parseInt(document.getElementById("Movement2").value);
+        }
+    });
+    $('#PlanCenter3').bind('input propertychange', function () {
+        if (document.getElementById("OriginCenter3").value == "") {
+            document.getElementById("Movement3").value = "";
+            document.getElementById("distance3").value = "";
+        } else {
+            document.getElementById("Movement3").value = parseInt(document.getElementById("OriginCenter3").value) - parseInt(document.getElementById("PlanCenter3").value);
+            document.getElementById("distance3").value = parseInt(document.getElementById("Result3").value) - parseInt(document.getElementById("Movement3").value);
+        }
+    });
     var info = getreplacerecordInfomation(treatmentID);
     $("#current-tab").text(patient.Treatmentdescribe + "复位记录");
     var groupprogress = patient.Progress.split(","); 
     if (contains(groupprogress, "13")) {
        for (var i = 0; i < info.length; i++) {
            if (info[i].treatmentname == patient.Treatmentname) {
-               var ReplacementRecord = document.getElementById("ReplacementRecord")
-               for (var k = 0; k < 3; k++) {
-                   ReplacementRecord.rows[k + 1].cells[1].innerHTML = info[i].OriginCenter.split(",")[k];
-                   ReplacementRecord.rows[k + 1].cells[2].innerHTML = info[i].PlanCenter.split(",")[k];
-                   ReplacementRecord.rows[k + 1].cells[3].innerHTML = info[i].Movement.split(",")[k];
-                   ReplacementRecord.rows[k + 1].cells[4].innerHTML = info[i].Result.split(",")[k];
-                   ReplacementRecord.rows[k + 1].cells[5].innerHTML = info[i].Distance.split(",")[k];
+               var ReplacementRecord = document.getElementById("ReplacementRecord");
+               if (info[i].userID == userID) {
+                   window.parent.document.getElementById("edit").removeAttribute("disabled");
+                   for (var k = 0; k < 3; k++) {
+                       document.getElementById("OriginCenter" + (k + 1)).value = info[i].OriginCenter.split(",")[k];
+                       document.getElementById("PlanCenter" + (k + 1)).value = info[i].PlanCenter.split(",")[k];
+                       document.getElementById("Movement" + (k + 1)).value = info[i].Movement.split(",")[k];
+                       document.getElementById("Result" + (k + 1)).value = info[i].Result.split(",")[k];
+                       document.getElementById("distance" + (k + 1)).value = info[i].Distance.split(",")[k];
+                   }
+
+               } else {
+                   for (var k = 0; k < 3; k++) {
+                       ReplacementRecord.rows[k + 1].cells[1].innerHTML = info[i].OriginCenter.split(",")[k];
+                       ReplacementRecord.rows[k + 1].cells[2].innerHTML = info[i].PlanCenter.split(",")[k];
+                       ReplacementRecord.rows[k + 1].cells[3].innerHTML = info[i].Movement.split(",")[k];
+                       ReplacementRecord.rows[k + 1].cells[4].innerHTML = info[i].Result.split(",")[k];
+                       ReplacementRecord.rows[k + 1].cells[5].innerHTML = info[i].Distance.split(",")[k];
+                   }
                }
  
                var boxes1 = document.getElementById("multipic_yanzheng");
@@ -420,6 +488,7 @@ function remove() {
     var groups = document.getElementsByTagName("input");
     for (var k = 0; k <= groups.length - 1; k++) {
             groups[k].removeAttribute("disabled");
+
     }
     document.getElementById("Remarks").removeAttribute("disabled");
     document.getElementById("viewpdf").removeAttribute("disabled");
