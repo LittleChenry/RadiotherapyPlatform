@@ -77,7 +77,8 @@ public class fixRecordRecord : IHttpHandler {
             context.Response.Write(Ex);
         }
 
-        try{
+        try
+        {
             string treatid = context.Request.Form["hidetreatID"];
             int treatID = Convert.ToInt32(treatid);
             string fixedid = "select Fixed_ID from treatment where treatment.ID=@treatid";
@@ -87,45 +88,41 @@ public class fixRecordRecord : IHttpHandler {
             int userid = Convert.ToInt32(userID);
             DateTime datetime = DateTime.Now;
             bool state = true;
-
-
-            string strSqlCommand = "UPDATE  fixed  SET Pictures=@picture,BodyPosition=@detail,Model_ID=@modelID,HeadRest_ID=@HeadRest_ID,FixedRequirements_ID=@FixedRequirements_ID,FixedEquipment_ID=@FixedEquipment_ID,Remarks=@remarks,OperateTime=@datetime,Operate_User_ID=@userid where fixed.ID=@fixedID";
-            //各参数赋予实际值
-            sqlOperation.AddParameterWithValue("@fixedID", FixedID);
-            sqlOperation.AddParameterWithValue("@detail", context.Request.Form["bodypost"]);
-            sqlOperation.AddParameterWithValue("@modelID", Convert.ToInt32(context.Request.Form["modelselect"]));
-            sqlOperation.AddParameterWithValue("@HeadRest_ID", Convert.ToInt32(context.Request.Form["Head"]));
-            sqlOperation.AddParameterWithValue("@FixedRequirements_ID", Convert.ToInt32(context.Request.Form["specialrequest"]));
-            sqlOperation.AddParameterWithValue("@FixedEquipment_ID", Convert.ToInt32(context.Request.Form["fixEquip"]));
-            sqlOperation.AddParameterWithValue("@remarks", context.Request.Form["Remarks"]);
-            sqlOperation.AddParameterWithValue("@datetime", datetime);
-            sqlOperation.AddParameterWithValue("@userid", userid);
-            sqlOperation.AddParameterWithValue("@picture", savepath1);
-            int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-            string strSqlCommand1 = "UPDATE  appointment  SET Completed=@state where Treatment_ID=@treatid and Task='体位固定'";
-            sqlOperation3.AddParameterWithValue("@state", state);
-            sqlOperation3.AddParameterWithValue("@treatid", treatID);
-            int ss = sqlOperation3.ExecuteNonQuery(strSqlCommand1);
             string select1 = "select Progress from treatment where ID=@treatid";
             sqlOperation.AddParameterWithValue("@treatid", treatID);
             string progress = sqlOperation.ExecuteScalar(select1);
             string[] group = progress.Split(',');
             bool exists = ((IList)group).Contains("4");
-            int Success = 0;
+
             if (!exists)
             {
+
+                string strSqlCommand = "UPDATE  fixed  SET Pictures=@picture,BodyPosition=@detail,Model_ID=@modelID,HeadRest_ID=@HeadRest_ID,FixedRequirements_ID=@FixedRequirements_ID,FixedEquipment_ID=@FixedEquipment_ID,Remarks=@remarks,OperateTime=@datetime,Operate_User_ID=@userid where fixed.ID=@fixedID";
+                //各参数赋予实际值
+                sqlOperation.AddParameterWithValue("@fixedID", FixedID);
+                sqlOperation.AddParameterWithValue("@detail", context.Request.Form["bodypost"]);
+                sqlOperation.AddParameterWithValue("@modelID", Convert.ToInt32(context.Request.Form["modelselect"]));
+                sqlOperation.AddParameterWithValue("@HeadRest_ID", Convert.ToInt32(context.Request.Form["Head"]));
+                sqlOperation.AddParameterWithValue("@FixedRequirements_ID", Convert.ToInt32(context.Request.Form["specialrequest"]));
+                sqlOperation.AddParameterWithValue("@FixedEquipment_ID", Convert.ToInt32(context.Request.Form["fixEquip"]));
+                sqlOperation.AddParameterWithValue("@remarks", context.Request.Form["Remarks"]);
+                sqlOperation.AddParameterWithValue("@datetime", datetime);
+                sqlOperation.AddParameterWithValue("@userid", userid);
+                sqlOperation.AddParameterWithValue("@picture", savepath1);
+                int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
+                string strSqlCommand1 = "UPDATE  appointment  SET Completed=@state where Treatment_ID=@treatid and Task='体位固定'";
+                sqlOperation3.AddParameterWithValue("@state", state);
+                sqlOperation3.AddParameterWithValue("@treatid", treatID);
+                int ss = sqlOperation3.ExecuteNonQuery(strSqlCommand1);
+
                 string fID = "UPDATE treatment SET Progress=@fixedID where ID=@treatid";
 
                 sqlOperation2.AddParameterWithValue("@treatid", treatID);
 
                 sqlOperation2.AddParameterWithValue("@fixedID", progress + ",4");
-                Success = sqlOperation2.ExecuteNonQuery(fID);
-            }
-            else
-            {
-                Success = 1;
-            }
-            if (intSuccess > 0 && Success>0 &&  ss > 0)
+                int Success = sqlOperation2.ExecuteNonQuery(fID);
+
+                if (intSuccess > 0 && Success > 0 && ss > 0)
                 {
                     return "success";
                 }
@@ -133,10 +130,33 @@ public class fixRecordRecord : IHttpHandler {
                 {
                     return "failure";
                 }
+            }
+            else
+            {
+                string strSqlCommand = "UPDATE  fixed  SET BodyPosition=@detail,Model_ID=@modelID,HeadRest_ID=@HeadRest_ID,FixedRequirements_ID=@FixedRequirements_ID,FixedEquipment_ID=@FixedEquipment_ID,Remarks=@remarks,OperateTime=@datetime,Operate_User_ID=@userid where fixed.ID=@fixedID";
+                //各参数赋予实际值
+                sqlOperation.AddParameterWithValue("@fixedID", FixedID);
+                sqlOperation.AddParameterWithValue("@detail", context.Request.Form["bodypost"]);
+                sqlOperation.AddParameterWithValue("@modelID", Convert.ToInt32(context.Request.Form["modelselect"]));
+                sqlOperation.AddParameterWithValue("@HeadRest_ID", Convert.ToInt32(context.Request.Form["Head"]));
+                sqlOperation.AddParameterWithValue("@FixedRequirements_ID", Convert.ToInt32(context.Request.Form["specialrequest"]));
+                sqlOperation.AddParameterWithValue("@FixedEquipment_ID", Convert.ToInt32(context.Request.Form["fixEquip"]));
+                sqlOperation.AddParameterWithValue("@remarks", context.Request.Form["Remarks"]);
+                sqlOperation.AddParameterWithValue("@datetime", datetime);
+                sqlOperation.AddParameterWithValue("@userid", userid);              
+                int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
+                if (intSuccess > 0)
+                {
+                    return "success";
+                }
+                else
+                {
+                    return "failure";
+                }
+            }
 
 
         }
-
         catch (System.Exception Ex1)
         {
             return "error";
