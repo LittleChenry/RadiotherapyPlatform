@@ -1375,23 +1375,30 @@ function ProgressNumToName(progressNum){
 }
 
 function checkEdit(str) {
+    var session = getSession();
+    var role = session.role;
     $('#edit').attr("disabled", "disabled");
     $('#save').attr("disabled", "disabled");
     $('#saveTemplate-list').attr("disabled", "disabled");
     $("#chooseTemplate").attr("disabled", "disabled");
     $("#Template-List").attr("disabled", "disabled");
-    var activeProgress = getProgressActive();
-    for (var i = 0; i < functions.length; i++) {
-        if (functions[i] == str) {
-            for (var j = 0; j < activeProgress.length; j++) {
-                if (activeProgress[j].toString() == str || "0" == str) {
-                    $("#edit").removeAttr("disabled");
-                    return true;
+    if (role != "科主任") {
+        var activeProgress = getProgressActive();
+        for (var i = 0; i < functions.length; i++) {
+            if (functions[i] == str) {
+                for (var j = 0; j < activeProgress.length; j++) {
+                    if (activeProgress[j].toString() == str || "0" == str) {
+                        $("#edit").removeAttr("disabled");
+                        return true;
+                    }
                 }
             }
         }
+        return false;
+    }else{
+        $("#edit").removeAttr("disabled");
+        return true;
     }
-    return false;
 }
 
 function Template() {
