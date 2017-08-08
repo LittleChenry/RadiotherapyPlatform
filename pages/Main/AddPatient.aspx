@@ -389,7 +389,7 @@
                         </div>
                         <div class="single-row">
                             <div class="col-xs-6">
-                                <span class="form-text col-xs-4" style="padding-left:0px;">所属医生：</span>
+                                <span class="form-text col-xs-4" style="padding-left:0px;">主管医生：</span>
                                 <select id="doctor" name="doctor" class="form-item"></select>
                             </div>
                             <div class="col-xs-6">

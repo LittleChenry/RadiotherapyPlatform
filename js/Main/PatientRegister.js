@@ -456,11 +456,7 @@ function save() {
         window.alert("姓名不能为空");
         return false;   
     }
-    if (document.getElementById("Hospital").value=="") {
-        window.alert("就诊医院不能为空");
-        return false;   
-                
-    }         
+      
     if (document.getElementById("Birthday").value=="") {
         window.alert("出生日期不能为空");
         return false;   
@@ -490,10 +486,7 @@ function save() {
         window.alert("体重不能为空");
         return false;                 
     }
-    if (document.getElementById("Sub").value == "") {
-        window.alert("请输入分中心负责人"); 
-        return false;   
-    }
+
     if (document.getElementById("doctor").value == "allItem") {
         window.alert("请选择医生");        
         return false;   
