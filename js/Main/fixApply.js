@@ -556,14 +556,22 @@ function compareWithToday(time) {
     if (parseInt(year) < parseInt(date.getFullYear())) {
         return false;
     } else {
-        if (parseInt(month) < parseInt(date.getMonth() + 1)) {
-            return false;
-        } else {
-            if (parseInt(day) < parseInt(date.getDate())) {
+        if (parseInt(year) == parseInt(date.getFullYear())) {
+            if (parseInt(month) < parseInt(date.getMonth() + 1)) {
                 return false;
             } else {
-                return true;
+                if (parseInt(month) == parseInt(date.getMonth() + 1)) {
+                    if (parseInt(day) < parseInt(date.getDate())) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
             }
+        } else {
+            return true;
         }
     }
 }
