@@ -564,7 +564,7 @@
                         </div>
                         <div class="modal-footer">
                             <button id="cannelEdit" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
-                            <input id="deleteUser" class="btn btn-danger" type="button" value="删除用户" />
+                            <!--<input id="deleteUser" class="btn btn-danger" type="button" value="删除用户" />-->
                             <input id="sureEdit" type="submit" class="btn btn-primary" value="确认" />
                         </div>
                 </div>

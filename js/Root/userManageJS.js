@@ -165,14 +165,14 @@ function createEditArea($tr){
     }
 
 
-    $("#deleteUser").bind("click", function () {
+    /*$("#deleteUser").bind("click", function () {
         if (canDelete) {
             canDelete = false;
         } else {
             return;
         }
         deleteUser();
-    });
+    });*/
 }
 function editUser(){
     var numberEdit = $("#numberEdit").val();
