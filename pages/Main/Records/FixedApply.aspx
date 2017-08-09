@@ -18,8 +18,6 @@
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
     <!-- Ionicons -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
-    <!-- Theme style -->
-    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/dist/css/AdminLTE.min.css"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
