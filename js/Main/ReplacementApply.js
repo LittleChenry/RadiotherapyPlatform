@@ -238,19 +238,26 @@ function compareWithToday(time) {
     var year = time.split("-")[0];
     var month = time.split("-")[1];
     var day = time.split("-")[2];
-    var date=new Date();
+    var date = new Date();
     if (parseInt(year) < parseInt(date.getFullYear())) {
         return false;
-    }else
-    {
-        if (parseInt(month) < parseInt(date.getMonth() + 1)) {
-            return false;
-        } else {
-            if (parseInt(day) < parseInt(date.getDate())) {
+    } else {
+        if (parseInt(year) == parseInt(date.getFullYear())) {
+            if (parseInt(month) < parseInt(date.getMonth() + 1)) {
                 return false;
             } else {
-                return true;
+                if (parseInt(month) == parseInt(date.getMonth() + 1)) {
+                    if (parseInt(day) < parseInt(date.getDate())) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
             }
+        } else {
+            return true;
         }
     }
 }

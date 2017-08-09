@@ -718,14 +718,22 @@ function compareWithToday(time) {
     if (parseInt(year) < parseInt(date.getFullYear())) {
         return false;
     } else {
-        if (parseInt(month) < parseInt(date.getMonth() + 1)) {
-            return false;
-        } else {
-            if (parseInt(day) < parseInt(date.getDate())) {
+        if (parseInt(year) == parseInt(date.getFullYear())) {
+            if (parseInt(month) < parseInt(date.getMonth() + 1)) {
                 return false;
             } else {
-                return true;
+                if (parseInt(month) == parseInt(date.getMonth() + 1)) {
+                    if (parseInt(day) < parseInt(date.getDate())) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }else{
+                  return true;
+                }
             }
+        } else {
+            return true;
         }
     }
 }
@@ -750,12 +758,13 @@ function chooseItem(thiselement) {
         if (thiselement.lastChild.className) {
             thiselement.className = "";
             thiselement.lastChild.className = "";
-            var k=interal-1;
-            while(k<times-1)
-            {
-                $element.nextAll().eq(k).removeClass();
-                $element.nextAll().eq(k).children(":last").removeClass();
-                k++;
+            var k = 0;
+            while (k < times) {
+                if ($element.nextAll().eq(k).hasClass("chosen")) {
+                    $element.nextAll().eq(k).removeClass();
+                    $element.nextAll().eq(k).children(":last").removeClass();
+                }
+                k = k + 1;
             }
         
         } else {
@@ -793,11 +802,14 @@ function chooseItem(thiselement) {
         if (thiselement.lastChild.className) {
             thiselement.className = "";
             thiselement.lastChild.className = "";
-            var k = interal - 1;
-            while (k < times-1) {
-                $element.nextAll().eq(k).removeClass();
-                $element.nextAll().eq(k).children(":last").removeClass();
-                k = k + interal;
+            var k = 0;
+            while (k < times) {
+                if($element.nextAll().eq(k).hasClass("chosen"))
+                {
+                    $element.nextAll().eq(k).removeClass();
+                    $element.nextAll().eq(k).children(":last").removeClass();
+                }
+                k =k+1;
             }
         } else {
             alert("请先取消其他选择！");

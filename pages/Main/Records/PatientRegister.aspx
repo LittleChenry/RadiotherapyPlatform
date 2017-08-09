@@ -142,7 +142,7 @@
                         </div>
                     <div class="single-row">              
                         <div class="item col-xs-6">
-                            所属医生：
+                            主管医生：
                             <select id="doctor" name="doctor" class="form-item"></select>
                         </div>
                         <div class="item col-xs-6">

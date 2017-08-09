@@ -77,8 +77,7 @@ public class patientRegister : IHttpHandler
         {
             context.Response.Write(Ex);
         }
-        try
-        {
+
             int doctorid = Convert.ToInt32(context.Request.Form["doctor"]);
             string strSqlCommand = "UPDATE patient SET IdentificationNumber=@IdentificationNumber,Hospital=@Hospital,Picture=@Picture,Name=@Name,Gender=@Gender,Age=@Age,Birthday=@Birthday,Nation=@Nation,Address=@Address,Contact1=@Contact1,Contact2=@Contact2,Height=@Height,Weight=@Weight,Ishospital=@Ishospital,Hospital_ID=@Hospital_ID where ID=@patientID";
             //各参数赋予实际值
@@ -95,7 +94,14 @@ public class patientRegister : IHttpHandler
             sqlOperation.AddParameterWithValue("@Contact2", context.Request.Form["Number2"]);
             sqlOperation.AddParameterWithValue("@Height", context.Request.Form["height"]);
             sqlOperation.AddParameterWithValue("@Weight", context.Request.Form["weight"]);
-            sqlOperation.AddParameterWithValue("@Hospital_ID", context.Request.Form["hospitalnumber"]);
+            if (context.Request.Form["RecordNumber"] == "1")
+            {
+                sqlOperation.AddParameterWithValue("@Hospital_ID", context.Request.Form["hospitalnumber"]);
+            }
+            else
+            {
+                sqlOperation.AddParameterWithValue("@Hospital_ID", null);
+            }
             sqlOperation.AddParameterWithValue("@Ishospital", context.Request.Form["RecordNumber"]);
             sqlOperation.AddParameterWithValue("@patientID", context.Request.Form["patientID"]);
             int Success = sqlOperation.ExecuteNonQuery(strSqlCommand);
@@ -103,15 +109,11 @@ public class patientRegister : IHttpHandler
             {
                 string command = "update treatment set Group_ID=@group where ID=@treat";
                 sqlOperation.AddParameterWithValue("@group", Convert.ToInt32(context.Request.Form["group"]));
-                sqlOperation.AddParameterWithValue("@treat",Convert.ToInt32(context.Request.Form["treatID"]));
+                sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(context.Request.Form["treatID"]));
                 int success2 = sqlOperation.ExecuteNonQuery(command);
             }
             return "success";
 
-        }
-        catch (System.Exception Ex1)
-        {
-            return "error";
-        }
+      
     }
 }
