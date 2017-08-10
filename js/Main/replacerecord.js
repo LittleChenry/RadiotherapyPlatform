@@ -67,35 +67,35 @@ function Init(evt) {
         if (document.getElementById("Result1").value == "") {
             document.getElementById("distance1").value = "";
         } else {
-            document.getElementById("distance1").value = parseInt(document.getElementById("Result1").value) - parseInt(document.getElementById("Movement1").value);
+            document.getElementById("distance1").value = numSub(parseFloat(document.getElementById("Result1").value) , parseFloat(document.getElementById("Movement1").value));
         }
     });
     $('#Result1').bind('input propertychange', function () {
         if (document.getElementById("Movement1").value == "") {
             document.getElementById("distance1").value = "";
         } else {
-            document.getElementById("distance1").value = parseInt(document.getElementById("Result1").value) - parseInt(document.getElementById("Movement1").value);
+            document.getElementById("distance1").value = numSub(parseFloat(document.getElementById("Result1").value) , parseFloat(document.getElementById("Movement1").value));
         }
     });
     $('#Movement2').bind('input propertychange', function () {
         if (document.getElementById("Result2").value == "") {
             document.getElementById("distance2").value = "";
         } else {
-            document.getElementById("distance2").value = parseInt(document.getElementById("Result2").value) - parseInt(document.getElementById("Movement2").value);
+            document.getElementById("distance2").value = numSub(parseFloat(document.getElementById("Result2").value) , parseFloat(document.getElementById("Movement2").value));
         }
     });
     $('#Movement3').bind('input propertychange', function () {
         if (document.getElementById("Result3").value == "") {
             document.getElementById("distance3").value = "";
         } else {
-            document.getElementById("distance3").value = parseInt(document.getElementById("Result3").value) - parseInt(document.getElementById("Movement3").value);
+            document.getElementById("distance3").value =  numSub(parseFloat(document.getElementById("Result3").value) , parseFloat(document.getElementById("Movement3").value));
         }
     });
     $('#Result2').bind('input propertychange', function () {
         if (document.getElementById("Movement2").value == "") {
             document.getElementById("distance2").value = "";
         } else {
-            document.getElementById("distance2").value = parseInt(document.getElementById("Result2").value) - parseInt(document.getElementById("Movement2").value);
+            document.getElementById("distance2").value = numSub(parseFloat(document.getElementById("Result2").value) , parseFloat(document.getElementById("Movement2").value));
         
         }
     });
@@ -103,7 +103,7 @@ function Init(evt) {
         if (document.getElementById("Movement3").value == "") {
             document.getElementById("distance3").value = "";
         } else {
-            document.getElementById("distance3").value = parseInt(document.getElementById("Result3").value) - parseInt(document.getElementById("Movement3").value);
+            document.getElementById("distance3").value =  numSub(parseFloat(document.getElementById("Result3").value) , parseFloat(document.getElementById("Movement3").value));
         }
     });
 
@@ -112,8 +112,8 @@ function Init(evt) {
             document.getElementById("Movement1").value = "";
             document.getElementById("distance1").value = "";
         } else {
-            document.getElementById("Movement1").value = parseInt(document.getElementById("OriginCenter1").value) - parseInt(document.getElementById("PlanCenter1").value);
-            document.getElementById("distance1").value = parseInt(document.getElementById("Result1").value) - parseInt(document.getElementById("Movement1").value);
+            document.getElementById("Movement1").value =  numSub(parseFloat(document.getElementById("OriginCenter1").value) , parseFloat(document.getElementById("PlanCenter1").value));
+            document.getElementById("distance1").value = numSub(parseFloat(document.getElementById("Result1").value) , parseFloat(document.getElementById("Movement1").value));
         }
     });
     $('#OriginCenter2').bind('input propertychange', function () {
@@ -121,8 +121,8 @@ function Init(evt) {
             document.getElementById("Movement2").value = "";
             document.getElementById("distance2").value = "";
         } else {
-            document.getElementById("Movement2").value = parseInt(document.getElementById("OriginCenter2").value) - parseInt(document.getElementById("PlanCenter2").value);
-            document.getElementById("distance2").value = parseInt(document.getElementById("Result2").value) - parseInt(document.getElementById("Movement2").value);
+            document.getElementById("Movement2").value = numSub(parseFloat(document.getElementById("OriginCenter2").value) , parseFloat(document.getElementById("PlanCenter2").value));
+            document.getElementById("distance2").value = numSub(parseFloat(document.getElementById("Result2").value) , parseFloat(document.getElementById("Movement2").value));
         }
     });
     $('#OriginCenter3').bind('input propertychange', function () {
@@ -130,8 +130,8 @@ function Init(evt) {
             document.getElementById("Movement3").value = "";
             document.getElementById("distance3").value = "";
         } else {
-            document.getElementById("Movement3").value = parseInt(document.getElementById("OriginCenter3").value) - parseInt(document.getElementById("PlanCenter3").value);
-            document.getElementById("distance3").value = parseInt(document.getElementById("Result3").value) - parseInt(document.getElementById("Movement3").value);
+            document.getElementById("Movement3").value =  numSub(parseFloat(document.getElementById("OriginCenter3").value) , parseFloat(document.getElementById("PlanCenter3").value));
+            document.getElementById("distance3").value = numSub(parseFloat(document.getElementById("Result3").value), parseFloat(document.getElementById("Movement3").value));
         }
     });
     $('#PlanCenter1').bind('input propertychange', function () {
@@ -139,8 +139,8 @@ function Init(evt) {
             document.getElementById("Movement1").value = "";
             document.getElementById("distance1").value = "";
         } else {
-            document.getElementById("Movement1").value = parseInt(document.getElementById("OriginCenter1").value) - parseInt(document.getElementById("PlanCenter1").value);
-            document.getElementById("distance1").value = parseInt(document.getElementById("Result1").value) - parseInt(document.getElementById("Movement1").value);
+            document.getElementById("Movement1").value = numSub(parseFloat(document.getElementById("OriginCenter1").value), parseFloat(document.getElementById("PlanCenter1").value));
+            document.getElementById("distance1").value = numSub(parseFloat(document.getElementById("Result1").value), parseFloat(document.getElementById("Movement1").value));
         }
     });
     $('#PlanCenter2').bind('input propertychange', function () {
@@ -148,8 +148,8 @@ function Init(evt) {
             document.getElementById("Movement2").value = "";
             document.getElementById("distance2").value = "";
         } else {
-            document.getElementById("Movement2").value = parseInt(document.getElementById("OriginCenter2").value) - parseInt(document.getElementById("PlanCenter2").value);
-            document.getElementById("distance2").value = parseInt(document.getElementById("Result2").value) - parseInt(document.getElementById("Movement2").value);
+            document.getElementById("Movement2").value = numSub(parseFloat(document.getElementById("OriginCenter2").value), parseFloat(document.getElementById("PlanCenter2").value));
+            document.getElementById("distance2").value = numSub(parseFloat(document.getElementById("Result2").value), parseFloat(document.getElementById("Movement2").value));
         }
     });
     $('#PlanCenter3').bind('input propertychange', function () {
@@ -157,8 +157,8 @@ function Init(evt) {
             document.getElementById("Movement3").value = "";
             document.getElementById("distance3").value = "";
         } else {
-            document.getElementById("Movement3").value = parseInt(document.getElementById("OriginCenter3").value) - parseInt(document.getElementById("PlanCenter3").value);
-            document.getElementById("distance3").value = parseInt(document.getElementById("Result3").value) - parseInt(document.getElementById("Movement3").value);
+            document.getElementById("Movement3").value =  numSub(parseFloat(document.getElementById("OriginCenter3").value) , parseFloat(document.getElementById("PlanCenter3").value));
+            document.getElementById("distance3").value =  numSub(parseFloat(document.getElementById("Result3").value) , parseFloat(document.getElementById("Movement3").value));
         }
     });
     var info = getreplacerecordInfomation(treatmentID);
@@ -293,6 +293,22 @@ function Init(evt) {
         });
     });
 }
+function numSub(num1, num2) {
+    var baseNum, baseNum1, baseNum2;
+    try {
+        baseNum1 = num1.toString().split(".")[1].length;
+    } catch (e) {
+        baseNum1 = 0;
+    }
+    try {
+        baseNum2 = num2.toString().split(".")[1].length;
+    } catch (e) {
+        baseNum2 = 0;
+    }
+    baseNum = Math.pow(10, Math.max(baseNum1, baseNum2));
+    var precision = (baseNum1 >= baseNum2) ? baseNum1 : baseNum2;
+    return ((num1 * baseNum - num2 * baseNum) / baseNum).toFixed(precision);
+};
 function hosttext(str) {
     if (str == "") {
         return "未住院";

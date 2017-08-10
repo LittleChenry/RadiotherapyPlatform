@@ -100,45 +100,61 @@ function Init(evt) {
         if (document.getElementById("ReferenceCenterX").value == "") {
             document.getElementById("MovementX").value = "";
         } else {
-            document.getElementById("MovementX").value = parseInt(document.getElementById("ReferenceCenterX").value) - parseInt(document.getElementById("TreatmentCenterX").value);
+            document.getElementById("MovementX").value =  numSub(parseFloat(document.getElementById("ReferenceCenterX").value) , parseFloat(document.getElementById("TreatmentCenterX").value));
         }
     });
     $('#TreatmentCenterX').bind('input propertychange', function () {
         if (document.getElementById("TreatmentCenterX").value == "") {
             document.getElementById("MovementX").value = "";
         } else {
-            document.getElementById("MovementX").value = parseInt(document.getElementById("ReferenceCenterX").value) - parseInt(document.getElementById("TreatmentCenterX").value);
+            document.getElementById("MovementX").value = numSub(parseFloat(document.getElementById("ReferenceCenterX").value) , parseFloat(document.getElementById("TreatmentCenterX").value));
         }
     });
     $('#ReferenceCenterY').bind('input propertychange', function () {
         if (document.getElementById("ReferenceCenterY").value == "") {
             document.getElementById("MovementY").value = "";
         } else {
-            document.getElementById("MovementY").value = parseInt(document.getElementById("ReferenceCenterY").value) - parseInt(document.getElementById("TreatmentCenterY").value);
+            document.getElementById("MovementY").value = numSub(parseFloat(document.getElementById("ReferenceCenterY").value) , parseFloat(document.getElementById("TreatmentCenterY").value));
         }
     });
     $('#TreatmentCenterY').bind('input propertychange', function () {
         if (document.getElementById("TreatmentCenterY").value == "") {
             document.getElementById("MovementY").value = "";
         } else {
-            document.getElementById("MovementY").value = parseInt(document.getElementById("ReferenceCenterY").value) - parseInt(document.getElementById("TreatmentCenterY").value);
+            document.getElementById("MovementY").value = numSub(parseFloat(document.getElementById("ReferenceCenterY").value), parseFloat(document.getElementById("TreatmentCenterY").value));
         }
     });
     $('#ReferenceCenterZ').bind('input propertychange', function () {
         if (document.getElementById("ReferenceCenterZ").value == "") {
             document.getElementById("MovementZ").value = "";
         } else {
-            document.getElementById("MovementZ").value = parseInt(document.getElementById("ReferenceCenterZ").value) - parseInt(document.getElementById("TreatmentCenterZ").value);
+            document.getElementById("MovementZ").value =  numSub(parseFloat(document.getElementById("ReferenceCenterZ").value) , parseFloat(document.getElementById("TreatmentCenterZ").value));
         }
     });
     $('#TreatmentCenterZ').bind('input propertychange', function () {
         if (document.getElementById("TreatmentCenterZ").value == "") {
             document.getElementById("MovementZ").value = "";
         } else {
-            document.getElementById("MovementZ").value = parseInt(document.getElementById("ReferenceCenterZ").value) - parseInt(document.getElementById("TreatmentCenterZ").value);
+            document.getElementById("MovementZ").value =numSub(parseFloat(document.getElementById("ReferenceCenterZ").value) , parseFloat(document.getElementById("TreatmentCenterZ").value));
         }
     });
 }
+function numSub(num1, num2) {
+    var baseNum, baseNum1, baseNum2;
+    try {
+        baseNum1 = num1.toString().split(".")[1].length;
+    } catch (e) {
+        baseNum1 = 0;
+    }
+    try {
+        baseNum2 = num2.toString().split(".")[1].length;
+    } catch (e) {
+        baseNum2 = 0;
+    }
+    baseNum = Math.pow(10, Math.max(baseNum1, baseNum2));
+    var precision = (baseNum1 >= baseNum2) ? baseNum1 : baseNum2;
+    return ((num1 * baseNum - num2 * baseNum) / baseNum).toFixed(precision);
+};
 function createdegreeItem(thiselement) {
     var PartItem = JSON.parse(getdegreeItem()).Item;
     thiselement.options.length = 0;

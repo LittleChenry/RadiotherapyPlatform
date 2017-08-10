@@ -76,20 +76,20 @@
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">层厚：</span>
                             <div class="group-item">
-                                <input id="Thickness" step="0.01" name="Thickness" type="number" class="form-group-input" disabled="disabled"/>
+                                <input id="Thickness" step="0.00001" name="Thickness" type="number" class="form-group-input" disabled="disabled"/>
                                 <span class="input-group-addon">mm</span>
                             </div>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">层数：</span>
-                            <input id="Number" step="0.01" name="Number" type="number"  class="form-item" disabled="disabled"/>
+                            <input id="Number" step="0.00001" name="Number" type="number"  class="form-item" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">参考中心层面：</span>
                             <div class="group-item">
-                                <input id="ReferenceScale" step="0.01" class="form-group-input" type="number" name="ReferenceScale" disabled="disabled"/>
+                                <input id="ReferenceScale" step="0.00001" class="form-group-input" type="number" name="ReferenceScale" disabled="disabled"/>
                                 <span class="input-group-addon">cm</span>
                             </div>
                         </div>

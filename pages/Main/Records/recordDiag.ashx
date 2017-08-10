@@ -3,6 +3,7 @@
 using System;
 using System.Web;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 public class recordDiag : IHttpHandler {
     DataLayer sqlOperation = new DataLayer("sqlStr");
@@ -46,7 +47,6 @@ public class recordDiag : IHttpHandler {
             string copybingqing1 = context.Request["copybingqing1"];
             string copybingqing2 = context.Request["copybingqing2"];
             string copybingqing3 = context.Request["copybingqing3"];
-
             string selectcode1 = "select ID from icdcode where Group1=@group1 and Group2=@group2 and Chinese=@group3";
             sqlOperation.AddParameterWithValue("@group1", copybingqing1);
             sqlOperation.AddParameterWithValue("@group2", copybingqing2);
@@ -111,7 +111,7 @@ public class recordDiag : IHttpHandler {
                 string strSqlCommand1 = "update treatment set DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe where ID=@treatid";
                 sqlOperation2.AddParameterWithValue("@treatid", treatID);
                 sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
-                sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);  
+                sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
                 int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
                 if (intSuccess > 0 && intSuccess1 > 0)
                 {
@@ -123,12 +123,13 @@ public class recordDiag : IHttpHandler {
                 }
             }
 
-            
+
         }
         catch (System.Exception Ex1)
         {
             return "error";
         }
+        }
     }     
- }
+
     

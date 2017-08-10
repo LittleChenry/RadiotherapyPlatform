@@ -251,11 +251,11 @@ function charge2(evt) {
 function save() {
     if (document.getElementById("state").value == "未审核") {
         window.alert("请审核计划");
-        return;
+        return false;
     }
     if (document.getElementById("advice").value == "") {
         window.alert("请填写审核意见");
-        return;
+        return false;
     }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {

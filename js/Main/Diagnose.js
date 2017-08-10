@@ -304,18 +304,22 @@ function getbingliItem() {
 function loadone() {
     var text1 = $("#bingqing1 option:selected").text();
     var text2 = $("#bingqing2 option:selected").text();
+    text1 = text1.replace(/&/g, "%26");
+    text2 = text2.replace(/&/g, "%26");
     var bingqing2 = document.getElementById("bingqing2");
     createbingqing2(bingqing2,text1);
     var bingqing3 = document.getElementById("bingqing3");
     createbingqing3(bingqing3, text1, text2);
-    $("#copybingqing1").attr("value", text1);
+    $("#copybingqing1").attr("value", $("#bingqing1 option:selected").text());
 }
 function loadtwo() {
     var text1 = $("#bingqing1 option:selected").text();
     var text2 = $("#bingqing2 option:selected").text();
+    text1 = text1.replace(/&/g, "%26");
+    text2 = text2.replace(/&/g, "%26");
     var bingqing3 = document.getElementById("bingqing3");
     createbingqing3(bingqing3, text1, text2);
-    $("#copybingqing2").attr("value", text2);
+    $("#copybingqing2").attr("value", $("#bingqing2 option:selected").text());
 }
 function loadthree() {
     var text3= $("#bingqing3 option:selected").text();
@@ -323,14 +327,14 @@ function loadthree() {
 }
 function loadonenext() {
     var text1 = $("#bingli1 option:selected").text();
-    var text1 = text1.replace("&", "%26");
+    var text1 = text1.replace(/&/g, "%26");
     var bingli2 = document.getElementById("bingli2");
     createbingli2(bingli2, text1);
-    $("#copybingli1").attr("value", text1);
+    $("#copybingli1").attr("value", $("#bingli1 option:selected").text());
 }
 function loadtwonext() {
     var text2 = $("#bingli2 option:selected").text();
-    $("#copybingli2").attr("value", text2);
+    $("#copybingli2").attr("value", $("#bingli2 option:selected").text());
 }
 function createbingqing2(thiselement, text)
 {

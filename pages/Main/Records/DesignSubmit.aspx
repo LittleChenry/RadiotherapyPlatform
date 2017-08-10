@@ -146,7 +146,7 @@
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">射野数量：</span>
-                            <input id="IlluminatedNumber" name="IlluminatedNumber" type="number" class="form-item" disabled="disabled"/>
+                            <input id="IlluminatedNumber" step="0.00001" name="IlluminatedNumber" type="number" class="form-item" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
@@ -159,13 +159,13 @@
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">机器跳数：</span>
-                            <input id="MachineNumbe" step="0.01" name="MachineNumbe" type="number" class="form-item" disabled="disabled"/>
+                            <input id="MachineNumbe" step="0.00001" name="MachineNumbe" type="number" class="form-item" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">控制点数量：</span>
-                            <input id="ControlPoint" name="ControlPoint" type="number" class="form-item" disabled="disabled"/>
+                            <input id="ControlPoint" step="0.00001" name="ControlPoint" type="number" class="form-item" disabled="disabled"/>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">计算网络：</span>

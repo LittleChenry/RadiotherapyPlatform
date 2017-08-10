@@ -69,7 +69,9 @@ function Init(evt) {
         document.getElementById("viewpdf2").href = pdf2;
     }
     var session = getSession();
-   
+    if (session.assistant != "") {
+        $("#operator", window.parent.document).html(session.assistant);
+    }
     var flag;
     if (appointid!= "undefined") {
         flag = judge(appointid, treatmentID);
@@ -165,6 +167,8 @@ function Init(evt) {
     {
         var allfirstnumber = parseInt(getallfirst(treatmentID));
         if ((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber == "") {
+            alert("请预约完所有加速治疗再进行治疗");
+        }
             var session = getSession();
             if (session.assistant != "") {
                 $.ajax({
@@ -199,10 +203,6 @@ function Init(evt) {
             } else {
                 alert("没有选择协助操作者");
             }
-        } else {
-            alert("请预约完所有加速治疗再进行治疗");
-            return false;
-        }   
             });
     $("#recordigrt").click(function()
     {

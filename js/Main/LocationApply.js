@@ -729,7 +729,7 @@ function compare(evt1, evt2) {
         return false;
     }
     if (parseInt(month) == parseInt(evt2[1]) && parseInt(day) == parseInt(evt2[2])) {
-        if ((parseInt(evt2[3]) - Min) >= 120) {
+        if ((parseInt(evt2[3]) - Min) >= 30) {
             return true;
         }
         else {

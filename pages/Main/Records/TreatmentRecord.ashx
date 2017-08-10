@@ -65,7 +65,6 @@ public class TreatmentRecord : IHttpHandler {
             DosagePriority = finaldos;
         }
         reader.Close();
-
         string sqlcommand2 = "select count(*) from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL";
         int finishedtimes = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
         string insert = "update treatmentrecord set TreatTime=@time,TreatedDays=@treatdays,TreatedTimes=@treattimes,Rest=@rest,Treat_User_ID=@user,IlluminatedNumber=@number1,MachineNumber=@number2,Assist_User=@assist,Singlenumber=@single,Remarks=@remarks where Appointment_ID=@appoint and Treatment_ID=@treat";
@@ -74,7 +73,7 @@ public class TreatmentRecord : IHttpHandler {
         sqlOperation.AddParameterWithValue("@treattimes", finishedtimes + 1);
         sqlOperation.AddParameterWithValue("@rest", totalnumber - finishedtimes - 1);
         sqlOperation.AddParameterWithValue("@user", user);
-        sqlOperation.AddParameterWithValue("@number1", Convert.ToInt32(IlluminatedNumber));
+        sqlOperation.AddParameterWithValue("@number1", Convert.ToDouble(IlluminatedNumber));
         sqlOperation.AddParameterWithValue("@number2", Convert.ToDouble(MachineNumbe));
         sqlOperation.AddParameterWithValue("@assist", assistant);
         sqlOperation.AddParameterWithValue("@single", DosagePriority);

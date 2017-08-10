@@ -490,27 +490,27 @@ function sex(evt) {
 function save() {
     if (document.getElementById("PlanSystem").value == "allItem") {
         window.alert("计划系统没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("Grid").value == "allItem") {
         window.alert("计算网格没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("Algorithm").value == "allItem") {
         window.alert("优化算法没有选择");
-        return;
+        return false;
     }
     if (document.getElementById("IlluminatedNumber").value == "") {
         window.alert("请填写射野数量");
-        return;
+        return false;
     }
     if (document.getElementById("MachineNumbe").value == "") {
         window.alert("请填写机器跳数");
-        return;
+        return false;
     }
     if (document.getElementById("ControlPoint").value == "") {
         window.alert("请填写控制点数量");
-        return;
+        return false;
     }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
