@@ -10,13 +10,17 @@ $(document).ready(function () {
     var session = getSession();
     functions = session.progress.split(" ");
     var patient = RolesToPatients();
-    adjustTable();
+    if (session.role != "模拟技师" && session.role != "治疗技师") {
+        adjustTable();
+    }
 
     $("#patient-search").bind('input propertychange', function () {
-        //alert(patient.PatientInfo.length);
+        var session = getSession();
         var Searchedpatients = Search($("#patient-search").val(), patient, session.role);
         Paging(Searchedpatients, session.role, session.userID);
-        adjustTable();
+        if (session.role != "模拟技师" && session.role != "治疗技师") {
+            adjustTable();
+        }
     });
     $("#save").unbind("click").click(function () {
         var result = $("#record-iframe")[0].contentWindow.save();
@@ -25,8 +29,11 @@ $(document).ready(function () {
         }
         $('#save').attr("disabled", "disabled");
         $('#saveTemplate-list').attr("disabled", "disabled");
+        var session = getSession();
         RolesToPatients();
-        adjustTable();
+        if (session.role != "模拟技师" && session.role != "治疗技师") {
+            adjustTable();
+        }
         Recover();
     });
     $('#edit').unbind("click").click(function () {
@@ -59,6 +66,7 @@ $(document).ready(function () {
 
 function RolesToPatients() {
     var patient;
+    var sortPatient;
     var session = getSession();
     if (session.role == "模拟技师" || session.role == "治疗技师") {
         if (session.equipmentID == "0") {
@@ -68,10 +76,8 @@ function RolesToPatients() {
             parameters[0] = session.equipmentID;
             parameters[1] = session.beginTime;
             parameters[2] = session.endTime;
-            patient = getPatient(session.userID, session.role, parameters);
-            var sortPatient = patientSort(patient);
+            sortPatient = getPatient(session.userID, session.role, parameters);
             Paging(sortPatient, session.role, session.userID);
-            adjustTable();
             $("#chosenEquipment").html(session.equipmentName);
             $("#dateRange").html(session.beginTime + "~~" + session.endTime);
         }
@@ -107,10 +113,8 @@ function RolesToPatients() {
             parameters[0] = equipmentID;
             parameters[1] = startdate;
             parameters[2] = enddate;
-            patient = getPatient(session.userID, session.role, parameters);
-            var sortPatient = patientSort(patient);
+            sortPatient = getPatient(session.userID, session.role, parameters);
             Paging(sortPatient, session.role, session.userID);
-            adjustTable();
             $.ajax({
                 type: "POST",
                 async: true,
@@ -130,7 +134,7 @@ function RolesToPatients() {
     } else {
         var parameters = new Array();
         patient = getPatient(session.userID, session.role, parameters);
-        var sortPatient = patientSort(patient);
+        sortPatient = patientSort(patient);
         Paging(sortPatient, session.role, session.userID);
         adjustTable();
         if (session.role == "医师" || session.role == "剂量师" || session.role == "物理师") {
@@ -262,7 +266,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Task + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td>"
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Task + "</td><td>" + date + " , " + begin + " - " + end + "</td><td>" + Completed+ "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td>"
                         + "<td>" + doctor + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -297,7 +301,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + "," + begin + "-" + end + "</td><td>" + Completed+ "</td><td>" + finishedtimes + "</td><td>" + totalnumber + "</td>"
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + " , " + begin + " - " + end + "</td><td>" + Completed+ "</td><td>" + finishedtimes + "</td><td>" + totalnumber + "</td>"
                         + "<td>" + totaltimes + "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + doctor + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -404,21 +408,21 @@ function Paging(patient, role, userID) {
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td><i></i></td><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "剂量师":
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td><i></i></td><td colspan="6" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "物理师":
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td><i></i></td><td colspan="6" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "模拟技师":
@@ -432,28 +436,28 @@ function Paging(patient, role, userID) {
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>预约时间</th><th>是否完成</th><th>完成次数</th><th>累次剂量</th>'
                     + '<th>总次数</th><th>诊断结果</th><th>疗程</th><th>主治医生</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td><i></i></td><td colspan="10" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="11" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "科主任":
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td><i></i></td><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "登记处人员":
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td><i></i></td><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             default:
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td><i></i></td><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
         }
         $("#patient_info").text("共0条记录");
@@ -490,11 +494,13 @@ function adjustTable(){
                 }
             });
         }else{
-            if ($(this).next().length > 0) {
-                $(this).css("display","none");
-            }
-            if (!$(this).hasClass("Parent")) {
-                $(this).css("display","none");
+            if ($(this).hasClass("Parent") || $(this).hasClass("Child")) {
+                if ($(this).next().length > 0) {
+                    $(this).css("display","none");
+                }
+                if (!$(this).hasClass("Parent")) {
+                    $(this).css("display","none");
+                }
             }
         }
     });
@@ -1492,30 +1498,6 @@ function Search(str, patient, role) {
             break;
         case "模拟技师":
             for (var i = 0; i < patient.PatientInfo.length; i++) {
-                if (i < patient.PatientInfo.length - 1) {
-                    if (patient.PatientInfo[i].treatID == patient.PatientInfo[i + 1].treatID) {
-                        TreatmentID = patient.PatientInfo[i].treatID;
-                        Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-                        Name = patient.PatientInfo[i].Name;
-                        treat = patient.PatientInfo[i].treat;
-                        diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
-                        Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
-                        Task = "复位验证";
-                        date = patient.PatientInfo[i].date;
-                        doctor = patient.PatientInfo[i].doctor;
-                        Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
-                        begin = toTime(patient.PatientInfo[i].begin);
-                        end = toTime(patient.PatientInfo[i + 1].end);
-                        if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || date.search(str) >= 0 || Task.search(str) >= 0 || begin.search(str) >= 0 || end.search(str) >= 0 || doctor.search(str) >= 0 || Completed.search(str) >= 0) {
-                            var singlepatient1 = { treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, Progress: patient.PatientInfo[i].Progress, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed, Task:patient.PatientInfo[i].Task };
-                            var singlepatient2 = { treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, Progress: patient.PatientInfo[i].Progress, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed, Task:patient.PatientInfo[i].Task };
-                            Searchedpatient[count++] = singlepatient1;
-                            Searchedpatient[count++] = singlepatient2;
-                        }
-                        i++;
-                        continue;
-                    }
-                }
                 TreatmentID = patient.PatientInfo[i].treatID;
                 Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
                 Name = patient.PatientInfo[i].Name;
@@ -1776,9 +1758,15 @@ Date.prototype.Format = function (fmt) {
 }
 
 function toTime(minute) {
+    var time;
     var hour = parseInt(parseInt(minute) / 60);
     var min = parseInt(minute) - hour * 60;
-    return hour.toString() + ":" + (min < 10 ? "0" : "") + min.toString();
+    if (hour < 24) {
+        time = hour.toString() + ":" + (min < 10 ? "0" : "") + min.toString();
+    }else{
+        time = (hour - 24).toString() + ":" + (min < 10 ? "0" : "") + min.toString() + "(次日)";
+    }
+    return time;
 }
 
 function OperateAttrDisabled() {
