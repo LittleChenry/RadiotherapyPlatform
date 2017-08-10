@@ -52,7 +52,11 @@ function Init(evt) {
                 if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(info[i].Begin).split(":")[0];
                     var minute = toTime(info[i].Begin).split(":")[1];
-                    var beginhour = parseInt(hour) - 24;
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
                     var begin = beginhour + ":" + minute;
                     var endhour = toTime(info[i].End).split(":")[0];
                     var endminute = toTime(info[i].End).split(":")[1];
@@ -79,7 +83,11 @@ function Init(evt) {
                 if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(info[i].Begin).split(":")[0];
                     var minute = toTime(info[i].Begin).split(":")[1];
-                    var beginhour = parseInt(hour) - 24;
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
                     var begin = beginhour + ":" + minute;
                     var endhour = toTime(info[i].End).split(":")[0];
                     var endminute = toTime(info[i].End).split(":")[1];
@@ -122,7 +130,11 @@ function Init(evt) {
                 if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(info[i].Begin).split(":")[0];
                     var minute = toTime(info[i].Begin).split(":")[1];
-                    var beginhour = parseInt(hour) - 24;
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
                     var begin = beginhour + ":" + minute;
                     var endhour = toTime(info[i].End).split(":")[0];
                     var endminute = toTime(info[i].End).split(":")[1];
@@ -357,7 +369,11 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                 if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(equiment[i].Begin).split(":")[0];
                     var minute = toTime(equiment[i].Begin).split(":")[1];
-                    var beginhour = parseInt(hour) - 24;
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
                     var begin = beginhour + ":" + minute;
                     var endhour = toTime(equiment[i].End).split(":")[0];
                     var endminute = toTime(equiment[i].End).split(":")[1];
@@ -384,7 +400,11 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                 if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(equiment[i].Begin).split(":")[0];
                     var minute = toTime(equiment[i].Begin).split(":")[1];
-                    var beginhour = parseInt(hour) - 24;
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
                     var begin = beginhour + ":" + minute;
                     var endhour = toTime(equiment[i].End).split(":")[0];
                     var endminute = toTime(equiment[i].End).split(":")[1];
