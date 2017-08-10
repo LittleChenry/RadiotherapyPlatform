@@ -31,7 +31,7 @@ function Init(evt) {
     for (var i = 0; i < appoints.appoint.length; i++) {
         var appointDate = new Date(appoints.appoint[i].Date);
         var completed = (appoints.appoint[i].Completed == "1") ? "已完成" : "未完成";
-        if (parseInt(toTime(appoints.appoint[i].Begin).split(":")[0]) >= 24) {
+        if (parseInt(toTime(appoints.appoint[i].End).split(":")[0]) >= 24) {
             var hour = toTime(appoints.appoint[i].Begin).split(":")[0];
             var minute = toTime(appoints.appoint[i].Begin).split(":")[1];
             var beginhour = parseInt(hour) - 24;

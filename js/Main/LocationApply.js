@@ -69,7 +69,7 @@ function Init(evt) {
                     add[1].checked = "true";
                     document.getElementById("enhancemethod").style.display = "none";
                 }
-                if (parseInt(toTime(info[i].Begin).split(":")[0]) >= 24) {
+                if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(info[i].Begin).split(":")[0];
                     var minute = toTime(info[i].Begin).split(":")[1];
                     var beginhour = parseInt(hour) - 24;
@@ -98,7 +98,7 @@ function Init(evt) {
                     + '<div class="single-row"><div class="item col-xs-6">是否增强:<span class="underline">' + trans(info[i].Enhance) + '</span></div>'
                     + '<div class="item col-xs-6">增强方式：<span class="underline">' + transmethod(info[i].methodname) + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">特殊要求:<span class="underline">' + info[i].locationrequire + '</span></div></div>';
-                if (parseInt(toTime(info[i].Begin).split(":")[0]) >= 24) {
+                if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(info[i].Begin).split(":")[0];
                     var minute = toTime(info[i].Begin).split(":")[1];
                     var beginhour = parseInt(hour) - 24;
@@ -141,7 +141,7 @@ function Init(evt) {
                     + '<div class="single-row"><div class="item col-xs-6">是否增强:<span class="underline">' + trans(info[i].Enhance) + '</span></div>'
                     + '<div class="item col-xs-6">增强方式：<span class="underline">' + transmethod(info[i].methodname) + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">特殊要求:<span class="underline">' + info[i].locationrequire + '</span></div></div>';
-                if (parseInt(toTime(info[i].Begin).split(":")[0]) >= 24) {
+                if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(info[i].Begin).split(":")[0];
                     var minute = toTime(info[i].Begin).split(":")[1];
                     var beginhour = parseInt(hour) - 24;
@@ -459,7 +459,7 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
         if (i <= equiment.length - 1) {
             var td = document.createElement("td");
             var sign = document.createElement("i");
-            if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+            if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
                 var hour = toTime(equiment[i].Begin).split(":")[0];
                 var minute = toTime(equiment[i].Begin).split(":")[1];
                 var beginhour = parseInt(hour) - 24;
@@ -492,7 +492,7 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                 sign.className = "fa fa-fw fa-ban td-sign";
                 td.addEventListener("click", hasChosen, false);
             }
-            if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+            if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
                 var hour = toTime(equiment[i].Begin).split(":")[0];
                 var minute = toTime(equiment[i].Begin).split(":")[1];
                 var beginhour = parseInt(hour) - 24;
