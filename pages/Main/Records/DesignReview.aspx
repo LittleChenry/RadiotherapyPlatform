@@ -188,8 +188,8 @@
                                 <tr>
                                     <td>11</td>
                                     <td>放疗计划再优化程度</td>
-                                    <td id="Td1" >
-                                        <select id="degree" name="degree" class="form-item" disabled="disabled"></select>
+                                    <td id="Td1" style="padding:0px;">
+                                        <select id="degree" name="degree" class="td-input" disabled="disabled"></select>
                                     </td>
                                     <td id="Reoptimization">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
@@ -200,8 +200,8 @@
                                 <tr>
                                     <td>12</td>
                                     <td>摆位野信息</td>
-                                    <td id="Td2" >
-                                        <select id="placeinfo" name="placeinfo" class="form-item" disabled="disabled"></select>
+                                    <td id="Td2" style="padding:0px;">
+                                        <select id="placeinfo" name="placeinfo" class="td-input" disabled="disabled"></select>
                                     </td>
                                     <td id="PlaceInformation">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
@@ -212,8 +212,8 @@
                                 <tr>
                                     <td>13</td>
                                     <td>DRR</td>
-                                    <td id="Td4" >
-                                       <select id="drr" name="drr" class="form-item" disabled="disabled"></select>
+                                    <td id="Td4" style="padding:0px;">
+                                       <select id="drr" name="drr" class="td-input" disabled="disabled"></select>
                                     </td>
                                     <td id="DRR">未通过</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
@@ -224,8 +224,8 @@
                                 <tr>
                                     <td>14</td>
                                     <td>计划和图像导出到放疗网络</td>
-                                    <td id="Td6" >
-                                        <select id="import" name="import" class="form-item" disabled="disabled"></select>
+                                    <td id="Td6" style="padding:0px;">
+                                        <select id="import" name="import" class="td-input" disabled="disabled"></select>
                                     </td>
                                     <td id="IsExport">否</td>
                                     <td style="padding:1px 35px;vertical-align:middle;">
