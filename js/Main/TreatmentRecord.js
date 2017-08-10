@@ -166,7 +166,7 @@ function Init(evt) {
     $("#confirm").click(function ()
     {
         var allfirstnumber = parseInt(getallfirst(treatmentID));
-        if ((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber == "") {
+        if (!((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber == "")){
             alert("请预约完所有加速治疗再进行治疗");
         }
             var session = getSession();
@@ -614,7 +614,20 @@ function CreateCurrentEquipmentTbale(equiment, dateString,times) {
     var length = timeinfo.length;
     var context2='<tbody>';
     for (var i = 0; i < length; i++) {
-        context2 = context2 + '<tr id="rows_' + i + '"  ><td  onclick="clickrow(this)">' + toTime(timeinfo[i].Begin) + ' - ' + toTime(timeinfo[i].End) + '</td></tr>';
+        if (parseInt(toTime(timeinfo[i].Begin).split(":")[0]) >= 24) {
+            var hour = toTime(timeinfo[i].Begin).split(":")[0];
+            var minute = toTime(timeinfo[i].Begin).split(":")[1];
+            var beginhour = parseInt(hour) - 24;
+            var begin = beginhour + ":" + minute;
+            var endhour = toTime(timeinfo[i].End).split(":")[0];
+            var endminute = toTime(timeinfo[i].End).split(":")[1];
+            var hourend = parseInt(endhour) - 24;
+            var end = hourend + ":" + endminute;
+            context2 = context2 + '<tr id="rows_' + i + '"  ><td  onclick="clickrow(this)">' + begin + ' - ' + end + '(次日)</td></tr>';
+        } else {
+            context2 = context2 + '<tr id="rows_' + i + '"  ><td  onclick="clickrow(this)">' + toTime(timeinfo[i].Begin) + ' - ' + toTime(timeinfo[i].End) + '</td></tr>';
+        }
+        
     }
     context2 = context2 + '</tbody>';
     $table.append(context2);

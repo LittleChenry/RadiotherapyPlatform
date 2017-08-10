@@ -80,7 +80,19 @@ function Init(evt) {
    document.getElementById("remarks").value = logjson.SpecialEnjoin;
     if (contains(groupprogress, "14")) {
         var info = getfirstaccelerateInfomation(treatmentID);
-        document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
+        if (parseInt(toTime(info.Begin).split(":")[0]) >= 24) {
+            var hour = toTime(info.Begin).split(":")[0];
+            var minute = toTime(info.Begin).split(":")[1];
+            var beginhour = parseInt(hour) - 24;
+            var begin = beginhour + ":" + minute;
+            var endhour = toTime(info.End).split(":")[0];
+            var endminute = toTime(info.End).split(":")[1];
+            var hourend = parseInt(endhour) - 24;
+            var end = hourend + ":" + endminute;
+            document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + begin + "-" + end+"(次日)";
+        } else {
+            document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
+        }
         document.getElementById("chooseappoint").disabled = "disabled";
         document.getElementById("operator").innerHTML = info.username;
         document.getElementById("date").innerHTML = info.ApplyTime;
@@ -90,7 +102,19 @@ function Init(evt) {
           createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2], type);
           var info = getfirstaccelerateInfomation(treatmentID);
           if ((typeof (info) != "undefined")) {
-              document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
+              if (parseInt(toTime(info.Begin).split(":")[0]) >= 24) {
+                  var hour = toTime(info.Begin).split(":")[0];
+                  var minute = toTime(info.Begin).split(":")[1];
+                  var beginhour = parseInt(hour) - 24;
+                  var begin = beginhour + ":" + minute;
+                  var endhour = toTime(info.End).split(":")[0];
+                  var endminute = toTime(info.End).split(":")[1];
+                  var hourend = parseInt(endhour) - 24;
+                  var end = hourend + ":" + endminute;
+                  document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + begin + "-" + end + "(次日)";
+              } else {
+                  document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
+              }
               document.getElementById("idforappoint").value = info.appointid;
           }
             var date = new Date();
@@ -367,7 +391,19 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
         var td = document.createElement("td");
         var sign = document.createElement("i");
         if (i <= equiment.length - 1) {
-            td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+            if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+                var hour = toTime(equiment[i].Begin).split(":")[0];
+                var minute = toTime(equiment[i].Begin).split(":")[1];
+                var beginhour = parseInt(hour) - 24;
+                var begin = beginhour + ":" + minute;
+                var endhour = toTime(equiment[i].End).split(":")[0];
+                var endminute = toTime(equiment[i].End).split(":")[1];
+                var hourend = parseInt(endhour) - 24;
+                var end = hourend + ":" + endminute;
+                td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + begin + "-" + end + "(次日)" + "_" + equiment[i].Euqipment);
+            } else {
+                td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+            }
             if (equiment[i].State == "0") {
                 if (getReplace(equiment[i], dateString)) {
                     if (compareWithToday(dateString)) {
@@ -388,7 +424,19 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                 sign.className = "fa fa-fw fa-ban td-sign";
                 td.addEventListener("click", hasChosen, false);
             }
-            var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+            if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+                var hour = toTime(equiment[i].Begin).split(":")[0];
+                var minute = toTime(equiment[i].Begin).split(":")[1];
+                var beginhour = parseInt(hour) - 24;
+                var begin = beginhour + ":" + minute;
+                var endhour = toTime(equiment[i].End).split(":")[0];
+                var endminute = toTime(equiment[i].End).split(":")[1];
+                var hourend = parseInt(endhour) - 24;
+                var end = hourend + ":" + endminute;
+                var text = document.createTextNode(begin + " - " + end + "(次日)");
+            } else {
+                var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+            }
             td.appendChild(text);
             td.appendChild(sign);
             tr.appendChild(td);
@@ -608,7 +656,7 @@ function compare(evt1, evt2) {
         return false;
     }
     if (parseInt(month) == parseInt(evt2[1]) && parseInt(day) == parseInt(evt2[2])) {
-        if ((parseInt(evt2[3]) - Min) >= 120) {
+        if ((parseInt(evt2[3]) - Min) >= 30) {
             return true;
         }
         else {
@@ -625,7 +673,7 @@ function remove() {
     var total = gettotalnumber(treatmentid);
     var totalnumber = total.split(",")[0];
     var finshedtimes = total.split(",")[1];
-    if (parseInt(finshedtimes) == 0 || finshedtimes=="") {
+    if (document.getElementById("appointtime").value==""){
         document.getElementById("chooseappoint").removeAttribute("disabled");
     }
     document.getElementById("changetotalnumber").removeAttribute("disabled");

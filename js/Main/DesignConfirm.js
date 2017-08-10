@@ -253,10 +253,6 @@ function save() {
         window.alert("请审核计划");
         return false;
     }
-    if (document.getElementById("advice").value == "") {
-        window.alert("请填写审核意见");
-        return false;
-    }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";

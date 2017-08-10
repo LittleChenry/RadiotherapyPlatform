@@ -53,9 +53,23 @@ function patientView(){
 				for (var i = 0; i < appoints.appoint.length; i++) {
 				    var appointDate = new Date(appoints.appoint[i].Date);
 				    var completed = (appoints.appoint[i].Completed == "1") ? "已完成" : "未完成";
-				    var tr = '<tr id="apoint_' + appoints.appoint[i].appointid + '"><td>' + appoints.appoint[i].Task + '</td>'
+				    if (parseInt(toTime(appoints.appoint[i].Begin).split(":")[0]) >= 24) {
+				        var hour = toTime(appoints.appoint[i].Begin).split(":")[0];
+				        var minute = toTime(appoints.appoint[i].Begin).split(":")[1];
+				        var beginhour = parseInt(hour) - 24;
+				        var begin = beginhour + ":" + minute;
+				        var endhour = toTime(appoints.appoint[i].End).split(":")[0];
+				        var endminute = toTime(appoints.appoint[i].End).split(":")[1];
+				        var hourend = parseInt(endhour) - 24;
+				        var end = hourend + ":" + endminute;
+				        var tr = '<tr id="apoint_' + appoints.appoint[i].appointid + '"><td>' + appoints.appoint[i].Task + '</td>'
+                         + '<td>' + appointDate.Format("yyyy-MM-dd") + ' , ' + begin + ' - ' + end + '(次日)</td>'
+                         + '<td>' + completed + '</td>';
+				    } else {
+				        var tr = '<tr id="apoint_' + appoints.appoint[i].appointid + '"><td>' + appoints.appoint[i].Task + '</td>'
                         + '<td>' + appointDate.Format("yyyy-MM-dd") + ' , ' + toTime(appoints.appoint[i].Begin) + ' - ' + toTime(appoints.appoint[i].End) + '</td>'
                         + '<td>' + completed + '</td>';
+				    }
 				    if (appoints.appoint[i].Task != "加速器" && session.roleName == "YS") {
 				        if (appoints.appoint[i].Completed == "1") {
 				            tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
@@ -469,7 +483,19 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
             if (i <= equiment.length - 1) {
                 var td = document.createElement("td");
                 var sign = document.createElement("i");
-                td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+                if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+                    var hour = toTime(equiment[i].Begin).split(":")[0];
+                    var minute = toTime(equiment[i].Begin).split(":")[1];
+                    var beginhour = parseInt(hour) - 24;
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(equiment[i].End).split(":")[0];
+                    var endminute = toTime(equiment[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + begin + "-" + end + "(次日)" + "_" + equiment[i].Euqipment);
+                } else {
+                    td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+                }
                 if (equiment[i].State == "0") {
                     if (compareWithToday(dateString)) {
                         sign.className = "";
@@ -484,7 +510,19 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                     sign.className = "fa fa-fw fa-ban td-sign";
                     td.addEventListener("click", hasChosen, false);
                 }
-                var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+                if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+                    var hour = toTime(equiment[i].Begin).split(":")[0];
+                    var minute = toTime(equiment[i].Begin).split(":")[1];
+                    var beginhour = parseInt(hour) - 24;
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(equiment[i].End).split(":")[0];
+                    var endminute = toTime(equiment[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    var text = document.createTextNode(begin + " - " + end + "(次日)");
+                } else {
+                    var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+                }
                 td.appendChild(text);
                 td.appendChild(sign);
                 tr.appendChild(td);

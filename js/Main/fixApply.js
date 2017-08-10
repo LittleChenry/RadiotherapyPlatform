@@ -49,7 +49,19 @@ function Init(evt) {
                 document.getElementById("fixEquip").value = info[i].fixedequipid;
                 document.getElementById("bodyPost").value = info[i].BodyPosition;
                 document.getElementById("Remarks").value = info[i].Remarks;
-                document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
+                if (parseInt(toTime(info[i].Begin).split(":")[0]) >= 24) {
+                    var hour = toTime(info[i].Begin).split(":")[0];
+                    var minute = toTime(info[i].Begin).split(":")[1];
+                    var beginhour = parseInt(hour) - 24;
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(info[i].End).split(":")[0];
+                    var endminute = toTime(info[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date + " " + begin + "-" + end+"(次日)";
+                } else {
+                    document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
+                }
                 document.getElementById("applyuser").innerHTML = info[i].username;
                 document.getElementById("time").innerHTML = info[i].ApplicationTime;
                 
@@ -63,10 +75,25 @@ function Init(evt) {
                     + '<div class="item col-xs-6">模具：<span class="underline">' + info[i].materialName + '</span></div>'
                     + '<div class="item col-xs-6">固定装置：<span class="underline">' + info[i].fixedequipname + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">体位:<span class="underline">' + info[i].BodyPosition + '</span></div>'
-                    + '<div class="item col-xs-6">特殊要求：<span class="underline">' + info[i].fixedrequire + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div>'
-                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
-                    + '<div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
+                    + '<div class="item col-xs-6">特殊要求：<span class="underline">' + info[i].fixedrequire + '</span></div></div>';
+                if (parseInt(toTime(info[i].Begin).split(":")[0]) >= 24) {
+                    var hour = toTime(info[i].Begin).split(":")[0];
+                    var minute = toTime(info[i].Begin).split(":")[1];
+                    var beginhour = parseInt(hour) - 24;
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(info[i].End).split(":")[0];
+                    var endminute = toTime(info[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + begin + '-' + end + '(次日)</span></div>'
+                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
+                     + '<div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
+                } else {
+                    content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div>'
+                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
+                     + '<div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
+                }
+    
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
@@ -91,10 +118,24 @@ function Init(evt) {
                     + '<div class="item col-xs-6">模具：<span class="underline">' + info[i].materialName + '</span></div>'
                     + '<div class="item col-xs-6">固定装置：<span class="underline">' + info[i].fixedequipname + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">体位:<span class="underline">' + info[i].BodyPosition + '</span></div>'
-                    + '<div class="item col-xs-6">特殊要求：<span class="underline">' + info[i].fixedrequire + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div>'
-                    + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
-                    + '<div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';
+                    + '<div class="item col-xs-6">特殊要求：<span class="underline">' + info[i].fixedrequire + '</span></div></div>';
+                if (parseInt(toTime(info[i].Begin).split(":")[0]) >= 24) {
+                    var hour = toTime(info[i].Begin).split(":")[0];
+                    var minute = toTime(info[i].Begin).split(":")[1];
+                    var beginhour = parseInt(hour) - 24;
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(info[i].End).split(":")[0];
+                    var endminute = toTime(info[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + begin + '-' + end + '(次日)</span></div>'
+                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
+                     + '<div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';
+                } else {
+                    content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div>'
+                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
+                     + '<div class="item col-xs-4"><button class="btn btn-success" type="button"  id="' + i + '">载入历史信息</button></div></div>';
+                }
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
@@ -313,7 +354,19 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
             if (i <= equiment.length - 1) {
                 var td = document.createElement("td");
                 var sign = document.createElement("i");
-                td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+                if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+                    var hour = toTime(equiment[i].Begin).split(":")[0];
+                    var minute = toTime(equiment[i].Begin).split(":")[1];
+                    var beginhour = parseInt(hour) - 24;
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(equiment[i].End).split(":")[0];
+                    var endminute = toTime(equiment[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + begin + "-" + end + "(次日)" + "_" + equiment[i].Euqipment);
+                } else {
+                    td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+                }
                 if (equiment[i].State == "0") {
                     if (compareWithToday(dateString)) {
                         sign.className = "";
@@ -328,7 +381,19 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                     sign.className = "fa fa-fw fa-ban td-sign";
                     td.addEventListener("click", hasChosen, false);
                 }
-                var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+                if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+                    var hour = toTime(equiment[i].Begin).split(":")[0];
+                    var minute = toTime(equiment[i].Begin).split(":")[1];
+                    var beginhour = parseInt(hour) - 24;
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(equiment[i].End).split(":")[0];
+                    var endminute = toTime(equiment[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    var text = document.createTextNode(begin + " - " + end + "(次日)");
+                } else {
+                    var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+                }
                 td.appendChild(text);
                 td.appendChild(sign);
                 tr.appendChild(td);

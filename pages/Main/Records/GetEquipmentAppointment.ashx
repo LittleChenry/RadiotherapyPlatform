@@ -68,9 +68,16 @@ public class GetEquipmentAppointment : IHttpHandler {
             int time=int.Parse(reader["Begin"].ToString());
             int hour=time/60;
             int minute=time-(time/60)*60;
-            DateTime dt1 = Convert.ToDateTime(date+" "+hour+":"+minute+":"+"00");
+            string date1 = date;
+            if (hour>=24)
+            {
+                hour = hour - 24;
+                DateTime datenew = Convert.ToDateTime(date);
+                date1 = datenew.AddDays(1).ToShortDateString();
+            }
+            DateTime dt1 = Convert.ToDateTime(date1 + " " + hour + ":" + minute + ":" + "00");
             DateTime dt2 = DateTime.Now;
-            if (DateTime.Compare(dt1, dt2) > 0)
+           if (DateTime.Compare(dt1, dt2) > 0)
             {
                 backString.Append("{\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\""
                         + reader["End"].ToString() + "\",\"EuqipmentID\":\"" + equipmentID + "\",\"ID\":\"" + reader["ID"].ToString() + "\",\"State\":\"" + reader["State"].ToString()

@@ -36,7 +36,19 @@ function Init(evt) {
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatmentname == patient.Treatmentname) {
                 document.getElementById("replacementrequire").value = info[i].requirement;
-                document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date.split(" ")[0] + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
+                if (parseInt(toTime(info[i].Begin).split(":")[0]) >= 24) {
+                    var hour = toTime(info[i].Begin).split(":")[0];
+                    var minute = toTime(info[i].Begin).split(":")[1];
+                    var beginhour = parseInt(hour) - 24;
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(info[i].End).split(":")[0];
+                    var endminute = toTime(info[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date.split(" ")[0] + " " + begin + "-" + end + "(次日)";
+                } else {
+                    document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date.split(" ")[0] + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
+                }
                 document.getElementById("applyuser").innerHTML = info[i].username;
                 document.getElementById("time").innerHTML = info[i].ApplicationTime;
                 if (info[i].userid == userID) {
@@ -46,8 +58,20 @@ function Init(evt) {
             } else {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '复位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
-                    + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div><div class="item col-xs-4"><button disabled="disabled" type="button" class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
+                    + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>';
+                if (parseInt(toTime(info[i].Begin).split(":")[0]) >= 24) {
+                    var hour = toTime(info[i].Begin).split(":")[0];
+                    var minute = toTime(info[i].Begin).split(":")[1];
+                    var beginhour = parseInt(hour) - 24;
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(info[i].End).split(":")[0];
+                    var endminute = toTime(info[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + begin + '-' + end + '(次日)</span></div><div class="item col-xs-4"><button disabled="disabled" type="button" class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
+                } else {
+                    content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div><div class="item col-xs-4"><button disabled="disabled" type="button" class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
+                }
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
 
@@ -70,8 +94,20 @@ function Init(evt) {
             if (info[i].treatmentname != patient.Treatmentname) {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '复位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
-                    + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';
+                    + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>';
+                if (parseInt(toTime(info[i].Begin).split(":")[0]) >= 24) {
+                    var hour = toTime(info[i].Begin).split(":")[0];
+                    var minute = toTime(info[i].Begin).split(":")[1];
+                    var beginhour = parseInt(hour) - 24;
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(info[i].End).split(":")[0];
+                    var endminute = toTime(info[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + begin + '-' + end + '(次日)</span></div><div class="item col-xs-4"><button  type="button" class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
+                } else {
+                    content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + ' ' + info[i].Date.split(" ")[0] + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div><div class="item col-xs-4"><button type="button" class="btn btn-success" id="' + i + '">载入历史信息</button></div></div>';
+                }
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
@@ -196,7 +232,19 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
             if (i <= equiment.length - 1) {
                 var td = document.createElement("td");
                 var sign = document.createElement("i");
-                td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+                if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+                    var hour = toTime(equiment[i].Begin).split(":")[0];
+                    var minute = toTime(equiment[i].Begin).split(":")[1];
+                    var beginhour = parseInt(hour) - 24;
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(equiment[i].End).split(":")[0];
+                    var endminute = toTime(equiment[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + begin + "-" + end + "(次日)" + "_" + equiment[i].Euqipment);
+                } else {
+                    td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+                }
                 if (equiment[i].State == "0") {
                     if (compareWithToday(dateString)) {
                         sign.className = "";
@@ -211,7 +259,19 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                     sign.className = "fa fa-fw fa-ban td-sign";
                     td.addEventListener("click", hasChosen, false);
                 }
-                var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+                if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+                    var hour = toTime(equiment[i].Begin).split(":")[0];
+                    var minute = toTime(equiment[i].Begin).split(":")[1];
+                    var beginhour = parseInt(hour) - 24;
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(equiment[i].End).split(":")[0];
+                    var endminute = toTime(equiment[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    var text = document.createTextNode(begin + " - " + end + "(次日)");
+                } else {
+                    var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+                }
                 td.appendChild(text);
                 td.appendChild(sign);
                 tr.appendChild(td);
