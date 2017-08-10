@@ -36,10 +36,14 @@ function Init(evt) {
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatmentname == patient.Treatmentname) {
                 document.getElementById("replacementrequire").value = info[i].requirement;
-                if (parseInt(toTime(info[i].Begin).split(":")[0]) >= 24) {
+                if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(info[i].Begin).split(":")[0];
                     var minute = toTime(info[i].Begin).split(":")[1];
-                    var beginhour = parseInt(hour) - 24;
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
                     var begin = beginhour + ":" + minute;
                     var endhour = toTime(info[i].End).split(":")[0];
                     var endminute = toTime(info[i].End).split(":")[1];
@@ -59,10 +63,14 @@ function Init(evt) {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '复位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>';
-                if (parseInt(toTime(info[i].Begin).split(":")[0]) >= 24) {
+                if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(info[i].Begin).split(":")[0];
                     var minute = toTime(info[i].Begin).split(":")[1];
-                    var beginhour = parseInt(hour) - 24;
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
                     var begin = beginhour + ":" + minute;
                     var endhour = toTime(info[i].End).split(":")[0];
                     var endminute = toTime(info[i].End).split(":")[1];
@@ -95,10 +103,14 @@ function Init(evt) {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '复位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-5">复位要求：<span class="underline">' + info[i].require + '</span></div></div>';
-                if (parseInt(toTime(info[i].Begin).split(":")[0]) >= 24) {
+                if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(info[i].Begin).split(":")[0];
                     var minute = toTime(info[i].Begin).split(":")[1];
-                    var beginhour = parseInt(hour) - 24;
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
                     var begin = beginhour + ":" + minute;
                     var endhour = toTime(info[i].End).split(":")[0];
                     var endminute = toTime(info[i].End).split(":")[1];
@@ -232,10 +244,14 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
             if (i <= equiment.length - 1) {
                 var td = document.createElement("td");
                 var sign = document.createElement("i");
-                if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+                if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(equiment[i].Begin).split(":")[0];
                     var minute = toTime(equiment[i].Begin).split(":")[1];
-                    var beginhour = parseInt(hour) - 24;
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
                     var begin = beginhour + ":" + minute;
                     var endhour = toTime(equiment[i].End).split(":")[0];
                     var endminute = toTime(equiment[i].End).split(":")[1];
@@ -259,10 +275,14 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                     sign.className = "fa fa-fw fa-ban td-sign";
                     td.addEventListener("click", hasChosen, false);
                 }
-                if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+                if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(equiment[i].Begin).split(":")[0];
                     var minute = toTime(equiment[i].Begin).split(":")[1];
-                    var beginhour = parseInt(hour) - 24;
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
                     var begin = beginhour + ":" + minute;
                     var endhour = toTime(equiment[i].End).split(":")[0];
                     var endminute = toTime(equiment[i].End).split(":")[1];

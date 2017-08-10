@@ -614,10 +614,14 @@ function CreateCurrentEquipmentTbale(equiment, dateString,times) {
     var length = timeinfo.length;
     var context2='<tbody>';
     for (var i = 0; i < length; i++) {
-        if (parseInt(toTime(timeinfo[i].Begin).split(":")[0]) >= 24) {
+        if (parseInt(toTime(timeinfo[i].End).split(":")[0]) >= 24) {
             var hour = toTime(timeinfo[i].Begin).split(":")[0];
             var minute = toTime(timeinfo[i].Begin).split(":")[1];
-            var beginhour = parseInt(hour) - 24;
+            if (hour >= 24) {
+                var beginhour = parseInt(hour) - 24;
+            } else {
+                var beginhour = hour;
+            }
             var begin = beginhour + ":" + minute;
             var endhour = toTime(timeinfo[i].End).split(":")[0];
             var endminute = toTime(timeinfo[i].End).split(":")[1];
