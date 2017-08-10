@@ -260,7 +260,7 @@ $(function () {
         });
     });
 });
-
+/*
 $(function () {
     $("#deleteType").bind("click", function () {
         var id = $("#equipmentID").val();
@@ -276,7 +276,7 @@ $(function () {
         })
     });
 });
-
+*/
 $(function () {
     $("#search").bind("click", function () {
         var text = $("#GroupSearchID").val();

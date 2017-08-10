@@ -205,7 +205,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="Root-userInformation.aspx"><i class="fa fa-circle-o"></i> 用户信息</a></li>
-            <li><a href="Root-user2role.aspx"><i class="fa fa-circle-o"></i>用户绑定</a></li>
+            <li class="active"><a href="Root-user2role.aspx"><i class="fa fa-circle-o"></i>用户绑定</a></li>
           </ul>
         </li>
 

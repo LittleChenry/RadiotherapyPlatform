@@ -39,6 +39,8 @@ public partial class Root_Root_equipment : System.Web.UI.Page
         int time = int.Parse(str.ToString());
         int hour = time / 60;
         int minute = time - hour*60;
+        if (hour >= 24)
+            hour -= 24;
         return (hour.ToString() + ":" + (minute < 10 ? "0" : "") + minute.ToString());
     }
 

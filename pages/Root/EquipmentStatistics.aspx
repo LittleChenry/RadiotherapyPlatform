@@ -307,7 +307,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-              <li><a href="EquipmentStatistics.aspx"><i class="fa fa-circle-o"></i> 设备检查统计</a></li>
+              <li class="active"><a href="EquipmentStatistics.aspx"><i class="fa fa-circle-o"></i> 设备检查统计</a></li>
           </ul>
         </li>
       </ul>

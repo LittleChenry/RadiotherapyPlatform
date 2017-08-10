@@ -122,6 +122,16 @@ function FillForm() {
     PMEnd.value = transTime(obj[0].EndTimePM);
     var changeTreatmentItem = document.getElementById("changeTreatmentItem");
     selectedByValue(changeTreatmentItem, obj[0].TreatmentItem);
+    var nextday = document.getElementById("allowNext");
+    if (parseInt(PMEnd.value.split(":")[0]) >= 24) {
+        nextday.getElementsByTagName("OPTION")[1].selected = true;
+        var newhor = parseInt(PMEnd.value.split(":")[0]) - 24;
+        var newmin = PMEnd.value.split(":")[1];
+        PMEnd.value = newhor + ":" + newmin;
+    } else {
+        nextday.getElementsByTagName("OPTION")[0].selected = true;
+    }
+
 }
 
 //根据value选择select当前选项
@@ -241,19 +251,19 @@ function checkClassName(name, thisElement) {
                 if (thisElement.id = "AMEnd") {
                     error.innerHTML = "上午结束时间必须在开始时间之后";
                 }
-                if (thisElement.id == "PMEnd") {
+                if (thisElement.id == "PMEnd" && $("#allowNext :selected").val() == "afternoon") {
                     error.innerHTML = "下午结束时间必须在开始时间之后";
                 }
             }
             backString += name;
             break;
         case "PMEnd":
-            if (isAllGood && !checkAfterTime(thisElement, "PMBeg")) {
+            if (isAllGood && !checkAfterTime(thisElement, "PMBeg") && $("#allowNext :selected").val() == "afternoon") {
                 backString += "invalid ";
                 if (thisElement.id = "AMEnd") {
                     error.innerHTML = "上午结束时间必须在开始时间之后";
                 }
-                if (thisElement.id == "PMEnd") {
+                if (thisElement.id == "PMEnd" && $("#allowNext :selected").val() == "afternoon") {
                     error.innerHTML = "下午结束时间必须在开始时间之后";
                 }
             }
@@ -322,7 +332,7 @@ function checkTimes() {
     } else {
         error.innerHTML = "";
         removeClassName(this, "invalid");
-        if (this.id == "PMBeg" || this.id == "PMEnd") {
+        if (this.id == "PMBeg" || (this.id == "PMEnd" && $("#allowNext :selected").val() == "afternoon")) {
             var time = this.value.split(":");
             var hour = time[0];
             if (parseInt(hour) < 12) {
@@ -333,7 +343,7 @@ function checkTimes() {
         if (this.id == "AMEnd" && !checkAfterTime(this, "AMbeg")) {
             error.innerHTML = "上午结束时间必须在开始时间之后";
             this.className += " invalid";
-        } else if (this.id == "PMEnd" && !checkAfterTime(this, "PMBeg")) {
+        } else if (this.id == "PMEnd" && !checkAfterTime(this, "PMBeg") && $("#allowNext :selected").val() == "afternoon") {
             error.innerHTML = "下午结束时间必须在开始时间之后";
             this.className += " invalid";
         }

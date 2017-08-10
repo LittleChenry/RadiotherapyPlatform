@@ -218,7 +218,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-              <li><a href="Root-role.aspx"><i class="fa fa-circle-o"></i> 角色信息</a></li>
+              <li class="active"><a href="Root-role.aspx"><i class="fa fa-circle-o"></i> 角色信息</a></li>
               <li><a href="Root-function2role.aspx"><i class="fa fa-circle-o"></i>功能绑定</a></li>
           </ul>
         </li>

@@ -202,7 +202,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="Root-InfoManage.aspx"><i class="fa fa-circle-o"></i> 消息管理</a></li>
-            <li><a href="Root-information.aspx"><i class="fa fa-circle-o"></i> 消息发布</a></li>
+            <li class="active"><a href="Root-information.aspx"><i class="fa fa-circle-o"></i> 消息发布</a></li>
           </ul>
         </li>
         <li class="treeview">

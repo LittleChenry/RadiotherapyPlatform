@@ -43,6 +43,13 @@ public class handlerEquipment : IHttpHandler {
         string PMEnd = context.Request.Form["PMEnd"];
         string type = context.Request.Form["equipmentType"];
         string treatmentItem = context.Request.Form["changeTreatmentItem"];
+        string next = context.Request.Form["allowNext"];
+        if (next == "nextday")
+        {
+            string[] pms = PMEnd.Split(':');
+            int hour = int.Parse(pms[0])+24;
+            PMEnd = hour + ":" + pms[1];           
+        }
         //sql语句
         string sqlCommand = "UPDATE equipment SET Name=@Name,State=@State,Timelength=@Timelength," +
                             "BeginTimeAM=@BeginTimeAM,EndTimeAM=@EndTimeAM,BegTimePM=@BegTimePM," +

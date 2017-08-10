@@ -229,7 +229,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="Root-equipment.aspx"><i class="fa fa-circle-o"></i> 设备管理</a></li>
+            <li class="active"><a href="Root-equipment.aspx"><i class="fa fa-circle-o"></i> 设备管理</a></li>
             <li><a href="EquipmentTypeManage.aspx"><i class="fa fa-circle-o"></i>设备类型管理</a></li>
             <li><a href="Root-EquipmentInspectionManage.aspx"><i class="fa fa-circle-o"></i> 设备检查管理</a></li>
             <li><a href="Root_EquipmentInspection.aspx"><i class="fa fa-circle-o"></i> 设备检查</a></li>
@@ -479,7 +479,12 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="noborder"><label for="PMEnd" class="height">下午结束时间</label></th>
+                                            <th class="noborder">
+                                                <select id="allowNext" name="allowNext">
+                                                    <option value="afternoon">下午结束时间</option>
+                                                    <option value="nextday">次日凌晨结束</option>
+                                                </select>
+                                            </th>
                                             <td>
                                                 <input type="text" id="PMEnd" name="PMEnd" class="form-control controlHeight Time PMEnd" placeholder="请输入下午结束使用设备时间" />
                                             </td>
