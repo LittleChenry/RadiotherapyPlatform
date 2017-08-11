@@ -147,8 +147,7 @@ function changeAppoint(e) {
     var date = date.Format('yyyy-MM-dd');
     document.getElementById("AppiontDate").value = date;
     CreateNewAppiontTable(e);
-    $("#sure").bind("click", function () {
-        $(this).unbind("click");
+    $("#sure").unbind("click").bind("click", function () {
         var choseid = ChoseID();
         var appoint = choseid.split("_");
         var newappoint = appoint[0];

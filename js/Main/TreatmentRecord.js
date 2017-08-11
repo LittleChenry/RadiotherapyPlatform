@@ -874,6 +874,7 @@ function RemoveAllChild1(area) {
 }
 //根据日期创建新表
 function CreateNewAppiontTable() {
+    document.getElementById("chooseProject").disabled = "disabled";
     $("#loading").show();
     var equipmentName = document.getElementById("equipmentName");
     var currentIndex = equipmentName.selectedIndex;
@@ -912,8 +913,8 @@ function CreateNewAppiontTable() {
         success: function (data) {
             thisObj = eval("(" + data + ")");
             CreateCurrentEquipmentTbale(thisObj, date, times);
-            //setTimeout("alert('5 seconds!')",5000);
             $("#loading").hide();
+            document.getElementById("chooseProject").removeAttribute("disabled");
         },
         error: function () {
             $("#loading").hide();
