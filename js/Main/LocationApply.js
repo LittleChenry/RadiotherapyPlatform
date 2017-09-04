@@ -666,6 +666,7 @@ function getLocationPatientInfo(treatmentID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.patient[0];
 }
