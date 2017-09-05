@@ -991,6 +991,8 @@ function checkAddTreatment(Radiotherapy_ID) {
                             '<tr id="design"><td>计划设计<i></i></td></tr><tr id="replace"><td>复位验证<i></i></td></tr></tbody>';
                         table.append(thead);
                         table.append(tbody);
+                        data = data.replace(/\r/g, "");
+                        data = data.replace(/\n/g, "\\n");
                         obj = $.parseJSON(data);
                         var newTreatname = obj.treatinfo.length + 1;
                         $("#newname").val("疗程" + newTreatname);

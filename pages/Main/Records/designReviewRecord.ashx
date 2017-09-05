@@ -105,8 +105,7 @@ public class designReviewRecord : IHttpHandler {
         {
             context.Response.Write(Ex);
         }
-        try
-         {
+
              string treatid = context.Request.Form["hidetreatID"];
             int treatID = Convert.ToInt32(treatid);
             //string userID = "1";
@@ -201,11 +200,6 @@ public class designReviewRecord : IHttpHandler {
             }
 
 
-             }
-         catch (System.Exception Ex1)
-         {
-             return "error";
-         }
 
 
     }

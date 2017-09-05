@@ -206,7 +206,7 @@ function getDesignInfo(treatID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    var json = json.replace(/\n/g, "\\n");
+    json = json.replace(/\r\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.designInfo;
 }
@@ -285,6 +285,7 @@ function chooseTempalte(templateID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    json = json.replace(/\r\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     document.getElementById("Remarks").value = obj1.templateInfo[0].RadiotherapyHistory;
     addDosagePriority1(obj1.templateInfo[0].DosagePriority);

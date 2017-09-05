@@ -121,6 +121,7 @@ function getimportCTInfomation(treatmentID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    json = json.replace(/\r\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 
@@ -131,7 +132,7 @@ function getLocation(treatmentID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    var json = json.replace(/\n/g, "\\n");
+    json = json.replace(/\r\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.info[0];
 }
@@ -142,7 +143,7 @@ function getfixPatientInfo(treatmentID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    json = json.replace(/\n/g, "\\n");
+    json = json.replace(/\r\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.patient[0];
 }

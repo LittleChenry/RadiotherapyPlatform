@@ -281,7 +281,7 @@ function getLocationInfomation(treatmentID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    var json = json.replace(/\n/g, "\\n");
+    var json = json.replace(/\r\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 }
