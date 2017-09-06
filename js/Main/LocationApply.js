@@ -281,7 +281,8 @@ function getLocationInfomation(treatmentID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    var json = json.replace(/\r\n/g, "\\n");
+    json = json.replace(/\r/g, "");
+    json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 }
@@ -291,7 +292,8 @@ function chooseTempalte(templateID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    var json = json.replace(/\n/g, "\\n");
+    json = json.replace(/\r/g, "");
+    json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     document.getElementById("scanmethod").value = obj1.templateInfo[0].scanmethodID;
     document.getElementById("scanpart").value = obj1.templateInfo[0].scanpartID;

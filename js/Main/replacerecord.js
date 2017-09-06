@@ -357,7 +357,8 @@ function getreplacerecordInfomation(treatmentID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    json = json.replace(/\r\n/g, "\\n");
+    json = json.replace(/\r/g, "");
+    json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 }
@@ -367,7 +368,8 @@ function getreplacerecordInfo(treatmentID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    json = json.replace(/\r\n/g, "\\n");
+    json = json.replace(/\r/g, "");
+    json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.replace[0];
 }
