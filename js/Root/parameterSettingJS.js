@@ -119,6 +119,9 @@ function selectCreate(type,page) {
         case "splitway":
             createSpiltWay(page);
             break;
+        case "material":
+            createMaterial(page);
+            break;
         default:
             break;
     }
@@ -208,6 +211,9 @@ function createPage(page) {
             break;
         case "splitway":
             createSpiltWayTable(page);
+            break;
+        case "material":
+            createMaterialTable(page);
             break;
         default:
             break;
@@ -1658,6 +1664,64 @@ function initAddSpiltWay() {
                 .append("<tr><th>分割方式</th><td>"
                 + "<input type=text class=form-control style=margin-right:0.8em />"
                 + "</td></tr><tr><th>时间间隔(/天)</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+/**
+ * material 模具 1
+ */
+function createMaterial(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>模具名称</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddMaterial();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "material" },
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createMaterialTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+/**
+ * 生成表格指定页（每页12行）-->2
+ * @param page 指定页数
+ */
+function createMaterialTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ *  3
+ */
+function initAddMaterial() {
+    $("#addrow").empty()
+                .append("<tr><th>模具名称</th><td>"
                 + "<input type=text class=form-control style=margin-right:0.8em />"
                 + "</td></tr>");
 }
