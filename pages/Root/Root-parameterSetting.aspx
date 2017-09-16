@@ -344,6 +344,7 @@
                             <option value="drr">DRR</option>
                             <option value="exportotradiotherapynetwork">计划和图像导出到放疗网络</option>
                             <option value="splitway">分割方式</option>
+                            <option value="material">模具</option>
                         </select>
                         <span class="input-group-btn">
                             <button class="btn btn-default" style="height:34px" type="button" id="sureTable">

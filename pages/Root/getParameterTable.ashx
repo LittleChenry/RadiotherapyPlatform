@@ -70,6 +70,8 @@ public class getParameterTable : IHttpHandler {
                 return selectExportoTradiotherapyNetwork();
             case "splitway":
                 return selectSpiltWay();
+            case "material":
+                return selectMaterial();
         }
         return "";
     }
@@ -519,6 +521,24 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["Ways"].ToString())
                       .Append("\",\"Interal\":\"")
                       .Append(reader["Interal"].ToString())
+                      .Append("\"},");
+        }
+        backString.Remove(backString.Length - 1, 1)
+                  .Append("]");
+        return backString.ToString();
+    }
+
+    private string selectMaterial()
+    {
+        StringBuilder backString = new StringBuilder("[");
+        string sqlCommand = "SELECT * FROM material";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
+        {
+            backString.Append("{\"ID\":\"")
+                      .Append(reader["ID"].ToString())
+                      .Append("\",\"Name\":\"")
+                      .Append(reader["Name"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)

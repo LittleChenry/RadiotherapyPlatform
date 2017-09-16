@@ -95,6 +95,9 @@ public class parameterEdit : IHttpHandler {
             case "splitway":
                 updateSplitWay(id, value);
                 break;
+            case "material":
+                updateMaterial(id,value);
+                break;
             default:
                 break;
         }
@@ -370,6 +373,18 @@ public class parameterEdit : IHttpHandler {
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Ways", values[0]);
         sqlOperation.AddParameterWithValue("@Interal",values[1]);
+        sqlOperation.AddParameterWithValue("@id", id);
+
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void updateMaterial(string id,string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "UPDATE material set Name=@Name WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
         sqlOperation.AddParameterWithValue("@id", id);
 
         sqlOperation.ExecuteNonQuery(sqlCommand);

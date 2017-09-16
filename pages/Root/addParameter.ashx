@@ -92,6 +92,9 @@ public class addParameter : IHttpHandler {
             case "splitway":
                 addSplitWay(value);
                 break;
+            case "material":
+                addMaterial(value);
+                break;
             default:
                 break;
         }
@@ -301,6 +304,15 @@ public class addParameter : IHttpHandler {
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Ways", values[0]);
         sqlOperation.AddParameterWithValue("@Interal",values[1]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addMaterial(string value) 
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO material(Name) VALUES(@Name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
         sqlOperation.ExecuteNonQuery(sqlCommand);
     }
 }
