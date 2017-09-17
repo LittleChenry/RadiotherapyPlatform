@@ -409,6 +409,12 @@
                                 <input id="Hospital" name="Hospital" type="text" class="form-item" AUTOCOMPLETE="OFF" />
                             </div>
                         </div>
+                        <div class="single-row">
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">放疗号：</span>
+                                <input id="radionumber" name="radionumber" class="form-item" AUTOCOMPLETE="OFF"/>
+                            </div>
+                        </div>
                     </div>
                     <div class="paper-footer">
                         <div class="single-row">

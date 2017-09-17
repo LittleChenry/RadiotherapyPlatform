@@ -79,7 +79,7 @@ public class patientRegister : IHttpHandler
         }
 
             int doctorid = Convert.ToInt32(context.Request.Form["doctor"]);
-            string strSqlCommand = "UPDATE patient SET IdentificationNumber=@IdentificationNumber,Hospital=@Hospital,Picture=@Picture,Name=@Name,Gender=@Gender,Age=@Age,Birthday=@Birthday,Nation=@Nation,Address=@Address,Contact1=@Contact1,Contact2=@Contact2,Height=@Height,Weight=@Weight,Ishospital=@Ishospital,Hospital_ID=@Hospital_ID where ID=@patientID";
+            string strSqlCommand = "UPDATE patient SET IdentificationNumber=@IdentificationNumber,Hospital=@Hospital,Picture=@Picture,Name=@Name,Gender=@Gender,Age=@Age,Birthday=@Birthday,Nation=@Nation,Address=@Address,Contact1=@Contact1,Contact2=@Contact2,Height=@Height,Weight=@Weight,Ishospital=@Ishospital,Hospital_ID=@Hospital_ID,Radiotherapy_ID=@Radiotherapy_ID where ID=@patientID";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@IdentificationNumber", context.Request.Form["IDcardNumber"]);
             sqlOperation.AddParameterWithValue("@Hospital", context.Request.Form["Hospital"]);
@@ -94,6 +94,7 @@ public class patientRegister : IHttpHandler
             sqlOperation.AddParameterWithValue("@Contact2", context.Request.Form["Number2"]);
             sqlOperation.AddParameterWithValue("@Height", context.Request.Form["height"]);
             sqlOperation.AddParameterWithValue("@Weight", context.Request.Form["weight"]);
+            sqlOperation.AddParameterWithValue("@Radiotherapy_ID", context.Request.Form["radionumber"]);
             if (context.Request.Form["RecordNumber"] == "1")
             {
                 sqlOperation.AddParameterWithValue("@Hospital_ID", context.Request.Form["hospitalnumber"]);

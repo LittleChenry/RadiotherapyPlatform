@@ -162,6 +162,12 @@
                             <input id="Sub" name="Sub" type="text" class="form-item" />
                         </div>
                     </div>
+                     <div class="single-row">
+                            <div class="col-xs-6">
+                               放疗号：
+                                <input id="radionumber" name="radionumber" class="form-item"/>
+                            </div>
+                     </div>
                 </div>
                 <div class="paper-content">
                     <div class="content-title">

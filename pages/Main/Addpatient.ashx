@@ -77,24 +77,7 @@ public class Addpatient : IHttpHandler {
             int doctorid = Convert.ToInt32(context.Request.Form["doctor"]);
             int userID = Convert.ToInt32(context.Request.Form["userID"]);
             DateTime datetime = DateTime.Now;
-            DateTime date = DateTime.Now;
-            string date1 = date.ToString("yyyy-MM-dd");
-            string date2 = date.ToString("yyyyMMdd");
-            string item = "select count(*) from patient where RegisterTime LIKE @time ";
-            sqlOperation1.AddParameterWithValue("@time", "%" + date1 + "%");
-            int Item = Convert.ToInt32(sqlOperation1.ExecuteScalar(item));
-            int treatID;
-            if (Item == 0)
-            {
-                treatID = Convert.ToInt32(date2 + "01");
-            }
-            else{
-                string count = "select max(Radiotherapy_ID) from patient where RegisterTime LIKE @time ";
-                sqlOperation1.AddParameterWithValue("@time", "%" + date1 + "%");
-                count = sqlOperation1.ExecuteScalar(count);
-                int Count = Convert.ToInt32(count);          
-                treatID = Count + 1;
-            }
+       
 
             string strSqlCommand = "INSERT INTO patient(IdentificationNumber,Hospital,RecordNumber,Picture,Name,Gender,Age,Birthday,Nation,Address,Contact1,Contact2,Height,RegisterDoctor,Weight,Register_User_ID,RegisterTime,SubCenterPrincipal_ID,Radiotherapy_ID,Principal_User_ID,Hospital_ID,Ishospital) VALUES("
              + "@IdentificationNumber,@Hospital,@RecordNumber,@Picture,@Name,@Gender,@Age,@Birthday,@Nation,@Address,@Contact1,@Contact2,@Height,@doctorid,@Weight,@Register_User_ID,@RegisterTime,@SubCenterPrincipal_ID,@Radiotherapy_ID,@Principal_User_ID,@hospitalnumber,@Ishospital)";
@@ -113,7 +96,7 @@ public class Addpatient : IHttpHandler {
             sqlOperation.AddParameterWithValue("@Contact2", context.Request.Form["Number2"]);
             sqlOperation.AddParameterWithValue("@Height", context.Request.Form["height"]);
             sqlOperation.AddParameterWithValue("@Weight", context.Request.Form["weight"]);
-            sqlOperation.AddParameterWithValue("@Radiotherapy_ID", treatID);
+            sqlOperation.AddParameterWithValue("@Radiotherapy_ID", context.Request.Form["radionumber"]);
             sqlOperation.AddParameterWithValue("@doctorid", doctorid);
             sqlOperation.AddParameterWithValue("@SubCenterPrincipal_ID", context.Request.Form["Sub"]);
             sqlOperation.AddParameterWithValue("@Principal_User_ID", 1);
@@ -134,7 +117,7 @@ public class Addpatient : IHttpHandler {
             sqlOperation1.AddParameterWithValue("@Name", context.Request.Form["userName"]);
             int patient = Convert.ToInt32(sqlOperation1.ExecuteScalar(patientID));
             int intSuccess2 = 0;
-            if (intSuccess > 0 && treatID > 0)
+            if (intSuccess > 0)
             {
                 if (context.Request.Form["group"] == "allItem")
                 {

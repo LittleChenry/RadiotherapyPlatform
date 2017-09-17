@@ -43,9 +43,54 @@ function Init() {
             $(this).css("background", "white");
         }
     });
+    $("#radionumber").bind("input propertychange", function () {
+        var isradio1 = isradio();
+        if (isradio1==0) {
+            $(this).css("background", "yellow");
+        } else {
+                  
+            if (isradio1== 1) {
+                $(this).css("background", "white");
+            } else {
+                $(this).css("background", "red");
+            }
+        }
+        if ($(this).prop("value") == "") {
+            $(this).css("background", "white");
+        }
+    });
 
 
 
+}
+function isradio() {
+    var radio = document.getElementById("radionumber").value;
+    var reg = /^(\d{8})$/;
+    if (!reg.test(radio)) {
+        return 0;
+    } else {
+        var returndata;
+        $.ajax({
+            url: "recheck.ashx",
+            type: "post",
+            data: {
+                radionumber: document.getElementById("radionumber").value,
+            },
+            dateType: "json",
+            async: false,
+            success: function (data) {
+                returndata = data;
+            },
+            error: function (e) { 
+                    
+            }
+        });
+        if (returndata == "success") {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
 }
 function getNowFormatDate() {
     var date = new Date();
@@ -137,6 +182,10 @@ function resetForm(evt) {
 
 //检查各个输入项内容
 function CheckEmpty() {
+    if (document.getElementById("radionumber").value == "") {
+        window.alert("放疗号不能为空");
+        return;
+    }
     if (document.getElementById("userName").value == "") {
         window.alert("姓名不能为空");
         return;
