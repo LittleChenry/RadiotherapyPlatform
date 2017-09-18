@@ -110,6 +110,17 @@
                                 <select id="Aim"  class="form-item" disabled="disabled"></select>
                             </div>                                  
                         </div>
+                      <div class="single-row">
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">普放选择：</span>
+                                <span class="col-xs-2" style="padding-left:0px;">
+                                <input  name="patientjudge" type="radio" checked="checked" value="1"  />是
+                                </span>
+                                 <span class="col-xs-2" style="padding-left:0px;">
+                                <input  name="patientjudge" type="radio" value="0"  />否
+                               </span>
+                            </div>
+                          </div>
                         <div class="single-row">
                             <div class="item area-group col-xs-12">
                                   <span class="col-xs-2" style="padding-left:0px;">备注：</span>

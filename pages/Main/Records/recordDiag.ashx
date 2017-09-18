@@ -42,6 +42,7 @@ public class recordDiag : IHttpHandler {
             string remark = context.Request["remark"];
             string treatname = context.Request["treatname"];
             string Aim = context.Request["Aim"];
+            string patientjudge = context.Request["patientjudge"];
             string copybingli1 = context.Request["copybingli1"];
             string copybingli2 = context.Request["copybingli2"];
             string copybingqing1 = context.Request["copybingqing1"];
@@ -90,6 +91,7 @@ public class recordDiag : IHttpHandler {
             bool exists = ((IList)group).Contains("1");
             if (!exists)
             {
+                
                 string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe where ID=@treatid";
                 sqlOperation2.AddParameterWithValue("@treatid", treatID);
                 sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);

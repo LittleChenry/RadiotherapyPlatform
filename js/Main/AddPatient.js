@@ -186,6 +186,10 @@ function CheckEmpty() {
         window.alert("放疗号不能为空");
         return;
     }
+    if (isradio() != 1) {
+        window.alert("放疗号设置不合格");
+        return;
+    }
     if (document.getElementById("userName").value == "") {
         window.alert("姓名不能为空");
         return;

@@ -422,6 +422,14 @@ function save() {
     var copybingqing1 = document.getElementById("copybingqing1");
     var copybingqing2 = document.getElementById("copybingqing2");
     var copybingqing3 = document.getElementById("copybingqing3");
+    var $radio1 = $('input[name="patientjudge"]:eq(0)');
+    var $radio2 = $('input[name="patientjudge"]:eq(1)');
+    var patientjudge;
+    if ($radio1.prop("checked")) {
+        patientjudge = 1;
+    } else {
+        patientjudge = 0;
+    }
     if (part.value == "allItem") {
         window.alert("请选择病变部位");
         return false;
@@ -463,7 +471,8 @@ function save() {
             remark: remark.value,
             part: part.value,
             newpart: newpart.value,
-            Aim:Aim.value,
+            Aim: Aim.value,
+            patientjudge:patientjudge,
             copybingli1: copybingli1.value,
             copybingli2: copybingli2.value,
             copybingqing1: copybingqing1.value,
