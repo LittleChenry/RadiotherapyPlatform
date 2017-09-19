@@ -41,6 +41,8 @@ public class diagnoseInfo : IHttpHandler {
         string sqlCommand = "select Patient_ID from treatment where treatment.ID=@treatID";
         sqlOperation2.AddParameterWithValue("@treatID", treatid);
         int patientid = int.Parse(sqlOperation2.ExecuteScalar(sqlCommand));
+        string iscommon = "select iscommon from treatment where ID=@treatID";
+        int iscommonnumber = int.Parse(sqlOperation2.ExecuteScalar(iscommon));
         string countCompute = "select count(diagnosisrecord.ID) from treatment,diagnosisrecord where treatment.Patient_ID=@patient and treatment.DiagnosisRecord_ID is not null and diagnosisrecord.ID =treatment.DiagnosisRecord_ID";
         sqlOperation2.AddParameterWithValue("@patient", patientid);
         int count = int.Parse(sqlOperation2.ExecuteScalar(countCompute));
@@ -74,7 +76,7 @@ public class diagnoseInfo : IHttpHandler {
             string date1 = dt1.ToString("yyyy-MM-dd HH:mm");
             backText.Append("{\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"partname\":\"" + reader["partname"] +  "\",\"lightpartname\":\"" +reader["lightpartname"] + "\",\"partID\":\"" + reader["Part_ID"] + "\",\"LightPart_ID\":\"" + reader["LightPart_ID"] + "\",\"Treatmentname\":\"" + reader["Treatmentname"] + "\",\"diagnosisresultName1\":\"" + result1 + "\",\"diagnosisresultName2\":\"" + result2 +
                  "\",\"diagnosisresultID\":\"" + reader["DiagnosisResult_ID"].ToString() + "\",\"treatmentaim\":\"" + reader["treatmentaim"].ToString() + "\",\"treatmentaimID\":\"" + reader["TreatAim_ID"].ToString() + "\",\"PathologyResult\":\"" + reader["PathologyResult"].ToString() + "\",\"username\":\"" + reader["username"].ToString() + "\",\"userID\":\"" + reader["Diagnosis_User_ID"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
-                 "\",\"Time\":\"" + date1 + "\"}");
+                 "\",\"Time\":\"" + date1 + "\",\"iscommonnumber\":\"" + iscommonnumber + "\"}");
             if (i < count)
             {
                 backText.Append(",");

@@ -114,10 +114,10 @@
                             <div class="col-xs-6">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">普放选择：</span>
                                 <span class="col-xs-2" style="padding-left:0px;">
-                                <input  name="patientjudge" type="radio" checked="checked" value="1"  />是
+                                <input  name="patientjudge" type="radio" checked="checked" disabled="disabled" value="1"  />是
                                 </span>
                                  <span class="col-xs-2" style="padding-left:0px;">
-                                <input  name="patientjudge" type="radio" value="0"  />否
+                                <input  name="patientjudge" type="radio" disabled="disabled" value="0"  />否
                                </span>
                             </div>
                           </div>
