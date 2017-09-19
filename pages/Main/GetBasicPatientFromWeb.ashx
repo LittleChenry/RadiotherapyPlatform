@@ -18,7 +18,8 @@ public class GetBasicPatientFromWeb : IHttpHandler {
     public String GetBasicInfo(HttpContext context)
     {
         string s = context.Request["info"];
-        return s;
+        string xmlstring = "<?xml version=\"1.0\" encoding=\"utf-8\"?><name>张俊东</name><sex>男</sex><birthdate>2008-10-7</birthdate>";
+        return xmlstring;
         //HIS.Service service = new HIS.Service();
        // return service.GetBasicInfo(s);
         

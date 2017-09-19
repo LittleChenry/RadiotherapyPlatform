@@ -91,7 +91,7 @@ public class recordDiag : IHttpHandler {
             bool exists = ((IList)group).Contains("1");
             if (!exists)
             {
-                
+               
                 string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe where ID=@treatid";
                 sqlOperation2.AddParameterWithValue("@treatid", treatID);
                 sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
