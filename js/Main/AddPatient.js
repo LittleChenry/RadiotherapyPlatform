@@ -33,7 +33,7 @@ function Init() {
     $radio1.bind('click', function () {
         $('#ishospital').css("display", "block");
     });
-    $("#IDcardNumber").bind("input propertychange", function () {
+    $("#IDcardNumber").bind("blur", function () {
         if (isCardNo()) {
             $(this).css("background", "yellow");
         } else {
@@ -60,6 +60,7 @@ function Init() {
         }
     });
     $("#sync").bind("click", Sync);
+    $("#IDcardNumber").bind("input propertychange", getBirthdate);
 }
 
 function Sync() {
@@ -91,6 +92,19 @@ function Sync() {
                 alert("error");
             }
         });
+    }
+}
+
+function getBirthdate() {
+    var IDcardNumber = $("#IDcardNumber").val();
+    if (IDcardNumber.length > 13) { //320623 1993 10 24 4039
+        var year = IDcardNumber.substring(6,10);
+        var month = IDcardNumber.substring(10,12);
+        var day = IDcardNumber.substring(12,14);
+        var birthdate = year + "-" + month + "-" + day;
+        $("#Birthday").val(birthdate);
+    }else{
+        $("#Birthday").val("");
     }
 }
 

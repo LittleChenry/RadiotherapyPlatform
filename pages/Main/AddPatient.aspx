@@ -277,12 +277,12 @@
                             <div class="item col-xs-5"> 
                                 <span class="col-xs-4">性别：</span>
                                 <span class="col-xs-4" style="padding-left:0px;">
-                                <input type="radio" name="Gender" id="male" value="M" />
-                                    男
+                                    <input type="radio" name="Gender" id="male" value="M" />
+                                    <label for="male" style="font-weight:400">男</label>
                                 </span>
                                 <span class="col-xs-4" style="padding-left:0px;">
-                                <input type="radio" name="Gender" id="female" value="F" />
-                                    女
+                                    <input type="radio" name="Gender" id="female" value="F" />
+                                    <label for="female" style="font-weight:400">女</label>
                                 </span>
                             </div>
                         </div>
@@ -293,7 +293,7 @@
                             </div>
                             <div class="col-xs-5">
                                 <span class="form-text col-xs-4">出生日期：</span>
-                                <input class="form-item" id="Birthday" name="Birthday"type="text" placeholder="选择日期" AUTOCOMPLETE="OFF"/>
+                                <input class="form-item" id="Birthday" name="Birthday"type="text" disabled="disabled"/>
                             </div>
                         </div>
                         <div class="single-row">
