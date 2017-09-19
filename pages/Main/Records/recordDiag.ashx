@@ -33,8 +33,7 @@ public class recordDiag : IHttpHandler {
     public string AddDiagnoseRecord(HttpContext context)
     {
         //获取表单信息
-        try
-        {
+    
             string treatID = context.Request["treatid"];
             string part = context.Request["part"];
             string newpart = context.Request["newpart"];
@@ -91,22 +90,40 @@ public class recordDiag : IHttpHandler {
             bool exists = ((IList)group).Contains("1");
             if (!exists)
             {
-               
-                string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe where ID=@treatid";
+                if (patientjudge == "1")
+                {
+                    string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe,iscommon=1 where ID=@treatid";
                 sqlOperation2.AddParameterWithValue("@treatid", treatID);
                 sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
                 sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
                 sqlOperation2.AddParameterWithValue("@Progress", "0,1");
-                int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
+                int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);  
                 if (intSuccess > 0 && intSuccess1 > 0)
                 {
-                    return "success";
-                }
-                else
+                        return "success";
+                 }
+                 else
                 {
-                    return "failure";
+                        return "failure";
+                 }
+                }else
+                {
+                    string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe,iscommon=0 where ID=@treatid";
+                    sqlOperation2.AddParameterWithValue("@treatid", treatID);
+                    sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
+                    sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
+                    sqlOperation2.AddParameterWithValue("@Progress", "0,1,2,3,4,5,6,7,8,9,10");
+                    int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
+                    if (intSuccess > 0 && intSuccess1 > 0)
+                    {
+                        return "success";
+                    }
+                    else
+                    {
+                        return "failure";
+                    }
+                    
                 }
-
             }
             else
             {
@@ -127,11 +144,8 @@ public class recordDiag : IHttpHandler {
 
 
         }
-        catch (System.Exception Ex1)
-        {
-            return "error";
+       
         }
-        }
-    }     
+
 
     

@@ -60,6 +60,11 @@ function createPatient(evt) {
                 document.getElementById("treatname").value = diagnosisInfo.diagnosisInfo[i].Treatmentdescribe;
                 document.getElementById("Aim").value = diagnosisInfo.diagnosisInfo[i].treatmentaimID;
                 document.getElementById("remark").value = diagnosisInfo.diagnosisInfo[i].Remarks;
+                if (diagnosisInfo.diagnosisInfo[i].iscommonnumber == "1") {
+                    $('input[name="patientjudge"]:eq(0)').prop('checked', true);
+                } else {
+                    $('input[name="patientjudge"]:eq(1)').prop('disabled', true);
+                }
                 if (diagnosisInfo.diagnosisInfo[i].userID == userID) {
                     window.parent.document.getElementById("edit").removeAttribute("disabled");
                 }
@@ -163,6 +168,7 @@ function getDignoseInfo(treatid) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+   
     var json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1;
@@ -490,8 +496,8 @@ function save() {
                 return false;
             }
         },
-        error: function () {
-            alert("error");
+        error: function (e) {
+            alert(e);
         }
     });
 
@@ -645,4 +651,6 @@ function remove() {
     document.getElementById("bingqing3").removeAttribute("disabled");
     document.getElementById("treatname").removeAttribute("disabled");
     document.getElementById("Aim").removeAttribute("disabled");
+    $('input[name="patientjudge"]:eq(0)').prop('disabled', false);
+    $('input[name="patientjudge"]:eq(1)').prop('disabled', false);
 }
