@@ -228,32 +228,7 @@
     </aside>
 
     <div class="content-wrapper">
-        <section id="choosepatient-content" class="outlist-content col-md-1 col-md-offset-2" style="padding:0px;width:200px;">
-            <div class="outlist-title">
-                外系统信息同步
-                <a href="javascript:;" style="color:white;"><i class="fa fa-fw fa-refresh"></i></a>
-            </div>
-            <div style="padding:3px 0px;">
-                <input class="form-control" type="text" placeholder="搜索" />
-            </div>
-            <table class="table table-condensed table-hover">
-                <tbody style="text-align:center;">
-                    <tr>
-                        <th>姓名</th>
-                        <th>病案号</th>
-                    </tr>
-                    <tr>
-                        <td>赵一雷</td>
-                        <td>2017072301</td>
-                    </tr>
-                    <tr>
-                        <td>王二江</td>
-                        <td>2017072302</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <section id="addpatient-content" class="content table-responsive col-md-9" style="background-color:#fff;width:1000px;">
+        <section id="addpatient-content" class="content table-responsive" style="background-color:#fff;width:1000px;">
             <form id="frmaddpatient" name="frmaddpatient" method="post" runat="server">
                 <div class="paper">
                 <div class="paper-title">
@@ -283,6 +258,15 @@
                             <div class="picture-remark">
                                 <p>上传头像</p>
                                 <p style="font-size:10px;">120*140像素</p>
+                            </div>
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-5">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">就诊卡号：</span>
+                                <input id="CardID" name="CardID" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
+                            </div>
+                            <div class="col-xs-5">
+                                <button id="sync" type="button" class="btn btn-info">HIS同步</button>
                             </div>
                         </div>
                         <div class="single-row">

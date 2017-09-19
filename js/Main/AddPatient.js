@@ -59,10 +59,41 @@ function Init() {
             $(this).css("background", "white");
         }
     });
-
-
-
+    $("#sync").bind("click", Sync);
 }
+
+function Sync() {
+    var CardID = $("#CardID").val();
+    if (CardID == "") {
+        alert("请输入就诊卡号!");
+    }else{
+        $.ajax({
+            url: "GetBasicPatientFromWeb.ashx",
+            type: "post",
+            data: {
+                info: CardID
+            },
+            dateType: "xml",
+            async: false,
+            success: function (data) {
+                var name = $(data).find("patient").children("name").text();
+                var sex = $(data).find("patient").children("sex").text();
+                var birthdate = $(data).find("patient").children("birthdate").text();
+                $("#userName").val(name);
+                $("#Birthday").val(birthdate);
+                if (sex == "男") {
+                    $("#male").attr("checked","checked");
+                }else{
+                    $("#female").attr("checked","checked");
+                }
+            },
+            error: function (e) { 
+                alert("error");
+            }
+        });
+    }
+}
+
 function isradio() {
     var radio = document.getElementById("radionumber").value;
     var reg = /^(\d{8})$/;
@@ -92,6 +123,7 @@ function isradio() {
         }
     }
 }
+
 function getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
@@ -113,8 +145,8 @@ function getNowFormatDate() {
 
     return currentdate;
 }
-//第二步诊断单中的分中心负责人选择项建立
 
+//第二步诊断单中的分中心负责人选择项建立
 function createdoctorItem(thiselement) {
     var doctorItem = docandgroup;
     thiselement.options.length = 0;
@@ -128,8 +160,8 @@ function createdoctorItem(thiselement) {
             i++;
     }
 }
-function createselect2(index)
-{
+
+function createselect2(index) {
     var thiselement = document.getElementById("group");
     var groups = docandgroup;
     var groupitem="";
@@ -154,8 +186,8 @@ function createselect2(index)
             thiselement.options[i].value = parseInt(groupitem[i].groupid);
         }
     }
+}
 
-    }
 function getdoctorandgroup() {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/getdoctorandgroup.ashx";
@@ -164,7 +196,6 @@ function getdoctorandgroup() {
     var Items = xmlHttp.responseText;
     docandgroup =JSON.parse(Items).Item;
 }
-
 
 //表单reset函数
 function resetForm(evt) {
@@ -178,8 +209,8 @@ function resetForm(evt) {
         }
     }
 }
-//第二步部位下拉项建立
 
+//第二步部位下拉项建立
 //检查各个输入项内容
 function CheckEmpty() {
     if (document.getElementById("radionumber").value == "") {
@@ -282,6 +313,7 @@ function checkPhone() {
     }
     return false;
 }
+
 function checkPhone2() {
     var strPhoneNumber = document.getElementById("Number2").value;
     var rep = /^(\d{3})\-?(\d{4})\-?(\d{4})$/;
@@ -290,6 +322,7 @@ function checkPhone2() {
     }
     return false;
 }
+
 //电话号码格式规范
 function phoneFormat() {
     var thisPhone = this.value;
@@ -299,6 +332,7 @@ function phoneFormat() {
         this.value = RegExp.$1 + "-" + RegExp.$2 + "-" + RegExp.$3;
     }
 }
+
 //reset时Input样式恢复
 function resetInput(thisElement) {
     var allClassName = thisElement.className.split(" ");
@@ -310,6 +344,7 @@ function resetInput(thisElement) {
     }
     thisElement.className = resetClassName;
 }
+
 //恢复样式（取消invalid）
 function recoverClassName(thisElement) {
     var returnClassName = "";
@@ -321,6 +356,7 @@ function recoverClassName(thisElement) {
     }
     thisElement.className = returnClassName;
 }
+
 function getUserID() {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/GetUserID.ashx";
@@ -333,9 +369,9 @@ function getUserID() {
 
         }
     }
-
     xmlHttp.send();
 }
+
 function getUserName() {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/GetUserName.ashx";
@@ -349,6 +385,7 @@ function getUserName() {
     }
     xmlHttp.send();
 }
+
 function isCardNo() {
     // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X  
     var card = document.getElementById("IDcardNumber").value;
@@ -358,6 +395,7 @@ function isCardNo() {
     }
     return false;
 }
+
 function loadProvince(regionId) {
     $("#id_provSelect").html("");
     $("#id_provSelect").append("<option value=''>请选择省份</option>");
@@ -408,6 +446,3 @@ function loadArea(regionId) {
         if (regionId.substring(4, 6) != "00") { $("#id_areaSelect").val(regionId); }
     }
 }
-
-
-
