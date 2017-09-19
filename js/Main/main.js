@@ -820,7 +820,7 @@ function trAddClick(patient, userID) {
                         break;
                     case 15:
                         if (LightLi(this, Progresses, "15", "12", "-1")) {
-                            var url = "Records/TreatmentReview.aspx?TreatmentID=" + e.data.ID;
+                            var url = "Records/TreatmentReview.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location";
                         } else {
                             var url = "Records/Blank.aspx";
                         }
@@ -1062,7 +1062,7 @@ function trAddClickforJS(patient, userID) {
                         break;
                     case 11:
                         if (LightLi(this, Progresses, "11", "10", "-1")) {
-                            var url = "Records/DesignReview.aspx?TreatmentID=" + e.data.ID;
+                            var url = "Records/FieldInput.aspx?TreatmentID=" + e.data.ID;
                         } else {
                             var url = "Records/Blank.aspx";
                         }
@@ -1078,7 +1078,7 @@ function trAddClickforJS(patient, userID) {
                         break;
                     case 12:
                         if (LightLi(this, Progresses, "12", "10", "-1")) {
-                            var url = "Records/ReplacementApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Replacement";
+                            var url = "Records/DesignReview.aspx?TreatmentID=" + e.data.ID;
                         } else {
                             var url = "Records/Blank.aspx";
                         }
@@ -1094,7 +1094,7 @@ function trAddClickforJS(patient, userID) {
                         break;
                     case 13:
                         if (LightLi(this, Progresses, "13", "12", "-1")) {
-                            var url = "Records/ReplacementRecord.aspx?TreatmentID=" + e.data.ID;
+                            var url = "Records/FirstAccelerator.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Accelerator";
                         } else {
                             var url = "Records/Blank.aspx";
                         }
@@ -1110,7 +1110,7 @@ function trAddClickforJS(patient, userID) {
                         break;
                     case 14:
                         if (LightLi(this, Progresses, "14", "12", "-1")) {
-                            var url = "Records/FirstAccelerator.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Accelerator";
+                            var url = "Records/TreatmentRecord.aspx?TreatmentID=" + e.data.ID + "&appointid=" + e.data.appointid;
                         } else {
                             var url = "Records/Blank.aspx";
                         }
@@ -1126,7 +1126,7 @@ function trAddClickforJS(patient, userID) {
                         break;
                     case 15:
                         if (LightLi(this, Progresses, "15", "12", "-1")) {
-                            var url = "Records/TreatmentRecord.aspx?TreatmentID=" + e.data.ID + "&appointid=" + e.data.appointid;
+                            var url = "Records/TreatmentReview.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location";
                         } else {
                             var url = "Records/Blank.aspx";
                         }
