@@ -32,7 +32,7 @@
                 <input type="hidden" id="diaguserid" name="diaguserid" />              
                 <input type="hidden" id="progress" />
             <div class="paper-title" >
-                 治疗计划提交
+                 辅助信息导入
             </div>
             <div class="paper-content">
                 <div class="content-title">
@@ -55,13 +55,21 @@
                 </div>
             </div>
             <div class="paper-content">
-
                 <div class="content-title">
                     <span>射野信息：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-6"><input type="file" id="file" /></div>
-                    <div class="item col-xs-6"><button id="sure" type="button">确定</button></div>
+                    <div class="col-xs-6">
+                        <div class="group-item" style="width:80%;">
+                            <input type="text" id="filename" class="form-control" disabled="disabled" style="border-radius:4px 0px 0px 4px;"/>
+                            <span class="input-group-btn">
+                                <a href="javascript:;" class="btn btn-info file">选择文件<input type="file" id="file"/></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <button class="btn btn-success" id="sure" type="button"><i class="fa fa-fw fa-reply-all"></i>导入</button>
+                    </div>
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-4">tps：<span id="technology" class="underline"></span></div>
@@ -135,12 +143,9 @@
     <script src="../../../plugin/AdminLTE/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
-       <script src="../../../js/Main/FixedRecordPrint.js"></script>
     <!-- javascript -->
-    <script src="../../../js/Main/DesignSubmit.js" type="text/javascript"></script>
+    <script src="../../../js/Main/FieldInput.js"></script>
     <!-- Page script -->
-    <script type="text/javascript">
-        $("#AppiontDate").datepicker({ autoclose: true });
-    </script>
+    <script src="../../../js/Main/FixedRecordPrint.js"></script>
 </body>
 </html>
