@@ -40,7 +40,7 @@ $(".file").on("change", "input[type='file']", function () {
     fileName=arr[arr.length-1];
     $("#filename").val(fileName);
 })
-$("#add").bind("click", function () {
+function addField() {
     var table = document.getElementById("Field");
     var rows = table.rows.length;
     var row = table.insertRow(rows);
@@ -55,7 +55,8 @@ $("#add").bind("click", function () {
     var t8 = row.insertCell(7);
     var t9 = row.insertCell(8);
     var t10 = row.insertCell(9);
-    var t11 = row.insertCell(10);    
+    var t11 = row.insertCell(10);
+    var t12 = row.insertCell(11);
     t1.style.padding = "0px";
     t2.style.padding = "0px";
     t3.style.padding = "0px";
@@ -67,8 +68,8 @@ $("#add").bind("click", function () {
     t9.style.padding = "0px";
     t10.style.padding = "0px";
     t11.style.padding = "0px";   
-    //t9.style.cssText = "text-align: center;padding:0px;vertical-align: middle";
-    //t9.id = "delete" + rows;
+    t12.style.cssText = "text-align: center;padding:0px;vertical-align: middle";
+    t12.id="delete" + rows;
     t1.innerHTML = '<input id="a1' + rows + '" name="a1' + rows + '" type="text" class="td-input" />';
     t2.innerHTML = '<input id="mu' + rows + '" name="mu' + rows + '" type="text" class="td-input" />';
     t3.innerHTML = '<input id="equipment' + rows + '" name="equipment' + rows + '" type="number" class="td-input" />';
@@ -80,9 +81,54 @@ $("#add").bind("click", function () {
     t9.innerHTML = '<input id="jtj' + rows + '" name="jtj' + rows + '" type="text" class="td-input" />';
     t10.innerHTML = '<input id="czj' + rows + '" name="czj' + rows + '" type="text" class="td-input" />';
     t11.innerHTML = '<input id="childs' + rows + '" name="childs' + rows + '" type="text" class="td-input" />';
-    //t9.innerHTML = '<a href="javascript:deleteDosagePriority(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
-})
+    t12.innerHTML = '<a href="javascript:deleteField(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
+}
+function deleteField(row) {
+    var table = document.getElementById("Field");
+    var maxrow = table.rows.length;
+    //var row = Number(currentbutton.id.replace(/[^0-9]/ig, ""));
+    for (var i = row + 1; i < maxrow - 1; i++) {
+        var j = i - 1;
+        var td1 = document.getElementById("a1" + i);
+        td1.id = "a1" + j;
+        td1.name = "a1" + j;
+        var td2 = document.getElementById("mu" + i);
+        td2.id = "mu" + j;
+        td2.name = "mu" + j;
+        var td3 = document.getElementById("equipment" + i);
+        td3.id = "equipment" + j
+        td3.name = "equipment" + j;
+        var td4 = document.getElementById("technology" + i);
+        td4.id = "technology" + j;
+        td4.name = "technology" + j;
+        var td5 = document.getElementById("type" + i);
+        td5.id = "type" + j;
+        td5.name = "type" + j;
+        var td6 = document.getElementById("energyField" + i);
+        td6.id = "energyField" + j;
+        td6.name = "energyField" + j;
+        var td7 = document.getElementById("ypj" + i);
+        td7.id = "ypj" + j;
+        td7.name = "ypj" + j;
+        var td8 = document.getElementById("jjj" + i);
+        td8.id = "jjj" + j;
+        td8.name = "jjj" + j;
+        var td9 = document.getElementById("jtj" + i);
+        td9.id = "jtj" + j;
+        td9.name = "jtj" + j;
+        var td10 = document.getElementById("czj" + i);
+        td10.id = "czj" + j;
+        td10.name = "czj" + j;
+        var td11 = document.getElementById("childs" + i);
+        td11.id = "childs" + j;
+        td11.name = "childs" + j;
 
+        var td12 = document.getElementById("delete" + i);
+        td12.id = "delete" + j;
+        td12.innerHTML = '<a  href="javascript:deleteField(' + j + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';;
+    }
+    table.deleteRow(row + 1);
+}
 $(function () {
     $("#sure").bind("click", function () {
         if (fileName == "") {
@@ -144,6 +190,10 @@ function creaetField(data) {
             td.appendChild(textNode);
             tr.appendChild(td);
         }
+        var td = document.createElement("td");
+        var textNode = document.createTextNode("");
+        td.appendChild(textNode);
+        tr.appendChild(td);
         tbody.appendChild(tr);
     }
     tbody.style.textAlign = "center";

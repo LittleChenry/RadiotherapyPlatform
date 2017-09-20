@@ -84,10 +84,7 @@
                 <div class="single-row">
                     <div class="col-xs-6" style="padding-left:0px;">
                         <span class="form-text col-xs-5">射野信息：</span>
-                    </div>
-                    <div class="col-xs-6">
-                        <button class="btn btn-success" id="add" type="button">新增</button>
-                    </div>
+                    </div>                   
                 </div>
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
@@ -105,6 +102,9 @@
                                     <th>机头角</th>
                                     <th>床转交</th>
                                     <th>子野数</th>
+                                    <th style="text-align: center;">
+                                        <a href="javascript:addField();"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
+                                    </th>
                                 </tr>
                             </thead>
                         </table>
