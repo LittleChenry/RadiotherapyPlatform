@@ -72,18 +72,21 @@
                     </div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">tps：<span id="technology" class="underline"></span></div>
-                    <div class="item col-xs-4">总剂量：<span id="equipment" class="underline"></span></div>
-                    <div class="item col-xs-4">分次剂量：<span id="ApplicationUser" class="underline"></span></div>
+                    <div class="item col-xs-4">tps：<span id="tps" class="underline"></span></div>
+                    <div class="item col-xs-4">总剂量：<span id="total" class="underline"></span></div>
+                    <div class="item col-xs-4">分次剂量：<span id="Graded" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">射野总数：<span id="ApplicationTime" class="underline"></span></div>
-                    <div class="item col-xs-4">摆位信息：<span id="receiveUser" class="underline"></span></div>
+                    <div class="item col-xs-4">射野总数：<span id="fieldTimes" class="underline"></span></div>
+                    <div class="item col-xs-4">摆位信息：<span id="pos" class="underline"></span></div>
                    
                 </div>
                 <div class="single-row">
                     <div class="col-xs-6" style="padding-left:0px;">
                         <span class="form-text col-xs-5">射野信息：</span>
+                    </div>
+                    <div class="col-xs-6">
+                        <button class="btn btn-success" id="add" type="button">新增</button>
                     </div>
                 </div>
                 <div class="single-row">

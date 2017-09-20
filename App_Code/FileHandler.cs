@@ -46,7 +46,7 @@ public class FileHandler
         MatchCollection ms = reg.Matches(content);
         for (int i = 0; i < ms.Count; i++)
         {
-            result.Append("{\"fieldID\":\"").Append(ms[i].Groups[2].Value).Append("\"")
+            result.Append("{\"a1\":\"").Append(ms[i].Groups[2].Value).Append("\"")
                   .Append(",\"mu\":\"").Append(ms[i].Groups[4].Value).Append("\"")
                   .Append(",\"equipment\":\"").Append(ms[i].Groups[6].Value).Append("\"")
                   .Append(",\"technology\":\"").Append(ms[i].Groups[7].Value).Append("\"")
