@@ -36,7 +36,7 @@ public class patientForDiagnose : IHttpHandler {
 
         DataLayer sqlOperation2 = new DataLayer("sqlStr");
         StringBuilder backText = new StringBuilder("{\"patient\":[");
-        string sqlCommand2 = "select treatment.ID as treatid,Progress,patient.*,Treatmentname,Treatmentdescribe,user.Name as doctor from treatment,patient,user where patient.RegisterDoctor=user.ID and treatment.Patient_ID=patient.ID and treatment.ID=@id";
+        string sqlCommand2 = "select treatment.ID as treatid,Progress,iscommon,patient.*,Treatmentname,Treatmentdescribe,user.Name as doctor from treatment,patient,user where patient.RegisterDoctor=user.ID and treatment.Patient_ID=patient.ID and treatment.ID=@id";
         sqlOperation2.AddParameterWithValue("@id", treatid);        
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         int i = 1;
@@ -46,7 +46,7 @@ public class patientForDiagnose : IHttpHandler {
                  "\",\"Hospital\":\"" + reader["Hospital"].ToString() + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() +
                  "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"RegisterDoctor\":\"" + reader["doctor"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() +
                  "\",\"Nation\":\"" + reader["Nation"].ToString() + "\",\"Address\":\"" + reader["Address"].ToString() + "\",\"Contact1\":\"" + reader["Contact1"].ToString() + "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() +
-                 "\",\"Contact2\":\"" + reader["Contact2"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"Hospital_ID\":\"" + reader["Hospital_ID"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\"}");
+                 "\",\"Contact2\":\"" + reader["Contact2"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"Hospital_ID\":\"" + reader["Hospital_ID"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");

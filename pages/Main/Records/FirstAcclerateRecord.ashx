@@ -53,7 +53,7 @@ public class FirstAcclerateRecord : IHttpHandler {
                     string progress = sqlOperation.ExecuteScalar(select1);
                     //将诊断ID填入treatment表
                     string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log,SplitWay_ID=@split,SpecialEnjoin=@remark where ID=@treat";
-                    sqlOperation.AddParameterWithValue("@progress", progress + ",14,15");
+                    sqlOperation.AddParameterWithValue("@progress", progress + "13,14,15");
                     sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
                     sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                     sqlOperation.AddParameterWithValue("@split", context.Request["splitway"]);
@@ -126,7 +126,7 @@ public class FirstAcclerateRecord : IHttpHandler {
                             string progress = sqlOperation.ExecuteScalar(select1);
                             //将诊断ID填入treatment表
                             string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log,SplitWay_ID=@split,SpecialEnjoin=@remark where ID=@treat";
-                            sqlOperation.AddParameterWithValue("@progress", progress + ",14,15");
+                            sqlOperation.AddParameterWithValue("@progress", progress + "13,14,15");
                             sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                             sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
                             sqlOperation.AddParameterWithValue("@split", context.Request["splitway"]);
