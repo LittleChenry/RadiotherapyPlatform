@@ -166,6 +166,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
+                    iscommon = patient.PatientInfo[i].iscommon;
                     var tr = "<tr id='" + TreatmentID + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
@@ -196,6 +197,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
+                    iscommon = patient.PatientInfo[i].iscommon;
                     var tr = "<tr id='" + TreatmentID + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
@@ -226,6 +228,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
+                    iscommon = patient.PatientInfo[i].iscommon;
                     var tr = "<tr id='" + TreatmentID + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
@@ -260,6 +263,7 @@ function Paging(patient, role, userID) {
                     Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
                     begin = toTime(patient.PatientInfo[i].begin);
                     end = toTime(patient.PatientInfo[i].end);
+                    iscommon = patient.PatientInfo[i].iscommon;
                     var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
@@ -295,6 +299,7 @@ function Paging(patient, role, userID) {
                     finishedtimes = patient.PatientInfo[i].finishedtimes;
                     totalnumber = patient.PatientInfo[i].totalnumber;
                     totaltimes = patient.PatientInfo[i].totaltimes;
+                    iscommon = patient.PatientInfo[i].iscommon;
                     var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
@@ -325,6 +330,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
+                    iscommon = patient.PatientInfo[i].iscommon;
                     var tr = "<tr id='" + TreatmentID + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
@@ -355,6 +361,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
+                    iscommon = patient.PatientInfo[i].iscommon;
                     var tr = "<tr id='" + TreatmentID + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
@@ -385,6 +392,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
+                    iscommon = patient.PatientInfo[i].iscommon;
                     var tr = "<tr id='" + TreatmentID + "'class='";
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
@@ -554,14 +562,33 @@ function closeTr(){
     });
 }
 
+function ShowUl(ul, iscommon){
+    if (iscommon == 0) {
+        ul.each(function (index, element) {
+            $(this).show();
+            if (index > 1 && index < 11) {
+                $(this).hide();
+            }
+            if (index == 12) {
+                $(this).hide();
+            }
+        });
+    }else{
+        ul.each(function (index, element) {
+            $(this).show();
+        });
+    }
+}
+
 function trAddClick(patient, userID) {
     for (var i = 0; i < patient.PatientInfo.length; i++) {
-        $("#" + patient.PatientInfo[i].treatID + "").click({Radiotherapy_ID:patient.PatientInfo[i].Radiotherapy_ID, state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+        $("#" + patient.PatientInfo[i].treatID + "").click({iscommon:patient.PatientInfo[i].iscommon, Radiotherapy_ID:patient.PatientInfo[i].Radiotherapy_ID, state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
             //checkAddTreatment(e.data.Radiotherapy_ID);
             OperateAttrDisabled();
             //$("#addTreatment").removeAttr("disabled");
             var ul = $("#progress-iframe").contents().find("#ul-progress a");
+            ShowUl(ul, e.data.iscommon);
             ul.each(function (index, element) {
                 $(this).find('span').removeClass();
             });
@@ -863,12 +890,13 @@ function trAddClick(patient, userID) {
 
 function trAddClickforJS(patient, userID) {
     for (var i = 0; i < patient.PatientInfo.length; i++) {
-        $("#" + patient.PatientInfo[i].treatID + "_" + patient.PatientInfo[i].appointid).click({Radiotherapy_ID:patient.PatientInfo[i].Radiotherapy_ID, state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+        $("#" + patient.PatientInfo[i].treatID + "_" + patient.PatientInfo[i].appointid).click({iscommon:patient.PatientInfo[i].iscommon, Radiotherapy_ID:patient.PatientInfo[i].Radiotherapy_ID, state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
             currentID = e.data.ID;
             //checkAddTreatment(e.data.Radiotherapy_ID);
             OperateAttrDisabled();
             //$("#addTreatment").removeAttr("disabled");
             var ul = $("#progress-iframe").contents().find("#ul-progress a");
+            ShowUl(ul, e.data.iscommon);
             ul.each(function (index, element) {
                 $(this).find('span').removeClass();
             });
@@ -1460,8 +1488,9 @@ function Search(str, patient, role) {
                 Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                 doctor = patient.PatientInfo[i].doctor;
                 groupname = patient.PatientInfo[i].groupname;
+                iscommon = patient.PatientInfo[i].iscommon;
                 if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0 || groupname.search(str) >= 0) {
-                    var singlepatient = { treat: treat, treatID: TreatmentID, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, groupname: groupname, diagnosisresult: patient.PatientInfo[i].diagnosisresult };
+                    var singlepatient = {iscommon:iscommon, treat: treat, treatID: TreatmentID, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, groupname: groupname, diagnosisresult: patient.PatientInfo[i].diagnosisresult };
                     Searchedpatient[count++] = singlepatient;
                 }
             }
@@ -1475,8 +1504,9 @@ function Search(str, patient, role) {
                 diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
                 Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                 doctor = patient.PatientInfo[i].doctor;
+                iscommon = patient.PatientInfo[i].iscommon;
                 if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0) {
-                    var singlepatient = { treat: treat, treatID: TreatmentID, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, diagnosisresult: patient.PatientInfo[i].diagnosisresult };
+                    var singlepatient = {iscommon:iscommon, treat: treat, treatID: TreatmentID, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, diagnosisresult: patient.PatientInfo[i].diagnosisresult };
                     Searchedpatient[count++] = singlepatient;
                 }
             }
@@ -1490,8 +1520,9 @@ function Search(str, patient, role) {
                 diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
                 Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                 doctor = patient.PatientInfo[i].doctor;
+                iscommon = patient.PatientInfo[i].iscommon;
                 if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0) {
-                    var singlepatient = { treat: treat, treatID: TreatmentID, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, diagnosisresult: patient.PatientInfo[i].diagnosisresult };
+                    var singlepatient = {iscommon:iscommon, treat: treat, treatID: TreatmentID, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, diagnosisresult: patient.PatientInfo[i].diagnosisresult };
                     Searchedpatient[count++] = singlepatient;
                 }
             }
@@ -1510,8 +1541,9 @@ function Search(str, patient, role) {
                 Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
                 begin = toTime(patient.PatientInfo[i].begin);
                 end = toTime(patient.PatientInfo[i].end);
+                iscommon = patient.PatientInfo[i].iscommon;
                 if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || date.search(str) >= 0 || Task.search(str) >= 0 || begin.search(str) >= 0 || end.search(str) >= 0 || doctor.search(str) >= 0 || Completed.search(str) >= 0) {
-                    var singlepatient = { treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, Progress: patient.PatientInfo[i].Progress, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed, Task:patient.PatientInfo[i].Task };
+                    var singlepatient = {iscommon:iscommon, treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, Progress: patient.PatientInfo[i].Progress, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed, Task:patient.PatientInfo[i].Task };
                     Searchedpatient[count++] = singlepatient;
                 }
             }
@@ -1526,8 +1558,9 @@ function Search(str, patient, role) {
                 Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                 doctor = patient.PatientInfo[i].doctor;
                 groupname = patient.PatientInfo[i].groupname;
+                iscommon = patient.PatientInfo[i].iscommon;
                 if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0 || groupname.search(str) >= 0) {
-                    var singlepatient = { treat: treat, treatID: TreatmentID, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, groupname: groupname, diagnosisresult: patient.PatientInfo[i].diagnosisresult };
+                    var singlepatient = {iscommon:iscommon, treat: treat, treatID: TreatmentID, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, groupname: groupname, diagnosisresult: patient.PatientInfo[i].diagnosisresult };
                     Searchedpatient[count++] = singlepatient;
                 }
             }
