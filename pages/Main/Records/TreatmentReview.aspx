@@ -180,7 +180,7 @@
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">参考中心层面：</span>
                             <div class="group-item">
-                                <input id="ReferenceNumber1" step="0.00001" class="form-group-input" type="number" name="ReferenceNumber1" disabled="disabled"/>
+                                <input id="ReferenceNumber" step="0.00001" class="form-group-input" type="number" name="ReferenceNumber1" disabled="disabled"/>
                                 <span class="input-group-addon">mm</span>
                             </div>
                             
@@ -188,7 +188,7 @@
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">体表参考刻度：</span>
                             <div class="group-item">
-                                <input id="ReferenceScale1" step="0.00001" class="form-group-input" type="number" name="ReferenceScale1" disabled="disabled"/>
+                                <input id="ReferenceScale" step="0.00001" class="form-group-input" type="number" name="ReferenceScale1" disabled="disabled"/>
                                 <span class="input-group-addon">mm</span>
                             </div>
                         </div>
@@ -206,7 +206,19 @@
                     <span>复查记录：</span>
                 </div>
                 <div class="single-row">
-                    
+                     <div class="item area-group col-xs-12">
+                        <table  class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
+                            <thead>
+                                <tr>
+                                    <th>扫描要求</th>
+                                    <th>备注信息</th>
+                                    <th>实施人员</th>
+                                </tr>
+                            </thead>
+                            <tbody id="checkrecord" style="text-align:center;"> 
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
             </div>
