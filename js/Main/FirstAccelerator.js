@@ -28,20 +28,28 @@ function Init(evt) {
     document.getElementById("lightpart").innerHTML = patient.lightpartname;
     var groupprogress = patient.Progress.split(",");
     var i = 0;
-    var designInfo = getDesignInfo(treatmentID);
-    document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
-    readDosagePriority(designInfo[i].DosagePriority);
-    readDosage(designInfo[i].Dosage);
-    document.getElementById("technology").innerHTML = designInfo[i].technology;
-    document.getElementById("equipment").innerHTML = designInfo[i].equipment;
-    document.getElementById("PlanSystem").innerHTML = designInfo[i].PlanSystem;
-    document.getElementById("IlluminatedNumber").innerHTML = designInfo[i].IlluminatedNumber;
-    document.getElementById("Coplanar").innerHTML = charge1(designInfo[i].Coplanar);
-    document.getElementById("MachineNumbe").innerHTML = designInfo[i].MachineNumbe;
-    document.getElementById("ControlPoint").innerHTML = designInfo[i].ControlPoint;
-    document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
-    document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
-    document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
+    var iscommon = judgecommon(treatmentID);
+    if (iscommon == "1") {
+        var designInfo = getDesignInfo(treatmentID);
+            document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
+            readDosagePriority(designInfo[i].DosagePriority);
+            readDosage(designInfo[i].Dosage);
+            document.getElementById("technology").innerHTML = designInfo[i].technology;
+            document.getElementById("equipment").innerHTML = designInfo[i].equipment;
+            document.getElementById("PlanSystem").innerHTML = designInfo[i].PlanSystem;
+            document.getElementById("IlluminatedNumber").innerHTML = designInfo[i].IlluminatedNumber;
+            document.getElementById("Coplanar").innerHTML = charge1(designInfo[i].Coplanar);
+            document.getElementById("MachineNumbe").innerHTML = designInfo[i].MachineNumbe;
+            document.getElementById("ControlPoint").innerHTML = designInfo[i].ControlPoint;
+            document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
+            document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
+            document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
+
+    }
+    if (iscommon == "0") {
+        $("#designinfo").hide();
+    }
+    
     createSplitway(document.getElementById("splitway"));
     var total = gettotalnumber(treatmentID);
     var totalnumber = total.split(",")[0];
@@ -156,6 +164,14 @@ function Init(evt) {
                 }
             });  
     }
+}
+function judgecommon(treatid) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "judgecommon.ashx?treatmentID=" + treatid;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
 }
 function geteuqipmenttype(treatmentID) {
     var xmlHttp = new XMLHttpRequest();

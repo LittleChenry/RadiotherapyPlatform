@@ -80,7 +80,13 @@ public class TreatmentReviewRecord : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@datetime", DateTime.Now);
                 sqlOperation.AddParameterWithValue("@userid", userid);
                 int intSuccess1 = sqlOperation.ExecuteNonQuery(strSqlCommand);
-                if (intSuccess1 > 0)
+
+                string command = "update appointment set State=1,Completed=1 where ID=@appoint";
+                sqlOperation.AddParameterWithValue("@appoint", appointid);
+                int success = sqlOperation.ExecuteNonQuery(command);
+        
+        
+                if (intSuccess1 > 0 && success>0)
                 {
                     return "success";
                 }

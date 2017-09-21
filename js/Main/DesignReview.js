@@ -39,7 +39,7 @@ function Init(evt) {
     var select4 = document.getElementById("import");
     createimportItem(select4);
     var progress = patient.Progress.split(",");
-    if (isInArray(progress, '10')) {
+    if (isInArray(progress, '11')) {
         var designInfo = getDesignInfo(treatID);
         var length = designInfo.length;
         for (var i = 0; i < length; i++) {
@@ -60,7 +60,7 @@ function Init(evt) {
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("time").innerHTML = getNowFormatDate();
         document.getElementById("hidetreatID").value = treatID;
-        if (isInArray(progress, '11')) {
+        if (isInArray(progress, '12')) {
             var reviewInfo = getReviewInfo(treatID);
             for (var i = 0; i < reviewInfo.length; i++) {
                 if (reviewInfo[i].Treatmentname == patient.Treatmentname) {

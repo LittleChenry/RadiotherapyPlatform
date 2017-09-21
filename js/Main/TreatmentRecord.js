@@ -35,38 +35,60 @@ function Init(evt) {
     document.getElementById("hospitalid").innerHTML = texthos;
     document.getElementById("lightpart").innerHTML = patient.lightpartname;
     var i = 0;
-    var replacerecordinfo = getreplacerecordInfo(treatmentID);
-    var boxes = document.getElementById("multipic");
-    var pictures = replacerecordinfo.picture.split(",");
-    if (replacerecordinfo.picture == "") {
-        boxes.innerHTML = "无";
-    } else {
-        for (var k = 1; k < pictures.length; k++) {
-            var div = document.createElement("DIV");
-            div.className = "boxes";
-            var div1 = document.createElement("DIV");
-            div1.className = "imgnum";
-            var img = document.createElement("IMG");
-            img.addEventListener("click", showPicture, false);
-            img.className = "img";
-            img.src = pictures[k];
-            img.style.display = "block";
-            div1.appendChild(img);
-            div.appendChild(div1);
-            boxes.appendChild(div);
+    var iscommon = judgecommon(treatmentID);
+    if (iscommon == "1") {
+        var replacerecordinfo = getreplacerecordInfo(treatmentID);
+        var boxes = document.getElementById("multipic");
+        var pictures = replacerecordinfo.picture.split(",");
+        if (replacerecordinfo.picture == "") {
+            boxes.innerHTML = "无";
+        } else {
+            for (var k = 1; k < pictures.length; k++) {
+                var div = document.createElement("DIV");
+                div.className = "boxes";
+                var div1 = document.createElement("DIV");
+                div1.className = "imgnum";
+                var img = document.createElement("IMG");
+                img.addEventListener("click", showPicture, false);
+                img.className = "img";
+                img.src = pictures[k];
+                img.style.display = "block";
+                div1.appendChild(img);
+                div.appendChild(div1);
+                boxes.appendChild(div);
+            }
+        }
+        var designInfo = getDesignInfo(treatmentID);
+        readDosagePriority(designInfo[i].DosagePriority);
+
+        var pdfgroup = getpdfgroup(treatmentID);
+        var pdf1 = pdfgroup.split(",")[0];
+        var pdf2 = pdfgroup.split(",")[1];
+        if (pdf1 != "") {
+            document.getElementById("viewpdf").href = pdf1;
+        }
+        if (pdf2 != "") {
+            document.getElementById("viewpdf2").href = pdf2;
         }
     }
-    var designInfo = getDesignInfo(treatmentID);
-    readDosagePriority(designInfo[i].DosagePriority);
-    
-    var pdfgroup = getpdfgroup(treatmentID);
-    var pdf1 = pdfgroup.split(",")[0];
-    var pdf2 = pdfgroup.split(",")[1];
-    if (pdf1 != "") {
-        document.getElementById("viewpdf").href = pdf1;
+    if (iscommon == "0") {
+        $("#referinfo").hide();
+        $("#aimdosagetable").hide();
+        $("#aimdosage").hide();
     }
-    if (pdf2 != "") {
-        document.getElementById("viewpdf2").href = pdf2;
+    var fildinfo = getfieldinfo(treatmentID);
+    if (fildinfo.length == 0) {
+        $("#fieldinfotable").hide();
+        $("#fieldinfo").hide();
+    } else {
+        var table = $("#Field");
+        for (var k = 1; k < fildinfo.length; k++) {
+            var content = '<tr><td>' + fildinfo[k].code + '</td><td>' + fildinfo[k].mu + '</td><td>' + fildinfo[k].equipment + '</td><td>' + fildinfo[k].radiotechnique;
+            content = content + '</td><td>' + fildinfo[k].radiotype + '</td><td>' + fildinfo[k].energy + '</td><td>' + fildinfo[k].wavedistance + + '</td><td>' + fildinfo[k].angleframe;
+            content = content + '</td><td>' + fildinfo[k].noseangle + '</td><td>' + fildinfo[k].bedrotation + '</td><td>' + fildinfo[k].subfieldnumber + + '</td></tr>';
+            table.append(content);
+        }
+
     }
     var session = getSession();
     if (session.assistant != "") {
@@ -252,6 +274,24 @@ function Init(evt) {
         $(this).unbind("click");
         checkAllTable(treatmentID);
     });
+}
+function getfieldinfo(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getallfieldinfo.ashx?treatmentID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var json = json.replace(/\n/g, "\\n");
+    var obj1 = eval("(" + json + ")");
+    return obj1.Item;
+}
+function judgecommon(treatid) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "judgecommon.ashx?treatmentID=" + treatid;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
 }
 function geteuqipmenttype(treatmentID) {
     var xmlHttp = new XMLHttpRequest();

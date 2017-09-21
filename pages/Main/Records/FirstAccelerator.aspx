@@ -50,7 +50,7 @@
                         <div class="item col-xs-4">住院情况：<span id="hospitalid" class="underline"></span></div> 
                   </div>
             </div>
-             <div class="paper-content">
+             <div id="designinfo" class="paper-content">
                   <div class="content-title">
                     <span>计划详细信息：</span>
                 </div>

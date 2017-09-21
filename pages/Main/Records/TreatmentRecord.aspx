@@ -71,12 +71,12 @@
                 <div class="single-row">
                     <div class="item col-xs-6">分割方式：<span id="split"  class="underline"></span></div>
                 </div>
-                <div class="single-row">
+                <div id="aimdosage" class="single-row">
                     <div class="col-xs-6" style="padding-left:0px;">
                         <span class="form-text col-xs-4">靶区处方剂量：</span>
                     </div>
                 </div>
-                <div class="single-row">
+                <div id="aimdosagetable" class="single-row">
                     <div class="item area-group col-xs-12">
                         <table id="Priority" class="table table-bordered">
                             <thead>
@@ -94,6 +94,33 @@
                         </table>
                     </div>
                 </div>
+                <div id="fieldinfo" class="single-row">
+                    <div class="col-xs-6" style="padding-left:0px;">
+                        <span class="form-text col-xs-4">射野信息：</span>
+                    </div>
+                </div>
+                <div id="fieldinfotable" class="single-row">
+                    <div class="item area-group col-xs-12">
+                        <table id="Field" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>射野ID</th>
+                                    <th>MU</th>
+                                    <th>放疗设备</th>
+                                    <th>照射技术</th>
+                                    <th>射野类型</th>
+                                    <th>能量</th>
+                                    <th>源皮距</th>
+                                    <th>机架角</th>
+                                    <th>机头角</th>
+                                    <th>床转交</th>
+                                    <th>子野数</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
                         <span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span>
