@@ -1,0 +1,4303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="WebService" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="WebService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="WebService">
+      <s:element name="GetVisitOutInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VisitDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DateTypeID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DoctID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVisitOutInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetVisitOutInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOutVisitDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VisitDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOutVisitDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiOutVisitDetailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOutVisitSum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VisitDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOutVisitSumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiOutVisitSumResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInVisitDoctorInfo">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetPatiInVisitDoctorInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInVisitDoctorInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInVisitDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LeaveDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInVisitDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInVisitDetailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOpDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InRoomDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOpDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInOpDetailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOutOpDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrderDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOutOpDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiOutOpDetailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInBillItemDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BillDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInBillItemDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInBillItemDetailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOutItemDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SettleDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOutItemDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiOutItemDetailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInPOItemDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BeginDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInPOItemDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInPOItemDetailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInBWBZDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CurrDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInBWBZDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInBWBZDetailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAisthIDCode">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAisthIDCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAisthIDCodeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOperation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InPatiID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReplyDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOperationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiOperationResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOperationByDate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ApplyDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOperationByDateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiOperationByDateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHostName">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetHostNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetHostNameResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetOrderExecInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InOutFlag" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EmpID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetOrderExecInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetOrderExecInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDictItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDictItemResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDictItemResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAgeFromBirthday">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAgeFromBirthdayResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAgeFromBirthdayResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPatiOpMaintance">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPatiOpMaintanceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetPatiOpMaintanceResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPatiOperation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="bytes" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPatiOperationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetPatiOperationResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpResource">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetOpResourceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpResourceResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PatiFeeInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="INPATIID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CARDNO" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BILLDATE" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PatiFeeInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PatiFeeInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetBloodApply">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ApplyID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DIAGNAME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TRANSAIM" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TRANSHISTORY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="GESTATIONHISTORY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TRANSADVERSEREACTION" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TRANSVARIETY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TRANSVOLUME" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="USEMETHOD" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="USERADIATE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BloodUnit" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetBloodApplyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetBloodApplyResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertPatiInOrder_free">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Flag" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="AccessID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DictGroupID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BeginEmpID_Doct" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertPatiInOrder_freeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InsertPatiInOrder_freeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNurseLevel">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="inPatiID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="inNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNurseLevelResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNurseLevelResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOpInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="inpatiID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="inNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOpInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiOpInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Init">
+        <s:complexType />
+      </s:element>
+      <s:element name="InitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InitResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBasicInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBasicInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBasicInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInHospInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InPatiID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInHospInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetInHospInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Flag" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInfoByUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Flag" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="AccessID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInfoByUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInfoByUserResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInspectInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrdID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Flag" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInspectInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetInspectInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetFlag">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrdID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="InOut" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Flag" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetFlagResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetFlagResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetFlag_New">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrdID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="InOut" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Flag" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="EmpID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetFlag_NewResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetFlag_NewResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetBackResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrdID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="InOut" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ResultAddress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetBackResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetBackResultResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInfoBasic">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInfoBasicResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInfoBasicResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInVisitInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InPatiID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="flag" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInVisitInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInVisitInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInDiag">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInDiagResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInDiagResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DiagOrgID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInIDResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOrgList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOrgListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInOrgListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInBedList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInBedListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInBedListResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmployeeInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmpID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmployeeInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEmployeeInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBedInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrgName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBedInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBedInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllEmp">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Flag" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllEmpResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllEmpResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiPastInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InPatiID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiPastInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiPastInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOutDiag">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InPatiID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiOutDiagResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiOutDiagResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDiagLocRelation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InOrgID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="flag" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDiagLocRelationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDiagLocRelationResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDiagLoc">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="flag" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDiagLocResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDiagLocResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSurgery">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetSurgeryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSurgeryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBedAndLoc">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetBedAndLocResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBedAndLocResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBillItemCateID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBillItemCateIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBillItemCateIDResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInOrderResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOrder_2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrdDes" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOrder_2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInOrder_2Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOrderItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrdID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOrderItemResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInOrderItemResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOrderApply">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrdID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOrderApplyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInOrderApplyResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCardNoByInPatiID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InPatiID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCardNoByInPatiIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCardNoByInPatiIDResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOperLimit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ItemID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOperLimitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOperLimitResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetICDcode">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetICDcodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetICDcodeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOrderTime">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrdFlag" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInOrderTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInOrderTimeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCateID">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetCateIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCateIDResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCompleteWebURL">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrdID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="InOut" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ResultAddress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetCompleteWebURLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetCompleteWebURLResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDictOrdID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrdID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Flag" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDictOrdIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDictOrdIDResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInfoByOrg">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Flag" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInfoByOrgResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInfoByOrgResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInfoByOrgs">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Flag" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgIDs" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInfoByOrgsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInfoByOrgsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AutoGetECGOrds">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="flag" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AutoGetECGOrdsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AutoGetECGOrdsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetOrdStatusFlag">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrdID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="InOut" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Flag" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgSrcID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EmpID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetOrdStatusFlagResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetOrdStatusFlagResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetResultByDictOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DictGroupID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BeginDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetResultByDictOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetResultByDictOrderResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDictOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DictOrdName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrdTypeID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDictOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDictOrderResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidEmpPassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmpID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptPassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidEmpPasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidEmpPasswordResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmpType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmpID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmpTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEmpTypeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateOrderByDict">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DictGroupID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgID_Loc" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgID_Dept" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BeginDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BeginEmpID_Doct" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrdTypeID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FreqID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TimeTypeID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UsageID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TimesQuantity" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OutTakeFlag" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EmpID_Doct" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateOrderByDictResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CreateOrderByDictResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInPatiInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInPatiInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetInPatiInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLeavePatiInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLeavePatiInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLeavePatiInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInHospPatiBillInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InPatiID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInHospPatiBillInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetInHospPatiBillInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetResourceOrg">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetResourceOrgResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetResourceOrgResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetResourceEmp">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetResourceEmpResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetResourceEmpResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidEncryptPassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptPassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidEncryptPasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidEncryptPasswordResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCardLeftAmount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCardLeftAmountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCardLeftAmountResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrgID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="enumOrgType" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrgIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrgIDResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDoctorID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrgID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDoctorIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDoctorIDResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InitOutVisit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="blnIsRun" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InitOutVisitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InitOutVisitResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDoctorVisitInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DoctorID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDoctorVisitInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDoctorVisitInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHisCurDate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MarginDay" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHisCurDateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetHisCurDateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPauseDoctor">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetPauseDoctorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPauseDoctorResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVisitListByCardNo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Date1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Date2" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVisitListByCardNoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetVisitListByCardNoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveVisit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="RsrcID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="RsrcDateTypeID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="VisitDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveVisitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveVisitResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveVisitResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveVisitResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveVisitResultResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancVisit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="RsrcID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="RsrcDateTypeID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="VisitDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancVisitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancVisitResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancVisitResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancVisitResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancVisitResultResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCardPassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCardPasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateCardPasswordResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInfoDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Flag" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPatiInfoDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPatiInfoDetailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInPatiStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInPatiStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetInPatiStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPatiOrderSwitch">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sFlag" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPatiOrderSwitchResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetPatiOrderSwitchResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPatiPathWay">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pFlag" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPatiPathWayResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetPatiPathWayResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDoctorRes">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetDoctorResResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDoctorResResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOutVisitInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="validDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOutVisitInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOutVisitInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOutVisitInfoNew">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="validDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CardType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOutVisitInfoNewResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOutVisitInfoNewResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InputStr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDrugInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNotDrugInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InputStr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNotDrugInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNotDrugInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInPatiTypeOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CateId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetInPatiTypeOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetInPatiTypeOrderResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderOutInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CardNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrderDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrderTypeID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DoctID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOrderOutInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOrderOutInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetVisitOutInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVisitOutInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetVisitOutInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVisitOutInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOutVisitDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiOutVisitDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOutVisitDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiOutVisitDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOutVisitSumSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiOutVisitSum" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOutVisitSumSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiOutVisitSumResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInVisitDoctorInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInVisitDoctorInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInVisitDoctorInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInVisitDoctorInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInVisitDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInVisitDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInVisitDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInVisitDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOpDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInOpDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOpDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInOpDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOutOpDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiOutOpDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOutOpDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiOutOpDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInBillItemDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInBillItemDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInBillItemDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInBillItemDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOutItemDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiOutItemDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOutItemDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiOutItemDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInPOItemDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInPOItemDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInPOItemDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInPOItemDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInBWBZDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInBWBZDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInBWBZDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInBWBZDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAisthIDCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAisthIDCode" />
+  </wsdl:message>
+  <wsdl:message name="GetAisthIDCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAisthIDCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOperationSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiOperation" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOperationSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiOperationResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOperationByDateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiOperationByDate" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOperationByDateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiOperationByDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHostNameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetHostName" />
+  </wsdl:message>
+  <wsdl:message name="GetHostNameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetHostNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetOrderExecInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:SetOrderExecInfo" />
+  </wsdl:message>
+  <wsdl:message name="SetOrderExecInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:SetOrderExecInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDictItemSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDictItem" />
+  </wsdl:message>
+  <wsdl:message name="GetDictItemSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDictItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAgeFromBirthdaySoapIn">
+    <wsdl:part name="parameters" element="tns:GetAgeFromBirthday" />
+  </wsdl:message>
+  <wsdl:message name="GetAgeFromBirthdaySoapOut">
+    <wsdl:part name="parameters" element="tns:GetAgeFromBirthdayResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetPatiOpMaintanceSoapIn">
+    <wsdl:part name="parameters" element="tns:SetPatiOpMaintance" />
+  </wsdl:message>
+  <wsdl:message name="SetPatiOpMaintanceSoapOut">
+    <wsdl:part name="parameters" element="tns:SetPatiOpMaintanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetPatiOperationSoapIn">
+    <wsdl:part name="parameters" element="tns:SetPatiOperation" />
+  </wsdl:message>
+  <wsdl:message name="SetPatiOperationSoapOut">
+    <wsdl:part name="parameters" element="tns:SetPatiOperationResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpResourceSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpResource" />
+  </wsdl:message>
+  <wsdl:message name="GetOpResourceSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpResourceResponse" />
+  </wsdl:message>
+  <wsdl:message name="PatiFeeInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:PatiFeeInfo" />
+  </wsdl:message>
+  <wsdl:message name="PatiFeeInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:PatiFeeInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetBloodApplySoapIn">
+    <wsdl:part name="parameters" element="tns:SetBloodApply" />
+  </wsdl:message>
+  <wsdl:message name="SetBloodApplySoapOut">
+    <wsdl:part name="parameters" element="tns:SetBloodApplyResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertPatiInOrder_freeSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertPatiInOrder_free" />
+  </wsdl:message>
+  <wsdl:message name="InsertPatiInOrder_freeSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertPatiInOrder_freeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNurseLevelSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNurseLevel" />
+  </wsdl:message>
+  <wsdl:message name="GetNurseLevelSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNurseLevelResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOpInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiOpInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOpInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiOpInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="InitSoapIn">
+    <wsdl:part name="parameters" element="tns:Init" />
+  </wsdl:message>
+  <wsdl:message name="InitSoapOut">
+    <wsdl:part name="parameters" element="tns:InitResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBasicInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBasicInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetBasicInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBasicInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetInHospInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetInHospInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetInHospInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetInHospInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInfoByUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInfoByUser" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInfoByUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInfoByUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetInspectInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetInspectInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetInspectInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetInspectInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetFlagSoapIn">
+    <wsdl:part name="parameters" element="tns:SetFlag" />
+  </wsdl:message>
+  <wsdl:message name="SetFlagSoapOut">
+    <wsdl:part name="parameters" element="tns:SetFlagResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetFlag_NewSoapIn">
+    <wsdl:part name="parameters" element="tns:SetFlag_New" />
+  </wsdl:message>
+  <wsdl:message name="SetFlag_NewSoapOut">
+    <wsdl:part name="parameters" element="tns:SetFlag_NewResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetBackResultSoapIn">
+    <wsdl:part name="parameters" element="tns:SetBackResult" />
+  </wsdl:message>
+  <wsdl:message name="SetBackResultSoapOut">
+    <wsdl:part name="parameters" element="tns:SetBackResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInfoBasicSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInfoBasic" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInfoBasicSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInfoBasicResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInVisitInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInVisitInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInVisitInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInVisitInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInDiagSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInDiag" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInDiagSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInDiagResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInID" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOrgListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInOrgList" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOrgListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInOrgListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInBedListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInBedList" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInBedListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInBedListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEmployeeInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBedInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBedInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetBedInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBedInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllEmpSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllEmp" />
+  </wsdl:message>
+  <wsdl:message name="GetAllEmpSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllEmpResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiPastInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiPastInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiPastInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiPastInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOutDiagSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiOutDiag" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiOutDiagSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiOutDiagResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDiagLocRelationSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDiagLocRelation" />
+  </wsdl:message>
+  <wsdl:message name="GetDiagLocRelationSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDiagLocRelationResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDiagLocSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDiagLoc" />
+  </wsdl:message>
+  <wsdl:message name="GetDiagLocSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDiagLocResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSurgerySoapIn">
+    <wsdl:part name="parameters" element="tns:GetSurgery" />
+  </wsdl:message>
+  <wsdl:message name="GetSurgerySoapOut">
+    <wsdl:part name="parameters" element="tns:GetSurgeryResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBedAndLocSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBedAndLoc" />
+  </wsdl:message>
+  <wsdl:message name="GetBedAndLocSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBedAndLocResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBillItemCateIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBillItemCateID" />
+  </wsdl:message>
+  <wsdl:message name="GetBillItemCateIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBillItemCateIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInOrder" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOrder_2SoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInOrder_2" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOrder_2SoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInOrder_2Response" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOrderItemSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInOrderItem" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOrderItemSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInOrderItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOrderApplySoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInOrderApply" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOrderApplySoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInOrderApplyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCardNoByInPatiIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCardNoByInPatiID" />
+  </wsdl:message>
+  <wsdl:message name="GetCardNoByInPatiIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCardNoByInPatiIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOperLimitSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOperLimit" />
+  </wsdl:message>
+  <wsdl:message name="GetOperLimitSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOperLimitResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetICDcodeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetICDcode" />
+  </wsdl:message>
+  <wsdl:message name="GetICDcodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetICDcodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOrderTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInOrderTime" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInOrderTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInOrderTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCateIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCateID" />
+  </wsdl:message>
+  <wsdl:message name="GetCateIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCateIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetCompleteWebURLSoapIn">
+    <wsdl:part name="parameters" element="tns:SetCompleteWebURL" />
+  </wsdl:message>
+  <wsdl:message name="SetCompleteWebURLSoapOut">
+    <wsdl:part name="parameters" element="tns:SetCompleteWebURLResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDictOrdIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDictOrdID" />
+  </wsdl:message>
+  <wsdl:message name="GetDictOrdIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDictOrdIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInfoByOrgSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInfoByOrg" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInfoByOrgSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInfoByOrgResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInfoByOrgsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInfoByOrgs" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInfoByOrgsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInfoByOrgsResponse" />
+  </wsdl:message>
+  <wsdl:message name="AutoGetECGOrdsSoapIn">
+    <wsdl:part name="parameters" element="tns:AutoGetECGOrds" />
+  </wsdl:message>
+  <wsdl:message name="AutoGetECGOrdsSoapOut">
+    <wsdl:part name="parameters" element="tns:AutoGetECGOrdsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetOrdStatusFlagSoapIn">
+    <wsdl:part name="parameters" element="tns:SetOrdStatusFlag" />
+  </wsdl:message>
+  <wsdl:message name="SetOrdStatusFlagSoapOut">
+    <wsdl:part name="parameters" element="tns:SetOrdStatusFlagResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetResultByDictOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:GetResultByDictOrder" />
+  </wsdl:message>
+  <wsdl:message name="GetResultByDictOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:GetResultByDictOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDictOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDictOrder" />
+  </wsdl:message>
+  <wsdl:message name="GetDictOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDictOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidEmpPasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidEmpPassword" />
+  </wsdl:message>
+  <wsdl:message name="ValidEmpPasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidEmpPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEmpTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEmpType" />
+  </wsdl:message>
+  <wsdl:message name="GetEmpTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEmpTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderByDictSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOrderByDict" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderByDictSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOrderByDictResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetInPatiInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetInPatiInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetInPatiInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetInPatiInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLeavePatiInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLeavePatiInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetLeavePatiInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLeavePatiInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetInHospPatiBillInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetInHospPatiBillInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetInHospPatiBillInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetInHospPatiBillInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetResourceOrgSoapIn">
+    <wsdl:part name="parameters" element="tns:GetResourceOrg" />
+  </wsdl:message>
+  <wsdl:message name="GetResourceOrgSoapOut">
+    <wsdl:part name="parameters" element="tns:GetResourceOrgResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetResourceEmpSoapIn">
+    <wsdl:part name="parameters" element="tns:GetResourceEmp" />
+  </wsdl:message>
+  <wsdl:message name="GetResourceEmpSoapOut">
+    <wsdl:part name="parameters" element="tns:GetResourceEmpResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidEncryptPasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidEncryptPassword" />
+  </wsdl:message>
+  <wsdl:message name="ValidEncryptPasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidEncryptPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCardLeftAmountSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCardLeftAmount" />
+  </wsdl:message>
+  <wsdl:message name="GetCardLeftAmountSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCardLeftAmountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrgIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrgID" />
+  </wsdl:message>
+  <wsdl:message name="GetOrgIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrgIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDoctorIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDoctorID" />
+  </wsdl:message>
+  <wsdl:message name="GetDoctorIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDoctorIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="InitOutVisitSoapIn">
+    <wsdl:part name="parameters" element="tns:InitOutVisit" />
+  </wsdl:message>
+  <wsdl:message name="InitOutVisitSoapOut">
+    <wsdl:part name="parameters" element="tns:InitOutVisitResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDoctorVisitInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDoctorVisitInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetDoctorVisitInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDoctorVisitInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHisCurDateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetHisCurDate" />
+  </wsdl:message>
+  <wsdl:message name="GetHisCurDateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetHisCurDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPauseDoctorSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPauseDoctor" />
+  </wsdl:message>
+  <wsdl:message name="GetPauseDoctorSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPauseDoctorResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetVisitListByCardNoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVisitListByCardNo" />
+  </wsdl:message>
+  <wsdl:message name="GetVisitListByCardNoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVisitListByCardNoResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveVisitSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveVisit" />
+  </wsdl:message>
+  <wsdl:message name="SaveVisitSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveVisitResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveVisitResultSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveVisitResult" />
+  </wsdl:message>
+  <wsdl:message name="SaveVisitResultSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveVisitResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancVisitSoapIn">
+    <wsdl:part name="parameters" element="tns:CancVisit" />
+  </wsdl:message>
+  <wsdl:message name="CancVisitSoapOut">
+    <wsdl:part name="parameters" element="tns:CancVisitResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancVisitResultSoapIn">
+    <wsdl:part name="parameters" element="tns:CancVisitResult" />
+  </wsdl:message>
+  <wsdl:message name="CancVisitResultSoapOut">
+    <wsdl:part name="parameters" element="tns:CancVisitResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCardPasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateCardPassword" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCardPasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateCardPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInfoDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPatiInfoDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetPatiInfoDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPatiInfoDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetInPatiStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetInPatiStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetInPatiStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetInPatiStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetPatiOrderSwitchSoapIn">
+    <wsdl:part name="parameters" element="tns:SetPatiOrderSwitch" />
+  </wsdl:message>
+  <wsdl:message name="SetPatiOrderSwitchSoapOut">
+    <wsdl:part name="parameters" element="tns:SetPatiOrderSwitchResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetPatiPathWaySoapIn">
+    <wsdl:part name="parameters" element="tns:SetPatiPathWay" />
+  </wsdl:message>
+  <wsdl:message name="SetPatiPathWaySoapOut">
+    <wsdl:part name="parameters" element="tns:SetPatiPathWayResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDoctorResSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDoctorRes" />
+  </wsdl:message>
+  <wsdl:message name="GetDoctorResSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDoctorResResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOutVisitInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOutVisitInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetOutVisitInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOutVisitInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOutVisitInfoNewSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOutVisitInfoNew" />
+  </wsdl:message>
+  <wsdl:message name="GetOutVisitInfoNewSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOutVisitInfoNewResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDrugInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDrugInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNotDrugInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNotDrugInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetNotDrugInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNotDrugInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetInPatiTypeOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:GetInPatiTypeOrder" />
+  </wsdl:message>
+  <wsdl:message name="GetInPatiTypeOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:GetInPatiTypeOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderOutInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOrderOutInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetOrderOutInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOrderOutInfoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="GetVisitOutInfo">
+      <wsdl:input message="tns:GetVisitOutInfoSoapIn" />
+      <wsdl:output message="tns:GetVisitOutInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutVisitDetail">
+      <wsdl:input message="tns:GetPatiOutVisitDetailSoapIn" />
+      <wsdl:output message="tns:GetPatiOutVisitDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutVisitSum">
+      <wsdl:input message="tns:GetPatiOutVisitSumSoapIn" />
+      <wsdl:output message="tns:GetPatiOutVisitSumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInVisitDoctorInfo">
+      <wsdl:input message="tns:GetPatiInVisitDoctorInfoSoapIn" />
+      <wsdl:output message="tns:GetPatiInVisitDoctorInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInVisitDetail">
+      <wsdl:input message="tns:GetPatiInVisitDetailSoapIn" />
+      <wsdl:output message="tns:GetPatiInVisitDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOpDetail">
+      <wsdl:input message="tns:GetPatiInOpDetailSoapIn" />
+      <wsdl:output message="tns:GetPatiInOpDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutOpDetail">
+      <wsdl:input message="tns:GetPatiOutOpDetailSoapIn" />
+      <wsdl:output message="tns:GetPatiOutOpDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInBillItemDetail">
+      <wsdl:input message="tns:GetPatiInBillItemDetailSoapIn" />
+      <wsdl:output message="tns:GetPatiInBillItemDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutItemDetail">
+      <wsdl:input message="tns:GetPatiOutItemDetailSoapIn" />
+      <wsdl:output message="tns:GetPatiOutItemDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInPOItemDetail">
+      <wsdl:input message="tns:GetPatiInPOItemDetailSoapIn" />
+      <wsdl:output message="tns:GetPatiInPOItemDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInBWBZDetail">
+      <wsdl:input message="tns:GetPatiInBWBZDetailSoapIn" />
+      <wsdl:output message="tns:GetPatiInBWBZDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAisthIDCode">
+      <wsdl:input message="tns:GetAisthIDCodeSoapIn" />
+      <wsdl:output message="tns:GetAisthIDCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOperation">
+      <wsdl:input message="tns:GetPatiOperationSoapIn" />
+      <wsdl:output message="tns:GetPatiOperationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOperationByDate">
+      <wsdl:input message="tns:GetPatiOperationByDateSoapIn" />
+      <wsdl:output message="tns:GetPatiOperationByDateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHostName">
+      <wsdl:input message="tns:GetHostNameSoapIn" />
+      <wsdl:output message="tns:GetHostNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetOrderExecInfo">
+      <wsdl:input message="tns:SetOrderExecInfoSoapIn" />
+      <wsdl:output message="tns:SetOrderExecInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDictItem">
+      <wsdl:input message="tns:GetDictItemSoapIn" />
+      <wsdl:output message="tns:GetDictItemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAgeFromBirthday">
+      <wsdl:input message="tns:GetAgeFromBirthdaySoapIn" />
+      <wsdl:output message="tns:GetAgeFromBirthdaySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPatiOpMaintance">
+      <wsdl:input message="tns:SetPatiOpMaintanceSoapIn" />
+      <wsdl:output message="tns:SetPatiOpMaintanceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPatiOperation">
+      <wsdl:input message="tns:SetPatiOperationSoapIn" />
+      <wsdl:output message="tns:SetPatiOperationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpResource">
+      <wsdl:input message="tns:GetOpResourceSoapIn" />
+      <wsdl:output message="tns:GetOpResourceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PatiFeeInfo">
+      <wsdl:input message="tns:PatiFeeInfoSoapIn" />
+      <wsdl:output message="tns:PatiFeeInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetBloodApply">
+      <wsdl:input message="tns:SetBloodApplySoapIn" />
+      <wsdl:output message="tns:SetBloodApplySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertPatiInOrder_free">
+      <wsdl:input message="tns:InsertPatiInOrder_freeSoapIn" />
+      <wsdl:output message="tns:InsertPatiInOrder_freeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNurseLevel">
+      <wsdl:input message="tns:GetNurseLevelSoapIn" />
+      <wsdl:output message="tns:GetNurseLevelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOpInfo">
+      <wsdl:input message="tns:GetPatiOpInfoSoapIn" />
+      <wsdl:output message="tns:GetPatiOpInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Init">
+      <wsdl:input message="tns:InitSoapIn" />
+      <wsdl:output message="tns:InitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBasicInfo">
+      <wsdl:input message="tns:GetBasicInfoSoapIn" />
+      <wsdl:output message="tns:GetBasicInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInHospInfo">
+      <wsdl:input message="tns:GetInHospInfoSoapIn" />
+      <wsdl:output message="tns:GetInHospInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfo">
+      <wsdl:input message="tns:GetPatiInfoSoapIn" />
+      <wsdl:output message="tns:GetPatiInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoByUser">
+      <wsdl:input message="tns:GetPatiInfoByUserSoapIn" />
+      <wsdl:output message="tns:GetPatiInfoByUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInspectInfo">
+      <wsdl:input message="tns:GetInspectInfoSoapIn" />
+      <wsdl:output message="tns:GetInspectInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetFlag">
+      <wsdl:input message="tns:SetFlagSoapIn" />
+      <wsdl:output message="tns:SetFlagSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetFlag_New">
+      <wsdl:input message="tns:SetFlag_NewSoapIn" />
+      <wsdl:output message="tns:SetFlag_NewSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetBackResult">
+      <wsdl:input message="tns:SetBackResultSoapIn" />
+      <wsdl:output message="tns:SetBackResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoBasic">
+      <wsdl:input message="tns:GetPatiInfoBasicSoapIn" />
+      <wsdl:output message="tns:GetPatiInfoBasicSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInVisitInfo">
+      <wsdl:input message="tns:GetPatiInVisitInfoSoapIn" />
+      <wsdl:output message="tns:GetPatiInVisitInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInDiag">
+      <wsdl:input message="tns:GetPatiInDiagSoapIn" />
+      <wsdl:output message="tns:GetPatiInDiagSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInID">
+      <wsdl:input message="tns:GetPatiInIDSoapIn" />
+      <wsdl:output message="tns:GetPatiInIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrgList">
+      <wsdl:input message="tns:GetPatiInOrgListSoapIn" />
+      <wsdl:output message="tns:GetPatiInOrgListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInBedList">
+      <wsdl:input message="tns:GetPatiInBedListSoapIn" />
+      <wsdl:output message="tns:GetPatiInBedListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfo">
+      <wsdl:input message="tns:GetEmployeeInfoSoapIn" />
+      <wsdl:output message="tns:GetEmployeeInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBedInfo">
+      <wsdl:input message="tns:GetBedInfoSoapIn" />
+      <wsdl:output message="tns:GetBedInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllEmp">
+      <wsdl:input message="tns:GetAllEmpSoapIn" />
+      <wsdl:output message="tns:GetAllEmpSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiPastInfo">
+      <wsdl:input message="tns:GetPatiPastInfoSoapIn" />
+      <wsdl:output message="tns:GetPatiPastInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutDiag">
+      <wsdl:input message="tns:GetPatiOutDiagSoapIn" />
+      <wsdl:output message="tns:GetPatiOutDiagSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDiagLocRelation">
+      <wsdl:input message="tns:GetDiagLocRelationSoapIn" />
+      <wsdl:output message="tns:GetDiagLocRelationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDiagLoc">
+      <wsdl:input message="tns:GetDiagLocSoapIn" />
+      <wsdl:output message="tns:GetDiagLocSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSurgery">
+      <wsdl:input message="tns:GetSurgerySoapIn" />
+      <wsdl:output message="tns:GetSurgerySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBedAndLoc">
+      <wsdl:input message="tns:GetBedAndLocSoapIn" />
+      <wsdl:output message="tns:GetBedAndLocSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBillItemCateID">
+      <wsdl:input message="tns:GetBillItemCateIDSoapIn" />
+      <wsdl:output message="tns:GetBillItemCateIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrder">
+      <wsdl:input message="tns:GetPatiInOrderSoapIn" />
+      <wsdl:output message="tns:GetPatiInOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrder_2">
+      <wsdl:input message="tns:GetPatiInOrder_2SoapIn" />
+      <wsdl:output message="tns:GetPatiInOrder_2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrderItem">
+      <wsdl:input message="tns:GetPatiInOrderItemSoapIn" />
+      <wsdl:output message="tns:GetPatiInOrderItemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrderApply">
+      <wsdl:input message="tns:GetPatiInOrderApplySoapIn" />
+      <wsdl:output message="tns:GetPatiInOrderApplySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCardNoByInPatiID">
+      <wsdl:input message="tns:GetCardNoByInPatiIDSoapIn" />
+      <wsdl:output message="tns:GetCardNoByInPatiIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOperLimit">
+      <wsdl:input message="tns:GetOperLimitSoapIn" />
+      <wsdl:output message="tns:GetOperLimitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetICDcode">
+      <wsdl:input message="tns:GetICDcodeSoapIn" />
+      <wsdl:output message="tns:GetICDcodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrderTime">
+      <wsdl:input message="tns:GetPatiInOrderTimeSoapIn" />
+      <wsdl:output message="tns:GetPatiInOrderTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCateID">
+      <wsdl:input message="tns:GetCateIDSoapIn" />
+      <wsdl:output message="tns:GetCateIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetCompleteWebURL">
+      <wsdl:input message="tns:SetCompleteWebURLSoapIn" />
+      <wsdl:output message="tns:SetCompleteWebURLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDictOrdID">
+      <wsdl:input message="tns:GetDictOrdIDSoapIn" />
+      <wsdl:output message="tns:GetDictOrdIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoByOrg">
+      <wsdl:input message="tns:GetPatiInfoByOrgSoapIn" />
+      <wsdl:output message="tns:GetPatiInfoByOrgSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoByOrgs">
+      <wsdl:input message="tns:GetPatiInfoByOrgsSoapIn" />
+      <wsdl:output message="tns:GetPatiInfoByOrgsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AutoGetECGOrds">
+      <wsdl:input message="tns:AutoGetECGOrdsSoapIn" />
+      <wsdl:output message="tns:AutoGetECGOrdsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetOrdStatusFlag">
+      <wsdl:input message="tns:SetOrdStatusFlagSoapIn" />
+      <wsdl:output message="tns:SetOrdStatusFlagSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResultByDictOrder">
+      <wsdl:input message="tns:GetResultByDictOrderSoapIn" />
+      <wsdl:output message="tns:GetResultByDictOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDictOrder">
+      <wsdl:input message="tns:GetDictOrderSoapIn" />
+      <wsdl:output message="tns:GetDictOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidEmpPassword">
+      <wsdl:input message="tns:ValidEmpPasswordSoapIn" />
+      <wsdl:output message="tns:ValidEmpPasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmpType">
+      <wsdl:input message="tns:GetEmpTypeSoapIn" />
+      <wsdl:output message="tns:GetEmpTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderByDict">
+      <wsdl:input message="tns:CreateOrderByDictSoapIn" />
+      <wsdl:output message="tns:CreateOrderByDictSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInPatiInfo">
+      <wsdl:input message="tns:GetInPatiInfoSoapIn" />
+      <wsdl:output message="tns:GetInPatiInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLeavePatiInfo">
+      <wsdl:input message="tns:GetLeavePatiInfoSoapIn" />
+      <wsdl:output message="tns:GetLeavePatiInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInHospPatiBillInfo">
+      <wsdl:input message="tns:GetInHospPatiBillInfoSoapIn" />
+      <wsdl:output message="tns:GetInHospPatiBillInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResourceOrg">
+      <wsdl:input message="tns:GetResourceOrgSoapIn" />
+      <wsdl:output message="tns:GetResourceOrgSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResourceEmp">
+      <wsdl:input message="tns:GetResourceEmpSoapIn" />
+      <wsdl:output message="tns:GetResourceEmpSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidEncryptPassword">
+      <wsdl:input message="tns:ValidEncryptPasswordSoapIn" />
+      <wsdl:output message="tns:ValidEncryptPasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCardLeftAmount">
+      <wsdl:input message="tns:GetCardLeftAmountSoapIn" />
+      <wsdl:output message="tns:GetCardLeftAmountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrgID">
+      <wsdl:input message="tns:GetOrgIDSoapIn" />
+      <wsdl:output message="tns:GetOrgIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDoctorID">
+      <wsdl:input message="tns:GetDoctorIDSoapIn" />
+      <wsdl:output message="tns:GetDoctorIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InitOutVisit">
+      <wsdl:input message="tns:InitOutVisitSoapIn" />
+      <wsdl:output message="tns:InitOutVisitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDoctorVisitInfo">
+      <wsdl:input message="tns:GetDoctorVisitInfoSoapIn" />
+      <wsdl:output message="tns:GetDoctorVisitInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHisCurDate">
+      <wsdl:input message="tns:GetHisCurDateSoapIn" />
+      <wsdl:output message="tns:GetHisCurDateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPauseDoctor">
+      <wsdl:input message="tns:GetPauseDoctorSoapIn" />
+      <wsdl:output message="tns:GetPauseDoctorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVisitListByCardNo">
+      <wsdl:input message="tns:GetVisitListByCardNoSoapIn" />
+      <wsdl:output message="tns:GetVisitListByCardNoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveVisit">
+      <wsdl:input message="tns:SaveVisitSoapIn" />
+      <wsdl:output message="tns:SaveVisitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveVisitResult">
+      <wsdl:input message="tns:SaveVisitResultSoapIn" />
+      <wsdl:output message="tns:SaveVisitResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancVisit">
+      <wsdl:input message="tns:CancVisitSoapIn" />
+      <wsdl:output message="tns:CancVisitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancVisitResult">
+      <wsdl:input message="tns:CancVisitResultSoapIn" />
+      <wsdl:output message="tns:CancVisitResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCardPassword">
+      <wsdl:input message="tns:UpdateCardPasswordSoapIn" />
+      <wsdl:output message="tns:UpdateCardPasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoDetail">
+      <wsdl:input message="tns:GetPatiInfoDetailSoapIn" />
+      <wsdl:output message="tns:GetPatiInfoDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInPatiStatus">
+      <wsdl:input message="tns:GetInPatiStatusSoapIn" />
+      <wsdl:output message="tns:GetInPatiStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPatiOrderSwitch">
+      <wsdl:input message="tns:SetPatiOrderSwitchSoapIn" />
+      <wsdl:output message="tns:SetPatiOrderSwitchSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPatiPathWay">
+      <wsdl:input message="tns:SetPatiPathWaySoapIn" />
+      <wsdl:output message="tns:SetPatiPathWaySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDoctorRes">
+      <wsdl:input message="tns:GetDoctorResSoapIn" />
+      <wsdl:output message="tns:GetDoctorResSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOutVisitInfo">
+      <wsdl:input message="tns:GetOutVisitInfoSoapIn" />
+      <wsdl:output message="tns:GetOutVisitInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOutVisitInfoNew">
+      <wsdl:input message="tns:GetOutVisitInfoNewSoapIn" />
+      <wsdl:output message="tns:GetOutVisitInfoNewSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugInfo">
+      <wsdl:input message="tns:GetDrugInfoSoapIn" />
+      <wsdl:output message="tns:GetDrugInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNotDrugInfo">
+      <wsdl:input message="tns:GetNotDrugInfoSoapIn" />
+      <wsdl:output message="tns:GetNotDrugInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInPatiTypeOrder">
+      <wsdl:input message="tns:GetInPatiTypeOrderSoapIn" />
+      <wsdl:output message="tns:GetInPatiTypeOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderOutInfo">
+      <wsdl:input message="tns:GetOrderOutInfoSoapIn" />
+      <wsdl:output message="tns:GetOrderOutInfoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetVisitOutInfo">
+      <soap:operation soapAction="WebService/GetVisitOutInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutVisitDetail">
+      <soap:operation soapAction="WebService/GetPatiOutVisitDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutVisitSum">
+      <soap:operation soapAction="WebService/GetPatiOutVisitSum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInVisitDoctorInfo">
+      <soap:operation soapAction="WebService/GetPatiInVisitDoctorInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInVisitDetail">
+      <soap:operation soapAction="WebService/GetPatiInVisitDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOpDetail">
+      <soap:operation soapAction="WebService/GetPatiInOpDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutOpDetail">
+      <soap:operation soapAction="WebService/GetPatiOutOpDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInBillItemDetail">
+      <soap:operation soapAction="WebService/GetPatiInBillItemDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutItemDetail">
+      <soap:operation soapAction="WebService/GetPatiOutItemDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInPOItemDetail">
+      <soap:operation soapAction="WebService/GetPatiInPOItemDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInBWBZDetail">
+      <soap:operation soapAction="WebService/GetPatiInBWBZDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAisthIDCode">
+      <soap:operation soapAction="WebService/GetAisthIDCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOperation">
+      <soap:operation soapAction="WebService/GetPatiOperation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOperationByDate">
+      <soap:operation soapAction="WebService/GetPatiOperationByDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHostName">
+      <soap:operation soapAction="WebService/GetHostName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetOrderExecInfo">
+      <soap:operation soapAction="WebService/SetOrderExecInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDictItem">
+      <soap:operation soapAction="WebService/GetDictItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAgeFromBirthday">
+      <soap:operation soapAction="WebService/GetAgeFromBirthday" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPatiOpMaintance">
+      <soap:operation soapAction="WebService/SetPatiOpMaintance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPatiOperation">
+      <soap:operation soapAction="WebService/SetPatiOperation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpResource">
+      <soap:operation soapAction="WebService/GetOpResource" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PatiFeeInfo">
+      <soap:operation soapAction="WebService/PatiFeeInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetBloodApply">
+      <soap:operation soapAction="WebService/SetBloodApply" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertPatiInOrder_free">
+      <soap:operation soapAction="WebService/InsertPatiInOrder_free" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNurseLevel">
+      <soap:operation soapAction="WebService/GetNurseLevel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOpInfo">
+      <soap:operation soapAction="WebService/GetPatiOpInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Init">
+      <soap:operation soapAction="WebService/Init" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasicInfo">
+      <soap:operation soapAction="WebService/GetBasicInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInHospInfo">
+      <soap:operation soapAction="WebService/GetInHospInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfo">
+      <soap:operation soapAction="WebService/GetPatiInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoByUser">
+      <soap:operation soapAction="WebService/GetPatiInfoByUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInspectInfo">
+      <soap:operation soapAction="WebService/GetInspectInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetFlag">
+      <soap:operation soapAction="WebService/SetFlag" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetFlag_New">
+      <soap:operation soapAction="WebService/SetFlag_New" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetBackResult">
+      <soap:operation soapAction="WebService/SetBackResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoBasic">
+      <soap:operation soapAction="WebService/GetPatiInfoBasic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInVisitInfo">
+      <soap:operation soapAction="WebService/GetPatiInVisitInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInDiag">
+      <soap:operation soapAction="WebService/GetPatiInDiag" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInID">
+      <soap:operation soapAction="WebService/GetPatiInID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrgList">
+      <soap:operation soapAction="WebService/GetPatiInOrgList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInBedList">
+      <soap:operation soapAction="WebService/GetPatiInBedList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfo">
+      <soap:operation soapAction="WebService/GetEmployeeInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBedInfo">
+      <soap:operation soapAction="WebService/GetBedInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllEmp">
+      <soap:operation soapAction="WebService/GetAllEmp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiPastInfo">
+      <soap:operation soapAction="WebService/GetPatiPastInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutDiag">
+      <soap:operation soapAction="WebService/GetPatiOutDiag" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDiagLocRelation">
+      <soap:operation soapAction="WebService/GetDiagLocRelation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDiagLoc">
+      <soap:operation soapAction="WebService/GetDiagLoc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSurgery">
+      <soap:operation soapAction="WebService/GetSurgery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBedAndLoc">
+      <soap:operation soapAction="WebService/GetBedAndLoc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBillItemCateID">
+      <soap:operation soapAction="WebService/GetBillItemCateID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrder">
+      <soap:operation soapAction="WebService/GetPatiInOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrder_2">
+      <soap:operation soapAction="WebService/GetPatiInOrder_2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrderItem">
+      <soap:operation soapAction="WebService/GetPatiInOrderItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrderApply">
+      <soap:operation soapAction="WebService/GetPatiInOrderApply" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCardNoByInPatiID">
+      <soap:operation soapAction="WebService/GetCardNoByInPatiID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOperLimit">
+      <soap:operation soapAction="WebService/GetOperLimit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetICDcode">
+      <soap:operation soapAction="WebService/GetICDcode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrderTime">
+      <soap:operation soapAction="WebService/GetPatiInOrderTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCateID">
+      <soap:operation soapAction="WebService/GetCateID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCompleteWebURL">
+      <soap:operation soapAction="WebService/SetCompleteWebURL" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDictOrdID">
+      <soap:operation soapAction="WebService/GetDictOrdID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoByOrg">
+      <soap:operation soapAction="WebService/GetPatiInfoByOrg" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoByOrgs">
+      <soap:operation soapAction="WebService/GetPatiInfoByOrgs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AutoGetECGOrds">
+      <soap:operation soapAction="WebService/AutoGetECGOrds" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetOrdStatusFlag">
+      <soap:operation soapAction="WebService/SetOrdStatusFlag" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResultByDictOrder">
+      <soap:operation soapAction="WebService/GetResultByDictOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDictOrder">
+      <soap:operation soapAction="WebService/GetDictOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidEmpPassword">
+      <soap:operation soapAction="WebService/ValidEmpPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmpType">
+      <soap:operation soapAction="WebService/GetEmpType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderByDict">
+      <soap:operation soapAction="WebService/CreateOrderByDict" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInPatiInfo">
+      <soap:operation soapAction="WebService/GetInPatiInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeavePatiInfo">
+      <soap:operation soapAction="WebService/GetLeavePatiInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInHospPatiBillInfo">
+      <soap:operation soapAction="WebService/GetInHospPatiBillInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResourceOrg">
+      <soap:operation soapAction="WebService/GetResourceOrg" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResourceEmp">
+      <soap:operation soapAction="WebService/GetResourceEmp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidEncryptPassword">
+      <soap:operation soapAction="WebService/ValidEncryptPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCardLeftAmount">
+      <soap:operation soapAction="WebService/GetCardLeftAmount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrgID">
+      <soap:operation soapAction="WebService/GetOrgID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDoctorID">
+      <soap:operation soapAction="WebService/GetDoctorID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InitOutVisit">
+      <soap:operation soapAction="WebService/InitOutVisit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDoctorVisitInfo">
+      <soap:operation soapAction="WebService/GetDoctorVisitInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHisCurDate">
+      <soap:operation soapAction="WebService/GetHisCurDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPauseDoctor">
+      <soap:operation soapAction="WebService/GetPauseDoctor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVisitListByCardNo">
+      <soap:operation soapAction="WebService/GetVisitListByCardNo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveVisit">
+      <soap:operation soapAction="WebService/SaveVisit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveVisitResult">
+      <soap:operation soapAction="WebService/SaveVisitResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancVisit">
+      <soap:operation soapAction="WebService/CancVisit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancVisitResult">
+      <soap:operation soapAction="WebService/CancVisitResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCardPassword">
+      <soap:operation soapAction="WebService/UpdateCardPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoDetail">
+      <soap:operation soapAction="WebService/GetPatiInfoDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInPatiStatus">
+      <soap:operation soapAction="WebService/GetInPatiStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPatiOrderSwitch">
+      <soap:operation soapAction="WebService/SetPatiOrderSwitch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPatiPathWay">
+      <soap:operation soapAction="WebService/SetPatiPathWay" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDoctorRes">
+      <soap:operation soapAction="WebService/GetDoctorRes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOutVisitInfo">
+      <soap:operation soapAction="WebService/GetOutVisitInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOutVisitInfoNew">
+      <soap:operation soapAction="WebService/GetOutVisitInfoNew" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugInfo">
+      <soap:operation soapAction="WebService/GetDrugInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNotDrugInfo">
+      <soap:operation soapAction="WebService/GetNotDrugInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInPatiTypeOrder">
+      <soap:operation soapAction="WebService/GetInPatiTypeOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderOutInfo">
+      <soap:operation soapAction="WebService/GetOrderOutInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetVisitOutInfo">
+      <soap12:operation soapAction="WebService/GetVisitOutInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutVisitDetail">
+      <soap12:operation soapAction="WebService/GetPatiOutVisitDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutVisitSum">
+      <soap12:operation soapAction="WebService/GetPatiOutVisitSum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInVisitDoctorInfo">
+      <soap12:operation soapAction="WebService/GetPatiInVisitDoctorInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInVisitDetail">
+      <soap12:operation soapAction="WebService/GetPatiInVisitDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOpDetail">
+      <soap12:operation soapAction="WebService/GetPatiInOpDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutOpDetail">
+      <soap12:operation soapAction="WebService/GetPatiOutOpDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInBillItemDetail">
+      <soap12:operation soapAction="WebService/GetPatiInBillItemDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutItemDetail">
+      <soap12:operation soapAction="WebService/GetPatiOutItemDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInPOItemDetail">
+      <soap12:operation soapAction="WebService/GetPatiInPOItemDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInBWBZDetail">
+      <soap12:operation soapAction="WebService/GetPatiInBWBZDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAisthIDCode">
+      <soap12:operation soapAction="WebService/GetAisthIDCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOperation">
+      <soap12:operation soapAction="WebService/GetPatiOperation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOperationByDate">
+      <soap12:operation soapAction="WebService/GetPatiOperationByDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHostName">
+      <soap12:operation soapAction="WebService/GetHostName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetOrderExecInfo">
+      <soap12:operation soapAction="WebService/SetOrderExecInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDictItem">
+      <soap12:operation soapAction="WebService/GetDictItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAgeFromBirthday">
+      <soap12:operation soapAction="WebService/GetAgeFromBirthday" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPatiOpMaintance">
+      <soap12:operation soapAction="WebService/SetPatiOpMaintance" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPatiOperation">
+      <soap12:operation soapAction="WebService/SetPatiOperation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpResource">
+      <soap12:operation soapAction="WebService/GetOpResource" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PatiFeeInfo">
+      <soap12:operation soapAction="WebService/PatiFeeInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetBloodApply">
+      <soap12:operation soapAction="WebService/SetBloodApply" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertPatiInOrder_free">
+      <soap12:operation soapAction="WebService/InsertPatiInOrder_free" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNurseLevel">
+      <soap12:operation soapAction="WebService/GetNurseLevel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOpInfo">
+      <soap12:operation soapAction="WebService/GetPatiOpInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Init">
+      <soap12:operation soapAction="WebService/Init" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasicInfo">
+      <soap12:operation soapAction="WebService/GetBasicInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInHospInfo">
+      <soap12:operation soapAction="WebService/GetInHospInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfo">
+      <soap12:operation soapAction="WebService/GetPatiInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoByUser">
+      <soap12:operation soapAction="WebService/GetPatiInfoByUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInspectInfo">
+      <soap12:operation soapAction="WebService/GetInspectInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetFlag">
+      <soap12:operation soapAction="WebService/SetFlag" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetFlag_New">
+      <soap12:operation soapAction="WebService/SetFlag_New" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetBackResult">
+      <soap12:operation soapAction="WebService/SetBackResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoBasic">
+      <soap12:operation soapAction="WebService/GetPatiInfoBasic" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInVisitInfo">
+      <soap12:operation soapAction="WebService/GetPatiInVisitInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInDiag">
+      <soap12:operation soapAction="WebService/GetPatiInDiag" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInID">
+      <soap12:operation soapAction="WebService/GetPatiInID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrgList">
+      <soap12:operation soapAction="WebService/GetPatiInOrgList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInBedList">
+      <soap12:operation soapAction="WebService/GetPatiInBedList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmployeeInfo">
+      <soap12:operation soapAction="WebService/GetEmployeeInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBedInfo">
+      <soap12:operation soapAction="WebService/GetBedInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllEmp">
+      <soap12:operation soapAction="WebService/GetAllEmp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiPastInfo">
+      <soap12:operation soapAction="WebService/GetPatiPastInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiOutDiag">
+      <soap12:operation soapAction="WebService/GetPatiOutDiag" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDiagLocRelation">
+      <soap12:operation soapAction="WebService/GetDiagLocRelation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDiagLoc">
+      <soap12:operation soapAction="WebService/GetDiagLoc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSurgery">
+      <soap12:operation soapAction="WebService/GetSurgery" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBedAndLoc">
+      <soap12:operation soapAction="WebService/GetBedAndLoc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBillItemCateID">
+      <soap12:operation soapAction="WebService/GetBillItemCateID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrder">
+      <soap12:operation soapAction="WebService/GetPatiInOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrder_2">
+      <soap12:operation soapAction="WebService/GetPatiInOrder_2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrderItem">
+      <soap12:operation soapAction="WebService/GetPatiInOrderItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrderApply">
+      <soap12:operation soapAction="WebService/GetPatiInOrderApply" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCardNoByInPatiID">
+      <soap12:operation soapAction="WebService/GetCardNoByInPatiID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOperLimit">
+      <soap12:operation soapAction="WebService/GetOperLimit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetICDcode">
+      <soap12:operation soapAction="WebService/GetICDcode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInOrderTime">
+      <soap12:operation soapAction="WebService/GetPatiInOrderTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCateID">
+      <soap12:operation soapAction="WebService/GetCateID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCompleteWebURL">
+      <soap12:operation soapAction="WebService/SetCompleteWebURL" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDictOrdID">
+      <soap12:operation soapAction="WebService/GetDictOrdID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoByOrg">
+      <soap12:operation soapAction="WebService/GetPatiInfoByOrg" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoByOrgs">
+      <soap12:operation soapAction="WebService/GetPatiInfoByOrgs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AutoGetECGOrds">
+      <soap12:operation soapAction="WebService/AutoGetECGOrds" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetOrdStatusFlag">
+      <soap12:operation soapAction="WebService/SetOrdStatusFlag" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResultByDictOrder">
+      <soap12:operation soapAction="WebService/GetResultByDictOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDictOrder">
+      <soap12:operation soapAction="WebService/GetDictOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidEmpPassword">
+      <soap12:operation soapAction="WebService/ValidEmpPassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmpType">
+      <soap12:operation soapAction="WebService/GetEmpType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderByDict">
+      <soap12:operation soapAction="WebService/CreateOrderByDict" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInPatiInfo">
+      <soap12:operation soapAction="WebService/GetInPatiInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLeavePatiInfo">
+      <soap12:operation soapAction="WebService/GetLeavePatiInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInHospPatiBillInfo">
+      <soap12:operation soapAction="WebService/GetInHospPatiBillInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResourceOrg">
+      <soap12:operation soapAction="WebService/GetResourceOrg" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResourceEmp">
+      <soap12:operation soapAction="WebService/GetResourceEmp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidEncryptPassword">
+      <soap12:operation soapAction="WebService/ValidEncryptPassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCardLeftAmount">
+      <soap12:operation soapAction="WebService/GetCardLeftAmount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrgID">
+      <soap12:operation soapAction="WebService/GetOrgID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDoctorID">
+      <soap12:operation soapAction="WebService/GetDoctorID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InitOutVisit">
+      <soap12:operation soapAction="WebService/InitOutVisit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDoctorVisitInfo">
+      <soap12:operation soapAction="WebService/GetDoctorVisitInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHisCurDate">
+      <soap12:operation soapAction="WebService/GetHisCurDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPauseDoctor">
+      <soap12:operation soapAction="WebService/GetPauseDoctor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVisitListByCardNo">
+      <soap12:operation soapAction="WebService/GetVisitListByCardNo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveVisit">
+      <soap12:operation soapAction="WebService/SaveVisit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveVisitResult">
+      <soap12:operation soapAction="WebService/SaveVisitResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancVisit">
+      <soap12:operation soapAction="WebService/CancVisit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancVisitResult">
+      <soap12:operation soapAction="WebService/CancVisitResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCardPassword">
+      <soap12:operation soapAction="WebService/UpdateCardPassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPatiInfoDetail">
+      <soap12:operation soapAction="WebService/GetPatiInfoDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInPatiStatus">
+      <soap12:operation soapAction="WebService/GetInPatiStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPatiOrderSwitch">
+      <soap12:operation soapAction="WebService/SetPatiOrderSwitch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPatiPathWay">
+      <soap12:operation soapAction="WebService/SetPatiPathWay" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDoctorRes">
+      <soap12:operation soapAction="WebService/GetDoctorRes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOutVisitInfo">
+      <soap12:operation soapAction="WebService/GetOutVisitInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOutVisitInfoNew">
+      <soap12:operation soapAction="WebService/GetOutVisitInfoNew" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugInfo">
+      <soap12:operation soapAction="WebService/GetDrugInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNotDrugInfo">
+      <soap12:operation soapAction="WebService/GetNotDrugInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInPatiTypeOrder">
+      <soap12:operation soapAction="WebService/GetInPatiTypeOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderOutInfo">
+      <soap12:operation soapAction="WebService/GetOrderOutInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="http://194.1.9.243/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="http://194.1.9.243/Service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
