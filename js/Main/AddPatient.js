@@ -42,7 +42,7 @@ function Init() {
             $(this).css("background", "white");
         }
     });
-    $("#radionumber").bind("input propertychange", function () {
+    $("#radionumber").blur(function () {
         var isradio1 = isradio();
         if (isradio1==0) {
             $(this).css("background", "yellow");
@@ -483,6 +483,9 @@ function loadCity(regionId, province) {
 
 function loadArea(regionId, city) {
     $("#Address_city").val(city);
+    if ($("#Address_province").val() == $("#Address_city").val()) {
+        $("#Address_city").val("");
+    }
     $("#address-title").find("li").each(function(index, element){
         if (index == 2) {
             $(this).find("a").click();
@@ -503,6 +506,9 @@ function loadArea(regionId, city) {
 
 function loadAddress(area) {
     $("#Address_area").val(area);
+    if ($("#Address_city").val() == $("#Address_area").val()) {
+        $("#Address_area").val("");
+    }
     $("#Address").val($("#Address_province").val() + $("#Address_city").val() + $("#Address_area").val());
     $("#addressArea").remove();
     $("#Address").focus();

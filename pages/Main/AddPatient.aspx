@@ -275,23 +275,23 @@
                             <div class="item col-xs-5"> 
                                 <span class="form-text col-xs-4" style="padding-left:0px;">性别：</span>
                                 <select id="Gender" name="Gender" class="form-item">
-                                    <option value="male">男</option>
-                                    <option value="female">女</option>
+                                    <option value="M">男</option>
+                                    <option value="F">女</option>
                                 </select>
                             </div>
                             <div class="col-xs-5">
-                                <span class="form-text col-xs-4">出生日期：</span>
-                                <input class="form-item" id="Birthday" name="Birthday"type="text" disabled="disabled"/>
+                                <span class="form-text col-xs-4">身份证号：</span>
+                                <input id="IDcardNumber"  name="IDcardNumber" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
                             </div>
                         </div>
                         <div class="single-row">
                             <div class="col-xs-5">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">民族：</span>
-                                <input id="Nation" value="汉" name="Nation"  class="form-item" type="text" AUTOCOMPLETE="OFF" />
+                                <input id="Nation" value="汉族" name="Nation"  class="form-item" type="text" AUTOCOMPLETE="OFF" />
                             </div>
                             <div class="col-xs-5">
-                                <span class="form-text col-xs-4">身份证号：</span>
-                                <input id="IDcardNumber"  name="IDcardNumber" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
+                                <span class="form-text col-xs-4">出生日期：</span>
+                                <input class="form-item" id="Birthday" name="Birthday" type="text" readonly="readonly"/>
                             </div>
                         </div>
                         <div id="ChooseAddress" class="single-row">
@@ -429,7 +429,7 @@
 <script>
     $("#addpatient-content").css("minHeight", $(document).height() - 101);
     $("#choosepatient-content").css("minHeight", $(document).height() - 101);
-    $("#Birthday").datepicker({ autoclose: true });
+    //$("#Birthday").datepicker({ autoclose: true });
 </script>
 </body>
 </html>
