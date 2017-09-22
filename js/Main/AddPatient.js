@@ -483,7 +483,7 @@ function loadCity(regionId, province) {
 
 function loadArea(regionId, city) {
     $("#Address_city").val(city);
-    if ($("#Address_province").val() == $("#Address_city").val()) {
+    if ($("#Address_province").val() == $("#Address_city").val() || $("#Address_city").val() == "市辖区" || $("#Address_city").val() == "县"  || $("#Address_city").val()== "省直辖行政单位"   || $("#Address_city").val()=="省直辖县级行政单位") {
         $("#Address_city").val("");
     }
     $("#address-title").find("li").each(function(index, element){
@@ -506,7 +506,7 @@ function loadArea(regionId, city) {
 
 function loadAddress(area) {
     $("#Address_area").val(area);
-    if ($("#Address_city").val() == $("#Address_area").val()) {
+    if ($("#Address_city").val() == $("#Address_area").val() || $("#Address_province").val() == $("#Address_area").val()) {
         $("#Address_area").val("");
     }
     $("#Address").val($("#Address_province").val() + $("#Address_city").val() + $("#Address_area").val());
