@@ -119,6 +119,25 @@
     overflow: hidden;
 }
 
+.addressPicker {
+    position: absolute;
+    float: left;
+    background-color: #fff;
+    border: 1px solid #AAAAAA;
+    box-shadow: 2px 2px 1px #888888;
+    z-index: 2;
+}
+
+.single-choice {
+    margin: 3px 8px 5px 8px;
+    color: #444444;
+    display: inline-block;
+}
+
+.single-choice :hover {
+    color: #007ACC;
+}
+
 .file {
     position: relative;
     display: inline-block;

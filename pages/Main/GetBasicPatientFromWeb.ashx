@@ -76,9 +76,9 @@ public class GetBasicPatientFromWeb : IHttpHandler {
         {
             simpleaddress = "";
         }
-        StringBuilder backText = new StringBuilder("{\"Item\":[");
+        StringBuilder backText = new StringBuilder("{\"Item\":");
         backText.Append("{\"name\":\"" + name + "\",\"sexid\":\"" + sexid + "\",\"birthdate\":\"" + birthdate + "\",\"simpleaddress\":\"" + simpleaddress + "\",\"nation\":\"" + nation + "\",\"telenumber\":\"" + telenumber + "\",\"telenumber2\":\"" + telenumber2+ "\"}");
-        backText.Append("]}");
+        backText.Append("}");
 
         return backText.ToString();
      

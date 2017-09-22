@@ -91,7 +91,7 @@ public class Addpatient : IHttpHandler {
             sqlOperation.AddParameterWithValue("@Birthday", context.Request.Form["Birthday"]);
             sqlOperation.AddParameterWithValue("@Age", Convert.ToInt32(DateTime.Now.Year.ToString()) - Convert.ToInt32(context.Request.Form["Birthday"].Substring(0, 4)));
             sqlOperation.AddParameterWithValue("@Nation", context.Request.Form["Nation"]);
-            sqlOperation.AddParameterWithValue("@Address", context.Request.Form["provSelect_text"] + context.Request.Form["citySelect_text"] + context.Request.Form["areaSelect_text"] + context.Request.Form["addressmore"]);
+            sqlOperation.AddParameterWithValue("@Address", context.Request.Form["Address"]);
             sqlOperation.AddParameterWithValue("@Contact1", context.Request.Form["Number1"]);
             sqlOperation.AddParameterWithValue("@Contact2", context.Request.Form["Number2"]);
             sqlOperation.AddParameterWithValue("@Height", context.Request.Form["height"]);

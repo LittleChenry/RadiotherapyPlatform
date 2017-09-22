@@ -24,7 +24,6 @@ function Init() {
     document.getElementById("userID").value = userID;
     document.getElementById("operate").innerHTML = userName;
     document.getElementById("date").innerHTML = getNowFormatDate();
-    loadProvince('');
     var $radio1 = $('input[name="RecordNumber"]:eq(0)');
     var $radio2 = $('input[name="RecordNumber"]:eq(1)');
     $radio2.bind('click', function () {
@@ -60,7 +59,44 @@ function Init() {
         }
     });
     $("#sync").bind("click", Sync);
+    $("#selectAddress").bind("click",SelectAddress);
     $("#IDcardNumber").bind("input propertychange", getBirthdate);
+}
+
+function SelectAddress() {
+    var position = $("#Address").offset();
+    var pickerTop = position.top + 29;
+    var pickerLeft = position.left;
+    var pickerWidth = $("#Address").width() + 9;
+    var addressArea = "<div id='addressArea' class='addressPicker'>" +
+        "<div class='nav-tabs-custom' style='margin-bottom:0px;'>" +
+        "<ul id='address-title' class='nav nav-tabs' style='font-size:16px;'>" +
+        "<li class='active'><a href='#tab_province' data-toggle='tab' aria-expanded='true'>省份</a></li>" +
+        "<li class=''><a href='#tab_city' data-toggle='tab' aria-expanded='false'>城市</a></li>" +
+        "<li class=''><a href='#tab_area' data-toggle='tab' aria-expanded='false'>县区</a></li>" +
+        "<li class='pull-right'><a id='close-picker' href='javascript:;' class='text-muted'><i class='fa fa-fw fa-remove'></i></a></li>" +
+        "</ul>" +
+        "<div class='tab-content'>" +
+        "<div class='tab-pane active' id='tab_province'></div>" +
+        "<div class='tab-pane' id='tab_city'></div>" +
+        "<div class='tab-pane' id='tab_area'></div>" +
+        "</div></div></div>";
+    $("#ChooseAddress").append(addressArea);
+    $("#close-picker").bind("click", function(){
+        $("#addressArea").remove();
+        $("#Address").focus();
+    });
+    window.onresize=function(){
+        var position = $("#Address").offset();
+        var pickerTop = position.top + 29;
+        var pickerLeft = position.left;
+        var pickerWidth = $("#Address").width() + 9;
+        $("#addressArea").offset({top:pickerTop, left:pickerLeft});
+        $("#addressArea").width(pickerWidth);
+    };
+    $("#addressArea").offset({top:pickerTop, left:pickerLeft});
+    $("#addressArea").width(pickerWidth);
+    loadProvince('');
 }
 
 function Sync() {
@@ -77,16 +113,18 @@ function Sync() {
             dateType: "xml",
             async: false,
             success: function (data) {
-                var name = $(data).find("patient").children("name").text();
-                var sex = $(data).find("patient").children("sex").text();
-                var birthdate = $(data).find("patient").children("birthdate").text();
-                $("#userName").val(name);
-                $("#Birthday").val(birthdate);
-                if (sex == "男") {
-                    $("#male").attr("checked","checked");
+                var patientInfo = $.parseJSON(data);
+                $("#userName").val(patientInfo.Item.name);
+                if (patientInfo.Item.sexid == 1) {
+                    $("#sex").val("male");
                 }else{
-                    $("#female").attr("checked","checked");
+                    $("#sex").val("female");
                 }
+                $("#Birthday").val(patientInfo.Item.birthdate);
+                $("#Nation").val(patientInfo.Item.nation);
+                $("#Number1").val(patientInfo.Item.telenumber);
+                $("#Number2").val(patientInfo.Item.telenumber2);
+                $("#Address").val(patientInfo.Item.simpleaddress);
             },
             error: function (e) { 
                 alert("error");
@@ -103,8 +141,6 @@ function getBirthdate() {
         var day = IDcardNumber.substring(12,14);
         var birthdate = year + "-" + month + "-" + day;
         $("#Birthday").val(birthdate);
-    }else{
-        $("#Birthday").val("");
     }
 }
 
@@ -256,18 +292,12 @@ function CheckEmpty() {
     if (document.getElementById("Birthday").value == "") {
         window.alert("出生日期不能为空");
         return;
+    }
 
-    }   
-    if (document.getElementById("id_provSelect").value == "" || document.getElementById("id_citySelect").value == "" || document.getElementById("id_areaSelect").value == "") {
-        window.alert("地址不能为空");
+    if (document.getElementById("Address").value == "") {
+        window.alert("家庭地址不能为空");
         return;
     }
-    var sel1 = document.getElementById("id_provSelect");
-    document.getElementById('provSelect_text').value = sel1.options[sel1.selectedIndex].text;
-    var sel2 = document.getElementById("id_citySelect");
-    document.getElementById('citySelect_text').value = sel2.options[sel2.selectedIndex].text;
-    var sel3 = document.getElementById("id_areaSelect");
-    document.getElementById('areaSelect_text').value = sel3.options[sel3.selectedIndex].text;
     if (document.getElementById("Number1").value == "") {
         window.alert("电话1不能为空");
         return;
@@ -308,8 +338,14 @@ function CheckEmpty() {
         contentType: false,
         async: false,
         success: function (data) {
-            alert("注册成功");
-            window.location.reload();
+            if (data == "success") {
+                alert("注册成功");
+                window.location.reload();
+            } else {
+                alert("注册失败");
+                return false;
+            }
+           
         },
         error: function (e) {
             window.location.href = "../Records/Error.aspx";
@@ -411,52 +447,63 @@ function isCardNo() {
 }
 
 function loadProvince(regionId) {
-    $("#id_provSelect").html("");
-    $("#id_provSelect").append("<option value=''>请选择省份</option>");
+    $("#tab_province").html("");
+    $("#tab_city").html("");
+    $("#tab_area").html("");
     var jsonStr = getAddress(regionId, 0);
+    var provinces = "<div>";
     for (var k in jsonStr) {
-        $("#id_provSelect").append("<option value='" + k + "'>" + jsonStr[k] + "</option>");
+        var singleProvince = "<a class='single-choice' href='javascript:;' onclick='loadCity(" + k + ",\"" + jsonStr[k] + "\")'>" + jsonStr[k] +"</a>";
+        provinces += singleProvince;
     }
-    if (regionId.length != 6) {
-        $("#id_citySelect").html("");
-        $("#id_citySelect").append("<option value=''>请选择城市</option>");
-        $("#id_areaSelect").html("");
-        $("#id_areaSelect").append("<option value=''>请选择区域</option>");
-    } else {
-        $("#id_provSelect").val(regionId.substring(0, 2) + "0000");
-        loadCity(regionId);
-    }
+    provinces += "</div>";
+    $("#tab_province").append(provinces);
 }
 
-function loadCity(regionId) {
-    $("#id_citySelect").html("");
-    $("#id_citySelect").append("<option value=''>请选择城市</option>");
-    if (regionId.length != 6) {
-        $("#id_areaSelect").html("");
-        $("#id_areaSelect").append("<option value=''>请选择区域</option>");
-    } else {
-        var jsonStr = getAddress(regionId, 1);
-        for (var k in jsonStr) {
-            $("#id_citySelect").append("<option value='" + k + "'>" + jsonStr[k] + "</option>");
+function loadCity(regionId, province) {
+    $("#Address_province").val(province);
+    $("#address-title").find("li").each(function(index, element){
+        if (index == 1) {
+            $(this).find("a").click();
         }
-        if (regionId.substring(2, 6) == "0000") {
-            $("#id_areaSelect").html("");
-            $("#id_areaSelect").append("<option value=''>请选择区域</option>");
-        } else {
-            $("#id_citySelect").val(regionId.substring(0, 4) + "00");
-            loadArea(regionId);
-        }
+    });
+    $("#Address").val($("#Address_province").val());
+    $("#tab_city").html("");
+    $("#tab_area").html("");
+    regionId = regionId + "";
+    var jsonStr = getAddress(regionId, 1);
+    var cities = "<div>";
+    for (var k in jsonStr) {
+        var singleCity = "<a class='single-choice' href='javascript:;' onclick='loadArea(" + k + ",\"" + jsonStr[k] + "\")'>" + jsonStr[k] +"</a>";
+        cities += singleCity;
     }
+    cities += "</div>";
+    $("#tab_city").append(cities);
 }
 
-function loadArea(regionId) {
-    $("#id_areaSelect").html("");
-    $("#id_areaSelect").append("<option value=''>请选择区域</option>");
-    if (regionId.length == 6) {
-        var jsonStr = getAddress(regionId, 2);
-        for (var k in jsonStr) {
-            $("#id_areaSelect").append("<option value='" + k + "'>" + jsonStr[k] + "</option>");
+function loadArea(regionId, city) {
+    $("#Address_city").val(city);
+    $("#address-title").find("li").each(function(index, element){
+        if (index == 2) {
+            $(this).find("a").click();
         }
-        if (regionId.substring(4, 6) != "00") { $("#id_areaSelect").val(regionId); }
+    });
+    $("#Address").val($("#Address_province").val() + $("#Address_city").val());
+    $("#tab_area").html("");
+    regionId = regionId + "";
+    var jsonStr = getAddress(regionId, 2);
+    var areas = "<div>";
+    for (var k in jsonStr) {
+        var singleArea = "<a class='single-choice' href='javascript:;' onclick='loadAddress(\"" + jsonStr[k] + "\")'>" + jsonStr[k] +"</a>";
+        areas += singleArea;
     }
+    areas += "</div>";
+    $("#tab_area").append(areas);
+}
+
+function loadAddress(area) {
+    $("#Address_area").val(area);
+    $("#Address").val($("#Address_province").val() + $("#Address_city").val() + $("#Address_area").val());
+    $("#addressArea").remove();
+    $("#Address").focus();
 }

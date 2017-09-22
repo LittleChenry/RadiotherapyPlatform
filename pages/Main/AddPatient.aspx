@@ -263,33 +263,21 @@
                         <div class="single-row">
                             <div class="col-xs-5">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">就诊卡号：</span>
-                                <input id="CardID" name="CardID" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
+                                <input id="CardID" name="CardID" class="form-item" type="text" AUTOCOMPLETE="OFF" style="width:37%;"/>
+                                <button id="sync" type="button" class="btn btn-info btn-sm btn-flat" style="margin-left:-1px;margin-top:-3px;">HIS同步</button>
                             </div>
                             <div class="col-xs-5">
-                                <button id="sync" type="button" class="btn btn-info">HIS同步</button>
-                            </div>
-                        </div>
-                        <div class="single-row">
-                            <div class="col-xs-5">
-                                <span class="form-text col-xs-4" style="padding-left:0px;">姓名：</span>
+                                <span class="form-text col-xs-4">姓名：</span>
                                 <input id="userName" name="userName" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
                             </div>
-                            <div class="item col-xs-5"> 
-                                <span class="col-xs-4">性别：</span>
-                                <span class="col-xs-4" style="padding-left:0px;">
-                                    <input type="radio" name="Gender" id="male" value="M" />
-                                    <label for="male" style="font-weight:400">男</label>
-                                </span>
-                                <span class="col-xs-4" style="padding-left:0px;">
-                                    <input type="radio" name="Gender" id="female" value="F" />
-                                    <label for="female" style="font-weight:400">女</label>
-                                </span>
-                            </div>
                         </div>
                         <div class="single-row">
-                            <div class="col-xs-5">
-                                <span class="form-text col-xs-4" style="padding-left:0px;">民族：</span>
-                                <input id="Nation" value="汉" name="Nation"  class="form-item" type="text" AUTOCOMPLETE="OFF" />
+                            <div class="item col-xs-5"> 
+                                <span class="form-text col-xs-4" style="padding-left:0px;">性别：</span>
+                                <select id="Gender" name="Gender" class="form-item">
+                                    <option value="male">男</option>
+                                    <option value="female">女</option>
+                                </select>
                             </div>
                             <div class="col-xs-5">
                                 <span class="form-text col-xs-4">出生日期：</span>
@@ -298,31 +286,22 @@
                         </div>
                         <div class="single-row">
                             <div class="col-xs-5">
-                                <span class="form-text col-xs-4" style="padding-left:0px;">身份证号：</span>
+                                <span class="form-text col-xs-4" style="padding-left:0px;">民族：</span>
+                                <input id="Nation" value="汉" name="Nation"  class="form-item" type="text" AUTOCOMPLETE="OFF" />
+                            </div>
+                            <div class="col-xs-5">
+                                <span class="form-text col-xs-4">身份证号：</span>
                                 <input id="IDcardNumber"  name="IDcardNumber" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
                             </div>
                         </div>
-                        <div class="single-row">
+                        <div id="ChooseAddress" class="single-row">
                             <div class="col-xs-10">
-                                <span class="form-text col-xs-2" style="padding-left:0px;width:120.2px;">地址：</span>
-                                <select id="id_provSelect"  class="form-item col-xs-3" name="provSelect" onChange="loadCity(this.value);" style="width:196.4px;">
-                                    <option value="">请选择省份</option>
-                                </select>
-                                <select id="id_citySelect" class="form-item col-xs-3" name="citySelect" onChange="loadArea(this.value);" style="width:196.4px;">
-                                    <option value="">请选择城市</option>
-                                </select>
-                                <select id="id_areaSelect" class="form-item col-xs-3" name="areaSelect" style="width:196.4px;">
-                                    <option value="">请选择区域</option>
-                                </select>
-                            </div>
-                            <input type="hidden" name="provSelect_text" id="provSelect_text" />
-                            <input type="hidden" name="citySelect_text" id="citySelect_text" />
-                            <input type="hidden" name="areaSelect_text" id="areaSelect_text" />
-                        </div>
-                        <div class="single-row">
-                            <div class="col-xs-10">
-                                <span class="form-text col-xs-2" style="padding-left:0px;width:120.2px;">详细地址：</span>
-                                <input id="addressmore" name="addressmore" class="form-item" type="text" AUTOCOMPLETE="OFF" style="width:52%;"/>
+                                <span class="form-text col-xs-2" style="padding-left:0px;width:16%;">家庭住址：</span>
+                                <input type="text" id="Address" name="Address" class="form-item"/>
+                                <input type="hidden" id="Address_province" />
+                                <input type="hidden" id="Address_city" />
+                                <input type="hidden" id="Address_area" />
+                                <a id="selectAddress" href="javasscript:;" style="font-size:18px;"><i class="fa fa-fw fa-map-marker"></i></a>
                             </div>
                         </div>
                         <div class="single-row">
