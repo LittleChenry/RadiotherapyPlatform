@@ -34,8 +34,13 @@ public class getallfieldinfo : IHttpHandler {
         string countcommand = "select count(*) from fieldinfomation where treatmentid=@treatmentid ";
         sqlOperation.AddParameterWithValue("@treatmentid", treatid);
         int count = int.Parse(sqlOperation.ExecuteScalar(countcommand));
+        string countcommand1 = "select TPS from treatment where ID=@treatmentid ";
+        string tps =sqlOperation.ExecuteScalar(countcommand1);
+        string countcommand2 = "select positioninfomation from treatment where ID=@treatmentid ";
+        string pos =sqlOperation.ExecuteScalar(countcommand2);
         string sqlCommand = "SELECT code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber from fieldinfomation  where treatmentid=@treatmentid ";
-        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        sqlOperation1.AddParameterWithValue("@treatmentid", treatid);
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation1.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 0;
         while (reader.Read())
@@ -43,7 +48,7 @@ public class getallfieldinfo : IHttpHandler {
 
 
             backText.Append("{\"code\":\"" + reader["code"].ToString() + "\",\"mu\":\"" + reader["mu"].ToString() + "\",\"equipment\":\"" + reader["equipment"].ToString() + "\",\"radiotechnique\":\"" + reader["radiotechnique"].ToString() + "\",\"radiotype\":\"" + reader["radiotype"].ToString() + "\",\"energy\":\"" + reader["energy"].ToString() + "\",\"wavedistance\":\"" + reader["wavedistance"].ToString() +
-                "\",\"angleframe\":\"" + reader["angleframe"].ToString() + "\",\"noseangle\":\"" + reader["noseangle"].ToString() + "\",\"bedrotation\":\"" + reader["bedrotation"].ToString() + "\",\"subfieldnumber\":\"" + reader["subfieldnumber"].ToString() + "\"}");
+                "\",\"angleframe\":\"" + reader["angleframe"].ToString() + "\",\"noseangle\":\"" + reader["noseangle"].ToString() + "\",\"bedrotation\":\"" + reader["bedrotation"].ToString() + "\",\"subfieldnumber\":\"" + reader["subfieldnumber"].ToString() + "\",\"tps\":\"" + tps + "\",\"pos\":\"" + pos + "\"}");
             if (i < count - 1)
             {
                 backText.Append(",");

@@ -25,12 +25,13 @@
 <body style="width:auto;min-width:900px;margin:auto;">
    <section class="content">
         <div class="paper" id="needPrint">
-            <form id="saveDesignSubmit" method="post" runat="server">
+            <form id="saveField" method="post" runat="server">
                 <input type="hidden" name="ispostback" value="true" />             
                 <input type="hidden"  id="hidetreatID" name="hidetreatID" />
                 <input type="hidden"  id="userID" name="userID" />
                 <input type="hidden" id="diaguserid" name="diaguserid" />              
                 <input type="hidden" id="progress" />
+                <input type="hidden" id="aa" name="aa"/>
             <div class="paper-title" >
                  辅助信息导入
             </div>
@@ -72,13 +73,13 @@
                     </div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">tps：<span id="tps" class="underline"></span></div>
-                    <div class="item col-xs-4">总剂量：<span id="total" class="underline"></span></div>
-                    <div class="item col-xs-4">分次剂量：<span id="Graded" class="underline"></span></div>
+                    <div class="item col-xs-4">tps：<input id="tps" name="tps" /></div>
+                    <div class="item col-xs-4">总剂量：<input id="total" name="total" /></div>
+                    <div class="item col-xs-4">分次剂量：<input id="Graded" name="Graded" /></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">射野总数：<span id="fieldTimes" class="underline"></span></div>
-                    <div class="item col-xs-4">摆位信息：<span id="pos" class="underline"></span></div>
+                    <div class="item col-xs-4">射野总数：<input id="fieldTimes" name="fieldTimes" /></div>
+                    <div class="item col-xs-4">摆位信息：<input id="pos" name="pos" /></div>
                    
                 </div>
                 <div class="single-row">
