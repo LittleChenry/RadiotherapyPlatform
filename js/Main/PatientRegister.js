@@ -1014,7 +1014,7 @@ function checkAddTreatment(Radiotherapy_ID) {
     });
     var functions = window.parent.functions;
     for (var i = 0; i < functions.length; i++) {
-        if (functions[i].toString() == "18") {
+        if (functions[i].toString() == "17") {
             $("#addTreatment").removeAttr("disabled");
             $("#addTreatment").nextAll().each(function(){
                 $(this).removeAttr("disabled");
