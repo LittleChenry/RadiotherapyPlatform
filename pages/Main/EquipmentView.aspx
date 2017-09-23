@@ -395,7 +395,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th class="noborder">
-                                                        <select id="allowNext" name="allowNext">
+                                                        <select id="allowNext" class="form-item" name="allowNext">
                                                             <option value="afternoon">下午结束时间</option>
                                                             <option value="nextday">次日凌晨结束</option>
                                                         </select>

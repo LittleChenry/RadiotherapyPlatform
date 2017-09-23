@@ -458,13 +458,34 @@ function loadProvince(regionId) {
     $("#tab_city").html("");
     $("#tab_area").html("");
     var jsonStr = getAddress(regionId, 0);
-    var provinces = "<div>";
+    var provincesA2G = "<div><div class='letter-area'>A - G</div><div>";
+    var provincesH2K = "<div><div class='letter-area'>H - K</div><div>";
+    var provincesL2S = "<div><div class='letter-area'>L - S</div><div>";
+    var provincesT2Z = "<div><div class='letter-area'>T - Z</div><div>";
     for (var k in jsonStr) {
-        var singleProvince = "<a class='single-choice' href='javascript:;' onclick='loadCity(" + k + ",\"" + jsonStr[k] + "\")'>" + jsonStr[k] +"</a>";
-        provinces += singleProvince;
+        var singleProvince = "<a class='single-choice' href='javascript:;' onclick='loadCity(" + k + ",\"" + jsonStr[k].Name + "\")'>" + jsonStr[k].Name +"</a>";
+        var ASCII = jsonStr[k].Character.charCodeAt();
+        if (ASCII >= 65 && ASCII <= 71) {
+            provincesA2G += singleProvince;
+        }
+        if (ASCII >= 72 && ASCII <= 75) {
+            provincesH2K += singleProvince;
+        }
+        if (ASCII >= 76 && ASCII <= 83) {
+            provincesL2S += singleProvince;
+        }
+        if (ASCII >= 84 && ASCII <= 90) {
+            provincesT2Z += singleProvince;
+        }
     }
-    provinces += "</div>";
-    $("#tab_province").append(provinces);
+    provincesA2G += "</div>";
+    provincesH2K += "</div>";
+    provincesL2S += "</div>";
+    provincesT2Z += "</div>";
+    $("#tab_province").append(provincesA2G);
+    $("#tab_province").append(provincesH2K);
+    $("#tab_province").append(provincesL2S);
+    $("#tab_province").append(provincesT2Z);
 }
 
 function loadCity(regionId, province) {

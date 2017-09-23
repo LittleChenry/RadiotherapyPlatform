@@ -4,9 +4,10 @@ function getAddress(regionId,type) {
 	var obj = address['0'];
 	var len = obj.length;
 	for(var i=0; i<len; i++) {
-		var key = obj[i][0];
-		var value = obj[i][1];
-		array[key] = value;
+	    var key = obj[i][0];
+	    var value1 = obj[i][1];
+	    var value2 = obj[i][2];
+	    array[key] = {Name:value1,Character:value2};
 	}
   } else if(type==1) {//市级列表
 	var str = regionId.substring(0,2);

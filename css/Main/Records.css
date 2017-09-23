@@ -138,6 +138,11 @@
     color: #3C62BC;
 }
 
+.letter-area {
+    font-size: 16px;
+    padding: 4px 3px 0px 3px;
+}
+
 .file {
     position: relative;
     display: inline-block;
