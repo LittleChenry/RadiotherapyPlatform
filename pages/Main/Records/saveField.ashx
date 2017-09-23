@@ -70,13 +70,18 @@ public class saveField : IHttpHandler {
             string progress1 = sqlOperation.ExecuteScalar(select1);
             string[] group = progress1.Split(',');
             bool exists = ((IList)group).Contains("11");
-            //if (!exists)
-            //{
+            if (exists)
+            {
+                string delete = "delete from fieldinfomation where treatmentid=@treatmentid";
+                sqlOperation1.AddParameterWithValue("@treatmentid", treatID);
+                sqlOperation.ExecuteNonQuery(delete);
+            }
+            
                 int intSuccess = 0;
                 for (int i = 0; i < a; i++)
                 {
-                    string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid) " +
-                                            "VALUES(@code,@mu,@equipment,@radiotechnique,@radiotype,@energy,@wavedistance,@angleframe,@noseangle,@bedrotation,@subfieldnumber,@User_ID,@Operate_Time,@treatmentid)";
+                    string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid,Singledose,Totaldose) " +
+                                            "VALUES(@code,@mu,@equipment,@radiotechnique,@radiotype,@energy,@wavedistance,@angleframe,@noseangle,@bedrotation,@subfieldnumber,@User_ID,@Operate_Time,@treatmentid,@Singledose,@Totaldose)";
                     // sqlOperation.AddParameterWithValue("@ID", Count);
                     sqlOperation.AddParameterWithValue("@code", context.Request.Form["a1"+i]);
                     sqlOperation.AddParameterWithValue("@mu", context.Request.Form["mu"+i]);
@@ -89,6 +94,8 @@ public class saveField : IHttpHandler {
                     sqlOperation.AddParameterWithValue("@noseangle", context.Request.Form["jtj" + i]);
                     sqlOperation.AddParameterWithValue("@bedrotation", context.Request.Form["czj" + i]);
                     sqlOperation.AddParameterWithValue("@subfieldnumber", context.Request.Form["childs" + i]);
+                    sqlOperation.AddParameterWithValue("@Singledose", Convert.ToInt32(context.Request.Form["Graded"]));
+                    sqlOperation.AddParameterWithValue("@Totaldose", Convert.ToInt32(context.Request.Form["total"]));
                     sqlOperation.AddParameterWithValue("@Operate_Time", date1);
                     sqlOperation.AddParameterWithValue("@treatmentid", treatID);
                     sqlOperation.AddParameterWithValue("@User_ID", userid);
@@ -98,16 +105,33 @@ public class saveField : IHttpHandler {
                 string select = "select Progress from treatment where ID=@treat";
                 sqlOperation.AddParameterWithValue("@treat", treatID);
                 string progress = sqlOperation.ExecuteScalar(select);
-
+                string common = "select iscommon from treatment where ID=@treat";
+                int iscommon = Convert.ToInt32(sqlOperation.ExecuteScalar(common));
                 int Success = 0;
-
-                string inserttreat = "update treatment set Progress=@progress,TPS=@TPS,positioninfomation=@positioninfomation where ID=@treat";
-                sqlOperation2.AddParameterWithValue("@progress", progress + ",11");
-                sqlOperation2.AddParameterWithValue("@TPS", context.Request.Form["tps"]);
-                sqlOperation2.AddParameterWithValue("@positioninfomation", context.Request.Form["pos"]);
-                sqlOperation2.AddParameterWithValue("@treat", treatID);
-                Success = sqlOperation2.ExecuteNonQuery(inserttreat);
-
+                if (!exists)
+                {
+                    string inserttreat = "update treatment set Progress=@progress,TPS=@TPS,positioninfomation=@positioninfomation where ID=@treat";
+                    if (iscommon == 1)
+                    {
+                        sqlOperation2.AddParameterWithValue("@progress", progress + ",11");
+                    }
+                    else
+                    {
+                        sqlOperation2.AddParameterWithValue("@progress", progress + ",11,12");
+                    }
+                    sqlOperation2.AddParameterWithValue("@TPS", context.Request.Form["tps"]);
+                    sqlOperation2.AddParameterWithValue("@positioninfomation", context.Request.Form["pos"]);
+                    sqlOperation2.AddParameterWithValue("@treat", treatID);
+                    Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+                }
+                else
+                {
+                    string inserttreat = "update treatment set TPS=@TPS,positioninfomation=@positioninfomation where ID=@treat";                   
+                    sqlOperation2.AddParameterWithValue("@TPS", context.Request.Form["tps"]);
+                    sqlOperation2.AddParameterWithValue("@positioninfomation", context.Request.Form["pos"]);
+                    sqlOperation2.AddParameterWithValue("@treat", treatID);
+                    Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+                }
                 if (intSuccess > 0 && Success > 0)
                 {
                     return "success";
@@ -116,31 +140,7 @@ public class saveField : IHttpHandler {
                 {
                     return "failure";
                 }
-            //}
-            //else
-            //{
-            //    string select = "select design.ID from treatment,design where treatment.ID=@treat and design.ID=treatment.Design_ID";
-            //    sqlOperation.AddParameterWithValue("@treat", treatID);
-            //    string design = sqlOperation.ExecuteScalar(select);
-            //    string strSqlCommand = "update Design set RadiotherapyHistory=@RadiotherapyHistory,DosagePriority=@DosagePriority,Technology_ID=@Technology_ID,Equipment_ID=@Equipment_ID,Application_User_ID=@Application_User_ID,ApplicationTime=@ApplicationTime where design.ID=@designid"; 
-            //    // sqlOperation.AddParameterWithValue("@ID", Count);
-            //    sqlOperation.AddParameterWithValue("@designid", Convert.ToInt32(design));
-            //    sqlOperation.AddParameterWithValue("@RadiotherapyHistory", context.Request.Form["Remarks"]);
-            //    sqlOperation.AddParameterWithValue("@Technology_ID", Convert.ToInt32(context.Request.Form["technology"]));
-            //    sqlOperation.AddParameterWithValue("@Equipment_ID", Convert.ToInt32(context.Request.Form["equipment"]));
-            //    sqlOperation.AddParameterWithValue("@DosagePriority", DosagePriority);
-            //    sqlOperation.AddParameterWithValue("@ApplicationTime", date1);
-            //    sqlOperation.AddParameterWithValue("@Application_User_ID", userid);
-            //    int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-            //    if (intSuccess > 0)
-            //    {
-            //        return "success";
-            //    }
-            //    else
-            //    {
-            //        return "failure";
-            //    }
-            //}
+           
         }
         catch (System.Exception Ex1)
         {

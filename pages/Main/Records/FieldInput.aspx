@@ -69,17 +69,17 @@
                         </div>
                     </div>
                     <div class="col-xs-6">
-                        <button class="btn btn-success" id="sure" type="button"><i class="fa fa-fw fa-reply-all"></i>导入</button>
+                        <button class="btn btn-success" id="sure" type="button" disabled="disabled"><i class="fa fa-fw fa-reply-all"></i>导入</button>
                     </div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">tps：<input id="tps" name="tps" /></div>
-                    <div class="item col-xs-4">总剂量：<input id="total" name="total" /></div>
-                    <div class="item col-xs-4">分次剂量：<input id="Graded" name="Graded" /></div>
+                    <div class="item col-xs-4">tps：<input id="tps" name="tps" disabled="disabled"/></div>
+                    <div class="item col-xs-4">总剂量：<input id="total" name="total" disabled="disabled"/></div>
+                    <div class="item col-xs-4">分次剂量：<input id="Graded" name="Graded" disabled="disabled"/></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">射野总数：<input id="fieldTimes" name="fieldTimes" /></div>
-                    <div class="item col-xs-4">摆位信息：<input id="pos" name="pos" /></div>
+                    <div class="item col-xs-4">射野总数：<input id="fieldTimes" name="fieldTimes" disabled="disabled"/></div>
+                    <div class="item col-xs-4">摆位信息：<input id="pos" name="pos" disabled="disabled"/></div>
                    
                 </div>
                 <div class="single-row">
@@ -104,7 +104,7 @@
                                     <th>床转交</th>
                                     <th>子野数</th>
                                     <th style="text-align: center;">
-                                        <a href="javascript:addField();"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
+                                        <a id="add" href="javascript:;"><i class="fa fa-fw fa-plus-circle" style="font-size:18px;"></i></a>
                                     </th>
                                 </tr>
                             </thead>

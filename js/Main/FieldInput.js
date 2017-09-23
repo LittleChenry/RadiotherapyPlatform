@@ -39,7 +39,14 @@ function Init(evt) {
         var fildinfo = getfieldinfo();
         document.getElementById("tps").value = fildinfo[0].tps;
         document.getElementById("pos").value = fildinfo[0].pos;
+        document.getElementById("Graded").value = fildinfo[0].Singledose;
+        document.getElementById("total").value = fildinfo[0].Totaldose;
+        document.getElementById("applyuser").innerHTML = fildinfo[0].Name;
+        document.getElementById("time").innerHTML = fildinfo[0].time;
         readField(fildinfo);
+    } else {
+        document.getElementById("applyuser").innerHTML = userName;
+        document.getElementById("time").innerHTML = getNowFormatDate();
     }
 }
 $(".file").on("change", "input[type='file']", function () {
@@ -48,6 +55,27 @@ $(".file").on("change", "input[type='file']", function () {
     fileName=arr[arr.length-1];
     $("#filename").val(fileName);
 })
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var min = date.getMinutes();
+    if (min < 10) {
+        min = "0" + min;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + min;
+
+    return currentdate;
+}
 function isInArray(arr, value) {
     for (var i = 0; i < arr.length; i++) {
         if (value === arr[i]) {
@@ -169,6 +197,10 @@ $(function () {
             contentType: false,
             success: function (data) {
                 var data = $.parseJSON(data);
+                //if (document.getElementById("radiotherapy").innerHTML != data.information[0].id) {
+                //    alert("文件选择错误");
+                //    return false;
+                //}
                 createInformation(data.information);
                 creaetField(data.details);
             }
@@ -176,9 +208,8 @@ $(function () {
     });
 });
 function createInformation(data) {
-    
-    document.getElementById("tps").value = data[0].tps;   
-    
+   
+    document.getElementById("tps").value = data[0].tps;       
     document.getElementById("Graded").value = data[0].once;
     document.getElementById("fieldTimes").value = data[0].fieldTimes;
     document.getElementById("pos").value = data[0].pos;
@@ -389,4 +420,27 @@ function save() {
         }
     });
 }
-function remove() { }
+function remove() {
+    document.getElementById("sure").removeAttribute("disabled");
+    document.getElementById("tps").removeAttribute("disabled");
+    document.getElementById("total").removeAttribute("disabled");
+    document.getElementById("Graded").removeAttribute("disabled");
+    document.getElementById("fieldTimes").removeAttribute("disabled");
+    document.getElementById("pos").removeAttribute("disabled");
+    $("#add").attr("href", "javascript:addField()");
+    if (aa > 0) {
+        for (var i = 0; i < aa; i++) {
+            document.getElementById("a1"+i).removeAttribute("disabled");
+            document.getElementById("mu"+i).removeAttribute("disabled");
+            document.getElementById("equipment"+i).removeAttribute("disabled");
+            document.getElementById("technology"+i).removeAttribute("disabled");
+            document.getElementById("type"+i).removeAttribute("disabled");
+            document.getElementById("energyField"+i).removeAttribute("disabled");
+            document.getElementById("ypj"+i).removeAttribute("disabled");
+            document.getElementById("jjj"+i).removeAttribute("disabled");
+            document.getElementById("jtj"+i).removeAttribute("disabled");
+            document.getElementById("czj"+i).removeAttribute("disabled");
+            document.getElementById("childs"+i).removeAttribute("disabled");
+        }
+    }
+}
