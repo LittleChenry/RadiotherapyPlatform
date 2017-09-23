@@ -82,10 +82,10 @@ function Init(evt) {
         $("#fieldinfo").hide();
     } else {
         var table = $("#Field");
-        for (var k = 1; k < fildinfo.length; k++) {
+        for (var k = 0; k < fildinfo.length; k++) {
             var content = '<tr><td>' + fildinfo[k].code + '</td><td>' + fildinfo[k].mu + '</td><td>' + fildinfo[k].equipment + '</td><td>' + fildinfo[k].radiotechnique;
-            content = content + '</td><td>' + fildinfo[k].radiotype + '</td><td>' + fildinfo[k].energy + '</td><td>' + fildinfo[k].wavedistance + + '</td><td>' + fildinfo[k].angleframe;
-            content = content + '</td><td>' + fildinfo[k].noseangle + '</td><td>' + fildinfo[k].bedrotation + '</td><td>' + fildinfo[k].subfieldnumber + + '</td></tr>';
+            content = content + '</td><td>' + fildinfo[k].radiotype + '</td><td>' + fildinfo[k].energy + '</td><td>' + fildinfo[k].wavedistance  + '</td><td>' + fildinfo[k].angleframe;
+            content = content + '</td><td>' + fildinfo[k].noseangle + '</td><td>' + fildinfo[k].bedrotation + '</td><td>' + fildinfo[k].subfieldnumber + '</td></tr>';
             table.append(content);
         }
 
@@ -162,11 +162,14 @@ function Init(evt) {
         document.getElementById("treatdays").innerHTML = dis;
         document.getElementById("treattimes").innerHTML = parseInt(treatconfirm.finishedtimes) + 1;
         document.getElementById("treatnumber").innerHTML = treatconfirm.IlluminatedNumber;
-        document.getElementById("machinenumber").innerHTML = treatconfirm.MachineNumbe;
-        document.getElementById("singlenumber").innerHTML = treatconfirm.DosagePriority;
-        document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.DosagePriority)*(parseInt(treatconfirm.finishedtimes)+1);
+        document.getElementById("machinenumber").value = treatconfirm.MachineNumbe;
+        document.getElementById("singlenumber").value = treatconfirm.DosagePriority;
+        document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.addosage) + parseInt(treatconfirm.DosagePriority);
         document.getElementById("chief").innerHTML = userName;
         document.getElementById("assist").innerHTML = session.assistant;
+        $("#singlenumber").bind('input propertychange', function () {
+            document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.addosage) + parseInt(document.getElementById("singlenumber").value);
+        });
     }
     if (totalnumber!="") {
         document.getElementById("totalnumber").value = parseInt(totalnumber);
@@ -187,6 +190,14 @@ function Init(evt) {
 
     $("#confirm").click(function ()
     {
+        if (document.getElementById("singlenumber").value == "") {
+            alert("单次剂量不为空");
+            return;
+        }
+        if (document.getElementById("machinenumber").value == "") {
+            alert("机器跳数不为空");
+            return;
+        }
         var allfirstnumber = parseInt(getallfirst(treatmentID));
         if (!((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber == "")){
             alert("请预约完所有加速治疗再进行治疗");
@@ -205,6 +216,9 @@ function Init(evt) {
                         appoint: appointid,
                         treatdays: dis,
                         patientid: patient.ID,
+                        singlenumber: document.getElementById("singlenumber").value,
+                        machinenumber: document.getElementById("machinenumber").value,
+                        IlluminatedNumber: document.getElementById("treatnumber").innerHTML,
                         remark: document.getElementById("remarks").value
                     },
                     dateType: "json",
@@ -259,8 +273,13 @@ function Init(evt) {
             alert("没有选择协助操作者");
         }
     });
-    var type = geteuqipmenttype(treatmentID);
-    createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator",type);
+    if (iscommon == "1") {
+        var type = geteuqipmenttype(treatmentID);
+        createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator", type);
+    } else {
+        createfixEquipmachine1(document.getElementById("equipmentName"), "Accelerator");
+
+    }
     var date = new Date();
     document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     $("#rest").unbind("click").bind("click", function () {
@@ -623,7 +642,24 @@ function createfixEquipmachine(thiselement, item,type) {
         }
     }
 }
-
+function createfixEquipmachine1(thiselement, item) {
+    var machineItem = JSON.parse(getmachineItem1(item)).Item;
+    thiselement.options.length = 0;
+    for (var i = 0; i < machineItem.length; i++) {
+        if (machineItem[i] != "") {
+            thiselement.options[i] = new Option(machineItem[i].Name);
+            thiselement.options[i].value = parseInt(machineItem[i].ID);
+        }
+    }
+}
+function getmachineItem1(item) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getfixmachine.ashx?item=" + item;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
+}
 function getmachineItem(item, type) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getaccermachine.ashx?item=" + item + "&type=" + type;
@@ -926,12 +962,14 @@ function CreateNewAppiontTable() {
     var AppiontDate = document.getElementById("AppiontDate");
     if (!compareWithToday(AppiontDate.value)) {
         alert("不能选择小于当天的日期");
+        document.getElementById("chooseProject").removeAttribute("disabled");
         $("#loading").hide();
         return;
     }
     var isweek = new Date(AppiontDate.value).getDay();
     if (isweek == 0 || isweek == 6) {
         alert("不能选择周六日作为起始天");
+        document.getElementById("chooseProject").removeAttribute("disabled");
         $("#loading").hide();
         return;
     }

@@ -110,8 +110,14 @@ function Init(evt) {
         document.getElementById("date").innerHTML = info.ApplyTime;
 
     } else {
-           var type  = geteuqipmenttype(treatmentID);
-          createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2], type);
+        if (iscommon == "1") {
+            var type = geteuqipmenttype(treatmentID);
+            createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2], type);
+        } else {
+            createfixEquipmachine1(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
+
+        }
+          
           var info = getfirstaccelerateInfomation(treatmentID);
           if ((typeof (info) != "undefined")) {
               if (parseInt(toTime(info.End).split(":")[0]) >= 24) {
@@ -181,6 +187,24 @@ function geteuqipmenttype(treatmentID) {
     var Items = xmlHttp.responseText;
     return Items;
 
+}
+function createfixEquipmachine1(thiselement, item) {
+    var machineItem = JSON.parse(getmachineItem1(item)).Item;
+    thiselement.options.length = 0;
+    for (var i = 0; i < machineItem.length; i++) {
+        if (machineItem[i] != "") {
+            thiselement.options[i] = new Option(machineItem[i].Name);
+            thiselement.options[i].value = parseInt(machineItem[i].ID);
+        }
+    }
+}
+function getmachineItem1(item) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getfixmachine.ashx?item=" + item;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
 }
 function createSplitway(thiselement) {
     var getsplitwayItem = JSON.parse(getsplitway()).Item;
@@ -436,7 +460,6 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                 td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
             }
             if (equiment[i].State == "0") {
-                if (getReplace(equiment[i], dateString)) {
                     if (compareWithToday(dateString)) {
                     sign.className = "";
                     td.addEventListener("click", chooseItem, false);
@@ -445,11 +468,7 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                         sign.className = "fa fa-fw fa-ban td-sign";
                         td.addEventListener("click", hasChosen, false);
                     }
-                } else {
-                    td.style.backgroundColor = "#C1C1C1";
-                    sign.className = "fa fa-fw fa-exclamation-circle";
-                    td.addEventListener("click", hasChosen, false);
-                }
+               
             } else {
                 td.style.backgroundColor = "#C1C1C1";
                 sign.className = "fa fa-fw fa-ban td-sign";

@@ -63,7 +63,7 @@ function createPatient(evt) {
                 if (diagnosisInfo.diagnosisInfo[i].iscommonnumber == "1") {
                     $('input[name="patientjudge"]:eq(0)').prop('checked', true);
                 } else {
-                    $('input[name="patientjudge"]:eq(1)').prop('disabled', true);
+                    $('input[name="patientjudge"]:eq(1)').prop('checked', true);
                 }
                 if (diagnosisInfo.diagnosisInfo[i].userID == userID) {
                     window.parent.document.getElementById("edit").removeAttribute("disabled");
