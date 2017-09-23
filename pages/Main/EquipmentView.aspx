@@ -3,28 +3,37 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!--Tell the brower to be responsive to screen width -->
-    <meta content="Width=device-width, initial-scale=1, maxmum-scale=1, user-scalable=no" name="viewport" />
-    <link rel="stylesheet" href="../../css/Main/Records.css"/>
-    <!--Boostrap -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css" />
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css" />
-    <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datepicker/datepicker3.css"/>
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css" />
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css" />
-    <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css" />
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>放疗质控系统</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+  <!-- css -->
+  <link rel="stylesheet" href="../../css/Main/Records.css"/>
+  <link rel="stylesheet" href="../../css/Root/equipment.css" />
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css"/>
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css" />
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css"/>
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css"/>
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css"/>
 
-    <!-- Main Css -->
-    <link rel="stylesheet" href="../../css/Main/main.css" />
-    <title>设备预约管理</title>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
 <div class="wrapper">
@@ -168,8 +177,8 @@
                         <span>患者汇总</span>
                     </a>
                 </li>
-                <li class="active treeview">
-                    <a href="EquipmentView.aspx">
+                <li class="treeview">
+                    <a href="EquipmentAppointment.aspx">
                         <i class="fa fa-clock-o"></i>
                         <span>设备预约管理</span>
                     </a>
@@ -186,10 +195,10 @@
                         <span>通知公告</span>
                     </a>
                 </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-edit"></i>
-                        <span>计划</span>
+                <li class="active treeview">
+                    <a id="Menu-EquipmentView"  href="EquipmentView.aspx">
+                        <i class="fa fa-briefcase"></i>
+                        <span>设备管理</span>
                     </a>
                 </li>
                 <li class="treeview">
@@ -219,126 +228,214 @@
             </ul>
         </section>
     </aside>
+
     <div class="content-wrapper">
         <section class="content-header">
             <h1>设备预约管理</h1>
         </section>
         <section class="content">
+            <input id="type" type="hidden" value="Root" />
             <div class="row">
-                <div class="col-md-3">
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">选择设备</h3>
+                <form id="frm" runat="server">
+                    <asp:ObjectDataSource ID="equipmentObjectDataSource" runat="server" SelectMethod="Select" TypeName="equipment" OnDeleting="equipmentObjectDataSource_Deleting" DeleteMethod="Delete">
+                        <DeleteParameters>
+                            <asp:Parameter Name="id" Type="String" />
+                        </DeleteParameters>
+                        <SelectParameters>
+                            <asp:FormParameter DefaultValue="allEquipment" FormField="equipState" Name="state" Type="String" />
+                            <asp:FormParameter DefaultValue="allItem" FormField="TreatmentItem" Name="item" Type="String" />
+                        </SelectParameters>
+                    </asp:ObjectDataSource>
+                    <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
+                    <div class="col-xs-12 search">
+                        <div class="col-xs-4">
+                            <select id="equipState" class="form-control" name="equipState" style="width:60%;">
+                                    <option value="allEquipment">全部设备</option>
+                                    <option value="1">可用设备</option>
+                                    <option value="2">检查中设备</option>
+                                    <option value="3">维修中设备</option>
+                                </select>
                         </div>
-                        <div class="box-body">
-                            <strong><i class="fa fa-book margin-r-5"></i> 选择项目</strong>
-                            <select id="equipmentType" class="form-control"></select>
-                            <hr>
-                            <strong><i class="fa fa-fw fa-dashboard"></i> 选择设备</strong>
-                            <select id="equipment" class="form-control"></select>
+                        <div class="col-xs-4">
+                            <select id="TreatmentItem" class="form-control" name="TreatmentItem" style="width:60%;">                
+                            </select>
                         </div>
-                        <div class="box-footer">
-                            <button id="sureEquipment" class="btn btn-primary pull-right" type="button">查询<i class="fa fa-fw fa-search"></i></button>
-                        </div>
-                    </div>
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">设备详情</h3>
-                        </div>
-                        <div class="box-body">
-                            <strong><i class="fa fa-fw fa-info-circle"></i> 设备信息</strong>
-                            <div>
-                                <p id="EquipmentInfo" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
-                            </div>
-                            <hr>
-                            <strong><i class="fa fa-fw fa-unlock-alt"></i> 状态</strong>
-                            <div>
-                                <p id="EquipmentState" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
-                            </div>
-                            <hr>
-                            <strong><i class="fa fa-fw fa-clock-o"></i> 工作时间</strong>
-                            <div>
-                                <p id="EquipmentTime" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
-                            </div>
+                        <div class="col-xs-4" style="padding-left:0px;">
+                            <input class="btn btn-primary" type="submit" value="查询" id="searchButton" />
                         </div>
                     </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#patientView" data-toggle="tab">患者视图</a></li>
-                            <li><a href="#appointView" data-toggle="tab">预约视图</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="active tab-pane" id="patientView" style="overflow:hidden;">
-                                <div class="col-md-6">
-                                    <table id="viewPatients" class="table" style="text-align:center;">
-                                        <thead>
-                                            <tr>
-                                                <th>疗程号</th>
-                                                <th>姓名</th>
-                                                <th>疗程</th>
-                                                <th>诊断结果</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
+                    <div class="col-xs-12" id="gridContent">
+                        <div class="box box-primary">
+                            <asp:GridView ID="equipmentGridView" runat="server" AllowPaging="True" PageSize="8" AutoGenerateColumns="False" CssClass="table table-bordered" DataSourceID="equipmentObjectDataSource">
+                                <PagerSettings Mode="NextPreviousFirstLast" FirstPageText="首页" LastPageText="末页" NextPageText="下一页" PreviousPageText="上一页" />
+                                <Columns>
+                                    <asp:BoundField DataField="Name" HeaderText="设备名" />
+                                    <asp:TemplateField HeaderText="设备状态">
+                                        <EditItemTemplate>
+                                            <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("State") %>'></asp:TextBox>
+                                        </EditItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="Label1" runat="server" Text='<%# GetState(Eval("State")) %>'></asp:Label>
+                                            <asp:HiddenField Value='<%# Eval("ID") %>' ID="equipmentID" runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="Timelength" HeaderText="一次治疗时间" />
+                                    <asp:TemplateField HeaderText="上午起始时间">
+                                        <EditItemTemplate>
+                                            <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("BeginTimeAM") %>'></asp:TextBox>
+                                        </EditItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="Label2" runat="server" Text='<%# GetTime(Eval("BeginTimeAM"))%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="上午结束时间">
+                                        <EditItemTemplate>
+                                            <asp:TextBox ID="TextBox3" runat="server" Text='<%# Bind("EndTimeAM") %>'></asp:TextBox>
+                                        </EditItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="Label3" runat="server" Text='<%# GetTime(Eval("EndTimeAM"))%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="下午起始时间">
+                                        <EditItemTemplate>
+                                            <asp:TextBox ID="TextBox4" runat="server" Text='<%# Bind("BegTimePM") %>'></asp:TextBox>
+                                        </EditItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="Label4" runat="server" Text='<%# GetTime(Eval("BegTimePM"))%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="下午结束时间">
+                                        <EditItemTemplate>
+                                            <asp:TextBox ID="TextBox5" runat="server" Text='<%# Bind("EndTimeTPM") %>'></asp:TextBox>
+                                        </EditItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="Label5" runat="server" Text='<%# GetTime(Eval("EndTimeTPM"))%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="设备类型">
+                                        <EditItemTemplate>
+                                            <asp:TextBox ID="TextBox6" runat="server" Text='<%# Bind("Type") %>'></asp:TextBox>
+                                        </EditItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="Label6" runat="server" Text='<%# Bind("Type") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="TreatmentItem" HeaderText="隶属治疗项目" />
+                                    <asp:TemplateField HeaderText="编辑设备" ShowHeader="False">
+                                        <ItemTemplate>
+                                            <a href="#" class="selectedUpdate btn btn-default" data-toggle="modal" data-target="#addEquipment">选择</a>
+                                            <input type="hidden" value='<%# Eval("ID") %>' />
+                                            <input type="hidden" value='<%# equipmentGridView.PageIndex %>' />
+                                            <input type="hidden" value='<%# Eval("EquipmentType") %>' />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                                <RowStyle HorizontalAlign="Center" />
+                            </asp:GridView>
+                        </div>
+                    </div>
+                </form>
+                <input id="insert" type="button" value="新增设备" class="btn btn-primary" data-toggle="modal" data-target="#addEquipment" style="display:none;"/>
+                <div id="addEquipment" class="modal fade" tabindex="-1" role="dialog">
+                    <form id="changefrm" method="post" action="Root-equipment.aspx">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">编辑设备信息</h4>
                                 </div>
-                                <div class="col-md-6">
-                                    <table id="viewAppoints" class="table" style="text-align:center;">
-                                        <thead>
-                                            <tr>
-                                                <th>预约项目</th>
-                                                <th>预约时间</th>
-                                                <th>是否完成</th>
-                                                <th>操作</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
+                                <div class="modal-body">
+                                    <label id="error"></label>
+                                    <div class="form-group">
+                                        <input type="hidden" id="equipID" name="equipID" />
+                                        <input type="hidden" id="currentPage" name="currentPage" />
+                                        <input type="hidden" name="ispostback" value="true" />
+                                        <input type="hidden" name="formType" value="" id="formType" />
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="noborder"><label for="equipmentName" class="height">设备名</label></th>
+                                                    <td>
+                                                        <input id="equipmentName" name="equipmentName" type="text" class="form-control controlHeight IsEmpty" placeholder="请输入设备名" />
+                                                    </td>                                           
+                                                </tr>
+                                                <tr>
+                                                    <th class="noborder"><label for="equipmentState" class="height">设备状态</label></th>
+                                                    <td>
+                                                        <select id="equipmentState" name="equipmentState" class="form-control">
+                                                            <option value="1">可用</option>
+                                                            <option value="2">检查中</option>
+                                                            <option value="3">维修中</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="noborder"><label for="onceTime" class="height">一次治疗时间</label></th>
+                                                    <td>
+                                                        <input type="text" id="onceTime" name="onceTime" class="form-control controlHeight OnceTreatment" placeholder="请输入一次治疗时间(单位分钟)" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="noborder"><label for="AMBeg" class="height">上午开始时间</label></th>
+                                                    <td>
+                                                        <input type="text" id="AMbeg" name="AMbeg" class="form-control controlHeight Time" placeholder="请输入上午开始使用设备时间" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="noborder"><label for="AMEnd" class="height">上午结束时间</label></th>
+                                                    <td>
+                                                        <input type="text" id="AMEnd" name="AMEnd" class="form-control controlHeight Time AMEnd" placeholder="请输入上午结束使用设备时间" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="noborder"><label for="PMBeg" class="height">下午开始时间</label></th>
+                                                    <td>
+                                                        <input type="text" id="PMBeg" name="PMBeg" class="form-control controlHeight Time" placeholder="请输入下午开始使用设备时间" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="noborder">
+                                                        <select id="allowNext" name="allowNext">
+                                                            <option value="afternoon">下午结束时间</option>
+                                                            <option value="nextday">次日凌晨结束</option>
+                                                        </select>
+                                                    </th>
+                                                    <td>
+                                                        <input type="text" id="PMEnd" name="PMEnd" class="form-control controlHeight Time PMEnd" placeholder="请输入下午结束使用设备时间" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="noborder"><label for="equipementType" class="height">设备类型</label></th>
+                                                    <td>
+                                                        <select id="equipmentType" class="form-control" name="equipmentType"></select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="noborder"><label for="changeTreatmentItem" class="height">隶属项目</label></th>
+                                                    <td>
+                                                        <select id="changeTreatmentItem" name="changeTreatmentItem" class="form-control treatItem">                
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane" id="appointView" style="overflow:hidden;">
-                                <div class="col-md-12">
-                                    <table id="appointTable" class="table table-bordered table-hover dataTable">
-                                        <thead id="thead"></thead>
-                                        <tbody id="tbody"></tbody>
-                                    </table>
+                                <div class="modal-footer">
+                                    <div class="col-xs-6" style="text-align:center;">
+                                        <input class="btn btn-default" id="Button1" type="button" value="取消" data-dismiss="modal" aria-label="Close" />
+                                    </div>
+                                    <div class="col-xs-6" style="text-align:center;">
+                                        <input class="btn btn-primary" type="submit" value="提交" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </section>
     </div>
-    <div id="changeAppoint" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document" style="width:700px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">修改预约时间</h4>
-                </div>
-                <div class="modal-body" style="overflow:hidden;">
-                    <div class="panel-row">
-                        <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
-                        <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
-                        <div class="col-xs-2">
-                            <button id="chooseProject" class="btn btn-default">查询该项</button>
-                        </div>
-                    </div>
-                    <div class="panel-row">
-                        <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal">取消</button>
-                    <button class="btn btn-primary" id="sure" type="button" data-dismiss="modal">确定</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.0
@@ -350,30 +447,30 @@
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="../../plugin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
-<!-- bootstrap datepicker -->
-<script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- DataTables -->
 <script src="../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- SlimScroll -->
 <script src="../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="../../plugin/AdminLTE/plugins/fastclick/fastclick.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="../../plugin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="../../plugin/AdminLTE/plugins/iCheck/icheck.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../plugin/AdminLTE/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
-<!-- Main javascript -->
-<script src="../../js/Main/HeaderOperate.js"></script>
-<script src="../../js/Main/AppiontmentViewJS.js"></script>
+<!-- Main js-->
+<script src="../../js/Root/RootMainJS.js"></script>
+<!-- Main JavaScript -->
+<script src="../../js/Root/equipment.js"></script>
 <script src="../../js/Main/EquipmentView.js"></script>
-<script>
-    $(".nav-tabs-custom").css("minHeight", $(document).height() - 200);
-    $("#AppiontDate").datepicker({ autoclose: true });
-</script>
+    
 </body>
 </html>

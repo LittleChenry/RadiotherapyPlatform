@@ -176,7 +176,7 @@
                     </a>
                 </li>
                 <li class="treeview">
-                    <a href="EquipmentView.aspx">
+                    <a href="EquipmentAppointment.aspx">
                         <i class="fa fa-clock-o"></i>
                         <span>设备预约管理</span>
                     </a>
@@ -194,9 +194,9 @@
                     </a>
                 </li>
                 <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-edit"></i>
-                        <span>计划</span>
+                    <a id="Menu-EquipmentView"  href="EquipmentView.aspx">
+                        <i class="fa fa-briefcase"></i>
+                        <span>设备管理</span>
                     </a>
                 </li>
                 <li class="treeview">
@@ -375,7 +375,7 @@
                         <div class="single-row">
                             <div class="col-xs-6">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">放疗号：</span>
-                                <input id="radionumber" name="radionumber" class="form-item" AUTOCOMPLETE="OFF"/>
+                                <input id="radionumber" name="radionumber" class="form-item" placeholder="年份+4位编码，例：20170001" AUTOCOMPLETE="OFF"/>
                             </div>
                         </div>
                     </div>

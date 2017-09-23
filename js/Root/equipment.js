@@ -45,7 +45,7 @@ function createEquipmentType() {
 
 function Refresh(evt) {
     evt.preventDefault();
-    window.location = 'Root-equipment.aspx';
+    window.location.reload();
 }
 
 //创建设备隶属治疗项目下拉菜单
@@ -70,7 +70,7 @@ function createItemSelect(thisElement) {
 //获取当前所有隶属治疗项目
 function getCurrentItem() {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getTreamentItem.ashx";
+    var url = "../../pages/Root/getTreamentItem.ashx";
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     Items = xmlHttp.responseText;
@@ -98,7 +98,7 @@ function EditEquipment(evt) {
 
 function getEquipmentInformation(id) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getEquipmentInformation.ashx?id=" + id;
+    var url = "../../pages/Root/getEquipmentInformation.ashx?id=" + id;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -186,7 +186,7 @@ function checkAll(evt) {
                 } else {
                     alert("更新成功");
                 }
-                window.location.href = "../../pages/Root/Root-equipment.aspx";
+                window.location.reload();
             }
         });
     }

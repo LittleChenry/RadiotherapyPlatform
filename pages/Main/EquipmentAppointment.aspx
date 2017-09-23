@@ -1,36 +1,30 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="NewsList.aspx.cs" Inherits="pages_Main_NewsList" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="EquipmentAppointment.aspx.cs" Inherits="pages_Main_EquipmentAppointment" %>
 
 <!DOCTYPE html>
 
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>放疗质控系统</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css">
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css" />
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--Tell the brower to be responsive to screen width -->
+    <meta content="Width=device-width, initial-scale=1, maxmum-scale=1, user-scalable=no" name="viewport" />
+    <link rel="stylesheet" href="../../css/Main/Records.css"/>
+    <!--Boostrap -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css" />
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datepicker/datepicker3.css"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css" />
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <!-- Main Css -->
+    <link rel="stylesheet" href="../../css/Main/main.css" />
+    <title>设备预约管理</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
 <div class="wrapper">
@@ -174,7 +168,7 @@
                         <span>患者汇总</span>
                     </a>
                 </li>
-                <li class="treeview">
+                <li class="active treeview">
                     <a href="EquipmentAppointment.aspx">
                         <i class="fa fa-clock-o"></i>
                         <span>设备预约管理</span>
@@ -186,14 +180,14 @@
                         <span>患者登记</span>
                     </a>
                 </li>
-                <li class="active treeview">
+                <li class="treeview">
                     <a href="NewsList.aspx?role=<%=((UserInformation)Session["loginUser"]) == null ?  "" : ((UserInformation)Session["loginUser"]).getRoleName() %>">
                         <i class="fa fa-bell-o"></i>
                         <span>通知公告</span>
                     </a>
                 </li>
                 <li class="treeview">
-                    <a id="Menu-EquipmentView" href="EquipmentView.aspx">
+                    <a id="Menu-EquipmentView"  href="EquipmentView.aspx">
                         <i class="fa fa-briefcase"></i>
                         <span>设备管理</span>
                     </a>
@@ -225,39 +219,126 @@
             </ul>
         </section>
     </aside>
-
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>通知公告</h1>
+            <h1>设备预约管理</h1>
         </section>
-        <section id="notice-content" class="content">
-            <input id="type" type="hidden" />
-            <div class="box">
-                <div class="box-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th style="width:4%"></th>
-                                <th style="width:70%">消息标题</th>
-                                <th style="width:13%">发布人</th>
-                                <th style="width:13%">发布时间</th>
-                            </tr>
-                        </thead>
-                        <tbody id="infomanagetable"></tbody>
-                    </table>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">选择设备</h3>
+                        </div>
+                        <div class="box-body">
+                            <strong><i class="fa fa-book margin-r-5"></i> 选择项目</strong>
+                            <select id="equipmentType" class="form-control"></select>
+                            <hr>
+                            <strong><i class="fa fa-fw fa-dashboard"></i> 选择设备</strong>
+                            <select id="equipment" class="form-control"></select>
+                        </div>
+                        <div class="box-footer">
+                            <button id="sureEquipment" class="btn btn-primary pull-right" type="button">查询<i class="fa fa-fw fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">设备详情</h3>
+                        </div>
+                        <div class="box-body">
+                            <strong><i class="fa fa-fw fa-info-circle"></i> 设备信息</strong>
+                            <div>
+                                <p id="EquipmentInfo" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
+                            </div>
+                            <hr>
+                            <strong><i class="fa fa-fw fa-unlock-alt"></i> 状态</strong>
+                            <div>
+                                <p id="EquipmentState" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
+                            </div>
+                            <hr>
+                            <strong><i class="fa fa-fw fa-clock-o"></i> 工作时间</strong>
+                            <div>
+                                <p id="EquipmentTime" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="box-footer">
-                    <div class="table-button pull-right">
-                        <button class="btn btn-primary btn-sm firstpage" id="firstPage">首页</button>
-                        <button class="btn btn-primary btn-sm firstpage" id="previousPage">上一页</button>
-                        <button class="btn btn-primary btn-sm firstpage" id="nextPage">下一页</button>
-                        <button class="btn btn-primary btn-sm firstpage" id="lastPage">尾页</button>
-                        <input type="hidden" id="currentPage" />
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#patientView" data-toggle="tab">患者视图</a></li>
+                            <li><a href="#appointView" data-toggle="tab">预约视图</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="patientView" style="overflow:hidden;">
+                                <div class="col-md-6">
+                                    <table id="viewPatients" class="table" style="text-align:center;">
+                                        <thead>
+                                            <tr>
+                                                <th>疗程号</th>
+                                                <th>姓名</th>
+                                                <th>疗程</th>
+                                                <th>诊断结果</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <table id="viewAppoints" class="table" style="text-align:center;">
+                                        <thead>
+                                            <tr>
+                                                <th>预约项目</th>
+                                                <th>预约时间</th>
+                                                <th>是否完成</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="appointView" style="overflow:hidden;">
+                                <div class="col-md-12">
+                                    <table id="appointTable" class="table table-bordered table-hover dataTable">
+                                        <thead id="thead"></thead>
+                                        <tbody id="tbody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
+    <div id="changeAppoint" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="width:700px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">修改预约时间</h4>
+                </div>
+                <div class="modal-body" style="overflow:hidden;">
+                    <div class="panel-row">
+                        <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
+                        <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                        <div class="col-xs-2">
+                            <button id="chooseProject" class="btn btn-default">查询该项</button>
+                        </div>
+                    </div>
+                    <div class="panel-row">
+                        <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" id="sure" type="button" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.0
@@ -286,8 +367,13 @@
 <script src="../../plugin/AdminLTE/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
-<!-- js -->
-<script src="../../js/Main/newsList.js"></script>
+<!-- Main javascript -->
 <script src="../../js/Main/HeaderOperate.js"></script>
+<script src="../../js/Main/AppiontmentViewJS.js"></script>
+<script src="../../js/Main/EquipmentAppointment.js"></script>
+<script>
+    $(".nav-tabs-custom").css("minHeight", $(document).height() - 200);
+    $("#AppiontDate").datepicker({ autoclose: true });
+</script>
 </body>
 </html>

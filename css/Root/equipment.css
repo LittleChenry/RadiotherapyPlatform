@@ -1,10 +1,7 @@
 ﻿#gridContent {
-    margin-top:6px;
+
 }
 
-#searchButton {
-    margin-left:33.333%;
-}
 #middleArea {
     opacity:0.44;
     filter:alpha(Opacity=44);
@@ -39,4 +36,9 @@
     margin-left:66.66666%;
     padding-left:16.6666667%;
     
+}
+
+.search {
+    margin: 10px 20px;
+    text-align: -webkit-center;
 }

@@ -13,6 +13,13 @@ function Init() {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
+    var session = getSession();
+    if (session.role != "物理师" && session.role != "模拟技师" && session.role != "治疗技师") {
+         $("#Menu-EquipmentView").attr("href", "javascript:;");
+         $("#Menu-EquipmentView").bind("click", function(){
+            alert("权限不够！");
+         });
+    }
     getUserName();
     document.getElementById("save").addEventListener("click", CheckEmpty, false);
     getdoctorandgroup();
@@ -512,4 +519,22 @@ function loadAddress(area) {
     $("#Address").val($("#Address_province").val() + $("#Address_city").val() + $("#Address_area").val());
     $("#addressArea").remove();
     $("#Address").focus();
+}
+
+function getSession() {
+    var Session;
+    $.ajax({
+        type: "GET",
+        url: "../../pages/Main/Records/getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            //alert(data);
+            Session = $.parseJSON(data);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+    return Session;
 }
