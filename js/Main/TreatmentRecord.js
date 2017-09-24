@@ -718,29 +718,39 @@ function CreateCurrentEquipmentTbale(equiment, dateString,times) {
     var equip = equiment.equipmentinfo;
     var length2=equip.length;
     for (var k = 0; k < length2; k++) {
-        var rest = k % length;
-        var $tr = $("#rows_" + rest);
-        if (k < length) {
-            if (equip[k].State == "0") {
-                var date=dataconverse(equip[k].Date);
-                var text = '<td id="' + equip[k].ID +'_'+date+'" onclick="chooseItem(this)"><i></i></td>';
+        var date = dataconverse(equip[k].date);
+        var firstid = parseInt(equip[k].firstid);
+        var group = equip[k].busygroup;
+        for (var rest = 0; rest < length; rest++) {
+            var $tr = $("#rows_" + rest);
+            if (k==0) {
+                if (!contains(firstid,group)) {
+                    var text = '<td id="' + firstid + '_' + date + '" onclick="chooseItem(this)"><i></i></td>';
+                } else {
+                    var text = '<td style="backgroundColor:#C1C1C1" onclick="choosebadItem(this)" id="' + firstid + '_' + date + '">已预约<i class="fa fa-fw fa-ban td-sign"></i></td>';
+                }
             } else {
-                var date = dataconverse(equip[k].Date);
-                var text = '<td style="backgroundColor:#C1C1C1" onclick="choosebadItem(this)" id="' + equip[k].ID + '_' + date + '">已预约<i class="fa fa-fw fa-ban td-sign"></i></td>';
+                if (!contains(firstid, group)) {
+                    var text = '<td id="' + firstid + '_' + date + '" onclick="chooseotherItem(this)"><i></i></td>';
+                } else {
+                    var text = '<td style="backgroundColor:#C1C1C1" onclick="chooseotherItem(this)" id="' + firstid + '_' + date + '">已预约<i class="fa fa-fw fa-ban td-sign"></i></td>';
+                }
             }
-        } else {
-            if (equip[k].State == "0") {
-                var date = dataconverse(equip[k].Date);
-                var text = '<td id="' + equip[k].ID + '_' + date + '" onclick="chooseotherItem(this)"><i></i></td>';
-            } else {
-                var date = dataconverse(equip[k].Date);
-                var text = '<td style="backgroundColor:#C1C1C1" onclick="chooseotherItem(this)" id="' + equip[k].ID + '_' + date + '">已预约<i class="fa fa-fw fa-ban td-sign"></i></td>';
-            }
+            $tr.append(text);
+            firstid++;
         }
-        $tr.append(text);
+
     }
 }
+function contains(firstid, group) {
+    for (var k = 0; k < group.length; k++) {
+        if (parseInt(group[k]) == firstid) {
+            return true;
+        }
+    }
+    return false;
 
+}
 function choosebadItem() {
     alert("此处不能预约");
 }

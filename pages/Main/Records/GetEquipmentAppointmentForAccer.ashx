@@ -24,6 +24,7 @@ public class GetEquipmentAppointmentForAccer : IHttpHandler {
     private string getInformation(HttpContext context)
     {
         DataLayer sqlOperation = new DataLayer("sqlStr");
+        DataLayer sqlOperation2 = new DataLayer("sqlStr");
         string dateorigin = context.Request["date"];
         string equipmentID = context.Request["equipmentID"];
         string alltotal = context.Request["times"];
@@ -59,55 +60,54 @@ public class GetEquipmentAppointmentForAccer : IHttpHandler {
                     }
                     else
                     {
-                        backString.Append("{\"Equipment\":\"false\"}]");
-                        return backString.ToString();//生成不了
+                        return "false";//生成不了
                     }
                 }
                 reader.Close();
             }
-            sqlCommand = "SELECT count(ID) From Appointment WHERE Date=@date AND Equipment_ID=@id";
-            int times = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
-            int currentTimes = 1;
-            sqlCommand = "SELECT * FROM Appointment WHERE Date=@date AND Equipment_ID=@id";
-            reader = sqlOperation.ExecuteReader(sqlCommand);
-            while (reader.Read())
+            string commandfirstID = "select MIN(ID) from appointment where date=@date and Equipment_ID=@id";
+            string firstID = sqlOperation.ExecuteScalar(commandfirstID);
+            string commandbusygroup = "select count(ID) from appointment where date=@date and Equipment_ID=@id and State=1";
+            int countbusy = int.Parse(sqlOperation.ExecuteScalar(commandbusygroup));
+            int m = 0;
+            string commandgroup = "select ID from appointment where date=@date and Equipment_ID=@id and State=1";
+            reader = sqlOperation.ExecuteReader(commandgroup);
+            StringBuilder backString3 = new StringBuilder("[");
+            while(reader.Read())
             {
-                    backString.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"State\":\"" + reader["State"].ToString()+"\",");
-
-                    if (k == 0)
-                    {
-                        backString2.Append("{\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\""
-                           + reader["End"].ToString()+"\"}");
-                    }
-                    DataLayer sqlOperation2 = new DataLayer("sqlStr");
-                    string sqlCommand2 = "SELECT Name FROM equipment WHERE ID=@id";
-                    sqlOperation2.AddParameterWithValue("@id", equipmentID);
-                    string name = sqlOperation2.ExecuteScalar(sqlCommand2);
-                    string patientname = "";
-                    if (reader["Patient_ID"].ToString() != "")
-                    {
-                        string sqlCommandtemp = "SELECT Name FROM patient WHERE ID=@pid";
-                        sqlOperation2.AddParameterWithValue("@pid", reader["Patient_ID"].ToString());
-                        patientname = sqlOperation2.ExecuteScalar(sqlCommandtemp);
-                    }
-                    sqlOperation2.Close();
-                    backString.Append("\"patientname\":\"" + patientname + "\"}");
-                    if (currentTimes < times)
-                    {
-                        backString.Append(",");
-                        if (k == 0)
-                        {
-                            backString2.Append(",");
-                        }
-                    }
-                ++currentTimes;
+                backString3.Append(reader["ID"].ToString());
+                if(m<countbusy-1)
+                {
+                    backString3.Append(",");
+                }
+                
             }
+            backString3.Append("]");
+            backString.Append("{\"date\":\"" + date + "\",\"firstid\":\"" + firstID + "\",\"busygroup\":" + backString3 + "}");
             reader.Close();
             if (k < alltotalnumber-1)
             {
                 backString.Append(",");
             }
         }
+        string commandcount = "SELECT count(ID) From Appointment WHERE Date=@date AND Equipment_ID=@id";
+        sqlOperation2.AddParameterWithValue("@date", dateorigin);
+        sqlOperation2.AddParameterWithValue("@id", equipmentID);
+        int times = int.Parse(sqlOperation2.ExecuteScalar(commandcount));
+        int currentTimes = 1;
+        string commandtime = "SELECT * FROM Appointment WHERE Date=@date AND Equipment_ID=@id";
+        MySql.Data.MySqlClient.MySqlDataReader readertime = sqlOperation2.ExecuteReader(commandtime);
+        while (readertime.Read())
+        {
+            backString2.Append("{\"Begin\":\"" + readertime["Begin"].ToString() + "\",\"End\":\"" + readertime["End"].ToString() + "\"}");
+            if (currentTimes < times)
+            {
+                backString2.Append(",");
+                currentTimes++;
+            }
+            
+        }
+
            backString2.Append("]");
             backString.Append("],");
             backString.Append(backString2);
