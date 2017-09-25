@@ -57,10 +57,10 @@
                     <span>参考信息：</span>
                 </div>  
                 <div class="single-row">
-                    <div class="col-xs-12" style="padding-left:30%;" >
+                    <div class="col-xs-12" style="padding-left:40%;" >
                         <a href="javascript:;"   id="viewpdf"  target="_blank"   class="btn btn-default">查看计划PDF文档</a>
                         <a href="javascript:;"   id="viewpdf2"  target="_blank"   class="btn btn-default">查看复核PDF文档</a>
-                        <button type="button" class="btn btn-default" id="CTpicture" data-toggle="modal" data-target="#ct">查看模拟定位图片</button>
+                      <%--  <button type="button" class="btn btn-default" id="CTpicture" data-toggle="modal" data-target="#ct">查看模拟定位图片</button>--%>
                     </div>
                 </div>
             </div>

@@ -37,27 +37,27 @@ function Init(evt) {
     var i = 0;
     var iscommon = judgecommon(treatmentID);
     if (iscommon == "1") {
-        var replacerecordinfo = getreplacerecordInfo(treatmentID);
-        var boxes = document.getElementById("multipic");
-        var pictures = replacerecordinfo.picture.split(",");
-        if (replacerecordinfo.picture == "") {
-            boxes.innerHTML = "无";
-        } else {
-            for (var k = 1; k < pictures.length; k++) {
-                var div = document.createElement("DIV");
-                div.className = "boxes";
-                var div1 = document.createElement("DIV");
-                div1.className = "imgnum";
-                var img = document.createElement("IMG");
-                img.addEventListener("click", showPicture, false);
-                img.className = "img";
-                img.src = pictures[k];
-                img.style.display = "block";
-                div1.appendChild(img);
-                div.appendChild(div1);
-                boxes.appendChild(div);
-            }
-        }
+        //var replacerecordinfo = getreplacerecordInfo(treatmentID);
+        //var boxes = document.getElementById("multipic");
+        //var pictures = replacerecordinfo.picture.split(",");
+        //if (replacerecordinfo.picture == "") {
+        //    boxes.innerHTML = "无";
+        //} else {
+        //    for (var k = 1; k < pictures.length; k++) {
+        //        var div = document.createElement("DIV");
+        //        div.className = "boxes";
+        //        var div1 = document.createElement("DIV");
+        //        div1.className = "imgnum";
+        //        var img = document.createElement("IMG");
+        //        img.addEventListener("click", showPicture, false);
+        //        img.className = "img";
+        //        img.src = pictures[k];
+        //        img.style.display = "block";
+        //        div1.appendChild(img);
+        //        div.appendChild(div1);
+        //        boxes.appendChild(div);
+        //    }
+        //}
         var designInfo = getDesignInfo(treatmentID);
         readDosagePriority(designInfo[i].DosagePriority);
 
