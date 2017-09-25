@@ -40,7 +40,7 @@ public class patientInfoForWLS : IHttpHandler
     }
     private string getfixrecordinfo(HttpContext context)
     {
-        string sqlCommand = "SELECT count(*) from treatment where Progress like '%10%' and Progress not in(select Progress from treatment where Progress like '%11%')";
+        string sqlCommand = "SELECT count(*) from treatment where Progress like '%11%' and Progress not in(select Progress from treatment where Progress like '%12%')";
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
         if (count == 0)
         {
@@ -48,7 +48,7 @@ public class patientInfoForWLS : IHttpHandler
         }
 
         int i = 1;
-        string sqlCommand2 = "select treatment.State as treatstate,treatment.ID as treatid,patient.*,user.Name as doctor,Progress,iscommon,treatment.Treatmentdescribe,DiagnosisRecord_ID,ConfirmTime from design,treatment,patient,user where design.ID=treatment.Design_ID and patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and Progress like '%10%' and Progress not in(select Progress from treatment where Progress like '%11%') order by patient.ID desc";
+        string sqlCommand2 = "select treatment.State as treatstate,treatment.ID as treatid,patient.*,user.Name as doctor,Progress,iscommon,treatment.Treatmentdescribe,DiagnosisRecord_ID,ConfirmTime from design,treatment,patient,user where design.ID=treatment.Design_ID and patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and Progress like '%11%' and Progress not in(select Progress from treatment where Progress like '%12%') order by patient.ID desc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
 

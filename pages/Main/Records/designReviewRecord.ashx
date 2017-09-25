@@ -173,12 +173,12 @@ public class designReviewRecord : IHttpHandler {
             sqlOperation.AddParameterWithValue("@treat", treatID);
             string progress = sqlOperation.ExecuteScalar(select1);
             string[] group = progress.Split(',');
-            bool exists = ((IList)group).Contains("11");
+            bool exists = ((IList)group).Contains("12");
             int Success = 0;
             if (!exists)
             {
                 string inserttreat = "update treatment set Review_ID=@Design_ID,Progress=@progress where ID=@treat";
-                sqlOperation2.AddParameterWithValue("@progress", progress + ",11");
+                sqlOperation2.AddParameterWithValue("@progress", progress + ",12");
                 sqlOperation2.AddParameterWithValue("@Design_ID", Count);
                 sqlOperation2.AddParameterWithValue("@treat", treatID);
                 Success = sqlOperation2.ExecuteNonQuery(inserttreat);
