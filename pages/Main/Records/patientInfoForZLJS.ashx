@@ -72,7 +72,7 @@ public class patientInfoForZLJS : IHttpHandler {
             int counttemp = int.Parse(sqlOperation.ExecuteScalar(sqlcommand));
             if (counttemp == 0)
             {
-                totaltimes = 0;
+               
                 totalnumber = 0;
             }
             else
@@ -82,16 +82,18 @@ public class patientInfoForZLJS : IHttpHandler {
                 MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(sqlcommand4);
                 while (reader1.Read())
                 {
-                    if (temp == 0)
-                    {
-                        totaltimes = Convert.ToInt32(reader1["TreatedTimes"].ToString()) + Convert.ToInt32(reader1["Rest"].ToString());
-                    }
                     totalnumber = totalnumber + Convert.ToInt32(reader1["Singlenumber"].ToString());
                     temp++;
                 }
                 reader1.Close();
     
             }
+            string sqlcommandtotaltimes = "select TotalNumber from treatment where ID=@treat";
+            string total = sqlOperation.ExecuteScalar(sqlcommandtotaltimes);
+            if (total != "")
+            {
+                totaltimes = int.Parse(total);
+            }            
             string result = "";
             if (reader["DiagnosisRecord_ID"] is DBNull)
             {
