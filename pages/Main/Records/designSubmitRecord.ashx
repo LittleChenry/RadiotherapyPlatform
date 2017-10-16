@@ -93,17 +93,40 @@ public class designSubmitRecord : IHttpHandler {
                 DosagePriority = DosagePriority + type + "," + dv + ",<," + number + "," + outt + "," + prv + "," + num + ",<," + numbers + "," + pp + ";";
                 j++;
             }
-            string strSqlCommand = "UPDATE  design  SET PlanSystem_ID=@PlanSystem_ID,DosagePriority=@DosagePriority,IlluminatedNumber=@IlluminatedNumber,Coplanar=@Coplanar,MachineNumbe=@MachineNumbe,ControlPoint=@ControlPoint,Grid_ID=@Grid_ID,Algorithm_ID=@Algorithm_ID,Feasibility=@Feasibility,SubmitTime=@datetime,Submit_User_ID=@userid where design.ID=@ctID";
+            string lr = "";
+            string rd = "";
+            string eo = "";
+            if (context.Request.Form["left"]=="")
+            {
+                lr = "-"+context.Request.Form["right"];
+            }
+            else
+            {
+                lr = context.Request.Form["left"];
+            }
+            if (context.Request.Form["rise"] == "")
+            {
+                rd = "-" + context.Request.Form["drop"];
+            }
+            else
+            {
+                rd = context.Request.Form["rise"];
+            } 
+            if (context.Request.Form["enter"] == "")
+            {
+                eo = "-" + context.Request.Form["out"];
+            }
+            else
+            {
+                eo = context.Request.Form["enter"];
+            }            
+            string para = lr+";"+rd+";"+eo;
+            string strSqlCommand = "UPDATE  design  SET PlanSystem_ID=@PlanSystem_ID,DosagePriority=@DosagePriority,Equipment_ID=@Equipment_ID,Raytype_ID=@Raytype_ID,parameters=@parameters,SubmitTime=@datetime,Submit_User_ID=@userid where design.ID=@ctID";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@PlanSystem_ID", Convert.ToInt32(context.Request.Form["PlanSystem"]));
-            sqlOperation.AddParameterWithValue("@IlluminatedNumber", context.Request.Form["IlluminatedNumber"]);
-            sqlOperation.AddParameterWithValue("@Coplanar", Convert.ToInt32(context.Request.Form["Coplanar"]));
-            //sqlOperation.AddParameterWithValue("@Remarks", context.Request.Form["Remarks"]);
-            sqlOperation.AddParameterWithValue("@MachineNumbe", context.Request.Form["MachineNumbe"]);
-            sqlOperation.AddParameterWithValue("@ControlPoint", context.Request.Form["ControlPoint"]);
-            sqlOperation.AddParameterWithValue("@Grid_ID", Convert.ToInt32(context.Request.Form["Grid"]));
-            sqlOperation.AddParameterWithValue("@Algorithm_ID", Convert.ToInt32(context.Request.Form["Algorithm"]));
-            sqlOperation.AddParameterWithValue("@Feasibility", Convert.ToInt32(context.Request.Form["Feasibility"]));
+            sqlOperation.AddParameterWithValue("@Equipment_ID", Convert.ToInt32(context.Request.Form["equipment"]));
+            sqlOperation.AddParameterWithValue("@Raytype_ID", Convert.ToInt32(context.Request.Form["Raytype"]));
+            sqlOperation.AddParameterWithValue("@parameters", para);
             sqlOperation.AddParameterWithValue("@datetime", datetime);
             sqlOperation.AddParameterWithValue("@DosagePriority", DosagePriority);
             sqlOperation.AddParameterWithValue("@ctID", designID);

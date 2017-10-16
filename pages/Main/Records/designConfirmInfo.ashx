@@ -52,7 +52,7 @@ public class designConfirmInfo : IHttpHandler {
         sqlOperation.AddParameterWithValue("@patient", patientid);
         int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand5));
         int i = 1;
-        string sqlCommand = "select design.ID as designid,Treatmentname,technology.name as tname,equipmenttype.type as eqname,grid.Name as gridname,algorithm.Name as algorithmname,plansystem.Name as planname,user.Name as doctor,design.* from technology,equipmenttype,design,user,treatment,plansystem,grid,algorithm where grid.ID=design.Grid_ID and plansystem.ID=design.PlanSystem_ID and algorithm.ID=design.Algorithm_ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";
+        string sqlCommand = "select design.ID as designid,Treatmentname,technology.name as tname,equipmenttype.type as eqname,raytype.Name as raytypename,plansystem.Name as planname,user.Name as doctor,design.* from technology,equipmenttype,design,user,treatment,plansystem,raytype where raytype.ID=design.Raytype_ID and plansystem.ID=design.PlanSystem_ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
         StringBuilder backText = new StringBuilder("{\"designInfo\":[");
@@ -103,9 +103,8 @@ public class designConfirmInfo : IHttpHandler {
                  "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"ReceiveUser\":\"" + receiver + "\",\"ReceiveTime\":\"" + date2 + "\",\"SubmitUser\":\"" + submit + "\",\"SubmitTime\":\"" + date4 +
                   "\",\"technology\":\"" + reader["tname"].ToString() + "\",\"equipment\":\"" + reader["eqname"].ToString() + "\",\"PlanSystem\":\"" + reader["planname"].ToString() + "\",\"designID\":\"" + reader["designid"].ToString() +
                   "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() +
-                   "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() +
-                   "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\",\"Grid_ID\":\"" + reader["gridname"].ToString() + "\",\"Algorithm_ID\":\"" + reader["algorithmname"].ToString() +
-                   "\",\"Feasibility\":\"" + reader["Feasibility"].ToString() + "\",\"userID\":\"" + reader["Confirm_User_ID"].ToString() + "\"}");
+                   "\",\"Raytype\":\"" + reader["raytypename"].ToString() +
+                   "\",\"userID\":\"" + reader["Confirm_User_ID"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");

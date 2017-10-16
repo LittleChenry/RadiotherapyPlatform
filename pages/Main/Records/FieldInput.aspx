@@ -57,6 +57,43 @@
             </div>
             <div class="paper-content">
                 <div class="content-title">
+                    <span>计划信息：</span>
+                </div>
+                <div class="single-row">
+                    <div class="item col-xs-6">照射技术：
+                        <select id="Irradiation" name="Irradiation" class="form-item" disabled="disabled"></select>
+                    </div>
+                    <div class="item col-xs-6">能量：
+                        <input id="ener" class="form-item" name="ener" disabled="disabled"/>
+                    </div>                   
+                </div>
+                <div class="single-row">
+                        <div class="item col-xs-6">射野数量：
+                            <input id="IlluminatedNumber" class="form-item" name="IlluminatedNumber" disabled="disabled"/>
+                        </div>
+                       <div class="item col-xs-6">射野角度：
+                           <input id="Illuminatedangle" class="form-item" name="Illuminatedangle" disabled="disabled"/>
+                       </div>                      
+                </div>
+                <div class="single-row">
+                        <div class="item col-xs-6">机器跳数：
+                            <input id="MachineNumbe" class="form-item" name="MachineNumbe" disabled="disabled"/>
+                        </div>
+                        <div class="item col-xs-6">控制点数量：
+                            <input id="ControlPoint" class="form-item" name="ControlPoint" disabled="disabled"/>
+                        </div>
+                </div>
+                <div class="single-row">
+                        <div class="item col-xs-6">非共面照射：
+                           <select id="Coplanar" name="Coplanar" class="form-item" disabled="disabled">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                           </select>
+                        </div>                       
+                </div>
+            </div>
+            <div class="paper-content">
+                <div class="content-title">
                     <span>射野信息：</span>
                 </div>
                 <div class="single-row">

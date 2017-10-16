@@ -117,7 +117,7 @@
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-4">治疗技术：<span id="technology" class="underline"></span></div>
-                    <div class="item col-xs-4">放疗设备：<span id="equipment" class="underline"></span></div>
+                    
                     <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
                 </div>
                 <div class="single-row">
@@ -145,46 +145,49 @@
                             <select id="PlanSystem" name="PlanSystem" class="form-item" disabled="disabled"></select>
                         </div>
                         <div class="col-xs-6">
-                            <span class="form-text col-xs-4">射野数量：</span>
-                            <input id="IlluminatedNumber" step="0.00001" name="IlluminatedNumber" type="number" class="form-item" disabled="disabled"/>
+                            <span class="form-text col-xs-4" >放疗设备：</span>
+                            <select id="equipment" name="equipment" class="form-item" disabled="disabled"></select>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">非共面照射：</span>
-                            <select id="Coplanar" name="Coplanar" class="form-item" disabled="disabled">
-                                <option value="1">是</option>
-                                <option value="0">否</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4">机器跳数：</span>
-                            <input id="MachineNumbe" step="0.00001" name="MachineNumbe" type="number" class="form-item" disabled="disabled"/>
-                        </div>
+                            <span class="form-text col-xs-4" style="padding-left:0px;">射线类型：</span>
+                            <select id="Raytype" name="Raytype" class="form-item" disabled="disabled"></select>
+                        </div>                        
                     </div>
                     <div class="single-row">
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">控制点数量：</span>
-                            <input id="ControlPoint" step="0.00001" name="ControlPoint" type="number" class="form-item" disabled="disabled"/>
-                        </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4">计算网络：</span>
-                            <select id="Grid" name="Grid" class="form-item" disabled="disabled"></select>
-                        </div>
+                       <span>移床参数：</span>
                     </div> 
-                    <div class="single-row">
+                   <div class="single-row">
+                       <div class="col-xs-6">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">左：</span>
+                            <input id="left" name="left" class="form-item" disabled="disabled"/>
+                       </div>
                         <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">优化算法：</span>
-                            <select id="Algorithm" name="Algorithm" class="form-item" disabled="disabled"></select>
-                        </div>
+                            <span class="form-text col-xs-4" >右：</span>
+                            <input id="right" name="right" class="form-item" disabled="disabled"/>
+                       </div>
+                    </div> 
+                         <div class="single-row">
+                       <div class="col-xs-6">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">升：</span>
+                            <input id="rise" name="rise" class="form-item" disabled="disabled"/>
+                       </div>
                         <div class="col-xs-6">
-                            <span class="form-text col-xs-4">计划可执行度：</span>
-                            <select id="Feasibility" name="Feasibility" class="form-item" disabled="disabled">
-                                <option value="1">可执行</option>
-                                <option value="0">不可执行</option>
-                            </select>
-                        </div>
-                    </div>
+                            <span class="form-text col-xs-4" >降：</span>
+                            <input id="drop" name="drop" class="form-item" disabled="disabled"/>
+                       </div>
+                    </div> 
+                         <div class="single-row">
+                       <div class="col-xs-6">
+                            <span class="form-text col-xs-4" style="padding-left:0px;">进：</span>
+                            <input id="enter" name="enter" class="form-item" disabled="disabled"/>
+                       </div>
+                        <div class="col-xs-6">
+                            <span class="form-text col-xs-4" >出：</span>
+                            <input id="out" name="out" class="form-item" disabled="disabled"/>
+                       </div>
+                    </div> 
                         </div>
                       </div> 
                 

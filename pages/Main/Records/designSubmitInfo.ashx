@@ -89,8 +89,7 @@ public class designSubmitInfo : IHttpHandler {
                  operate = sqlOperation2.ExecuteScalar(sqlCommand4);
              }
              string planname = null;
-             string gridname = null;
-             string alname = null;
+             string raytypename = null;            
              if (reader["PlanSystem_ID"] is DBNull)
              {
 
@@ -102,27 +101,53 @@ public class designSubmitInfo : IHttpHandler {
                  sqlOperation2.AddParameterWithValue("@PlanSystem_ID", reader["PlanSystem_ID"].ToString());
                  planname = sqlOperation2.ExecuteScalar(sql1);
              }
-             if (reader["Grid_ID"] is DBNull)
+             if (reader["Raytype_ID"] is DBNull)
              {
 
-                 gridname = null;
+                 raytypename = null;
              }
              else
              {
-                 string sql = "select Name from grid where grid.ID=@Grid_ID";
-                 sqlOperation2.AddParameterWithValue("@Grid_ID", reader["Grid_ID"].ToString());
-                 gridname = sqlOperation2.ExecuteScalar(sql);
+                 string sql = "select Name from raytype where ID=@Raytype_ID";
+                 sqlOperation2.AddParameterWithValue("@Raytype_ID", reader["Raytype_ID"].ToString());
+                 raytypename = sqlOperation2.ExecuteScalar(sql);
              }
-             if (reader["Algorithm_ID"] is DBNull)
+             string left = "";
+             string right = "";
+             string rise = "";
+             string drop = "";
+             string enter = "";
+             string out1 = "";
+             if (!(reader["parameters"] is DBNull))
              {
-
-                 alname = null;
-             }
-             else
-             {
-                 string sql2 = "select Name from algorithm where algorithm.ID=@Grid_ID";
-                 sqlOperation2.AddParameterWithValue("@Grid_ID", reader["Algorithm_ID"].ToString());
-                 alname = sqlOperation2.ExecuteScalar(sql2);
+                 string parameters = reader["parameters"].ToString();
+                 string a1 = parameters.Split(new char[1] { ';' })[0];
+                 string a2 = parameters.Split(new char[1] { ';' })[1];
+                 string a3 = parameters.Split(new char[1] { ';' })[2];
+                 if (Convert.ToDouble(a1) > 0)
+                 {
+                     left = a1;
+                 }
+                 else
+                 {
+                     right = a1.Substring(1);
+                 }
+                 if (Convert.ToDouble(a2) > 0)
+                 {
+                     rise = a2;
+                 }
+                 else
+                 {
+                     drop = a2.Substring(1);
+                 }
+                 if (Convert.ToDouble(a3) > 0)
+                 {
+                     enter = a3;
+                 }
+                 else
+                 {
+                     out1 = a3.Substring(1);
+                 }
              }
             string Do = reader["DosagePriority"].ToString();
             string Priority = Do.Split(new char[1] {'&'})[0];
@@ -130,11 +155,10 @@ public class designSubmitInfo : IHttpHandler {
             backText.Append("{\"apptime\":\"" + date1 +
                  "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"ReceiveUser\":\"" + receiver + "\",\"ReceiveTime\":\"" + date2 + "\",\"SubmitUser\":\"" + operate + "\",\"SubmitTime\":\"" + date3 +
                   "\",\"technology\":\"" + reader["tname"].ToString() + "\",\"equipment\":\"" + reader["eqname"].ToString() + "\",\"PlanSystem\":\"" + reader["PlanSystem_ID"].ToString() +
-                  "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
-                   "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() +
-                   "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\",\"Grid_ID\":\"" + reader["Grid_ID"].ToString() + "\",\"Algorithm_ID\":\"" + reader["Algorithm_ID"].ToString() +
-                   "\",\"Feasibility\":\"" + reader["Feasibility"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"gridname\":\""+ gridname +
-                   "\",\"PlanSystemname\":\"" + planname + "\",\"algorithmname\":\"" + alname + "\",\"designID\":\"" + reader["designid"].ToString() + "\",\"userID\":\"" + reader["Submit_User_ID"].ToString() + "\"}");
+                  "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +                  
+                  "\",\"Raytype\":\"" + reader["Raytype_ID"].ToString() + "\",\"equipmentid\":\"" + reader["Equipment_ID"].ToString() +
+                   "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"Raytypename\":\"" + raytypename + "\",\"left\":\"" + left + "\",\"right\":\"" + right + "\",\"rise\":\"" + rise + "\",\"drop\":\"" + drop + "\",\"enter\":\"" + enter + "\",\"out\":\"" + out1 +
+                   "\",\"PlanSystemname\":\"" + planname + "\",\"designID\":\"" + reader["designid"].ToString() + "\",\"userID\":\"" + reader["Submit_User_ID"].ToString() + "\"}");
 
             if (i < count)
             {

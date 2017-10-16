@@ -38,7 +38,7 @@ public class getallfieldinfo : IHttpHandler {
         string tps =sqlOperation.ExecuteScalar(countcommand1);
         string countcommand2 = "select positioninfomation from treatment where ID=@treatmentid ";
         string pos =sqlOperation.ExecuteScalar(countcommand2);
-        string sqlCommand = "SELECT code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,Operate_Time,Name from fieldinfomation,user where User_ID=user.ID and treatmentid=@treatmentid ";
+        string sqlCommand = "SELECT code,mu,equipment,radiotechnique,radiotype,fieldinfomation.energy as energy1,design.energy as energy2,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,Operate_Time,Name,design.* from fieldinfomation,user,design,treatment where User_ID=user.ID and design.ID=treatment.Design_ID and treatment.ID=treatmentid and treatmentid=@treatmentid ";
         sqlOperation1.AddParameterWithValue("@treatmentid", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation1.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
@@ -49,9 +49,12 @@ public class getallfieldinfo : IHttpHandler {
             DateTime dt1 = Convert.ToDateTime(date);
             string date1 = dt1.ToString("yyyy-MM-dd HH:mm");
 
-            backText.Append("{\"code\":\"" + reader["code"].ToString() + "\",\"mu\":\"" + reader["mu"].ToString() + "\",\"equipment\":\"" + reader["equipment"].ToString() + "\",\"radiotechnique\":\"" + reader["radiotechnique"].ToString() + "\",\"radiotype\":\"" + reader["radiotype"].ToString() + "\",\"energy\":\"" + reader["energy"].ToString() + "\",\"wavedistance\":\"" + reader["wavedistance"].ToString() +
+            backText.Append("{\"code\":\"" + reader["code"].ToString() + "\",\"mu\":\"" + reader["mu"].ToString() + "\",\"equipment\":\"" + reader["equipment"].ToString() + "\",\"radiotechnique\":\"" + reader["radiotechnique"].ToString() + "\",\"radiotype\":\"" + reader["radiotype"].ToString() + "\",\"energy\":\"" + reader["energy1"].ToString() + "\",\"wavedistance\":\"" + reader["wavedistance"].ToString() +
                 "\",\"angleframe\":\"" + reader["angleframe"].ToString() + "\",\"noseangle\":\"" + reader["noseangle"].ToString() + "\",\"bedrotation\":\"" + reader["bedrotation"].ToString() + "\",\"subfieldnumber\":\"" + reader["subfieldnumber"].ToString() + "\",\"tps\":\"" + tps + "\",\"pos\":\"" + pos +
-                "\",\"Singledose\":\"" + reader["Singledose"].ToString() + "\",\"Totaldose\":\"" + reader["Totaldose"].ToString() + "\",\"time\":\"" + date1 + "\",\"Name\":\"" + reader["Name"].ToString() + "\"}");
+                "\",\"Singledose\":\"" + reader["Singledose"].ToString() + "\",\"Totaldose\":\"" + reader["Totaldose"].ToString() + "\",\"Illuminatedangle\":\"" + reader["Illuminatedangle"].ToString() + "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() +
+                "\",\"Irradiation\":\"" + reader["Irradiation_ID"].ToString() + "\",\"energy2\":\"" + reader["energy2"].ToString() + "\",\"time\":\"" + date1 + "\",\"Name\":\"" + reader["Name"].ToString() +
+                "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() +
+                "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\"}");
             if (i < count - 1)
             {
                 backText.Append(",");

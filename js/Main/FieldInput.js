@@ -34,9 +34,18 @@ function Init(evt) {
     var texthos = hosttext(patient.Hospital_ID);
     document.getElementById("hospitalid").innerHTML = texthos;
     document.getElementById("lightpart").innerHTML = patient.lightpartname;
+    var select1 = document.getElementById("Irradiation");
+    createPlanSystemItem(select1);
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '11')) {
         var fildinfo = getfieldinfo();
+        document.getElementById("Irradiation").value = fildinfo[0].Irradiation;
+        document.getElementById("ener").value = fildinfo[0].energy2;
+        document.getElementById("IlluminatedNumber").value = fildinfo[0].IlluminatedNumber;
+        document.getElementById("Illuminatedangle").value = fildinfo[0].Illuminatedangle;
+        document.getElementById("MachineNumbe").value = fildinfo[0].MachineNumbe;
+        document.getElementById("ControlPoint").value = fildinfo[0].ControlPoint;
+        document.getElementById("Coplanar").value = fildinfo[0].Coplanar;
         document.getElementById("tps").value = fildinfo[0].tps;
         document.getElementById("pos").value = fildinfo[0].pos;
         document.getElementById("Graded").value = fildinfo[0].Singledose;
@@ -55,6 +64,29 @@ $(".file").on("change", "input[type='file']", function () {
     fileName=arr[arr.length-1];
     $("#filename").val(fileName);
 })
+function createPlanSystemItem(thiselement) {
+    var PartItem = JSON.parse(getPartItem3()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--照射技术选择--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+        }
+    }
+
+
+}
+//第二步部位项数据库调取
+function getPartItem3() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "Irradiation.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
 function getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
@@ -396,6 +428,10 @@ function hosttext(str) {
 
 function save() {   
     var form = new FormData(document.getElementById("saveField"));
+    if (document.getElementById("Irradiation").value == "allItem") {
+        window.alert("照射技术没有选择");
+        return false;
+    }
     $.ajax({
         url: "saveField.ashx",
         type: "post",
@@ -406,11 +442,12 @@ function save() {
         success: function (data) {
             if (data == "success") {
                 alert("保存成功");
+                window.location.reload();
             } else {
                 alert("保存失败");
                 return false;
             }
-            window.location.reload();
+            
         },
         error: function (e) {
             window.location.href = "Error.aspx";
@@ -427,6 +464,13 @@ function remove() {
     document.getElementById("Graded").removeAttribute("disabled");
     document.getElementById("fieldTimes").removeAttribute("disabled");
     document.getElementById("pos").removeAttribute("disabled");
+    document.getElementById("Irradiation").removeAttribute("disabled");
+    document.getElementById("ener").removeAttribute("disabled");
+    document.getElementById("IlluminatedNumber").removeAttribute("disabled");
+    document.getElementById("Illuminatedangle").removeAttribute("disabled");
+    document.getElementById("MachineNumbe").removeAttribute("disabled");
+    document.getElementById("ControlPoint").removeAttribute("disabled");
+    document.getElementById("Coplanar").removeAttribute("disabled");
     $("#add").attr("href", "javascript:addField()");
     if (aa > 0) {
         for (var i = 0; i < aa; i++) {
