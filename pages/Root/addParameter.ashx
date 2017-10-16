@@ -95,6 +95,12 @@ public class addParameter : IHttpHandler {
             case "material":
                 addMaterial(value);
                 break;
+            case "irradiation":
+                addIrradiation(value);
+                break;
+            case "raytype":
+                addRaytype(value);
+                break;
             default:
                 break;
         }
@@ -311,6 +317,24 @@ public class addParameter : IHttpHandler {
     {
         string[] values = value.Split(' ');
         string sqlCommand = "INSERT INTO material(Name) VALUES(@Name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addIrradiation(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO irradiation(Name) VALUES(@Name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addRaytype(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO raytype(Name) VALUES(@Name)";
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
         sqlOperation.ExecuteNonQuery(sqlCommand);

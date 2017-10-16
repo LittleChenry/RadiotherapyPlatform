@@ -122,6 +122,12 @@ function selectCreate(type,page) {
         case "material":
             createMaterial(page);
             break;
+        case "irradiation":
+            createIrradiation(page);
+            break;
+        case "raytype":
+            createRaytype(page);
+            break;
         default:
             break;
     }
@@ -214,6 +220,12 @@ function createPage(page) {
             break;
         case "material":
             createMaterialTable(page);
+            break;
+        case "irradiation":
+            createIrradiationTable(page);
+            break;
+        case "raytype":
+            createRaytypeTable(page);
             break;
         default:
             break;
@@ -1722,6 +1734,122 @@ function createMaterialTable(page) {
 function initAddMaterial() {
     $("#addrow").empty()
                 .append("<tr><th>模具名称</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+/**
+ * irradiation 照射技术 1
+ */
+function createIrradiation(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>照射技术</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddIrradiation();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "irradiation" },
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createIrradiationTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+/**
+ * 生成表格指定页（每页12行）-->2
+ * @param page 指定页数
+ */
+function createIrradiationTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ *  3
+ */
+function initAddIrradiation() {
+    $("#addrow").empty()
+                .append("<tr><th>照射技术</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+/**
+ * raytype 射线类型 1
+ */
+function createRaytype(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>射线类型</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddRaytype();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "raytype" },
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createRaytypeTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+/**
+ * 生成表格指定页（每页12行）-->2
+ * @param page 指定页数
+ */
+function createRaytypeTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ *  3
+ */
+function initAddRaytype() {
+    $("#addrow").empty()
+                .append("<tr><th>射线类型</th><td>"
                 + "<input type=text class=form-control style=margin-right:0.8em />"
                 + "</td></tr>");
 }

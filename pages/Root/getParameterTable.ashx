@@ -72,6 +72,10 @@ public class getParameterTable : IHttpHandler {
                 return selectSpiltWay();
             case "material":
                 return selectMaterial();
+            case "irradiation":
+                return selectIrradiation();
+            case "raytype":
+                return selectRaytype();
         }
         return "";
     }
@@ -532,6 +536,42 @@ public class getParameterTable : IHttpHandler {
     {
         StringBuilder backString = new StringBuilder("[");
         string sqlCommand = "SELECT * FROM material";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
+        {
+            backString.Append("{\"ID\":\"")
+                      .Append(reader["ID"].ToString())
+                      .Append("\",\"Name\":\"")
+                      .Append(reader["Name"].ToString())
+                      .Append("\"},");
+        }
+        backString.Remove(backString.Length - 1, 1)
+                  .Append("]");
+        return backString.ToString();
+    }
+
+    private string selectIrradiation()
+    {
+        StringBuilder backString = new StringBuilder("[");
+        string sqlCommand = "SELECT * FROM irradiation";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
+        {
+            backString.Append("{\"ID\":\"")
+                      .Append(reader["ID"].ToString())
+                      .Append("\",\"Name\":\"")
+                      .Append(reader["Name"].ToString())
+                      .Append("\"},");
+        }
+        backString.Remove(backString.Length - 1, 1)
+                  .Append("]");
+        return backString.ToString();
+    }
+
+    private string selectRaytype()
+    {
+        StringBuilder backString = new StringBuilder("[");
+        string sqlCommand = "SELECT * FROM raytype";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
