@@ -104,6 +104,9 @@ public class parameterEdit : IHttpHandler {
             case "raytype":
                 updateRaytype(id, value);
                 break;
+            case "bodyposition":
+                updateBodyposition(id,value);
+                break;
             default:
                 break;
         }
@@ -412,6 +415,18 @@ public class parameterEdit : IHttpHandler {
     {
         string[] values = value.Split(' ');
         string sqlCommand = "UPDATE raytype set Name=@Name WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@id", id);
+
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void updateBodyposition(string id,string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "UPDATE bodyposition set Name=@Name WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
