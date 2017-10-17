@@ -36,10 +36,10 @@ function Init(evt) {
     document.getElementById("lightpart").innerHTML = patient.lightpartname;
     var select1 = document.getElementById("PlanSystem");
     createPlanSystemItem(select1);
-    var select2 = document.getElementById("Grid");
-    createGridItem(select2);
-    var select3 = document.getElementById("Algorithm");
-    createAlgorithmItem(select3);
+    var select2 = document.getElementById("equipment");
+    createEquipmentItem(select2);
+    var select3 = document.getElementById("Raytype");
+    createRaytypeItem(select3);
     var designInfo = getDesignInfo(treatID);
     $("#current-tab").text(patient.Treatmentdescribe + "计划提交");
     var progress = patient.Progress.split(",");
@@ -51,20 +51,21 @@ function Init(evt) {
                 addDosagePriority1(designInfo[i].DosagePriority);
                 addDosage1(designInfo[i].Dosage);
                 document.getElementById("technology").innerHTML = designInfo[i].technology;
-                document.getElementById("equipment").innerHTML = designInfo[i].equipment;
+                
                 document.getElementById("ApplicationUser").innerHTML = designInfo[i].doctor;
                 document.getElementById("ApplicationTime").innerHTML = designInfo[i].apptime;
                 document.getElementById("receiveUser").innerHTML = designInfo[i].ReceiveUser;
                 document.getElementById("receiveTime").innerHTML = designInfo[i].ReceiveTime;
-                
+
+                document.getElementById("equipment").value = designInfo[i].equipmentid;
                 document.getElementById("PlanSystem").value = designInfo[i].PlanSystem;
-                document.getElementById("IlluminatedNumber").value = designInfo[i].IlluminatedNumber;
-                document.getElementById("Coplanar").value = designInfo[i].Coplanar;
-                document.getElementById("MachineNumbe").value = designInfo[i].MachineNumbe;
-                document.getElementById("ControlPoint").value = designInfo[i].ControlPoint;
-                document.getElementById("Grid").value = designInfo[i].Grid_ID;
-                document.getElementById("Algorithm").value = designInfo[i].Algorithm_ID;
-                document.getElementById("Feasibility").value = designInfo[i].Feasibility;
+                document.getElementById("Raytype").value = designInfo[i].Raytype;
+                document.getElementById("left").value = designInfo[i].left;
+                document.getElementById("right").value = designInfo[i].right;
+                document.getElementById("rise").value = designInfo[i].rise;
+                document.getElementById("drop").value = designInfo[i].drop;
+                document.getElementById("enter").value = designInfo[i].enter;
+                document.getElementById("out").value = designInfo[i].out;
                 document.getElementById("applyuser").innerHTML = designInfo[i].SubmitUser;
                 document.getElementById("time").innerHTML = designInfo[i].SubmitTime;
                 if (designInfo[i].userID == userID) {
@@ -78,13 +79,13 @@ function Init(evt) {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].Treatmentdescribe + '计划提交信息</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-6">计划系统：<span class="underline">' + designInfo[i].PlanSystemname + '</span></div>'
-                    + '<div class="item col-xs-6">射野数量：<span class="underline">' + designInfo[i].IlluminatedNumber + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-6">非共面照射：<span class="underline">' + trans(designInfo[i].Coplanar) + '</span></div>'
-                    + '<div class="item col-xs-6">机器跳数：<span class="underline">' + designInfo[i].MachineNumbe + '</span></div></div>'
-                        + '<div class="single-row"><div class="item col-xs-6">控制点数量：<span class="underline">' + designInfo[i].ControlPoint + '</span></div>'
-                    + '<div class="item col-xs-6">计算网络：<span class="underline">' + designInfo[i].gridname + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-6">优化算法：<span class="underline">' + designInfo[i].algorithmname + '</span></div>'
-                    + '<div class="item col-xs-6">计划可执行度：<span class="underline">' + transfer(designInfo[i].Feasibility) + '</span></div></div><div class="single-row"><div class="item col-xs-6"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
+                    + '<div class="item col-xs-6">放疗设备：<span class="underline">' + designInfo[i].equipment + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">射线类型：<span class="underline">' + designInfo[i].Raytypename + '</span></div></div>'
+                    + '<div class="single-row"><span>移床参数：</span></div><div class="single-row">'
+                    + '<div class="item col-xs-6">左：<span class="underline">' + designInfo[i].left + '</span></div><div class="item col-xs-6">右：<span class="underline">' + designInfo[i].right + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">升：<span class="underline">' + designInfo[i].rise + '</span></div><div class="item col-xs-6">降：<span class="underline">' + designInfo[i].drop + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">进：<span class="underline">' + designInfo[i].enter + '</span></div><div class="item col-xs-6">出：<span class="underline">' + designInfo[i].out + '</span></div></div>'                    
+                    + '<div class="single-row"><div class="item col-xs-6"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
             }
@@ -102,13 +103,13 @@ function Init(evt) {
                     var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].Treatmentdescribe + '计划提交信息</a></li>';
                     var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                         + '<div class="item col-xs-6">计划系统：<span class="underline">' + designInfo[i].PlanSystemname + '</span></div>'
-                        + '<div class="item col-xs-6">射野数量：<span class="underline">' + designInfo[i].IlluminatedNumber + '</span></div></div>'
-                        + '<div class="single-row"><div class="item col-xs-6">非共面照射：<span class="underline">' + trans(designInfo[i].Coplanar) + '</span></div>'
-                        + '<div class="item col-xs-6">机器跳数：<span class="underline">' + designInfo[i].MachineNumbe + '</span></div></div>'
-                         + '<div class="single-row"><div class="item col-xs-6">控制点数量：<span class="underline">' + designInfo[i].ControlPoint + '</span></div>'
-                        + '<div class="item col-xs-6">计算网络：<span class="underline">' + designInfo[i].gridname + '</span></div></div>'
-                        + '<div class="single-row"><div class="item col-xs-6">优化算法：<span class="underline">' + designInfo[i].algorithmname + '</span></div>'
-                        + '<div class="item col-xs-6">计划可执行度：<span class="underline">' + transfer(designInfo[i].Feasibility) + '</span></div></div><div class="single-row"><div class="item col-xs-6"><button class="btn btn-success" type="button"  id="' + i + '">载入历史信息</button></div></div>';
+                        + '<div class="item col-xs-6">放疗设备：<span class="underline">' + designInfo[i].equipment + '</span></div></div>'
+                        + '<div class="single-row"><div class="item col-xs-6">射线类型：<span class="underline">' + designInfo[i].Raytypename + '</span></div></div>'
+                        + '<div class="single-row"><span>移床参数：</span></div><div class="single-row">'
+                        + '<div class="item col-xs-6">左：<span class="underline">' + designInfo[i].left + '</span></div><div class="item col-xs-6">右：<span class="underline">' + designInfo[i].right + '</span></div></div>'
+                        + '<div class="single-row"><div class="item col-xs-6">升：<span class="underline">' + designInfo[i].rise + '</span></div><div class="item col-xs-6">降：<span class="underline">' + designInfo[i].drop + '</span></div></div>'
+                        + '<div class="single-row"><div class="item col-xs-6">进：<span class="underline">' + designInfo[i].enter + '</span></div><div class="item col-xs-6">出：<span class="underline">' + designInfo[i].out + '</span></div></div>'
+                        + '<div class="single-row"><div class="item col-xs-6"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div></div>';
                     $("#tabs").append(tab);
                     $("#tab-content").append(content);
                 } else {
@@ -116,7 +117,7 @@ function Init(evt) {
                     addDosagePriority1(designInfo[i].DosagePriority);
                     addDosage1(designInfo[i].Dosage);
                     document.getElementById("technology").innerHTML = designInfo[i].technology;
-                    document.getElementById("equipment").innerHTML = designInfo[i].equipment;
+                    document.getElementById("equipment").value = designInfo[i].equipmentid;
                     document.getElementById("ApplicationUser").innerHTML = designInfo[i].doctor;
                     document.getElementById("ApplicationTime").innerHTML = designInfo[i].apptime;
                     document.getElementById("receiveUser").innerHTML = designInfo[i].ReceiveUser;
@@ -127,14 +128,15 @@ function Init(evt) {
     $("#tab-content").find("button").each(function () {
         $(this).bind("click", function () {
             var k = this.id;
+            document.getElementById("equipment").value = designInfo[k].equipmentid;
             document.getElementById("PlanSystem").value = designInfo[k].PlanSystem;
-            document.getElementById("IlluminatedNumber").value = designInfo[k].IlluminatedNumber;
-            document.getElementById("Coplanar").value = designInfo[k].Coplanar;
-            document.getElementById("MachineNumbe").value = designInfo[k].MachineNumbe;
-            document.getElementById("ControlPoint").value = designInfo[k].ControlPoint;
-            document.getElementById("Grid").value = designInfo[k].Grid_ID;
-            document.getElementById("Algorithm").value = designInfo[k].Algorithm_ID;
-            document.getElementById("Feasibility").value = designInfo[k].Feasibility;
+            document.getElementById("Raytype").value = designInfo[k].Raytype;
+            document.getElementById("left").value = designInfo[k].left;
+            document.getElementById("right").value = designInfo[k].right;
+            document.getElementById("rise").value = designInfo[k].rise;
+            document.getElementById("drop").value = designInfo[k].drop;
+            document.getElementById("enter").value = designInfo[k].enter;
+            document.getElementById("out").value = designInfo[k].out;
         });
     });
 }
@@ -172,34 +174,10 @@ function transfer(number) {
 
 }
 
-function createGridItem(thiselement) {
-    var PartItem = JSON.parse(getPartItem3()).Item;
+function createEquipmentItem(thiselement) {
+    var PartItem = JSON.parse(getPartItem2()).item;
     thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--计算网格选择--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
-        }
-    }
-
-
-}
-//第二步部位项数据库调取
-function getPartItem3() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "getGrid.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
-}
-
-function createPlanSystemItem(thiselement) {
-    var PartItem = JSON.parse(getPartItem2()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--计划系统选择--");
+    thiselement.options[0] = new Option("--放疗设备选择--");
     thiselement.options[0].value = "allItem";
     for (var i = 0; i < PartItem.length; i++) {
         if (PartItem[i] != "") {
@@ -213,6 +191,30 @@ function createPlanSystemItem(thiselement) {
 //第二步部位项数据库调取
 function getPartItem2() {
     var xmlHttp = new XMLHttpRequest();
+    var url = "getEqForDesign.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+
+function createPlanSystemItem(thiselement) {
+    var PartItem = JSON.parse(getPartItem3()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--计划系统选择--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+        }
+    }
+
+
+}
+//第二步部位项数据库调取
+function getPartItem3() {
+    var xmlHttp = new XMLHttpRequest();
     var url = "PlanSystem.ashx";
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
@@ -220,10 +222,10 @@ function getPartItem2() {
     return Items;
 }
 
-function createAlgorithmItem(thiselement) {
+function createRaytypeItem(thiselement) {
     var PartItem = JSON.parse(getPartItem1()).Item;
     thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--优化算法选择--");
+    thiselement.options[0] = new Option("--射线类型选择--");
     thiselement.options[0].value = "allItem";
     for (var i = 0; i < PartItem.length; i++) {
         if (PartItem[i] != "") {
@@ -237,7 +239,7 @@ function createAlgorithmItem(thiselement) {
 //第二步部位项数据库调取
 function getPartItem1() {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getAlgorithm.ashx";
+    var url = "getRaytype.ashx";
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     var Items = xmlHttp.responseText;
@@ -494,24 +496,24 @@ function save() {
         window.alert("计划系统没有选择");
         return false;
     }
-    if (document.getElementById("Grid").value == "allItem") {
-        window.alert("计算网格没有选择");
+    if (document.getElementById("equipment").value == "allItem") {
+        window.alert("放疗设备没有选择");
         return false;
     }
-    if (document.getElementById("Algorithm").value == "allItem") {
-        window.alert("优化算法没有选择");
+    if (document.getElementById("Raytype").value == "allItem") {
+        window.alert("射线类型没有选择");
         return false;
     }
-    if (document.getElementById("IlluminatedNumber").value == "") {
-        window.alert("请填写射野数量");
+    if (document.getElementById("left").value == "" && document.getElementById("right").value == "") {
+        window.alert("请填写移床参数");
         return false;
     }
-    if (document.getElementById("MachineNumbe").value == "") {
-        window.alert("请填写机器跳数");
+    if (document.getElementById("enter").value == "" && document.getElementById("out").value == "") {
+        window.alert("请填写移床参数");
         return false;
     }
-    if (document.getElementById("ControlPoint").value == "") {
-        window.alert("请填写控制点数量");
+    if (document.getElementById("rise").value == "" && document.getElementById("drop").value == "") {
+        window.alert("请填写移床参数");
         return false;
     }
     if ((typeof (userID) == "undefined")) {
@@ -544,14 +546,14 @@ function save() {
         }
     });
 }
-function remove() {
+function remove() {   
+    document.getElementById("equipment").removeAttribute("disabled");
     document.getElementById("PlanSystem").removeAttribute("disabled");
-    document.getElementById("IlluminatedNumber").removeAttribute("disabled");
-    document.getElementById("Coplanar").removeAttribute("disabled");
-    document.getElementById("MachineNumbe").removeAttribute("disabled");
-    document.getElementById("ControlPoint").removeAttribute("disabled");
-    document.getElementById("Grid").removeAttribute("disabled");
-    document.getElementById("Algorithm").removeAttribute("disabled");
-    document.getElementById("Feasibility").removeAttribute("disabled");
-    
+    document.getElementById("Raytype").removeAttribute("disabled");
+    document.getElementById("left").removeAttribute("disabled");
+    document.getElementById("right").removeAttribute("disabled");
+    document.getElementById("rise").removeAttribute("disabled");
+    document.getElementById("drop").removeAttribute("disabled");
+    document.getElementById("enter").removeAttribute("disabled");
+    document.getElementById("out").removeAttribute("disabled");
 }

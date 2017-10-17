@@ -118,17 +118,7 @@
                     <div class="item col-xs-4">计划系统：<span id="PlanSystem" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">射野数量：<span id="IlluminatedNumber" class="underline"></span></div>
-                    <div class="item col-xs-4">非共面照射：<span id="Coplanar" class="underline"></span></div>
-                    <div class="item col-xs-4">机器跳数：<span id="MachineNumbe" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">控制点数量：<span id="ControlPoint" class="underline"></span></div>
-                    <div class="item col-xs-4">计算网络：<span id="Grid" class="underline"></span></div>
-                    <div class="item col-xs-4">优化算法：<span id="Algorithm" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">计划可执行度：<span id="Feasibility" class="underline"></span></div>
+                    <div class="item col-xs-4">射线类型：<span id="Raytype" class="underline"></span></div>                   
                     <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
                     <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>
                 </div>

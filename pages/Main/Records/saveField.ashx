@@ -74,7 +74,7 @@ public class saveField : IHttpHandler {
             {
                 string delete = "delete from fieldinfomation where treatmentid=@treatmentid";
                 sqlOperation1.AddParameterWithValue("@treatmentid", treatID);
-                sqlOperation.ExecuteNonQuery(delete);
+                sqlOperation1.ExecuteNonQuery(delete);
             }
             
                 int intSuccess = 0;
@@ -108,6 +108,20 @@ public class saveField : IHttpHandler {
                 string common = "select iscommon from treatment where ID=@treat";
                 int iscommon = Convert.ToInt32(sqlOperation.ExecuteScalar(common));
                 int Success = 0;
+                string select5 = "select Design_ID from treatment where ID=@treat";
+                sqlOperation.AddParameterWithValue("@treat", treatID);
+                string designid = sqlOperation.ExecuteScalar(select5);
+                string update = "update design set IlluminatedNumber=@IlluminatedNumber,Coplanar=@Coplanar,MachineNumbe=@MachineNumbe,ControlPoint=@ControlPoint,Illuminatedangle=@Illuminatedangle,Irradiation_ID=@Irradiation_ID,energy=@energy where ID=@designid";
+                sqlOperation1.AddParameterWithValue("@Irradiation_ID", Convert.ToInt32(context.Request.Form["Irradiation"]));
+                sqlOperation1.AddParameterWithValue("@IlluminatedNumber", Convert.ToInt32(context.Request.Form["IlluminatedNumber"]));
+                sqlOperation1.AddParameterWithValue("@Coplanar", Convert.ToInt32(context.Request.Form["Coplanar"]));
+                sqlOperation1.AddParameterWithValue("@energy", context.Request.Form["ener"]);
+                sqlOperation1.AddParameterWithValue("@MachineNumbe", Convert.ToDouble(context.Request.Form["MachineNumbe"]));
+                sqlOperation1.AddParameterWithValue("@Illuminatedangle", context.Request.Form["Illuminatedangle"]);
+                sqlOperation1.AddParameterWithValue("@ControlPoint", Convert.ToInt32(context.Request.Form["ControlPoint"]));
+                sqlOperation1.AddParameterWithValue("@designid", designid);
+                int successs=sqlOperation1.ExecuteNonQuery(update);
+            
                 if (!exists)
                 {
                     string inserttreat = "update treatment set Progress=@progress,TPS=@TPS,positioninfomation=@positioninfomation where ID=@treat";
@@ -132,7 +146,7 @@ public class saveField : IHttpHandler {
                     sqlOperation2.AddParameterWithValue("@treat", treatID);
                     Success = sqlOperation2.ExecuteNonQuery(inserttreat);
                 }
-                if (intSuccess > 0 && Success > 0)
+                if (intSuccess > 0 && Success > 0 && successs > 0)
                 {
                     return "success";
                 }

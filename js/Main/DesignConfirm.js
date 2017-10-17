@@ -47,13 +47,7 @@ function Init(evt) {
                 document.getElementById("receiveUser").innerHTML = designInfo[i].ReceiveUser;
                 document.getElementById("receiveTime").innerHTML = designInfo[i].ReceiveTime;
                 document.getElementById("PlanSystem").innerHTML = designInfo[i].PlanSystem;
-                document.getElementById("IlluminatedNumber").innerHTML = designInfo[i].IlluminatedNumber;
-                document.getElementById("Coplanar").innerHTML = charge1(designInfo[i].Coplanar);
-                document.getElementById("MachineNumbe").innerHTML = designInfo[i].MachineNumbe;
-                document.getElementById("ControlPoint").innerHTML = designInfo[i].ControlPoint;
-                document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
-                document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
-                document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
+                document.getElementById("Raytype").innerHTML = designInfo[i].Raytype;
                 document.getElementById("Submituser").innerHTML = designInfo[i].SubmitUser;
                 document.getElementById("Submittime").innerHTML = designInfo[i].SubmitTime;
                 document.getElementById("userID").value = userID;

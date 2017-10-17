@@ -98,6 +98,12 @@ public class parameterEdit : IHttpHandler {
             case "material":
                 updateMaterial(id,value);
                 break;
+            case "irradiation":
+                updateIrradiation(id,value);
+                break;
+            case "raytype":
+                updateRaytype(id, value);
+                break;
             default:
                 break;
         }
@@ -382,6 +388,30 @@ public class parameterEdit : IHttpHandler {
     {
         string[] values = value.Split(' ');
         string sqlCommand = "UPDATE material set Name=@Name WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@id", id);
+
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void updateIrradiation(string id, string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "UPDATE irradiation set Name=@Name WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@id", id);
+
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void updateRaytype(string id, string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "UPDATE raytype set Name=@Name WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
