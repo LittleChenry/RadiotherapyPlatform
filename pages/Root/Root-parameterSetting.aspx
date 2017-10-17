@@ -347,6 +347,7 @@
                             <option value="material">模具</option>
                             <option value="irradiation">照射技术</option>
                             <option value="raytype">射线类型</option>
+                            <option value="bodyposition">摆位信息</option>
                         </select>
                         <span class="input-group-btn">
                             <button class="btn btn-default" style="height:34px" type="button" id="sureTable">

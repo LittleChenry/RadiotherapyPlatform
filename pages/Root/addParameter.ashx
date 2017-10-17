@@ -101,6 +101,9 @@ public class addParameter : IHttpHandler {
             case "raytype":
                 addRaytype(value);
                 break;
+            case "bodyposition":
+                addBodyposition(value);
+                break;
             default:
                 break;
         }
@@ -335,6 +338,15 @@ public class addParameter : IHttpHandler {
     {
         string[] values = value.Split(' ');
         string sqlCommand = "INSERT INTO raytype(Name) VALUES(@Name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addBodyposition(string value)
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO bodyposition(Name) VALUES(@Name)";
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
         sqlOperation.ExecuteNonQuery(sqlCommand);

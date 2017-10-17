@@ -128,6 +128,9 @@ function selectCreate(type,page) {
         case "raytype":
             createRaytype(page);
             break;
+        case "bodyposition":
+            createBodyposition(page);
+            break;
         default:
             break;
     }
@@ -226,6 +229,9 @@ function createPage(page) {
             break;
         case "raytype":
             createRaytypeTable(page);
+            break;
+        case "bodyposition":
+            createBodypositionTable(page);
             break;
         default:
             break;
@@ -1850,6 +1856,64 @@ function createRaytypeTable(page) {
 function initAddRaytype() {
     $("#addrow").empty()
                 .append("<tr><th>射线类型</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
+
+/**
+ * bodyposition 摆位信息 1
+ */
+function createBodyposition(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>摆位信息</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddBodyposition();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "bodyposition" },
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createBodypositionTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+/**
+ * 生成表格指定页（每页12行）-->2
+ * @param page 指定页数
+ */
+function createBodypositionTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+    var tr = "";
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
+           + "</td></tr>";
+    }
+
+    $tbody.append(tr);
+}
+
+/**
+ *  3
+ */
+function initAddBodyposition() {
+    $("#addrow").empty()
+                .append("<tr><th>摆位信息</th><td>"
                 + "<input type=text class=form-control style=margin-right:0.8em />"
                 + "</td></tr>");
 }
