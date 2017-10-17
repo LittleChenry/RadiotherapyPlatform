@@ -110,13 +110,13 @@
                     </div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">tps：<input id="tps" name="tps" disabled="disabled"/></div>
-                    <div class="item col-xs-4">总剂量：<input id="total" name="total" disabled="disabled"/></div>
-                    <div class="item col-xs-4">分次剂量：<input id="Graded" name="Graded" disabled="disabled"/></div>
+                    <div class="item col-xs-4">TPS：<input id="tps" class="form-item" name="tps" disabled="disabled"/></div>
+                    <div class="item col-xs-4">总剂量：<input id="total" class="form-item" name="total" disabled="disabled"/></div>
+                    <div class="item col-xs-4">分次剂量：<input id="Graded" class="form-item" name="Graded" disabled="disabled"/></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">射野总数：<input id="fieldTimes" name="fieldTimes" disabled="disabled"/></div>
-                    <div class="item col-xs-4">摆位信息：<input id="pos" name="pos" disabled="disabled"/></div>
+                    <div class="item col-xs-4">射野总数：<input id="fieldTimes" class="form-item" name="fieldTimes" disabled="disabled"/></div>
+                    <div class="item col-xs-4">摆位信息：<input id="pos" class="form-item" name="pos" disabled="disabled"/></div>
                    
                 </div>
                 <div class="single-row">

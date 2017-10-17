@@ -2,143 +2,114 @@
 
 var userName;
 var userID;
+var signal = 0;
+var signal1 = 0;
 function Init(evt) {
 
-    //获得当前执行人姓名与ID
-    getUserName();
-    getUserID();
-    if ((typeof (userID) == "undefined")) {
-        if (confirm("用户身份已经失效,是否选择重新登录?")) {
-            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+//获得当前执行人姓名与ID
+getUserName();
+getUserID();
+if ((typeof (userID) == "undefined")) {
+    if (confirm("用户身份已经失效,是否选择重新登录?")) {
+        parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+    }
+}
+//此处为分页代码
+//alert("jy");
+//document.getElementById("username").value = userID; 
+var treatID = window.location.search.split("=")[1];
+
+
+var patient = getPatientInfo(treatID);
+document.getElementById("username").innerHTML = patient.Name;
+document.getElementById("sex").innerHTML = sex(patient.Gender);
+document.getElementById("age").innerHTML = patient.Age;
+document.getElementById("progress").value = patient.Progress;
+document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
+document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
+document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
+document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
+var texthos = hosttext(patient.Hospital_ID);
+document.getElementById("hospitalid").innerHTML = texthos;
+document.getElementById("lightpart").innerHTML = patient.lightpartname;
+
+var progress = patient.Progress.split(",");
+if (isInArray(progress, '11')) {
+    var designInfo = getDesignInfo(treatID);
+    var fieldInfo = getFieldInfo(treatID);
+    var length = designInfo.length;
+    for (var i = 0; i < length; i++) {
+        if (designInfo[i].Treatmentname == patient.Treatmentname) {
+            document.getElementById("positioninfomation1").innerHTML = designInfo[i].positioninfomation1;
+            document.getElementById("dose1").innerHTML = cale(designInfo[i].DosagePriority);
+            document.getElementById("Equipment1").innerHTML = designInfo[i].equipment;
+            document.getElementById("plansystem1").innerHTML = designInfo[i].PlanSystem;
+            document.getElementById("Coplanar1").innerHTML = charge1(designInfo[i].Coplanar1);
+            document.getElementById("Irradiation1").innerHTML = designInfo[i].Irradiation1;
+            document.getElementById("Raytype1").innerHTML = designInfo[i].Raytype;
+            document.getElementById("energy1").innerHTML = designInfo[i].energy1;
+            document.getElementById("IlluminatedNumber1").innerHTML = designInfo[i].IlluminatedNumber1;
+            document.getElementById("Illuminatedangle1").innerHTML = designInfo[i].Illuminatedangle1;
+            document.getElementById("MU1").innerHTML = designInfo[i].MU1;
+            document.getElementById("ControlPoint1").innerHTML = designInfo[i].ControlPoint1;
+            document.getElementById("positioninfomation2").innerHTML = fieldInfo[0].positioninfomation2;
+            document.getElementById("dose2").innerHTML = fieldInfo[0].dose2;
+            document.getElementById("Equipment2").innerHTML = fieldInfo[0].Equipment2;
+            document.getElementById("plansystem2").innerHTML = fieldInfo[0].plansystem2;
+            document.getElementById("remark").innerHTML = fieldInfo[0].remark;
+            document.getElementById("Coplanar2").innerHTML = charge3(fieldInfo[0].Coplanar2);
+            document.getElementById("Irradiation2").innerHTML = charge4(fieldInfo);
+            document.getElementById("Raytype2").innerHTML = fieldInfo[0].Raytype2;
+            document.getElementById("energy2").innerHTML = fieldInfo[0].energy2;
+            document.getElementById("IlluminatedNumber2").innerHTML = fieldInfo[0].IlluminatedNumber2;
+            document.getElementById("Illuminatedangle2").innerHTML = charge5(fieldInfo);
+            document.getElementById("MU2").innerHTML = cale2(fieldInfo);
+            document.getElementById("ControlPoint2").innerHTML = cale3(fieldInfo);
+            document.getElementById("left").innerHTML = designInfo[i].left;
+            document.getElementById("right").innerHTML = designInfo[i].right;
+            document.getElementById("rise").innerHTML = designInfo[i].rise;
+            document.getElementById("drop").innerHTML = designInfo[i].drop;
+            document.getElementById("enter").innerHTML = designInfo[i].enter;
+            document.getElementById("out").innerHTML = designInfo[i].out;
         }
     }
-    //此处为分页代码
-    //alert("jy");
-    //document.getElementById("username").value = userID; 
-    var treatID = window.location.search.split("=")[1];
-
-
-    var patient = getPatientInfo(treatID);
-    document.getElementById("username").innerHTML = patient.Name;
-    document.getElementById("sex").innerHTML = sex(patient.Gender);
-    document.getElementById("age").innerHTML = patient.Age;
-    document.getElementById("progress").value = patient.Progress;
-    document.getElementById("Reguser").innerHTML = patient.RegisterDoctor;
-    document.getElementById("treatID").innerHTML = patient.Treatmentdescribe;
-    document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
-    document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
-    var texthos = hosttext(patient.Hospital_ID);
-    document.getElementById("hospitalid").innerHTML = texthos;
-    document.getElementById("lightpart").innerHTML = patient.lightpartname;
-    var select1 = document.getElementById("degree");
-    createdegreeItem(select1);
-    var select2 = document.getElementById("placeinfo");
-    createplaceinfoItem(select2);
-    var select3 = document.getElementById("drr");
-    createdrrItem(select3);
-    var select4 = document.getElementById("import");
-    createimportItem(select4);
-    var progress = patient.Progress.split(",");
-    if (isInArray(progress, '11')) {
-        var designInfo = getDesignInfo(treatID);
-        var length = designInfo.length;
-        for (var i = 0; i < length; i++) {
-            if (designInfo[i].Treatmentname == patient.Treatmentname) {
-                document.getElementById("Technology").innerHTML = designInfo[i].technology;
-                document.getElementById("Equipment").innerHTML = designInfo[i].equipment;
-                document.getElementById("PlanSystem").innerHTML = designInfo[i].PlanSystem;
-                document.getElementById("IlluminatedNumber").innerHTML = designInfo[i].IlluminatedNumber;
-                document.getElementById("Coplanar").innerHTML = charge1(designInfo[i].Coplanar);
-                document.getElementById("MachineNumbe").innerHTML = designInfo[i].MachineNumbe;
-                document.getElementById("ControlPoint").innerHTML = designInfo[i].ControlPoint;
-                document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
-                document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
-                document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
-            }
-        }
-        document.getElementById("userID").value = userID;
-        document.getElementById("applyuser").innerHTML = userName;
-        document.getElementById("time").innerHTML = getNowFormatDate();
-        document.getElementById("hidetreatID").value = treatID;
-        if (isInArray(progress, '12')) {
-            var reviewInfo = getReviewInfo(treatID);
-            for (var i = 0; i < reviewInfo.length; i++) {
-                if (reviewInfo[i].Treatmentname == patient.Treatmentname) {
-                    document.getElementById("TechnologyConfirm").innerHTML = charge2(reviewInfo[i].TechnologyConfirm);
-                    document.getElementById("EquipmentConfirm").innerHTML = charge2(reviewInfo[i].EquipmentConfirm);
-                    document.getElementById("PlanSystemConfirm").innerHTML = charge2(reviewInfo[i].PlanSystemConfirm);
-                    document.getElementById("AngleConfirm").innerHTML = charge2(reviewInfo[i].AngleConfirm);
-                    document.getElementById("CoplanarConfirm").innerHTML = charge2(reviewInfo[i].CoplanarConfirm);
-                    document.getElementById("MachineNumbeConfirm").innerHTML = charge2(reviewInfo[i].MachineNumbeConfirm);
-                    document.getElementById("ControlPointConfirm").innerHTML = charge2(reviewInfo[i].ControlPointConfirm);
-                    document.getElementById("GridConfirm").innerHTML = charge2(reviewInfo[i].GridConfirm);
-                    document.getElementById("AlgorithmConfirm").innerHTML = charge2(reviewInfo[i].AlgorithmConfirm);
-                    document.getElementById("FeasibilityConfirm").innerHTML = charge(reviewInfo[i].FeasibilityConfirm);
-                    document.getElementById("Reoptimization").innerHTML = charge2(reviewInfo[i].Reoptimization);
-                    document.getElementById("PlaceInformation").innerHTML = charge2(reviewInfo[i].PlaceInformation);
-                    document.getElementById("DRR").innerHTML = charge2(reviewInfo[i].DRR);
-                    document.getElementById("degree").value = reviewInfo[i].degree;
-                    document.getElementById("placeinfo").value = reviewInfo[i].placeinfo;
-                    document.getElementById("drr").value = reviewInfo[i].drrin;
-                    document.getElementById("import").value = reviewInfo[i].import;
-                    getreference(reviewInfo[i].ReferenceCenter);
-                    gettreatment(reviewInfo[i].TreatmentCenter);
-                    getmovement(reviewInfo[i].Movement);
-
-                    document.getElementById("IsExport").innerHTML = charge2(reviewInfo[i].IsExport);
-                    document.getElementById("applyuser").innerHTML = reviewInfo[i].name;
-                    document.getElementById("time").innerHTML = reviewInfo[i].ReviewTime;
+    document.getElementById("userID").value = userID;
+    document.getElementById("applyuser").innerHTML = userName;
+    document.getElementById("time").innerHTML = getNowFormatDate();
+    document.getElementById("hidetreatID").value = treatID;
+    if (isInArray(progress, '12')) {
+        var reviewInfo = getReviewInfo(treatID);       
+                document.getElementById(plan(reviewInfo.PlanQA)).checked = true;
+                document.getElementById("degree").value = reviewInfo.degree;
+                document.getElementById("remark").value = reviewInfo.Remark;
+                if(reviewInfo.sum=="1"){
+                    document.getElementById("check1").innerHTML = "通过";
+                    document.getElementById("check2").innerHTML = "通过";
+                    document.getElementById("check3").innerHTML = "通过";
+                    document.getElementById("check4").innerHTML = "通过";
+                    document.getElementById("check5").innerHTML = "通过";
+                    document.getElementById("check6").innerHTML = "通过";
+                    document.getElementById("check7").innerHTML = "通过";
+                    document.getElementById("check8").innerHTML = "通过";
+                    document.getElementById("check9").innerHTML = "通过";
+                    document.getElementById("check10").innerHTML = "通过";
+                    document.getElementById("check11").innerHTML = "通过";
+                    document.getElementById("check12").innerHTML = "通过";
+                    document.getElementById("check13").innerHTML = "通过";
+                    document.getElementById("check14").innerHTML = "通过";
+                    document.getElementById("check15").innerHTML = "通过";
+                    document.getElementById("applyuser").innerHTML = reviewInfo.name;
+                    document.getElementById("time").innerHTML = reviewInfo.ReviewTime;
                     if (reviewInfo[i].userID == userID) {
                         window.parent.document.getElementById("edit").removeAttribute("disabled");
-
                     }
-                }
+                
             }
+
         }
     }
-    $('#ReferenceCenterX').bind('input propertychange', function () {
-        if (document.getElementById("ReferenceCenterX").value == "") {
-            document.getElementById("MovementX").value = "";
-        } else {
-            document.getElementById("MovementX").value =  numSub(parseFloat(document.getElementById("ReferenceCenterX").value) , parseFloat(document.getElementById("TreatmentCenterX").value));
-        }
-    });
-    $('#TreatmentCenterX').bind('input propertychange', function () {
-        if (document.getElementById("TreatmentCenterX").value == "") {
-            document.getElementById("MovementX").value = "";
-        } else {
-            document.getElementById("MovementX").value = numSub(parseFloat(document.getElementById("ReferenceCenterX").value) , parseFloat(document.getElementById("TreatmentCenterX").value));
-        }
-    });
-    $('#ReferenceCenterY').bind('input propertychange', function () {
-        if (document.getElementById("ReferenceCenterY").value == "") {
-            document.getElementById("MovementY").value = "";
-        } else {
-            document.getElementById("MovementY").value = numSub(parseFloat(document.getElementById("ReferenceCenterY").value) , parseFloat(document.getElementById("TreatmentCenterY").value));
-        }
-    });
-    $('#TreatmentCenterY').bind('input propertychange', function () {
-        if (document.getElementById("TreatmentCenterY").value == "") {
-            document.getElementById("MovementY").value = "";
-        } else {
-            document.getElementById("MovementY").value = numSub(parseFloat(document.getElementById("ReferenceCenterY").value), parseFloat(document.getElementById("TreatmentCenterY").value));
-        }
-    });
-    $('#ReferenceCenterZ').bind('input propertychange', function () {
-        if (document.getElementById("ReferenceCenterZ").value == "") {
-            document.getElementById("MovementZ").value = "";
-        } else {
-            document.getElementById("MovementZ").value =  numSub(parseFloat(document.getElementById("ReferenceCenterZ").value) , parseFloat(document.getElementById("TreatmentCenterZ").value));
-        }
-    });
-    $('#TreatmentCenterZ').bind('input propertychange', function () {
-        if (document.getElementById("TreatmentCenterZ").value == "") {
-            document.getElementById("MovementZ").value = "";
-        } else {
-            document.getElementById("MovementZ").value =numSub(parseFloat(document.getElementById("ReferenceCenterZ").value) , parseFloat(document.getElementById("TreatmentCenterZ").value));
-        }
-    });
 }
+
 function numSub(num1, num2) {
     var baseNum, baseNum1, baseNum2;
     try {
@@ -154,99 +125,276 @@ function numSub(num1, num2) {
     baseNum = Math.pow(10, Math.max(baseNum1, baseNum2));
     var precision = (baseNum1 >= baseNum2) ? baseNum1 : baseNum2;
     return ((num1 * baseNum - num2 * baseNum) / baseNum).toFixed(precision);
-};
-function createdegreeItem(thiselement) {
-    var PartItem = JSON.parse(getdegreeItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--优化程度选择--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+}
+function check() {
+    var item = 1;
+    signal = 1;
+    if (document.getElementById("positioninfomation1").innerHTML == document.getElementById("positioninfomation2").innerHTML) {
+        document.getElementById("check1").innerHTML = "通过";
+    } else {
+        item = 0;
+    }
+    if (document.getElementById("dose1").innerHTML == document.getElementById("dose2").innerHTML) {
+        document.getElementById("check2").innerHTML = "通过";
+    }
+    else {
+        item = 0;
+    }
+    if (document.getElementById("Equipment1").innerHTML == document.getElementById("Equipment2").innerHTML) {
+        document.getElementById("check3").innerHTML = "通过";
+    } else {
+        item = 0;
+    }
+    if (document.getElementById("plansystem1").innerHTML == document.getElementById("plansystem2").innerHTML) {
+        document.getElementById("check4").innerHTML = "通过";
+    } else {
+        item = 0;
+    }
+    if (document.getElementById("Coplanar1").innerHTML == document.getElementById("Coplanar2").innerHTML) {
+        document.getElementById("check12").innerHTML = "通过";
+    } else {
+        item = 0;
+    }
+    if (document.getElementById("Irradiation1").innerHTML == document.getElementById("Irradiation2").innerHTML) {
+        document.getElementById("check5").innerHTML = "通过";
+    } else {
+        item = 0;
+    }
+    if (document.getElementById("Raytype1").innerHTML == document.getElementById("Raytype2").innerHTML) {
+        document.getElementById("check6").innerHTML = "通过";
+
+    } else {
+        item = 0;
+    }
+    if (document.getElementById("energy1").innerHTML == document.getElementById("energy2").innerHTML) {
+        document.getElementById("check7").innerHTML = "通过";
+
+    } else {
+        item = 0;
+    }
+    if (document.getElementById("IlluminatedNumber1").innerHTML == document.getElementById("IlluminatedNumber2").innerHTML) {
+        document.getElementById("check8").innerHTML = "通过";
+
+    } else {
+        item = 0;
+    }
+    if (document.getElementById("Illuminatedangle1").innerHTML == document.getElementById("Illuminatedangle2").innerHTML) {
+        document.getElementById("check9").innerHTML = "通过";
+
+    } else {
+        item = 0;
+    }
+    if (document.getElementById("MU1").innerHTML == document.getElementById("MU2").innerHTML) {
+        document.getElementById("check10").innerHTML = "通过";
+       
+    } else {
+        item = 0;
+    }
+    if (document.getElementById("ControlPoint1").innerHTML == document.getElementById("ControlPoint2").innerHTML) {
+        document.getElementById("check11").innerHTML = "通过";
+        
+    } else {
+        item = 0;
+    }
+    if (item == 0) {
+        signal = 0;
+    }
+}
+function charge4(arr) {
+    var count = 1;
+    var array = new Array();
+    for (var item in arr) {
+        array[item] = arr[item].Irradiation2;
+    }
+    var yuansu = new Array();
+    var sum = new Array();
+    for (var i = 0; i < array.length; i++) {
+        for (var j = i + 1; j < array.length; j++) {
+            if (array[i] == array[j]) {
+                count++;
+                array.splice(j, 1);
+            }
+        }
+        yuansu[i] = array[i];
+        sum[i] = count;
+        count = 1;
+    }
+    var newsum = new Array();
+    for (var item in sum) {
+        newsum[item] = sum[item];
+    }
+    newsum.sort();
+    for (var i = 0; i < sum.length; i++) {
+        if (sum[i] == newsum[newsum.length - 1]) {
+            return yuansu[i];
         }
     }
-
-
 }
-//第二步部位项数据库调取
-function getdegreeItem() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "getdegree.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
+function confirm1(input, Button, cancelButton) {
+    var content = input.innerHTML;
+    if (content == "通过") {
+        signal = 1;
+    }
+    Button.style.display = "none";
+    cancelButton.style.display = "block";
 }
-function createplaceinfoItem(thiselement) {
-    var PartItem = JSON.parse(getplaceinfoItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--信息选择--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+
+function cancelconfirm(input, Button, cancelButton) {
+    var content = input.innerHTML;
+    if (content == "取消通过") {
+        signal = 0;
+    }
+    Button.style.display = "block";
+    cancelButton.style.display = "none";
+}
+function charge5(arr) {
+    var count = 1;
+    var array = new Array();
+    for (var item in arr) {
+        array[item] = arr[item].Illuminatedangle2;
+    }
+    var yuansu = new Array();
+    var sum = new Array();
+    for (var i = 0; i < array.length; i++) {
+        for (var j = i + 1; j < array.length; j++) {
+            if (array[i] == array[j]) {
+                count++;
+                array.splice(j, 1);
+            }
+        }
+        yuansu[i] = array[i];
+        sum[i] = count;
+        count = 1;
+    }
+    var newsum = new Array();
+    for (var item in sum) {
+        newsum[item] = sum[item];
+    }
+    newsum.sort();
+    for (var i = 0; i < sum.length; i++) {
+        if (sum[i] == newsum[newsum.length - 1]) {
+            return yuansu[i];
         }
     }
-
-
 }
-//第二步部位项数据库调取
-function getplaceinfoItem() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "getplaceinfo.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
+function cale2(arr) {
+    var array = new Array();
+    for (var item in arr) {
+        array[item] = arr[item].MU2 * 1;
+    }
+    var len = array.length;
+    var sum = 0;
+    for (var i = 0; i < len; i++) {
+        sum += array[i];
+    }
+    sum = parseInt(sum * Math.pow(10, 6) + 0.5, 10) / Math.pow(10, 6);
+    return sum;
 }
-function createdrrItem(thiselement) {
-    var PartItem = JSON.parse(getdrrItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--drr选择--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
-        }
+function cale3(arr) {
+    var array = new Array();
+    for (var item in arr) {
+        array[item] = arr[item].ControlPoint2 * 1;
+    }
+    var len = array.length;
+    var sum = 0;
+    for (var i = 0; i < len; i++) {
+        sum += array[i];
     }
 
-
+    return sum;
 }
-//第二步部位项数据库调取
-function getdrrItem() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "getdrr.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
-}
-function createimportItem(thiselement) {
-    var PartItem = JSON.parse(getimportItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--导出选择--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
-        }
-    }
+//function createdegreeItem(thiselement) {
+//    var PartItem = JSON.parse(getdegreeItem()).Item;
+//    thiselement.options.length = 0;
+//    thiselement.options[0] = new Option("--优化程度选择--");
+//    thiselement.options[0].value = "allItem";
+//    for (var i = 0; i < PartItem.length; i++) {
+//        if (PartItem[i] != "") {
+//            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+//            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+//        }
+//    }
 
 
-}
-//第二步部位项数据库调取
-function getimportItem() {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "getimport.ashx";
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send();
-    var Items = xmlHttp.responseText;
-    return Items;
-}
+//}
+////第二步部位项数据库调取
+//function getdegreeItem() {
+//    var xmlHttp = new XMLHttpRequest();
+//    var url = "getdegree.ashx";
+//    xmlHttp.open("GET", url, false);
+//    xmlHttp.send();
+//    var Items = xmlHttp.responseText;
+//    return Items;
+//}
+//function createplaceinfoItem(thiselement) {
+//    var PartItem = JSON.parse(getplaceinfoItem()).Item;
+//    thiselement.options.length = 0;
+//    thiselement.options[0] = new Option("--信息选择--");
+//    thiselement.options[0].value = "allItem";
+//    for (var i = 0; i < PartItem.length; i++) {
+//        if (PartItem[i] != "") {
+//            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+//            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+//        }
+//    }
+
+
+//}
+////第二步部位项数据库调取
+//function getplaceinfoItem() {
+//    var xmlHttp = new XMLHttpRequest();
+//    var url = "getplaceinfo.ashx";
+//    xmlHttp.open("GET", url, false);
+//    xmlHttp.send();
+//    var Items = xmlHttp.responseText;
+//    return Items;
+//}
+//function createdrrItem(thiselement) {
+//    var PartItem = JSON.parse(getdrrItem()).Item;
+//    thiselement.options.length = 0;
+//    thiselement.options[0] = new Option("--drr选择--");
+//    thiselement.options[0].value = "allItem";
+//    for (var i = 0; i < PartItem.length; i++) {
+//        if (PartItem[i] != "") {
+//            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+//            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+//        }
+//    }
+
+
+//}
+////第二步部位项数据库调取
+//function getdrrItem() {
+//    var xmlHttp = new XMLHttpRequest();
+//    var url = "getdrr.ashx";
+//    xmlHttp.open("GET", url, false);
+//    xmlHttp.send();
+//    var Items = xmlHttp.responseText;
+//    return Items;
+//}
+//function createimportItem(thiselement) {
+//    var PartItem = JSON.parse(getimportItem()).Item;
+//    thiselement.options.length = 0;
+//    thiselement.options[0] = new Option("--导出选择--");
+//    thiselement.options[0].value = "allItem";
+//    for (var i = 0; i < PartItem.length; i++) {
+//        if (PartItem[i] != "") {
+//            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+//            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+//        }
+//    }
+
+
+//}
+////第二步部位项数据库调取
+//function getimportItem() {
+//    var xmlHttp = new XMLHttpRequest();
+//    var url = "getimport.ashx";
+//    xmlHttp.open("GET", url, false);
+//    xmlHttp.send();
+//    var Items = xmlHttp.responseText;
+//    return Items;
+//}
 function isInArray(arr, value) {
     for (var i = 0; i < arr.length; i++) {
         if (value === arr[i]) {
@@ -262,6 +410,30 @@ function hosttext(str) {
         return ("住院,住院号:" + str);
     }
 }
+function cale(str) {
+    var lists = new Array();
+    var dose = new Array();
+    lists = str.split(";");
+    var a = 0;
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        dose[a] = list[5];
+        a++;
+    }
+    var max = 0;
+    var len = dose.length;
+    if (len = 1) {
+        return lists[0].split(",")[3] + "/" + lists[0].split(",")[5];
+    } else {
+        for (var i = 1; i < len; i++) {
+            if (dose[i] > max) {
+                max = i;
+            }
+        }
+        return lists[max].split(",")[3] + "/" + lists[max].split(",")[5];
+    }
+}
 function getReviewInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "ReviewInfo.ashx?treatID=" + treatID;
@@ -271,11 +443,22 @@ function getReviewInfo(treatID) {
     json = json.replace(/\r/g, "");
     json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
-    return obj1.reviewInfo;
+    return obj1.reviewInfo[0];
 }
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "designConfirmInfo.ashx?treatID=" + treatID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    json = json.replace(/\r/g, "");
+    json = json.replace(/\n/g, "\\n");
+    var obj1 = eval("(" + json + ")");
+    return obj1.designInfo;
+}
+function getFieldInfo(treatID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "FieldConfirmInfo.ashx?treatID=" + treatID;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -316,54 +499,6 @@ function getNowFormatDate() {
     return currentdate;
 }
 
-
-function confirm(input, Confirm, Confirm1, Button, cancelButton) {
-    var content = input.innerHTML;
-    switch (content) {
-        case "通过":
-            Confirm.innerHTML = "通过";
-            Confirm1.value = "1";
-            break;
-        case "可执行":
-            Confirm.innerHTML = "可执行";
-            Confirm1.value = "1";
-            break;
-        case "不可再优化":
-            Confirm.innerHTML = "不可再优化";
-            Confirm1.value = "1";
-            break;
-        case "是":
-            Confirm.innerHTML = "是";
-            Confirm1.value = "1";
-            break;
-    }
-    Button.style.display = "none";
-    cancelButton.style.display = "block";
-}
-
-function cancelconfirm(input, Confirm, Confirm1, Button, cancelButton) {
-    var content = input.innerHTML;
-    switch (content) {
-        case "取消通过":
-            Confirm.innerHTML = "不通过";
-            Confirm1.value = "0";
-            break;
-        case "不可执行":
-            Confirm.innerHTML = "不可执行";
-            Confirm1.value = "0";
-            break;
-        case "可再优化":
-            Confirm.innerHTML = "可再优化";
-            Confirm1.value = "0";
-            break;
-        case "否":
-            Confirm.innerHTML = "否";
-            Confirm1.value = "0";
-            break;
-    }
-    Button.style.display = "block";
-    cancelButton.style.display = "none";
-}
 function getUserName() {
     var xmlHttp = new XMLHttpRequest();
     var url = "GetUserName.ashx";
@@ -408,6 +543,12 @@ function charge1(evt) {
     else
         return "是";
 }
+function charge3(evt) {
+    if (evt == "0.0")
+        return "不是";
+    else
+        return "是";
+}
 function charge2(evt) {
     if (evt == "0")
         return "不通过";
@@ -433,20 +574,8 @@ function getmovement(ReferenceCenter) {
     document.getElementById("MovementZ").value = Reference[2];
 }
 function save() {
-    if (document.getElementById("degree").value == "allItem") {
-        window.alert("再优化程度没有选择");
-        return false;
-    }
-    if (document.getElementById("placeinfo").value == "allItem") {
-        window.alert("摆位野信息没有选择");
-        return false;
-    }
-    if (document.getElementById("drr").value == "allItem") {
-        window.alert("drr没有选择");
-        return false;
-    }
-    if (document.getElementById("import").value == "allItem") {
-        window.alert("导出信息没有选择");
+    if (signal == 0) {
+        window.alert("请核对正确");
         return false;
     }
     if ((typeof (userID) == "undefined")) {
@@ -479,34 +608,18 @@ function save() {
         }
     });
 }
-function remove() {   
-    document.getElementById("confirmTechnology").removeAttribute("disabled");
-    document.getElementById("confirmEquipment").removeAttribute("disabled");
-    document.getElementById("confirmPlanSystem").removeAttribute("disabled");
-    document.getElementById("confirmAngle").removeAttribute("disabled");
+function remove() {
+ 
     document.getElementById("confirmCoplanar").removeAttribute("disabled");
-    document.getElementById("confirmMachineNumbe").removeAttribute("disabled");
-    document.getElementById("confirmControlPoint").removeAttribute("disabled");
-    document.getElementById("confirmGrid").removeAttribute("disabled");
-    document.getElementById("confirmAlgorithm").removeAttribute("disabled");
-    document.getElementById("confirmFeasibility").removeAttribute("disabled");
-    document.getElementById("confirmReoptimization").removeAttribute("disabled");
-    document.getElementById("confirmPlaceInformation").removeAttribute("disabled");
-    document.getElementById("confirmIsExport").removeAttribute("disabled");
-    document.getElementById("confirmDRR").removeAttribute("disabled");
-    document.getElementById("ReferenceCenterX").removeAttribute("disabled");
-    document.getElementById("ReferenceCenterY").removeAttribute("disabled");
-    document.getElementById("ReferenceCenterZ").removeAttribute("disabled");
-    document.getElementById("TreatmentCenterX").removeAttribute("disabled");
-    document.getElementById("TreatmentCenterY").removeAttribute("disabled");
-    document.getElementById("TreatmentCenterZ").removeAttribute("disabled");
-    document.getElementById("MovementX").removeAttribute("disabled");
-    document.getElementById("MovementY").removeAttribute("disabled");
-    document.getElementById("MovementZ").removeAttribute("disabled");
+    document.getElementById("Button1").removeAttribute("disabled");
+    document.getElementById("Button3").removeAttribute("disabled");
+    document.getElementById("degree").removeAttribute("disabled");
     document.getElementById("fp_upload").removeAttribute("disabled");
     document.getElementById("fp_upload1").removeAttribute("disabled");
-    document.getElementById("degree").removeAttribute("disabled");
-    document.getElementById("placeinfo").removeAttribute("disabled");
-    document.getElementById("drr").removeAttribute("disabled");
-    document.getElementById("import").removeAttribute("disabled");
+}
+function plan(evt) {
+    if (evt == "1")
+        return "yes";
+    else
+        return "no";
 }

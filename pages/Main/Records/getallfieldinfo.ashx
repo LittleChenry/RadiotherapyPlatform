@@ -38,7 +38,7 @@ public class getallfieldinfo : IHttpHandler {
         string tps =sqlOperation.ExecuteScalar(countcommand1);
         string countcommand2 = "select positioninfomation from treatment where ID=@treatmentid ";
         string pos =sqlOperation.ExecuteScalar(countcommand2);
-        string sqlCommand = "SELECT code,mu,equipment,radiotechnique,radiotype,fieldinfomation.energy as energy1,design.energy as energy2,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,Operate_Time,Name,design.* from fieldinfomation,user,design,treatment where User_ID=user.ID and design.ID=treatment.Design_ID and treatment.ID=treatmentid and treatmentid=@treatmentid ";
+        string sqlCommand = "SELECT code,mu,equipment,User_ID,radiotechnique,radiotype,fieldinfomation.energy as energy1,design.energy as energy2,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,Operate_Time,Name,design.* from fieldinfomation,user,design,treatment where User_ID=user.ID and design.ID=treatment.Design_ID and treatment.ID=treatmentid and treatmentid=@treatmentid ";
         sqlOperation1.AddParameterWithValue("@treatmentid", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation1.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
@@ -53,7 +53,7 @@ public class getallfieldinfo : IHttpHandler {
                 "\",\"angleframe\":\"" + reader["angleframe"].ToString() + "\",\"noseangle\":\"" + reader["noseangle"].ToString() + "\",\"bedrotation\":\"" + reader["bedrotation"].ToString() + "\",\"subfieldnumber\":\"" + reader["subfieldnumber"].ToString() + "\",\"tps\":\"" + tps + "\",\"pos\":\"" + pos +
                 "\",\"Singledose\":\"" + reader["Singledose"].ToString() + "\",\"Totaldose\":\"" + reader["Totaldose"].ToString() + "\",\"Illuminatedangle\":\"" + reader["Illuminatedangle"].ToString() + "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() +
                 "\",\"Irradiation\":\"" + reader["Irradiation_ID"].ToString() + "\",\"energy2\":\"" + reader["energy2"].ToString() + "\",\"time\":\"" + date1 + "\",\"Name\":\"" + reader["Name"].ToString() +
-                "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() +
+                "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() + "\",\"userID\":\"" + reader["User_ID"].ToString() +
                 "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\"}");
             if (i < count - 1)
             {

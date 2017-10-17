@@ -36,15 +36,9 @@ public class ReviewInfo : IHttpHandler {
     private string getfixrecordinfo(HttpContext context)
     {
         int treatid = Convert.ToInt32(context.Request.QueryString["treatID"]);
-        string sqlCommand1 = "select Patient_ID from treatment where treatment.ID=@treatID";
-        sqlOperation.AddParameterWithValue("@treatID", treatid);
-        int patientid = int.Parse(sqlOperation.ExecuteScalar(sqlCommand1));
-        string sqlcommand2 = "select count(treatment.ID) from treatment,review where treatment.Patient_ID=@patient and treatment.Review_ID=review.ID";
-        sqlOperation.AddParameterWithValue("@patient", patientid);
-        int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
-        int i = 1;
-        string sqlCommand = "select review.*,user.Name as username,review.ID as reviewid,Treatmentname from review,treatment,user where review.ID=treatment.Review_ID and review._User_ID=user.ID and treatment.Patient_ID=@patient";
-        sqlOperation2.AddParameterWithValue("@patient", patientid);
+     
+        string sqlCommand = "select review.*,user.Name as username,review.ID as reviewid,Treatmentname from review,treatment,user where review.ID=treatment.Review_ID and review._User_ID=user.ID and treatment.ID=@treatID";
+        sqlOperation2.AddParameterWithValue("@treatID", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"reviewInfo\":[");
         while (reader.Read())
@@ -52,21 +46,10 @@ public class ReviewInfo : IHttpHandler {
             string date = reader["ReviewTime"].ToString();
             DateTime dt1 = Convert.ToDateTime(date);
             string date1 = dt1.ToString("yyyy-MM-dd HH:mm");
-            backText.Append("{\"ReviewTime\":\"" + date1 + "\",\"name\":\"" + reader["username"] + "\",\"TechnologyConfirm\":\"" + reader["TechnologyConfirm"] +
-                "\",\"PlanSystemConfirm\":\"" + reader["PlanSystemConfirm"] + "\",\"EquipmentConfirm\":\"" + reader["EquipmentConfirm"] +
-                "\",\"AngleConfirm\":\"" + reader["AngleConfirm"] + "\",\"CoplanarConfirm\":\"" + reader["CoplanarConfirm"] +
-                "\",\"MachineNumbeConfirm\":\"" + reader["MachineNumbeConfirm"] + "\",\"ControlPointConfirm\":\"" + reader["ControlPointConfirm"] +
-                "\",\"GridConfirm\":\"" + reader["GridConfirm"] + "\",\"AlgorithmConfirm\":\"" + reader["AlgorithmConfirm"] +
-                "\",\"FeasibilityConfirm\":\"" + reader["FeasibilityConfirm"] + "\",\"Reoptimization\":\"" + reader["Reoptimization"] +
-                "\",\"ReferenceCenter\":\"" + reader["ReferenceCenter"] + "\",\"TreatmentCenter\":\"" + reader["TreatmentCenter"] +
-                "\",\"Movement\":\"" + reader["Movement"] + "\",\"PlaceInformation\":\"" + reader["PlaceInformation"] + "\",\"reviewID\":\"" + reader["reviewid"] +
-                "\",\"DRR\":\"" + reader["DRR"] + "\",\"IsExport\":\"" + reader["IsExport"] + "\",\"Treatmentname\":\"" + reader["Treatmentname"] +"\",\"userID\":\"" + reader["_User_ID"]+
-                "\",\"placeinfo\":\"" + reader["placeinfo"] + "\",\"degree\":\"" + reader["degree"] + "\",\"drrin\":\"" + reader["drrin"] + "\",\"import\":\"" + reader["import"] + "\"}");
-            if (i < count)
-            {
-                backText.Append(",");
-            }
-            i++;
+            backText.Append("{\"ReviewTime\":\"" + date1 + "\",\"name\":\"" + reader["username"] + "\",\"sum\":\"" + reader["SUM"] +
+                "\",\"degree\":\"" + reader["Percent"] + "\",\"PlanQA\":\"" + reader["PlanQA"] + "\",\"userID\":\"" + reader["_User_ID"] +
+                "\",\"Remark\":\"" + reader["Remark"] + "\"}");
+          
         }
         backText.Append("]}");
         reader.Close();

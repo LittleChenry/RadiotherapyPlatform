@@ -48,11 +48,14 @@ public class designConfirmInfo : IHttpHandler {
         string sqlCommand4 = "select Patient_ID from treatment where treatment.ID=@treatID";
         sqlOperation.AddParameterWithValue("@treatID", treatID);
         int patientid = int.Parse(sqlOperation.ExecuteScalar(sqlCommand4));
+        string sqlCommand6 = "select bodyposition.Name from treatment,fixed,bodyposition where bodyposition.ID=fixed.BodyPosition and treatment.Fixed_ID =fixed.ID and treatment.ID=@treatID";
+        sqlOperation.AddParameterWithValue("@treatID", treatID);
+        string posit = sqlOperation.ExecuteScalar(sqlCommand6);
         string sqlcommand5= "select count(treatment.ID) from treatment,design where treatment.Patient_ID=@patient and treatment.Design_ID=design.ID";
         sqlOperation.AddParameterWithValue("@patient", patientid);
         int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand5));
         int i = 1;
-        string sqlCommand = "select design.ID as designid,Treatmentname,technology.name as tname,equipmenttype.type as eqname,raytype.Name as raytypename,plansystem.Name as planname,user.Name as doctor,design.* from technology,equipmenttype,design,user,treatment,plansystem,raytype where raytype.ID=design.Raytype_ID and plansystem.ID=design.PlanSystem_ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";
+        string sqlCommand = "select design.ID as designid,Treatmentname,technology.name as tname,equipmenttype.type as eqname,irradiation.Name as irrname,raytype.Name as raytypename,plansystem.Name as planname,user.Name as doctor,design.* from irradiation,technology,equipmenttype,design,user,treatment,plansystem,raytype where irradiation.ID=design.Irradiation_ID and raytype.ID=design.Raytype_ID and plansystem.ID=design.PlanSystem_ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
         StringBuilder backText = new StringBuilder("{\"designInfo\":[");
@@ -96,6 +99,43 @@ public class designConfirmInfo : IHttpHandler {
                 sqlOperation2.AddParameterWithValue("@patient", patientid);
                 operate = sqlOperation2.ExecuteScalar(sqlCommand3);
             }
+            string left = "";
+            string right = "";
+            string rise = "";
+            string drop = "";
+            string enter = "";
+            string out1 = "";
+            if (!(reader["parameters"] is DBNull))
+            {
+                string parameters = reader["parameters"].ToString();
+                string a1 = parameters.Split(new char[1] { ';' })[0];
+                string a2 = parameters.Split(new char[1] { ';' })[1];
+                string a3 = parameters.Split(new char[1] { ';' })[2];
+                if (Convert.ToDouble(a1) > 0)
+                {
+                    left = a1;
+                }
+                else
+                {
+                    right = a1.Substring(1);
+                }
+                if (Convert.ToDouble(a2) > 0)
+                {
+                    rise = a2;
+                }
+                else
+                {
+                    drop = a2.Substring(1);
+                }
+                if (Convert.ToDouble(a3) > 0)
+                {
+                    enter = a3;
+                }
+                else
+                {
+                    out1 = a3.Substring(1);
+                }
+            }
             string Do = reader["DosagePriority"].ToString();
             string Priority = Do.Split(new char[1] { '&' })[0];
             string Dosage = Do.Split(new char[1] { '&' })[1];
@@ -103,8 +143,10 @@ public class designConfirmInfo : IHttpHandler {
                  "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"ReceiveUser\":\"" + receiver + "\",\"ReceiveTime\":\"" + date2 + "\",\"SubmitUser\":\"" + submit + "\",\"SubmitTime\":\"" + date4 +
                   "\",\"technology\":\"" + reader["tname"].ToString() + "\",\"equipment\":\"" + reader["eqname"].ToString() + "\",\"PlanSystem\":\"" + reader["planname"].ToString() + "\",\"designID\":\"" + reader["designid"].ToString() +
                   "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() +
-                   "\",\"Raytype\":\"" + reader["raytypename"].ToString() +
-                   "\",\"userID\":\"" + reader["Confirm_User_ID"].ToString() + "\"}");
+                   "\",\"Raytype\":\"" + reader["raytypename"].ToString() + "\",\"Coplanar1\":\"" + reader["Coplanar"].ToString() + "\",\"Irradiation1\":\"" + reader["irrname"].ToString() + "\",\"energy1\":\"" + reader["energy"].ToString() +
+                   "\",\"userID\":\"" + reader["Confirm_User_ID"].ToString() + "\",\"IlluminatedNumber1\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"Illuminatedangle1\":\"" + reader["Illuminatedangle"].ToString() +
+                   "\",\"MU1\":\"" + reader["MachineNumbe"].ToString() + "\",\"ControlPoint1\":\"" + reader["ControlPoint"].ToString() +  "\",\"positioninfomation1\":\"" + posit +
+                   "\",\"left\":\"" + left + "\",\"right\":\"" + right + "\",\"rise\":\"" + rise + "\",\"drop\":\"" + drop + "\",\"enter\":\"" + enter + "\",\"out\":\"" + out1 + "\"}");
             if (i < count)
             {
                 backText.Append(",");

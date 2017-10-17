@@ -53,6 +53,9 @@ function Init(evt) {
         document.getElementById("applyuser").innerHTML = fildinfo[0].Name;
         document.getElementById("time").innerHTML = fildinfo[0].time;
         readField(fildinfo);
+        if (fildinfo[0].userID == userID) {
+            window.parent.document.getElementById("edit").removeAttribute("disabled");
+        }
     } else {
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("time").innerHTML = getNowFormatDate();
@@ -314,6 +317,7 @@ function readField(data) {
     for (var i = table.rows.length - 1; i > 0; i--) {
         table.deleteRow(i);
     }
+    aa = data.length;
     document.getElementById("fieldTimes").value = data.length;
     for (var i = 0; i < data.length; i++) {
         var list = new Array();
@@ -366,6 +370,7 @@ function readField(data) {
         t11.innerHTML = '<input id="childs' + i + '" name="childs' + i + '" type="text" value="' + list[10] + '" class="td-input" disabled="disabled"/>';
         //t12.innerHTML = '<a href="javascript:deleteField(' + i + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
     }
+    document.getElementById("aa").value = aa;
 }
 function getfieldinfo() {
     var xmlHttp = new XMLHttpRequest();

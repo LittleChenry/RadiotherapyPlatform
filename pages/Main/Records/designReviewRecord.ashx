@@ -126,45 +126,14 @@ public class designReviewRecord : IHttpHandler {
             {
                 Count = Convert.ToInt32(count) + 1;
             }
-            string x1 = context.Request.Form["ReferenceCenterX"];
-            string y1 = context.Request.Form["ReferenceCenterY"];
-            string z1 = context.Request.Form["ReferenceCenterZ"];
-            string x2 = context.Request.Form["TreatmentCenterX"];
-            string y2 = context.Request.Form["TreatmentCenterY"];
-            string z2 = context.Request.Form["TreatmentCenterZ"];
-            string x3 = context.Request.Form["MovementX"];
-            string y3 = context.Request.Form["MovementY"];
-            string z3 = context.Request.Form["MovementZ"];
-            string ReferenceCenter = x1 + "," + y1 + "," + z1;
-            string TreatmentCenter = x2 + "," + y2 + "," + z2;
-            string Movement = x3 + "," + y3 + "," + z3;
-            string strSqlCommand = "INSERT INTO review(ID,TechnologyConfirm,EquipmentConfirm,CoplanarConfirm,AngleConfirm,MachineNumbeConfirm,ControlPointConfirm,GridConfirm,FeasibilityConfirm,AlgorithmConfirm,Reoptimization,PlaceInformation,DRR,IsExport,ReferenceCenter,TreatmentCenter,Movement,_User_ID,ReviewTime,PlanSystemConfirm,PDF1,PDF2,degree,placeinfo,drrin,import) " +
-                                    "VALUES(@ID,@confirmTechnology,@EquipmentConfirm,@CoplanarConfirm,@AngleConfirm,@MachineNumbeConfirm,@ControlPointConfirm,@GridConfirm,@FeasibilityConfirm,@AlgorithmConfirm,@Reoptimization,@PlaceInformation,@DRR,@IsExport,@ReferenceCenter,@TreatmentCenter,@Movement,@User_ID,@ReviewTime,@planSystemConfirm,@PDF1,@PDF2,@degree,@placeinfo,@drrin,@import)";
+            string strSqlCommand = "INSERT INTO review(ID,PlanQA,_User_ID,ReviewTime,Remark,PDF1,PDF2,SUM,Percent) " +
+                                    "VALUES(@ID,@PlanQA,@User_ID,@ReviewTime,@Remark,@PDF1,@PDF2,@SUM,@Percent)";
             sqlOperation.AddParameterWithValue("@ID", Count);
-            sqlOperation.AddParameterWithValue("@confirmTechnology", Convert.ToInt32(context.Request.Form["TechnologyConfirm1"]));
-            sqlOperation.AddParameterWithValue("@EquipmentConfirm", Convert.ToInt32(context.Request.Form["EquipmentConfirm1"]));
-
-            sqlOperation.AddParameterWithValue("@degree", Convert.ToInt32(context.Request.Form["degree"]));
-            sqlOperation.AddParameterWithValue("@placeinfo", Convert.ToInt32(context.Request.Form["placeinfo"]));
-            sqlOperation.AddParameterWithValue("@drrin", Convert.ToInt32(context.Request.Form["drr"]));
-            sqlOperation.AddParameterWithValue("@import", Convert.ToInt32(context.Request.Form["import"]));
-           
-            sqlOperation.AddParameterWithValue("@AngleConfirm", Convert.ToInt32(context.Request.Form["confirmAngle1"]));
-            sqlOperation.AddParameterWithValue("@CoplanarConfirm", Convert.ToInt32(context.Request.Form["confirmCoplanar1"]));
-            sqlOperation.AddParameterWithValue("@MachineNumbeConfirm", Convert.ToInt32(context.Request.Form["confirmMachineNumbe1"]));
-            sqlOperation.AddParameterWithValue("@ControlPointConfirm", Convert.ToInt32(context.Request.Form["confirmControlPoint1"]));
-            sqlOperation.AddParameterWithValue("@GridConfirm", Convert.ToInt32(context.Request.Form["confirmGrid1"]));
-            sqlOperation.AddParameterWithValue("@AlgorithmConfirm", Convert.ToInt32(context.Request.Form["confirmAlgorithm1"]));
-            sqlOperation.AddParameterWithValue("@Reoptimization", Convert.ToInt32(context.Request.Form["confirmReoptimization1"]));
-            sqlOperation.AddParameterWithValue("@FeasibilityConfirm", Convert.ToInt32(context.Request.Form["confirmFeasibility1"]));
-            sqlOperation.AddParameterWithValue("@PlaceInformation", Convert.ToInt32(context.Request.Form["confirmPlaceInformation1"]));
-            sqlOperation.AddParameterWithValue("@IsExport", Convert.ToInt32(context.Request.Form["confirmIsExport1"]));
-            sqlOperation.AddParameterWithValue("@DRR", Convert.ToInt32(context.Request.Form["confirmDRR1"]));
-            sqlOperation.AddParameterWithValue("@planSystemConfirm", Convert.ToInt32(context.Request.Form["confirmPlanSystem1"]));
-            sqlOperation.AddParameterWithValue("@ReferenceCenter", ReferenceCenter);
-            sqlOperation.AddParameterWithValue("@TreatmentCenter", TreatmentCenter);
+            sqlOperation.AddParameterWithValue("@PlanQA", Convert.ToInt32(context.Request.Form["PlanQA"]));
+            sqlOperation.AddParameterWithValue("@Remark", context.Request.Form["Remark"]);
+            sqlOperation.AddParameterWithValue("@SUM", 1);
+            sqlOperation.AddParameterWithValue("@Percent",context.Request.Form["degree"]);
             sqlOperation.AddParameterWithValue("@ReviewTime", datetime1);
-            sqlOperation.AddParameterWithValue("@Movement", Movement);
             sqlOperation.AddParameterWithValue("@User_ID", userid);
             sqlOperation.AddParameterWithValue("@PDF1", savepath1);
             sqlOperation.AddParameterWithValue("@PDF2", savepath3);
