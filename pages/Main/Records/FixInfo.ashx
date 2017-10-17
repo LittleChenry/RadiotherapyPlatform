@@ -46,7 +46,7 @@ public class FixInfo : IHttpHandler
             sqlOperation.AddParameterWithValue("@patient", patientid);
             int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
             int i = 1;
-            string sqlCommand1 = "select Treatmentname,Treatmentdescribe,fixed.*,material.Name as mname,fixed.ID as fixedid,user.Name as doctor,fixedequipment.Name as fename,fixedrequirements.* from fixedequipment,user,material,fixedrequirements,treatment,fixed where fixed.Application_User_ID=user.ID and fixedequipment.ID=fixed.FixedEquipment_ID and fixed.Model_ID=material.ID and fixed.FixedRequirements_ID=fixedrequirements.ID and treatment.Fixed_ID=fixed.ID and treatment.Patient_ID=@patient";
+            string sqlCommand1 = "select Treatmentname,Treatmentdescribe,fixed.*,material.Name as mname,fixed.ID as fixedid,bodyposition.Name as bodyname,user.Name as doctor,fixedequipment.Name as fename,fixedrequirements.* from fixedequipment,user,material,fixedrequirements,treatment,fixed,bodyposition where fixed.Application_User_ID=user.ID and fixedequipment.ID=fixed.FixedEquipment_ID and fixed.Model_ID=material.ID and fixed.FixedRequirements_ID=fixedrequirements.ID and treatment.Fixed_ID=fixed.ID and treatment.Patient_ID=@patient and bodyposition.ID=fixed.BodyPosition";
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand1);
              StringBuilder backText = new StringBuilder("{\"fixedInfo\":[");
  
@@ -93,7 +93,7 @@ public class FixInfo : IHttpHandler
 
                 }
                 backText.Append("{\"modelID\":\"" + reader["Model_ID"].ToString() + "\",\"requireID\":\"" + reader["FixedRequirements_ID"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"userID\":\"" + operateid +
-                     "\",\"body\":\"" + reader["BodyPosition"].ToString() + "\",\"fixedEquipment\":\"" + reader["FixedEquipment_ID"].ToString() + "\",\"operate\":\"" + operate + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
+                     "\",\"bodyname\":\"" + reader["bodyname"].ToString() + "\",\"body\":\"" + reader["BodyPosition"].ToString() + "\",\"fixedEquipment\":\"" + reader["FixedEquipment_ID"].ToString() + "\",\"operate\":\"" + operate + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
                      "\",\"ApplicationTime\":\"" + date1 + "\",\"ApplicationUser\":\"" + reader["doctor"].ToString() + "\",\"BodyPositionDetail\":\"" + reader["BodyPositionDetail"].ToString() + "\",\"headrest\":\"" + reader["HeadRest_ID"].ToString() +
                      "\",\"AnnexDescription\":\"" + reader["AnnexDescription"].ToString() + "\",\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"Pictures\":\"" + reader["Pictures"].ToString() + "\",\"OperateTime\":\"" + date2 + "\",\"headrestname\":\"" + headname+
                      "\",\"fixedID\":\"" + reader["fixedid"].ToString() + "\",\"modelname\":\"" + reader["mname"].ToString() + "\",\"requirename\":\"" + reader["Requirements"].ToString() + "\",\"fixedEquipmentname\":\"" + reader["fename"].ToString() + "\"}");

@@ -73,10 +73,7 @@
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4" style="padding-left:0px;">体位：</span>
                         <select id="bodyPost" name="bodyPost" class="form-item" disabled="disabled">
-                            <option value="allItem">----选择体位-----</option>
-                            <option value="仰卧">仰卧</option>
-                            <option value="俯卧">俯卧</option>
-                            <option value="侧卧">侧卧</option>
+        
                         </select>
                     </div>
                     <div class="col-xs-6">

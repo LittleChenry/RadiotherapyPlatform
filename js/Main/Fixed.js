@@ -40,6 +40,7 @@ function Init(evt) {
     createmodelselectItem(document.getElementById("modelselect"));
     createspecialrequestItem(document.getElementById("specialrequest"));
     createfixEquipItem(document.getElementById("fixEquip"));
+    createbodyposItem(document.getElementById("bodyPost"));
     createheadrestItem(document.getElementById("Head"));
     $("#current-tab").text(patient.Treatmentdescribe + "体位固定记录");
     var fixedInfo = getFixedInfo(treatID);
@@ -162,6 +163,26 @@ function Init(evt) {
             document.getElementById("Remarks").value = fixedInfo.fixedInfo[k].Remarks;
         });
     });
+}
+function createbodyposItem(thiselement) {
+    var bodyposItem = JSON.parse(getbodyposItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("-------选择体位-------");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < bodyposItem.length; i++) {
+        if (bodyposItem[i] != "") {
+            thiselement.options[i + 1] = new Option(bodyposItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(bodyposItem[i].ID);
+        }
+    }
+}
+function getbodyposItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getbodypost.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
 }
 function createheadrestItem(thiselement) {
     var modelItem = JSON.parse(getrestItem()).Item;

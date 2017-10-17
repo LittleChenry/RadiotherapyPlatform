@@ -36,6 +36,7 @@ function Init(evt) {
     //document.getElementById("hospitalid").innerHTML = patient.Hospital_ID;
     createmodelselectItem(document.getElementById("modelselect"));
     createspecialrequestItem(document.getElementById("specialrequest"));
+    createbodyposItem(document.getElementById("bodyPost"));
     createfixEquipItem(document.getElementById("fixEquip"));
     var info = getfixInfomation(treatmentID);
     $("#current-tab").text(patient.Treatmentdescribe + "体位固定申请");
@@ -47,7 +48,7 @@ function Init(evt) {
                 document.getElementById("modelselect").value = info[i].materialID;
                 document.getElementById("specialrequest").value = info[i].require;
                 document.getElementById("fixEquip").value = info[i].fixedequipid;
-                document.getElementById("bodyPost").value = info[i].BodyPosition;
+                document.getElementById("bodyPost").value = info[i].bodyid;
                 document.getElementById("Remarks").value = info[i].Remarks;
                 if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(info[i].Begin).split(":")[0];
@@ -161,7 +162,7 @@ function Init(evt) {
                 document.getElementById("modelselect").value = info[k].materialID;
                 document.getElementById("specialrequest").value = info[k].require;
                 document.getElementById("fixEquip").value = info[k].fixedequipid;
-                document.getElementById("bodyPost").value = info[k].BodyPosition;
+                document.getElementById("bodyPost").value = info[k].bodyid;
                 document.getElementById("Remarks").value = info[k].Remarks;
             }
         });
@@ -197,7 +198,27 @@ function getNowFormatDate() {
 
     return currentdate;
 }
-
+function createbodyposItem(thiselement)
+{
+    var bodyposItem = JSON.parse(getbodyposItem()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("-------选择体位-------");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < bodyposItem.length; i++) {
+        if (bodyposItem[i] != "") {
+            thiselement.options[i + 1] = new Option(bodyposItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(bodyposItem[i].ID);
+        }
+    }
+}
+function getbodyposItem() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getbodypost.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
 function createfixEquipmachine(thiselement,item) {
     var machineItem = JSON.parse(getmachineItem(item)).Item;
     thiselement.options.length = 0;
