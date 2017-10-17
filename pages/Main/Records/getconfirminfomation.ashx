@@ -82,6 +82,8 @@ public class getconfirminfomation : IHttpHandler {
                 
             }
           reader.Close();
+          string machinenumber = "select sum(mu) from fieldinfomation where treatmentid=@treat";
+          MachineNumbe = sqlOperation.ExecuteScalar(machinenumber); 
           string command = "select count(*) from fieldinfomation where treatmentid=@treat";
           IlluminatedNumber = sqlOperation.ExecuteScalar(command);  
         }
