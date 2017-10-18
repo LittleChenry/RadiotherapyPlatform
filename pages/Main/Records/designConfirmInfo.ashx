@@ -55,7 +55,7 @@ public class designConfirmInfo : IHttpHandler {
         sqlOperation.AddParameterWithValue("@patient", patientid);
         int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand5));
         int i = 1;
-        string sqlCommand = "select design.ID as designid,Treatmentname,technology.name as tname,equipmenttype.type as eqname,irradiation.Name as irrname,raytype.Name as raytypename,plansystem.Name as planname,user.Name as doctor,design.* from irradiation,technology,equipmenttype,design,user,treatment,plansystem,raytype where irradiation.ID=design.Irradiation_ID and raytype.ID=design.Raytype_ID and plansystem.ID=design.PlanSystem_ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";
+        string sqlCommand = "select design.ID as designid,Treatmentname,technology.name as tname,equipmenttype.type as eqname,raytype.Name as raytypename,plansystem.Name as planname,user.Name as doctor,design.* from technology,equipmenttype,design,user,treatment,plansystem,raytype where raytype.ID=design.Raytype_ID and plansystem.ID=design.PlanSystem_ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
         StringBuilder backText = new StringBuilder("{\"designInfo\":[");
@@ -98,6 +98,18 @@ public class designConfirmInfo : IHttpHandler {
                 sqlOperation2.AddParameterWithValue("@ReceiveTime", reader["ReceiveTime"].ToString());
                 sqlOperation2.AddParameterWithValue("@patient", patientid);
                 operate = sqlOperation2.ExecuteScalar(sqlCommand3);
+            }
+            string IRR = null;
+            if (reader["Irradiation_ID"] is DBNull)
+            {
+
+                IRR = null;
+            }
+            else
+            {
+                string sqlCommand3 = "select Name from irradiation where ID=@Irradiation_ID";
+                sqlOperation2.AddParameterWithValue("@Irradiation_ID", Convert.ToInt32(reader["Irradiation_ID"]));
+                IRR = sqlOperation2.ExecuteScalar(sqlCommand3);
             }
             string left = "";
             string right = "";
@@ -143,7 +155,7 @@ public class designConfirmInfo : IHttpHandler {
                  "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"ReceiveUser\":\"" + receiver + "\",\"ReceiveTime\":\"" + date2 + "\",\"SubmitUser\":\"" + submit + "\",\"SubmitTime\":\"" + date4 +
                   "\",\"technology\":\"" + reader["tname"].ToString() + "\",\"equipment\":\"" + reader["eqname"].ToString() + "\",\"PlanSystem\":\"" + reader["planname"].ToString() + "\",\"designID\":\"" + reader["designid"].ToString() +
                   "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() +
-                   "\",\"Raytype\":\"" + reader["raytypename"].ToString() + "\",\"Coplanar1\":\"" + reader["Coplanar"].ToString() + "\",\"Irradiation1\":\"" + reader["irrname"].ToString() + "\",\"energy1\":\"" + reader["energy"].ToString() +
+                   "\",\"Raytype\":\"" + reader["raytypename"].ToString() + "\",\"Coplanar1\":\"" + reader["Coplanar"].ToString() + "\",\"Irradiation1\":\"" + IRR + "\",\"energy1\":\"" + reader["energy"].ToString() +
                    "\",\"userID\":\"" + reader["Confirm_User_ID"].ToString() + "\",\"IlluminatedNumber1\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"Illuminatedangle1\":\"" + reader["Illuminatedangle"].ToString() +
                    "\",\"MU1\":\"" + reader["MachineNumbe"].ToString() + "\",\"ControlPoint1\":\"" + reader["ControlPoint"].ToString() +  "\",\"positioninfomation1\":\"" + posit +
                    "\",\"left\":\"" + left + "\",\"right\":\"" + right + "\",\"rise\":\"" + rise + "\",\"drop\":\"" + drop + "\",\"enter\":\"" + enter + "\",\"out\":\"" + out1 + "\"}");
