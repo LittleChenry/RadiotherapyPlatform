@@ -228,11 +228,11 @@
                                         <td>放疗计划QA</td>
                                         <td colspan="4">
                                             <span class="col-xs-6">
-                                                <input type="radio" name="planQA" id="yes" value="1" />
+                                                <input type="radio" name="planQA" id="yes" value="1" disabled="disabled"/>
                                                 执行
                                             </span>
                                             <span class="col-xs-6">
-                                                <input type="radio" name="planQA" id="no" value="0" />
+                                                <input type="radio" name="planQA" id="no" value="0" disabled="disabled"/>
                                                 未执行
                                             </span>
                                         </td>
@@ -242,7 +242,7 @@
                                         <td>17</td>
                                         <td>通过率</td>
                                         <td colspan="4">
-                                            <input name="degree" id="degree" class="form-item" />
+                                            <input name="degree" id="degree" class="form-item" disabled="disabled"/>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -250,7 +250,7 @@
                                         <td>16</td>
                                         <td>备注条件</td>
                                         <td colspan="4">
-                                            <input name="remark" id="remark" class="form-item"/>
+                                            <input name="remark" id="remark" class="form-item" disabled="disabled"/>
                                         </td>
                                         <td></td>
                                     </tr>
