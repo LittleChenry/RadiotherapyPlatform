@@ -65,12 +65,12 @@ if (isInArray(progress, '11')) {
             document.getElementById("Illuminatedangle2").innerHTML = ruler(fieldInfo);
             document.getElementById("MU2").innerHTML = cale2(fieldInfo);
             document.getElementById("ControlPoint2").innerHTML = cale3(fieldInfo);
-            document.getElementById("left").innerHTML = designInfo[i].left;
-            document.getElementById("right").innerHTML = designInfo[i].right;
-            document.getElementById("rise").innerHTML = designInfo[i].rise;
-            document.getElementById("drop").innerHTML = designInfo[i].drop;
-            document.getElementById("enter").innerHTML = designInfo[i].enter;
-            document.getElementById("out").innerHTML = designInfo[i].out;
+            document.getElementById("left").innerHTML = (designInfo[i].left == "")?"":(designInfo[i].left+"cm");
+            document.getElementById("right").innerHTML = (designInfo[i].right == "")?"":(designInfo[i].right+"cm");
+            document.getElementById("rise").innerHTML = (designInfo[i].rise == "")?"":(designInfo[i].rise+"cm");
+            document.getElementById("drop").innerHTML = (designInfo[i].drop == "")?"":(designInfo[i].drop+"cm");
+            document.getElementById("enter").innerHTML = (designInfo[i].enter == "")?"":(designInfo[i].enter+"cm");
+            document.getElementById("out").innerHTML = (designInfo[i].out == "")?"":(designInfo[i].out+"cm");
         }
     }
     document.getElementById("userID").value = userID;

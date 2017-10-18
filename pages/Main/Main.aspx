@@ -202,6 +202,18 @@
                     </a>
                 </li>
                 <li class="treeview">
+                  <a href="#">
+                    <i class="fa fa-table"></i> <span>Tables</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li class="active"><a href="simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
+                    <li><a href="data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
+                  </ul>
+                </li>
+                <li class="treeview">
                     <a href="#">
                         <i class="fa fa-rmb"></i>
                         <span>收费</span>
