@@ -71,9 +71,12 @@
                         <div class="item col-xs-6">射野数量：
                             <input id="IlluminatedNumber" class="form-item" name="IlluminatedNumber" disabled="disabled"/>
                         </div>
-                       <div class="item col-xs-6">射野角度：
-                           <input id="Illuminatedangle" class="form-item" name="Illuminatedangle" disabled="disabled"/>
-                       </div>                      
+                        <div class="item col-xs-6">非共面照射：
+                           <select id="Coplanar" name="Coplanar" class="form-item" disabled="disabled">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                           </select>
+                        </div>                                           
                 </div>
                 <div class="single-row">
                         <div class="item col-xs-6">机器跳数：
@@ -84,12 +87,10 @@
                         </div>
                 </div>
                 <div class="single-row">
-                        <div class="item col-xs-6">非共面照射：
-                           <select id="Coplanar" name="Coplanar" class="form-item" disabled="disabled">
-                                <option value="1">是</option>
-                                <option value="0">否</option>
-                           </select>
-                        </div>                       
+                       <div class="item area-group col-xs-12">
+                           <span class="col-xs-4" style="padding-left:0px;">射野角度(以逗号隔开)：</span>
+                           <textarea id="Illuminatedangle" class="form-area col-xs-12" name="Illuminatedangle" disabled="disabled"></textarea>
+                       </div>                         
                 </div>
             </div>
             <div class="paper-content">

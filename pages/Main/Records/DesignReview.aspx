@@ -32,17 +32,7 @@
             <input type="hidden"  id="TechnologyConfirm1" name="TechnologyConfirm1" value="0"/>
             <input type="hidden"  id="confirmPlanSystem1" name="confirmPlanSystem1" value="0"/>
             <input type="hidden"  id="EquipmentConfirm1" name="EquipmentConfirm1" value="0"/>
-            <input type="hidden"  id="confirmAngle1" name="confirmAngle1" value="0"/>
-            <input type="hidden"  id="confirmCoplanar1" name="confirmCoplanar1" value="0"/>
-            <input type="hidden"  id="confirmMachineNumbe1" name="confirmMachineNumbe1" value="0"/>
-            <input type="hidden"  id="confirmControlPoint1" name="confirmControlPoint1" value="0"/>
-            <input type="hidden"  id="confirmGrid1" name="confirmGrid1" value="0"/>
-            <input type="hidden"  id="confirmAlgorithm1" name="confirmAlgorithm1" value="0"/>
-            <input type="hidden"  id="confirmReoptimization1" name="confirmReoptimization1" value="0"/>
-            <input type="hidden"  id="confirmFeasibility1" name="confirmFeasibility1" value="0"/>
-            <input type="hidden"  id="confirmPlaceInformation1" name="confirmPlaceInformation1" value="0"/>
-            <input type="hidden"  id="confirmIsExport1" name="confirmIsExport1" value="0"/>
-            <input type="hidden"  id="confirmDRR1" name="confirmDRR1" value="0"/>                  
+            
             <input type="hidden" id="progress" />
             <div class="paper-title">
                  治疗计划复核
@@ -70,7 +60,7 @@
             <div class="paper-content">
                 <div class="content-title">
                     <span>复核计划信息：
-                    <button id="confirm" type="button" class="btn btn-block btn-success" onclick="check()" >通过</button></span>
+                    <button id="confirm" type="button" class="btn btn-block btn-success" onclick="check()" disabled="disabled">通过</button></span>
                 </div>
                 <div class="single-row">
                     <div class="item area-group col-xs-12">
@@ -177,8 +167,8 @@
                 <div class="single-row">
                        <span class="form-text col-xs-6" style="padding-left:0px;">移床参数：</span>
                     <span id="check13" class="form-text col-xs-6" > 
-                       <button id="confirmCoplanar" class="btn btn-block btn-success" type="button"  onclick="confirm1(this,confirmCoplanar, cancelconfirmCoplanar)" disabled="disabled">通过</button>
-                       <button id="cancelconfirmCoplanar" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this,confirmCoplanar, cancelconfirmCoplanar)" style="display:none;margin:0px;" >取消通过</button>
+                       <button id="confirmCoplanar" class="btn btn-block btn-success" type="button"  onclick="confirm1(this,confirmCoplanar, cancelconfirmCoplanar,TechnologyConfirm1)" disabled="disabled">通过</button>
+                       <button id="cancelconfirmCoplanar" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this,confirmCoplanar, cancelconfirmCoplanar,TechnologyConfirm1)" style="display:none;margin:0px;" >取消通过</button>
                     </span>
                         </div> 
                    <div class="single-row">
@@ -214,16 +204,16 @@
                     <div class="single-row">                     
                            <span class="form-text col-xs-6" >治疗计划打印与传输：</span>
                         <span id="check14"  class="form-text col-xs-6" >
-                           <button id="Button1" class="btn btn-block btn-success" type="button"  onclick="confirm1(this,Button1,Button2)" disabled="disabled">通过</button>
-                           <button id="Button2" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this,Button1,Button2)" style="display:none;margin:0px;" >取消通过</button>
+                           <button id="Button1" class="btn btn-block btn-success" type="button"  onclick="confirm1(this,Button1,Button2,confirmPlanSystem1)" disabled="disabled">通过</button>
+                           <button id="Button2" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this,Button1,Button2,confirmPlanSystem1)" style="display:none;margin:0px;" >取消通过</button>
                         </span>
                     </div> 
                     <div class="single-row">    
                                      
                            <span class="form-text col-xs-6" >参考图像传输：</span>
                             <span id="check15" class="form-text col-xs-6" > 
-                           <button id="Button3" class="btn btn-block btn-success" type="button"  onclick="confirm1(this,Button3,Button4)" disabled="disabled">通过</button>
-                           <button id="Button4" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this,Button3,Button4)" style="display:none;margin:0px;" >取消通过</button>
+                           <button id="Button3" class="btn btn-block btn-success" type="button"  onclick="confirm1(this,Button3,Button4,EquipmentConfirm1)" disabled="disabled">通过</button>
+                           <button id="Button4" class="btn btn-block btn-warning" type="button"  onclick="cancelconfirm(this,Button3,Button4,EquipmentConfirm1)" style="display:none;margin:0px;" >取消通过</button>
                         </span>
                     </div> 
                     
@@ -245,7 +235,7 @@
                         </div> 
                          <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">备注条件：</span>
-                            <input name="remark" id="remark" class="form-item" value="3mm/3%,AD"/>
+                            <input name="remark" id="remark" class="form-item"/>
                         </div>   
                     </div> 
                  <div id="pdfplan" class="single-row">

@@ -56,13 +56,13 @@ if (isInArray(progress, '11')) {
             document.getElementById("dose2").innerHTML = fieldInfo[0].dose2;
             document.getElementById("Equipment2").innerHTML = fieldInfo[0].Equipment2;
             document.getElementById("plansystem2").innerHTML = fieldInfo[0].plansystem2;
-            document.getElementById("remark").innerHTML = fieldInfo[0].remark;
+            document.getElementById("remark").value = fieldInfo[0].remark;
             document.getElementById("Coplanar2").innerHTML = charge3(fieldInfo[0].Coplanar2);
             document.getElementById("Irradiation2").innerHTML = charge4(fieldInfo);
             document.getElementById("Raytype2").innerHTML = fieldInfo[0].Raytype2;
             document.getElementById("energy2").innerHTML = fieldInfo[0].energy2;
             document.getElementById("IlluminatedNumber2").innerHTML = fieldInfo[0].IlluminatedNumber2;
-            document.getElementById("Illuminatedangle2").innerHTML = charge5(fieldInfo);
+            document.getElementById("Illuminatedangle2").innerHTML = ruler(fieldInfo);
             document.getElementById("MU2").innerHTML = cale2(fieldInfo);
             document.getElementById("ControlPoint2").innerHTML = cale3(fieldInfo);
             document.getElementById("left").innerHTML = designInfo[i].left;
@@ -133,72 +133,112 @@ function check() {
         document.getElementById("check1").innerHTML = "通过";
     } else {
         item = 0;
+        document.getElementById("check1").innerHTML = "不通过";
     }
     if (document.getElementById("dose1").innerHTML == document.getElementById("dose2").innerHTML) {
         document.getElementById("check2").innerHTML = "通过";
     }
     else {
         item = 0;
+        document.getElementById("check2").innerHTML = "不通过";
     }
     if (document.getElementById("Equipment1").innerHTML == document.getElementById("Equipment2").innerHTML) {
         document.getElementById("check3").innerHTML = "通过";
     } else {
         item = 0;
+        document.getElementById("check3").innerHTML = "不通过";
     }
     if (document.getElementById("plansystem1").innerHTML == document.getElementById("plansystem2").innerHTML) {
         document.getElementById("check4").innerHTML = "通过";
     } else {
         item = 0;
+        document.getElementById("check4").innerHTML = "不通过";
     }
     if (document.getElementById("Coplanar1").innerHTML == document.getElementById("Coplanar2").innerHTML) {
         document.getElementById("check12").innerHTML = "通过";
     } else {
         item = 0;
+        document.getElementById("check12").innerHTML = "不通过";
     }
     if (document.getElementById("Irradiation1").innerHTML == document.getElementById("Irradiation2").innerHTML) {
         document.getElementById("check5").innerHTML = "通过";
     } else {
         item = 0;
+        document.getElementById("check5").innerHTML = "不通过";
     }
     if (document.getElementById("Raytype1").innerHTML == document.getElementById("Raytype2").innerHTML) {
         document.getElementById("check6").innerHTML = "通过";
 
     } else {
         item = 0;
+        document.getElementById("check6").innerHTML = "不通过";
     }
     if (document.getElementById("energy1").innerHTML == document.getElementById("energy2").innerHTML) {
         document.getElementById("check7").innerHTML = "通过";
 
     } else {
         item = 0;
+        document.getElementById("check7").innerHTML = "不通过";
     }
     if (document.getElementById("IlluminatedNumber1").innerHTML == document.getElementById("IlluminatedNumber2").innerHTML) {
         document.getElementById("check8").innerHTML = "通过";
 
     } else {
         item = 0;
+        document.getElementById("check8").innerHTML = "不通过";
     }
-    if (document.getElementById("Illuminatedangle1").innerHTML == document.getElementById("Illuminatedangle2").innerHTML) {
+    if (isequal()) {
         document.getElementById("check9").innerHTML = "通过";
-
     } else {
         item = 0;
+        document.getElementById("check9").innerHTML = "不通过";
     }
     if (document.getElementById("MU1").innerHTML == document.getElementById("MU2").innerHTML) {
         document.getElementById("check10").innerHTML = "通过";
        
     } else {
         item = 0;
+        document.getElementById("check10").innerHTML = "不通过";
     }
     if (document.getElementById("ControlPoint1").innerHTML == document.getElementById("ControlPoint2").innerHTML) {
         document.getElementById("check11").innerHTML = "通过";
         
     } else {
         item = 0;
+        document.getElementById("check11").innerHTML = "不通过";
+
     }
     if (item == 0) {
         signal = 0;
     }
+}
+function isequal() {
+    var str2 = document.getElementById("Illuminatedangle2").innerHTML;
+    var str1 = document.getElementById("Illuminatedangle1").innerHTML;
+    var array1 = new Array();
+    array1 = str1.split(",");
+    var array2 = new Array();
+    array2 = str2.split(",");
+    if (array1.length != array2.length) {
+        return false;
+    }
+    var sign = new Array();
+    for (var i = 0; i < array1.length; i++) {
+        for (var j = 0; j < array2.length; j++) {
+            if (array1[i]*1 == array2[j]*1) {
+                sign[i] = 1;
+                break;
+            } else {
+                sign[i] = 0;
+            }
+        }
+    }
+    for (var k = 0; k < sign.length; k++) {
+        if (sign[k] == 0) {
+            return false;
+        }
+    }
+    return true;
 }
 function charge4(arr) {
     var count = 1;
@@ -230,52 +270,35 @@ function charge4(arr) {
         }
     }
 }
-function confirm1(input, Button, cancelButton) {
+function confirm1(input, Button, cancelButton,confirm) {
     var content = input.innerHTML;
     if (content == "通过") {
-        signal = 1;
+        confirm.value = 1;
     }
     Button.style.display = "none";
     cancelButton.style.display = "block";
 }
 
-function cancelconfirm(input, Button, cancelButton) {
+function cancelconfirm(input, Button, cancelButton,confirm) {
     var content = input.innerHTML;
     if (content == "取消通过") {
-        signal = 0;
+        confirm.value = 0;
     }
     Button.style.display = "block";
     cancelButton.style.display = "none";
 }
-function charge5(arr) {
-    var count = 1;
+function ruler(arr) {
     var array = new Array();
+    var str = "";
     for (var item in arr) {
         array[item] = arr[item].Illuminatedangle2;
     }
-    var yuansu = new Array();
-    var sum = new Array();
-    for (var i = 0; i < array.length; i++) {
-        for (var j = i + 1; j < array.length; j++) {
-            if (array[i] == array[j]) {
-                count++;
-                array.splice(j, 1);
-            }
-        }
-        yuansu[i] = array[i];
-        sum[i] = count;
-        count = 1;
+    
+    for (var i = 0; i < array.length-1; i++) {
+        str = str+array[i]+","
     }
-    var newsum = new Array();
-    for (var item in sum) {
-        newsum[item] = sum[item];
-    }
-    newsum.sort();
-    for (var i = 0; i < sum.length; i++) {
-        if (sum[i] == newsum[newsum.length - 1]) {
-            return yuansu[i];
-        }
-    }
+    str = str + array[array.length - 1];
+    return str;
 }
 function cale2(arr) {
     var array = new Array();
@@ -578,6 +601,18 @@ function save() {
         window.alert("请核对正确");
         return false;
     }
+    if (document.getElementById("TechnologyConfirm1").value == 0) {
+        window.alert("请核对正确");
+        return false;
+    }
+    if (document.getElementById("confirmPlanSystem1").value == 0) {
+        window.alert("请核对正确");
+        return false;
+    }
+    if (document.getElementById("EquipmentConfirm1").value == 0) {
+        window.alert("请核对正确");
+        return false;
+    }
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
@@ -609,7 +644,7 @@ function save() {
     });
 }
 function remove() {
- 
+    document.getElementById("confirm").removeAttribute("disabled");
     document.getElementById("confirmCoplanar").removeAttribute("disabled");
     document.getElementById("Button1").removeAttribute("disabled");
     document.getElementById("Button3").removeAttribute("disabled");
