@@ -5,6 +5,7 @@ var userID;
 var treatID;
 var fileName = "";
 var aa = 0;
+var ss = 0;
 function Init(evt) {
 
     //获得当前执行人姓名与ID
@@ -42,7 +43,8 @@ function Init(evt) {
         document.getElementById("Irradiation").value = fildinfo[0].Irradiation;
         document.getElementById("ener").value = fildinfo[0].energy2;
         document.getElementById("IlluminatedNumber").value = fildinfo[0].IlluminatedNumber;
-        document.getElementById("Illuminatedangle").value = fildinfo[0].Illuminatedangle;
+        ss = fildinfo[0].IlluminatedNumber;
+        table(ss, fildinfo[0].Illuminatedangle);
         document.getElementById("MachineNumbe").value = fildinfo[0].MachineNumbe;
         document.getElementById("ControlPoint").value = fildinfo[0].ControlPoint;
         document.getElementById("Coplanar").value = fildinfo[0].Coplanar;
@@ -73,9 +75,9 @@ function Init(evt) {
                 tbody += "<tr>";
                 while(rownum < 4){
                     if (count <= num) {
-                        td = "<td style='padding:0px;'><input type='number' class='td-input'></td>";
+                        td = '<td style="padding:0px;"><input type="number" id="angle' + count + '" name="angle' + count + '" class="td-input"></td>';
                     }else{
-                        td = "<td style='text-align:center;'>/</td>";
+                        td = '<td style="text-align:center;">/</td>';
                     }
                     tbody += td;
                     rownum += 1;
@@ -95,7 +97,33 @@ function Init(evt) {
         $("#filename").val(fileName);
     })
 }
-
+function table(num, str) {
+    var list = new Array();
+    list=str.split(",");
+    if (num > 0) {
+        var table = $("#Illuminatedangle");
+        table.html("");
+        var tbody = "<tbody>";
+        var count = 1;
+        while (count <= num) {
+            var rownum = 0;
+            tbody += "<tr>";
+            while (rownum < 4) {
+                if (count <= num) {
+                    td = '<td style="padding:0px;"><input type="number" id="angle' + count + '" name="angle' + count + '" class="td-input" value="'+list[count-1]+'" disabled="disabled"></td>';
+                } else {
+                    td = '<td style="text-align:center;">/</td>';
+                }
+                tbody += td;
+                rownum += 1;
+                count += 1;
+            }
+            tbody += "</tr>";
+        }
+        tbody += "/tbody";
+        table.append(tbody);
+    }
+}
 function createPlanSystemItem(thiselement) {
     var PartItem = JSON.parse(getPartItem3()).Item;
     thiselement.options.length = 0;
@@ -499,10 +527,15 @@ function remove() {
     document.getElementById("Irradiation").removeAttribute("disabled");
     document.getElementById("ener").removeAttribute("disabled");
     document.getElementById("IlluminatedNumber").removeAttribute("disabled");
-    document.getElementById("Illuminatedangle").removeAttribute("disabled");
+    //document.getElementById("Illuminatedangle").readonly="false";
     document.getElementById("MachineNumbe").removeAttribute("disabled");
     document.getElementById("ControlPoint").removeAttribute("disabled");
-    document.getElementById("Coplanar").removeAttribute("disabled");
+    document.getElementById("Coplanar").removeAttribute("disabled");    
+    if (ss > 0) {
+        for(var j=1;j<=ss;j++){
+        document.getElementById("angle"+j).removeAttribute("disabled");
+        }
+    }
     $("#add").attr("href", "javascript:addField()");
     if (aa > 0) {
         for (var i = 0; i < aa; i++) {
