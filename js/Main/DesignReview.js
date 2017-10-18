@@ -40,6 +40,19 @@ if (isInArray(progress, '11')) {
     var length = designInfo.length;
     for (var i = 0; i < length; i++) {
         if (designInfo[i].Treatmentname == patient.Treatmentname) {
+            document.getElementById("yes").checked = true;
+            var $radio1 = $('input[name="planQA"]:eq(0)');
+            var $radio2 = $('input[name="planQA"]:eq(1)');
+            $radio2.bind('click', function () {
+                document.getElementById("degree").disabled = "disabled";
+                document.getElementById("remark").disabled = "disabled";
+            });
+            $radio1.bind('click', function () {
+                if (document.getElementById("yes").disabled != "disabled") {
+                    document.getElementById("degree").removeAttribute("disabled");
+                    document.getElementById("remark").removeAttribute("disabled");
+                }              
+            });
             document.getElementById("positioninfomation1").innerHTML = designInfo[i].positioninfomation1;
             document.getElementById("dose1").innerHTML = cale(designInfo[i].DosagePriority);
             document.getElementById("Equipment1").innerHTML = designInfo[i].equipment;
@@ -649,7 +662,11 @@ function remove() {
     document.getElementById("Button1").removeAttribute("disabled");
     document.getElementById("Button3").removeAttribute("disabled");
     document.getElementById("degree").removeAttribute("disabled");
-    document.getElementById("fp_upload").removeAttribute("disabled");
+    document.getElementById("degree").removeAttribute("disabled");
+    document.getElementById("remark").removeAttribute("disabled");
+    var add = document.getElementsByName("planQA");
+    add[0].removeAttribute("disabled");
+    add[1].removeAttribute("disabled");
     document.getElementById("fp_upload1").removeAttribute("disabled");
 }
 function plan(evt) {
