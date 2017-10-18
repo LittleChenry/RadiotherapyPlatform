@@ -196,22 +196,20 @@
                     </a>
                 </li>
                 <li class="treeview">
-                    <a id="Menu-EquipmentView" href="EquipmentView.aspx">
-                        <i class="fa fa-briefcase"></i>
-                        <span>设备管理</span>
+                    <a href="#">
+                        <i class="fa fa-briefcase"></i> <span>设备管理</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
-                </li>
-                <li class="treeview">
-                  <a href="#">
-                    <i class="fa fa-table"></i> <span>Tables</span>
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li class="active"><a href="simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-                    <li><a href="data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
-                  </ul>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="EquipmentInspection.aspx"><i class="fa fa-circle-o"></i>设备检查</a>
+                        </li>
+                        <li>
+                            <a href="EquipmentInspectionResult.aspx"><i class="fa fa-circle-o"></i>设备检查结果</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="treeview">
                     <a href="#">

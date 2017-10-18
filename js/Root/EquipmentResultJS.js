@@ -55,7 +55,7 @@ function CreateTitleList() {
 function GetResultDate() {
     $.ajax({
         type: "GET",
-        url: "GetInspectionResult.ashx",
+        url: "../../pages/Root/GetInspectionResult.ashx",
         async: false,
         dateType: "text",
         success: function (date) {
@@ -80,7 +80,7 @@ function CreateLi(ID, date, EquipmentName, Cycle, People, ishide) {
             break;
     }
     var $span = $("<span style=float:right>" + date + "</span>");
-    var $a = $("<a href=InspectionResult.aspx?id=" + ID + "&People=" + People + "&Equipment=" + EquipmentName + cycName + "&date=" + date.split(" ")[0] + " target=_blank>" + cycName + "-" + EquipmentName + "</a>");
+    var $a = $("<a href=../../pages/Root/InspectionResult.aspx?id=" + ID + "&People=" + People + "&Equipment=" + EquipmentName + cycName + "&date=" + date.split(" ")[0] + " target=_blank>" + cycName + "-" + EquipmentName + "</a>");
     var $br = $("<hr style=margin-top: 5px; margin-bottom: 5px;>");
     var $hideInput = $("<input type=hidden value=" + ID + " />");
     var $li = $("<li></li>");
