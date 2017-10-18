@@ -81,10 +81,10 @@ function Init(evt) {
                     + '<div class="item col-xs-6">计划系统：<span class="underline">' + designInfo[i].PlanSystemname + '</span></div>'
                     + '<div class="item col-xs-6">放疗设备：<span class="underline">' + designInfo[i].equipment + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">射线类型：<span class="underline">' + designInfo[i].Raytypename + '</span></div></div>'
-                    + '<div class="single-row"><span>移床参数：</span></div><div class="single-row">'
-                    + '<div class="item col-xs-6">左：<span class="underline">' + designInfo[i].left + '</span></div><div class="item col-xs-6">右：<span class="underline">' + designInfo[i].right + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-6">升：<span class="underline">' + designInfo[i].rise + '</span></div><div class="item col-xs-6">降：<span class="underline">' + designInfo[i].drop + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-6">进：<span class="underline">' + designInfo[i].enter + '</span></div><div class="item col-xs-6">出：<span class="underline">' + designInfo[i].out + '</span></div></div>'                    
+                    + '<div class="single-row"><div class="item col-xs-6">移床参数：</div></div><div class="single-row">'
+                    + '<div class="item col-xs-6">左：<span class="underline">' + designInfo[i].left + 'cm</span></div><div class="item col-xs-6">右：<span class="underline">' + designInfo[i].right + 'cm</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">升：<span class="underline">' + designInfo[i].rise + 'cm</span></div><div class="item col-xs-6">降：<span class="underline">' + designInfo[i].drop + 'cm</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">进：<span class="underline">' + designInfo[i].enter + 'cm</span></div><div class="item col-xs-6">出：<span class="underline">' + designInfo[i].out + 'cm</span></div></div>'                    
                     + '<div class="single-row"><div class="item col-xs-6"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);

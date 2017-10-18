@@ -65,9 +65,13 @@ $(document).ready(function () {
     });
 })
 
-/*window.onresize=function(){
-    document.location.reload();
-}*/
+window.onresize=function(){
+    $(".frame-content").height($(document).height() - 151);
+    $("#patient-content").height($(document).height() - 151);
+    $("#patient-table-content").height($(document).height() - 190);
+    $("#record-iframe").width($("#record-content").width());
+    $("#progress-iframe").width($("#progress-content").width());
+}
 
 function RolesToPatients() {
     var patient;
@@ -1328,7 +1332,7 @@ function ProgressToString(pro) {
                 Progress += "计划确认、";
                 break;
             case 11:
-                Progress += "辅助信息导入、";
+                Progress += "放疗计划导入、";
                 break;
             case 12:
                 Progress += "计划复核、";
@@ -1390,7 +1394,7 @@ function ProgressNumToName(progressNum){
             Progress = "计划确认";
             break;
         case 11:
-            Progress = "辅助信息导入";
+            Progress = "放疗计划导入";
             break;
         case 12:
             Progress = "计划复核";

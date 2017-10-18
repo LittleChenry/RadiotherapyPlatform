@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>治疗计划提交</title>
+    <title></title>
     <!-- css -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/css/Main/Records.css"/>
     <!-- Bootstrap 3.3.6 -->
@@ -117,79 +117,96 @@
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-4">治疗技术：<span id="technology" class="underline"></span></div>
-                    
                     <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
+                    <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>
                     <div class="item col-xs-4">领取医生：<span id="receiveUser" class="underline"></span></div>
                     <div class="item col-xs-4">领取时间：<span id="receiveTime" class="underline"></span></div>
                 </div>
             </div>
-            <div class="paper-content"> 
-                
-                    
-                    <div class="content-title">
-                        <span>提交计划信息：</span>
-                    </div>
-                    <div class="single-row tab-row">
+            <div class="paper-content">
+                <div class="content-title">
+                    <span>提交计划信息：</span>
+                </div>
+                <div class="single-row tab-row">
                     <ul id="tabs" class="nav nav-tabs">
                         <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
                     </ul>
-                   </div>
-                  <div id="tab-content" class="tab-content">
+                </div>
+                <div id="tab-content" class="tab-content">
                     <div class="tab-pane active" id="tab">
-                    <div class="single-row">
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">计划系统：</span>
-                            <select id="PlanSystem" name="PlanSystem" class="form-item" disabled="disabled"></select>
+                        <div class="single-row">
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">计划系统：</span>
+                                <select id="PlanSystem" name="PlanSystem" class="form-item" disabled="disabled"></select>
+                            </div>
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4" >放疗设备：</span>
+                                <select id="equipment" name="equipment" class="form-item" disabled="disabled"></select>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4" >放疗设备：</span>
-                            <select id="equipment" name="equipment" class="form-item" disabled="disabled"></select>
+                        <div class="single-row">
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">射线类型：</span>
+                                <select id="Raytype" name="Raytype" class="form-item" disabled="disabled"></select>
+                            </div>                        
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">移床参数：</span>
+                            </div>
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4">左：</span>
+                                <div class="group-item">
+                                    <input id="left" name="left" type="number" class="form-group-input" disabled="disabled"/>
+                                    <span class="input-group-addon">cm</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4">右：</span>
+                                <div class="group-item">
+                                    <input id="right" name="right" type="number" class="form-group-input" disabled="disabled"/>
+                                    <span class="input-group-addon">cm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4">升：</span>
+                                <div class="group-item">
+                                    <input id="rise" name="rise" type="number" class="form-group-input" disabled="disabled"/>
+                                    <span class="input-group-addon">cm</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4">降：</span>
+                                <div class="group-item">
+                                    <input id="drop" name="drop" type="number" class="form-group-input" disabled="disabled"/>
+                                    <span class="input-group-addon">cm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-row">
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4">进：</span>
+                                <div class="group-item">
+                                    <input id="enter" name="enter" type="number" class="form-group-input" disabled="disabled"/>
+                                    <span class="input-group-addon">cm</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4">出：</span>
+                                <div class="group-item">
+                                    <input id="out" name="out" type="number" class="form-group-input" disabled="disabled"/>
+                                    <span class="input-group-addon">cm</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="single-row">
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">射线类型：</span>
-                            <select id="Raytype" name="Raytype" class="form-item" disabled="disabled"></select>
-                        </div>                        
-                    </div>
-                    <div class="single-row">
-                       <span>移床参数：</span>
-                    </div> 
-                   <div class="single-row">
-                       <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">左：</span>
-                            <input id="left" name="left" class="form-item" disabled="disabled"/>
-                       </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4" >右：</span>
-                            <input id="right" name="right" class="form-item" disabled="disabled"/>
-                       </div>
-                    </div> 
-                         <div class="single-row">
-                       <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">升：</span>
-                            <input id="rise" name="rise" class="form-item" disabled="disabled"/>
-                       </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4" >降：</span>
-                            <input id="drop" name="drop" class="form-item" disabled="disabled"/>
-                       </div>
-                    </div> 
-                         <div class="single-row">
-                       <div class="col-xs-6">
-                            <span class="form-text col-xs-4" style="padding-left:0px;">进：</span>
-                            <input id="enter" name="enter" class="form-item" disabled="disabled"/>
-                       </div>
-                        <div class="col-xs-6">
-                            <span class="form-text col-xs-4" >出：</span>
-                            <input id="out" name="out" class="form-item" disabled="disabled"/>
-                       </div>
-                    </div> 
-                        </div>
-                      </div> 
+                </div> 
                 
             </div>
             <div class="paper-footer">

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>治疗计划提交</title>
+    <title></title>
     <!-- css -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/css/Main/Records.css"/>
     <!-- Bootstrap 3.3.6 -->
@@ -13,7 +13,7 @@
     <!-- DataTables -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
     <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datepicker/datepicker3.css"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css"/>
     <!-- Ionicons -->
@@ -33,7 +33,7 @@
                 <input type="hidden" id="progress" />
                 <input type="hidden" id="aa" name="aa"/>
             <div class="paper-title" >
-                 辅助信息导入
+                 放疗计划导入
             </div>
             <div class="paper-content">
                 <div class="content-title">
@@ -45,14 +45,14 @@
                     <div class="item col-xs-4">年龄：<span id="age" class="underline"></span></div>
                 </div>
                  <div class="single-row">
-                        <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
-                       <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
-                       <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
+                    <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
+                    <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
+                    <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                        <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
-                        <div class="item col-xs-4">照射部位：<span id="lightpart" class="underline"></span></div>
-                        <div class="item col-xs-4">住院情况：<span id="hospitalid" class="underline"></span></div> 
+                    <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
+                    <div class="item col-xs-4">照射部位：<span id="lightpart" class="underline"></span></div>
+                    <div class="item col-xs-4">住院情况：<span id="hospitalid" class="underline"></span></div> 
                 </div>
             </div>
             <div class="paper-content">
@@ -60,37 +60,49 @@
                     <span>计划信息：</span>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-6">照射技术：
+                    <div class="item col-xs-6">
+                        照射技术：
                         <select id="Irradiation" name="Irradiation" class="form-item" disabled="disabled"></select>
                     </div>
-                    <div class="item col-xs-6">能量：
-                        <input id="ener" class="form-item" name="ener" disabled="disabled"/>
+                    <div class="item col-xs-6">
+                        能量：
+                        <input id="ener" class="form-item" type="number" name="ener" disabled="disabled"/>
                     </div>                   
                 </div>
                 <div class="single-row">
-                        <div class="item col-xs-6">射野数量：
-                            <input id="IlluminatedNumber" class="form-item" name="IlluminatedNumber" disabled="disabled"/>
-                        </div>
-                        <div class="item col-xs-6">非共面照射：
-                           <select id="Coplanar" name="Coplanar" class="form-item" disabled="disabled">
-                                <option value="1">是</option>
-                                <option value="0">否</option>
-                           </select>
-                        </div>                                           
+                    <div class="item col-xs-6">
+                        射野数量：
+                        <input id="IlluminatedNumber" class="form-item" type="number" name="IlluminatedNumber" disabled="disabled"/>
+                    </div>
+                    <div class="item col-xs-6">
+                        非共面照射：
+                        <select id="Coplanar" name="Coplanar" class="form-item" disabled="disabled">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>                                           
                 </div>
                 <div class="single-row">
-                        <div class="item col-xs-6">机器跳数：
-                            <input id="MachineNumbe" class="form-item" name="MachineNumbe" disabled="disabled"/>
-                        </div>
-                        <div class="item col-xs-6">控制点数量：
-                            <input id="ControlPoint" class="form-item" name="ControlPoint" disabled="disabled"/>
-                        </div>
+                    <div class="item col-xs-6">
+                        机器跳数：
+                        <input id="MachineNumbe" class="form-item" type="number" name="MachineNumbe" disabled="disabled"/>
+                    </div>
+                    <div class="item col-xs-6">
+                        控制点数量：
+                        <input id="ControlPoint" class="form-item" type="number" name="ControlPoint" disabled="disabled"/>
+                    </div>
                 </div>
                 <div class="single-row">
-                       <div class="item area-group col-xs-12">
-                           <span class="col-xs-4" style="padding-left:0px;">射野角度(以逗号隔开)：</span>
-                           <textarea id="Illuminatedangle" class="form-area col-xs-12" name="Illuminatedangle" disabled="disabled"></textarea>
-                       </div>                         
+                    <div class="item col-xs-6">
+                        射野角度：
+                    </div>
+                </div>
+                <div class="single-row">
+                    <div class="col-xs-12">
+                        <table id="Illuminatedangle" class="table table-bordered">
+
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="paper-content">
@@ -111,9 +123,24 @@
                     </div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">TPS：<input id="tps" class="form-item" name="tps" disabled="disabled"/></div>
-                    <div class="item col-xs-4">总剂量：<input id="total" class="form-item" name="total" disabled="disabled"/></div>
-                    <div class="item col-xs-4">分次剂量：<input id="Graded" class="form-item" name="Graded" disabled="disabled"/></div>
+                    <div class="item col-xs-4">
+                        TPS：<input id="tps" class="form-item" name="tps" disabled="disabled"/>
+                    </div>
+                    <div class="item col-xs-4">
+                        总剂量：
+                        <div class="group-item">
+                            <input id="total" class="form-group-input" name="total" disabled="disabled"/>
+                            <span class="input-group-addon">cGy</span>
+                        </div>
+
+                    </div>
+                    <div class="item col-xs-4">
+                        分次剂量：
+                        <div class="group-item">
+                            <input id="Graded" class="form-group-input" name="Graded" disabled="disabled"/>
+                            <span class="input-group-addon">cGy</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-4">射野总数：<input id="fieldTimes" class="form-item" name="fieldTimes" disabled="disabled"/></div>
@@ -159,7 +186,7 @@
             </form>
         </div>
     </section>
-      <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">
+    <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">
                 
     </section>
      

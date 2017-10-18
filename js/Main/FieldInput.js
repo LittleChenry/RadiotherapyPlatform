@@ -60,13 +60,42 @@ function Init(evt) {
         document.getElementById("applyuser").innerHTML = userName;
         document.getElementById("time").innerHTML = getNowFormatDate();
     }
+
+    $("#IlluminatedNumber").blur(function(){
+        var num = $("#IlluminatedNumber").val();
+        if (num > 0) {
+            var table = $("#Illuminatedangle");
+            table.html("");
+            var tbody = "<tbody>";
+            var count = 1;
+            while(count <= num){
+                var rownum = 0;
+                tbody += "<tr>";
+                while(rownum < 4){
+                    if (count <= num) {
+                        td = "<td style='padding:0px;'><input type='number' class='td-input'></td>";
+                    }else{
+                        td = "<td style='text-align:center;'>/</td>";
+                    }
+                    tbody += td;
+                    rownum += 1;
+                    count += 1;
+                }
+                tbody += "</tr>";
+            }
+            tbody += "/tbody";
+            table.append(tbody);
+        }
+    });
+
+    $(".file").on("change", "input[type='file']", function () {
+        var filePath=$(this).val();
+        var arr=filePath.split('\\');
+        fileName=arr[arr.length-1];
+        $("#filename").val(fileName);
+    })
 }
-$(".file").on("change", "input[type='file']", function () {
-    var filePath=$(this).val();
-    var arr=filePath.split('\\');
-    fileName=arr[arr.length-1];
-    $("#filename").val(fileName);
-})
+
 function createPlanSystemItem(thiselement) {
     var PartItem = JSON.parse(getPartItem3()).Item;
     thiselement.options.length = 0;
@@ -78,8 +107,6 @@ function createPlanSystemItem(thiselement) {
             thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
         }
     }
-
-
 }
 //第二步部位项数据库调取
 function getPartItem3() {

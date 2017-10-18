@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>病情诊断</title>
+    <title></title>
     <!-- css -->
     <link rel="stylesheet" href="/RadiotherapyPlatform/css/Main/Records.css"/>
     <!-- Bootstrap 3.3.6 -->
