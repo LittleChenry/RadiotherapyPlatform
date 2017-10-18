@@ -14,8 +14,12 @@ $(document).ready(function () {
         adjustTable();
     }
     if (session.role != "物理师" && session.role != "模拟技师" && session.role != "治疗技师") {
-         $("#Menu-EquipmentView").attr("href", "javascript:;");
-         $("#Menu-EquipmentView").bind("click", function(){
+         $("#Menu-EquipmentInspection").attr("href", "javascript:;");
+         $("#Menu-EquipmentInspectionResult").attr("href", "javascript:;");
+         $("#Menu-EquipmentInspection").bind("click", function(){
+            alert("权限不够！");
+         });
+         $("#Menu-EquipmentInspectionResult").bind("click", function(){
             alert("权限不够！");
          });
     }

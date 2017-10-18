@@ -205,10 +205,10 @@
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="EquipmentInspection.aspx"><i class="fa fa-circle-o"></i>设备检查</a>
+                            <a id="Menu-EquipmentInspection" href="EquipmentInspection.aspx"><i class="fa fa-circle-o"></i>设备检查</a>
                         </li>
                         <li class="active">
-                            <a href="EquipmentInspectionResult.aspx"><i class="fa fa-circle-o"></i>设备检查结果</a>
+                            <a id="Menu-EquipmentInspectionResult" href="EquipmentInspectionResult.aspx"><i class="fa fa-circle-o"></i>设备检查结果</a>
                         </li>
                     </ul>
                 </li>

@@ -189,8 +189,8 @@
                                         <td>右</td>
                                         <td id="right"></td>
                                         <td rowspan="3">
-                                            <button id="confirmCoplanar" class="btn btn-success" type="button" onclick="confirm1(this,confirmCoplanar, cancelconfirmCoplanar,TechnologyConfirm1)" disabled="disabled">通过</button>
-                                            <button id="cancelconfirmCoplanar" class="btn btn-warning" type="button" onclick="cancelconfirm(this,confirmCoplanar, cancelconfirmCoplanar,TechnologyConfirm1)" style="display:none;margin:0px;" >取消通过</button>
+                                            <button id="confirmCoplanar" class="btn btn-success" type="button" onclick="confirm1(this,confirmCoplanar, cancelconfirmCoplanar,TechnologyConfirm1)" disabled="disabled" style="margin:auto;">通过</button>
+                                            <button id="cancelconfirmCoplanar" class="btn btn-warning" type="button" onclick="cancelconfirm(this,confirmCoplanar, cancelconfirmCoplanar,TechnologyConfirm1)" style="display:none;margin:auto;" >取消通过</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -210,8 +210,8 @@
                                         <td>治疗计划打印与传输</td>
                                         <td colspan="4"></td>
                                         <td>
-                                            <button id="Button1" class="btn btn-success" type="button" onclick="confirm1(this,Button1,Button2,confirmPlanSystem1)" disabled="disabled">通过</button>
-                                            <button id="Button2" class="btn btn-warning" type="button" onclick="cancelconfirm(this,Button1,Button2,confirmPlanSystem1)" style="display:none;margin:0px;" >取消通过</button>
+                                            <button id="Button1" class="btn btn-success" type="button" onclick="confirm1(this,Button1,Button2,confirmPlanSystem1)" disabled="disabled" style="margin:auto;">通过</button>
+                                            <button id="Button2" class="btn btn-warning" type="button" onclick="cancelconfirm(this,Button1,Button2,confirmPlanSystem1)" style="display:none;margin:auto;" >取消通过</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -219,8 +219,8 @@
                                         <td>参考图像传输</td>
                                         <td colspan="4"></td>
                                         <td>
-                                            <button id="Button3" class="btn btn-success" type="button" onclick="confirm1(this,Button3,Button4,EquipmentConfirm1)" disabled="disabled">通过</button>
-                                            <button id="Button4" class="btn btn-warning" type="button" onclick="cancelconfirm(this,Button3,Button4,EquipmentConfirm1)" style="display:none;margin:0px;" >取消通过</button>
+                                            <button id="Button3" class="btn btn-success" type="button" onclick="confirm1(this,Button3,Button4,EquipmentConfirm1)" disabled="disabled" style="margin:auto;">通过</button>
+                                            <button id="Button4" class="btn btn-warning" type="button" onclick="cancelconfirm(this,Button3,Button4,EquipmentConfirm1)" style="display:none;margin:auto;" >取消通过</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -247,7 +247,7 @@
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td>16</td>
+                                        <td>18</td>
                                         <td>备注条件</td>
                                         <td colspan="4">
                                             <input name="remark" id="remark" class="form-item" disabled="disabled"/>
