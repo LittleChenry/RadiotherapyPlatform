@@ -119,12 +119,8 @@
                     <div class="item col-xs-4">机器跳数：<span id="MachineNumbe" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">控制点数量：<span id="ControlPoint" class="underline"></span></div>
-                    <div class="item col-xs-4">计算网络：<span id="Grid" class="underline"></span></div>
-                    <div class="item col-xs-4">优化算法：<span id="Algorithm" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">计划可执行度：<span id="Feasibility" class="underline"></span></div>
+                    <div class="item col-xs-4">控制点数量：<span id="ControlPoint" class="underline"></span></div>   
+                     <div class="item col-xs-4">射线类型：<span id="raytype" class="underline"></span></div>   
                 </div>
             </div>
             <div class="paper-content"> 

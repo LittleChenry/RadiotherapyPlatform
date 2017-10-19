@@ -37,13 +37,11 @@ function Init(evt) {
             document.getElementById("technology").innerHTML = designInfo[i].technology;
             document.getElementById("equipment").innerHTML = designInfo[i].equipment;
             document.getElementById("PlanSystem").innerHTML = designInfo[i].PlanSystem;
-            document.getElementById("IlluminatedNumber").innerHTML = designInfo[i].IlluminatedNumber;
-            document.getElementById("Coplanar").innerHTML = charge1(designInfo[i].Coplanar);
-            document.getElementById("MachineNumbe").innerHTML = designInfo[i].MachineNumbe;
-            document.getElementById("ControlPoint").innerHTML = designInfo[i].ControlPoint;
-            document.getElementById("Grid").innerHTML = designInfo[i].Grid_ID;
-            document.getElementById("Algorithm").innerHTML = designInfo[i].Algorithm_ID;
-            document.getElementById("Feasibility").innerHTML = charge(designInfo[i].Feasibility);
+            document.getElementById("IlluminatedNumber").innerHTML = designInfo[i].IlluminatedNumber1;
+            document.getElementById("Coplanar").innerHTML = charge1(designInfo[i].Coplanar1);
+            document.getElementById("MachineNumbe").innerHTML = designInfo[i].MU1;
+            document.getElementById("ControlPoint").innerHTML = designInfo[i].ControlPoint1;
+            document.getElementById("raytype").innerHTML = designInfo[i].Raytype;
 
     }
     if (iscommon == "0") {
