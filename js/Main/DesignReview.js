@@ -668,6 +668,7 @@ function remove() {
     add[0].removeAttribute("disabled");
     add[1].removeAttribute("disabled");
     document.getElementById("fp_upload1").removeAttribute("disabled");
+    document.getElementById("fp_upload").removeAttribute("disabled");
 }
 function plan(evt) {
     if (evt == "1")
