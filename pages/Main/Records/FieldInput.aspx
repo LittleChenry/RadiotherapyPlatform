@@ -55,6 +55,7 @@
                     <div class="item col-xs-4">住院情况：<span id="hospitalid" class="underline"></span></div> 
                 </div>
             </div>
+                <div id="plan">
             <div class="paper-content">
                 <div class="content-title">
                     <span>计划信息：</span>
@@ -105,6 +106,7 @@
                     </div>
                 </div>
             </div>
+                    </div>
             <div class="paper-content">
                 <div class="content-title">
                     <span>射野信息：</span>

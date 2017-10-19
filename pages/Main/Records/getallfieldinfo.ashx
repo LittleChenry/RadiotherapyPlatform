@@ -38,6 +38,24 @@ public class getallfieldinfo : IHttpHandler {
         string tps =sqlOperation.ExecuteScalar(countcommand1);
         string countcommand2 = "select positioninfomation from treatment where ID=@treatmentid ";
         string pos =sqlOperation.ExecuteScalar(countcommand2);
+        string countcommand3 = "select iscommon from treatment where ID=@treatmentid ";
+        int iscommon = Convert.ToInt32(sqlOperation.ExecuteScalar(countcommand3));
+        if (iscommon == 0)
+        {
+            string max = "select max(ID) from design";
+            int MAX = Convert.ToInt32(sqlOperation.ExecuteScalar(max));
+            if (MAX < 1)
+            {
+                string insert = "insert into design set(ID) " +
+                                    "VALUES(@ID)";
+                sqlOperation.AddParameterWithValue("@ID", 1);
+                sqlOperation.ExecuteNonQuery(insert);
+                MAX = 1;
+            }
+            string update = "update treatment set Design_ID=@Design_ID where ID=@treatmentid";
+            sqlOperation.AddParameterWithValue("@Design_ID", MAX);
+            sqlOperation.ExecuteNonQuery(update);
+        }
         string sqlCommand = "SELECT code,mu,equipment,User_ID,radiotechnique,radiotype,fieldinfomation.energy as energy1,design.energy as energy2,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,Operate_Time,Name,design.* from fieldinfomation,user,design,treatment where User_ID=user.ID and design.ID=treatment.Design_ID and treatment.ID=treatmentid and treatmentid=@treatmentid ";
         sqlOperation1.AddParameterWithValue("@treatmentid", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation1.ExecuteReader(sqlCommand);

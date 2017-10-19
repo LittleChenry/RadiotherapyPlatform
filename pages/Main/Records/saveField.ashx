@@ -108,27 +108,34 @@ public class saveField : IHttpHandler {
                 string common = "select iscommon from treatment where ID=@treat";
                 int iscommon = Convert.ToInt32(sqlOperation.ExecuteScalar(common));
                 int Success = 0;
-                string select5 = "select Design_ID from treatment where ID=@treat";
-                sqlOperation.AddParameterWithValue("@treat", treatID);
-                string designid = sqlOperation.ExecuteScalar(select5);
-                int number = Convert.ToInt32(context.Request.Form["IlluminatedNumber"]);
-                string angle = "";
-                for (int j = 1; j < number; j++)
+                int successs = 0;
+                if (iscommon == 1)
                 {
-                    angle = angle + context.Request.Form["angle"+j]+",";
+                    string select5 = "select Design_ID from treatment where ID=@treat";
+                    sqlOperation.AddParameterWithValue("@treat", treatID);
+                    string designid = sqlOperation.ExecuteScalar(select5);
+                    int number = Convert.ToInt32(context.Request.Form["IlluminatedNumber"]);
+                    string angle = "";
+                    for (int j = 1; j < number; j++)
+                    {
+                        angle = angle + context.Request.Form["angle" + j] + ",";
+                    }
+                    angle = angle + context.Request.Form["angle" + number];
+                    string update = "update design set IlluminatedNumber=@IlluminatedNumber,Coplanar=@Coplanar,MachineNumbe=@MachineNumbe,ControlPoint=@ControlPoint,Illuminatedangle=@Illuminatedangle,Irradiation_ID=@Irradiation_ID,energy=@energy where ID=@designid";
+                    sqlOperation1.AddParameterWithValue("@Irradiation_ID", Convert.ToInt32(context.Request.Form["Irradiation"]));
+                    sqlOperation1.AddParameterWithValue("@IlluminatedNumber", Convert.ToInt32(context.Request.Form["IlluminatedNumber"]));
+                    sqlOperation1.AddParameterWithValue("@Coplanar", Convert.ToInt32(context.Request.Form["Coplanar"]));
+                    sqlOperation1.AddParameterWithValue("@energy", context.Request.Form["ener"]);
+                    sqlOperation1.AddParameterWithValue("@MachineNumbe", Convert.ToDouble(context.Request.Form["MachineNumbe"]));
+                    sqlOperation1.AddParameterWithValue("@Illuminatedangle", angle);
+                    sqlOperation1.AddParameterWithValue("@ControlPoint", Convert.ToInt32(context.Request.Form["ControlPoint"]));
+                    sqlOperation1.AddParameterWithValue("@designid", designid);
+                    successs = sqlOperation1.ExecuteNonQuery(update);
                 }
-                angle = angle + context.Request.Form["angle" + number];
-                string update = "update design set IlluminatedNumber=@IlluminatedNumber,Coplanar=@Coplanar,MachineNumbe=@MachineNumbe,ControlPoint=@ControlPoint,Illuminatedangle=@Illuminatedangle,Irradiation_ID=@Irradiation_ID,energy=@energy where ID=@designid";
-                sqlOperation1.AddParameterWithValue("@Irradiation_ID", Convert.ToInt32(context.Request.Form["Irradiation"]));
-                sqlOperation1.AddParameterWithValue("@IlluminatedNumber", Convert.ToInt32(context.Request.Form["IlluminatedNumber"]));
-                sqlOperation1.AddParameterWithValue("@Coplanar", Convert.ToInt32(context.Request.Form["Coplanar"]));
-                sqlOperation1.AddParameterWithValue("@energy", context.Request.Form["ener"]);
-                sqlOperation1.AddParameterWithValue("@MachineNumbe", Convert.ToDouble(context.Request.Form["MachineNumbe"]));
-                sqlOperation1.AddParameterWithValue("@Illuminatedangle", angle);
-                sqlOperation1.AddParameterWithValue("@ControlPoint", Convert.ToInt32(context.Request.Form["ControlPoint"]));
-                sqlOperation1.AddParameterWithValue("@designid", designid);
-                int successs=sqlOperation1.ExecuteNonQuery(update);
-            
+                else
+                {
+                    successs = 1;
+                }
                 if (!exists)
                 {
                     string inserttreat = "update treatment set Progress=@progress,TPS=@TPS,positioninfomation=@positioninfomation where ID=@treat";

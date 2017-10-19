@@ -6,6 +6,7 @@ var treatID;
 var fileName = "";
 var aa = 0;
 var ss = 0;
+var common;
 function Init(evt) {
 
     //获得当前执行人姓名与ID
@@ -35,19 +36,26 @@ function Init(evt) {
     var texthos = hosttext(patient.Hospital_ID);
     document.getElementById("hospitalid").innerHTML = texthos;
     document.getElementById("lightpart").innerHTML = patient.lightpartname;
-    var select1 = document.getElementById("Irradiation");
-    createPlanSystemItem(select1);
+    common = patient.iscommon;
+    if (common == 0) {
+        document.getElementById("plan").innerHTML = "";
+    } else {
+        var select1 = document.getElementById("Irradiation");
+        createPlanSystemItem(select1);
+    }
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '11')) {
         var fildinfo = getfieldinfo();
-        document.getElementById("Irradiation").value = fildinfo[0].Irradiation;
-        document.getElementById("ener").value = fildinfo[0].energy2;
-        document.getElementById("IlluminatedNumber").value = fildinfo[0].IlluminatedNumber;
-        ss = fildinfo[0].IlluminatedNumber;
-        table(ss, fildinfo[0].Illuminatedangle);
-        document.getElementById("MachineNumbe").value = fildinfo[0].MachineNumbe;
-        document.getElementById("ControlPoint").value = fildinfo[0].ControlPoint;
-        document.getElementById("Coplanar").value = fildinfo[0].Coplanar;
+        if (common == 1) {
+            document.getElementById("Irradiation").value = fildinfo[0].Irradiation;
+            document.getElementById("ener").value = fildinfo[0].energy2;
+            document.getElementById("IlluminatedNumber").value = fildinfo[0].IlluminatedNumber;
+            ss = fildinfo[0].IlluminatedNumber;
+            table(ss, fildinfo[0].Illuminatedangle);
+            document.getElementById("MachineNumbe").value = fildinfo[0].MachineNumbe;
+            document.getElementById("ControlPoint").value = fildinfo[0].ControlPoint;
+            document.getElementById("Coplanar").value = fildinfo[0].Coplanar;
+        }
         document.getElementById("tps").value = fildinfo[0].tps;
         document.getElementById("pos").value = fildinfo[0].pos;
         document.getElementById("Graded").value = fildinfo[0].Singledose;
@@ -488,9 +496,11 @@ function hosttext(str) {
 
 function save() {   
     var form = new FormData(document.getElementById("saveField"));
-    if (document.getElementById("Irradiation").value == "allItem") {
-        window.alert("照射技术没有选择");
-        return false;
+    if (common == 1) {
+        if (document.getElementById("Irradiation").value == "allItem") {
+            window.alert("照射技术没有选择");
+            return false;
+        }
     }
     $.ajax({
         url: "saveField.ashx",
@@ -524,16 +534,18 @@ function remove() {
     document.getElementById("Graded").removeAttribute("disabled");
     document.getElementById("fieldTimes").removeAttribute("disabled");
     document.getElementById("pos").removeAttribute("disabled");
-    document.getElementById("Irradiation").removeAttribute("disabled");
-    document.getElementById("ener").removeAttribute("disabled");
-    document.getElementById("IlluminatedNumber").removeAttribute("disabled");
-    //document.getElementById("Illuminatedangle").readonly="false";
-    document.getElementById("MachineNumbe").removeAttribute("disabled");
-    document.getElementById("ControlPoint").removeAttribute("disabled");
-    document.getElementById("Coplanar").removeAttribute("disabled");    
-    if (ss > 0) {
-        for(var j=1;j<=ss;j++){
-        document.getElementById("angle"+j).removeAttribute("disabled");
+    if (common == 1) {
+        document.getElementById("Irradiation").removeAttribute("disabled");
+        document.getElementById("ener").removeAttribute("disabled");
+        document.getElementById("IlluminatedNumber").removeAttribute("disabled");
+        //document.getElementById("Illuminatedangle").readonly="false";
+        document.getElementById("MachineNumbe").removeAttribute("disabled");
+        document.getElementById("ControlPoint").removeAttribute("disabled");
+        document.getElementById("Coplanar").removeAttribute("disabled");
+        if (ss > 0) {
+            for (var j = 1; j <= ss; j++) {
+                document.getElementById("angle" + j).removeAttribute("disabled");
+            }
         }
     }
     $("#add").attr("href", "javascript:addField()");
