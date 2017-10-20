@@ -1732,6 +1732,7 @@ function getPatient(userID, role, parameters) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    alert(json);
     var patient = eval("(" + json + ")");
     return patient;
 }

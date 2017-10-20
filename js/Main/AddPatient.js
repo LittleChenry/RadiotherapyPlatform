@@ -66,6 +66,14 @@ function Init() {
         }
     });
     $("#sync").bind("click", Sync);
+    $("#CardID").keydown(function () {
+        if (event.keyCode == "13") {
+            Sync();
+        }
+    });
+    var tre=gettreatid();
+    $("#radionumber").attr("value", tre);
+
     $("#selectAddress").bind("click",SelectAddress);
     $("#IDcardNumber").bind("input propertychange", getBirthdate);
 }
@@ -122,16 +130,17 @@ function Sync() {
             success: function (data) {
                 var patientInfo = $.parseJSON(data);
                 $("#userName").val(patientInfo.Item.name);
-                if (patientInfo.Item.sexid == 1) {
-                    $("#sex").val("male");
+                if (patientInfo.Item.sexid == "1") {
+                    $("#Gender").val("F");
                 }else{
-                    $("#sex").val("female");
+                    $("#Gender").val("M");
                 }
-                $("#Birthday").val(patientInfo.Item.birthdate);
+                $("#Birthday").val(patientInfo.Item.birthdate.substring(0,10));
                 $("#Nation").val(patientInfo.Item.nation);
                 $("#Number1").val(patientInfo.Item.telenumber);
                 $("#Number2").val(patientInfo.Item.telenumber2);
                 $("#Address").val(patientInfo.Item.simpleaddress);
+                $("#IDcardNumber").val(patientInfo.Item.idcard);
             },
             error: function (e) { 
                 alert("error");
@@ -253,6 +262,14 @@ function getdoctorandgroup() {
     var Items = xmlHttp.responseText;
     docandgroup =JSON.parse(Items).Item;
 }
+function gettreatid() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "SelectTreatID.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
+}
 
 //表单reset函数
 function resetForm(evt) {
@@ -309,14 +326,7 @@ function CheckEmpty() {
         window.alert("电话1不能为空");
         return;
     }    
-    if (document.getElementById("height").value == "") {
-        window.alert("身高不能为空");
-        return;
-    }
-    if (document.getElementById("weight").value == "") {
-        window.alert("体重不能为空");
-        return;
-    }
+    
     if (isCardNo()) {
         window.alert("身份证格式不正确");
         return;

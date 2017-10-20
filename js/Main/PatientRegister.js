@@ -3,10 +3,11 @@ var docandgroup;
 window.addEventListener("load", Init, false);
 //初始化 
 var userID;
+var Radiotherapy_ID;
 
 function Init(evt) {
     var treatID = window.location.search.split("&")[0].split("=")[1];
-    var Radiotherapy_ID = window.location.search.split("&")[1].split("=")[1];
+     Radiotherapy_ID = window.location.search.split("&")[1].split("=")[1];
     getdoctorandgroup();
     var select4 = document.getElementById("doctor");
     createdoctorItem(select4);
@@ -90,6 +91,7 @@ function Init(evt) {
     checkAddTreatment(Radiotherapy_ID);
     $("#radionumber").bind("input propertychange", function () {
         var isradio1 = isradio();
+ 
         if (isradio1 == 0) {
             $(this).css("background", "yellow");
         } else {
@@ -112,6 +114,9 @@ function isradio() {
         return 0;
     } else {
         var returndata;
+        if (Radiotherapy_ID == radio) {
+            return 1;
+        }
         $.ajax({
             url: "../recheck.ashx",
             type: "post",
@@ -549,14 +554,7 @@ function save() {
         window.alert("身份证格式不正确");
         return false;
     }      
-    if (document.getElementById("height").value=="") {
-        window.alert("身高不能为空");
-        return false;                  
-    }
-    if (document.getElementById("weight").value=="") {
-        window.alert("体重不能为空");
-        return false;                 
-    }
+
 
     if (document.getElementById("doctor").value == "allItem") {
         window.alert("请选择医生");        
