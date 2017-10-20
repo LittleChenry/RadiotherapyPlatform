@@ -34,10 +34,10 @@ public class getmodel : IHttpHandler {
     }
     private string getmodelItem()
     {
-        string countItem = "SELECT count(*) FROM material where Amount>0";
+        string countItem = "SELECT count(*) FROM material ";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
 
-        string sqlCommand = "SELECT * FROM material  where Amount>0";
+        string sqlCommand = "SELECT * FROM material";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;
