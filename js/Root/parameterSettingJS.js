@@ -338,7 +338,12 @@ $(function () {
         sureEdit();
     });
 });
-
+//删除
+$(function () {
+    $("#sureDelete").bind("click", function () {
+        sureDelete();
+    });
+})
 function sureEdit() {
     var $input = $("#editArea").find("input[type=text]");
     var id = $("#editID").val();
@@ -359,7 +364,29 @@ function sureEdit() {
         }
     });
 }
+function sureDelete() {
+    var $input = $("#editArea").find("input[type=text]");
+    var id = $("#editID").val();
 
+    var val = "";
+    for (var i = 0; i < $input.length; ++i) {
+        val += $input[i].value + " ";
+    }
+
+    $.ajax({
+        type: "post",
+        url: "../../pages/Root/parameterDelete.ashx",
+        data: { "type": currentTable, "id": id, "value": val },
+        success: function () {
+            alert("删除成功");
+            selectCreate(currentTable, parseInt($("#currentPage").val()));
+            $("#cannelEdit").trigger("click");
+        },
+        error: function () {
+            alert("删除失败");
+        }
+    });
+}
 /**
  * 翻页事件
  */

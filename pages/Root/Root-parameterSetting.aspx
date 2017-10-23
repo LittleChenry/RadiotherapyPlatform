@@ -450,6 +450,7 @@
                         </div>
                         <div class="modal-footer">
                             <button id="cannelEdit" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                            <input id="sureDelete" type="button" class="btn btn-danger" value="删除" /> 
                             <input id="sureEdit" type="submit" class="btn btn-primary" value="确认" />
                         </div>
                 </div>
