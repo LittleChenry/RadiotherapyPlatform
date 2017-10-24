@@ -287,6 +287,9 @@ $(function () {
         $("#parameterTable").bind("click", function (evt) {
             var which = evt.target;
             var $tr = $(which).closest("tr");
+            var $tr2 = $(this).find("tr:first");
+            if($tr[0] == $tr2[0])
+                return false;
             editParameter($tr);
             $("#EditGroup").trigger("click");
         });
@@ -328,6 +331,14 @@ function editParameter($tr) {
                                + values[i]
                                + " /></td></tr>");
     }
+    var $defaultRadio0 = $("<label class='checkbox-inline'><input type='radio' name='default' value='0'/>默认</label>");
+    var $defaultRadio1 = $("<label class='checkbox-inline'><input type='radio' name='default' value='1' checked/>不默认</label>");
+
+    var $tr = $("<tr><th>设置默认</th></tr>");
+    var $td = $("<td></td>").append($defaultRadio0).append($defaultRadio1);
+    $tr.append($td);
+    editArea.append($tr);
+
 }
 
 /**
@@ -347,16 +358,16 @@ $(function () {
 function sureEdit() {
     var $input = $("#editArea").find("input[type=text]");
     var id = $("#editID").val();
-
+    var isDefault = $("input[name='default']:checked").val();
     var val = "";
     for (var i = 0; i < $input.length; ++i) {
         val += $input[i].value + " ";
     }
-
+    val += isDefault+" ";
     $.ajax({
         type: "post",
         url: "../../pages/Root/parameterEdit.ashx",
-        data: { "type": currentTable, "id": id, "value": val },
+        data: { "type": currentTable, "id": id, "value": val},
         success: function () {
             alert("修改成功");
             selectCreate(currentTable, parseInt($("#currentPage").val()));
@@ -551,16 +562,15 @@ function createPart(page) {
 function createPartTable(page) {
     var $tbody = $("#tbody");//清空当前表格
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].code + "<input type=hidden value=" + jsonObj[i].id
+       var $tr = $("<tr><td>" + jsonObj[i].code + "<input type=hidden value=" + jsonObj[i].id
            + " /></td><td>" + jsonObj[i].Name + "</td><td>" + jsonObj[i].Description
-           + "</td></tr>";
+           + "</td></tr>");
+       if (jsonObj[i].IsDefault == '0') {
+           $tr.addClass("success");
+       }
+       $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -629,16 +639,15 @@ function initAddDiagnosisResult() {
 function createDiagnosisResultTable(page) {
     var $tbody = $("#tbody");//清空当前表格
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].code + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].code + "<input type=hidden value=" + jsonObj[i].id
            + " /></td><td>" + jsonObj[i].TumorName + "</td><td>" + jsonObj[i].Description
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -681,18 +690,17 @@ function initAddFixedEquipment() {
 
 //3
 function createFixedEquipmentTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -735,18 +743,17 @@ function initAddFixedRequirements() {
 
 //3
 function createFixedRequirementsTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Requirements + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Requirements + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -789,18 +796,17 @@ function initAddScanPart() {
 
 //3
 function createScanPartTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -843,18 +849,17 @@ function initAddScanMethod() {
 
 //3
 function createScanMethodTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Method + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Method + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -897,18 +902,17 @@ function initAddEnhanceMethod() {
 
 //3
 function createEnhanceMethodTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Method + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Method + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 
@@ -952,18 +956,17 @@ function initAddLocationRequirements() {
 
 //3
 function createLocationRequirementsTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Requirements + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Requirements + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -1006,18 +1009,17 @@ function initAddDensityConversion() {
 
 //3
 function createDensityConversionTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -1060,18 +1062,17 @@ function initAddEndangeredOrgan() {
 
 //3
 function createEndangeredOrganTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -1114,18 +1115,17 @@ function initAddTechnology() {
 
 //3
 function createTechnologyTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -1168,18 +1168,17 @@ function initAddPlanSystem() {
 
 //3
 function createPlanSystemTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -1222,18 +1221,17 @@ function initAddGrid() {
 
 //3
 function createGridTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -1276,18 +1274,17 @@ function initAddAlgorithm() {
 
 //3
 function createAlgorithmTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -1330,18 +1327,17 @@ function initAddReplacementRequirements() {
 
 //3
 function createReplacementRequirementsTable(page) {
-    var $tbody = $("#tbody");//清空当前表格
+    var $tbody = $("#tbody");
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Requirements + "<input type=hidden value=" + jsonObj[i].id
+        var $tr = $("<tr><td>" + jsonObj[i].Requirements + "<input type=hidden value=" + jsonObj[i].id
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -1380,14 +1376,15 @@ function initAddLightPart(){
 function createLightPartTable(page){
     var $tbody = $("#tbody");
     $tbody.empty();
-    var tr = "";
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
+        var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 /**
  * treataim治疗目标  ->1
@@ -1421,16 +1418,17 @@ function createLightPartTable(page){
  }
  //3
  function createTreatAimTable(page){
-    var $tbody = $("#tbody");
-    $tbody.empty();
-    var tr = "";
-    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Aim + "<input type=hidden value=" + jsonObj[i].ID 
-           + " />"
-           + "</td></tr>";
-    }
-
-    $tbody.append(tr);
+     var $tbody = $("#tbody");
+     $tbody.empty();
+     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+         var $tr = $("<tr><td>" + jsonObj[i].Aim + "<input type=hidden value=" + jsonObj[i].ID
+            + " />"
+            + "</td></tr>");
+         if (jsonObj[i].IsDefault == '0') {
+             $tr.addClass("success");
+         }
+         $tbody.append($tr);
+     }
  }
  /**
  * headrest头枕  ->1
@@ -1464,16 +1462,17 @@ function createLightPartTable(page){
  }
  //3
  function createHeadRestTable(page){
-    var $tbody = $("#tbody");
-    $tbody.empty();
-    var tr = "";
-    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
-           + " />"
-           + "</td></tr>";
-    }
-
-    $tbody.append(tr);
+     var $tbody = $("#tbody");
+     $tbody.empty();
+     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+         var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+            + " />"
+            + "</td></tr>");
+         if (jsonObj[i].IsDefault == '0') {
+             $tr.addClass("success");
+         }
+         $tbody.append($tr);
+     }
  }
  /**
  * pendulumfieldinfo 摆位野信息  ->1
@@ -1507,16 +1506,17 @@ function createLightPartTable(page){
  }
  //3
  function createPendulumFieldInfoTable(page){
-    var $tbody = $("#tbody");
-    $tbody.empty();
-    var tr = "";
-    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
-           + " />"
-           + "</td></tr>";
-    }
-
-    $tbody.append(tr);
+     var $tbody = $("#tbody");
+     $tbody.empty();
+     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+         var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+            + " />"
+            + "</td></tr>");
+         if (jsonObj[i].IsDefault == '0') {
+             $tr.addClass("success");
+         }
+         $tbody.append($tr);
+     }
  }
 
  /**
@@ -1551,16 +1551,17 @@ function createLightPartTable(page){
  }
  //3
  function createPlanOptimizeDegreeTable(page){
-    var $tbody = $("#tbody");
-    $tbody.empty();
-    var tr = "";
-    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
-           + " />"
-           + "</td></tr>";
-    }
-
-    $tbody.append(tr);
+     var $tbody = $("#tbody");
+     $tbody.empty();
+     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+         var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+            + " />"
+            + "</td></tr>");
+         if (jsonObj[i].IsDefault == '0') {
+             $tr.addClass("success");
+         }
+         $tbody.append($tr);
+     }
  }
 
  /**
@@ -1595,16 +1596,17 @@ function createLightPartTable(page){
  }
  //3
  function createDrrTable(page){
-    var $tbody = $("#tbody");
-    $tbody.empty();
-    var tr = "";
-    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
-           + " />"
-           + "</td></tr>";
-    }
-
-    $tbody.append(tr);
+     var $tbody = $("#tbody");
+     $tbody.empty();
+     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+         var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+            + " />"
+            + "</td></tr>");
+         if (jsonObj[i].IsDefault == '0') {
+             $tr.addClass("success");
+         }
+         $tbody.append($tr);
+     }
  }
 
  /**
@@ -1641,14 +1643,17 @@ function createLightPartTable(page){
  function createExportoTradiotherapyNetworkTable(page){
     var $tbody = $("#tbody");
     $tbody.empty();
-    var tr = "";
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
+        var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID 
            + " />"
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
 
-    $tbody.append(tr);
+    
  }
 
  /**
@@ -1689,16 +1694,15 @@ function createSpiltWay(page) {
 function createSpiltWayTable(page) {
     var $tbody = $("#tbody");//清空当前表格
     $tbody.empty();
-
-    var tr = "";
-
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Ways + "<input type=hidden value=" + jsonObj[i].ID
+        var $tr = $("<tr><td>" + jsonObj[i].Ways + "<input type=hidden value=" + jsonObj[i].ID
            + " /></td><td>" + jsonObj[i].Interal
-           + "</td></tr>";
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -1751,14 +1755,15 @@ function createMaterialTable(page) {
     var $tbody = $("#tbody");//清空当前表格
     $tbody.empty();
 
-    var tr = "";
 
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
-           + "</td></tr>";
+        $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
+           + "</td></tr>)");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -1809,14 +1814,15 @@ function createIrradiationTable(page) {
     var $tbody = $("#tbody");//清空当前表格
     $tbody.empty();
 
-    var tr = "";
 
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
-           + "</td></tr>";
+        $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
+           + "</td></tr>)");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**
@@ -1867,14 +1873,17 @@ function createRaytypeTable(page) {
     var $tbody = $("#tbody");//清空当前表格
     $tbody.empty();
 
-    var tr = "";
 
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
-           + "</td></tr>";
+        $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
+           + "</td></tr>)");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
 
-    $tbody.append(tr);
+   
 }
 
 /**
@@ -1925,14 +1934,15 @@ function createBodypositionTable(page) {
     var $tbody = $("#tbody");//清空当前表格
     $tbody.empty();
 
-    var tr = "";
 
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
-        tr += "<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
-           + "</td></tr>";
+        var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
     }
-
-    $tbody.append(tr);
 }
 
 /**

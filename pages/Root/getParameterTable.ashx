@@ -99,6 +99,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["Name"].ToString())
                       .Append("\",\"Description\":\"")
                       .Append(reader["Description"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -123,6 +125,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["TumorName"].ToString())
                       .Append("\",\"Description\":\"")
                       .Append(reader["Description"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -143,6 +147,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -163,6 +169,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Requirements\":\"")
                       .Append(reader["Requirements"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -183,6 +191,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -203,6 +213,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Method\":\"")
                       .Append(reader["Method"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -223,6 +235,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Method\":\"")
                       .Append(reader["Method"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -243,6 +257,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Requirements\":\"")
                       .Append(reader["Requirements"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -263,6 +279,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -283,6 +301,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -303,6 +323,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -323,6 +345,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -343,6 +367,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -363,6 +389,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -383,6 +411,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Requirements\":\"")
                       .Append(reader["Requirements"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -401,6 +431,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -419,6 +451,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Aim\":\"")
                       .Append(reader["Aim"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -437,6 +471,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -455,6 +491,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -472,6 +510,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -489,6 +529,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -507,6 +549,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -527,6 +571,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["Ways"].ToString())
                       .Append("\",\"Interal\":\"")
                       .Append(reader["Interal"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -545,6 +591,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -563,6 +611,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -581,6 +631,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)
@@ -599,6 +651,8 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["ID"].ToString())
                       .Append("\",\"Name\":\"")
                       .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
                       .Append("\"},");
         }
         backString.Remove(backString.Length - 1, 1)

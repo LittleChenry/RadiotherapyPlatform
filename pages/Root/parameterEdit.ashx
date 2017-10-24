@@ -114,324 +114,568 @@ public class parameterEdit : IHttpHandler {
     
     private void updatePart(string id, string value){
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE part set Code=@code,Name=@name,Description=@description WHERE ID=@id";
+        string sqlCommand = "UPDATE part set Code=@code,Name=@name,Description=@description,IsDefault=@IsDefault WHERE ID=@id";
         
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@code", values[0]);
         sqlOperation.AddParameterWithValue("@name", values[1]);
         sqlOperation.AddParameterWithValue("@description", values[2]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[3]));
         sqlOperation.AddParameterWithValue("@id", id);
         
         sqlOperation.ExecuteNonQuery(sqlCommand);
+        if (values[3] == "0")
+        {
+            string sqlCommand1 = "update part set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
     
     private void  updateDiagnosisResult(string id, string value){
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE diagnosisResult set Code=@code,TumorName=@name,Description=@description WHERE ID=@id";
+        string sqlCommand = "UPDATE diagnosisResult set Code=@code,TumorName=@name,Description=@description,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@code", values[0]);
         sqlOperation.AddParameterWithValue("@name", values[1]);
         sqlOperation.AddParameterWithValue("@description", values[2]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[3]));
         sqlOperation.AddParameterWithValue("@id", id);
 
         sqlOperation.ExecuteNonQuery(sqlCommand);
+        if (values[3] == "0")
+        {
+            string sqlCommand1 = "update diagnosisResult set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateFixedEquipment(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE FixedEquipment set Name=@name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE fixedequipment set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
-        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update fixedequipment set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateFixedRequirements(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE FixedRequirements set Requirements=@Requirements WHERE ID=@id";
+
+        string sqlCommand = "UPDATE fixedrequirements set Requirements=@Requirements,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Requirements", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update fixedrequirements set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateScanPart(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE ScanPart set Name=@name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE scanpart set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
-        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update scanpart set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateScanMethod(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE ScanMethod set Method=@method WHERE ID=@id";
+
+        string sqlCommand = "UPDATE scanmethod set Method=@Method,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
-        sqlOperation.AddParameterWithValue("@method", values[0]);
+        sqlOperation.AddParameterWithValue("@Method", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update scanmethod set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateEnhanceMethod(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE EnhanceMethod set Method=@method WHERE ID=@id";
+
+        string sqlCommand = "UPDATE enhancemethod set Method=@Method,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
-        sqlOperation.AddParameterWithValue("@method", values[0]);
+        sqlOperation.AddParameterWithValue("@Method", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update enhancemethod set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateLocationRequirements(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE LocationRequirements set Requirements=@Requirements WHERE ID=@id";
+
+        string sqlCommand = "UPDATE locationrequirements set Requirements=@Requirements,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Requirements", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update locationrequirements set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateDensityConversion(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE DensityConversion set Name=@name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE densityconversion set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
-        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update densityconversion set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateEndangeredOrgan(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE EndangeredOrgan set Name=@name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE endangeredorgan set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
-        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update endangeredorgan set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateTechnology(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE Technology set Name=@name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE technology set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
-        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update technology set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updatePlanSystem(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE PlanSystem set Name=@name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE plansystem set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
-        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update plansystem set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateGrid(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE Grid set Name=@name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE grid set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
-        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update grid set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateAlgorithm(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE Algorithm set Name=@name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE algorithm set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
-        sqlOperation.AddParameterWithValue("@name", values[0]);
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update algorithm set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateReplacementRequirements(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE ReplacementRequirements set Requirements=@Requirements WHERE ID=@id";
+
+        string sqlCommand = "UPDATE replacementrequirements set Requirements=@Requirements,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Requirements", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update replacementrequirements set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateLightPart(string id, string value) 
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE lightpart set Name=@Name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE lightpart set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update lightpart set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateTreatAim(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE treataim set Aim=@Aim WHERE ID=@id";
+
+        string sqlCommand = "UPDATE treataim set Aim=@Aim,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Aim", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update treataim set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateHeadRest(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE headrest set Name=@Name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE headrest set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update headrest set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updatePendulumFieldInfo(string id, string value) 
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE pendulumfieldinfo set Name=@Name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE pendulumfieldinfo set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update pendulumfieldinfo set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
     private void updatePlanOptimizeDegree(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE planoptimizedegree set Name=@Name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE planoptimizedegree set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update planoptimizedegree set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
     private void updateDrr(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE drr set Name=@Name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE drr set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update drr set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
     private void updateExportoTradiotherapyNetwork(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE exportotradiotherapynetwork set Name=@Name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE exportotradiotherapynetwork set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update exportotradiotherapynetwork set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
     private void updateSplitWay(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE splitway set Ways=@Ways,Interal=@Interal WHERE ID=@id";
+        string sqlCommand = "UPDATE splitway set Ways=@Ways,Interal=@Interal,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Ways", values[0]);
         sqlOperation.AddParameterWithValue("@Interal",values[1]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[2]));
         sqlOperation.AddParameterWithValue("@id", id);
 
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[2] == "0")
+        {
+            string sqlCommand1 = "update splitway set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateMaterial(string id,string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE material set Name=@Name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE material set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update material set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateIrradiation(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE irradiation set Name=@Name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE irradiation set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update irradiation set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateRaytype(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE raytype set Name=@Name WHERE ID=@id";
+
+        string sqlCommand = "UPDATE raytype set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update raytype set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 
     private void updateBodyposition(string id,string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE bodyposition set Name=@Name WHERE ID=@id";
+        
+        string sqlCommand = "UPDATE bodyposition set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault",int.Parse(values[1]));
         sqlOperation.AddParameterWithValue("@id", id);
-
         sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if(values[1]=="0"){
+            string sqlCommand1 = "update bodyposition set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
+        
+        
+        
+       
     }
 }
