@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css" />
     <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce -->
     <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css" />
+    <link rel="stylesheet" href="../../plugin/jqueryui/jquery-ui.min.css" />
     <title>基本信息管理</title>
 
     <!-- Main CSS -->
@@ -365,6 +366,7 @@
                          <input type="button" class="btn btn-primary btn-sm buttonToLeft floatRight" id="newGroup" data-toggle="modal" data-target="#myModal" value="新增" style="padding: 2.5px 10px;" />
                         <input type="button" class="btn btn-primary btn-sm floatRight" id="changeGroup" value="编辑" style="padding: 2.5px 10px;" />
                         <input type="button" class="btn btn-primary btn-sm floatRight" id="closeEdite" value="结束编辑" style="padding: 2.5px 10px;display:none" />
+                        <input type="button" class="btn btn-primary btn-sm floatRight" id="toSort" value="排序" style="padding: 2.5px 10px"; data-toggle="modal" data-backdrop="false" />
                         <input type="button" class="tohidden" id="EditGroup" data-toggle="modal" data-target="#editModal" />
                     </div>
                     <div id="tableArea" class="panel-body mintablewidth">
@@ -433,7 +435,7 @@
                         <!-- /.modal-dialog -->
                      </div>
 
-         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -458,6 +460,32 @@
             </div>
                                 <!-- /.modal-dialog -->
         </div>
+
+                        <div class="modal fade" id="sortModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
+                                        <h4 class="modal-title">排序</h4>
+                        
+                                    </div>
+                                    <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
+                                        <table class="table table-bordered table-center">
+                                            <tbody id="sort">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button id="sortCancel" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                                        <input id="sortSure" type="submit" class="btn btn-primary" value="确认" />
+                                    </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                     </div>
                     </div>
                 </div>
             </div>

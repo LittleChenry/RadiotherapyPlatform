@@ -1954,3 +1954,828 @@ function initAddBodyposition() {
                 + "<input type=text class=form-control style=margin-right:0.8em />"
                 + "</td></tr>");
 }
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------排序-----------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+
+$(function () {
+    $("#toSort").click(function () {
+        $("#sortModal").modal({
+            backdrop: false
+        });
+        createSortTable($("#tableSelect").val());
+        $("#sort").sortable(); //移动表格
+        $("#sort").disableSelection();
+    });
+
+    $("#sortSure").click(function () {
+        sureSort();
+    });
+})
+function sureSort(){
+    var $sortTrs = $("#sort").find("tr");
+    var orders = "";
+    $sortTrs.each(function(index,element){
+        orders += $(element).find("td :hidden").val() + " ";
+    });
+    $.ajax({
+        type: "post",
+        url: "sortParameterTable.ashx",
+        data: { table: $("#tableSelect").val(),orders:orders },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            alert("修改成功");
+            $('#sortModal').modal('hide');
+            selectCreate($("#tableSelect").val(),1);
+        }
+    });
+}
+function createSortTable(type) {
+    switch (type) {
+        case "part":
+            sortPart();
+            break;
+        case "DiagnosisResult":
+            sortDiagnosisResult();
+            break;
+        case "FixedEquipment":
+            sortFixedEquipment();
+            break;
+        case "FixedRequirements":
+            sortFixedRequirements();
+            break;
+        case "ScanPart":
+            sortScanPart();
+            break;
+        case "ScanMethod":
+            sortScanMethod();
+            break;
+        case "EnhanceMethod":
+            sortEnhanceMethod();
+            break;
+        case "LocationRequirements":
+            sortLocationRequirements();
+            break;
+        case "DensityConversion":
+            sortDensityConversion();
+            break;
+        case "EndangeredOrgan":
+            sortEndangeredOrgan();
+            break;
+        case "Technology":
+            sortTechnology();
+            break;
+        case "PlanSystem":
+            sortPlanSystem();
+            break;
+        case "Grid":
+            sortGrid();
+            break;
+        case "Algorithm":
+            sortAlgorithm();
+            break;
+        case "ReplacementRequirements":
+            sortReplacementRequirements();
+            break;
+        case "lightpart":
+            sortLightPart();
+            break;
+        case "treataim":
+            sortTreatAim();
+            break;
+        case "headrest":
+            sortHeadRest();
+            break;
+        case "pendulumfieldinfo":
+            sortPendulumFieldInfo();
+            break;
+        case "planoptimizedegree":
+            sortPlanOptimizeDegree();
+            break;
+        case "drr":
+            sortDrr();
+            break;
+        case "exportotradiotherapynetwork":
+            sortExportoTradiotherapyNetwork();
+            break;
+        case "splitway":
+            sortSpiltWay();
+            break;
+        case "material":
+            sortMaterial();
+            break;
+        case "irradiation":
+            sortIrradiation();
+            break;
+        case "raytype":
+            sortRaytype();
+            break;
+        case "bodyposition":
+            sortBodyposition();
+            break;
+        default:
+            break;
+    }
+}
+
+function sortPart() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "part" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length ; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].code + "<input type=hidden value=" + jsonObj[i].id
+                    + " /></td><td>" + jsonObj[i].Name + "</td><td>" + jsonObj[i].Description
+                    + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+function sortDiagnosisResult() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "DiagnosisResult" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].code + "<input type=hidden value=" + jsonObj[i].id
+                   + " /></td><td>" + jsonObj[i].TumorName + "</td><td>" + jsonObj[i].Description
+                   + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+function sortFixedEquipment() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "FixedEquipment" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+                        + " />"
+                        + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortFixedRequirements() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "FixedRequirements" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Requirements + "<input type=hidden value=" + jsonObj[i].id
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortScanPart() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "ScanPart" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortScanMethod() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "ScanMethod" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Method + "<input type=hidden value=" + jsonObj[i].id
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortEnhanceMethod() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "EnhanceMethod" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Method + "<input type=hidden value=" + jsonObj[i].id
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortLocationRequirements() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "LocationRequirements" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Requirements + "<input type=hidden value=" + jsonObj[i].id
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortDensityConversion() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "DensityConversion" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortEndangeredOrgan() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "EndangeredOrgan" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortTechnology() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "Technology" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortPlanSystem() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "PlanSystem" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortGrid() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "Grid" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortAlgorithm() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "Algorithm" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].id
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortReplacementRequirements() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "ReplacementRequirements" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Requirements + "<input type=hidden value=" + jsonObj[i].id
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortLightPart() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "lightpart" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortTreatAim() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "treataim" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Aim + "<input type=hidden value=" + jsonObj[i].ID
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortHeadRest() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "headrest" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortPendulumFieldInfo() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "pendulumfieldinfo" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortPlanOptimizeDegree() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "planoptimizedegree" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortDrr() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "drr" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortExportoTradiotherapyNetwork() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "exportotradiotherapynetwork" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+                            + " />"
+                            + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortSpiltWay() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "splitway" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Ways + "<input type=hidden value=" + jsonObj[i].ID
+           + " /></td><td>" + jsonObj[i].Interal
+           + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortMaterial() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "material" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+                           + " />"
+                           + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortIrradiation() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "irradiation" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+                           + " />"
+                           + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortRaytype() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "raytype" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+                           + " />"
+                           + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortBodyposition() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "bodyposition" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+                           + " />"
+                           + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}

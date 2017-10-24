@@ -10,6 +10,9 @@ public class getParameterTable : IHttpHandler {
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
         string result = choose(context);
+        sqlOperation.Close();
+        sqlOperation.Dispose();
+        sqlOperation = null;
         context.Response.Write(result);
     }
  
@@ -85,7 +88,7 @@ public class getParameterTable : IHttpHandler {
     private string selectPart()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM part";
+        string sqlCommand = "SELECT * FROM part Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -111,7 +114,7 @@ public class getParameterTable : IHttpHandler {
     private string selectDiagnosisResult()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM DiagnosisResult";
+        string sqlCommand = "SELECT * FROM DiagnosisResult Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -137,7 +140,7 @@ public class getParameterTable : IHttpHandler {
     private string selectFixedEquipment()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM FixedEquipment";
+        string sqlCommand = "SELECT * FROM FixedEquipment Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -159,7 +162,7 @@ public class getParameterTable : IHttpHandler {
     private string selectFixedRequirements()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM FixedRequirements";
+        string sqlCommand = "SELECT * FROM FixedRequirements Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -181,7 +184,7 @@ public class getParameterTable : IHttpHandler {
     private string selectScanPart()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM ScanPart";
+        string sqlCommand = "SELECT * FROM ScanPart Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -203,7 +206,7 @@ public class getParameterTable : IHttpHandler {
     private string selectScanMethod()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM ScanMethod";
+        string sqlCommand = "SELECT * FROM ScanMethod Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -225,7 +228,7 @@ public class getParameterTable : IHttpHandler {
     private string selectEnhanceMethod()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM EnhanceMethod";
+        string sqlCommand = "SELECT * FROM EnhanceMethod Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -247,7 +250,7 @@ public class getParameterTable : IHttpHandler {
     private string selectLocationRequirements()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM LocationRequirements";
+        string sqlCommand = "SELECT * FROM LocationRequirements Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -269,7 +272,7 @@ public class getParameterTable : IHttpHandler {
     private string selectDensityConversion()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM DensityConversion";
+        string sqlCommand = "SELECT * FROM DensityConversion Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -291,7 +294,7 @@ public class getParameterTable : IHttpHandler {
     private string selectEndangeredOrgan()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM EndangeredOrgan";
+        string sqlCommand = "SELECT * FROM EndangeredOrgan Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -313,7 +316,7 @@ public class getParameterTable : IHttpHandler {
     private string selectTechnology()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM Technology";
+        string sqlCommand = "SELECT * FROM Technology Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -335,7 +338,7 @@ public class getParameterTable : IHttpHandler {
     private string selectPlanSystem()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM PlanSystem";
+        string sqlCommand = "SELECT * FROM PlanSystem Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -357,7 +360,7 @@ public class getParameterTable : IHttpHandler {
     private string selectGrid()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM Grid";
+        string sqlCommand = "SELECT * FROM Grid Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -379,7 +382,7 @@ public class getParameterTable : IHttpHandler {
     private string selectAlgorithm()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM Algorithm";
+        string sqlCommand = "SELECT * FROM Algorithm Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -401,7 +404,7 @@ public class getParameterTable : IHttpHandler {
     private string selectReplacementRequirements()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM ReplacementRequirements";
+        string sqlCommand = "SELECT * FROM ReplacementRequirements Order BY Orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
@@ -423,7 +426,7 @@ public class getParameterTable : IHttpHandler {
     private string selectLightPart()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM lightpart";
+        string sqlCommand = "SELECT * FROM lightpart Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
@@ -443,7 +446,7 @@ public class getParameterTable : IHttpHandler {
     private string selectTreatAim()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM treataim";
+        string sqlCommand = "SELECT * FROM treataim Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
@@ -463,7 +466,7 @@ public class getParameterTable : IHttpHandler {
     private string selectHeadRest() 
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM headrest";
+        string sqlCommand = "SELECT * FROM headrest Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
@@ -483,7 +486,7 @@ public class getParameterTable : IHttpHandler {
     private string selectPendulumFieldInfo()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM pendulumfieldinfo";
+        string sqlCommand = "SELECT * FROM pendulumfieldinfo Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
@@ -502,7 +505,7 @@ public class getParameterTable : IHttpHandler {
     private string selectPlanOptimizeDegree() 
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM planoptimizedegree";
+        string sqlCommand = "SELECT * FROM planoptimizedegree Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
@@ -521,7 +524,7 @@ public class getParameterTable : IHttpHandler {
     private string selectDrr()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM drr";
+        string sqlCommand = "SELECT * FROM drr Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
@@ -541,7 +544,7 @@ public class getParameterTable : IHttpHandler {
     private string selectExportoTradiotherapyNetwork()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM exportotradiotherapynetwork";
+        string sqlCommand = "SELECT * FROM exportotradiotherapynetwork Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
@@ -561,7 +564,7 @@ public class getParameterTable : IHttpHandler {
     private string selectSpiltWay()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM splitway";
+        string sqlCommand = "SELECT * FROM splitway Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
@@ -583,7 +586,7 @@ public class getParameterTable : IHttpHandler {
     private string selectMaterial()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM material";
+        string sqlCommand = "SELECT * FROM material Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
@@ -603,7 +606,7 @@ public class getParameterTable : IHttpHandler {
     private string selectIrradiation()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM irradiation";
+        string sqlCommand = "SELECT * FROM irradiation Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
@@ -623,7 +626,7 @@ public class getParameterTable : IHttpHandler {
     private string selectRaytype()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM raytype";
+        string sqlCommand = "SELECT * FROM raytype Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
@@ -643,7 +646,7 @@ public class getParameterTable : IHttpHandler {
     private string selectBodyposition()
     {
         StringBuilder backString = new StringBuilder("[");
-        string sqlCommand = "SELECT * FROM bodyposition";
+        string sqlCommand = "SELECT * FROM bodyposition Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {
