@@ -104,6 +104,9 @@ public class addParameter : IHttpHandler {
             case "bodyposition":
                 addBodyposition(value);
                 break;
+            case "energy":
+                addEnergy(value);
+                break;
             default:
                 break;
         }
@@ -347,6 +350,15 @@ public class addParameter : IHttpHandler {
     {
         string[] values = value.Split(' ');
         string sqlCommand = "INSERT INTO bodyposition(Name) VALUES(@Name)";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void addEnergy(string value) 
+    {
+        string[] values = value.Split(' ');
+        string sqlCommand = "INSERT INTO energy(Name) VALUES(@Name)";
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Name", values[0]);
         sqlOperation.ExecuteNonQuery(sqlCommand);

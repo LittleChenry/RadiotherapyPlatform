@@ -131,6 +131,9 @@ function selectCreate(type,page) {
         case "bodyposition":
             createBodyposition(page);
             break;
+        case "energy":
+            createEnergy(page);
+            break;
         default:
             break;
     }
@@ -232,6 +235,9 @@ function createPage(page) {
             break;
         case "bodyposition":
             createBodypositionTable(page);
+            break;
+        case "energy":
+            createEnergyTable(page);
             break;
         default:
             break;
@@ -1954,6 +1960,65 @@ function initAddBodyposition() {
                 + "<input type=text class=form-control style=margin-right:0.8em />"
                 + "</td></tr>");
 }
+
+/**
+ * energy 能量 1
+ */
+function createEnergy(page) {
+    //生成表头
+    $("#thead").empty()
+               .append("<tr>"
+                       + "<th>能量</th>"
+                       + "</tr>");
+    $("#tbody").empty();
+
+    //新增表格
+    initAddEnergy();
+
+    //获取表格数据
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "energy" },
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            currentlength = jsonObj.length;
+            $("#sumPage").val(countSumPage(jsonObj.length));
+            createEnergyTable(page);//生成表格第一页
+            initBindPage();//绑定翻页事件
+        }
+    });
+}
+
+/**
+ * 生成表格指定页（每页12行）-->2
+ * @param page 指定页数
+ */
+function createEnergyTable(page) {
+    var $tbody = $("#tbody");//清空当前表格
+    $tbody.empty();
+
+
+    for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
+        var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID + " /></td><td>"
+           + "</td></tr>");
+        if (jsonObj[i].IsDefault == '0') {
+            $tr.addClass("success");
+        }
+        $tbody.append($tr);
+    }
+}
+
+/**
+ *  3
+ */
+function initAddEnergy() {
+    $("#addrow").empty()
+                .append("<tr><th>能量</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr>");
+}
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------排序-----------------------------------------------------------------------------------------------------
@@ -2074,6 +2139,9 @@ function createSortTable(type) {
             break;
         case "bodyposition":
             sortBodyposition();
+            break;
+        case "energy":
+            sortEnergy();
             break;
         default:
             break;
@@ -2759,6 +2827,32 @@ function sortBodyposition() {
         type: "post",
         url: "getParameterTable.ashx",
         data: { table: "bodyposition" },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].Name + "<input type=hidden value=" + jsonObj[i].ID
+                           + " />"
+                           + "</td></tr>");
+                if (jsonObj[i].IsDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sortEnergy() {
+    $.ajax({
+        type: "post",
+        url: "getParameterTable.ashx",
+        data: { table: "energy" },//哪个表格
         dataType: "text",
         success: function (data) {
             jsonObj = $.parseJSON(data);

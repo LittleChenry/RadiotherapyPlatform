@@ -108,6 +108,9 @@ public class parameterDelete : IHttpHandler {
             case "bodyposition":
                 deleteBodyposition(id);
                 break;
+            case "energy":
+                deleteEnergy(id);
+                break;
             default:
                 break;
         }
@@ -322,6 +325,14 @@ public class parameterDelete : IHttpHandler {
     private void deleteBodyposition(string id)
     {
         string sqlCommand = "delete from bodyposition where id=@id";
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@id", id);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+    }
+
+    private void deleteEnergy(string id) 
+    {
+        string sqlCommand = "delete from energy where id=@id";
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@id", id);
         sqlOperation.ExecuteNonQuery(sqlCommand);

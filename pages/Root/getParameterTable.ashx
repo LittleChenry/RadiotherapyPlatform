@@ -81,6 +81,8 @@ public class getParameterTable : IHttpHandler {
                 return selectRaytype();
             case "bodyposition":
                 return selectBodyposition();
+            case "energy":
+                return selectEnergy();
         }
         return "";
     }
@@ -647,6 +649,26 @@ public class getParameterTable : IHttpHandler {
     {
         StringBuilder backString = new StringBuilder("[");
         string sqlCommand = "SELECT * FROM bodyposition Order BY Orders";
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+        while (reader.Read())
+        {
+            backString.Append("{\"ID\":\"")
+                      .Append(reader["ID"].ToString())
+                      .Append("\",\"Name\":\"")
+                      .Append(reader["Name"].ToString())
+                      .Append("\",\"IsDefault\":\"")
+                      .Append(reader["IsDefault"].ToString())
+                      .Append("\"},");
+        }
+        backString.Remove(backString.Length - 1, 1)
+                  .Append("]");
+        return backString.ToString();
+    }
+
+    private string selectEnergy()
+    {
+        StringBuilder backString = new StringBuilder("[");
+        string sqlCommand = "SELECT * FROM energy Order BY Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         while (reader.Read())
         {

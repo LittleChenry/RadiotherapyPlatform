@@ -107,6 +107,9 @@ public class parameterEdit : IHttpHandler {
             case "bodyposition":
                 updateBodyposition(id,value);
                 break;
+            case "energy":
+                updateEnergy(id,value);
+                break;
             default:
                 break;
         }
@@ -673,9 +676,26 @@ public class parameterEdit : IHttpHandler {
             sqlOperation.AddParameterWithValue("@ID", id);
             sqlOperation.ExecuteNonQuery(sqlCommand1);
         }
-        
-        
-        
-       
+    }
+
+    private void updateEnergy(string id, string value) 
+    {
+        string[] values = value.Split(' ');
+
+        string sqlCommand = "UPDATE energy set Name=@Name,IsDefault=@IsDefault WHERE ID=@id";
+
+        sqlOperation.clearParameter();
+        sqlOperation.AddParameterWithValue("@Name", values[0]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[1]));
+        sqlOperation.AddParameterWithValue("@id", id);
+        sqlOperation.ExecuteNonQuery(sqlCommand);
+
+        if (values[1] == "0")
+        {
+            string sqlCommand1 = "update energy set IsDefault=1 where ID != @ID";
+            sqlOperation.clearParameter();
+            sqlOperation.AddParameterWithValue("@ID", id);
+            sqlOperation.ExecuteNonQuery(sqlCommand1);
+        }
     }
 }
