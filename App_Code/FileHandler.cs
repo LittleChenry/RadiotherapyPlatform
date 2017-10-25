@@ -26,6 +26,11 @@ public class FileHandler
     public static string handler(string content)
     {
         StringBuilder result = new StringBuilder("{\"information\":[");
+        Regex findname = new Regex("^\"\\w+\",\"(\\d+)\",\"([^\"]*)\",\"([^\"]*)\",");
+        Match mn = findname.Match(content);
+        string lastName = mn.Groups[2].Value;
+        string firstName = mn.Groups[3].Value;
+
         Regex reg = new Regex("^\"\\w+\",\"(\\d+)\",(\"[^\"]*\",?\\r?\\n?){21}\"([^\"]*)\",(\"[^\"]*\",?\\r?\\n?){11}\"([^\"]*)\",\"([^\"]*)\",(\"[^\"]*\",?\\r?\\n?){2}\"([^\"]*)\",(\"[^\"]*\",?\\r?\\n?){3}\"([^\"]*)\",");
         Match m = reg.Match(content);
         string id = m.Groups[1].Value;
@@ -35,6 +40,8 @@ public class FileHandler
         string fieldTimes = m.Groups[8].Value;
         string pos = m.Groups[10].Value;
         result.Append("{\"id\":\"").Append(id).Append("\"")
+              .Append(",\"lastName\":\"").Append(lastName).Append("\"")
+              .Append(",\"firstName\":\"").Append(firstName).Append("\"")
               .Append(",\"tps\":\"").Append(tps).Append("\"")
               .Append(",\"all\":\"").Append(all).Append("\"")
               .Append(",\"once\":\"").Append(once).Append("\"")
