@@ -67,7 +67,7 @@
                     </div>
                     <div class="item col-xs-6">
                         能量：
-                        <input id="ener" class="form-item" type="number" name="ener" disabled="disabled"/>
+                        <select id="ener" class="form-item"  name="ener" disabled="disabled"></select>
                     </div>                   
                 </div>
                 <div class="single-row">
@@ -126,8 +126,17 @@
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-4">
+                        放疗号：<input id="id" class="form-item" name="id" disabled="disabled"/>
+                    </div>
+                    <div class="item col-xs-4">
+                        姓名拼音：<input id="pingyin" class="form-item" name="pingyin" disabled="disabled"/>
+                    </div>
+                    <div class="item col-xs-4">
                         TPS：<input id="tps" class="form-item" name="tps" disabled="disabled"/>
                     </div>
+                    
+                </div>
+                <div class="single-row">
                     <div class="item col-xs-4">
                         总剂量：
                         <div class="group-item">
@@ -143,11 +152,12 @@
                             <span class="input-group-addon">cGy</span>
                         </div>
                     </div>
+                    <div class="item col-xs-4">射野总数：<input id="fieldTimes" class="form-item" name="fieldTimes" disabled="disabled"/></div>
+                    
+                   
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">射野总数：<input id="fieldTimes" class="form-item" name="fieldTimes" disabled="disabled"/></div>
                     <div class="item col-xs-4">摆位信息：<input id="pos" class="form-item" name="pos" disabled="disabled"/></div>
-                   
                 </div>
                 <div class="single-row">
                     <div class="col-xs-6" style="padding-left:0px;">

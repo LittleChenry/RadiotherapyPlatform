@@ -125,7 +125,7 @@ public class saveField : IHttpHandler {
                     sqlOperation1.AddParameterWithValue("@Irradiation_ID", Convert.ToInt32(context.Request.Form["Irradiation"]));
                     sqlOperation1.AddParameterWithValue("@IlluminatedNumber", Convert.ToInt32(context.Request.Form["IlluminatedNumber"]));
                     sqlOperation1.AddParameterWithValue("@Coplanar", Convert.ToInt32(context.Request.Form["Coplanar"]));
-                    sqlOperation1.AddParameterWithValue("@energy", context.Request.Form["ener"]);
+                    sqlOperation1.AddParameterWithValue("@energy", Convert.ToInt32(context.Request.Form["ener"]));
                     sqlOperation1.AddParameterWithValue("@MachineNumbe", Convert.ToDouble(context.Request.Form["MachineNumbe"]));
                     sqlOperation1.AddParameterWithValue("@Illuminatedangle", angle);
                     sqlOperation1.AddParameterWithValue("@ControlPoint", Convert.ToInt32(context.Request.Form["ControlPoint"]));
@@ -138,7 +138,7 @@ public class saveField : IHttpHandler {
                 }
                 if (!exists)
                 {
-                    string inserttreat = "update treatment set Progress=@progress,TPS=@TPS,positioninfomation=@positioninfomation where ID=@treat";
+                    string inserttreat = "update treatment set Progress=@progress,TPS=@TPS,positioninfomation=@positioninfomation,pinyin=@pinyin,radioID=@radioid where ID=@treat";
                     if (iscommon == 1)
                     {
                         sqlOperation2.AddParameterWithValue("@progress", progress + ",11");
@@ -148,14 +148,18 @@ public class saveField : IHttpHandler {
                         sqlOperation2.AddParameterWithValue("@progress", progress + ",11,12");
                     }
                     sqlOperation2.AddParameterWithValue("@TPS", context.Request.Form["tps"]);
+                    sqlOperation2.AddParameterWithValue("@pinyin", context.Request.Form["pingyin"]);
+                    sqlOperation2.AddParameterWithValue("@radioid", context.Request.Form["id"]);
                     sqlOperation2.AddParameterWithValue("@positioninfomation", context.Request.Form["pos"]);
                     sqlOperation2.AddParameterWithValue("@treat", treatID);
                     Success = sqlOperation2.ExecuteNonQuery(inserttreat);
                 }
                 else
                 {
-                    string inserttreat = "update treatment set TPS=@TPS,positioninfomation=@positioninfomation where ID=@treat";                   
+                    string inserttreat = "update treatment set TPS=@TPS,positioninfomation=@positioninfomation,pinyin=@pinyin,radioID=@radioid where ID=@treat";                   
                     sqlOperation2.AddParameterWithValue("@TPS", context.Request.Form["tps"]);
+                    sqlOperation2.AddParameterWithValue("@pinyin", context.Request.Form["pingyin"]);
+                    sqlOperation2.AddParameterWithValue("@radioid", context.Request.Form["id"]);
                     sqlOperation2.AddParameterWithValue("@positioninfomation", context.Request.Form["pos"]);
                     sqlOperation2.AddParameterWithValue("@treat", treatID);
                     Success = sqlOperation2.ExecuteNonQuery(inserttreat);

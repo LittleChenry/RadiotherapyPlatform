@@ -36,6 +36,10 @@ public class getallfieldinfo : IHttpHandler {
         int count = int.Parse(sqlOperation.ExecuteScalar(countcommand));
         string countcommand1 = "select TPS from treatment where ID=@treatmentid ";
         string tps =sqlOperation.ExecuteScalar(countcommand1);
+        string radio = "select radioID from treatment where ID=@treatmentid ";
+        string radioID = sqlOperation.ExecuteScalar(radio);
+        string pinyin = "select pinyin from treatment where ID=@treatmentid ";
+        string pingyin = sqlOperation.ExecuteScalar(pinyin);
         string countcommand2 = "select positioninfomation from treatment where ID=@treatmentid ";
         string pos =sqlOperation.ExecuteScalar(countcommand2);
         string countcommand3 = "select iscommon from treatment where ID=@treatmentid ";
@@ -72,7 +76,7 @@ public class getallfieldinfo : IHttpHandler {
                 "\",\"Singledose\":\"" + reader["Singledose"].ToString() + "\",\"Totaldose\":\"" + reader["Totaldose"].ToString() + "\",\"Illuminatedangle\":\"" + reader["Illuminatedangle"].ToString() + "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() +
                 "\",\"Irradiation\":\"" + reader["Irradiation_ID"].ToString() + "\",\"energy2\":\"" + reader["energy2"].ToString() + "\",\"time\":\"" + date1 + "\",\"Name\":\"" + reader["Name"].ToString() +
                 "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() + "\",\"userID\":\"" + reader["User_ID"].ToString() +
-                "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\"}");
+                "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\",\"pinyin\":\"" + pingyin + "\",\"radioID\":\"" + radioID+ "\"}");
             if (i < count - 1)
             {
                 backText.Append(",");
