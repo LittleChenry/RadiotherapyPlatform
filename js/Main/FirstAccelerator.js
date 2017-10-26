@@ -82,7 +82,9 @@ function Init(evt) {
        }
        $("#log").append(content);
    }
-   document.getElementById("splitway").value = logjson.SplitWay_ID;
+   if (logjson.SplitWay_ID != "") {
+       document.getElementById("splitway").value = logjson.SplitWay_ID;
+   }
    document.getElementById("remarks").value = logjson.SpecialEnjoin;
     if (contains(groupprogress, "14")) {
         var info = getfirstaccelerateInfomation(treatmentID);
@@ -223,7 +225,7 @@ function getsplitway() {
     var xmlHttp = new XMLHttpRequest();
     var url = "getsplitwayItem.ashx";
     xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
+    xmlHttp.send();
     var Items = xmlHttp.responseText;
     return Items;
 }
