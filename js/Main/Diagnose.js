@@ -195,15 +195,67 @@ function sex(evt) {
 function createPartItem(thiselement) {
     var PartItem = JSON.parse(getPartItem()).Item;
     var defaultItem = JSON.parse(getPartItem()).defaultItem;
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i] = new Option(PartItem[i].Name);
-            thiselement.options[i].value = parseInt(PartItem[i].ID);
-        }
-    }
-    thiselement.value = defaultItem.ID;
+    $(thiselement).bind("click",function(){
+        event.stopPropagation();
+        autoList(this, PartItem);
+    });
 
 }
+
+function autoList(e, data){
+    var position = $(e).offset();
+    var parentelement = $(e).parent();
+    var pickerTop = position.top + 30;
+    var pickerLeft = position.left;
+    var pickerWidth = $(e).width() + 12;
+    if ($(e).next()) {
+        $(e).next().remove();
+    }
+    $(document).click(function(){
+        $(e).next().remove();
+    });
+    var selectArea = "<div class='pickerarea'><ul class='auto_ul'>";
+    for (var i = 0; i < data.length; i++) {
+        li = "<li id='" + data[i].ID +"' class='auto_list'>" + data[i].Name + "</li>";
+        selectArea += li;
+    }
+    selectArea += "</ul></div>";
+    $(parentelement).append(selectArea);
+    $(e).next().css({minWidth:pickerWidth});
+    $(e).next().offset({top:pickerTop, left:pickerLeft});
+    $(e).next().find("ul").find("li").each(function(){
+        $(this).mouseover(function(){
+            $(this).css("color","#FFFFFF");
+            $(this).css("background","#3C8DBC");
+        });
+        $(this).mouseout(function(){
+            $(this).css("color","#000000");
+            $(this).css("background","#FFFFFF");
+        });
+        $(this).bind("click",function(){
+            event.stopPropagation();
+            if ($(this).find("i").length == 0) {
+                var ispan = "<i class='pull-right fa fa-fw fa-check'></i>"
+                $(this).append(ispan);
+            }else{
+                $(this).find("i")[0].remove();
+            }
+            $(this).parent().parent().prev().val("");
+            $(this).parent().find("li").each(function(index,element){
+                if ($(this).find("i").length != 0) {
+                    var text = $(this).parent().parent().prev().val() + $(this).text().split("<")[0] + "，";
+                    $(this).parent().parent().prev().val(text);
+                }
+            });
+            if ($(this).parent().parent().prev().val()) {
+                var temp = $(this).parent().parent().prev().val();
+                $(this).parent().parent().prev().val(temp.substring(0,temp.length-1));
+            }
+        });
+    });
+}
+
+
 //第二步部位项数据库调取
 function getPartItem() {
     var xmlHttp = new XMLHttpRequest();

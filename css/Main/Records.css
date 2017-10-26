@@ -283,3 +283,25 @@
     font-size: 16px;
     border-bottom: 1px solid #c2c2c2;
 }
+
+.auto_ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    font-size: 16px;
+    height: 200px;
+    overflow: auto;
+}
+
+.auto_list {
+    padding: 0px 5px;
+}
+
+.pickerarea {
+    position: absolute;
+    float: left;
+    background-color: #fff;
+    border: 1px solid #AAAAAA;
+    box-shadow: 2px 2px 1px #888888;
+    z-index: 2;
+}
