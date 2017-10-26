@@ -44,6 +44,10 @@ public class FieldConfirmInfo : IHttpHandler {
         string posit = sqlOperation.ExecuteScalar(sqlCommand6);
         string sqlCommand7 = "select TPS from treatment where treatment.ID=@treatID";
         string tps = sqlOperation.ExecuteScalar(sqlCommand7);
+        string sqlCommand11 = "select pinyin from treatment where treatment.ID=@treatID";
+        string pinyin = sqlOperation.ExecuteScalar(sqlCommand11);
+        string sqlCommand12 = "select radioID from treatment where treatment.ID=@treatID";
+        string radioID = sqlOperation.ExecuteScalar(sqlCommand12);
         string sqlCommand8 = "select max(ID) from review";
         int review = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlCommand8));
         string remark="";
@@ -64,10 +68,14 @@ public class FieldConfirmInfo : IHttpHandler {
 
         while (reader.Read())
         {
+            if (reader["radiotechnique"].ToString() == "Setup")
+            {
+                continue;
+            }
             backText.Append("{\"plansystem2\":\"" + tps + "\",\"positioninfomation2\":\"" + posit + "\",\"dose2\":\"" + reader["Singledose"].ToString() + "/" + reader["Totaldose"].ToString() +
                    "\",\"Raytype2\":\"" + reader["radiotype"].ToString() + "\",\"Coplanar2\":\"" + reader["bedrotation"].ToString() + "\",\"Irradiation2\":\"" + reader["radiotechnique"].ToString() + "\",\"energy2\":\"" + reader["energy"].ToString() +
                    "\",\"IlluminatedNumber2\":\"" + count + "\",\"Illuminatedangle2\":\"" + reader["angleframe"].ToString() + "\",\"Equipment2\":\"" + reader["equipment"].ToString() +
-                   "\",\"MU2\":\"" + reader["mu"].ToString() + "\",\"ControlPoint2\":\"" + reader["subfieldnumber"].ToString() + "\",\"remark\":\"" + remark + "\"}");
+                   "\",\"MU2\":\"" + reader["mu"].ToString() + "\",\"ControlPoint2\":\"" + reader["subfieldnumber"].ToString() + "\",\"remark\":\"" + remark + "\",\"pinyin2\":\"" + pinyin + "\",\"radioID2\":\"" + radioID + "\"}");
             if (i < count)
             {
                 backText.Append(",");

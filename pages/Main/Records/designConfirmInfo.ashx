@@ -48,6 +48,12 @@ public class designConfirmInfo : IHttpHandler {
         string sqlCommand4 = "select Patient_ID from treatment where treatment.ID=@treatID";
         sqlOperation.AddParameterWithValue("@treatID", treatID);
         int patientid = int.Parse(sqlOperation.ExecuteScalar(sqlCommand4));
+        string sqlCommand10 = "select Nameping from patient where patient.ID=@ID";
+        sqlOperation.AddParameterWithValue("@ID", patientid);
+        string pinyin = sqlOperation.ExecuteScalar(sqlCommand10);
+        string sqlCommand11 = "select Radiotherapy_ID from patient where patient.ID=@ID";
+        sqlOperation.AddParameterWithValue("@ID", patientid);
+        string Radiotherapy_ID = sqlOperation.ExecuteScalar(sqlCommand11);
         string sqlCommand6 = "select bodyposition.Name from treatment,fixed,bodyposition where bodyposition.ID=fixed.BodyPosition and treatment.Fixed_ID =fixed.ID and treatment.ID=@treatID";
         sqlOperation.AddParameterWithValue("@treatID", treatID);
         string posit = sqlOperation.ExecuteScalar(sqlCommand6);
@@ -108,8 +114,20 @@ public class designConfirmInfo : IHttpHandler {
             else
             {
                 string sqlCommand3 = "select Name from irradiation where ID=@Irradiation_ID";
-                sqlOperation2.AddParameterWithValue("@Irradiation_ID", Convert.ToInt32(reader["Irradiation_ID"]));
+                sqlOperation2.AddParameterWithValue("@Irradiation_ID", Convert.ToInt32(reader["Irradiation_ID"]).ToString());
                 IRR = sqlOperation2.ExecuteScalar(sqlCommand3);
+            }
+            string energy = null;
+            if (reader["energy"] is DBNull)
+            {
+
+                energy = null;
+            }
+            else
+            {
+                string sqlCommand3 = "select Name from energy where ID=@energy_ID";
+                sqlOperation2.AddParameterWithValue("@energy_ID", Convert.ToInt32(reader["energy"]).ToString());
+                energy = sqlOperation2.ExecuteScalar(sqlCommand3);
             }
             string left = "";
             string right = "";
@@ -155,9 +173,9 @@ public class designConfirmInfo : IHttpHandler {
                  "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"ReceiveUser\":\"" + receiver + "\",\"ReceiveTime\":\"" + date2 + "\",\"SubmitUser\":\"" + submit + "\",\"SubmitTime\":\"" + date4 +
                   "\",\"technology\":\"" + reader["tname"].ToString() + "\",\"equipment\":\"" + reader["eqname"].ToString() + "\",\"PlanSystem\":\"" + reader["planname"].ToString() + "\",\"designID\":\"" + reader["designid"].ToString() +
                   "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() +
-                   "\",\"Raytype\":\"" + reader["raytypename"].ToString() + "\",\"Coplanar1\":\"" + reader["Coplanar"].ToString() + "\",\"Irradiation1\":\"" + IRR + "\",\"energy1\":\"" + reader["energy"].ToString() +
+                   "\",\"Raytype\":\"" + reader["raytypename"].ToString() + "\",\"Coplanar1\":\"" + reader["Coplanar"].ToString() + "\",\"Irradiation1\":\"" + IRR + "\",\"energy1\":\"" + energy +
                    "\",\"userID\":\"" + reader["Confirm_User_ID"].ToString() + "\",\"IlluminatedNumber1\":\"" + reader["IlluminatedNumber"].ToString() + "\",\"Illuminatedangle1\":\"" + reader["Illuminatedangle"].ToString() +
-                   "\",\"MU1\":\"" + reader["MachineNumbe"].ToString() + "\",\"ControlPoint1\":\"" + reader["ControlPoint"].ToString() +  "\",\"positioninfomation1\":\"" + posit +
+                   "\",\"MU1\":\"" + reader["MachineNumbe"].ToString() + "\",\"ControlPoint1\":\"" + reader["ControlPoint"].ToString() + "\",\"positioninfomation1\":\"" + posit + "\",\"pinyin1\":\"" + pinyin + "\",\"radioID1\":\"" + Radiotherapy_ID +
                    "\",\"left\":\"" + left + "\",\"right\":\"" + right + "\",\"rise\":\"" + rise + "\",\"drop\":\"" + drop + "\",\"enter\":\"" + enter + "\",\"out\":\"" + out1 + "\"}");
             if (i < count)
             {

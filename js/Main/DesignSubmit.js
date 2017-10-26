@@ -61,6 +61,7 @@ function Init(evt) {
                 document.getElementById("PlanSystem").value = designInfo[i].PlanSystem;
                 document.getElementById("Raytype").value = designInfo[i].Raytype;
                 document.getElementById("left").value = designInfo[i].left;
+                
                 document.getElementById("right").value = designInfo[i].right;
                 document.getElementById("rise").value = designInfo[i].rise;
                 document.getElementById("drop").value = designInfo[i].drop;
@@ -138,6 +139,48 @@ function Init(evt) {
             document.getElementById("enter").value = designInfo[k].enter;
             document.getElementById("out").value = designInfo[k].out;
         });
+    });
+    $('#left').bind('input propertychange', function () {
+        if (document.getElementById("left").value == "") {
+            document.getElementById("right").removeAttribute("disabled");
+        } else {
+            document.getElementById("right").disabled = "disabled";
+        }
+    });
+    $('#right').bind('input propertychange', function () {
+        if (document.getElementById("right").value == "") {
+            document.getElementById("left").removeAttribute("disabled");
+        } else {
+            document.getElementById("left").disabled = "disabled";
+        }
+    });
+    $('#drop').bind('input propertychange', function () {
+        if (document.getElementById("drop").value == "") {
+            document.getElementById("rise").removeAttribute("disabled");
+        } else {
+            document.getElementById("rise").disabled = "disabled";
+        }
+    });
+    $('#rise').bind('input propertychange', function () {
+        if (document.getElementById("rise").value == "") {
+            document.getElementById("drop").removeAttribute("disabled");
+        } else {
+            document.getElementById("drop").disabled = "disabled";
+        }
+    });
+    $('#enter').bind('input propertychange', function () {
+        if (document.getElementById("enter").value == "") {
+            document.getElementById("out").removeAttribute("disabled");
+        } else {
+            document.getElementById("out").disabled = "disabled";
+        }
+    });
+    $('#out').bind('input propertychange', function () {
+        if (document.getElementById("out").value == "") {
+            document.getElementById("enter").removeAttribute("disabled");
+        } else {
+            document.getElementById("enter").disabled = "disabled";
+        }
     });
 }
 function isInArray(arr, value) {
@@ -550,10 +593,29 @@ function remove() {
     document.getElementById("equipment").removeAttribute("disabled");
     document.getElementById("PlanSystem").removeAttribute("disabled");
     document.getElementById("Raytype").removeAttribute("disabled");
+    
     document.getElementById("left").removeAttribute("disabled");
     document.getElementById("right").removeAttribute("disabled");
     document.getElementById("rise").removeAttribute("disabled");
     document.getElementById("drop").removeAttribute("disabled");
     document.getElementById("enter").removeAttribute("disabled");
     document.getElementById("out").removeAttribute("disabled");
+    if (document.getElementById("left").value == "") {
+        document.getElementById("left").disabled = "disabled";
+    }
+    if (document.getElementById("right").value == "") {
+        document.getElementById("right").disabled = "disabled";
+    }
+    if (document.getElementById("rise").value == "") {
+        document.getElementById("rise").disabled = "disabled";
+    }
+    if (document.getElementById("drop").value == "") {
+        document.getElementById("drop").disabled = "disabled";
+    }
+    if (document.getElementById("enter").value == "") {
+        document.getElementById("enter").disabled = "disabled";
+    }
+    if (document.getElementById("out").value == "") {
+        document.getElementById("out").disabled = "disabled";
+    }
 }

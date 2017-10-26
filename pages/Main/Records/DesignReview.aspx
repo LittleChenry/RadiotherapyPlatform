@@ -62,7 +62,11 @@
                         <span>复核计划信息：</span>
                     </div>
                     <div class="single-row">
+                        
+                            
                         <div class="col-xs-12">
+                            <button id="Forced" type="button" class="btn btn-success" onclick="force()" disabled="disabled">强制通过</button>
+                        
                             <button id="confirm" type="button" class="btn btn-success pull-right" onclick="check()" disabled="disabled">自动复核</button>
                         </div>
                     </div>
@@ -81,83 +85,97 @@
                                 <tbody style="text-align: center;">
                                     <tr>
                                         <td>1</td>                                    
+                                        <td>姓名（拼音）</td>
+                                        <td id="pinyin1"></td>
+                                        <td id="pinyin2"></td>                        
+                                        <td id="check13"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>                                    
+                                        <td>放疗号</td>
+                                        <td id="radioID1"></td>
+                                        <td id="radioID2"></td>                        
+                                        <td id="check14"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>                                    
                                         <td>摆位信息</td>
                                         <td id="positioninfomation1"></td>
                                         <td id="positioninfomation2"></td>                        
                                         <td id="check1"></td>
                                     </tr>
                                     <tr>
-                                        <td>2</td>
+                                        <td>4</td>
                                         <td>分次剂量/总剂量</td>
                                         <td id="dose1" ></td>
                                         <td id="dose2"></td>
                                         <td id="check2"></td>
                                     </tr>
                                     <tr>
-                                        <td>3</td>
+                                        <td>5</td>
                                         <td>放疗设备</td>
                                         <td id="Equipment1" ></td>
                                         <td id="Equipment2"></td>
                                         <td id="check3"></td>
                                     </tr>
                                     <tr>
-                                        <td>4</td>
+                                        <td>6</td>
                                          <td>放疗计划系统</td>
                                         <td id="plansystem1" ></td>
                                         <td id="plansystem2"></td>
                                         <td id="check4"></td>
                                     </tr>
                                     <tr>
-                                        <td>5</td>
+                                        <td>7</td>
                                         <td>照射技术</td>
                                         <td id="Irradiation1" ></td>
                                         <td id="Irradiation2"></td>
                                         <td id="check5"></td>
                                     </tr>
                                     <tr>
-                                        <td>6</td>
+                                        <td>8</td>
                                         <td>射线类型</td>
                                         <td id="Raytype1" ></td>
                                         <td id="Raytype2" ></td>
                                         <td id="check6"></td>
                                     </tr>
                                     <tr>
-                                        <td>7</td>
+                                        <td>9</td>
                                         <td>能量</td>
                                         <td id="energy1" ></td>
                                         <td id="energy2"></td>
                                         <td id="check7"></td>
                                     </tr>
                                     <tr>
-                                        <td>8</td>
+                                        <td>10</td>
                                         <td>射野数量</td>
                                         <td id="IlluminatedNumber1" ></td>
                                         <td id="IlluminatedNumber2"></td>
                                         <td id="check8"></td>
                                     </tr>
                                     <tr>
-                                        <td>9</td>
+                                        <td>11</td>
                                         <td>射野角度</td>
                                         <td id="Illuminatedangle1" ></td>
                                         <td id="Illuminatedangle2"></td>
                                         <td id="check9"></td>
                                     </tr>
                                     <tr>
-                                        <td>10</td>
+                                        <td>12</td>
                                         <td>机器跳数</td>
                                         <td id="MU1" ></td>
                                         <td id="MU2"></td>
                                         <td id="check10"></td>
                                     </tr>
                                     <tr>
-                                        <td>11</td>
+                                        <td>13</td>
                                         <td>控制点数量</td>
                                         <td id="ControlPoint1" ></td>
                                         <td id="ControlPoint2"></td>
                                         <td id="check11"></td>
                                     </tr>
                                     <tr>
-                                        <td>12</td>
+                                        <td>14</td>
                                         <td>非共面照射</td>
                                         <td id="Coplanar1" ></td>
                                         <td id="Coplanar2"></td>

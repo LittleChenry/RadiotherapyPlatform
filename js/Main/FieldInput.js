@@ -42,6 +42,8 @@ function Init(evt) {
     } else {
         var select1 = document.getElementById("Irradiation");
         createPlanSystemItem(select1);
+        var select2 = document.getElementById("ener");
+        createenergyItem(select2);
     }
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '11')) {
@@ -56,6 +58,8 @@ function Init(evt) {
             document.getElementById("ControlPoint").value = fildinfo[0].ControlPoint;
             document.getElementById("Coplanar").value = fildinfo[0].Coplanar;
         }
+        document.getElementById("pingyin").value = fildinfo[0].pinyin;
+        document.getElementById("id").value = fildinfo[0].radioID;
         document.getElementById("tps").value = fildinfo[0].tps;
         document.getElementById("pos").value = fildinfo[0].pos;
         document.getElementById("Graded").value = fildinfo[0].Singledose;
@@ -148,6 +152,27 @@ function createPlanSystemItem(thiselement) {
 function getPartItem3() {
     var xmlHttp = new XMLHttpRequest();
     var url = "Irradiation.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+function createenergyItem(thiselement) {
+    var PartItem = JSON.parse(getPartItem4()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--能量选择--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+        }
+    }
+}
+//第二步部位项数据库调取
+function getPartItem4() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "energy.ashx";
     xmlHttp.open("GET", url, false);
     xmlHttp.send();
     var Items = xmlHttp.responseText;
@@ -306,7 +331,8 @@ $(function () {
     });
 });
 function createInformation(data) {
-   
+    document.getElementById("id").value = data[0].id;
+    document.getElementById("pingyin").value = data[0].lastName + data[0].firstName;
     document.getElementById("tps").value = data[0].tps;       
     document.getElementById("Graded").value = data[0].once;
     document.getElementById("fieldTimes").value = data[0].fieldTimes;
@@ -528,6 +554,8 @@ function save() {
     });
 }
 function remove() {
+    document.getElementById("id").removeAttribute("disabled");
+    document.getElementById("pingyin").removeAttribute("disabled");
     document.getElementById("sure").removeAttribute("disabled");
     document.getElementById("tps").removeAttribute("disabled");
     document.getElementById("total").removeAttribute("disabled");

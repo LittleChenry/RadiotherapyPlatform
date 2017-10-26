@@ -64,6 +64,8 @@ if (isInArray(progress, '11')) {
             document.getElementById("IlluminatedNumber1").innerHTML = designInfo[i].IlluminatedNumber1;
             document.getElementById("Illuminatedangle1").innerHTML = designInfo[i].Illuminatedangle1;
             document.getElementById("MU1").innerHTML = designInfo[i].MU1;
+            document.getElementById("pinyin1").innerHTML = designInfo[i].pinyin1;
+            document.getElementById("radioID1").innerHTML = designInfo[i].radioID1;
             document.getElementById("ControlPoint1").innerHTML = designInfo[i].ControlPoint1;
             document.getElementById("positioninfomation2").innerHTML = fieldInfo[0].positioninfomation2;
             document.getElementById("dose2").innerHTML = fieldInfo[0].dose2;
@@ -77,6 +79,8 @@ if (isInArray(progress, '11')) {
             document.getElementById("IlluminatedNumber2").innerHTML = fieldInfo[0].IlluminatedNumber2;
             document.getElementById("Illuminatedangle2").innerHTML = ruler(fieldInfo);
             document.getElementById("MU2").innerHTML = cale2(fieldInfo);
+            document.getElementById("pinyin2").innerHTML = fieldInfo[0].pinyin2;
+            document.getElementById("radioID2").innerHTML = fieldInfo[0].radioID2;
             document.getElementById("ControlPoint2").innerHTML = cale3(fieldInfo);
             document.getElementById("left").innerHTML = (designInfo[i].left == "")?"":(designInfo[i].left+"cm");
             document.getElementById("right").innerHTML = (designInfo[i].right == "")?"":(designInfo[i].right+"cm");
@@ -206,7 +210,7 @@ function check() {
         item = 0;
         document.getElementById("check9").innerHTML = "不通过";
     }
-    if (document.getElementById("MU1").innerHTML == document.getElementById("MU2").innerHTML) {
+    if (isequal1()) {
         document.getElementById("check10").innerHTML = "通过";
        
     } else {
@@ -221,9 +225,53 @@ function check() {
         document.getElementById("check11").innerHTML = "不通过";
 
     }
+    if (document.getElementById("pinyin1").innerHTML.toLowerCase() == document.getElementById("pinyin2").innerHTML.toLowerCase()) {
+        document.getElementById("check13").innerHTML = "通过";
+
+    } else {
+        item = 0;
+        document.getElementById("check13").innerHTML = "不通过";
+
+    }
+    if (document.getElementById("radioID1").innerHTML == document.getElementById("radioID2").innerHTML) {
+        document.getElementById("check14").innerHTML = "通过";
+
+    } else {
+        item = 0;
+        document.getElementById("check14").innerHTML = "不通过";
+
+    }
     if (item == 0) {
         signal = 0;
     }
+} 
+function isequal1() {
+    var str1 = document.getElementById("MU1").innerHTML;
+    var str2 = document.getElementById("MU2").innerHTML;
+    var num1 = Math.round(str1 * 1);
+    var num2 = Math.round(str2 * 1);
+    if (num1 == num2) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function force() {
+    signal = 1;
+    document.getElementById("check1").innerHTML = "通过";
+    document.getElementById("check2").innerHTML = "通过";
+    document.getElementById("check3").innerHTML = "通过";
+    document.getElementById("check4").innerHTML = "通过";
+    document.getElementById("check5").innerHTML = "通过";
+    document.getElementById("check6").innerHTML = "通过";
+    document.getElementById("check7").innerHTML = "通过";
+    document.getElementById("check8").innerHTML = "通过";
+    document.getElementById("check9").innerHTML = "通过";
+    document.getElementById("check10").innerHTML = "通过";
+    document.getElementById("check11").innerHTML = "通过";
+    document.getElementById("check12").innerHTML = "通过";
+    document.getElementById("check13").innerHTML = "通过";
+    document.getElementById("check14").innerHTML = "通过";
 }
 function isequal() {
     var str2 = document.getElementById("Illuminatedangle2").innerHTML;
@@ -260,28 +308,21 @@ function charge4(arr) {
         array[item] = arr[item].Irradiation2;
     }
     var yuansu = new Array();
-    var sum = new Array();
+ 
     for (var i = 0; i < array.length; i++) {
-        for (var j = i + 1; j < array.length; j++) {
-            if (array[i] == array[j]) {
-                count++;
-                array.splice(j, 1);
-            }
+        if (array[i] == "3DCRT" || array[i] == "Step and shot" || array[i] == "Static") {
+            yuansu[i]= "Static";
         }
-        yuansu[i] = array[i];
-        sum[i] = count;
-        count = 1;
-    }
-    var newsum = new Array();
-    for (var item in sum) {
-        newsum[item] = sum[item];
-    }
-    newsum.sort();
-    for (var i = 0; i < sum.length; i++) {
-        if (sum[i] == newsum[newsum.length - 1]) {
-            return yuansu[i];
+        if (array[i] == "dMLC" || array[i] == "VMAT" || array[i] == "Dynamic") {
+            yuansu[i] = "Dynamic";
         }
     }
+    for (var j = 0; j < yuansu.length; j++) {
+        if (yuansu[j] != yuansu[0]) {
+            return "Dynamic,Static"
+        }
+    }
+    return yuansu[0];
 }
 function confirm1(input, Button, cancelButton,confirm) {
     var content = input.innerHTML;
@@ -660,6 +701,7 @@ function remove() {
     document.getElementById("confirm").removeAttribute("disabled");
     document.getElementById("confirmCoplanar").removeAttribute("disabled");
     document.getElementById("Button1").removeAttribute("disabled");
+    document.getElementById("Forced").removeAttribute("disabled");
     document.getElementById("Button3").removeAttribute("disabled");
     document.getElementById("degree").removeAttribute("disabled");
     document.getElementById("degree").removeAttribute("disabled");

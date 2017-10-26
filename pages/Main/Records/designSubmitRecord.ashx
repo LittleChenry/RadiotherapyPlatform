@@ -96,7 +96,7 @@ public class designSubmitRecord : IHttpHandler {
             string lr = "";
             string rd = "";
             string eo = "";
-            if (context.Request.Form["left"]=="")
+            if (context.Request.Form["left"]==""||context.Request.Form["left"]==null)
             {
                 lr = "-"+context.Request.Form["right"];
             }
@@ -104,15 +104,15 @@ public class designSubmitRecord : IHttpHandler {
             {
                 lr = context.Request.Form["left"];
             }
-            if (context.Request.Form["rise"] == "")
+            if (context.Request.Form["rise"] == "" || context.Request.Form["rise"] == null)
             {
                 rd = "-" + context.Request.Form["drop"];
             }
             else
             {
                 rd = context.Request.Form["rise"];
-            } 
-            if (context.Request.Form["enter"] == "")
+            }
+            if (context.Request.Form["enter"] == "" || context.Request.Form["enter"] == null)
             {
                 eo = "-" + context.Request.Form["out"];
             }
