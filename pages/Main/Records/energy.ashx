@@ -26,14 +26,21 @@ public class energy : IHttpHandler {
     {
         string countItem = "SELECT count(*) FROM energy";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
-
-        string sqlCommand = "SELECT ID,Name FROM energy";
+        string count1 = "SELECT count(*) FROM energy where IsDefault=0";
+        int count2 = int.Parse(sqlOperation.ExecuteScalar(count1));
+        string defaut = "";
+        if (count2 > 0)
+        {
+            string sqlCommand1 = "SELECT ID FROM energy where IsDefault=0";
+            defaut = sqlOperation.ExecuteScalar(sqlCommand1);
+        }
+        string sqlCommand = "SELECT ID,Name FROM energy order by Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;
         while (reader.Read())
         {
-            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() + "\"}");
+            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() + "\",\"defaultItem\":\"" + defaut + "\"}");
             if (i < count)
             {
 

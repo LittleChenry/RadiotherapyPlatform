@@ -148,7 +148,7 @@ function getfixPatientInfo(treatmentID) {
     return obj1.patient[0];
 }
 function createDnsityItem(thiselement) {
-    var PartItem = JSON.parse(getPartItem()).Item;
+    var PartItem = JSON.parse(getPartItem()).Item;  
     thiselement.options.length = 0;
     thiselement.options[0] = new Option("--CT电子密度转换选择--");
     thiselement.options[0].value = "allItem";
@@ -158,8 +158,9 @@ function createDnsityItem(thiselement) {
             thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
         }
     }
-
-
+    if (PartItem[0].defaultItem != "") {
+        thiselement.value = PartItem[0].defaultItem;
+    }
 }
 //第二步部位项数据库调取
 function getPartItem() {

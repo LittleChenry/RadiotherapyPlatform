@@ -147,6 +147,9 @@ function createPlanSystemItem(thiselement) {
             thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
         }
     }
+    if (PartItem[0].defaultItem != "") {
+        thiselement.value = PartItem[0].defaultItem;
+    }
 }
 //第二步部位项数据库调取
 function getPartItem3() {
@@ -167,6 +170,9 @@ function createenergyItem(thiselement) {
             thiselement.options[i + 1] = new Option(PartItem[i].Name);
             thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
         }
+    }
+    if (PartItem[0].defaultItem != "") {
+        thiselement.value = PartItem[0].defaultItem;
     }
 }
 //第二步部位项数据库调取

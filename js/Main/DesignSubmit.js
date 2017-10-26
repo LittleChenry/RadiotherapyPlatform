@@ -228,8 +228,6 @@ function createEquipmentItem(thiselement) {
             thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
         }
     }
-
-
 }
 //第二步部位项数据库调取
 function getPartItem2() {
@@ -252,7 +250,9 @@ function createPlanSystemItem(thiselement) {
             thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
         }
     }
-
+    if (PartItem[0].defaultItem != "") {
+        thiselement.value = PartItem[0].defaultItem;
+    }
 
 }
 //第二步部位项数据库调取
@@ -276,7 +276,9 @@ function createRaytypeItem(thiselement) {
             thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
         }
     }
-
+    if (PartItem[0].defaultItem != "") {
+        thiselement.value = PartItem[0].defaultItem;
+    }
 
 }
 //第二步部位项数据库调取
@@ -600,22 +602,22 @@ function remove() {
     document.getElementById("drop").removeAttribute("disabled");
     document.getElementById("enter").removeAttribute("disabled");
     document.getElementById("out").removeAttribute("disabled");
-    if (document.getElementById("left").value == "") {
+    if (document.getElementById("left").value == "" && document.getElementById("right").value != "") {
         document.getElementById("left").disabled = "disabled";
     }
-    if (document.getElementById("right").value == "") {
+    if (document.getElementById("right").value == "" && document.getElementById("left").value != "") {
         document.getElementById("right").disabled = "disabled";
     }
-    if (document.getElementById("rise").value == "") {
+    if (document.getElementById("rise").value == "" && document.getElementById("drop").value != "") {
         document.getElementById("rise").disabled = "disabled";
     }
-    if (document.getElementById("drop").value == "") {
+    if (document.getElementById("drop").value == "" && document.getElementById("rise").value != "") {
         document.getElementById("drop").disabled = "disabled";
     }
-    if (document.getElementById("enter").value == "") {
+    if (document.getElementById("enter").value == "" && document.getElementById("out").value != "") {
         document.getElementById("enter").disabled = "disabled";
     }
-    if (document.getElementById("out").value == "") {
+    if (document.getElementById("out").value == "" && document.getElementById("enter").value != "") {
         document.getElementById("out").disabled = "disabled";
     }
 }

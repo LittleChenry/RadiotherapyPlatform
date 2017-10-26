@@ -96,10 +96,10 @@
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">多模态图像：</span>
                             <select id="MultimodalImage" name="MultimodalImage" class="form-item" disabled="disabled">
-                                <option value="allItem" >--选择多模态图像--</option>
+                                <option value="Other">Other</option>
                                 <option value="MRI">MRI</option>
                                 <option value="PET">PET</option>
-                                <option value="Other">Other</option>
+                                
                             </select>
                         </div>
                     </div> 

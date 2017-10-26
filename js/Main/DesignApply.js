@@ -341,7 +341,9 @@ function createTechnologyItem(thiselement) {
             thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
         }
     }
-
+    if (PartItem[0].defaultItem != "") {
+        thiselement.value = PartItem[0].defaultItem;
+    }
 
 }
 //第二步部位项数据库调取
@@ -365,7 +367,9 @@ function createEquipmentItem(thiselement) {
             thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
         }
     }
-
+    if (PartItem[0].defaultItem != "") {
+        thiselement.value = PartItem[0].defaultItem;
+    }
 
 }
 //第二步部位项数据库调取

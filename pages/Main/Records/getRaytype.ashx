@@ -26,14 +26,21 @@ public class getRaytype : IHttpHandler {
     {
         string countItem = "SELECT count(*) FROM raytype";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
-
-        string sqlCommand = "SELECT ID,Name FROM raytype";
+        string count1 = "SELECT count(*) FROM raytype where IsDefault=0";
+        int count2 = int.Parse(sqlOperation.ExecuteScalar(count1));
+        string defaut = "";
+        if (count2 > 0)
+        {
+            string sqlCommand1 = "SELECT ID FROM raytype where IsDefault=0";
+            defaut = sqlOperation.ExecuteScalar(sqlCommand1);
+        }
+        string sqlCommand = "SELECT ID,Name FROM raytype order by Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;
         while (reader.Read())
         {
-            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() + "\"}");
+            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() + "\",\"defaultItem\":\"" + defaut + "\"}");
             if (i < count)
             {
 

@@ -477,11 +477,12 @@ function save() {
         success: function (data) {
             if (data == "success") {
                 alert("保存成功");
+                window.location.reload();
             } else {
                 alert("保存失败");
                 return false;
             }
-            window.location.reload();
+            
         },
         error: function (e) {
             window.location.href = "Error.aspx";

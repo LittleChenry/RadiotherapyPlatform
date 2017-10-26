@@ -215,6 +215,9 @@ function createSplitway(thiselement) {
             thiselement.options[i+1].value = parseInt(getsplitwayItem[i].ID);
         }
     }
+    if (getsplitwayItem[0].defaultItem != "") {
+        thiselement.value = getsplitwayItem[0].defaultItem;
+    }
 }
 function getsplitway() {
     var xmlHttp = new XMLHttpRequest();

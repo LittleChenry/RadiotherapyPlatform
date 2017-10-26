@@ -77,9 +77,9 @@
                     </div>
                     <div class="item col-xs-6">
                         非共面照射：
-                        <select id="Coplanar" name="Coplanar" class="form-item" disabled="disabled">
-                            <option value="1">是</option>
+                        <select id="Coplanar" name="Coplanar" class="form-item" disabled="disabled">                           
                             <option value="0">否</option>
+                            <option value="1">是</option>
                         </select>
                     </div>                                           
                 </div>

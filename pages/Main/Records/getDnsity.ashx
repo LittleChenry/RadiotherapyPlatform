@@ -27,14 +27,21 @@ public class getDnsity : IHttpHandler {
     {
         string countItem = "SELECT count(*) FROM densityconversion";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
-
-        string sqlCommand = "SELECT ID,Name FROM densityconversion";
+        string count1 = "SELECT count(*) FROM densityconversion where IsDefault=0";
+        int count2 = int.Parse(sqlOperation.ExecuteScalar(count1));
+        string defaut = "";
+        if (count2 > 0)
+        {
+            string sqlCommand1 = "SELECT ID FROM densityconversion where IsDefault=0";
+            defaut = sqlOperation.ExecuteScalar(sqlCommand1);
+        }
+        string sqlCommand = "SELECT ID,Name FROM densityconversion order by Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;
         while (reader.Read())
         {
-            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() + "\"}");
+            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() + "\",\"defaultItem\":\"" + defaut+"\"}");
             if (i < count)
             {
 
