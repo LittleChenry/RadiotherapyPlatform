@@ -35,7 +35,7 @@ public class getaddmethod : IHttpHandler {
         string countItem = "SELECT count(*) FROM EnhanceMethod";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
 
-        string sqlCommand = "SELECT ID,Method FROM EnhanceMethod";
+        string sqlCommand = "SELECT ID,Method FROM EnhanceMethod order by Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;
@@ -49,7 +49,20 @@ public class getaddmethod : IHttpHandler {
             }
             i++;
         }
-        backText.Append("]}");
+        reader.Close();
+        backText.Append("],\"defaultItem\":");
+        string defaultpart = "SELECT ID,Method FROM EnhanceMethod where IsDefault=0";
+        MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(defaultpart);
+        if (reader1.Read())
+        {
+            backText.Append("{\"ID\":\"" + reader1["ID"].ToString() + "\",\"Method\":\"" + reader1["Method"].ToString() + "\"}");
+
+        }
+        else
+        {
+            backText.Append("\"\"");
+        }
+        backText.Append("}");
         return backText.ToString();
     }
 }
