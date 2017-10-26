@@ -113,15 +113,13 @@ if (isInArray(progress, '11')) {
                     document.getElementById("check11").innerHTML = "通过";
                     document.getElementById("check12").innerHTML = "通过";
                     document.getElementById("check13").innerHTML = "通过";
-                    document.getElementById("check14").innerHTML = "通过";
-                    document.getElementById("check15").innerHTML = "通过";
+                    document.getElementById("check14").innerHTML = "通过";                  
                     document.getElementById("applyuser").innerHTML = reviewInfo.name;
-                    document.getElementById("time").innerHTML = reviewInfo.ReviewTime;
-                    if (reviewInfo[i].userID == userID) {
-                        window.parent.document.getElementById("edit").removeAttribute("disabled");
-                    }
-                
-            }
+                    document.getElementById("time").innerHTML = reviewInfo.ReviewTime;              
+                }
+                if (reviewInfo.userID == userID) {
+                    window.parent.document.getElementById("edit").removeAttribute("disabled");
+                }
 
         }
     }

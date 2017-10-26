@@ -40,7 +40,7 @@ public class patientInfoForWLS : IHttpHandler
     }
     private string getfixrecordinfo(HttpContext context)
     {
-        string sqlCommand = "SELECT count(*) from treatment where Progress like '%11%' and Progress not in(select Progress from treatment where Progress like '%12%')";
+        string sqlCommand = "SELECT count(*) from treatment where Progress like '%10%' and State=0";
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
         if (count == 0)
         {
@@ -48,7 +48,7 @@ public class patientInfoForWLS : IHttpHandler
         }
 
         int i = 1;
-        string sqlCommand2 = "select treatment.State as treatstate,treatment.ID as treatid,patient.*,user.Name as doctor,Progress,iscommon,treatment.Treatmentdescribe,DiagnosisRecord_ID,ConfirmTime from design,treatment,patient,user where design.ID=treatment.Design_ID and patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and Progress like '%11%' and Progress not in(select Progress from treatment where Progress like '%12%') order by patient.ID desc";
+        string sqlCommand2 = "select treatment.State as treatstate,treatment.ID as treatid,patient.*,user.Name as doctor,Progress,iscommon,treatment.Treatmentdescribe,DiagnosisRecord_ID,Design_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and Progress like '%10%' and treatment.State=0 order by patient.ID desc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
 
@@ -65,9 +65,20 @@ public class patientInfoForWLS : IHttpHandler
                 sqlOperation1.AddParameterWithValue("@ID", reader["DiagnosisRecord_ID"].ToString());
                 result = sqlOperation1.ExecuteScalar(sqlCommand3);
             }
+            string confirmTime = "";
+            if (reader["Design_ID"] is DBNull)
+            {
+                confirmTime = DateTime.Now.ToString();
+            }
+            else
+            {
+                string sqlCommand3 = "select ConfirmTime from design where design.ID=@designID";
+                sqlOperation1.AddParameterWithValue("@designID", reader["Design_ID"].ToString());
+                confirmTime = sqlOperation1.ExecuteScalar(sqlCommand3);
+            }
             backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"state\":\"" + reader["treatstate"].ToString() +
                     "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString()
-                    + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"confirmTime\":\"" + reader["ConfirmTime"].ToString() + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\"}");
+                    + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"confirmTime\":\"" + confirmTime+ "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\"}");
 
             if (i < count)
             {
