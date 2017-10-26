@@ -34,7 +34,7 @@ public class getfixequip : IHttpHandler {
         string countItem = "SELECT count(*) FROM FixedEquipment";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
 
-        string sqlCommand = "SELECT ID,Name FROM FixedEquipment";
+        string sqlCommand = "SELECT ID,Name FROM FixedEquipment order by Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;
@@ -48,7 +48,20 @@ public class getfixequip : IHttpHandler {
             }
             i++;
         }
-        backText.Append("]}");
+        reader.Close();
+        backText.Append("],\"defaultItem\":");
+        string defaultpart = "SELECT ID,Name FROM FixedEquipment where IsDefault=0";
+        MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(defaultpart);
+        if (reader1.Read())
+        {
+            backText.Append("{\"ID\":\"" + reader1["ID"].ToString() + "\",\"Name\":\"" + reader1["Name"].ToString() + "\"}");
+
+        }
+        else
+        {
+            backText.Append("\"\"");
+        }
+        backText.Append("}");
         return backText.ToString();
     }
 

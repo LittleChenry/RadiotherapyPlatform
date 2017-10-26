@@ -165,15 +165,16 @@ function Init(evt) {
     });
 }
 function createbodyposItem(thiselement) {
-    var bodyposItem = JSON.parse(getbodyposItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-------选择体位-------");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < bodyposItem.length; i++) {
-        if (bodyposItem[i] != "") {
-            thiselement.options[i + 1] = new Option(bodyposItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(bodyposItem[i].ID);
+    var PartItem = JSON.parse(getbodyposItem()).Item;
+    var defaultItem = JSON.parse(getbodyposItem()).defaultItem;
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i] = new Option(PartItem[i].Name);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
+    }
+    if (defaultItem != "") {
+        thiselement.value = defaultItem.ID;
     }
 }
 function getbodyposItem() {
@@ -185,15 +186,16 @@ function getbodyposItem() {
     return Items;
 }
 function createheadrestItem(thiselement) {
-    var modelItem = JSON.parse(getrestItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-------头枕选择-------");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < modelItem.length; i++) {
-        if (modelItem[i] != "") {
-            thiselement.options[i + 1] = new Option(modelItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(modelItem[i].ID);
+    var PartItem = JSON.parse(getrestItem()).Item;
+    var defaultItem = JSON.parse(getrestItem()).defaultItem;
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i] = new Option(PartItem[i].Name);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
+    }
+    if (defaultItem != "") {
+        thiselement.value = defaultItem.ID;
     }
 
 }
@@ -206,15 +208,16 @@ function getrestItem() {
     return Items;
 }
 function createmodelselectItem(thiselement) {
-    var modelItem = JSON.parse(getmodelItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-------模具选择-------");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < modelItem.length; i++) {
-        if (modelItem[i] != "") {
-            thiselement.options[i + 1] = new Option(modelItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(modelItem[i].ID);
+    var PartItem = JSON.parse(getmodelItem()).Item;
+    var defaultItem = JSON.parse(getmodelItem()).defaultItem;
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i] = new Option(PartItem[i].Name);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
+    }
+    if (defaultItem != "") {
+        thiselement.value = defaultItem.ID;
     }
 
 }
@@ -228,15 +231,16 @@ function getmodelItem() {
 }
 //第二页的特殊要求下拉菜单
 function createspecialrequestItem(thiselement) {
-    var specialItem = JSON.parse(getspecialItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-------特殊要求-------");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < specialItem.length; i++) {
-        if (specialItem[i] != "") {
-            thiselement.options[i + 1] = new Option(specialItem[i].Requirements);
-            thiselement.options[i + 1].value = parseInt(specialItem[i].ID);
+    var PartItem = JSON.parse(getspecialItem()).Item;
+    var defaultItem = JSON.parse(getspecialItem()).defaultItem;
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i] = new Option(PartItem[i].Requirements);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
+    }
+    if (defaultItem != "") {
+        thiselement.value = defaultItem.ID;
     }
 
 }
@@ -250,15 +254,16 @@ function getspecialItem() {
 }
 //第二页获取固定装置下拉菜单
 function createfixEquipItem(thiselement) {
-    var fixequipItem = JSON.parse(getfixequipItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-------固定装置-------");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < fixequipItem.length; i++) {
-        if (fixequipItem[i] != "") {
-            thiselement.options[i + 1] = new Option(fixequipItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(fixequipItem[i].ID);
+    var PartItem = JSON.parse(getfixequipItem()).Item;
+    var defaultItem = JSON.parse(getfixequipItem()).defaultItem;
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i] = new Option(PartItem[i].Name);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
+    }
+    if (defaultItem != "") {
+        thiselement.value = defaultItem.ID;
     }
 
 }

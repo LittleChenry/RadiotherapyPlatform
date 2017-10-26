@@ -28,7 +28,7 @@ public class getheadrest : IHttpHandler {
         string countItem = "SELECT count(*) FROM headrest";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
 
-        string sqlCommand = "SELECT * FROM headrest";
+        string sqlCommand = "SELECT * FROM headrest order by Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;
@@ -43,7 +43,19 @@ public class getheadrest : IHttpHandler {
             i++;
         }
         reader.Close();
-        backText.Append("]}");
+        backText.Append("],\"defaultItem\":");
+        string defaultpart = "SELECT ID,Name FROM headrest where IsDefault=0";
+        MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(defaultpart);
+        if (reader1.Read())
+        {
+            backText.Append("{\"ID\":\"" + reader1["ID"].ToString() + "\",\"Name\":\"" + reader1["Name"].ToString() + "\"}");
+
+        }
+        else
+        {
+            backText.Append("\"\"");
+        }
+        backText.Append("}");
         return backText.ToString();
     }
 
