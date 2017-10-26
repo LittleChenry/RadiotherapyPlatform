@@ -92,7 +92,7 @@
                         <div class="single-row">
                             <div class="item col-xs-6" style="position:static;">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">病变部位：</span>
-                                <input id="part" class="form-item" type="text"  />
+                                <input id="part" class="form-item" type="text" disabled="disabled" />
                             </div>
                             <div class="item col-xs-6" style="position:static;">
                                  <span class="form-text col-xs-4"> 照射部位：</span>

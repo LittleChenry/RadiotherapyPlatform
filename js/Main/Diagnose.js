@@ -215,7 +215,7 @@ function autoList(e, data){
         var pickerLeft = position.left;
         var pickerWidth = $(e).width() + 12;
         $(document).click(function(){
-            $(e).next().fadeOut();
+            $(e).next().fadeOut(200);
         });
         var selectArea = "<div class='pickerarea'><ul class='auto_ul'>";
         for (var i = 0; i < data.length; i++) {
@@ -232,7 +232,7 @@ function autoList(e, data){
                 $(this).css("background","#3C8DBC");
             });
             $(this).mouseout(function(){
-                $(this).css("color","#000000");
+                $(this).css("color","#333333");
                 $(this).css("background","#FFFFFF");
             });
             $(this).bind("click",function(){
@@ -257,7 +257,7 @@ function autoList(e, data){
             });
         });
     }
-    $(e).next().fadeIn();
+    $(e).next().fadeIn(200);
 }
 
 

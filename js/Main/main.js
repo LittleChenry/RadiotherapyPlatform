@@ -859,8 +859,8 @@ function trAddClick(patient, userID) {
                         });
                         break;
                     case 15:
-                        if (LightLi(this, Progresses, "15", "12", "-1")) {
-                            var url = "Records/TreatmentReview.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location";
+                        if (LightLi(this, Progresses, "15", "14", "-1")) {
+                            var url = "Records/Summary.aspx?TreatmentID=" + e.data.ID;
                         } else {
                             var url = "Records/Blank.aspx";
                         }
@@ -875,8 +875,8 @@ function trAddClick(patient, userID) {
                         });
                         break;
                     case 16:
-                        if (LightLi(this, Progresses, "16", "14", "-1")) {
-                            var url = "Records/Summary.aspx?TreatmentID=" + e.data.ID;
+                        if (LightLi(this, Progresses, "16", "1", "-1")) {
+                            var url = "Records/TreatmentReview.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location";
                         } else {
                             var url = "Records/Blank.aspx";
                         }
@@ -1166,8 +1166,8 @@ function trAddClickforJS(patient, userID) {
                         });
                         break;
                     case 15:
-                        if (LightLi(this, Progresses, "15", "12", "-1")) {
-                            var url = "Records/TreatmentReview.aspx?TreatmentID=" + e.data.ID + "&appointid=" + e.data.appointid + "&TreatmentItem=Location";
+                        if (LightLi(this, Progresses, "15", "14", "-1")) {
+                            var url = "Records/Summary.aspx?TreatmentID=" + e.data.ID;
                         } else {
                             var url = "Records/Blank.aspx";
                         }
@@ -1182,8 +1182,8 @@ function trAddClickforJS(patient, userID) {
                         });
                         break;
                     case 16:
-                        if (LightLi(this, Progresses, "16", "14", "-1")) {
-                            var url = "Records/Summary.aspx?TreatmentID=" + e.data.ID;
+                        if (LightLi(this, Progresses, "16", "1", "-1")) {
+                            var url = "Records/TreatmentReview.aspx?TreatmentID=" + e.data.ID + "&appointid=" + e.data.appointid + "&TreatmentItem=Location";
                         } else {
                             var url = "Records/Blank.aspx";
                         }
@@ -1348,10 +1348,10 @@ function ProgressToString(pro) {
                 Progress += "加速器治疗、";
                 break;
             case 15:
-                Progress += "加速器治疗、";
+                Progress += "总结随访、";
                 break;
             case 16:
-                Progress += "总结随访、";
+                Progress += "CT扫描、";
                 break;
             default:
                 Progress += "无、";
@@ -1410,10 +1410,10 @@ function ProgressNumToName(progressNum){
             Progress = "加速器治疗";
             break;
         case 15:
-            Progress = "加速器治疗";
+            Progress = "总结随访";
             break;
         case 16:
-            Progress = "总结随访";
+            Progress = "CT扫描";
             break;
         default:
             Progress = "无";
