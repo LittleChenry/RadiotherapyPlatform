@@ -20,13 +20,25 @@ public class editEquipmentType : IHttpHandler {
     private void update(HttpContext context)
     {
         DataLayer sqlOperator = new DataLayer("sqlStr");
-
-        string id = context.Request.Form["id"];
         string type = context.Request.Form["type"];
-        string sqlCommand = "UPDATE equipmenttype SET Type=@type WHERE ID=@id";
-        sqlOperator.AddParameterWithValue("@type", type);
+        string id = context.Request.Form["id"];
+        string isDefault = context.Request.Form["isDefault"];
+
+        string sqlCommand = "UPDATE equipmenttype set Type=@Type,IsDefault=@IsDefault WHERE ID=@id";
+
+        sqlOperator.clearParameter();
+        sqlOperator.AddParameterWithValue("@Type", type);
+        sqlOperator.AddParameterWithValue("@IsDefault", int.Parse(isDefault));
         sqlOperator.AddParameterWithValue("@id", id);
         sqlOperator.ExecuteNonQuery(sqlCommand);
+
+        if (isDefault == "0")
+        {
+            string sqlCommand1 = "update equipmenttype set IsDefault=1 where ID != @ID";
+            sqlOperator.clearParameter();
+            sqlOperator.AddParameterWithValue("@ID", id);
+            sqlOperator.ExecuteNonQuery(sqlCommand1);
+        }
 
         sqlOperator.Close();
         sqlOperator.Dispose();

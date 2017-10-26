@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css" />
     <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce -->
     <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css" />
-
+    <link rel="stylesheet" href="../../plugin/jqueryui/jquery-ui.min.css" />
     <!-- Main Css -->
     <link rel="stylesheet" href="../../css/Root/rootMain.css" />
 
@@ -340,6 +340,7 @@
                     <div class="panel-heading mintablewidth">
                         <i class="fa fa-bar-chart-o fa-fw"></i>
                         <span class="panel-title">设备类型表</span>
+                        <input type="button" class="btn btn-primary btn-sm floatRight" id="toSort" value="排序" style="padding: 2.5px 10px"; data-toggle="modal" data-backdrop="false" />
                          <input type="button" class="btn btn-primary btn-sm buttonToLeft floatRight" id="newGroup" data-toggle="modal" data-target="#myModal" value="新增" style="padding: 2.5px 10px;" />
                         <input type="button" class="btn btn-primary btn-sm floatRight" id="changeGroup" value="编辑" style="padding: 2.5px 10px;" />
                         <input type="button" class="btn btn-primary btn-sm floatRight" id="closeEdite" value="结束编辑" style="padding: 2.5px 10px;display:none" />
@@ -423,12 +424,19 @@
                                             <input id="equipmentID" type="hidden" />
                                         </td>
                                     </tr>
-                                    
+                                    <tr>
+                                        <th>设置默认</th>
+                                        <td>
+                                            <label class='checkbox-inline'><input type='radio' name='default' value='0'/>默认</label>
+                                            <label class='checkbox-inline'><input type='radio' name='default' value='1' checked="checked"/>不默认</label>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="modal-footer">
                             <button id="cannelEdit" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                            <input id="deleteType" type="button" class="btn btn-danger" value="删除" /> 
                             <input id="sureEdit" type="submit" class="btn btn-primary" value="确认" />
                         </div>
                 </div>
@@ -437,7 +445,31 @@
                                 <!-- /.modal-dialog -->
         </div>
 
+                        <div class="modal fade" id="sortModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
+                                        <h4 class="modal-title">排序</h4>
+                        
+                                    </div>
+                                    <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
+                                        <table class="table table-bordered table-center">
+                                            <tbody id="sort">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
 
+                                    <div class="modal-footer">
+                                        <button id="sortCancel" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                                        <input id="sortSure" type="submit" class="btn btn-primary" value="确认" />
+                                    </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                     </div>
                     </div>
                 </div>
             </div>
