@@ -299,6 +299,10 @@ function CheckEmpty() {
         window.alert("姓名不能为空");
         return;
     }
+    if (document.getElementById("usernamepingyin").value == "") {
+        window.alert("姓名拼音不能为空");
+        return;
+    }
     if (document.getElementsByName("Gender")[0].checked == false  && document.getElementsByName("Gender")[1].checked == false) {
         window.alert("性别不能为空");
         return;

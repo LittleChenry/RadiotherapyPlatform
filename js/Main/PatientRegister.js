@@ -392,6 +392,7 @@ function writePatientInfo(PatientInfo) {
     document.getElementById("Number2").value =  PatientInfo.patientInfo[0].Contact2;
     document.getElementById("patientID").value =  PatientInfo.patientInfo[0].ID;
     document.getElementById("doctor").value = PatientInfo.patientInfo[0].doctor;
+    document.getElementById("usernamepingyin").value = PatientInfo.patientInfo[0].usernamepingyin;
     var select4 = document.getElementById("doctor");
     createselect2(select4.selectedIndex);
     if (PatientInfo.patientInfo[0].group == "") {
@@ -522,6 +523,10 @@ function save() {
     if (document.getElementById("userName").value=="") {
         window.alert("姓名不能为空");
         return false; 
+    }
+    if (document.getElementById("usernamepingyin").value == "") {
+        window.alert("姓名拼音不能为空");
+        return false;
     }
     if (document.getElementById("IDcardNumber").value=="") {
         window.alert("身份证不能为空");

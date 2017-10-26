@@ -276,11 +276,18 @@
                                 <input id="CardID" name="CardID" class="form-item" type="text" AUTOCOMPLETE="OFF" style="width:37%;"/>
                                 <button id="sync" type="button" class="btn btn-info btn-sm btn-flat" style="margin-left:-1px;margin-top:-3px;">HIS同步</button>
                             </div>
-                            <div class="col-xs-5">
-                                <span class="form-text col-xs-4">姓名：</span>
+                        </div>
+                         <div class="single-row">
+                             <div class="col-xs-5">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">姓名：</span>
                                 <input id="userName" name="userName" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
                             </div>
+                            <div class="col-xs-5">
+                                <span class="form-text col-xs-4">姓名拼音：</span>
+                                <input id="usernamepingyin" name="usernamepingyin" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
+                            </div>
                         </div>
+
                         <div class="single-row">
                             <div class="item col-xs-5"> 
                                 <span class="form-text col-xs-4" style="padding-left:0px;">性别：</span>

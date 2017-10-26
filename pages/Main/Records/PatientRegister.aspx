@@ -59,8 +59,14 @@
                     </div>
                     <div class="single-row">
                         <div class="item col-xs-5">
+                            <div class="item col-xs-5" style="padding-left:0px;">
                             姓名：
                             <input id="userName" name="userName" type="text" class="form-item" />
+                            </div>
+                            <div class="item col-xs-5" style="padding-left:0px;">
+                             拼音：
+                            <input id="usernamepingyin" name="usernamepingyin" type="text" class="form-item" />
+                           </div>
                         </div>
                         <div class="item col-xs-5" style="padding-top:5px;">
                             <span class="col-xs-3" style="padding-left:0px;">性别：</span>
