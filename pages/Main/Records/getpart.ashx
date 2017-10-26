@@ -51,9 +51,9 @@ public class getpart : IHttpHandler {
         }
         reader.Close();
         backText.Append("],\"defaultItem\":");
-        string defaultpart = "SELECT ID,Name FROM part order by IsDefault=0";
+        string defaultpart = "SELECT ID,Name FROM part where IsDefault=0";
         MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(defaultpart);
-        if (reader.Read())
+        if (reader1.Read())
         {
             backText.Append("{\"ID\":\"" + reader1["ID"].ToString() + "\",\"Name\":\"" + reader1["Name"].ToString() + "\"}");
           

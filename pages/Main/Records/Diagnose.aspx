@@ -91,8 +91,8 @@
 
                         <div class="single-row">
                             <div class="item col-xs-6">
-                                <span class="form-text col-xs-4" style="padding-left:0px;">病变部位：</span>
-                                <select id="part" name="part" class="form-item" disabled="disabled"></select>
+                                <span class="form-text col-xs-4"   style="padding-left:0px;">病变部位：</span>
+                                <select id="part" name="part" aria-multiselectable="true" class="form-item" disabled="disabled"></select>
                             </div>
                             <div class="item col-xs-6">
                                  <span class="form-text col-xs-4"> 照射部位：</span>

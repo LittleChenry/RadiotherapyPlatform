@@ -194,16 +194,14 @@ function sex(evt) {
 //第二步部位下拉项建立
 function createPartItem(thiselement) {
     var PartItem = JSON.parse(getPartItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-----部位选择-----");
-    thiselement.options[0].value = "allItem";
+    var defaultItem = JSON.parse(getPartItem()).defaultItem;
     for (var i = 0; i < PartItem.length; i++) {
         if (PartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+            thiselement.options[i] = new Option(PartItem[i].Name);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
     }
-
+    thiselement.value = defaultItem.ID;
 
 }
 //第二步部位项数据库调取
