@@ -7,7 +7,7 @@ var Radiotherapy_ID;
 
 function Init(evt) {
     var treatID = window.location.search.split("&")[0].split("=")[1];
-     Radiotherapy_ID = window.location.search.split("&")[1].split("=")[1];
+    Radiotherapy_ID = window.location.search.split("&")[1].split("=")[1];
     getdoctorandgroup();
     var select4 = document.getElementById("doctor");
     createdoctorItem(select4);

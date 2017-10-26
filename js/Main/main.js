@@ -620,7 +620,7 @@ function trAddClick(patient, userID) {
                     case 0:
                         $(this).find('li').removeClass().addClass("progress-info");
                         $(this).find('i').removeClass().addClass("fa fa-fw fa-info-circle");
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID + "&Radiotherapy_ID=" + e.data.Radiotherapy_ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -636,7 +636,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -653,7 +653,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -670,7 +670,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -687,7 +687,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -703,7 +703,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -719,7 +719,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -735,7 +735,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -752,7 +752,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -768,7 +768,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -784,7 +784,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -800,7 +800,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -816,7 +816,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -832,7 +832,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -848,7 +848,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -864,7 +864,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -880,7 +880,7 @@ function trAddClick(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -891,7 +891,7 @@ function trAddClick(patient, userID) {
                         });
                         break;
                     default:
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', "Records/Error.aspx");
                         });
                 }
@@ -928,7 +928,7 @@ function trAddClickforJS(patient, userID) {
                     case 0:
                         $(this).find('li').removeClass().addClass("progress-info");
                         $(this).find('i').removeClass().addClass("fa fa-fw fa-info-circle");
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID + "&Radiotherapy_ID=" + e.data.Radiotherapy_ID);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -944,7 +944,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -960,7 +960,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -977,7 +977,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -994,7 +994,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1010,7 +1010,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1026,7 +1026,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1042,7 +1042,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1059,7 +1059,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1075,7 +1075,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1091,7 +1091,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1107,7 +1107,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1123,7 +1123,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1139,7 +1139,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1155,7 +1155,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1171,7 +1171,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1187,7 +1187,7 @@ function trAddClickforJS(patient, userID) {
                         } else {
                             var url = "Records/Blank.aspx";
                         }
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
@@ -1198,7 +1198,7 @@ function trAddClickforJS(patient, userID) {
                         });
                         break;
                     default:
-                        $(this).click(function () {
+                        $(this).unbind("click").click(function () {
                             $("#record-iframe").attr('src', "Records/Error.aspx");
                         });
                 }

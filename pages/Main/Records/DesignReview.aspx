@@ -62,17 +62,16 @@
                         <span>复核计划信息：</span>
                     </div>
                     <div class="single-row">
-                        
-                            
                         <div class="col-xs-12">
-                            <button id="Forced" type="button" class="btn btn-success" onclick="force()" disabled="disabled">强制通过</button>
-                        
-                            <button id="confirm" type="button" class="btn btn-success pull-right" onclick="check()" disabled="disabled">自动复核</button>
+                            <div class="pull-right">
+                                <button id="Forced" type="button" class="btn btn-success" onclick="force()" disabled="disabled">强制通过</button>
+                                <button id="confirm" type="button" class="btn btn-success" onclick="check()" disabled="disabled" style="margin-left:10px;">自动复核</button>
+                            </div>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="item area-group col-xs-12">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" style="word-break:break-all;">
                                 <thead>
                                     <tr>
                                         <th style="width:8%;text-align:center;">序号</th>
