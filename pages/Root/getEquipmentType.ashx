@@ -22,7 +22,7 @@ public class getEquipmentType : IHttpHandler {
     {
         DataLayer sqlOperator = new DataLayer("sqlStr");
 
-        string sqlCommand = "SELECT * FROM equipmenttype";
+        string sqlCommand = "SELECT * FROM equipmenttype order by orders";
 
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperator.ExecuteReader(sqlCommand);
 
@@ -34,6 +34,8 @@ public class getEquipmentType : IHttpHandler {
                   .Append(reader["ID"].ToString())
                   .Append("\",\"type\":\"")
                   .Append(reader["Type"].ToString())
+                  .Append("\",\"isDefault\":\"")
+                  .Append(reader["IsDefault"].ToString())
                   .Append("\"},");
         }
         result.Remove(result.Length - 1, 1).Append("]");

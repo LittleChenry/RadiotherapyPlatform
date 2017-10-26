@@ -46,6 +46,9 @@ function createPage(page) {
                     + "</td><td>"
                     + jsonObj[i].type
                     + "</td></tr>");
+        if (jsonObj[i].isDefault == "0") {
+            $tr.addClass("success");
+        }
         $tbody.append($tr);
     }
 }
@@ -243,15 +246,16 @@ function editType($tr) {
     $("#editType").val($td[1].innerText);
     $("#equipmentID").val($td[0].innerText);
 }
-
+//编辑提交
 $(function () {
     $("#sureEdit").bind("click", function () {
         var type = $("#editType").val();
         var id = $("#equipmentID").val();
+        var isDefault = $("input[name='default']:checked").val();
         $.ajax({
             type: "post",
             url: "editEquipmentType.ashx",
-            data: { "id": id, "type": type },
+            data: { "id": id, "type": type ,"isDefault":isDefault},
             success: function () {
                 alert("修改成功");
                 createTable(parseInt($("#currentPage").val()));
@@ -260,7 +264,7 @@ $(function () {
         });
     });
 });
-/*
+//删除
 $(function () {
     $("#deleteType").bind("click", function () {
         var id = $("#equipmentID").val();
@@ -276,7 +280,7 @@ $(function () {
         })
     });
 });
-*/
+
 $(function () {
     $("#search").bind("click", function () {
         var text = $("#GroupSearchID").val();
@@ -313,3 +317,63 @@ $(function () {
         window.location.href = "../../pages/Root/EquipmentTypeManage.aspx";
     });
 });
+
+
+//排序
+$(function () {
+    $("#toSort").click(function () {
+        $("#sortModal").modal({
+            backdrop: false
+        });
+        createSortTable();
+        $("#sort").sortable(); //移动表格
+        $("#sort").disableSelection();
+    });
+
+    $("#sortSure").click(function () {
+        sureSort();
+    });
+})
+
+function createSortTable() {
+    $.ajax({
+        type: "post",
+        url: "getEquipmentType.ashx",
+        dataType: "text",
+        success: function (data) {
+            jsonObj = $.parseJSON(data);
+            var $sort = $("#sort");//清空当前表格
+            $sort.empty();
+            for (var i = 0; i < jsonObj.length ; ++i) {
+                var $tr = $("<tr><td>" + jsonObj[i].type + "<input type=hidden value=" + jsonObj[i].id
+                    + " /></td></tr>");
+                if (jsonObj[i].isDefault == '0') {
+                    $tr.addClass("success");
+                }
+                $sort.append($tr);
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+
+function sureSort() {
+    var $sortTrs = $("#sort").find("tr");
+    var orders = "";
+    $sortTrs.each(function (index, element) {
+        orders += $(element).find("td :hidden").val() + " ";
+    });
+    $.ajax({
+        type: "post",
+        url: "sortParameterTable.ashx",
+        data: { table: "equipmenttype", orders: orders },//哪个表格
+        dataType: "text",
+        success: function (data) {
+            alert("修改成功");
+            $('#sortModal').modal('hide');
+            createTable(1);
+        }
+    });
+}
