@@ -209,7 +209,7 @@ public class AddTreatment : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@design", design);
                 sqlOperation.AddParameterWithValue("@review", review);
                 sqlOperation.AddParameterWithValue("@doc", doctor);
-                sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6,7,8,9,10,11");
+                sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6,7,8,9,10");
                 sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
                 success = sqlOperation.ExecuteNonQuery(insert);
             }
@@ -224,7 +224,7 @@ public class AddTreatment : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@design", design);
                 sqlOperation.AddParameterWithValue("@review", review);
                 sqlOperation.AddParameterWithValue("@doc", doctor);
-                sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6,7,8,9,10,11");
+                sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6,7,8,9,10");
                 sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
                 success = sqlOperation.ExecuteNonQuery(insert);
             }

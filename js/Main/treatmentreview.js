@@ -25,7 +25,7 @@ function Init(evt) {
     document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
     var texthos = hosttext(patient.Hospital_ID);
     document.getElementById("hospitalid").innerHTML = texthos;
-    document.getElementById("lightpart").innerHTML = patient.lightpartname;
+    document.getElementById("lightpart").innerHTML = patient.LightPart_ID;
     var groupprogress = patient.Progress.split(",");
     var select1 = document.getElementById("scanpart");
     createscanpartItem(select1);
@@ -392,15 +392,16 @@ function checkAllTable() {
 
 //扫描部位
 function createscanpartItem(thiselement) {
-    var scanpartItem = JSON.parse(getscanpartItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--扫描部位--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < scanpartItem.length; i++) {
-        if (scanpartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(scanpartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(scanpartItem[i].ID);
+    var PartItem = JSON.parse(getscanpartItem()).Item;
+    var defaultItem = JSON.parse(getscanpartItem()).defaultItem;
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i] = new Option(PartItem[i].Name);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
+    }
+    if (defaultItem != "") {
+        thiselement.value = defaultItem.ID;
     }
 }
 
@@ -414,15 +415,16 @@ function getscanpartItem() {
 }
 //扫描部位
 function createscanmethodItem(thiselement) {
-    var scanmethodItem = JSON.parse(getscanmethodItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--扫描方式--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < scanmethodItem.length; i++) {
-        if (scanmethodItem[i] != "") {
-            thiselement.options[i + 1] = new Option(scanmethodItem[i].Method);
-            thiselement.options[i + 1].value = parseInt(scanmethodItem[i].ID);
+    var PartItem = JSON.parse(getscanmethodItem()).Item;
+    var defaultItem = JSON.parse(getscanmethodItem()).defaultItem;
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i] = new Option(PartItem[i].Method);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
+    }
+    if (defaultItem != "") {
+        thiselement.value = defaultItem.ID;
     }
 }
 function getscanmethodItem() {
@@ -435,15 +437,16 @@ function getscanmethodItem() {
 }
 //扫描特殊要求
 function createspecialItem(thiselement) {
-    var specialItem = JSON.parse(getspecialItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--特殊要求--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < specialItem.length; i++) {
-        if (specialItem[i] != "") {
-            thiselement.options[i + 1] = new Option(specialItem[i].Requirements);
-            thiselement.options[i + 1].value = parseInt(specialItem[i].ID);
+    var PartItem = JSON.parse(getspecialItem()).Item;
+    var defaultItem = JSON.parse(getspecialItem()).defaultItem;
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i] = new Option(PartItem[i].Requirements);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
+    }
+    if (defaultItem != "") {
+        thiselement.value = defaultItem.ID;
     }
 }
 function getspecialItem() {
@@ -456,15 +459,16 @@ function getspecialItem() {
 }
 //增强方式
 function createaddmethodItem(thiselement) {
-    var addmethodItem = JSON.parse(getaddmethodItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--增强方式--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < addmethodItem.length; i++) {
-        if (addmethodItem[i] != "") {
-            thiselement.options[i + 1] = new Option(addmethodItem[i].Method);
-            thiselement.options[i + 1].value = parseInt(addmethodItem[i].ID);
+    var PartItem = JSON.parse(getaddmethodItem()).Item;
+    var defaultItem = JSON.parse(getaddmethodItem()).defaultItem;
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i] = new Option(PartItem[i].Method);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
+    }
+    if (defaultItem != "") {
+        thiselement.value = defaultItem.ID;
     }
 }
 function getaddmethodItem() {
@@ -622,18 +626,7 @@ function contains(group, s) {
     }
     return false;
 }
-function createscanpartItem(thiselement) {
-    var scanpartItem = JSON.parse(getscanpartItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--扫描部位--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < scanpartItem.length; i++) {
-        if (scanpartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(scanpartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(scanpartItem[i].ID);
-        }
-    }
-}
+
 
 function getscanpartItem() {
     var xmlHttp = new XMLHttpRequest();
@@ -643,19 +636,7 @@ function getscanpartItem() {
     var Items = xmlHttp.responseText;
     return Items;
 }
-//扫描部位
-function createscanmethodItem(thiselement) {
-    var scanmethodItem = JSON.parse(getscanmethodItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--扫描方式--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < scanmethodItem.length; i++) {
-        if (scanmethodItem[i] != "") {
-            thiselement.options[i + 1] = new Option(scanmethodItem[i].Method);
-            thiselement.options[i + 1].value = parseInt(scanmethodItem[i].ID);
-        }
-    }
-}
+
 function getscanmethodItem() {
     var xmlHttp = new XMLHttpRequest();
     var url = "getscanmethod.ashx";
@@ -666,15 +647,16 @@ function getscanmethodItem() {
 }
 //扫描特殊要求
 function createspecialItem(thiselement) {
-    var specialItem = JSON.parse(getspecialItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--特殊要求--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < specialItem.length; i++) {
-        if (specialItem[i] != "") {
-            thiselement.options[i + 1] = new Option(specialItem[i].Requirements);
-            thiselement.options[i + 1].value = parseInt(specialItem[i].ID);
+    var PartItem = JSON.parse(getspecialItem()).Item;
+    var defaultItem = JSON.parse(getspecialItem()).defaultItem;
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i] = new Option(PartItem[i].Requirements);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
+    }
+    if (defaultItem != "") {
+        thiselement.value = defaultItem.ID;
     }
 }
 function getspecialItem() {
@@ -687,15 +669,16 @@ function getspecialItem() {
 }
 //增强方式
 function createaddmethodItem(thiselement) {
-    var addmethodItem = JSON.parse(getaddmethodItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("--增强方式--");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < addmethodItem.length; i++) {
-        if (addmethodItem[i] != "") {
-            thiselement.options[i + 1] = new Option(addmethodItem[i].Method);
-            thiselement.options[i + 1].value = parseInt(addmethodItem[i].ID);
+    var PartItem = JSON.parse(getaddmethodItem()).Item;
+    var defaultItem = JSON.parse(getaddmethodItem()).defaultItem;
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i] = new Option(PartItem[i].Method);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
+    }
+    if (defaultItem != "") {
+        thiselement.value = defaultItem.ID;
     }
 }
 

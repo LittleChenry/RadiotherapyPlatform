@@ -31,7 +31,7 @@ document.getElementById("diagnosisresult").innerHTML = patient.diagnosisresult;
 document.getElementById("radiotherapy").innerHTML = patient.Radiotherapy_ID;
 var texthos = hosttext(patient.Hospital_ID);
 document.getElementById("hospitalid").innerHTML = texthos;
-document.getElementById("lightpart").innerHTML = patient.lightpartname;
+document.getElementById("lightpart").innerHTML = patient.LightPart_ID;
 
 var progress = patient.Progress.split(",");
 if (isInArray(progress, '11')) {
