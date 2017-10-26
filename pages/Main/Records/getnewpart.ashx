@@ -25,10 +25,10 @@ public class getnewpart : IHttpHandler {
     }
     private string getprinItem()
     {
-        string countItem = "SELECT count(*) FROM lightpart";
+        string countItem = "SELECT count(*) FROM lightpart  ";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
 
-        string sqlCommand = "SELECT ID,Name FROM lightpart";
+        string sqlCommand = "SELECT ID,Name FROM lightpart order by Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;
@@ -42,7 +42,20 @@ public class getnewpart : IHttpHandler {
             }
             i++;
         }
-        backText.Append("]}");
+        reader.Close();
+        backText.Append("],\"defaultItem\":");
+        string defaultpart = "SELECT ID,Name FROM lightpart where IsDefault=0";
+        MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(defaultpart);
+        if (reader1.Read())
+        {
+            backText.Append("{\"ID\":\"" + reader1["ID"].ToString() + "\",\"Name\":\"" + reader1["Name"].ToString() + "\"}");
+
+        }
+        else
+        {
+            backText.Append("\"\"");
+        }
+        backText.Append("}");
         return backText.ToString();
     }
 

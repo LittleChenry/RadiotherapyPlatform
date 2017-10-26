@@ -37,7 +37,7 @@ public class getmodel : IHttpHandler {
         string countItem = "SELECT count(*) FROM material ";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
 
-        string sqlCommand = "SELECT * FROM material";
+        string sqlCommand = "SELECT * FROM material order by Orders ";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;
@@ -52,7 +52,15 @@ public class getmodel : IHttpHandler {
             i++;
         }
         reader.Close();
-        backText.Append("]}");
+        backText.Append("],\"defaultItem\":");
+        string defaultpart = "SELECT ID,Name FROM part where IsDefault=0";
+        MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(defaultpart);
+        if (reader1.Read())
+        {
+            backText.Append("{\"ID\":\"" + reader1["ID"].ToString() + "\",\"Name\":\"" + reader1["Name"].ToString() + "\"}");
+
+        }
+        backText.Append("}");
         return backText.ToString();
     }
 

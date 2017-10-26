@@ -47,7 +47,7 @@ public class diagnoseInfo : IHttpHandler {
         sqlOperation2.AddParameterWithValue("@patient", patientid);
         int count = int.Parse(sqlOperation2.ExecuteScalar(countCompute));
         int i = 1;
-        string sqlCommand1 = "select diagnosisrecord.*,part.Name as partname,lightpart.Name as lightpartname,treataim.Aim as treatmentaim,user.Name as username,Treatmentname,Treatmentdescribe from user,part,diagnosisrecord,treatment,lightpart,treataim where diagnosisrecord.LightPart_ID=lightpart.ID and diagnosisrecord.TreatAim_ID=treataim.ID  and diagnosisrecord.Diagnosis_User_ID=user.ID and treatment.DiagnosisRecord_ID=diagnosisrecord.ID and diagnosisrecord.Part_ID=part.ID and treatment.Patient_ID=@patient";
+        string sqlCommand1 = "select diagnosisrecord.*,treataim.Aim as treatmentaim,user.Name as username,Treatmentname,Treatmentdescribe from user,diagnosisrecord,treatment,treataim where diagnosisrecord.TreatAim_ID=treataim.ID  and diagnosisrecord.Diagnosis_User_ID=user.ID and treatment.DiagnosisRecord_ID=diagnosisrecord.ID and treatment.Patient_ID=@patient";
         sqlOperation2.AddParameterWithValue("@patient", patientid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand1);
         StringBuilder backText = new StringBuilder("{\"diagnosisInfo\":[");
@@ -74,7 +74,7 @@ public class diagnoseInfo : IHttpHandler {
             string date = reader["Time"].ToString();
             DateTime dt1 = Convert.ToDateTime(date);
             string date1 = dt1.ToString("yyyy-MM-dd HH:mm");
-            backText.Append("{\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"partname\":\"" + reader["partname"] +  "\",\"lightpartname\":\"" +reader["lightpartname"] + "\",\"partID\":\"" + reader["Part_ID"] + "\",\"LightPart_ID\":\"" + reader["LightPart_ID"] + "\",\"Treatmentname\":\"" + reader["Treatmentname"] + "\",\"diagnosisresultName1\":\"" + result1 + "\",\"diagnosisresultName2\":\"" + result2 +
+            backText.Append("{\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"partname\":\"" + reader["Part_ID"] + "\",\"lightpartname\":\"" + reader["LightPart_ID"]+ "\",\"Treatmentname\":\"" + reader["Treatmentname"] + "\",\"diagnosisresultName1\":\"" + result1 + "\",\"diagnosisresultName2\":\"" + result2 +
                  "\",\"diagnosisresultID\":\"" + reader["DiagnosisResult_ID"].ToString() + "\",\"treatmentaim\":\"" + reader["treatmentaim"].ToString() + "\",\"treatmentaimID\":\"" + reader["TreatAim_ID"].ToString() + "\",\"PathologyResult\":\"" + reader["PathologyResult"].ToString() + "\",\"username\":\"" + reader["username"].ToString() + "\",\"userID\":\"" + reader["Diagnosis_User_ID"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
                  "\",\"Time\":\"" + date1 + "\",\"iscommonnumber\":\"" + iscommonnumber + "\"}");
             if (i < count)

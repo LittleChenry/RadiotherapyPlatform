@@ -63,8 +63,8 @@ public class recordDiag : IHttpHandler {
             string strSqlCommand = "insert into diagnosisrecord(Part_ID,LightPart_ID,DiagnosisResult_ID,PathologyResult,TreatAim_ID,Diagnosis_User_ID,Time,Remarks)" +
                                     "values(@Part_ID,@LightPart_ID,@DiagnosisResult_ID,@PathologyResult,@TreatAim_ID,@Diagnosis_User_ID,@Time,@Remarks)";
 
-            sqlOperation1.AddParameterWithValue("@Part_ID", Convert.ToInt32(part));
-            sqlOperation1.AddParameterWithValue("@LightPart_ID", Convert.ToInt32(newpart));
+            sqlOperation1.AddParameterWithValue("@Part_ID", part);
+            sqlOperation1.AddParameterWithValue("@LightPart_ID", newpart);
             sqlOperation1.AddParameterWithValue("@DiagnosisResult_ID", code1);
             sqlOperation1.AddParameterWithValue("@PathologyResult", code2);
             sqlOperation1.AddParameterWithValue("@TreatAim_ID", Convert.ToInt32(Aim));

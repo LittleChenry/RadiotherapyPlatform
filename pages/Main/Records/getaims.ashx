@@ -27,7 +27,7 @@ public class getaims : IHttpHandler {
         string countItem = "SELECT count(*) FROM treataim";
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
 
-        string sqlCommand = "SELECT ID,Aim FROM treataim";
+        string sqlCommand = "SELECT ID,Aim FROM treataim  order by Orders";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i = 1;
@@ -41,7 +41,20 @@ public class getaims : IHttpHandler {
             }
             i++;
         }
-        backText.Append("]}");
+        reader.Close();
+        backText.Append("],\"defaultItem\":");
+        string defaultpart = "SELECT ID,Aim FROM treataim where IsDefault=0";
+        MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(defaultpart);
+        if (reader1.Read())
+        {
+            backText.Append("{\"ID\":\"" + reader1["ID"].ToString() + "\",\"Aim\":\"" + reader1["Aim"].ToString() + "\"}");
+
+        }
+        else
+        {
+            backText.Append("\"\"");
+        }
+        backText.Append("}");
         return backText.ToString();
     }
 

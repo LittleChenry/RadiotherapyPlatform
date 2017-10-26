@@ -55,8 +55,8 @@ function createPatient(evt) {
                 loadonenext();
                 document.getElementById("bingli2").value = diagnosisInfo.diagnosisInfo[i].diagnosisresultName2.split(",")[1];
                 loadtwonext();
-                document.getElementById("part").value = diagnosisInfo.diagnosisInfo[i].partID;
-                document.getElementById("newpart").value = diagnosisInfo.diagnosisInfo[i].LightPart_ID;
+                document.getElementById("part").value = diagnosisInfo.diagnosisInfo[i].partname;
+                document.getElementById("newpart").value = diagnosisInfo.diagnosisInfo[i].lightpartname;
                 document.getElementById("treatname").value = diagnosisInfo.diagnosisInfo[i].Treatmentdescribe;
                 document.getElementById("Aim").value = diagnosisInfo.diagnosisInfo[i].treatmentaimID;
                 document.getElementById("remark").value = diagnosisInfo.diagnosisInfo[i].Remarks;
@@ -115,8 +115,8 @@ function createPatient(evt) {
             loadonenext();
             document.getElementById("bingli2").value = diagnosisInfo.diagnosisInfo[k].diagnosisresultName2.split(",")[1];
             loadtwonext();
-            document.getElementById("part").value = diagnosisInfo.diagnosisInfo[k].partID;
-            document.getElementById("newpart").value = diagnosisInfo.diagnosisInfo[k].LightPart_ID;
+            document.getElementById("part").value = diagnosisInfo.diagnosisInfo[k].partname;
+            document.getElementById("newpart").value = diagnosisInfo.diagnosisInfo[k].lightpartname;
             document.getElementById("Aim").value = diagnosisInfo.diagnosisInfo[k].treatmentaimID;
             document.getElementById("remark").value = diagnosisInfo.diagnosisInfo[k].Remarks; 
         });
@@ -195,6 +195,11 @@ function sex(evt) {
 function createPartItem(thiselement) {
     var PartItem = JSON.parse(getPartItem()).Item;
     var defaultItem = JSON.parse(getPartItem()).defaultItem;
+    if (defaultItem == "") {
+        $(thiselement).attr("value", "");
+    } else {
+        $(thiselement).attr("value", defaultItem.Name);
+    }
     $(thiselement).bind("click",function(){
         event.stopPropagation();
         autoList(this, PartItem);
@@ -266,17 +271,17 @@ function getPartItem() {
     return Items;
 }
 function createNewpartItem(thiselement) {
-    var NewpartItem = JSON.parse(getNewpartItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("-----照射部位选择-----");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < NewpartItem.length; i++) {
-        if (NewpartItem[i] != "") {
-            thiselement.options[i + 1] = new Option(NewpartItem[i].Name);
-            thiselement.options[i + 1].value = parseInt(NewpartItem[i].ID);
-        }
+    var PartItem = JSON.parse(getNewpartItem()).Item;
+    var defaultItem = JSON.parse(getNewpartItem()).defaultItem;
+    if (defaultItem == "") {
+        $(thiselement).attr("value", "");
+    } else {
+        $(thiselement).attr("value", defaultItem.Name);
     }
-
+    $(thiselement).bind("click", function () {
+        event.stopPropagation();
+        autoList(this, PartItem);
+    });
 
 }
 //第二步部位项数据库调取
@@ -289,17 +294,17 @@ function getNewpartItem() {
     return Items;
 }
 function createAimItem(thiselement) {
-    var AimItem = JSON.parse(getAimItem()).Item;
-    thiselement.options.length = 0;
-    thiselement.options[0] = new Option("----治疗目标选择-----");
-    thiselement.options[0].value = "allItem";
-    for (var i = 0; i < AimItem.length; i++) {
-        if (AimItem[i] != "") {
-            thiselement.options[i + 1] = new Option(AimItem[i].Aim);
-            thiselement.options[i + 1].value = parseInt(AimItem[i].ID);
+    var PartItem = JSON.parse(getAimItem()).Item;
+    var defaultItem = JSON.parse(getAimItem()).defaultItem;
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i] = new Option(PartItem[i].Aim);
+            thiselement.options[i].value = parseInt(PartItem[i].ID);
         }
     }
-
+    if (defaultItem != "") {
+        thiselement.value = defaultItem.ID;
+    }
 
 }
 //第二步部位项数据库调取

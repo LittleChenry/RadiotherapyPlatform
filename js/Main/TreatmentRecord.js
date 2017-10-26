@@ -1004,6 +1004,7 @@ function CreateNewAppiontTable() {
         dateType: "json",
         success: function (data) {
             thisObj = eval("(" + data + ")");
+           //alert("一种");
             CreateCurrentEquipmentTbale(thisObj, date, times);
             $("#loading").hide();
             document.getElementById("chooseProject").removeAttribute("disabled");

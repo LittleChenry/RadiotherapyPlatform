@@ -56,7 +56,11 @@ public class getpart : IHttpHandler {
         if (reader1.Read())
         {
             backText.Append("{\"ID\":\"" + reader1["ID"].ToString() + "\",\"Name\":\"" + reader1["Name"].ToString() + "\"}");
-          
+
+        }
+        else
+        {
+            backText.Append("\"\"");
         }
         backText.Append("}");
         return backText.ToString();

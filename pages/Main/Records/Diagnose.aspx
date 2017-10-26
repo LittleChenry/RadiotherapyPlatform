@@ -94,9 +94,10 @@
                                 <span class="form-text col-xs-4" style="padding-left:0px;">病变部位：</span>
                                 <input id="part" class="form-item" type="text"  />
                             </div>
-                            <div class="item col-xs-6">
+                            <div class="item col-xs-6" style="position:static;">
                                  <span class="form-text col-xs-4"> 照射部位：</span>
-                                <select id="newpart" name="part" class="form-item" disabled="disabled"></select>
+                                <input id="newpart" class="form-item" type="text"  />
+
                             </div>                                  
                         </div>
                         
