@@ -19,13 +19,16 @@ public class SelectTreatID : IHttpHandler {
     public string gettreatid()
     {
 
-        string countItem = "SELECT count(*) FROM patient ";
+        DateTime dt = DateTime.Now;
+        int year = dt.Year;
+        string countItem = "SELECT count(*) FROM patient where Radiotherapy_ID DIV 10000=@year";
+        sqlOperation.AddParameterWithValue("@year", year);
         int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
         if (count == 0)
         {
-            DateTime dt = new DateTime();
-            int year = dt.Year;
-            return year + "0001";
+            DateTime dt2 = DateTime.Now;
+            int yearid = dt2.Year;
+            return yearid + "0001";
         }
         else
         {
