@@ -1670,7 +1670,9 @@ function createSpiltWay(page) {
     $("#thead").empty()
                .append("<tr>"
                        + "<th>分割方式</th>"
-                       + "<th>时间间隔(/天)</th>" 
+                       + "<th>天数间隔(/天)</th>"
+                       + "<th>每天次数</th>"
+                       + "<th>时间间隔(/h)</th>"
                        + "</tr>");
     $("#tbody").empty();
 
@@ -1702,7 +1704,7 @@ function createSpiltWayTable(page) {
     $tbody.empty();
     for (var i = (page - 1) * 12; i < jsonObj.length && i < page * 12; ++i) {
         var $tr = $("<tr><td>" + jsonObj[i].Ways + "<input type=hidden value=" + jsonObj[i].ID
-           + " /></td><td>" + jsonObj[i].Interal
+           + " /></td><td>" + jsonObj[i].Interal + "</td><td>" + jsonObj[i].Times + "</td><td>" + jsonObj[i].TimeInteral
            + "</td></tr>");
         if (jsonObj[i].IsDefault == '0') {
             $tr.addClass("success");
@@ -1718,9 +1720,15 @@ function initAddSpiltWay() {
     $("#addrow").empty()
                 .append("<tr><th>分割方式</th><td>"
                 + "<input type=text class=form-control style=margin-right:0.8em />"
-                + "</td></tr><tr><th>时间间隔(/天)</th><td>"
+                + "</td></tr><tr><th>天数间隔(/天)</th><td>"
                 + "<input type=text class=form-control style=margin-right:0.8em />"
-                + "</td></tr>");
+                + "</td></tr><tr><th>每天次数(/天)</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                + "</td></tr><tr><th>时间间隔(/h)</th><td>"
+                + "<input type=text class=form-control style=margin-right:0.8em />"
+                +"</td></tr>"
+                );
+                
 }
 
 /**

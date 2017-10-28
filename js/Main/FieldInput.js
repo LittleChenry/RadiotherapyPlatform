@@ -87,7 +87,7 @@ function Init(evt) {
                 tbody += "<tr>";
                 while(rownum < 4){
                     if (count <= num) {
-                        td = '<td style="padding:0px;"><input type="number" id="angle' + count + '" name="angle' + count + '" class="td-input"></td>';
+                        td = '<td style="padding:0px;"><input type="text" id="angle' + count + '" name="angle' + count + '" class="td-input"></td>';
                     }else{
                         td = '<td style="text-align:center;">/</td>';
                     }
@@ -122,7 +122,7 @@ function table(num, str) {
             tbody += "<tr>";
             while (rownum < 4) {
                 if (count <= num) {
-                    td = '<td style="padding:0px;"><input type="number" id="angle' + count + '" name="angle' + count + '" class="td-input" value="'+list[count-1]+'" disabled="disabled"></td>';
+                    td = '<td style="padding:0px;"><input type="text" id="angle' + count + '" name="angle' + count + '" class="td-input" value="'+list[count-1]+'" disabled="disabled"></td>';
                 } else {
                     td = '<td style="text-align:center;">/</td>';
                 }
@@ -531,6 +531,22 @@ function save() {
     if (common == 1) {
         if (document.getElementById("Irradiation").value == "allItem") {
             window.alert("照射技术没有选择");
+            return false;
+        }
+        if (document.getElementById("ener").value == "allItem") {
+            window.alert("能量没有选择");
+            return false;
+        }
+        if (document.getElementById("IlluminatedNumber").value == "") {
+            window.alert("射野数量没有输入");
+            return false;
+        }
+        if (document.getElementById("MachineNumbe").value == "") {
+            window.alert("机器跳数没有输入");
+            return false;
+        }
+        if (document.getElementById("ControlPoint").value == "") {
+            window.alert("控制点数量没有输入");
             return false;
         }
     }

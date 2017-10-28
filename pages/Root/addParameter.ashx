@@ -312,10 +312,12 @@ public class addParameter : IHttpHandler {
     private void addSplitWay(string value) 
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "INSERT INTO splitway(Ways,Interal) VALUES(@Ways,@Interal)";
+        string sqlCommand = "INSERT INTO splitway(Ways,Interal,Times,TimeInteral) VALUES(@Ways,@Interal,@Times,@TimeInteral)";
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Ways", values[0]);
         sqlOperation.AddParameterWithValue("@Interal",values[1]);
+        sqlOperation.AddParameterWithValue("@Times", values[2]);
+        sqlOperation.AddParameterWithValue("@TimeInteral", values[3]);
         sqlOperation.ExecuteNonQuery(sqlCommand);
     }
 

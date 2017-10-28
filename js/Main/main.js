@@ -1828,7 +1828,7 @@ function tem(userID, type) {
     tbody.html("");
     if (template != "") {
         for (var i = 0; i < template.length; i++) {
-            var tr = '<tr id="Template_'+ template[i].ID +'"><td style="text-align:center;"><label><input type="radio" name="singleTemplate" class="minimal"></label></td><td>'+ template[i].Name +'</td></tr>';
+            var tr = '<tr id="Template_'+ template[i].ID +'"><td style="text-align:center;"><label><input type="radio" name="singleTemplate" class="minimal"></label></td><td style="text-align:center;">'+ template[i].Name +'</td><td style="text-align:center;"><button class="btn btn-info" onclick="deleteTemplate(this,'+ template[i].ID +')">删除</button></td></tr>';
             tbody.append(tr);
         }
         tbody.find("tr").each(function(){
@@ -1854,6 +1854,20 @@ function tem(userID, type) {
         var tbody = $("#TemplateTable tbody");
         $("#record-iframe")[0].contentWindow.chooseTempalte($(".checked").parent().parent().parent().attr("id").split("_")[1]);
     });
+}
+
+function deleteTemplate(e,templateID){
+    var xmlHttp = new XMLHttpRequest();
+    var url = "Records/deleteTemplate.ashx?templateID=" + templateID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    if(json=="success"){
+        alert("删除成功");
+        $(e).parent().parent().remove();
+    }else{
+        alert("删除失败");
+    }
 }
 
 function Templatechoose(userID, type) {

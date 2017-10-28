@@ -576,17 +576,19 @@ public class parameterEdit : IHttpHandler {
     private void updateSplitWay(string id, string value)
     {
         string[] values = value.Split(' ');
-        string sqlCommand = "UPDATE splitway set Ways=@Ways,Interal=@Interal,IsDefault=@IsDefault WHERE ID=@id";
+        string sqlCommand = "UPDATE splitway set Ways=@Ways,Interal=@Interal,Times=@Times,TimeInteral=@TimeInteral,IsDefault=@IsDefault WHERE ID=@id";
 
         sqlOperation.clearParameter();
         sqlOperation.AddParameterWithValue("@Ways", values[0]);
         sqlOperation.AddParameterWithValue("@Interal",values[1]);
-        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[2]));
+        sqlOperation.AddParameterWithValue("@Times", values[2]);
+        sqlOperation.AddParameterWithValue("@TimeInteral", values[3]);
+        sqlOperation.AddParameterWithValue("@IsDefault", int.Parse(values[4]));
         sqlOperation.AddParameterWithValue("@id", id);
 
         sqlOperation.ExecuteNonQuery(sqlCommand);
 
-        if (values[2] == "0")
+        if (values[4] == "0")
         {
             string sqlCommand1 = "update splitway set IsDefault=1 where ID != @ID";
             sqlOperation.clearParameter();

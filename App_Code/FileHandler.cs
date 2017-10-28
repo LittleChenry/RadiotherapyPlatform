@@ -49,7 +49,7 @@ public class FileHandler
               .Append(",\"pos\":\"").Append(pos).Append("\"}")
               .Append("],\"details\":[");
 
-        reg = new Regex("(\\w?)*\"FIELD_DEF\",\"[^\"]*\",?\\r?\\n?\"([^\"]*)\",?(\"[^\"]*\",?\\r?\\n?){3}\"([^\"]*)\",?(\"[^\"]*\",?\\r?\\n?)\"([^\"]*)\",?\"([^\"]*)\",?\"([^\"]*)\",?\"([^\"]*)\",?(\"[^\"]*\",?\\r?\\n?){3}\"([^\"]*)\",?\"([^\"]*)\",?\"([^\"]*)\",?(\"[^\"]*\",?\\r?\\n?){11}\"([^\"]*)\",?(\"[^\"]*\",?\\r?\\n?){29}\"CONTROL_PT_DEF\",?(\"[^\"]*\",?\\r?\\n?){3}\"([^\"]*)\",?");
+        reg = new Regex("(\\w?)*\"FIELD_DEF\",\"[^\"]*\",?\\r?\\n?\"([^\"]*)\",?(\"[^\"]*\",?\\r?\\n?){3}\"([^\"]*)\",?(\"[^\"]*\",?\\r?\\n?)\"([^\"]*)\",?\"([^\"]*)\",?\"([^\"]*)\",?\"([^\"]*)\",?(\"[^\"]*\",?\\r?\\n?){3}\"([^\"]*)\",?\"([^\"]*)\",?\"([^\"]*)\",?(\"[^\"]*\",?\\r?\\n?){11}\"([^\"]*)\",?(\"[^\"]*\",?\\r?\\n?){4}\"([^\"]*)\",?(\"[^\"]*\",?\\r?\\n?){24}\"CONTROL_PT_DEF\",?(\"[^\"]*\",?\\r?\\n?){3}\"([^\"]*)\",?");
         MatchCollection ms = reg.Matches(content);
         for (int i = 0; i < ms.Count; i++)
         {
@@ -60,12 +60,12 @@ public class FileHandler
                   .Append(",\"type\":\"").Append(ms[i].Groups[8].Value).Append("\"")
                   .Append(",\"energyField\":\"").Append(ms[i].Groups[9].Value).Append("\"")
                   .Append(",\"ypj\":\"").Append(ms[i].Groups[11].Value).Append("\"")
-                  .Append(",\"jjj\":\"").Append(ms[i].Groups[12].Value).Append("\"")
+                  .Append(",\"jjj\":\"").Append(ms[i].Groups[12].Value + (ms[i].Groups[17].Value == "" ? "" : "/" + ms[i].Groups[17].Value)).Append("\"")
                   .Append(",\"jtj\":\"").Append(ms[i].Groups[13].Value).Append("\"")
                   .Append(",\"czj\":\"").Append(ms[i].Groups[15].Value).Append("\"")
-                  .Append(",\"childs\":\"").Append(ms[i].Groups[18].Value).Append("\"},");
+                  .Append(",\"childs\":\"").Append(ms[i].Groups[20].Value).Append("\"},");
         }
 
-        return result.Remove(result.Length-1,1).Append("]}").ToString();
+        return result.Remove(result.Length - 1, 1).Append("]}").ToString();
     }
 }

@@ -101,7 +101,7 @@ function Init(evt) {
         flag = "success";
     }
     var progress = patient.Progress.split(",");
-    if (flag == "success" && !contains(progress, "15")) {
+    if (flag == "success" && !contains(progress, "14")) {
         if (session.assistant == "" && (session.role == "治疗技师" || session.role == "科主任")) {
             $("#operatorModal").modal({ backdrop: 'static' });
         }

@@ -576,6 +576,10 @@ public class getParameterTable : IHttpHandler {
                       .Append(reader["Ways"].ToString())
                       .Append("\",\"Interal\":\"")
                       .Append(reader["Interal"].ToString())
+                      .Append("\",\"Times\":\"")
+                      .Append(reader["Times"].ToString())
+                      .Append("\",\"TimeInteral\":\"")
+                      .Append(reader["TimeInteral"].ToString())
                       .Append("\",\"IsDefault\":\"")
                       .Append(reader["IsDefault"].ToString())
                       .Append("\"},");

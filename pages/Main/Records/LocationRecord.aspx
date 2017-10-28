@@ -129,7 +129,7 @@
                             <span class="form-text col-xs-4" style="padding-left:0px;">参考中心层面：</span>
                             <div class="group-item">
                                 <input id="ReferenceNumber" step="0.00001" class="form-group-input" type="number" name="ReferenceNumber" disabled="disabled"/>
-                                <span class="input-group-addon">mm</span>
+                                <span class="input-group-addon">cm</span>
                             </div>
                             
                         </div>
@@ -137,7 +137,7 @@
                             <span class="form-text col-xs-4">体表参考刻度：</span>
                             <div class="group-item">
                                 <input id="ReferenceScale" step="0.00001" class="form-group-input" type="number" name="ReferenceScale" disabled="disabled"/>
-                                <span class="input-group-addon">mm</span>
+                                <span class="input-group-addon">cm</span>
                             </div>
                         </div>
                     </div>

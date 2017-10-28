@@ -4,11 +4,14 @@ var userName;
 var userID;
 var signal = 0;
 var signal1 = 0;
+var role;
 function Init(evt) {
 
 //获得当前执行人姓名与ID
 getUserName();
 getUserID();
+var session = getSession();
+role = session.role;
 if ((typeof (userID) == "undefined")) {
     if (confirm("用户身份已经失效,是否选择重新登录?")) {
         parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
@@ -76,7 +79,7 @@ if (isInArray(progress, '11')) {
             document.getElementById("Irradiation2").innerHTML = charge4(fieldInfo);
             document.getElementById("Raytype2").innerHTML = fieldInfo[0].Raytype2;
             document.getElementById("energy2").innerHTML = fieldInfo[0].energy2;
-            document.getElementById("IlluminatedNumber2").innerHTML = fieldInfo[0].IlluminatedNumber2;
+            document.getElementById("IlluminatedNumber2").innerHTML = fieldInfo.length;
             document.getElementById("Illuminatedangle2").innerHTML = ruler(fieldInfo);
             document.getElementById("MU2").innerHTML = cale2(fieldInfo);
             document.getElementById("pinyin2").innerHTML = fieldInfo[0].pinyin2;
@@ -157,7 +160,11 @@ function check() {
         item = 0;
         document.getElementById("check2").innerHTML = "不通过";
     }
-    if (document.getElementById("Equipment1").innerHTML == document.getElementById("Equipment2").innerHTML) {
+    var equipment = document.getElementById("Equipment1").innerHTML;
+    var dreg = /(\d*)([a-z]*[A-Z]*)(\d*)/;
+    dreg.exec(equipment);
+    var deleteEChar = RegExp.$1 + RegExp.$3;
+    if (deleteEChar == document.getElementById("Equipment2").innerHTML) {
         document.getElementById("check3").innerHTML = "通过";
     } else {
         item = 0;
@@ -188,7 +195,11 @@ function check() {
         item = 0;
         document.getElementById("check6").innerHTML = "不通过";
     }
-    if (document.getElementById("energy1").innerHTML == document.getElementById("energy2").innerHTML) {
+    var enery = document.getElementById("energy1").innerHTML;
+    var reg = /(\d*)([a-z]*[A-Z]*)(\d*)/;
+    reg.exec(enery);
+    var deleteChar = RegExp.$1 + RegExp.$3;
+    if (deleteChar == document.getElementById("energy2").innerHTML) {
         document.getElementById("check7").innerHTML = "通过";
 
     } else {
@@ -284,7 +295,7 @@ function isequal() {
     var sign = new Array();
     for (var i = 0; i < array1.length; i++) {
         for (var j = 0; j < array2.length; j++) {
-            if (array1[i]*1 == array2[j]*1) {
+            if (qq(array1[i],array2[j])) {
                 sign[i] = 1;
                 break;
             } else {
@@ -298,6 +309,26 @@ function isequal() {
         }
     }
     return true;
+}
+function qq(a1, a2) {
+    if (isInArray(a1, "/")) {
+        if (!isInArray(a2, "/")) {
+            return false;
+        } else {
+            if (a1.split("/")[0]*1 == a2.split("/")[0]*1 && a1.split("/")[1]*1 == a2.split("/")[1]*1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    } else {
+        if (a1 * 1 == a2 * 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+   
 }
 function charge4(arr) {
     var count = 1;
@@ -537,10 +568,28 @@ function getFieldInfo(treatID) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
+    
     json = json.replace(/\r/g, "");
     json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
     return obj1.designInfo;
+}
+function getSession() {
+    var Session;
+    $.ajax({
+        type: "GET",
+        url: "getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            //alert(data);
+            Session = $.parseJSON(data);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+    return Session;
 }
 function getPatientInfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
@@ -699,7 +748,9 @@ function remove() {
     document.getElementById("confirm").removeAttribute("disabled");
     document.getElementById("confirmCoplanar").removeAttribute("disabled");
     document.getElementById("Button1").removeAttribute("disabled");
-    document.getElementById("Forced").removeAttribute("disabled");
+    if (role == "科主任") {
+        document.getElementById("Forced").removeAttribute("disabled");
+    }
     document.getElementById("Button3").removeAttribute("disabled");
     document.getElementById("degree").removeAttribute("disabled");
     document.getElementById("degree").removeAttribute("disabled");
