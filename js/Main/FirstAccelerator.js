@@ -137,7 +137,7 @@ function Init(evt) {
               } else {
                   document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
               }
-              document.getElementById("idforappoint").value = info.appointid;
+              document.getElementById("idforappoint").value = info.Date + "," + info.Begin + "," + info.End + "," + info.Equipment_ID;
           }
             var date = new Date();
             document.getElementById("operator").innerHTML = userName;
@@ -399,7 +399,10 @@ function save() {
             url: "FirstAcclerateRecord.ashx",
             async: false,
             data: {
-                id: appointid,
+                date: appointid.split(",")[0],
+                begin: appointid.split(",")[1],
+                end: appointid.split(",")[2],
+                equipid: appointid.split(",")[3],
                 treatid: treatmentid,
                 isfinished: finish,
                 totalnumber: totalnumber,
@@ -432,12 +435,13 @@ function save() {
 //创建某设备某天的预约表
 function CreateCurrentEquipmentTbale(equiment, dateString) {
     var table = document.getElementById("apptiontTable");
+    equiment = equiment.Equipment;
     RemoveAllChild(table);
     if (equiment.length != 0) {
     var tbody = document.createElement("tbody");
     var i;
-    for (i=0; i < Math.ceil(equiment.length / 5) * 5 ; i++) {
-        var count = i % 5;
+    for (i=0; i < Math.ceil(equiment.length / 6) * 6 ; i++) {
+        var count = i % 6;
         var tr;
         if (count == 0) {
             tr = document.createElement("tr");
@@ -458,11 +462,11 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                 var endminute = toTime(equiment[i].End).split(":")[1];
                 var hourend = parseInt(endhour) - 24;
                 var end = hourend + ":" + endminute;
-                td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + begin + "-" + end + "(次日)" + "_" + equiment[i].Euqipment);
+                td.setAttribute("id", dateString + "_" + begin + "-" + end + "(次日)" + "_" + equiment[i].Begin + "_" + equiment[i].End);
             } else {
-                td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+                td.setAttribute("id", dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Begin + "_" + equiment[i].End);
             }
-            if (equiment[i].State == "0") {
+            if (equiment[i].state == "0") {
                     if (compareWithToday(dateString)) {
                     sign.className = "";
                     td.addEventListener("click", chooseItem, false);
@@ -500,16 +504,15 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
         }
         if (i == equiment.length) {
             var k;
-            for (k = equiment.length; k <= Math.ceil(equiment.length / 5) * 5 - 1; k++) {
+            for (k = equiment.length; k <= Math.ceil(equiment.length / 6) * 6 - 1; k++) {
                 var td = document.createElement("td");
                 tr.appendChild(td);
             }
         }
-        if (count == 4) {
+        if (count == 5) {
             tbody.appendChild(tr);
         }
     }
-
     table.appendChild(tbody);
 } else {
     table.innerHTML = "今天已经不可以预约了,改天吧！";
@@ -571,7 +574,9 @@ function chooseItem() {
             this.className = "";
             this.lastChild.className = "";
         } else {
-            alert("只能选择一个时间段！");
+            Clear();
+            this.className = "chosen";
+            this.lastChild.className = "fa fa-fw fa-check td-sign";
         }
     }
 
@@ -589,7 +594,19 @@ function ChoseID() {
     }
     return td_id;
 }
-
+function Clear() {
+    var table = document.getElementById("apptiontTable");
+    for (var i = 0; i < table.rows.length; i++) {
+        for (var j = 0; j < table.rows[i].cells.length; j++) {
+            var cell = table.rows[i].cells[j];
+            if (cell.className != "") {
+                cell.className = "";
+                cell.lastChild.className = "";
+                return;
+            }
+        }
+    }
+}
 function hasChosen() {
     alert("该时间段不能预约！");
 }
@@ -643,11 +660,13 @@ function CreateNewAppiontTable(evt) {
     var AppiontDate = document.getElementById("AppiontDate");
     if (!compareWithToday(AppiontDate.value)) {
         alert("不能选择小于当天的日期");
+        var table = document.getElementById("apptiontTable");
+        RemoveAllChild(table);
         return;
     }
     var date = AppiontDate.value;
     var xmlHttp = new XMLHttpRequest();
-    var url = "GetEquipmentAppointment.ashx?equipmentID=" + equipmentID + "&date=" + date;
+    var url = "GetEquipmentWorktime.ashx?equipmentID=" + equipmentID + "&date=" + date;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -682,8 +701,14 @@ function sex(evt) {
 function checkAllTable() {
     var choseid = ChoseID();
     var appoint = choseid.split("_");
-    document.getElementById("idforappoint").value = appoint[0];
-    document.getElementById("appointtime").value = appoint[3] + " " + appoint[1].split(" ")[0] + " " + appoint[2];
+    var equipmentName = document.getElementById("equipmentName");
+    var currentIndex = equipmentName.selectedIndex;
+    var equipname = equipmentName.options[currentIndex].innerHTML;
+    var equipid = equipmentName.options[currentIndex].value;
+    document.getElementById("idforappoint").value = appoint[0].split(" ")[0] + "," + appoint[2] + "," + appoint[3] + "," + equipid;
+    document.getElementById("appointtime").value = equipname + " " + appoint[0].split(" ")[0] + " " + appoint[1];
+   
+
 }
 
 function getreplacetime(treatid) {
