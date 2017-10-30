@@ -306,3 +306,75 @@
     box-shadow: 2px 2px 1px #888888;
     z-index: 2;
 }
+
+.ap-title {
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.ap-function {
+    padding: 0px 20px 5px 20px;
+    font-size: 16px;
+    height: 50px;
+}
+
+.btn-area {
+    height: 40px;
+}
+
+.time-btn {
+    padding: 4px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: 3px;
+    box-shadow: none;
+    border: 1px solid #3C8DBC;
+    background-color: white;
+    color: #444444;
+    outline: none;
+}
+
+.time-btn:hover {
+    background-color: #3C8DBC;
+    color: white;
+}
+
+.time-btn:active {
+    background-color: #204D74;
+    color: white;
+}
+
+.selected-btn {
+    background-color: #3C8DBC;
+    color: white;
+}
+
+.info-area {
+    margin-top: 5px;
+}
+
+.option-area {
+    
+}
+
+.ap-data {
+    padding: 5px 20px;
+}
+
+.afternoon {
+    display: none;
+}
+
+.evening {
+    display: none;
+}
+
+.hide-table {
+    display: none;
+}
