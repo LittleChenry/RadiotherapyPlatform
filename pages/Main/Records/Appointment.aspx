@@ -64,115 +64,22 @@
                     <button type="button" class="time-btn">下午</button>
                     <button type="button" class="time-btn">晚上</button>
                 </div>
-                <div id="chooseWeek" class="col-xs-8">
-                    <button type="button" class="time-btn selected-btn">11/11-11/17</button>
-                    <button type="button" class="time-btn">11/18-11/24</button>
-                </div>
+                <div id="chooseWeek" class="col-xs-8"></div>
                 <div class="col-xs-2">
-                    <button type="button" class="time-btn pull-right">调整</button>
+                    <button type="button" class="time-btn pull-right">自由选择</button>
                 </div>
             </div>
             <div>
-                <div class="col-xs-2">
+                <div id="DayTimeArea" class="col-xs-2">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>时间\日期</th>
                             </tr>
                         </thead>
-                        <tr class="morning">
-                            <td>6:00-6:10</td>
-                        </tr>
-                        <tr class="afternoon">
-                            <td>14:10-14:20</td>
-                        </tr>
-                        <tr class="evening">
-                            <td>20:10-20:20</td>
-                        </tr>
                     </table>
                 </div>
-                <div id="WeekArea" class="col-xs-10">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>11/11</th>
-                                <th>11/12</th>
-                                <th>11/13</th>
-                                <th>11/14</th>
-                                <th>11/15</th>
-                                <th>11/16</th>
-                                <th>11/17</th>
-                            </tr>
-                        </thead>
-                        <tr class="morning">
-                            <td>首次</td>
-                            <td></td>
-                            <td></td>
-                            <td>已预约</td>
-                            <td>已预约</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr class="afternoon">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>已预约</td>
-                            <td></td>
-                            <td>已预约</td>
-                        </tr>
-                        <tr class="evening">
-                            <td>已预约</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>已预约</td>
-                        </tr>
-                    </table>
-                    <table class="table table-bordered hide-table">
-                        <thead>
-                            <tr>
-                                <th>11/18</th>
-                                <th>11/19</th>
-                                <th>11/20</th>
-                                <th>11/21</th>
-                                <th>11/22</th>
-                                <th>11/23</th>
-                                <th>11/24</th>
-                            </tr>
-                        </thead>
-                        <tr class="morning">
-                            <td>首次</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>已预约</td>
-                            <td></td>
-                            <td>已预约</td>
-                        </tr>
-                        <tr class="afternoon">
-                            <td></td>
-                            <td></td>
-                            <td>已预约</td>
-                            <td></td>
-                            <td>已预约</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr class="evening">
-                            <td></td>
-                            <td></td>
-                            <td>已预约</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>已预约</td>
-                        </tr>
-                    </table>
-                </div>
+                <div id="WeekArea" class="col-xs-10"></div>
             </div>
         </div>
     </section>
