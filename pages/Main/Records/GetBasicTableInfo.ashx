@@ -39,11 +39,11 @@ public class GetBasicTableInfo : IHttpHandler {
             backText.Append("{\"Interal\":\""+reader["Interal"].ToString()+"\",\"Ways\":\""+reader["Ways"].ToString()+"\",\"Times\":\""+reader["Times"].ToString()+"\",\"TimeInteral\":\""+reader["TimeInteral"].ToString()+"\"");
         }
         reader.Close();
-        string firstequip = "SELECT equipment.Name as equipmentname,appointment_accelerate.Date as begindate,equipment.Timelength as timelength,equipment.EndTimeTPM as pmend,equipment.BeginTimeAM as ambegin,equipment.State as equipmentstate FROM treatmentrecord,equipment,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and appointment_accelerate.Equipment_ID=equipment.ID and treatmentrecord.Treatment_ID=@treat order by appointment_accelerate.Date,appointment_accelerate.Begin asc";
+        string firstequip = "SELECT equipment.Name as equipmentname,appointment_accelerate.Date as begindate,appointment_accelerate.Begin as begin,appointment_accelerate.End as end,equipment.Timelength as timelength,equipment.EndTimeTPM as pmend,equipment.BeginTimeAM as ambegin,equipment.State as equipmentstate FROM treatmentrecord,equipment,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and appointment_accelerate.Equipment_ID=equipment.ID and treatmentrecord.Treatment_ID=@treat order by appointment_accelerate.Date,appointment_accelerate.Begin asc";
         reader = sqlOperation.ExecuteReader(firstequip);
         if (reader.Read())
         {
-            backText.Append(",\"equipmentname\":\"" + reader["equipmentname"].ToString() + "\",\"begindate\":\"" + reader["begindate"].ToString() + "\",\"timelength\":\"" + reader["timelength"].ToString() + "\",\"ambegin\":\"" + reader["ambegin"].ToString() + "\",\"pmend\":\"" + reader["pmend"].ToString() + "\",\"equipmentstate\":\"" + reader["equipmentstate"].ToString() + "\"");
+            backText.Append(",\"equipmentname\":\"" + reader["equipmentname"].ToString() + "\",\"begindate\":\"" + reader["begindate"].ToString() + "\",\"timelength\":\"" + reader["timelength"].ToString() + "\",\"ambegin\":\"" + reader["ambegin"].ToString() + "\",\"begin\":\"" + reader["begin"].ToString() + "\",\"end\":\"" + reader["end"].ToString() + "\",\"pmend\":\"" + reader["pmend"].ToString() + "\",\"equipmentstate\":\"" + reader["equipmentstate"].ToString() + "\"");
           
         }
         reader.Close();
