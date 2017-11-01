@@ -14,6 +14,16 @@ function Init(evt) {
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
     getUserName();
+    $("#rest").bind("click",{treatid:treatmentID},function(e){
+        var obj = new Object();
+        obj.info = "treatid=" + e.data.treatid;
+        window.showModalDialog("Appointment.aspx", obj);
+        function doChromeWindowShowModalDialog(obj) {
+            if (obj != null) {
+                alert(obj);
+            }
+        }
+    });
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
