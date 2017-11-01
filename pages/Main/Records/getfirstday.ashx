@@ -27,12 +27,12 @@ public class getfirstday : IHttpHandler {
         string treatid = context.Request.QueryString["treatmentID"];
         int treat = int.Parse(treatid);
         string total = "";
-        string sqlcommand = "select TreatTime from treatmentrecord where Treatment_ID=@treat order by ID asc";
+        string sqlcommand = "select appointment_accelerate.Date as begindate from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.Treatment_ID=@treat order by appointment_accelerate.Date,appointment_accelerate.Begin asc";
         sqlOperation.AddParameterWithValue("treat", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand);
         if (reader.Read())
         {
-            total = reader["TreatTime"].ToString() ;
+            total = reader["begindate"].ToString();
 
         }
         return total;

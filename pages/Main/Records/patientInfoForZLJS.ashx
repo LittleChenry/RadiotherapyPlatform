@@ -44,7 +44,7 @@ public class patientInfoForZLJS : IHttpHandler {
         String date1 = context.Request.QueryString["date1"];
         String date2 = context.Request.QueryString["date2"];
 
-        string sqlCommand = "SELECT count(*) from appointment where Equipment_ID=@Equipment and Date >= @date1 and Date <= @date2 and State=1";
+        string sqlCommand = "SELECT count(*) from appointment_accelerate where Equipment_ID=@Equipment and Date >= @date1 and Date <= @date2 ";
         sqlOperation.AddParameterWithValue("@Equipment", equipmentID);
         sqlOperation.AddParameterWithValue("@date1", date1);
         sqlOperation.AddParameterWithValue("@date2", date2);
@@ -55,7 +55,7 @@ public class patientInfoForZLJS : IHttpHandler {
         }
 
         int i = 1;
-        string sqlCommand2 = "select treatment.State as treatstate,Progress,iscommon,treatment.ID as treatid,patient.*,user.Name as doctor,appointment.ID as appointid,appointment.*,equipment.Name as eqname,treatment.Treatmentdescribe,DiagnosisRecord_ID from appointment,treatment,patient,user,equipment where appointment.Equipment_ID=equipment.ID and appointment.Equipment_ID=@groupid and appointment.Date >= @date1 and appointment.Date <= @date2 and appointment.State=1 and appointment.Treatment_ID=treatment.ID and patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID order by appointment.Date,appointment.Begin asc";
+        string sqlCommand2 = "select treatment.State as treatstate,Progress,iscommon,treatment.ID as treatid,patient.*,user.Name as doctor,appointment_accelerate.ID as appointid,appointment_accelerate.*,equipment.Name as eqname,treatment.Treatmentdescribe,DiagnosisRecord_ID from appointment_accelerate,treatment,patient,user,equipment where appointment_accelerate.Equipment_ID=equipment.ID and appointment_accelerate.Equipment_ID=@groupid and appointment_accelerate.Date >= @date1 and appointment_accelerate.Date <= @date2  and appointment_accelerate.Treatment_ID=treatment.ID and patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID order by appointment_accelerate.Date,appointment_accelerate.Begin asc";
         sqlOperation2.AddParameterWithValue("@groupid", equipmentID);
         sqlOperation2.AddParameterWithValue("@date1", date1);
         sqlOperation2.AddParameterWithValue("@date2", date2);

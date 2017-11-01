@@ -83,26 +83,27 @@
                         </table>
                     </div>
                 </div>
-                <div class="single-row">
+                  <div id="fieldinfo" class="single-row">
                     <div class="col-xs-6" style="padding-left:0px;">
-                        <span class="form-text col-xs-5">危及器官限量：</span>
+                        <span class="form-text col-xs-4">射野信息：</span>
                     </div>
                 </div>
-                <div class="single-row">
+                <div id="fieldinfotable" class="single-row">
                     <div class="item area-group col-xs-12">
-                        <table id="Dosage" class="table table-bordered">
+                        <table id="Field" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>危及器官</th>
-                                    <th>剂量cGy</th>
-                                    <th>限制</th>
-                                    <th>体积/%</th>
-                                    <th>外放mm</th>
-                                    <th>PRV</th>
-                                    <th>剂量cGy</th>
-                                    <th>限制</th>
-                                    <th>体积/%</th>
-                                    <th>优先级</th>
+                                    <th>射野ID</th>
+                                    <th>MU</th>
+                                    <th>放疗设备</th>
+                                    <th>照射技术</th>
+                                    <th>射野类型</th>
+                                    <th>能量</th>
+                                    <th>源皮距</th>
+                                    <th>机架角</th>
+                                    <th>机头角</th>
+                                    <th>床转交</th>
+                                    <th>子野数</th>
                                 </tr>
                             </thead>
                         </table>

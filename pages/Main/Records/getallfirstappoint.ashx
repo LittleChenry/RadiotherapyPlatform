@@ -30,7 +30,7 @@ public class getallfirstappoint : IHttpHandler {
         int appointid=0;
         string date="";
         string begin="";
-        string sqlcommand = "select Treat_User_ID,Appointment_ID,Date,Begin from treatmentrecord,appointment where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment.ID order by Date desc,Begin desc";
+        string sqlcommand = "select Treat_User_ID,Appointment_ID,Date,Begin from treatmentrecord,appointment_accelerate where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment_accelerate.ID order by Date desc,Begin desc";
         sqlOperation.AddParameterWithValue("treat", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand);
         while (reader.Read())
@@ -50,7 +50,7 @@ public class getallfirstappoint : IHttpHandler {
         reader.Close();
         if (appointid != 0)
         {
-            string sqlcommand1 = "select Treat_User_ID from treatmentrecord,appointment where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment.ID and (Date<@date or (Date=@date and Begin<=@begin)) order by Date,Begin asc";
+            string sqlcommand1 = "select Treat_User_ID from treatmentrecord,appointment_accelerate where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment_accelerate.ID and (Date<@date or (Date=@date and Begin<=@begin)) order by Date,Begin asc";
             sqlOperation.AddParameterWithValue("@date", date);
             sqlOperation.AddParameterWithValue("@begin", begin);
             MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(sqlcommand1);

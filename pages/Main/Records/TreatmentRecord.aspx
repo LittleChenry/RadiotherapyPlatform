@@ -138,7 +138,7 @@
                             <input id="totalnumber" type="number" name="totalnumber" class="form-item" disabled="disabled"/>
                         </span>
                         <span class="form-text col-xs-5" style="padding-left:0px;">
-                            <button id="rest" disabled="disabled" type="button" data-toggle="modal" data-target="#appoint" class="btn btn-warning" >剩余加速器预约</button> 
+                            <button id="rest" disabled="disabled" type="button"  class="btn btn-warning" >剩余加速器预约</button> 
                         </span>
                     </div>
                     <div class="col-xs-5" >
@@ -296,7 +296,7 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        <div id="appoint"  class="modal fade" tabindex="-1" role="dialog">
+       <%-- <div id="appoint"  class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document" style="width:800px;">
                 <div class="modal-content"  >
                     <div class="modal-header">
@@ -327,7 +327,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--%>
        
         <div id="ct" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document" style="width:700px;">

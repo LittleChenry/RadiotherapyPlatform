@@ -33,7 +33,6 @@ function Init(evt) {
         var designInfo = getDesignInfo(treatmentID);
             document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
             readDosagePriority(designInfo[i].DosagePriority);
-            readDosage(designInfo[i].Dosage);
             document.getElementById("technology").innerHTML = designInfo[i].technology;
             document.getElementById("equipment").innerHTML = designInfo[i].equipment;
             document.getElementById("PlanSystem").innerHTML = designInfo[i].PlanSystem;
@@ -47,7 +46,20 @@ function Init(evt) {
     if (iscommon == "0") {
         $("#designinfo").hide();
     }
-    
+    var fildinfo = getfieldinfo(treatmentID);
+    if (fildinfo.length == 0) {
+        $("#fieldinfotable").hide();
+        $("#fieldinfo").hide();
+    } else {
+        var table = $("#Field");
+        for (var k = 0; k < fildinfo.length; k++) {
+            var content = '<tr><td>' + fildinfo[k].code + '</td><td>' + fildinfo[k].mu + '</td><td>' + fildinfo[k].equipment + '</td><td>' + fildinfo[k].radiotechnique;
+            content = content + '</td><td>' + fildinfo[k].radiotype + '</td><td>' + fildinfo[k].energy + '</td><td>' + fildinfo[k].wavedistance + '</td><td>' + fildinfo[k].angleframe;
+            content = content + '</td><td>' + fildinfo[k].noseangle + '</td><td>' + fildinfo[k].bedrotation + '</td><td>' + fildinfo[k].subfieldnumber + '</td></tr>';
+            table.append(content);
+        }
+
+    }
     createSplitway(document.getElementById("splitway"));
     var total = gettotalnumber(treatmentID);
     var totalnumber = total.split(",")[0];
@@ -170,6 +182,16 @@ function Init(evt) {
                 }
             });  
     }
+}
+function getfieldinfo(treatmentID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getallfieldinfo.ashx?treatmentID=" + treatmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    var json = json.replace(/\n/g, "\\n");
+    var obj1 = eval("(" + json + ")");
+    return obj1.Item;
 }
 function judgecommon(treatid) {
     var xmlHttp = new XMLHttpRequest();
