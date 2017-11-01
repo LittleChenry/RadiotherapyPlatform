@@ -31,7 +31,7 @@ public class GetAccerWorkCondition : IHttpHandler
         string equipmentID = "";
         string dateorigin = "";
         StringBuilder backString = new StringBuilder("{\"appointinfo\":[");
-        string firstequip = "SELECT equipment.ID as equipid,equipment.Name as equipmentname,appointment_accelerate.Date as begindate,appointment_accelerate.IsDouble as isdouble,equipment.Timelength as timelength,equipment.BeginTimeAM as ambegin,equipment.State as equipmentstate FROM treatmentrecord,equipment,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and appointment_accelerate.Equipment_ID=equipment.ID and treatmentrecord.Treatment_ID=@treat order by appointment_accelerate.Date,appointment_accelerate.Begin asc";
+        string firstequip = "SELECT equipment.ID as equipid,equipment.Name as equipmentname,appointment_accelerate.Date as begindate,equipment.Timelength as timelength,equipment.BeginTimeAM as ambegin,equipment.State as equipmentstate FROM treatmentrecord,equipment,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and appointment_accelerate.Equipment_ID=equipment.ID and treatmentrecord.Treatment_ID=@treat order by appointment_accelerate.Date,appointment_accelerate.Begin asc";
         sqlOperation.AddParameterWithValue("@treat", treatmentid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(firstequip);
         if (reader.Read())
@@ -59,7 +59,7 @@ public class GetAccerWorkCondition : IHttpHandler
             {
                 backString.Append(",");
             }
-            string sqlCommand = "SELECT Patient_ID,Begin,End,Treatment_ID FROM appointment_accelerate WHERE Date=@date AND Equipment_ID=@id";
+            string sqlCommand = "SELECT Patient_ID,Begin,End,Treatment_ID,IsDouble FROM appointment_accelerate WHERE Date=@date AND Equipment_ID=@id";
           reader = sqlOperation.ExecuteReader(sqlCommand);
             int i = 0;
             while (reader.Read())
@@ -70,7 +70,7 @@ public class GetAccerWorkCondition : IHttpHandler
                 string treatmentdescribe = "select Treatmentdescribe from treatment where ID=@treatid";
                 sqlOperation2.AddParameterWithValue("@treatid", reader["Treatment_ID"].ToString());
                 string treatdescribe = sqlOperation2.ExecuteScalar(treatmentdescribe);
-                backString.Append("{\"Date\":\"" + date + "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\",\"isdouble\":\"" + reader["isdouble"].ToString() + "\",\"name\":\"" + name + "\",\"treatdescribe\":\"" + treatdescribe + "\"}");
+                backString.Append("{\"Date\":\"" + date + "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\",\"isdouble\":\"" + reader["IsDouble"].ToString() + "\",\"name\":\"" + name + "\",\"treatdescribe\":\"" + treatdescribe + "\"}");
                 if (i < todaynumber - 1)
                 {
                     backString.Append(",");
