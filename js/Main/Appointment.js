@@ -4,6 +4,8 @@
     var D;
     var T;
     var remaintimes;
+    var firstDate;
+    var ambegin,pmend,timelength,equipmentname,equipmentstate;
     $.ajax({
         type: "POST",
         async: false,
@@ -12,18 +14,22 @@
         },
         url: "../../../pages/Main/Records/GetBasicTableInfo.ashx",
         success: function(data){
-        	alert(data);
+        	//alert(data);
         	var info = $.parseJSON(data);
         	$("#Ways").text(info.Ways);
-        	$("#appointnumber").text(info.appointnumber);
-        	$("#total").text(info.total);
+        	$("#appointnumber").text(info.appointnumber + "/" + info.total);
+        	$("#equipmentname").text(info.equipmentname);
         	D = parseInt(info.Interal);
         	T = parseInt(info.Times);
         	remaintimes = parseInt(info.total) - parseInt(info.appointnumber);
-        	//var firstDate = info.firstDate;
+        	firstDate = new Date(info.begindate);
+        	$("#firstdate").text(firstDate.Format("yyyy-MM-dd") + " " +toTime(info.begin));
+        	ambegin = parseInt(info.ambegin);
+        	pmend = parseInt(info.pmend);
+        	timelength = parseInt(info.timelength);
         }
     });
-	var getdays = createDateTable(D, T, "2017-11-01", remaintimes, 360, 1320, 10);
+	var getdays = createDateTable(D, T, firstDate.Format("yyyy-MM-dd"), remaintimes, ambegin, pmend, timelength);
 	$.ajax({
 		type: "POST",
         async: false,
@@ -33,7 +39,7 @@
         },
         url: "../../../pages/Main/Records/GetAccerWorkCondition.ashx",
         success: function(data){
-        	alert(data);
+        	//alert(data);
         }
 	});
 	var chooseWeek = $("#chooseWeek");

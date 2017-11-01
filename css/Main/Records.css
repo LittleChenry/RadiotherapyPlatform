@@ -316,7 +316,6 @@
 .ap-function {
     padding: 0px 20px 5px 20px;
     font-size: 16px;
-    height: 50px;
 }
 
 .btn-area {
@@ -357,10 +356,11 @@
 
 .info-area {
     margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .option-area {
-    
+    margin-bottom: 30px;
 }
 
 .ap-data {

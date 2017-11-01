@@ -28,24 +28,26 @@
             <h3>预约</h3>
         </div>
         <div class="ap-function">
-            <div class="info-area col-xs-6">
-                <div class="col-xs-4">
+            <div class="info-area col-xs-12">
+                <div class="col-xs-3">
                     <span>分割方式：</span>
-                    <span id="Ways"></span>
+                    <span id="Ways" class="underline"></span>
                 </div>
-                <div class="col-xs-4">
+                <div class="col-xs-3">
+                    <span>预约设备：</span>
+                    <span id="equipmentname" class="underline"></span>
+                </div>
+                <div class="col-xs-3">
                     <span>首次时间：</span>
-                    <span>2017-11-11</span>
+                    <span id="firstdate" class="underline"></span>
                 </div>
-                <div class="col-xs-4">
+                <div class="col-xs-3">
                     <span>已约次数/总次数：</span>
-                    <span id="appointnumber"></span>
-                    <span>/</span>
-                    <span id="total"></span>
+                    <span id="appointnumber" class="underline"></span>
                 </div>
             </div>
-            <div class="option-area col-xs-6">
-                <div class="col-xs-8">
+            <div class="option-area col-xs-12">
+                <div class="col-xs-4">
                     <span>避让方式：</span>
                     <select class="form-item">
                         <option value="1">不避让</option>
@@ -53,9 +55,9 @@
                         <option value="3">无条件避让</option>
                     </select>
                 </div>
-                <div class="pull-right">
-                    <button type="button" class="time-btn">清空预约</button>
-                    <button type="button" class="time-btn">确认返回</button>
+                <div class="col-xs-4 col-xs-offset-4">
+                    <button type="button" class="time-btn pull-right" style="margin-left:5px;">确认返回</button>
+                    <button type="button" class="time-btn pull-right">清空预约</button>
                 </div>
             </div>
         </div>
