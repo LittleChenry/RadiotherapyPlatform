@@ -1,5 +1,41 @@
 ﻿$(document).ready(function () {
-	createDateTable(1, 1, "2017-11-01", 3, 360, 1320, 10);
+	var parameter = window.location.search.split("?")[1];
+    treatid = parameter.split("=")[1];
+    var D;
+    var T;
+    var remaintimes;
+    $.ajax({
+        type: "POST",
+        async: false,
+        data:{
+        	treatid:treatid
+        },
+        url: "../../../pages/Main/Records/GetBasicTableInfo.ashx",
+        success: function(data){
+        	alert(data);
+        	var info = $.parseJSON(data);
+        	$("#Ways").text(info.Ways);
+        	$("#appointnumber").text(info.appointnumber);
+        	$("#total").text(info.total);
+        	D = parseInt(info.Interal);
+        	T = parseInt(info.Times);
+        	remaintimes = parseInt(info.total) - parseInt(info.appointnumber);
+        	//var firstDate = info.firstDate;
+        }
+    });
+	var getdays = createDateTable(D, T, "2017-11-01", remaintimes, 360, 1320, 10);
+	$.ajax({
+		type: "POST",
+        async: false,
+        data:{
+        	treatid:treatid,
+        	times:getdays
+        },
+        url: "../../../pages/Main/Records/GetAccerWorkCondition.ashx",
+        success: function(data){
+        	alert(data);
+        }
+	});
 	var chooseWeek = $("#chooseWeek");
 	chooseWeek.find("button").each(function(index,e){
 		$(this).bind("click",{index:index},function(e){
@@ -61,6 +97,10 @@
 	});
 })
 
+window.onbeforeunload = function () {
+    var tmplInfo = "SUCCESS";
+    window.opener._doChromeWindowShowModalDialog(tmplInfo);
+}
 
 function createDateTable(D, T, startDate, times, startTime, endTime, singleInterval){
 	var morningEnd = 720;
@@ -73,7 +113,7 @@ function createDateTable(D, T, startDate, times, startTime, endTime, singleInter
 	var DTA_tbody = "<tbody style='text-align:center;'>";
 	var days = CalculateDays(D, T, startDate, times);
 	var countdays = 0;
-	var extradays = days % 7 ;
+	var extradays = (days % 7 == 0) ? 7 : days % 7;
 	while(countdays < days + 14 - extradays){
 		var singlecurrentTime = startTime;
 		var weeknum = Math.floor(countdays/7) + 1;
@@ -142,6 +182,7 @@ function createDateTable(D, T, startDate, times, startTime, endTime, singleInter
 	}
 	DTA_tbody += "</tbody>";
 	DayTimeArea.find("table").append(DTA_tbody);
+	return days + 14 - extradays;
 }
 
 function CalculateDays(D, T, startDate, times){

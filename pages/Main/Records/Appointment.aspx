@@ -31,15 +31,17 @@
             <div class="info-area col-xs-6">
                 <div class="col-xs-4">
                     <span>分割方式：</span>
-                    <span>每天一次</span>
+                    <span id="Ways"></span>
                 </div>
                 <div class="col-xs-4">
-                    <span>起止时间：</span>
-                    <span>11/11 - 11/19</span>
+                    <span>首次时间：</span>
+                    <span>2017-11-11</span>
                 </div>
                 <div class="col-xs-4">
                     <span>已约次数/总次数：</span>
-                    <span>20/25</span>
+                    <span id="appointnumber"></span>
+                    <span>/</span>
+                    <span id="total"></span>
                 </div>
             </div>
             <div class="option-area col-xs-6">
@@ -58,7 +60,7 @@
             </div>
         </div>
         <div class="ap-data">
-            <div class="btn-area">
+            <div class="btn-area col-xs-12">
                 <div id="chooseTime" class="col-xs-2">
                     <button type="button" class="time-btn selected-btn">上午</button>
                     <button type="button" class="time-btn">下午</button>
@@ -69,7 +71,7 @@
                     <button type="button" class="time-btn pull-right">自由选择</button>
                 </div>
             </div>
-            <div>
+            <div class="col-xs-12">
                 <div id="DayTimeArea" class="col-xs-2">
                     <table class="table table-bordered">
                         <thead>
@@ -103,6 +105,8 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
 
+    <script src="../../../js/Main/chromeWindowShowModalDialog.js"></script>
     <script src="../../../js/Main/Appointment.js"></script>
+    
 </body>
 </html>

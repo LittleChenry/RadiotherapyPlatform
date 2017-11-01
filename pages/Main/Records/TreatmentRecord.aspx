@@ -138,7 +138,7 @@
                             <input id="totalnumber" type="number" name="totalnumber" class="form-item" disabled="disabled"/>
                         </span>
                         <span class="form-text col-xs-5" style="padding-left:0px;">
-                            <button id="rest" disabled="disabled" type="button"  class="btn btn-warning" >剩余加速器预约</button> 
+                            <button id="rest" disabled="disabled" type="button" class="btn btn-warning" >剩余加速器预约</button> 
                         </span>
                     </div>
                     <div class="col-xs-5" >
@@ -395,7 +395,8 @@
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <script src="../../../js/Main/TreatRecordPrint.js"></script>
     <!-- javascript -->
-    <script src="../../../js/Main/TreatmentRecord.js" type="text/javascript"></script>
+    <script src="../../../js/Main/TreatmentRecord.js"></script>
+    <script src="../../../js/Main/chromeWindowShowModalDialog.js"></script>
     <!-- Page script -->
     <script type="text/javascript">
         $("#AppiontDate").datepicker({ autoclose: true });

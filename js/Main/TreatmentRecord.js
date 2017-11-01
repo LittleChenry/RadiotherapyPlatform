@@ -18,11 +18,6 @@ function Init(evt) {
         var obj = new Object();
         obj.info = "treatid=" + e.data.treatid;
         window.showModalDialog("Appointment.aspx", obj);
-        function doChromeWindowShowModalDialog(obj) {
-            if (obj != null) {
-                alert(obj);
-            }
-        }
     });
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -304,6 +299,13 @@ function Init(evt) {
         checkAllTable(treatmentID);
     });
 }
+
+function doChromeWindowShowModalDialog(obj) {
+    if (obj != null) {
+        //alert(obj);
+    }
+}
+
 function getfieldinfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getallfieldinfo.ashx?treatmentID=" + treatmentID;
