@@ -26,13 +26,28 @@ public class GetAccerWorkCondition : IHttpHandler
     {
         DataLayer sqlOperation = new DataLayer("sqlStr");
         DataLayer sqlOperation2 = new DataLayer("sqlStr");
-        string dateorigin = context.Request["date"];
-        string equipmentID = context.Request["equipmentID"];
+        string treatmentid = context.Request["treatid"];
         string alltotal = context.Request["times"];
+        string equipmentID = "";
+        string dateorigin = "";
+        StringBuilder backString = new StringBuilder("{\"appointinfo\":[");
+        string firstequip = "SELECT equipment.ID as equipid,equipment.Name as equipmentname,appointment_accelerate.Date as begindate,equipment.Timelength as timelength,equipment.BeginTimeAM as ambegin,equipment.State as equipmentstate FROM treatmentrecord,equipment,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and appointment_accelerate.Equipment_ID=equipment.ID and treatmentrecord.Treatment_ID=@treat order by appointment_accelerate.Date,appointment_accelerate.Begin asc";
+        sqlOperation.AddParameterWithValue("@treat", treatmentid);
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(firstequip);
+        if (reader.Read())
+        {
+            equipmentID = reader["equipid"].ToString();
+            dateorigin = reader["begindate"].ToString();
+        }
+        else
+        {
+            backString.Append("]}");
+            return backString.ToString();
+        }
+        reader.Close();
         int alltotalnumber = int.Parse(alltotal);
         DateTime datefirst = Convert.ToDateTime(dateorigin);
         string date = "";
-        StringBuilder backString = new StringBuilder("{\"appointinfo\":[");
         for (int k = 0; k < alltotalnumber; k++)
         {
             date = datefirst.AddDays(k).ToShortDateString();
@@ -45,7 +60,7 @@ public class GetAccerWorkCondition : IHttpHandler
                 backString.Append(",");
             }
             string sqlCommand = "SELECT Patient_ID,Begin,End,Treatment_ID FROM appointment_accelerate WHERE Date=@date AND Equipment_ID=@id";
-            MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+          reader = sqlOperation.ExecuteReader(sqlCommand);
             int i = 0;
             while (reader.Read())
             {
@@ -65,62 +80,7 @@ public class GetAccerWorkCondition : IHttpHandler
            
             reader.Close();
         }
-        backString.Append("],\"equipmentinfo\":[");
-        string equipcommand = "SELECT * FROM equipment WHERE ID=@id";
-        MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(equipcommand);
-        string Oncetime, Ambeg, AmEnd, PMBeg, PMEnd, treatmentItem;
-        if (reader1.Read())
-        {
-            if (reader1["State"].ToString() == "1")
-            {
-                Oncetime = reader1["Timelength"].ToString();
-                Ambeg = reader1["BeginTimeAM"].ToString();
-                AmEnd = reader1["EndTimeAM"].ToString();
-                PMBeg = reader1["BegTimePM"].ToString();
-                PMEnd = reader1["EndTimeTPM"].ToString();
-                treatmentItem = reader1["TreatmentItem"].ToString();
-                int intAMBeg = int.Parse(Ambeg);
-                int intAMEnd = int.Parse(AmEnd);
-                int intPMBeg = int.Parse(PMBeg);
-                int intPMEnd = int.Parse(PMEnd);
-                int AMTime = intAMEnd - intAMBeg;
-                int PMTime = intPMEnd - intPMBeg;
-                int AMFrequency = AMTime / int.Parse(Oncetime);
-                int PMFrequency = PMTime / int.Parse(Oncetime);
-                for (int j = 0; j < AMFrequency; j++)
-                {
-                    int begin = intAMBeg + (j * int.Parse(Oncetime));
-                    int end = begin + int.Parse(Oncetime);
-                    backString.Append("{\"Begin\":\"" + begin + "\",\"End\":\"" + end + "\"}");
-                    if (j < AMFrequency - 1)
-                    {
-                        backString.Append(",");
-                    }
-                    if (j == AMFrequency - 1 && PMFrequency > 0)
-                    {
-                        backString.Append(",");
-                    }
-                }
-
-                for (int k = 0; k < PMFrequency; k++)
-                {
-                    int Pbegin = intPMBeg + (k * int.Parse(Oncetime));
-                    int PEnd = Pbegin + int.Parse(Oncetime);
-                    backString.Append("{\"Begin\":\"" + Pbegin + "\",\"End\":\"" + PEnd + "\"}");
-                    if (k < PMFrequency - 1)
-                    {
-                        backString.Append(",");
-                    }
-                }
-
-            }
-            backString.Append("]}");
-        }
-        else
-        {
-            backString.Append("]}");
-        }
-        reader1.Close();
+        backString.Append("]}");
         sqlOperation.Close();
         sqlOperation = null;
         sqlOperation2.Close();
