@@ -44,7 +44,11 @@
                 </div>
                 <div class="col-xs-3">
                     <span>已约次数/总次数：</span>
-                    <span id="appointnumber" class="underline"></span>
+                    <span class="underline">
+                        <span id="appointnumber"></span>
+                        <span>/</span>
+                        <span id="total"></span>
+                    </span>
                 </div>
             </div>
             <div class="option-area col-xs-12">
