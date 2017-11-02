@@ -304,7 +304,7 @@ function doChromeWindowShowModalDialog(obj) {
     if (obj != null) {
         alert(obj);
         var text = $("#rest").text();
-        alert(text);
+        $("#rest").text("剩余加速器预约(剩0次)");
     }
 }
 

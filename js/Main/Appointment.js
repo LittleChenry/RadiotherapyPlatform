@@ -118,9 +118,10 @@
         		}
         	}
 			var firstrow = (firstTime - ambegin) / timelength;
-			var firsttdid = "0" + firstrow.toString() + "0";
-			$("#"+ tdid).text("首次");
-			var trclass = $("#"+ tdid).parent().attr("class");
+			var firsttdid = "1" + firstrow.toString() + "0";
+			$("#"+ firsttdid).text("首次");
+			$("#"+ firsttdid).addClass("self-selected");
+			var trclass = $("#"+ firsttdid).parent().attr("class");
 			switch(trclass){
 				case "afternoon":
 					$("#chooseTime").find("button").each(function(index,e){
@@ -186,7 +187,7 @@
 		var exist = CalculateTimes();
 		if (exist == remaintimes) {
 			var appointdata = findAllAppointData(ambegin,timelength,firstDate.Format("yyyy-MM-dd"));
-			alert(appointdata.toString());
+			//alert(appointdata.toString());
 			$.ajax({
 				type: "POST",
 		        async: false,
@@ -486,7 +487,7 @@ function CheckTimeInterva(row,timelength,TimeInteral){
 	var minInterval = TimeInteral * 60;
 	WeekArea.find("table").each(function(index,e){
 		$(this).find("td").each(function(){
-			if ($(this).find("i").length > 0) {
+			if ($(this).find("i").length > 0 || $(this).hasClass("self-selected")) {
 				var tdid = $(this).attr("id");
 				var rownum = parseInt(tdid.substring(1,tdid.length-1));
 				if (minInterval > timelength * Math.abs(rownum - row) && (rownum - row) != 0) {
