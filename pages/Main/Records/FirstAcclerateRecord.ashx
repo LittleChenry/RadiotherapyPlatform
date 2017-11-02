@@ -82,7 +82,7 @@ public class FirstAcclerateRecord : IHttpHandler {
           }
       }else
      {
-         string strcommand = "select count(*) from appointment_accelerate where Equipment_ID=@equip and Date=@date and Begin=@begin and End=@end";
+         string strcommand = "select count(*) from appointment_accelerate where Equipment_ID=@equip and Date=@date and ((Begin<=@begin and End>=@begin) or (Begin<=@end and End>=@end))";
          sqlOperation.AddParameterWithValue("@equip", equipid);
          sqlOperation.AddParameterWithValue("@date", date);
          sqlOperation.AddParameterWithValue("@begin", begin);
