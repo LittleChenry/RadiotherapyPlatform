@@ -75,6 +75,7 @@ public class GetAccerWorkCondition : IHttpHandler
                 {
                     backString.Append(",");
                 }
+                i++;
 
             }
            
