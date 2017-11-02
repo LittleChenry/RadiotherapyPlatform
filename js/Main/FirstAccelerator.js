@@ -3,6 +3,7 @@ var userName;
 var userID;
 var number = 0;
 var obj = [];
+var equipmentfrominfo="";
 function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
@@ -182,7 +183,13 @@ function Init(evt) {
                 }
             });  
     }
+    $("#timeselect").bind("change", function () {
+        var dateString = document.getElementById("AppiontDate").value;
+        CreateCurrentEquipmentTbale(dateString);
+    });
+
 }
+
 function getfieldinfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getallfieldinfo.ashx?treatmentID=" + treatmentID;
@@ -455,91 +462,191 @@ function save() {
     }
 
 //创建某设备某天的预约表
-function CreateCurrentEquipmentTbale(equiment, dateString) {
+function CreateCurrentEquipmentTbale(dateString) {
     var table = document.getElementById("apptiontTable");
-    equiment = equiment.Equipment;
+    var equiment;
+    if (equipmentfrominfo != "") {
+        equiment = [].concat(equipmentfrominfo.Equipment);
+    } else {
+        equiment = [];
+    }
     RemoveAllChild(table);
-    if (equiment.length != 0) {
-    var tbody = document.createElement("tbody");
-    var i;
-    for (i=0; i < Math.ceil(equiment.length / 6) * 6 ; i++) {
-        var count = i % 6;
-        var tr;
-        if (count == 0) {
-            tr = document.createElement("tr");
-        } 
-        var td = document.createElement("td");
-        var sign = document.createElement("i");
-        if (i <= equiment.length - 1) {
-            if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
-                var hour = toTime(equiment[i].Begin).split(":")[0];
-                var minute = toTime(equiment[i].Begin).split(":")[1];
-                if (hour >= 24) {
-                    var beginhour = parseInt(hour) - 24;
-                } else {
-                    var beginhour = hour;
-                }
-                var begin = beginhour + ":" + minute;
-                var endhour = toTime(equiment[i].End).split(":")[0];
-                var endminute = toTime(equiment[i].End).split(":")[1];
-                var hourend = parseInt(endhour) - 24;
-                var end = hourend + ":" + endminute;
-                td.setAttribute("id", dateString + "_" + begin + "-" + end + "(次日)" + "_" + equiment[i].Begin + "_" + equiment[i].End);
-            } else {
-                td.setAttribute("id", dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Begin + "_" + equiment[i].End);
+    var selecttime = document.getElementById("timeselect");
+    var currentIndex = selecttime.selectedIndex;
+    var selecttimevalue = selecttime.options[currentIndex].value;
+    var beginxianzhi = selecttimevalue.split("-")[0];
+    var endxianzhi = selecttimevalue.split("-")[1];
+    var isspecial = document.getElementById("isspecial");
+    var currentIndex1 = isspecial.selectedIndex;
+    var isspecialvalue = isspecial.options[currentIndex1].value;
+    if (equiment.length == 0) {
+        table.innerHTML = "今天已经不可以预约了,改天吧！";
+        return;
+    }
+    var tempcount = 0;
+    for (tempcount = 0; tempcount < equiment.length;) {
+        if (!(parseInt(equiment[tempcount].Begin) >= parseInt(beginxianzhi) && parseInt(equiment[tempcount].End) <= parseInt(endxianzhi))) {
+            equiment.splice(tempcount, 1);
+        } else {
+            tempcount++;
+        }
+    }
+    if (isspecialvalue == "0") {
+        var tbody = document.createElement("tbody");
+        var i;
+        for (i = 0; i < Math.ceil(equiment.length / 6) * 6 ; i++) {
+            var count = i % 6;
+            var tr;
+            if (count == 0) {
+                tr = document.createElement("tr");
             }
-            if (equiment[i].state == "0") {
+            var td = document.createElement("td");
+            var sign = document.createElement("i");
+            if (i <= equiment.length - 1) {
+                if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
+                    var hour = toTime(equiment[i].Begin).split(":")[0];
+                    var minute = toTime(equiment[i].Begin).split(":")[1];
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(equiment[i].End).split(":")[0];
+                    var endminute = toTime(equiment[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    td.setAttribute("id", dateString + "_" + begin + "-" + end + "(次日)" + "_" + equiment[i].Begin + "_" + equiment[i].End);
+                } else {
+                    td.setAttribute("id", dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Begin + "_" + equiment[i].End);
+                }
+                if (equiment[i].state == "0") {
                     if (compareWithToday(dateString)) {
-                    sign.className = "";
-                    td.addEventListener("click", chooseItem, false);
+                        sign.className = "";
+                        td.addEventListener("click", chooseItem, false);
                     } else {
                         td.style.backgroundColor = "#C1C1C1";
                         sign.className = "fa fa-fw fa-ban td-sign";
                         td.addEventListener("click", hasChosen, false);
                     }
-               
-            } else {
-                td.style.backgroundColor = "#C1C1C1";
-                sign.className = "fa fa-fw fa-ban td-sign";
-                td.addEventListener("click", hasChosen, false);
-            }
-            if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
-                var hour = toTime(equiment[i].Begin).split(":")[0];
-                var minute = toTime(equiment[i].Begin).split(":")[1];
-                if (hour >= 24) {
-                    var beginhour = parseInt(hour) - 24;
+
                 } else {
-                    var beginhour = hour;
+                    td.style.backgroundColor = "#C1C1C1";
+                    sign.className = "fa fa-fw fa-ban td-sign";
+                    td.addEventListener("click", hasChosen, false);
                 }
-                var begin = beginhour + ":" + minute;
-                var endhour = toTime(equiment[i].End).split(":")[0];
-                var endminute = toTime(equiment[i].End).split(":")[1];
-                var hourend = parseInt(endhour) - 24;
-                var end = hourend + ":" + endminute;
-                var text = document.createTextNode(begin + " - " + end + "(次日)");
-            } else {
-                var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
-            }
-            td.appendChild(text);
-            td.appendChild(sign);
-            tr.appendChild(td);
-        }
-        if (i == equiment.length) {
-            var k;
-            for (k = equiment.length; k <= Math.ceil(equiment.length / 6) * 6 - 1; k++) {
-                var td = document.createElement("td");
+                if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
+                    var hour = toTime(equiment[i].Begin).split(":")[0];
+                    var minute = toTime(equiment[i].Begin).split(":")[1];
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(equiment[i].End).split(":")[0];
+                    var endminute = toTime(equiment[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    var text = document.createTextNode(begin + " - " + end + "(次日)");
+                } else {
+                    var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+                }
+                td.appendChild(text);
+                td.appendChild(sign);
                 tr.appendChild(td);
             }
+            if (i == equiment.length) {
+                var k;
+                for (k = equiment.length; k <= Math.ceil(equiment.length / 6) * 6 - 1; k++) {
+                    var td = document.createElement("td");
+                    tr.appendChild(td);
+                }
+            }
+            if (count == 5) {
+                tbody.appendChild(tr);
+            }
         }
-        if (count == 5) {
-            tbody.appendChild(tr);
-        }
+        table.appendChild(tbody);
     }
-    table.appendChild(tbody);
-} else {
-    table.innerHTML = "今天已经不可以预约了,改天吧！";
+    //} else {
+    //    var tbody = document.createElement("tbody");
+    //    var i;
+    //    for (i = 0; i < Math.ceil(equiment.length / 6) * 6 ; i++) {
+    //        var count = i % 6;
+    //        var tr;
+    //        if (count == 0) {
+    //            tr = document.createElement("tr");
+    //        }
+    //        var td = document.createElement("td");
+    //        var sign = document.createElement("i");
+    //        if (i <= equiment.length - 1) {
+    //            if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
+    //                var hour = toTime(equiment[i].Begin).split(":")[0];
+    //                var minute = toTime(equiment[i].Begin).split(":")[1];
+    //                if (hour >= 24) {
+    //                    var beginhour = parseInt(hour) - 24;
+    //                } else {
+    //                    var beginhour = hour;
+    //                }
+    //                var begin = beginhour + ":" + minute;
+    //                var endhour = toTime(equiment[i].End).split(":")[0];
+    //                var endminute = toTime(equiment[i].End).split(":")[1];
+    //                var hourend = parseInt(endhour) - 24;
+    //                var end = hourend + ":" + endminute;
+    //                td.setAttribute("id", dateString + "_" + begin + "-" + end + "(次日)" + "_" + equiment[i].Begin + "_" + equiment[i].End);
+    //            } else {
+    //                td.setAttribute("id", dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Begin + "_" + equiment[i].End);
+    //            }
+    //            if (equiment[i].state == "0") {
+    //                if (compareWithToday(dateString)) {
+    //                    sign.className = "";
+    //                    td.addEventListener("click", chooseItem, false);
+    //                } else {
+    //                    td.style.backgroundColor = "#C1C1C1";
+    //                    sign.className = "fa fa-fw fa-ban td-sign";
+    //                    td.addEventListener("click", hasChosen, false);
+    //                }
 
-}
+    //            } else {
+    //                td.style.backgroundColor = "#C1C1C1";
+    //                sign.className = "fa fa-fw fa-ban td-sign";
+    //                td.addEventListener("click", hasChosen, false);
+    //            }
+    //            if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
+    //                var hour = toTime(equiment[i].Begin).split(":")[0];
+    //                var minute = toTime(equiment[i].Begin).split(":")[1];
+    //                if (hour >= 24) {
+    //                    var beginhour = parseInt(hour) - 24;
+    //                } else {
+    //                    var beginhour = hour;
+    //                }
+    //                var begin = beginhour + ":" + minute;
+    //                var endhour = toTime(equiment[i].End).split(":")[0];
+    //                var endminute = toTime(equiment[i].End).split(":")[1];
+    //                var hourend = parseInt(endhour) - 24;
+    //                var end = hourend + ":" + endminute;
+    //                var text = document.createTextNode(begin + " - " + end + "(次日)");
+    //            } else {
+    //                var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+    //            }
+    //            td.appendChild(text);
+    //            td.appendChild(sign);
+    //            tr.appendChild(td);
+    //        }
+    //        if (i == equiment.length) {
+    //            var k;
+    //            for (k = equiment.length; k <= Math.ceil(equiment.length / 6) * 6 - 1; k++) {
+    //                var td = document.createElement("td");
+    //                tr.appendChild(td);
+    //            }
+    //        }
+    //        if (count == 5) {
+    //            tbody.appendChild(tr);
+    //        }
+    //    }
+    //    table.appendChild(tbody);
+    //}
 }
 function compareWithToday(time) {
     var year = time.split("-")[0];
@@ -684,6 +791,7 @@ function CreateNewAppiontTable(evt) {
         alert("不能选择小于当天的日期");
         var table = document.getElementById("apptiontTable");
         RemoveAllChild(table);
+        equipmentfrominfo = [];
         return;
     }
     var date = AppiontDate.value;
@@ -692,8 +800,8 @@ function CreateNewAppiontTable(evt) {
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
-    thisObj = eval("(" + json + ")");
-    CreateCurrentEquipmentTbale(thisObj, date);
+    equipmentfrominfo = eval("(" + json + ")");
+    CreateCurrentEquipmentTbale(date);
 }
 //获取所有待等待体位固定申请疗程号以及所属患者ID与其他信息
 function getFAPatientInfo(treatmentID) {

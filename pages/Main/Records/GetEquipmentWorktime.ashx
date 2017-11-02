@@ -69,7 +69,7 @@ public class GetEquipmentWorktime : IHttpHandler {
                     if (DateTime.Compare(dt1, dt2) > 0)
                     {
                         sqlOperation2.clearParameter();
-                        string checkcommand = "select count(*) from appointment_accelerate where Equipment_ID=@equipid and Begin=@begin and End=@end and Date=@date and state is NULL";
+                        string checkcommand = "select count(*) from appointment_accelerate where Equipment_ID=@equipid and ((Begin<=@begin and End>=@begin) or (Begin<=@end and End>=@end)) and Date=@date and state is NULL";
                         sqlOperation2.AddParameterWithValue("@equipid", equipmentID);
                         sqlOperation2.AddParameterWithValue("@begin", begin);
                         sqlOperation2.AddParameterWithValue("@end", end);
