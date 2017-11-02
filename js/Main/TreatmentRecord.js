@@ -302,7 +302,9 @@ function Init(evt) {
 
 function doChromeWindowShowModalDialog(obj) {
     if (obj != null) {
-        //alert(obj);
+        alert(obj);
+        var text = $("#rest").text();
+        alert(text);
     }
 }
 

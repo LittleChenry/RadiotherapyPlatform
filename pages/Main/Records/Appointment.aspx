@@ -27,6 +27,7 @@
         <div class="ap-title">
             <h3>预约</h3>
         </div>
+        <input type="hidden" id="selectedrownum" value="0" />
         <div class="ap-function">
             <div class="info-area col-xs-12">
                 <div class="col-xs-3">
@@ -56,8 +57,8 @@
                     </select>
                 </div>
                 <div class="col-xs-4 col-xs-offset-4">
-                    <button type="button" class="time-btn pull-right" style="margin-left:5px;">确认返回</button>
-                    <button type="button" class="time-btn pull-right">清空预约</button>
+                    <button id="confirm" type="button" class="time-btn pull-right" style="margin-left:5px;">确认返回</button>
+                    <button id="removeAppointment" type="button" class="time-btn pull-right">清空预约</button>
                 </div>
             </div>
         </div>
@@ -69,8 +70,9 @@
                     <button type="button" class="time-btn">晚上</button>
                 </div>
                 <div id="chooseWeek" class="col-xs-8"></div>
-                <div class="col-xs-2">
-                    <button type="button" class="time-btn pull-right">自由选择</button>
+                <div id="chooseWay" class="col-xs-2">
+                    <button type="button" class="time-btn pull-right" style="margin-left:5px;">自由预约</button>
+                    <button type="button" class="time-btn selected-btn pull-right">批量预约</button>
                 </div>
             </div>
             <div class="col-xs-12">
