@@ -120,7 +120,7 @@
 			var firstrow = (firstTime - ambegin) / timelength;
 			var firsttdid = "1" + firstrow.toString() + "0";
 			$("#"+ firsttdid).text("首次");
-			$("#"+ firsttdid).addClass("self-selected");
+			//$("#"+ firsttdid).addClass("self-selected");
 			var trclass = $("#"+ firsttdid).parent().attr("class");
 			switch(trclass){
 				case "afternoon":
@@ -251,7 +251,7 @@ function BatchAppoint(num,D,T,timelength,TimeInteral,appointnumber){
 	var table = $("#WeekArea").find("table");
 	table.find("td").each(function(index,e){
 		$(this).bind("click",function(){
-			if (!($(this).hasClass("selected-td"))) {
+			if (!($(this).hasClass("selected-td")) && !($(this).hasClass("weekend"))) {
 				var tdid = $(this).attr("id");
 				var rownum = parseInt(tdid.substring(1,tdid.length-1));
 				var tablenum = parseInt(tdid.substring(0,1));
@@ -487,7 +487,7 @@ function CheckTimeInterva(row,timelength,TimeInteral){
 	var minInterval = TimeInteral * 60;
 	WeekArea.find("table").each(function(index,e){
 		$(this).find("td").each(function(){
-			if ($(this).find("i").length > 0 || $(this).hasClass("self-selected")) {
+			if ($(this).find("i").length > 0) {
 				var tdid = $(this).attr("id");
 				var rownum = parseInt(tdid.substring(1,tdid.length-1));
 				if (minInterval > timelength * Math.abs(rownum - row) && (rownum - row) != 0) {
