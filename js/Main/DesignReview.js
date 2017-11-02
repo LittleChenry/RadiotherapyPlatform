@@ -104,7 +104,9 @@ if (isInArray(progress, '11')) {
                 document.getElementById("remark").value = reviewInfo.Remark;
                 if(reviewInfo.sum=="1"){
                     document.getElementById("check1").innerHTML = "通过";
+                    document.getElementById("check1").style.color = "#0000ff";
                     document.getElementById("check2").innerHTML = "通过";
+                    document.getElementById("check2").style.color = "#0000ff";
                     document.getElementById("check3").innerHTML = "通过";
                     document.getElementById("check4").innerHTML = "通过";
                     document.getElementById("check5").innerHTML = "通过";
@@ -116,7 +118,19 @@ if (isInArray(progress, '11')) {
                     document.getElementById("check11").innerHTML = "通过";
                     document.getElementById("check12").innerHTML = "通过";
                     document.getElementById("check13").innerHTML = "通过";
-                    document.getElementById("check14").innerHTML = "通过";                  
+                    document.getElementById("check14").innerHTML = "通过";
+                    document.getElementById("check3").style.color = "#0000ff";
+                    document.getElementById("check4").style.color = "#0000ff";
+                    document.getElementById("check5").style.color = "#0000ff";
+                    document.getElementById("check6").style.color = "#0000ff";
+                    document.getElementById("check7").style.color = "#0000ff";
+                    document.getElementById("check8").style.color = "#0000ff";
+                    document.getElementById("check9").style.color = "#0000ff";
+                    document.getElementById("check10").style.color = "#0000ff";
+                    document.getElementById("check11").style.color = "#0000ff";
+                    document.getElementById("check12").style.color = "#0000ff";
+                    document.getElementById("check13").style.color = "#0000ff";
+                    document.getElementById("check14").style.color = "#0000ff";
                     document.getElementById("applyuser").innerHTML = reviewInfo.name;
                     document.getElementById("time").innerHTML = reviewInfo.ReviewTime;              
                 }
@@ -149,16 +163,20 @@ function check() {
     signal = 1;
     if (document.getElementById("positioninfomation1").innerHTML == document.getElementById("positioninfomation2").innerHTML) {
         document.getElementById("check1").innerHTML = "通过";
+        document.getElementById("check1").style.color = "#0000ff";
     } else {
         item = 0;
         document.getElementById("check1").innerHTML = "不通过";
+        document.getElementById("check1").style.color = "#ff0000";
     }
     if (document.getElementById("dose1").innerHTML == document.getElementById("dose2").innerHTML) {
         document.getElementById("check2").innerHTML = "通过";
+        document.getElementById("check2").style.color = "#0000ff";
     }
     else {
         item = 0;
         document.getElementById("check2").innerHTML = "不通过";
+        document.getElementById("check2").style.color = "#ff0000";
     }
     var equipment = document.getElementById("Equipment1").innerHTML;
     var dreg = /(\d*)([a-z]*[A-Z]*)(\d*)/;
@@ -166,34 +184,44 @@ function check() {
     var deleteEChar = RegExp.$1 + RegExp.$3;
     if (deleteEChar == document.getElementById("Equipment2").innerHTML) {
         document.getElementById("check3").innerHTML = "通过";
+        document.getElementById("check3").style.color = "#0000ff";
     } else {
         item = 0;
         document.getElementById("check3").innerHTML = "不通过";
+        document.getElementById("check3").style.color = "#ff0000";
     }
     if (document.getElementById("plansystem1").innerHTML == document.getElementById("plansystem2").innerHTML) {
         document.getElementById("check4").innerHTML = "通过";
+        document.getElementById("check4").style.color = "#0000ff";
     } else {
         item = 0;
         document.getElementById("check4").innerHTML = "不通过";
+        document.getElementById("check4").style.color = "#ff0000";
     }
     if (document.getElementById("Coplanar1").innerHTML == document.getElementById("Coplanar2").innerHTML) {
         document.getElementById("check12").innerHTML = "通过";
+        document.getElementById("check12").style.color = "#0000ff";
     } else {
         item = 0;
         document.getElementById("check12").innerHTML = "不通过";
+        document.getElementById("check12").style.color = "#ff0000";
     }
     if (document.getElementById("Irradiation1").innerHTML == document.getElementById("Irradiation2").innerHTML) {
         document.getElementById("check5").innerHTML = "通过";
+        document.getElementById("check5").style.color = "#0000ff";
     } else {
         item = 0;
         document.getElementById("check5").innerHTML = "不通过";
+        document.getElementById("check5").style.color = "#ff0000";
     }
     if (document.getElementById("Raytype1").innerHTML == document.getElementById("Raytype2").innerHTML) {
         document.getElementById("check6").innerHTML = "通过";
+        document.getElementById("check6").style.color = "#0000ff";
 
     } else {
         item = 0;
         document.getElementById("check6").innerHTML = "不通过";
+        document.getElementById("check6").style.color = "#ff0000";
     }
     var enery = document.getElementById("energy1").innerHTML;
     var reg = /(\d*)([a-z]*[A-Z]*)(\d*)/;
@@ -201,53 +229,65 @@ function check() {
     var deleteChar = RegExp.$1 + RegExp.$3;
     if (deleteChar == document.getElementById("energy2").innerHTML) {
         document.getElementById("check7").innerHTML = "通过";
+        document.getElementById("check7").style.color = "#0000ff";
 
     } else {
         item = 0;
         document.getElementById("check7").innerHTML = "不通过";
+        document.getElementById("check7").style.color = "#ff0000";
     }
     if (document.getElementById("IlluminatedNumber1").innerHTML == document.getElementById("IlluminatedNumber2").innerHTML) {
         document.getElementById("check8").innerHTML = "通过";
-
+        document.getElementById("check8").style.color = "#0000ff";
     } else {
         item = 0;
         document.getElementById("check8").innerHTML = "不通过";
+        document.getElementById("check8").style.color = "#ff0000";
     }
     if (isequal()) {
         document.getElementById("check9").innerHTML = "通过";
+        document.getElementById("check9").style.color = "#0000ff";
     } else {
         item = 0;
         document.getElementById("check9").innerHTML = "不通过";
+        document.getElementById("check9").style.color = "#ff0000";
     }
     if (isequal1()) {
         document.getElementById("check10").innerHTML = "通过";
+        document.getElementById("check10").style.color = "#0000ff";
        
     } else {
         item = 0;
         document.getElementById("check10").innerHTML = "不通过";
+        document.getElementById("check10").style.color = "#ff0000";
     }
     if (document.getElementById("ControlPoint1").innerHTML == document.getElementById("ControlPoint2").innerHTML) {
         document.getElementById("check11").innerHTML = "通过";
+        document.getElementById("check11").style.color = "#0000ff";
         
     } else {
         item = 0;
         document.getElementById("check11").innerHTML = "不通过";
+        document.getElementById("check11").style.color = "#ff0000";
 
     }
     if (document.getElementById("pinyin1").innerHTML.toLowerCase() == document.getElementById("pinyin2").innerHTML.toLowerCase()) {
         document.getElementById("check13").innerHTML = "通过";
-
+        document.getElementById("check13").style.color = "#0000ff";
     } else {
         item = 0;
         document.getElementById("check13").innerHTML = "不通过";
+        document.getElementById("check13").style.color = "#ff0000";
 
     }
     if (document.getElementById("radioID1").innerHTML == document.getElementById("radioID2").innerHTML) {
         document.getElementById("check14").innerHTML = "通过";
+        document.getElementById("check14").style.color = "#0000ff";
 
     } else {
         item = 0;
         document.getElementById("check14").innerHTML = "不通过";
+        document.getElementById("check14").style.color = "#ff0000";
 
     }
     if (item == 0) {
@@ -281,6 +321,20 @@ function force() {
     document.getElementById("check12").innerHTML = "通过";
     document.getElementById("check13").innerHTML = "通过";
     document.getElementById("check14").innerHTML = "通过";
+    document.getElementById("check1").style.color = "#0000ff";
+    document.getElementById("check2").style.color = "#0000ff";
+    document.getElementById("check3").style.color = "#0000ff";
+    document.getElementById("check4").style.color = "#0000ff";
+    document.getElementById("check5").style.color = "#0000ff";
+    document.getElementById("check6").style.color = "#0000ff";
+    document.getElementById("check7").style.color = "#0000ff";
+    document.getElementById("check8").style.color = "#0000ff";
+    document.getElementById("check9").style.color = "#0000ff";
+    document.getElementById("check10").style.color = "#0000ff";
+    document.getElementById("check11").style.color = "#0000ff";
+    document.getElementById("check12").style.color = "#0000ff";
+    document.getElementById("check13").style.color = "#0000ff";
+    document.getElementById("check14").style.color = "#0000ff";
 }
 function isequal() {
     var str2 = document.getElementById("Illuminatedangle2").innerHTML;
