@@ -806,6 +806,16 @@ function CreateCurrentAccerEquipmentTbale(dateString) {
     } else {
         equiment = [];
     }
+    if (equiment.length != 0) {
+        var appointinfo = equipmentfrominfo.appointinfo;
+        for (var temp = 0; temp < equiment.length; temp++) {
+            for (var temp2 = 0; temp2 < appointinfo.length; temp2++) {
+                if (parseInt(equiment[temp].Begin) == parseInt(appointinfo[temp2].Begin)) {
+                    equiment[temp].state = "1";
+                }
+            }
+        }
+    }
     RemoveAllChild(table);
     var selecttime = document.getElementById("timeselect");
     var currentIndex = selecttime.selectedIndex;

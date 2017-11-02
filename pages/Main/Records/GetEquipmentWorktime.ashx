@@ -68,21 +68,7 @@ public class GetEquipmentWorktime : IHttpHandler {
                     DateTime dt2 = DateTime.Now;
                     if (DateTime.Compare(dt1, dt2) > 0)
                     {
-                        sqlOperation2.clearParameter();
-                        string checkcommand = "select count(*) from appointment_accelerate where Equipment_ID=@equipid and ((Begin<=@begin and End>@begin) or (Begin<@end and End>=@end)) and Date=@date";
-                        sqlOperation2.AddParameterWithValue("@equipid", equipmentID);
-                        sqlOperation2.AddParameterWithValue("@begin", begin);
-                        sqlOperation2.AddParameterWithValue("@end", end);
-                        sqlOperation2.AddParameterWithValue("@date", date);
-                        int count = int.Parse(sqlOperation2.ExecuteScalar(checkcommand));
-                        if (count == 0)
-                        {
-                            backString.Append("{\"Begin\":\"" + begin + "\",\"End\":\"" + end + "\",\"state\":\"0\"}");
-                        }
-                        else
-                        {
-                            backString.Append("{\"Begin\":\"" + begin + "\",\"End\":\"" + end + "\",\"state\":\"1\"}");
-                        }
+                        backString.Append("{\"Begin\":\"" + begin + "\",\"End\":\"" + end + "\",\"state\":\"0\"}");
                         if (j < AMFrequency - 1)
                         {
                             backString.Append(",");
@@ -112,30 +98,36 @@ public class GetEquipmentWorktime : IHttpHandler {
                     DateTime dt2 = DateTime.Now;
                     if (DateTime.Compare(dt1, dt2) > 0)
                     {
-                        sqlOperation2.clearParameter();
-                        string checkcommand = "select count(*) from appointment_accelerate where Equipment_ID=@equipid and ((Begin<=@begin and End>@begin) or (Begin<@end and End>=@end)) and Date=@date";
-                        sqlOperation2.AddParameterWithValue("@equipid", equipmentID);
-                        sqlOperation2.AddParameterWithValue("@begin", Pbegin);
-                        sqlOperation2.AddParameterWithValue("@end", PEnd);
-                        sqlOperation2.AddParameterWithValue("@date", date);
-                        int count = int.Parse(sqlOperation2.ExecuteScalar(checkcommand));
-                        if (count == 0)
-                        {
-                            backString.Append("{\"Begin\":\"" + Pbegin + "\",\"End\":\"" + PEnd + "\",\"state\":\"0\"}");
-                        }
-                        else
-                        {
-                            backString.Append("{\"Begin\":\"" + Pbegin + "\",\"End\":\"" + PEnd + "\",\"state\":\"1\"}");
-                        }
+                        backString.Append("{\"Begin\":\"" + Pbegin + "\",\"End\":\"" + PEnd + "\",\"state\":\"0\"}");
                         if (k < PMFrequency - 1)
                         {
                             backString.Append(",");
                         }
                     }
                     
+                } 
+                
+                reader.Close();
+                backString.Append("],\"appointinfo\":[");
+                string countcommand = "select count(*) from appointment_accelerate where Date=@date and Equipment_ID=@equipid";
+                sqlOperation.AddParameterWithValue("@date", date);
+                sqlOperation.AddParameterWithValue("@equipid", equipmentID);
+                int counttemp = int.Parse(sqlOperation.ExecuteScalar(countcommand));
+                
+                string patientcommand = "select Begin,End from appointment_accelerate where Date=@date and Equipment_ID=@equipid";
+                reader = sqlOperation.ExecuteReader(patientcommand);
+                int c = 0;
+                while (reader.Read())
+                {
+                    backString.Append("{\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\"}");
+                    if (c < counttemp - 1)
+                    {
+                        backString.Append(",");
+                    }
+                    c++;
+                    
                 }
                 backString.Append("]}");
-                reader.Close();
                 sqlOperation.Close();
                 sqlOperation = null;
                 sqlOperation2.Close();
