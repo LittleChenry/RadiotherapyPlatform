@@ -50,7 +50,7 @@
             <div class="option-area col-xs-12">
                 <div class="col-xs-4">
                     <span>避让方式：</span>
-                    <select class="form-item">
+                    <select id="avoidway" class="form-item">
                         <option value="1">不避让</option>
                         <option value="2">局部避让</option>
                         <option value="3">无条件避让</option>

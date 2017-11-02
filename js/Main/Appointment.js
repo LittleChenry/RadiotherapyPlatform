@@ -182,6 +182,7 @@
 
 	$("#confirm").bind("click",function(){
 		var appointdata = findAllAppointData(ambegin,timelength,firstDate.Format("yyyy-MM-dd"));
+		alert(appointdata.toString());
 		$.ajax({
 			type: "POST",
 	        async: false,
@@ -201,6 +202,10 @@
 	        }
 		});
 	});
+
+	$("#avoidway").bind("change",function(){
+		$("#removeAppointment").click();
+	});
 })
 
 /*window.onbeforeunload = function () {
@@ -210,7 +215,7 @@
 
 function findAllAppointData(ambegin,timelength,firstDate){
 	var WeekArea = $("#WeekArea");
-	var data = new Array();
+	var data = "[";
 	var count = 0;
 	WeekArea.find("table").each(function(index,e){
 		$(this).find("td").each(function(){
@@ -223,60 +228,90 @@ function findAllAppointData(ambegin,timelength,firstDate){
 				isdouble = 0;
 				var begin = ambegin + rownum * timelength;
 				var end = begin + (isdouble + 1) * timelength;
-				data[count++] = {"Date":date,"Begin":begin,"End":end,"isdouble":isdouble};
+				data += '{"Date":"' + date + '","Begin":"' + begin + '","End":"' + end + '"},';
 			}
 			return count;
 		});
 	});
+	data = data.substring(0,data.length-1) + ']';
 	return data;
 }
 
 function BatchAppoint(num,D,T,timelength,TimeInteral){
 	CancelClick();
+	var avoidway = $("#avoidway").val();
 	var table = $("#WeekArea").find("table");
 	table.find("td").each(function(index,e){
 		$(this).bind("click",function(){
-			var tdid = $(this).attr("id");
-			var rownum = parseInt(tdid.substring(1,tdid.length-1));
-			var tablenum = parseInt(tdid.substring(0,1));
-			var colnum = parseInt(tdid.substring(tdid.length-1,tdid.length));
-			var rowTimes = new Array(T);
-			var aver = Math.floor(num/T);
-			var count = aver;
-			var extracount = 0;
-			var extra = num - aver * T;
-			var selectedrownum = parseInt($("#selectedrownum").val());
-			rowTimes[0] = aver;
-			for (var i = 1; i < T; i++) {
-				if (extracount < extra) {
-					rowTimes[i] = aver + 1;
-					extracount ++;
-				}else{
-					rowTimes[i] = aver;
+			if (!($(this).hasClass("selected-td"))) {
+				var tdid = $(this).attr("id");
+				var rownum = parseInt(tdid.substring(1,tdid.length-1));
+				var tablenum = parseInt(tdid.substring(0,1));
+				var colnum = parseInt(tdid.substring(tdid.length-1,tdid.length));
+				var rowTimes = new Array(T);
+				var aver = Math.floor(num/T);
+				var count = aver;
+				var extracount = 0;
+				var extra = num - aver * T;
+				var selectedrownum = parseInt($("#selectedrownum").val());
+				rowTimes[0] = aver;
+				for (var i = 1; i < T; i++) {
+					if (extracount < extra) {
+						rowTimes[i] = aver + 1;
+						extracount ++;
+					}else{
+						rowTimes[i] = aver;
+					}
 				}
-			}
-			if ($(this).find("i").length == 0) {
-				RowBatchAppoint(this,rownum,colnum,num,rowTimes[selectedrownum],D,timelength,TimeInteral);
-				
+				if ($(this).find("i").length == 0) {
+					RowBatchAppoint(this,rownum,colnum,num,rowTimes[selectedrownum],D,timelength,TimeInteral,avoidway);
+					
+				}
 			}
 		});
 	});
 }
 
-function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral){
+function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,avoidway){
 	//alert(rownum + "," + colnum + "," + numTotal + "," + D);
 	var exist = CalculateTimes();
-	//alert(exist);
+	//alert(avoidway);
 	if (exist < numTotal) {
 		if (CheckTimeInterva(rownum,timelength,TimeInteral)) {
 			var count = 0;
 			for (var i = colnum; i < 7 && count < num; i = i + D) {
 				var tdid = "1" + rownum.toString() + i.toString();
-				if(!($("#" + tdid).hasClass("weekend"))){
-					$("#" + tdid).append("<i class='fa fa-fw fa-check'></i>");
-					count ++;
+				if (!($("#" + tdid).hasClass("selected-td"))) {
+					if(!($("#" + tdid).hasClass("weekend"))){
+						$("#" + tdid).append("<i class='fa fa-fw fa-check'></i>");
+						count ++;
+					}
+					$("#" + tdid).unbind("click");
+				}else{
+					switch(avoidway){
+						case 1:
+							alert("存在阻挡！");
+							RemoveRow(rownum);
+							return false;
+						case 2:
+							var flag = PartialAvoid(1,rownum,i,6);
+							if (flag) {
+								count ++;
+							}else{
+								alert("局部存在阻挡！");
+								return false;
+							}
+							break;
+						default:
+							var flag = UnconditionalAvoid(1,rownum,i);
+							if (flag) {
+								count ++;
+							}else{
+								alert("存在阻挡！");
+								return false;
+							}
+					}
 				}
-				$("#" + tdid).unbind("click");
 			}
 			var currentTable = $(e);
 			var tablenum = 2;
@@ -284,11 +319,37 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral){
 				currentTable = currentTable.next();
 				for (var i = 0; i < 7 && count < num; i = i + D) {
 					var tdid = tablenum.toString() + rownum.toString() + i.toString();
-					if(!($("#" + tdid).hasClass("weekend"))){
-						$("#" + tdid).append("<i class='fa fa-fw fa-check'></i>");
-						count ++;
+					if (!($("#" + tdid).hasClass("selected-td"))) {
+						if(!($("#" + tdid).hasClass("weekend"))){
+							$("#" + tdid).append("<i class='fa fa-fw fa-check'></i>");
+							count ++;
+						}
+						$("#" + tdid).unbind("click");
+					}else{
+						switch(avoidway){
+							case 1:
+								alert("存在阻挡！");
+								RemoveRow(rownum);
+								return false;
+							case 2:
+								var flag = PartialAvoid(1,rownum,i,6);
+								if (flag) {
+									count ++;
+								}else{
+									alert("局部存在阻挡！");
+									return false;
+								}
+								break;
+							default:
+								var flag = UnconditionalAvoid(tablenum,rownum,i);
+								if (flag) {
+									count ++;
+								}else{
+									alert("存在阻挡！");
+									return false;
+								}
+						}
 					}
-					$("#" + tdid).unbind("click");
 				}
 				tablenum ++;
 			}
@@ -298,6 +359,40 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral){
 	}else{
 		alert("已预约完！");
 	}
+	return true;
+}
+
+function PartialAvoid(tablenum,rownum,colnum,range){
+	//alert(tablenum + "," + rownum + "," + colnum + "," + range);
+	for (var i = 1; i <= range; i++) {
+		var tdid1 = tablenum.toString() + (rownum - i).toString() + colnum.toString();
+		var tdid2 = tablenum.toString() + (rownum + i).toString() + colnum.toString();
+		if ($("#" + tdid1).find("i").length == 0) {
+			$("#" + tdid1).append("<i class='fa fa-fw fa-check'></i>");
+			return true;
+		}else if ($("#" + tdid2).find("i").length == 0) {
+			$("#" + tdid2).append("<i class='fa fa-fw fa-check'></i>");
+			return true;
+		}else{
+			return false;
+		}
+	}
+}
+
+function UnconditionalAvoid(tablenum,rownum,colnum){
+
+}
+
+function RemoveRow(rownum){
+	$("#WeekArea").find("table").each(function(index,e){
+		for (var i = 0; i < 7; i++) {
+			var tablenum = index + 1;
+			var tdid = tablenum.toString() + rownum.toString() + i.toString();
+			if ($(this).find("i").length > 0) {
+				$(this).html("");
+			}
+		}
+	});
 }
 
 function UnlimitedAppoint(num){
@@ -305,15 +400,17 @@ function UnlimitedAppoint(num){
 	var table = $("#WeekArea").find("table");
 	table.find("td").each(function(index,e){
 		$(this).bind("click",function(){
-			var currentNum = CalculateTimes();
-			if (currentNum < num) {
-				if ($(this).find("i").length == 0) {
-				$(this).append("<i class='fa fa-fw fa-check'></i>");
+			if (!($(this).hasClass("selected-td"))) {
+				var currentNum = CalculateTimes();
+				if (currentNum < num) {
+					if ($(this).find("i").length == 0) {
+					$(this).append("<i class='fa fa-fw fa-check'></i>");
+					}else{
+						$(this).find("i")[0].remove();
+					}
 				}else{
-					$(this).find("i")[0].remove();
+					alert("已预约完！");
 				}
-			}else{
-				alert("已预约完！");
 			}
 		});
 	});
