@@ -91,7 +91,7 @@ public class TreatmentRecord : IHttpHandler {
         if (success > 0)
         {
 
-            string sqlcommand3 = "update appointment set Patient_ID=@patient,Treatment_ID=@treat,Completed=1 where ID=@appoint";
+            string sqlcommand3 = "update appointment_accelerate set Patient_ID=@patient,Treatment_ID=@treat,Completed=1 where ID=@appoint";
             sqlOperation.AddParameterWithValue("@patient", patient);
             int success1 = sqlOperation.ExecuteNonQuery(sqlcommand3);
             if (success1 == 0)

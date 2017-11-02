@@ -26,59 +26,38 @@ public class changeAccerateAppoint : IHttpHandler {
     public string AddFixRecord(HttpContext context)
     {
         //获取表单信息
-        string appoint = context.Request["newappoint"];
         string oldappoint = context.Request["oldappoint"];
-        string strcommand = "select State from appointment where ID=@appointid";
-        sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));
-        string count = sqlOperation.ExecuteScalar(strcommand);
-            if (count == "1")
+        string newdate = context.Request["newdate"];
+        string newbegin = context.Request["newbegin"];
+        string newend = context.Request["newend"];
+        string equipidcommand = "select Equipment_ID from appointment_accelerate where ID=@oldappoint";
+        sqlOperation.AddParameterWithValue("@oldappoint", oldappoint);
+        string equipmentid = sqlOperation.ExecuteScalar(equipidcommand);
+        string countcommand = "select count(*) from appointment_accelerate where Equipment_ID=@equip and ((Begin<=@begin and End>@begin) or (Begin<@end and End>=@end)) and Date=@date";
+        sqlOperation.AddParameterWithValue("@equip", equipmentid);
+        sqlOperation.AddParameterWithValue("@begin", newbegin);
+        sqlOperation.AddParameterWithValue("@end", newend);
+        sqlOperation.AddParameterWithValue("@date", newdate);
+        int count = int.Parse(sqlOperation.ExecuteScalar(countcommand));
+        if (count == 0)
+        {
+            string updateappoint = "update appointment_accelerate set Date=@date,Begin=@begin,End=@end where ID=@oldappoint";
+            int success=sqlOperation.ExecuteNonQuery(updateappoint);
+            if (success == 0)
             {
-                return "busy";
+                return "failure";
             }
             else
             {
-                string strcommand1 = "update appointment set State=1 where ID=@appointid and State=0";
-                int intSuccess = sqlOperation.ExecuteNonQuery(strcommand1);
-                if (intSuccess == 0)
-                {
-                    return "busy";
-                }
-                else
-                {
-                    string asktreat = "select Treatment_ID from appointment where ID=@oldappointid";
-                    sqlOperation.AddParameterWithValue("@oldappointid", Convert.ToInt32(context.Request["oldappoint"]));
-                    string treatid = sqlOperation.ExecuteScalar(asktreat);
-                    string strcommand2 = "select Patient_ID from treatment where ID=@treat";
-                    sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
-                    string patient_ID = sqlOperation.ExecuteScalar(strcommand2);
-
-                    string finishappoint = "update appointment set Patient_ID=@Patient,Treatment_ID=@treat where ID=@appointid";
-                    sqlOperation.AddParameterWithValue("@Patient", Convert.ToInt32(patient_ID));
-                    int Success1 = sqlOperation.ExecuteNonQuery(finishappoint);
-
-                    string updatefixappoint = "update treatmentrecord set Appointment_ID=@appointid where Appointment_ID=@appoint and Treatment_ID=@treat";
-                    sqlOperation.AddParameterWithValue("@appoint", oldappoint);
-                    int updatesuccess = sqlOperation.ExecuteNonQuery(updatefixappoint);
-
-                    if (updatesuccess > 0)
-                    {
-
-                        string deleteappoint = "update appointment set Patient_ID=NULL,Treatment_ID=NULL,state=0 where ID=@appoint";
-                        sqlOperation.AddParameterWithValue("appoint", Convert.ToInt32(oldappoint));
-                        int Success = sqlOperation.ExecuteNonQuery(deleteappoint);
-                        if (Success > 0)
-                        {
-                            return "success";
-                        }
-                    }
-
-                    return "failure";
-
-                }
+                return "success";
             }
-
-      
+            
+        }
+        else
+        {
+            return "busy";
+        }
     }
-
+   
 
 }

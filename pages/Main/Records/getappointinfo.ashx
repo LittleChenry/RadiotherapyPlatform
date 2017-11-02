@@ -41,6 +41,26 @@ public class getappointinfo : IHttpHandler {
             }
             i++;
         }
+        reader.Close();
+        string selectallappoint2 = "select count(*) from appointment_accelerate where Treatment_ID=@treatid";
+        int count1 = int.Parse(sqlOperation.ExecuteScalar(selectallappoint2));
+        if (count1 > 0 && count>0)
+        {
+            backText.Append(",");
+        }
+        string selectall1 = "select appointment_accelerate.ID as appointid,equipment.Name as equipname,Begin,End,Date,Completed,Task from equipment,appointment_accelerate where appointment_accelerate.Equipment_ID=equipment.ID and Treatment_ID=@treatid order by Date,Begin";
+        reader = sqlOperation.ExecuteReader(selectall1);
+         i = 0;
+        while (reader.Read())
+        {
+            backText.Append("{\"Task\":\"" + reader["Task"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\",\"appointid\":\"" + reader["appointid"].ToString() + "\",\"equipname\":\"" + reader["equipname"].ToString() + "\",\"Completed\":\"" + reader["Completed"].ToString() + "\"}");
+            if (i < count1 - 1)
+            {
+                backText.Append(",");
+            }
+            i++;
+        }
+        reader.Close();
         backText.Append("]}");
         return backText.ToString();
     }

@@ -237,6 +237,22 @@
                             <button id="chooseProject" class="btn btn-default">查询该项</button>
                         </div>
                     </div>
+                      <div id="timechoose" class="panel-row" style="display:none">
+                            <div class="item col-xs-7">时间筛选：<select id="timeselect" name="timeselect" class="form-item">
+                                                                   <option value="360-720">06:00-12:00</option>
+                                                                    <option value="720-1080">12:00-18:00</option>
+                                                                    <option value="1080-1440">18:00-24:00</option>
+                                                                    <option value="1440-1800">00:00-06:00(次日)</option>
+                                                                  </select>
+
+                            </div>
+                            <div class="item col-xs-5" style="padding-left:20px">是否占用两格：<select id="isspecial" name="isspecial" class="form-item">
+                                                                      <option value="0">否</option>
+                                                                      <%--<option value="1">是</option>--%>
+                                                                  </select>
+
+                            </div>
+                         </div>
                     <div class="panel-row">
                         <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
                     </div>
