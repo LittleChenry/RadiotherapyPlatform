@@ -246,7 +246,7 @@
                                                                   </select>
 
                             </div>
-                            <div class="item col-xs-5" style="padding-left:20px">是否占用两格：<select id="isspecial" name="isspecial" class="form-item">
+                            <div class="item col-xs-5" style="padding-left:20px;display:none">是否占用两格：<select id="isspecial" name="isspecial" class="form-item">
                                                                       <option value="0">否</option>
                                                                       <%--<option value="1">是</option>--%>
                                                                   </select>

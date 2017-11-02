@@ -55,7 +55,7 @@ public class GetAccerWorkCondition : IHttpHandler
             sqlOperation.AddParameterWithValue("@date", date);
             sqlOperation.AddParameterWithValue("@id", equipmentID);
             int todaynumber = int.Parse(sqlOperation.ExecuteScalar(todaycount));
-            if (k < alltotalnumber - 1 && k > 0 && todaynumber > 0)
+            if (k > 0 && todaynumber > 0)
             {
                 backString.Append(",");
             }
