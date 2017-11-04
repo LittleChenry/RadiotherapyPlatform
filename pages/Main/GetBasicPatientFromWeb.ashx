@@ -65,11 +65,24 @@ public class GetBasicPatientFromWeb : IHttpHandler {
             nation="";
         }
         XmlNode tele2 = xmldoc.SelectSingleNode("/NewDataSet/Table/CONTACTORTELENUM");
-        String telenumber2 = tele2.InnerText;
-        if (telenumber2 == "不详" || telenumber2 == "-")
+        String telenumber2 = "";
+        if(tele2==null)
         {
-            telenumber2="";
+            tele2 = xmldoc.SelectSingleNode("/NewDataSet/Table/CONTACTORHANDSET");
         }
+        if (tele2 == null)
+        {
+            telenumber2 = "不详";
+        }
+        else
+        {
+            telenumber2 = tele2.InnerText;
+            if (telenumber2 == "不详" || telenumber2 == "-")
+            {
+                telenumber2 = "";
+            }
+        }
+       
         XmlNode address2 = xmldoc.SelectSingleNode("/NewDataSet/Table/IDCARD");
         String idcard = address2.InnerText;
         if (idcard == "不详" || idcard == "-")
