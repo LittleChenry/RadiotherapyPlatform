@@ -7,7 +7,7 @@ var signal1 = 0;
 var role;
 function Init(evt) {
 
-//获得当前执行人姓名与ID
+//获得当前执行人姓名与ID,
 getUserName();
 getUserID();
 var session = getSession();
