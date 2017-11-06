@@ -50,7 +50,7 @@ public class GetInfoForEquipAndAppoint : IHttpHandler {
         backString.Append(",\"appointinfo\":[");
        
         int i=0;
-        string appointinfocommand = "select ID,Task,Patient_ID,Date,Begin,End,Completed,Treatment_ID,IsDouble from appointment_accelerate where Equipment_ID=@equipid and Date>=@date order by Date,Begin asc";
+        string appointinfocommand = "select ID,Task,Patient_ID,Date,Begin,End,Completed,Treatment_ID,IsDouble from appointment_accelerate where Equipment_ID=@equipid and Date>=@date order by Begin,Date asc";
         reader = sqlOperation.ExecuteReader(appointinfocommand);
         while (reader.Read())
         {
