@@ -278,26 +278,26 @@ function Init(evt) {
             alert("没有选择协助操作者");
         }
     });
-    if (iscommon == "1") {
-        var type = geteuqipmenttype(treatmentID);
-        createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator", type);
-    } else {
-        createfixEquipmachine1(document.getElementById("equipmentName"), "Accelerator");
+    //if (iscommon == "1") {
+    //    var type = geteuqipmenttype(treatmentID);
+    //    createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator", type);
+    //} else {
+    //    createfixEquipmachine1(document.getElementById("equipmentName"), "Accelerator");
 
-    }
-    var date = new Date();
-    document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    $("#rest").unbind("click").bind("click", function () {
-        CreateNewAppiontTable();
+    //}
+    //var date = new Date();
+    //document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    //$("#rest").unbind("click").bind("click", function () {
+    //    CreateNewAppiontTable();
 
-    });
-    $("#chooseProject").unbind("click").bind("click", function () {
-        CreateNewAppiontTable();
-    });
-    $("#sure").bind("click", function () {
-        $(this).unbind("click");
-        checkAllTable(treatmentID);
-    });
+    //});
+    //$("#chooseProject").unbind("click").bind("click", function () {
+    //    CreateNewAppiontTable();
+    //});
+    //$("#sure").bind("click", function () {
+    //    $(this).unbind("click");
+    //    checkAllTable(treatmentID);
+    //});
 }
 
 function doChromeWindowShowModalDialog(obj) {
