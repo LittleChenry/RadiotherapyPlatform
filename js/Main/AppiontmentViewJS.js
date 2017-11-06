@@ -75,7 +75,7 @@ function convertTime(time) {
     var h = parseInt(t / 60);
     var m = t - h * 60;
     var str = "";
-    str += h + ":" + (m > 10 ? "" : "0") + m;
+    str += h + ":" + (m >= 10 ? "" : "0") + m;
     return str;
 }
 
