@@ -59,7 +59,7 @@ public class GetAccerWorkCondition : IHttpHandler
             {
                 backString.Append(",");
             }
-            string sqlCommand = "SELECT Patient_ID,Begin,End,Treatment_ID,IsDouble FROM appointment_accelerate WHERE Date=@date AND Equipment_ID=@id";
+            string sqlCommand = "SELECT Patient_ID,Begin,End,Treatment_ID,IsDouble,Completed FROM appointment_accelerate WHERE Date=@date AND Equipment_ID=@id";
           reader = sqlOperation.ExecuteReader(sqlCommand);
             int i = 0;
             while (reader.Read())
@@ -79,7 +79,7 @@ public class GetAccerWorkCondition : IHttpHandler
                 {
                     iscondition = "0";
                 }
-                backString.Append("{\"Date\":\"" + date + "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\",\"isdouble\":\"" + reader["IsDouble"].ToString() + "\",\"name\":\"" + name + "\",\"ispatient\":\"" + iscondition + "\",\"treatdescribe\":\"" + treatdescribe + "\"}");
+                backString.Append("{\"Date\":\"" + date + "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\",\"Completed\":\"" + reader["Completed"].ToString() + "\",\"isdouble\":\"" + reader["IsDouble"].ToString() + "\",\"name\":\"" + name + "\",\"ispatient\":\"" + iscondition + "\",\"treatdescribe\":\"" + treatdescribe + "\"}");
                 if (i < todaynumber - 1)
                 {
                     backString.Append(",");
