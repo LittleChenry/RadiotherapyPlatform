@@ -35,7 +35,7 @@ public class AppointChangeAndDelete : IHttpHandler {
         }
         if (ja.Count != 0)
         {
-            string way = ja[0]["date"].ToString();
+            string way = ja[0]["Date"].ToString();
             if (way == "")
             {
                 int i = 0;

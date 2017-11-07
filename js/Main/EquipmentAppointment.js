@@ -298,7 +298,7 @@ function DeleteTreatment(timelength,begintime){
         data:{
             appoint:data
         },
-        url: "../../../pages/Main/Records/AppointChangeAndDelete.ashx",
+        url: "AppointChangeAndDelete.ashx",
         success:function(){
             alert("修改成功！");
         }
@@ -321,7 +321,7 @@ function findAllTreatData(timelength,begintime){
                 var begin = begintime + rownum * timelength;
                 var isdouble = 0;
                 var end = begin + (isdouble + 1) * timelength;
-                data += '{"appointid":"'+ appointid +'","Date":"' + date + '","Begin":"' + begin + '","End":"' + end + '"},';
+                data += '{"appointid":"'+ appointid +'","Date":"","Begin":"","End":""},';
             }
         });
     });

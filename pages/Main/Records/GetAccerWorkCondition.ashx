@@ -70,7 +70,16 @@ public class GetAccerWorkCondition : IHttpHandler
                 string treatmentdescribe = "select Treatmentdescribe from treatment where ID=@treatid";
                 sqlOperation2.AddParameterWithValue("@treatid", reader["Treatment_ID"].ToString());
                 string treatdescribe = sqlOperation2.ExecuteScalar(treatmentdescribe);
-                backString.Append("{\"Date\":\"" + date + "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\",\"isdouble\":\"" + reader["IsDouble"].ToString() + "\",\"name\":\"" + name + "\",\"treatdescribe\":\"" + treatdescribe + "\"}");
+                string iscondition="";
+                if (reader["Treatment_ID"].ToString() == "treatmentid")
+                {
+                    iscondition = "1";
+                }
+                else
+                {
+                    iscondition = "0";
+                }
+                backString.Append("{\"Date\":\"" + date + "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\",\"isdouble\":\"" + reader["IsDouble"].ToString() + "\",\"name\":\"" + name + "\",\"ispatient\":\"" + iscondition + "\",\"treatdescribe\":\"" + treatdescribe + "\"}");
                 if (i < todaynumber - 1)
                 {
                     backString.Append(",");
