@@ -277,7 +277,7 @@
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#patientView" data-toggle="tab">患者视图</a></li>
-                            <li><a href="#appointView" data-toggle="tab">预约视图</a></li>
+                            <li><a id="AppointType" href="#appointView" data-toggle="tab">预约视图</a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="active tab-pane" id="patientView" style="overflow:hidden;">
@@ -314,6 +314,29 @@
                                         <thead id="thead"></thead>
                                         <tbody id="tbody"></tbody>
                                     </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="appointViewAccelerate" style="overflow:hidden;">
+                                <div class="btn-area col-xs-12">
+                                    <div class="col-xs-3 col-xs-offset-9">
+                                        <button id="DeleteAppoint" type="button" class="time-btn pull-right" style="margin-left:5px;">删除预约</button>
+                                        <button id="CancelTreatment" type="button" class="time-btn pull-right">取消选择</button>
+                                    </div>
+                                </div>
+                                <div class="btn-area col-xs-12">
+                                    <div id="chooseTime" class="col-xs-3">
+                                        <button type="button" class="time-btn selected-btn">上午</button>
+                                        <button type="button" class="time-btn">下午</button>
+                                        <button type="button" class="time-btn">晚上</button>
+                                    </div>
+                                    <div id="chooseWeek" class="col-xs-6"></div>
+                                    <div id="chooseWay" class="col-xs-3">
+                                        <button type="button" class="time-btn pull-right" style="margin-left:5px;">自由选择</button>
+                                        <button type="button" class="time-btn selected-btn pull-right">批量选择</button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div id="WeekArea" class="col-xs-12"></div>
                                 </div>
                             </div>
                         </div>

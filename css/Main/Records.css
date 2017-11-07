@@ -386,4 +386,36 @@
 
 .selected-td {
     background-color: #c1c1c1;
+    font-weight: 600;
+}
+
+.treat-td {
+    background-color: #3C8DBC;
+    color: white;
+}
+
+.info-content {
+    width: 400px;
+    position: relative;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #999;
+    border-radius: 6px;
+    outline: 0;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.info-close {
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.info-text {
+    margin: auto;
+    padding: 20px 10px;
+    font-size: 18px;
+    width: 350px;
+    text-align: center;
+    word-break: break-word;
 }

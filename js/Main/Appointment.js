@@ -16,7 +16,7 @@
         },
         url: "../../../pages/Main/Records/GetBasicTableInfo.ashx",
         success: function(data){
-        	//alert(data);
+        	//showinfo(data);
         	var info = $.parseJSON(data);
         	$("#Ways").text(info.Ways);
         	$("#appointnumber").text(info.appointnumber);
@@ -105,7 +105,7 @@
         },
         url: "../../../pages/Main/Records/GetAccerWorkCondition.ashx",
         success: function(data){
-        	//alert(data);
+        	//showinfo(data);
         	var info = $.parseJSON(data);
         	if (info.appointinfo) {
         		for (var i = 0; i < info.appointinfo.length; i++) {
@@ -187,7 +187,7 @@
 		var exist = CalculateTimes();
 		if (exist == remaintimes) {
 			var appointdata = findAllAppointData(ambegin,timelength,firstDate.Format("yyyy-MM-dd"));
-			//alert(appointdata.toString());
+			//showinfo(appointdata.toString());
 			$.ajax({
 				type: "POST",
 		        async: false,
@@ -207,7 +207,7 @@
 		        }
 			});
 		}else{
-			alert("还未预约完！");
+			showinfo("还未预约完！");
 		}
 		
 	});
@@ -274,16 +274,18 @@ function BatchAppoint(num,D,T,timelength,TimeInteral,appointnumber){
 				if ($(this).find("i").length == 0) {
 					RowBatchAppoint(this,rownum,colnum,num,rowTimes[selectedrownum],D,timelength,TimeInteral,appointnumber);
 				}
+			}else if ($(this).hasClass("weekend")) {
+				showinfo("不能选择周末!");
 			}
 		});
 	});
 }
 
 function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,appointnumber){
-	//alert(rownum + "," + colnum + "," + numTotal + "," + D);
+	//showinfo(rownum + "," + colnum + "," + numTotal + "," + D);
 	var exist = CalculateTimes();
 	var avoidway = $("#avoidway").val();
-	//alert(avoidway);
+	//showinfo(avoidway);
 	var TempI;
 	if (exist < numTotal) {
 		if (CheckTimeInterva(rownum,timelength,TimeInteral)) {
@@ -293,6 +295,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 				var tdid = "1" + rownum.toString() + i.toString();
 				if (!($("#" + tdid).hasClass("selected-td"))) {
 					if(!($("#" + tdid).hasClass("weekend"))){
+						$("#" + tdid).addClass("selected-td");
 						$("#" + tdid).append("<i class='fa fa-fw fa-check'></i>");
 						count ++;
 						TempD = D;
@@ -307,7 +310,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 				}else{
 					switch(avoidway){
 						case '1':
-							alert("存在阻挡！");
+							showinfo("存在阻挡！");
 							RemoveRow(rownum);
 							return false;
 						case '2':
@@ -315,7 +318,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 							if (flag) {
 								count ++;
 							}else{
-								alert("局部存在阻挡！");
+								showinfo("局部存在阻挡！");
 								RemoveRow(rownum);
 								return false;
 							}
@@ -325,7 +328,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 							if (flag) {
 								count ++;
 							}else{
-								alert("存在阻挡！");
+								showinfo("存在阻挡！");
 								RemoveRow(rownum);
 								return false;
 							}
@@ -344,6 +347,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 					var tdid = tablenum.toString() + rownum.toString() + i.toString();
 					if (!($("#" + tdid).hasClass("selected-td"))) {
 						if(!($("#" + tdid).hasClass("weekend"))){
+							$("#" + tdid).addClass("selected-td");
 							$("#" + tdid).append("<i class='fa fa-fw fa-check'></i>");
 							count ++;
 							TempD = D;
@@ -359,7 +363,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 					}else{
 						switch(avoidway){
 							case '1':
-								alert("存在阻挡！");
+								showinfo("存在阻挡！");
 								RemoveRow(rownum);
 								return false;
 							case '2':
@@ -367,7 +371,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 								if (flag) {
 									count ++;
 								}else{
-									alert("局部存在阻挡！");
+									showinfo("局部存在阻挡！");
 									RemoveRow(rownum);
 									return false;
 								}
@@ -377,7 +381,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 								if (flag) {
 									count ++;
 								}else{
-									alert("存在阻挡！");
+									showinfo("存在阻挡！");
 									RemoveRow(rownum);
 									return false;
 								}
@@ -393,7 +397,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 			$("#selectedrownum").val(selectedrownum + 1);
 		}
 	}else{
-		alert("已预约完！");
+		showinfo("已预约完！");
 	}
 	return true;
 }
@@ -419,9 +423,11 @@ function PartialAvoid(tablenum,rownum,colnum,range){
 		var tdid1 = tablenum.toString() + (rownum - i).toString() + colnum.toString();
 		var tdid2 = tablenum.toString() + (rownum + i).toString() + colnum.toString();
 		if ($("#" + tdid1).length > 0 && !($("#" + tdid1).hasClass("selected-td"))) {
+			$("#" + tdid1).addClass("selected-td");
 			$("#" + tdid1).append("<i class='fa fa-fw fa-check'></i>");
 			return true;
 		}else if ($("#" + tdid2).length > 0 && !($("#" + tdid2).hasClass("selected-td"))) {
+			$("#" + tdid2).addClass("selected-td");
 			$("#" + tdid2).append("<i class='fa fa-fw fa-check'></i>");
 			return true;
 		}
@@ -435,9 +441,11 @@ function UnconditionalAvoid(tablenum,rownum,colnum){
 	var tdid2 = tablenum.toString() + (rownum + 1).toString() + colnum.toString();
 	while($("#" + tdid1).length > 0 || $("#" + tdid2).length > 0) {
 		if ($("#" + tdid1).length > 0 && !($("#" + tdid1).hasClass("selected-td"))) {
+			$("#" + tdid1).addClass("selected-td");
 			$("#" + tdid1).append("<i class='fa fa-fw fa-check'></i>");
 			return true;
 		}else if ($("#" + tdid2).length > 0 && !($("#" + tdid2).hasClass("selected-td"))) {
+			$("#" + tdid2).addClass("selected-td");
 			$("#" + tdid2).append("<i class='fa fa-fw fa-check'></i>");
 			return true;
 		}
@@ -454,6 +462,7 @@ function RemoveRow(rownum){
 			var tablenum = index + 1;
 			var tdid = tablenum.toString() + rownum.toString() + i.toString();
 			if ($("#" + tdid).find("i").length > 0) {
+				$("#" + tdid).removeClass("selected-td");
 				$("#" + tdid).html("");
 			}
 		}
@@ -465,16 +474,18 @@ function UnlimitedAppoint(num,appointnumber){
 	var table = $("#WeekArea").find("table");
 	table.find("td").each(function(index,e){
 		$(this).bind("click",function(){
-			if (!($(this).hasClass("selected-td"))) {
+			if ($(this).find("i").length > 0) {
+				$(this).removeClass("selected-td");
+				$(this).find("i")[0].remove();
+			}else if (!($(this).hasClass("selected-td"))) {
 				var currentNum = CalculateTimes();
 				if ($(this).find("i").length == 0) {
 					if (currentNum < num) {
+						$(this).addClass("selected-td");
 						$(this).append("<i class='fa fa-fw fa-check'></i>");
 					}else{
-						alert("已预约完！");
+						showinfo("已预约完！");
 					}
-				}else{
-					$(this).find("i")[0].remove();
 				}
 			}
 			updateTimes(appointnumber);
@@ -501,7 +512,7 @@ function CheckTimeInterva(row,timelength,TimeInteral){
 	if (minInterval >= TimeInteral * 60) {
 		return true;
 	}else{
-		alert("请注意时间间隔！");
+		showinfo("请注意时间间隔！");
 		return false;
 	}
 }
@@ -520,6 +531,7 @@ function CancelAppoint(appointnumber){
 	WeekArea.find("table").each(function(index,e){
 		$(this).find("td").each(function(){
 			if ($(this).find("i").length > 0) {
+				$(this).removeClass("selected-td");
 				$(this).find("i")[0].remove();
 			}
 		});
@@ -571,6 +583,7 @@ function createDateTable(D, T, startDate, times, startTime, endTime, singleInter
 		
 		chooseWeek.append(button);
 		var w1,w0;
+		table += '<th>时间' + '\\' + '日期</th>';
 		for (var i = 0; i < 7 && countdays < days + 14 - extradays; i++) {
 			var currentDate = new Date(dateAdd(TempDate,i));
 			var weekday = currentDate.getDay();
@@ -588,37 +601,22 @@ function createDateTable(D, T, startDate, times, startTime, endTime, singleInter
 		while(singlecurrentTime < endTime){
 			var start = singlecurrentTime;
 			var end = singlecurrentTime + singleInterval;
+
 			if (end <= morningEnd) {
-				var tr = '<tr class="morning">';
-				for (var i = 0; i < 7 && countdays < days + 14 - extradays; i++) {
-					if (i == w0 || i == w1) {
-						tr += "<td id='"+ weeknum + rownum + i +"' class='td-single weekend'></td>";
-					}else{
-						tr += "<td id='"+ weeknum + rownum + i +"' class='td-single'></td>";
-					}
-				}
-				tr += "</tr>";
+				var tr = '<tr class="morning"><td>'+ toTime(start) + '-'+ toTime(end) +'</td>';
 			}else if (end <= afternoonEnd) {
-				var tr = '<tr class="afternoon">';
-				for (var i = 0; i < 7 && countdays < days + 14 - extradays; i++) {
-					if (i == w0 || i == w1) {
-						tr += "<td id='"+ weeknum + rownum + i +"' class='td-single weekend'></td>";
-					}else{
-						tr += "<td id='"+ weeknum + rownum + i +"' class='td-single'></td>";
-					}
-				}
-				tr += "</tr>";
+				var tr = '<tr class="afternoon"><td>'+ toTime(start) + '-'+ toTime(end) +'</td>';
 			}else{
-				var tr = '<tr class="evening">';
-				for (var i = 0; i < 7 && countdays < days + 14 - extradays; i++) {
-					if (i == w0 || i == w1) {
-						tr += "<td id='"+ weeknum + rownum + i +"' class='td-single weekend'></td>";
-					}else{
-						tr += "<td id='"+ weeknum + rownum + i +"' class='td-single'></td>";
-					}
-				}
-				tr += "</tr>";
+				var tr = '<tr class="evening"><td>'+ toTime(start) + '-'+ toTime(end) +'</td>';
 			}
+			for (var i = 0; i < 7 && countdays < days + 14 - extradays; i++) {
+				if (i == w0 || i == w1) {
+					tr += "<td id='"+ weeknum + rownum + i +"' class='td-single weekend'></td>";
+				}else{
+					tr += "<td id='"+ weeknum + rownum + i +"' class='td-single'></td>";
+				}
+			}
+			tr += "</tr>";
 			table += tr;
 			singlecurrentTime = end;
 			rownum ++;
@@ -630,7 +628,7 @@ function createDateTable(D, T, startDate, times, startTime, endTime, singleInter
 		WeekArea.append(table);
 	}
 
-	while(currentTime < endTime){
+	/*while(currentTime < endTime){
 		var start = currentTime;
 		var end = currentTime + singleInterval;
 		if (end <= morningEnd) {
@@ -644,7 +642,7 @@ function createDateTable(D, T, startDate, times, startTime, endTime, singleInter
 		currentTime = end;
 	}
 	DTA_tbody += "</tbody>";
-	DayTimeArea.find("table").append(DTA_tbody);
+	DayTimeArea.find("table").append(DTA_tbody);*/
 	return days + 14 - extradays;
 }
 
@@ -769,12 +767,24 @@ function getSession() {
         async: false,
         dateType: "text",
         success: function (data) {
-            //alert(data);
+            //showinfo(data);
             Session = $.parseJSON(data);
         },
         error: function () {
-            alert("error");
+            showinfo("error");
         }
     });
     return Session;
+}
+
+function showinfo(info){
+	var showinfo = $("#showinfo");
+	var maxTime = 4000;
+	var showTime = info.length * 800 > maxTime ? maxTime : info.length * 800;
+	showinfo.find("span").text(info);
+	showinfo.modal("show");
+	setTimeout(function(){
+		showinfo.modal("hide");
+		showinfo.find("span").text("");
+	},showTime);
 }

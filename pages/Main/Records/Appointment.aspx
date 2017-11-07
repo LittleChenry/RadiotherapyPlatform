@@ -80,19 +80,22 @@
                 </div>
             </div>
             <div class="col-xs-12">
-                <div id="DayTimeArea" class="col-xs-2">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>时间\日期</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div id="WeekArea" class="col-xs-10"></div>
+                <div id="WeekArea" class="col-xs-12"></div>
             </div>
         </div>
     </section>
+    <div id="showinfo" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="info-content">
+                <div class="info-close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i aria-hidden="true">&times;</i></button>
+                </div>
+                <div class="info-text">
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- jQuery UI 1.11.4 -->

@@ -9,12 +9,27 @@ $(document).ready(function () {
     }
 	chooseEquipment();
 	$("#sureEquipment").unbind("click").click(function(){
+        var equipmentType = $("#equipmentType").val();
 		var equipmentID = $("#equipment").val();
 		if (equipmentID == null) {
 			alert("请选择设备！");
 			return false;
 		}
-		appointView();
+        if (equipmentType == "加速器") {
+            $("#AppointType").attr("href","#appointViewAccelerate");
+            if ($("#appointViewAccelerate").hasClass("active") || $("#appointView").hasClass("active")) {
+                $("#appointView").removeClass("active");
+                $("#appointViewAccelerate").addClass("active");
+            }
+            AccelerateAppointView();
+        }else{
+            $("#AppointType").attr("href","#appointView");
+            if ($("#appointViewAccelerate").hasClass("active") || $("#appointView").hasClass("active")) {
+                $("#appointViewAccelerate").removeClass("active");
+                $("#appointView").addClass("active");
+            }
+            appointView();
+        }
 		patientView();
 	});
 	document.getElementById("chooseProject").addEventListener("click", function () {
@@ -24,8 +39,310 @@ $(document).ready(function () {
 	    var dateString = document.getElementById("AppiontDate").value;
 	    CreateCurrentAccerEquipmentTbale(dateString);
 	});
+    
 
 });
+
+function AccelerateAppointView(){
+    var equipmentID = $("#equipment").val();
+    var appiontview = getAppointRecords(equipmentID);
+    var machineinfo = appiontview.machineinfo;
+    var appointinfo = appiontview.appointinfo;
+    var morningEnd = 720;
+    var afternoonEnd = 1080;
+    var count = 0;
+    var num = appointinfo.length;
+    var DayTimeArea = $("#DayTimeArea");
+    var WeekArea = $("#WeekArea");
+    WeekArea.html("");
+    var chooseWeek = $("#chooseWeek");
+    chooseWeek.html("");
+    var begintime = parseInt(appointinfo[0].Begin);
+    var maxbegin = parseInt(appiontview.maxbegin);
+    var timelength = parseInt(machineinfo.Timelength);
+    var rows = (maxbegin - begintime) / timelength + 1;
+    var endtime = begintime + timelength;
+    while(count < num){
+        var currentdate = appointinfo[count].Date;
+        var datediff = GetDateDiff(new Date().Format("yyyy-MM-dd"),new Date(currentdate).Format("yyyy-MM-dd"));
+        var needtable = Math.floor(datediff / 7) + 1;
+        var tablenum = WeekArea.find("table").length;
+        if(tablenum < needtable){
+            if (WeekArea.find("table").length == 0) {
+                var table = '<table class="table table-bordered" style="table-layout:fixed;"><thead><tr>';
+                var button = '<button type="button" class="time-btn selected-btn" style="margin-right:5px;margin-bottom:4px;">'+ '第' + needtable + '周' +'</button>';
+            }else{
+                var table = '<table class="table table-bordered" style="display:none;table-layout:fixed;"><thead><tr>';
+                var button = '<button type="button" class="time-btn" style="margin-right:5px;margin-bottom:4px;">'+ '第' + needtable + '周' +'</button>';
+            }
+            chooseWeek.append(button);
+            table += '<th>时间' + '\\' + '日期</th>';
+            for (var i = 0; i < 7; i++) {
+                var thisDate = new Date(dateAdd(new Date().Format("yyyy-MM-dd"),i + tablenum * 7));
+                var weekday = thisDate.getDay();
+                var th = '<th>'+ thisDate.Format("MM/dd") + '('+ num2week(weekday) +')' +'</th>';
+                table += th;
+            }
+            table += "</tr></thead><tbody style='text-align:center;'>";
+            for (var i = 0; i < rows; i++) {
+                var TempBegin = begintime + i * timelength;
+                var TempEnd = TempBegin + timelength;
+                if (TempEnd <= morningEnd) {
+                    var tr = '<tr class="morning"><td>'+ toTime(TempBegin) + '-'+ toTime(TempEnd) +'</td>';
+                }else if (TempEnd <= afternoonEnd) {
+                    var tr = '<tr class="afternoon"><td>'+ toTime(TempBegin) + '-'+ toTime(TempEnd) +'</td>';
+                }else{
+                    var tr = '<tr class="evening"><td>'+ toTime(TempBegin) + '-'+ toTime(TempEnd) +'</td>';
+                }
+                for (var j = 0; j < 7; j++) {
+                    tr += "<td id='"+ (needtable).toString() + i + j +"'></td>";
+                }
+                tr += "</tr>";
+                table += tr;
+            }
+            table += "</tbody></table>";
+            WeekArea.append(table);
+        }
+
+        count ++;
+    }
+
+    count = 0;
+
+    while(count < num){
+        var currentdate = appointinfo[count].Date;
+        var currenttime = parseInt(appointinfo[count].Begin);
+        var datediff = GetDateDiff(new Date().Format("yyyy-MM-dd"),new Date(currentdate).Format("yyyy-MM-dd"));
+        var tablenum = Math.floor(datediff / 7) + 1;
+        var col = datediff - 7 * (tablenum - 1);
+        var row = (currenttime - begintime) / timelength;
+        var tdid = tablenum.toString() + row.toString() + col.toString();
+        var span = '<span id='+ appointinfo[count].TreatmentID + '_' + appointinfo[count].appointid +'>'+ appointinfo[count].patientname + " " + appointinfo[count].treatdescribe +'</span>'
+        $("#" + tdid).append(span);
+        /*$("#" + tdid).bind("click",function(){
+            var treatID = $(this).find("span").attr('id');
+            findAllTreatIDTd(treatID);
+        });*/
+        count ++;
+    }
+
+    $("#chooseWeek").find("button").each(function(index,e){
+        $(this).bind("click",{index:index},function(e){
+            var WeekArea = $("#WeekArea");
+            var btnindex = e.data.index;
+            chooseWeek.find("button").each(function(index,e){
+                if ($(this).hasClass("selected-btn")) {
+                    $(this).removeClass("selected-btn");
+                }
+            });
+            $(this).addClass("selected-btn");
+            WeekArea.find("table").each(function(index,e){
+                if ($(this).css("display") != "none") {
+                    $(this).fadeOut(200,function(){
+                        WeekArea.find("table").each(function(index,e){
+                            if (btnindex == index) {
+                                $(this).fadeIn(200);
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    });
+    var chooseTime = $("#chooseTime");
+    chooseTime.find("button").each(function(index,e){
+        $(this).bind("click",{index:index},function(e){
+            switch(e.data.index){
+                case 0:
+                    if ($(this).hasClass("selected-btn")) {
+                        $(".morning").fadeOut(200);
+                        $(this).removeClass("selected-btn");
+                    }else{
+                        $(".morning").fadeIn(200);
+                        $(this).addClass("selected-btn");
+                    }
+                    break;
+                case 1:
+                    if ($(this).hasClass("selected-btn")) {
+                        $(".afternoon").fadeOut(200);
+                        $(this).removeClass("selected-btn");
+                    }else{
+                        $(".afternoon").fadeIn(200);
+                        $(this).addClass("selected-btn");
+                    }
+                    break;
+                case 2:
+                    if ($(this).hasClass("selected-btn")) {
+                        $(".evening").fadeOut(200);
+                        $(this).removeClass("selected-btn");
+                    }else{
+                        $(".evening").fadeIn(200);
+                        $(this).addClass("selected-btn");
+                    }
+                    break;
+            }
+        });
+        
+    });
+
+    BatchChooseTreat();
+
+    $("#chooseWay").find("button").each(function(index,e){
+        $(this).bind("click",{index:index},function(e){
+            if (e.data.index == 0) {
+                CancelClick();
+                UnlimitedChooseTreat();
+                $(this).removeClass("selected-btn").addClass("selected-btn");
+                if ($(this).next().hasClass("selected-btn")) {
+                    $(this).next().removeClass("selected-btn");
+                }
+            }else if (e.data.index == 1) {
+                CancelClick();
+                BatchChooseTreat();
+                $(this).removeClass("selected-btn").addClass("selected-btn");
+                if ($(this).prev().hasClass("selected-btn")) {
+                    $(this).prev().removeClass("selected-btn");
+                }
+            }
+        });
+    });
+
+    $("#CancelTreatment").bind("click",function(){
+        CancelTreatment();
+    });
+
+    $("#DeleteAppoint").bind("click",function(){
+        DeleteTreatment(timelength,begintime);
+    });
+}
+
+function BatchChooseTreat(){
+    var WeekArea = $("#WeekArea");
+    WeekArea.find("table").each(function(index,e){
+        $(this).find("td").each(function(index,e){
+            if($(this).find("span").length > 0){
+                $(this).bind("click",function(){
+                    var treatID = $(this).find("span").attr('id').split("_")[0];
+                    if (!($(this).hasClass("treat-td"))) {
+                        findAllTreatIDTd(treatID);
+                    }else{
+                        cancelAllTreatIDTd(treatID)
+                    }
+                });
+            }
+        });
+    });
+}
+
+function UnlimitedChooseTreat(){
+    var WeekArea = $("#WeekArea");
+    WeekArea.find("table").each(function(index,e){
+        $(this).find("td").each(function(index,e){
+            if($(this).find("span").length > 0){
+                $(this).bind("click",function(){
+                    if ($(this).hasClass("treat-td")) {
+                        $(this).removeClass("treat-td");
+                    }else{
+                        $(this).addClass("treat-td");
+                    }
+                });
+            }
+        });
+    });
+}
+
+function findAllTreatIDTd(treatID){
+    var WeekArea = $("#WeekArea");
+    WeekArea.find("table").each(function(index,e){
+        $(this).find("td").each(function(index,e){
+            if($(this).find("span").length > 0){
+                if ($(this).find("span").attr("id").split("_")[0] == treatID) {
+                    $(this).addClass("treat-td");
+                }else if ($(this).hasClass("treat-td")) {
+                    $(this).removeClass("treat-td");
+                }
+            }
+        });
+    });
+}
+
+function cancelAllTreatIDTd(treatID){
+    var WeekArea = $("#WeekArea");
+    WeekArea.find("table").each(function(index,e){
+        $(this).find("td").each(function(index,e){
+            if($(this).find("span").length > 0){
+                if ($(this).find("span").attr("id").split("_")[0] == treatID) {
+                    $(this).removeClass("treat-td");
+                }
+            }
+        });
+    });
+}
+
+function CancelTreatment(){
+    var WeekArea = $("#WeekArea");
+    WeekArea.find("table").each(function(index,e){
+        $(this).find("td").each(function(){
+            if ($(this).hasClass("treat-td")) {
+                $(this).removeClass("treat-td");
+            }
+        });
+    });
+}
+
+function DeleteTreatment(timelength,begintime){
+    var data = findAllTreatData(timelength,begintime);
+    $.ajax({
+        type: "POST",
+        async: false,
+        data:{
+            appoint:data
+        },
+        url: "../../../pages/Main/Records/AppointChangeAndDelete.ashx",
+        success:function(){
+            alert("修改成功！");
+        }
+    });
+}
+
+function findAllTreatData(timelength,begintime){
+    var WeekArea = $("#WeekArea");
+    var data = "[";
+    WeekArea.find("table").each(function(index,e){
+        $(this).find("td").each(function(){
+            if ($(this).hasClass("treat-td")) {
+                var tdid = $(this).attr("id").split("_")[0];
+                var appointid = $(this).find("span").attr("id").split("_")[1];
+                var rownum = parseInt(tdid.substring(1,tdid.length-1));
+                var tablenum = parseInt(tdid.substring(0,1));
+                var colnum = parseInt(tdid.substring(tdid.length-1,tdid.length));
+                var begindate = new Date();
+                var date = dateAdd(begindate.Format("yyyy-MM-dd"),(tablenum - 1) * 7 + colnum);
+                var begin = begintime + rownum * timelength;
+                var isdouble = 0;
+                var end = begin + (isdouble + 1) * timelength;
+                data += '{"appointid":"'+ appointid +'","Date":"' + date + '","Begin":"' + begin + '","End":"' + end + '"},';
+            }
+        });
+    });
+    var l = data.length;
+    if (l > 1) {
+        data = data.substring(0,data.length-1);
+    }else{
+        data += "\"\"";
+    }
+    data += ']';
+    return data;
+}
+
+function CancelClick(){
+    var WeekArea = $("#WeekArea");
+    WeekArea.find("table").each(function(index,e){
+        $(this).find("td").each(function(){
+            $(this).unbind("click");
+        });
+    });
+}
 
 function patientView(){
 	var equipmentID = $("#equipment").val();
@@ -327,6 +644,18 @@ function getAppointments(treatmentID){
     });
     return appoints;
 }
+
+function getAppointRecords(equipmentID){
+    var xmlHttp = new XMLHttpRequest();
+    var url = "Records/GetInfoForEquipAndAppoint.ashx?equipid=" + equipmentID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    //alert(Items);
+    var data = $.parseJSON(Items)
+    return data;
+}
+
 function geteuqipmenttype(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/geteuqipmenttype.ashx?treatmentID=" + treatmentID;
@@ -364,7 +693,7 @@ function showEquipmentInfo(equipmentinfo){
 	});
 	EquipmentTime.html("一次治疗时间：" + equipmentinfo.Timelength + "min");
 	var TimeRangeAM = '<p class="text-muted" style="padding-left:20px;margin-top:10px;">上午工作时间：'+ toTime(equipmentinfo.BeginTimeAM) + ' - ' + toTime(equipmentinfo.EndTimeAM) +'</p>';
-	var TimeRangePM = '<p class="text-muted" style="padding-left:20px;margin-top:10px;">下午工作时间：'+ toTime(equipmentinfo.BegTimePM) + ' - ' + toTime(equipmentinfo.EndTimePM) +'</p>';
+	var TimeRangePM = '<p class="text-muted" style="padding-left:20px;margin-top:10px;">下午工作时间：'+ toTime2(equipmentinfo.BegTimePM) + ' - ' + toTime2(equipmentinfo.EndTimePM) +'</p>';
 	EquipmentTime.after(TimeRangePM);
 	EquipmentTime.after(TimeRangeAM);
 }
@@ -834,4 +1163,90 @@ function compareWithToday(time) {
             return true;
         }
     }
+}
+
+function toTime2(minute) {
+    var hour = parseInt(parseInt(minute) / 60);
+    var min = parseInt(minute) - hour * 60;
+    if (hour >= 24) {
+        hour = hour - 24;
+        return hour.toString() + ":" + (min < 10 ? "0" : "") + min.toString() + "(次日)";
+    } else {
+        return hour.toString() + ":" + (min < 10 ? "0" : "") + min.toString();
+    }
+}
+
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1,
+        "d+": this.getDate(),
+        "h+": this.getHours(),
+        "m+": this.getMinutes(),
+        "s+": this.getSeconds(),
+        "q+": Math.floor((this.getMonth() + 3) / 3),
+        "S": this.getMilliseconds()
+    };
+    if (/(y+)/.test(fmt))
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+function GetDateDiff(startDate, endDate) {
+    var startTime = new Date(Date.parse(startDate.replace(/-/g, "/"))).getTime();
+    var endTime = new Date(Date.parse(endDate.replace(/-/g, "/"))).getTime();
+    var dates = Math.abs((startTime - endTime)) / (1000 * 60 * 60 * 24);
+    return dates;
+}
+
+function num2week(isweek){
+    switch(isweek){
+        case 0:
+            var xq = "周日";
+            break;
+        case 1:
+            var xq = "周一";
+            break;
+        case 2:
+            var xq = "周二";
+            break;
+        case 3:
+            var xq = "周三";
+            break;
+        case 4:
+            var xq = "周四";
+            break;
+        case 5:
+            var xq = "周五";
+            break;
+        case 6:
+            var xq = "周六";
+            break;
+    }
+    return xq;
+}
+
+function dateAdd(dd, n) {
+    var strs = new Array();
+    strs = dd.split("-");
+    var y = strs[0];
+    var m = strs[1];
+    var d = strs[2];
+    var t = new Date(y, m - 1, d);
+    var str = t.getTime() + n * (1000 * 60 * 60 * 24);
+    var newdate = new Date();
+    newdate.setTime(str);
+    var strYear = newdate.getFullYear();
+    var strDay = newdate.getDate();
+    if (strDay < 10) {
+        strDay = "0" + strDay;
+    }
+    var strMonth = newdate.getMonth() + 1;
+    if (strMonth < 10) {
+        strMonth = "0" + strMonth;
+    }
+    var strdate = strYear+"-"+strMonth + "-" + strDay;
+    return strdate;
 }

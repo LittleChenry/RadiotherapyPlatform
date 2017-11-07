@@ -115,11 +115,11 @@ function RolesToPatients() {
             if (startdate > enddate) {
                 alert("结束日期不能小于开始日期！");
                 return false;
-            }
+            }/*
             if (startdate < currentTime) {
                 alert("开始日期不能小于当天日期！");
                 return false;
-            }
+            }*/
             $("#chosenEquipment").html(equipmentName);
             $("#dateRange").html(startdate + "~~" + enddate);
             var parameters = new Array();
