@@ -419,3 +419,7 @@
     text-align: center;
     word-break: break-word;
 }
+
+.completed {
+    background-color: #c1c1c1;
+}

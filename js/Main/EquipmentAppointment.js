@@ -95,7 +95,11 @@ function AccelerateAppointView(){
                     var tr = '<tr class="evening"><td>'+ toTime(TempBegin) + '-'+ toTime(TempEnd) +'</td>';
                 }
                 for (var j = 0; j < 7; j++) {
-                    tr += "<td id='"+ (needtable).toString() + i + j +"'></td>";
+                    if (appointinfo[count].Completed == 0) {
+                        tr += "<td id='"+ (needtable).toString() + i + j +"'></td>";
+                    }else{
+                        tr += "<td id='"+ (needtable).toString() + i + j +"' class='completed'></td>";
+                    }
                 }
                 tr += "</tr>";
                 table += tr;
@@ -220,7 +224,7 @@ function BatchChooseTreat(){
     var WeekArea = $("#WeekArea");
     WeekArea.find("table").each(function(index,e){
         $(this).find("td").each(function(index,e){
-            if($(this).find("span").length > 0){
+            if($(this).find("span").length > 0 && !($(this).hasClass("completed"))){
                 $(this).bind("click",function(){
                     var treatID = $(this).find("span").attr('id').split("_")[0];
                     if (!($(this).hasClass("treat-td"))) {
@@ -238,7 +242,7 @@ function UnlimitedChooseTreat(){
     var WeekArea = $("#WeekArea");
     WeekArea.find("table").each(function(index,e){
         $(this).find("td").each(function(index,e){
-            if($(this).find("span").length > 0){
+            if($(this).find("span").length > 0 && !($(this).hasClass("completed"))){
                 $(this).bind("click",function(){
                     if ($(this).hasClass("treat-td")) {
                         $(this).removeClass("treat-td");
