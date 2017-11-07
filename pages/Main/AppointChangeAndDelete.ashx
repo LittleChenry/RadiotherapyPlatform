@@ -23,8 +23,16 @@ public class AppointChangeAndDelete : IHttpHandler {
     }
     private string deleteandchange(HttpContext context)
     {
-        string oldappoint = context.Request["oldappoint"];
-        JArray ja = (JArray)JsonConvert.DeserializeObject(oldappoint);
+        string oldappoint = context.Request["appoint"];
+        JArray ja;
+        if (oldappoint != "")
+        {
+              ja = (JArray)JsonConvert.DeserializeObject(oldappoint);
+        }
+        else
+        {
+            return "failure";
+        }
         if (ja.Count != 0)
         {
             string way = ja[0]["date"].ToString();
