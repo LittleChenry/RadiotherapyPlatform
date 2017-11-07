@@ -51,26 +51,52 @@ public class GetBasicTableInfo : IHttpHandler {
         int appointid = 0;
         string date = "";
         string begin = "";
-        string sqlcommand = "select Treat_User_ID,Appointment_ID,Date,Begin from treatmentrecord,appointment_accelerate where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment_accelerate.ID order by Date desc,Begin desc";
-         reader = sqlOperation.ExecuteReader(sqlcommand);
+        string begindate = "";
+        string beginbegin = "";
+        string beginend = "";
+        string sqlcommand2 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin)) order by Date desc,Begin desc";
+        sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now);
+        sqlOperation.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
+        reader = sqlOperation.ExecuteReader(sqlcommand2);
         while (reader.Read())
         {
             if (reader["Treat_User_ID"].ToString() == "")
             {
+                if (begindate == "")
+                {
+                    begindate = reader["Date"].ToString();
+                    beginbegin = reader["Begin"].ToString();
+                    beginend = reader["End"].ToString();
+                }
                 count++;
             }
-            else
+        }
+        reader.Close();
+        
+
+        string sqlcommand = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date<@nowdate) or((Date=@nowdate)and Begin<@nowbegin)) order by Date desc,Begin desc";
+        reader = sqlOperation.ExecuteReader(sqlcommand);
+        while (reader.Read())
+        {
+            if (reader["Treat_User_ID"].ToString() != "")
             {
-                appointid = int.Parse(reader["Appointment_ID"].ToString());
+               appointid = int.Parse(reader["Appointment_ID"].ToString());
                 date = reader["Date"].ToString();
                 begin = reader["Begin"].ToString();
+                if (begindate == "")
+                {
+                    begindate = reader["Date"].ToString();
+                    beginbegin = reader["Begin"].ToString();
+                    beginend = reader["End"].ToString();
+                }
                 break;
             }
         }
         reader.Close();
-        if (appointid != 0)
+      
+      if (appointid != 0)
         {
-            string sqlcommand1 = "select Treat_User_ID from treatmentrecord,appointment_accelerate where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment_accelerate.ID and (Date<@date or (Date=@date and Begin<=@begin)) order by Date,Begin asc";
+            string sqlcommand1 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment_accelerate.ID and (Date<@date or (Date=@date and Begin<=@begin)) order by Date,Begin asc";
             sqlOperation.AddParameterWithValue("@date", date);
             sqlOperation.AddParameterWithValue("@begin", begin);
             MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(sqlcommand1);
@@ -89,7 +115,7 @@ public class GetBasicTableInfo : IHttpHandler {
         if (total != "")
         {
 
-            backText.Append(",\"total\":\"" + total + "\",\"appointnumber\":\"" + count + "\"}");
+            backText.Append(",\"total\":\"" + total + "\",\"appointnumber\":\"" + count + "\",\"newbegindate\":\"" + begindate + "\",\"newbeginbegin\":\"" + beginbegin + "\",\"newbeginend\":\"" + beginend + "\"}");
  
         }
         return backText.ToString();
