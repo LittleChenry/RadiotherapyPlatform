@@ -112,6 +112,10 @@ public class GetBasicTableInfo : IHttpHandler {
         }
         string totalnumber = "select TotalNumber from treatment where ID=@treat";
         string total = sqlOperation.ExecuteScalar(totalnumber);
+        if (begindate == "")
+        {
+            begindate = DateTime.Now.Date.ToString();
+        }
         if (total != "")
         {
 
