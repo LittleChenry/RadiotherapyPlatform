@@ -43,7 +43,7 @@ public class GetBasicTableInfo : IHttpHandler {
         reader = sqlOperation.ExecuteReader(firstequip);
         if (reader.Read())
         {
-            backText.Append(",\"equipmentname\":\"" + reader["equipmentname"].ToString() + "\",\"timelength\":\"" + reader["timelength"].ToString() + "\",\"ambegin\":\"" + reader["ambegin"].ToString()  + "\",\"pmend\":\"" + reader["pmend"].ToString() + "\",\"equipmentstate\":\"" + reader["equipmentstate"].ToString() + "\"");
+            backText.Append(",\"equipmentname\":\"" + reader["equipmentname"].ToString() + "\",\"timelength\":\"" + reader["timelength"].ToString() + "\",\"begindate\":\"" + reader["begindate"].ToString() + "\",\"begin\":\"" + reader["begin"].ToString() + "\",\"end\":\"" + reader["end"].ToString() + "\",\"ambegin\":\"" + reader["ambegin"].ToString() + "\",\"pmend\":\"" + reader["pmend"].ToString() + "\",\"equipmentstate\":\"" + reader["equipmentstate"].ToString() + "\"");
           
         }
         reader.Close();
@@ -115,7 +115,7 @@ public class GetBasicTableInfo : IHttpHandler {
         if (total != "")
         {
 
-            backText.Append(",\"total\":\"" + total + "\",\"appointnumber\":\"" + count + "\",\"begindate\":\"" + begindate + "\",\"begin\":\"" + beginbegin + "\",\"end\":\"" + beginend + "\"}");
+            backText.Append(",\"total\":\"" + total + "\",\"appointnumber\":\"" + count + "\",\"newbegindate\":\"" + begindate + "\",\"newbegin\":\"" + beginbegin + "\",\"newend\":\"" + beginend + "\"}");
  
         }
         return backText.ToString();

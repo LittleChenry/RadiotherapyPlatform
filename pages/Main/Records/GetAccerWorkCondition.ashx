@@ -28,6 +28,7 @@ public class GetAccerWorkCondition : IHttpHandler
         DataLayer sqlOperation2 = new DataLayer("sqlStr");
         string treatmentid = context.Request["treatid"];
         string alltotal = context.Request["times"];
+        string datenow = context.Request["nowdate"];
         string equipmentID = "";
         string dateorigin = "";
         StringBuilder backString = new StringBuilder("{\"appointinfo\":[");
@@ -46,7 +47,7 @@ public class GetAccerWorkCondition : IHttpHandler
         }
         reader.Close();
         int alltotalnumber = int.Parse(alltotal);
-        DateTime datefirst = Convert.ToDateTime(dateorigin);
+        DateTime datefirst = Convert.ToDateTime(datenow);
         string date = "";
         for (int k = 0; k < alltotalnumber; k++)
         {
