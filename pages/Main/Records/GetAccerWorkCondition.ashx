@@ -72,7 +72,7 @@ public class GetAccerWorkCondition : IHttpHandler
                 sqlOperation2.AddParameterWithValue("@treatid", reader["Treatment_ID"].ToString());
                 string treatdescribe = sqlOperation2.ExecuteScalar(treatmentdescribe);
                 string iscondition="";
-                if (reader["Treatment_ID"].ToString() == "treatmentid")
+                if (reader["Treatment_ID"].ToString() == treatmentid)
                 {
                     iscondition = "1";
                 }
