@@ -119,7 +119,7 @@
         	}
 			var firstrow = (firstTime - ambegin) / timelength;
 			var firsttdid = "1" + firstrow.toString() + "0";
-			$("#"+ firsttdid).text("首次");
+			$("#"+ firsttdid).text("最近一次预约");
 			//$("#"+ firsttdid).addClass("self-selected");
 			var trclass = $("#"+ firsttdid).parent().attr("class");
 			switch(trclass){
