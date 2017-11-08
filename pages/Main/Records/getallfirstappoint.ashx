@@ -31,7 +31,7 @@ public class getallfirstappoint : IHttpHandler {
         string date="";
         string begin="";
         string sqlcommand2 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin)) order by Date desc,Begin desc";
-        sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now);
+        sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
         sqlOperation.AddParameterWithValue("@treat", treat);
         sqlOperation.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand2);
@@ -39,7 +39,7 @@ public class getallfirstappoint : IHttpHandler {
         {
             if (reader["Treat_User_ID"].ToString() == "")
             {
-             
+                appointid = int.Parse(reader["Appointment_ID"].ToString()); 
                 count++;
             }
         }

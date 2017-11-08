@@ -43,7 +43,7 @@ public class GetBasicTableInfo : IHttpHandler {
         reader = sqlOperation.ExecuteReader(firstequip);
         if (reader.Read())
         {
-            backText.Append(",\"equipmentname\":\"" + reader["equipmentname"].ToString() + "\",\"begindate\":\"" + reader["begindate"].ToString() + "\",\"timelength\":\"" + reader["timelength"].ToString() + "\",\"ambegin\":\"" + reader["ambegin"].ToString() + "\",\"begin\":\"" + reader["begin"].ToString() + "\",\"end\":\"" + reader["end"].ToString() + "\",\"pmend\":\"" + reader["pmend"].ToString() + "\",\"equipmentstate\":\"" + reader["equipmentstate"].ToString() + "\"");
+            backText.Append(",\"equipmentname\":\"" + reader["equipmentname"].ToString() + "\",\"timelength\":\"" + reader["timelength"].ToString() + "\",\"ambegin\":\"" + reader["ambegin"].ToString()  + "\",\"pmend\":\"" + reader["pmend"].ToString() + "\",\"equipmentstate\":\"" + reader["equipmentstate"].ToString() + "\"");
           
         }
         reader.Close();
@@ -55,7 +55,7 @@ public class GetBasicTableInfo : IHttpHandler {
         string beginbegin = "";
         string beginend = "";
         string sqlcommand2 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.Treatment_ID=@treat and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin)) order by Date desc,Begin desc";
-        sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now);
+        sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
         sqlOperation.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
         reader = sqlOperation.ExecuteReader(sqlcommand2);
         while (reader.Read())
@@ -115,7 +115,7 @@ public class GetBasicTableInfo : IHttpHandler {
         if (total != "")
         {
 
-            backText.Append(",\"total\":\"" + total + "\",\"appointnumber\":\"" + count + "\",\"newbegindate\":\"" + begindate + "\",\"newbeginbegin\":\"" + beginbegin + "\",\"newbeginend\":\"" + beginend + "\"}");
+            backText.Append(",\"total\":\"" + total + "\",\"appointnumber\":\"" + count + "\",\"begindate\":\"" + begindate + "\",\"begin\":\"" + beginbegin + "\",\"end\":\"" + beginend + "\"}");
  
         }
         return backText.ToString();
