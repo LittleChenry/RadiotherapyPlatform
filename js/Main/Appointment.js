@@ -6,7 +6,7 @@
     var D;
     var T;
     var remaintimes,total,appointnumber;
-    var firstDate,firstTime;
+    var firstDate,firstTime,begindate;
     var ambegin,pmend,timelength,equipmentname,equipmentstate,TimeInteral;
     $.ajax({
         type: "POST",
@@ -29,6 +29,7 @@
         	appointnumber = parseInt(info.appointnumber);
         	remaintimes = parseInt(info.total) - parseInt(info.appointnumber);
         	firstDate = new Date(info.begindate);
+        	begindate = new Date(info.newbegindate);
         	firstTime = info.begin;
         	$("#firstdate").text(firstDate.Format("yyyy-MM-dd") + " " +toTime(firstTime));
         	ambegin = parseInt(info.ambegin);
@@ -36,7 +37,7 @@
         	timelength = parseInt(info.timelength);
         }
     });
-	var getdays = createDateTable(D, T, firstDate.Format("yyyy-MM-dd"), remaintimes, ambegin, pmend, timelength);
+	var getdays = createDateTable(D, T, begindate.Format("yyyy-MM-dd"), remaintimes, ambegin, pmend, timelength);
 	var chooseWeek = $("#chooseWeek");
 	chooseWeek.find("button").each(function(index,e){
 		$(this).bind("click",{index:index},function(e){
@@ -101,7 +102,8 @@
         async: false,
         data:{
         	treatid:treatid,
-        	times:getdays
+        	times:getdays,
+        	nowdate:begindate.Format("yyyy-MM-dd")
         },
         url: "../../../pages/Main/Records/GetAccerWorkCondition.ashx",
         success: function(data){
@@ -109,7 +111,7 @@
         	var info = $.parseJSON(data);
         	if (info.appointinfo) {
         		for (var i = 0; i < info.appointinfo.length; i++) {
-        			var daysdiff = GetDateDiff(firstDate.Format("yyyy-MM-dd"),new Date(info.appointinfo[i].Date).Format("yyyy-MM-dd"));
+        			var daysdiff = GetDateDiff(begindate.Format("yyyy-MM-dd"),new Date(info.appointinfo[i].Date).Format("yyyy-MM-dd"));
         			var tablenum = Math.floor(daysdiff / 7) + 1;
         			var col = daysdiff % 7;
         			var row = (info.appointinfo[i].Begin - ambegin) / timelength;
@@ -117,30 +119,28 @@
         			$("#"+ tdid).addClass("selected-td");
         		}
         	}
-			var firstrow = (firstTime - ambegin) / timelength;
+			/*var firstrow = (firstTime - ambegin) / timelength;
 			var firsttdid = "1" + firstrow.toString() + "0";
 			$("#"+ firsttdid).text("最近一次预约");
 			//$("#"+ firsttdid).addClass("self-selected");
-			var trclass = $("#"+ firsttdid).parent().attr("class");
-			switch(trclass){
-				case "afternoon":
-					$("#chooseTime").find("button").each(function(index,e){
-						if (index == 1) {
-							$(this).click();
-						}else if(index == 0){
-							$(this).click();
-						}
-					});
-					break;
-				case "evening":
-					$("#chooseTime").find("button").each(function(index,e){
-						if (index == 2) {
-							$(this).click();
-						}else if(index == 0){
-							$(this).click();
-						}
-					});
-					break;
+			var trclass = $("#"+ firsttdid).parent().attr("class");*/
+			var morningEnd = 720;
+			var afternoonEnd = 1080;
+			var t = parseInt(firstTime);
+			if (t + timelength <= morningEnd) {
+
+			}else if (t + timelength <= afternoonEnd) {
+				$("#chooseTime").find("button").each(function(index,e){
+					if (index == 1) {
+						$(this).click();
+					}
+				});
+			}else{
+				$("#chooseTime").find("button").each(function(index,e){
+					if (index == 2) {
+						$(this).click();
+					}
+				});
 			}
         }
 	});
@@ -186,7 +186,7 @@
 	$("#confirm").bind("click",function(){
 		var exist = CalculateTimes();
 		if (exist == remaintimes) {
-			var appointdata = findAllAppointData(ambegin,timelength,firstDate.Format("yyyy-MM-dd"));
+			var appointdata = findAllAppointData(ambegin,timelength,begindate.Format("yyyy-MM-dd"));
 			//showinfo(appointdata.toString());
 			$.ajax({
 				type: "POST",
