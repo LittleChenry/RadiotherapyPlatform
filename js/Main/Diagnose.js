@@ -538,7 +538,8 @@ function save() {
             copybingli2: copybingli2.value,
             copybingqing1: copybingqing1.value,
             copybingqing2: copybingqing2.value,
-            copybingqing3:copybingqing3.value
+            copybingqing3: copybingqing3.value,
+
 
         },
         dateType: "json",

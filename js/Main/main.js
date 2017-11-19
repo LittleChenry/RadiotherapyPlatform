@@ -620,8 +620,9 @@ function trAddClick(patient, userID) {
                     case 0:
                         $(this).find('li').removeClass().addClass("progress-info");
                         $(this).find('i').removeClass().addClass("fa fa-fw fa-info-circle");
+                        var url = "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID + "&Radiotherapy_ID=" + e.data.Radiotherapy_ID;
                         $(this).unbind("click").click(function () {
-                            $("#record-iframe").attr('src', "Records/PatientRegister.aspx?TreatmentID=" + e.data.ID + "&Radiotherapy_ID=" + e.data.Radiotherapy_ID);
+                            $("#record-iframe").attr('src', url);
                             var ul = $("#progress-iframe").contents().find("#ul-progress a");
                             ul.each(function (index, element) {
                                 $(this).find('span').removeClass();

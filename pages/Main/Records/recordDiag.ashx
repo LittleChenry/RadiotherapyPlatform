@@ -88,25 +88,25 @@ public class recordDiag : IHttpHandler {
             string progress = sqlOperation.ExecuteScalar(select1);
             string[] group = progress.Split(',');
             bool exists = ((IList)group).Contains("1");
-            if (!exists)
-            {
+        
                 if (patientjudge == "1")
                 {
                     string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe,iscommon=1 where ID=@treatid";
-                sqlOperation2.AddParameterWithValue("@treatid", treatID);
-                sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
-                sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
-                sqlOperation2.AddParameterWithValue("@Progress", "0,1");
-                int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);  
-                if (intSuccess > 0 && intSuccess1 > 0)
-                {
+                    sqlOperation2.AddParameterWithValue("@treatid", treatID);
+                    sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
+                    sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
+                    sqlOperation2.AddParameterWithValue("@Progress", "0,1");
+                    int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
+                    if (intSuccess > 0 && intSuccess1 > 0)
+                    {
                         return "success";
-                 }
-                 else
-                {
+                    }
+                    else
+                    {
                         return "failure";
-                 }
-                }else
+                    }
+                }
+                else
                 {
                     string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe,iscommon=0 where ID=@treatid";
                     sqlOperation2.AddParameterWithValue("@treatid", treatID);
@@ -122,27 +122,9 @@ public class recordDiag : IHttpHandler {
                     {
                         return "failure";
                     }
-                    
-                }
-            }
-            else
-            {
-                string strSqlCommand1 = "update treatment set DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe where ID=@treatid";
-                sqlOperation2.AddParameterWithValue("@treatid", treatID);
-                sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
-                sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
-                int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
-                if (intSuccess > 0 && intSuccess1 > 0)
-                {
-                    return "success";
-                }
-                else
-                {
-                    return "failure";
-                }
-            }
 
-
+                }
+    
         }
        
         }
