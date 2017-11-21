@@ -145,9 +145,11 @@ $(function(){
 });
 
 var canDelete = true;
+var nowEditNumberBefore = "";
 //创建编辑用户的modal内容
-function createEditArea($tr){
+function createEditArea($tr) {
     var $tds = $tr.find("td");
+    nowEditNumberBefore = $tds[0].innerText;
     $("#numberEdit").val($tds[0].innerText);
     $("#nameEdit").val($tds[1].innerText);
     if($tds[2].innerText == "男"){
@@ -182,14 +184,15 @@ function editUser(){
     var officeEdit = $("#officeEdit").val();
     var activateEdit = $("input:radio[name='activateEdit']:checked").val();
     var current = parseInt($("#currentPage").val());
+    var key = $("#pwdEdit").val();
     $.ajax({
         type: "post",
         url: "/RadiotherapyPlatform/pages/Root/editUser.ashx",
-        data: {"numberEdit":numberEdit,"nameEdit":nameEdit,"genderEdit":genderEdit,"phoneEdit":phoneEdit,"officeEdit":officeEdit,"activateEdit":activateEdit},
+        data: {"beforeNumber":nowEditNumberBefore,"numberEdit":numberEdit,"pwd": key,"nameEdit":nameEdit,"genderEdit":genderEdit,"phoneEdit":phoneEdit,"officeEdit":officeEdit,"activateEdit":activateEdit},
         dataType: "text",
         success: function () {
             alert("修改成功");
-            changeObj(numberEdit,nameEdit,genderEdit,phoneEdit,officeEdit,activateEdit);
+            changeObj(numberEdit,nameEdit,genderEdit,phoneEdit,officeEdit,activateEdit,key);
             $("#tableArea").createTable(objuser, {
                 headName: new Array("用户账号", "姓名", "性别", "联系方式", "办公室", "用户密码", "激活状态"),
                 pages: current
@@ -199,14 +202,16 @@ function editUser(){
     });
 }
 
-function changeObj(num,name,gender,contact,office,activate) {
+function changeObj(num,name,gender,contact,office,activate,pwd) {
     for (var i = 0; i < objuser.length; ++i) {
-        if (num == objuser[i].Number) {
+        if (nowEditNumberBefore == objuser[i].Number) {
+            objuser[i].Number = num;
             objuser[i].Name = name;
             objuser[i].Gender = (gender == "M" ? "男":"女");
             objuser[i].Contact = contact;
             objuser[i].Office = office;
-            objuser[i].Activate = (activate == 0?"未激活":"激活");
+            objuser[i].Activate = (activate == 0 ? "未激活" : "激活");
+            objuser[i].password = pwd;
             break;
         }
     }

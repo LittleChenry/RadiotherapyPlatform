@@ -2,12 +2,29 @@
 var xmlHttp;
 
 window.addEventListener("load", InitAll, false);
+window.onkeydown = function (evt) {
+    var ketnum;
+    if (window.event) // IE
+    {
+        keynum = evt.keyCode
+    }
+    else if (e.which) // Netscape/Firefox/Opera
+    {
+        keynum = evt.which
+    }
+    if (keynum == 13) {
+        if (document.getElementById("loginDiv").style.display == "none")
+            TransferMain();
+        else
+            checkAll();
+    }
+        
+};
 
 function InitAll() {
     document.getElementById("login").addEventListener("click", checkAll, false);//点击登陆进行是否填写验证
     document.getElementById("registration").addEventListener("click", TransferRegedit, false);//转到注册界面
     document.getElementById("login2").addEventListener("click", TransferMain, false);//多角色登陆
-
     readUserIDCookie();//读取cookie的用户名
     if (readUserKeyCookie()) {//读取cookie的用户密码
         document.getElementById("saveUserKey").checked = true;

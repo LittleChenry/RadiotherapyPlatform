@@ -497,7 +497,7 @@
                                         <tr>
                                             <th style="width:30%;">账号</th>
                                             <td>
-                                                <input id="numberEdit" class="form-control IsEmpty number" name="numberEdit" type="text" disabled/>
+                                                <input id="numberEdit" class="form-control IsEmpty number" name="numberEdit" type="text"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -521,7 +521,7 @@
                                         <tr>
                                             <th>密码</th>
                                             <td>
-                                                <input id="pwdEdit" name="pwdEdit" type="text" class="form-control userKey" disabled/>
+                                                <input id="pwdEdit" name="pwdEdit" type="text" class="form-control userKey"/>
                                             </td>
                                         </tr>
                                         <tr>

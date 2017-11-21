@@ -27,14 +27,18 @@ public class editUser : IHttpHandler {
         string phoneEdit = context.Request.Form["phoneEdit"];
         string officeEdit = context.Request.Form["officeEdit"];
         string activateEdit = context.Request.Form["activateEdit"];
+        string pwd = context.Request.Form["pwd"];
+        string beforeNumber = context.Request.Form["beforeNumber"];
 
-        string updateUserCommand = "UPDATE user SET Name=@Name,Gender=@Gender,Contact=@Contact,Office=@Office,Activate=@Activate WHERE Number=@Number";
+        string updateUserCommand = "UPDATE user SET Number=@Number,Name=@Name,Gender=@Gender,Contact=@Contact,Password=@pwd,Office=@Office,Activate=@Activate WHERE Number=@BeforeNumber";
         sqlOperation.AddParameterWithValue("@Name",nameEdit);
         sqlOperation.AddParameterWithValue("@Gender",genderEdit);
         sqlOperation.AddParameterWithValue("@Contact",phoneEdit);
         sqlOperation.AddParameterWithValue("@Office",officeEdit);
+        sqlOperation.AddParameterWithValue("@pwd", pwd);
         sqlOperation.AddParameterWithValue("@Activate",int.Parse(activateEdit));
         sqlOperation.AddParameterWithValue("@Number",numberEdit);
+        sqlOperation.AddParameterWithValue("@BeforeNumber", beforeNumber);
         sqlOperation.ExecuteNonQuery(updateUserCommand);
     }
 }

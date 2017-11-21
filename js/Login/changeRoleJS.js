@@ -3,6 +3,22 @@ $(function () {
     getRoles();
 });
 
+window.onkeydown = function (evt) {
+    var ketnum;
+    if (window.event) // IE
+    {
+        keynum = evt.keyCode
+    }
+    else if (e.which) // Netscape/Firefox/Opera
+    {
+        keynum = evt.which
+    }
+    if (keynum == 13) {
+        $("#login").trigger("click");
+    }
+    return true;
+};
+
 //切换角色登陆
 $(function () {
     $("#login").bind("click", function () {

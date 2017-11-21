@@ -250,12 +250,11 @@
                 <div class="col-xs-12">
                     <div class="col-xs-4">
                         <select id="equipment" class="form-control">
-                            <option value="">--请选择检查设备--</option>
+                            
                         </select>
                     </div>
                     <div class="col-xs-3 toCenter">
                             <select id="cycle" class="form-control">
-                                <option value="">--请选择检查周期--</option>
                                 <option value="day">日检</option>
                                 <option value="month">月检</option>
                                 <option value="year">年检</option>
@@ -346,7 +345,7 @@
 <!-- Main js-->
 <script src="../../js/Root/RootMainJS.js"></script>
 <!-- Main JavaScript -->
-<script src="../../js/Root/EquipmentRecordJS.js"></script>
+<script src="../../js/Main/EquipmentRecordJs.js"></script>
     
 </body>
 </html>
