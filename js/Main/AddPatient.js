@@ -3,10 +3,13 @@
 var userName;
 var userID;
 var docandgroup;
+
 window.addEventListener("load", Init, false);//添加页面加载处理函数
 
 //初始化
 function Init() {
+    var session = getSession();
+    var role = session.role;
     getUserID();
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -28,9 +31,14 @@ function Init() {
     select4.addEventListener("change", function () {
         createselect2(select4.selectedIndex);
     }, false);
+    
     document.getElementById("userID").value = userID;
     document.getElementById("operate").innerHTML = userName;
     document.getElementById("date").innerHTML = getNowFormatDate();
+    if (role == "医师") {
+        document.getElementById("doctor").value = userID;
+        createselect2(select4.selectedIndex);
+    }
     var $radio1 = $('input[name="RecordNumber"]:eq(0)');
     var $radio2 = $('input[name="RecordNumber"]:eq(1)');
     $radio2.bind('click', function () {
@@ -76,6 +84,7 @@ function Init() {
 
     $("#selectAddress").bind("click",SelectAddress);
     $("#IDcardNumber").bind("input propertychange", getBirthdate);
+    
 }
 
 function SelectAddress() {
@@ -148,7 +157,23 @@ function Sync() {
         });
     }
 }
-
+function getSession() {
+    var Session;
+    $.ajax({
+        type: "GET",
+        url: "Records/getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            //alert(data);
+            Session = $.parseJSON(data);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+    return Session;
+}
 function getBirthdate() {
     var IDcardNumber = $("#IDcardNumber").val();
     if (IDcardNumber.length > 13) { //320623 1993 10 24 4039
