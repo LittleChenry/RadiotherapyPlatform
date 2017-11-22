@@ -259,8 +259,8 @@ function Paging(patient, role, userID) {
                 break;
             case "模拟技师":
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Task, date, begin, end, Completed, doctor;
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>预约项目</th><th>预约时间</th><th>是否完成</th><th>诊断结果</th><th>疗程</th>'
-                    + '<th>主治医生</th></tr></thead>';
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th>'
+                    + '<th>患者姓名</th><th>状态</th><th>诊断结果</th><th>疗程</th><th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
@@ -273,7 +273,7 @@ function Paging(patient, role, userID) {
                     Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                     Task = patient.PatientInfo[i].Task;
                     doctor = patient.PatientInfo[i].doctor;
-                    Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
+                    Completed = (patient.PatientInfo[i].Completed == "1") ? "完成" : "等待";
                     begin = toTime(patient.PatientInfo[i].begin);
                     end = toTime(patient.PatientInfo[i].end);
                     iscommon = patient.PatientInfo[i].iscommon;
@@ -283,7 +283,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Task + "</td><td>" + date + " , " + begin + " - " + end + "</td><td>" + Completed+ "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td>"
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Completed+ "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td>"
                         + "<td>" + doctor + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -294,7 +294,7 @@ function Paging(patient, role, userID) {
                 break;
             case "治疗技师":
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, date, begin, end, Completed, doctor, finishedtimes, totalnumber, totaltimes;
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>预约时间</th><th>是否完成</th><th>完成次数</th><th>累次剂量</th>'
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>状态</th><th>完成次数</th><th>累次剂量</th>'
                     + '<th>总次数</th><th>诊断结果</th><th>疗程</th><th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
@@ -306,7 +306,7 @@ function Paging(patient, role, userID) {
                     diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
                     date = patient.PatientInfo[i].date;
                     doctor = patient.PatientInfo[i].doctor;
-                    Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
+                    Completed = (patient.PatientInfo[i].Completed == "1") ? "完成" : "等待";
                     begin = toTime(patient.PatientInfo[i].begin);
                     end = toTime(patient.PatientInfo[i].end);
                     finishedtimes = patient.PatientInfo[i].finishedtimes;
@@ -319,7 +319,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + date + " , " + begin + " - " + end + "</td><td>" + Completed+ "</td><td>" + finishedtimes + "</td><td>" + totalnumber + "</td>"
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Completed+ "</td><td>" + finishedtimes + "</td><td>" + totalnumber + "</td>"
                         + "<td>" + totaltimes + "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + doctor + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -447,14 +447,14 @@ function Paging(patient, role, userID) {
                 table.append(tbody);
                 break;
             case "模拟技师":
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>预约项目</th><th>预约时间</th><th>是否完成</th><th>诊断结果</th><th>疗程</th>'
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>状态</th><th>诊断结果</th><th>疗程</th>'
                     + '<th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="9" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "治疗技师":
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>预约时间</th><th>是否完成</th><th>完成次数</th><th>累次剂量</th>'
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>状态</th><th>完成次数</th><th>累次剂量</th>'
                     + '<th>总次数</th><th>诊断结果</th><th>疗程</th><th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="11" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
@@ -699,7 +699,7 @@ function trAddClick(patient, userID) {
                         });
                         break;
                     case 5:
-                        if (LightLi(this, Progresses, "5", "4", "3")) {
+                        if (LightLi(this, Progresses, "5", "3", "-1")) {
                             var url = "Records/LocationRecord.aspx?TreatmentID=" + e.data.ID;
                         } else {
                             var url = "Records/Blank.aspx";
@@ -904,8 +904,8 @@ function trAddClick(patient, userID) {
 
 function trAddClickforJS(patient, userID) {
     for (var i = 0; i < patient.PatientInfo.length; i++) {
-        $("#" + patient.PatientInfo[i].treatID + "_" + patient.PatientInfo[i].appointid).click({iscommon:patient.PatientInfo[i].iscommon, Radiotherapy_ID:patient.PatientInfo[i].Radiotherapy_ID, state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
-            currentID = e.data.ID;
+        $("#" + patient.PatientInfo[i].treatID + "_" + patient.PatientInfo[i].appointid).click({appointid:patient.PatientInfo[i].appointid,iscommon:patient.PatientInfo[i].iscommon, Radiotherapy_ID:patient.PatientInfo[i].Radiotherapy_ID, state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
+            currentID = e.data.ID + "_" + e.data.appointid;
             //checkAddTreatment(e.data.Radiotherapy_ID);
             OperateAttrDisabled();
             //$("#addTreatment").removeAttr("disabled");
@@ -1006,7 +1006,7 @@ function trAddClickforJS(patient, userID) {
                         });
                         break;
                     case 5:
-                        if (LightLi(this, Progresses, "5", "4", "3")) {
+                        if (LightLi(this, Progresses, "5", "3", "-1")) {
                             var url = "Records/LocationRecord.aspx?TreatmentID=" + e.data.ID;
                         } else {
                             var url = "Records/Blank.aspx";
@@ -1484,7 +1484,7 @@ function removeSession() {
 
 function Recover() {
     if (currentID != "0" && $("#" + currentID).length > 0) {
-        $("#" + currentID).click();
+        $("#" + currentID).addClass("chose");
     }
 }
 
@@ -1552,12 +1552,34 @@ function Search(str, patient, role) {
                 Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
                 Task = patient.PatientInfo[i].Task;
                 doctor = patient.PatientInfo[i].doctor;
-                Completed = (patient.PatientInfo[i].Completed == "1") ? "已完成" : "未完成";
+                Completed = (patient.PatientInfo[i].Completed == "1") ? "完成" : "等待";
                 begin = toTime(patient.PatientInfo[i].begin);
                 end = toTime(patient.PatientInfo[i].end);
                 iscommon = patient.PatientInfo[i].iscommon;
-                if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || date.search(str) >= 0 || Task.search(str) >= 0 || begin.search(str) >= 0 || end.search(str) >= 0 || doctor.search(str) >= 0 || Completed.search(str) >= 0) {
+                if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || doctor.search(str) >= 0 || Completed.search(str) >= 0) {
                     var singlepatient = {iscommon:iscommon, treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, Progress: patient.PatientInfo[i].Progress, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed, Task:patient.PatientInfo[i].Task };
+                    Searchedpatient[count++] = singlepatient;
+                }
+            }
+            break;
+        case "治疗技师":
+            for (var i = 0; i < patient.PatientInfo.length; i++) {
+                TreatmentID = patient.PatientInfo[i].treatID;
+                Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
+                Name = patient.PatientInfo[i].Name;
+                treat = patient.PatientInfo[i].treat;
+                diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
+                date = patient.PatientInfo[i].date;
+                doctor = patient.PatientInfo[i].doctor;
+                Completed = (patient.PatientInfo[i].Completed == "1") ? "完成" : "等待";
+                begin = toTime(patient.PatientInfo[i].begin);
+                end = toTime(patient.PatientInfo[i].end);
+                finishedtimes = patient.PatientInfo[i].finishedtimes;
+                totalnumber = patient.PatientInfo[i].totalnumber;
+                totaltimes = patient.PatientInfo[i].totaltimes;
+                iscommon = patient.PatientInfo[i].iscommon;
+                if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || doctor.search(str) >= 0 || Completed.search(str) >= 0 || finishedtimes.search(str) >= 0 || totalnumber.search(str) >= 0 || totaltimes.search(str) >= 0) {
+                    var singlepatient = {Progress: patient.PatientInfo[i].Progress,appointid:patient.PatientInfo[i].appointid,finishedtimes:patient.PatientInfo[i].finishedtimes, totaltimes:patient.PatientInfo[i].totaltimes, totalnumber:patient.PatientInfo[i].totalnumber, iscommon:iscommon, treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed};
                     Searchedpatient[count++] = singlepatient;
                 }
             }
