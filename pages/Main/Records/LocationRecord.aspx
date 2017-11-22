@@ -65,9 +65,9 @@
                     <div id="tab-content" class="tab-content">
                         <div class="tab-pane active" id="tab">
                    <div class="single-row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-6" style="position:static;">
                         <span class="form-text col-xs-4" style="padding-left:0px;">扫描部位：</span>
-                        <select id="scanpart" name="scanpart" class="form-item" disabled="disabled"></select>
+                        <input id="scanpart" name="scanpart" class="form-item" disabled="disabled"></input>
                     </div>
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4">扫描方式：</span>

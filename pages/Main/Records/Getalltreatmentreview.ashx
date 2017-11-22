@@ -34,7 +34,7 @@ public class Getalltreatmentreview : IHttpHandler {
         string countcommand = "select count(*) from treatmentreview where treatmentid=@treatmentid and operateuser is not NULL";
         sqlOperation.AddParameterWithValue("@treatmentid", treatid);
         int count = int.Parse(sqlOperation.ExecuteScalar(countcommand));
-        string sqlCommand = "SELECT scanpart.Name as scanpartname,scanmethod.Method as scanMethod,up,down,enhance,enhancemethod,locationrequirements.Requirements as locaterequire,applyremark,thick,treatmentreview.number as trnumber,ReferenceNumber,ReferenceScale,remark,user.Name as username,operateuser from treatmentreview,scanpart,scanmethod,locationrequirements,user where treatmentid=@treatmentid and operateuser is not NULL and treatmentreview.scanmethod=scanmethod.ID and treatmentreview.scanpart=scanpart.ID and treatmentreview.specialrequest=locationrequirements.ID  and treatmentreview.applyuser=user.ID";
+        string sqlCommand = "SELECT scanpart,scanmethod.Method as scanMethod,up,down,enhance,enhancemethod,locationrequirements.Requirements as locaterequire,applyremark,thick,treatmentreview.number as trnumber,ReferenceNumber,ReferenceScale,remark,user.Name as username,operateuser from treatmentreview,scanmethod,locationrequirements,user where treatmentid=@treatmentid and operateuser is not NULL and treatmentreview.scanmethod=scanmethod.ID and treatmentreview.specialrequest=locationrequirements.ID  and treatmentreview.applyuser=user.ID";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
         int i=0;
@@ -52,7 +52,7 @@ public class Getalltreatmentreview : IHttpHandler {
                 enhancemethod = sqlOperation1.ExecuteScalar(enhancemethodcommand);
             }
 
-            backText.Append("{\"scanpart\":\"" + reader["scanpartname"].ToString() + "\",\"scanmethod\":\"" + reader["scanMethod"].ToString() + "\",\"up\":\"" + reader["up"].ToString() + "\",\"down\":\"" + reader["down"].ToString() + "\",\"enhance\":\"" + reader["enhance"].ToString() + "\",\"enhancemethod\":\"" + enhancemethod + "\",\"specialrequest\":\"" + reader["locaterequire"].ToString() + "\",\"applyremark\":\"" + reader["applyremark"].ToString() +
+            backText.Append("{\"scanpart\":\"" + reader["scanpart"].ToString() + "\",\"scanmethod\":\"" + reader["scanMethod"].ToString() + "\",\"up\":\"" + reader["up"].ToString() + "\",\"down\":\"" + reader["down"].ToString() + "\",\"enhance\":\"" + reader["enhance"].ToString() + "\",\"enhancemethod\":\"" + enhancemethod + "\",\"specialrequest\":\"" + reader["locaterequire"].ToString() + "\",\"applyremark\":\"" + reader["applyremark"].ToString() +
                 "\",\"thick\":\"" + reader["thick"].ToString() + "\",\"number\":\"" + reader["trnumber"].ToString() + "\",\"ReferenceNumber\":\"" + reader["ReferenceNumber"].ToString() + "\",\"ReferenceScale\":\"" + reader["ReferenceScale"].ToString() + "\",\"remark\":\"" + reader["remark"].ToString() + "\",\"applyuser\":\"" + reader["username"].ToString() + "\",\"operateuer\":\"" + operateuser + "\"}");
             if (i < count - 1)
             {

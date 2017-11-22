@@ -77,7 +77,7 @@ public class LocationApplyRecord : IHttpHandler {
                     string strSqlCommand = "INSERT INTO location(Appointment_ID,ScanPart_ID,ScanMethod_ID,UpperBound,Enhance,EnhanceMethod_ID,LowerBound,LocationRequirements_ID,Remarks,Application_User_ID,ApplicationTime) " +
                                             "VALUES(@Appointment_ID,@ScanPart_ID,@ScanMethod_ID,@UpperBound,@Enhance,@EnhanceMethod_ID,@LowerBound,@LocationRequirements_ID,@Remarks,@Application_User_ID,@ApplicationTime)";
                     sqlOperation1.AddParameterWithValue("@Appointment_ID", Convert.ToInt32(appoint));
-                    sqlOperation1.AddParameterWithValue("@ScanPart_ID", Convert.ToInt32(scanpart));
+                    sqlOperation1.AddParameterWithValue("@ScanPart_ID",scanpart);
                     sqlOperation1.AddParameterWithValue("@ScanMethod_ID", Convert.ToInt32(scanmethod));
                     sqlOperation1.AddParameterWithValue("@UpperBound", up);
                     sqlOperation1.AddParameterWithValue("@ApplicationTime", DateTime.Now);
@@ -125,7 +125,7 @@ public class LocationApplyRecord : IHttpHandler {
             int locateapplyid = int.Parse(sqlOperation.ExecuteScalar(locateapply));
             string strupdate = "update location set ScanPart_ID=@ScanPart_ID,ScanMethod_ID=@ScanMethod_ID,UpperBound=@UpperBound,LowerBound=@LowerBound,Enhance=@Enhance,EnhanceMethod_ID=@EnhanceMethod_ID,LocationRequirements_ID=@LocationRequirements_ID,Remarks=@Remarks where ID=@locateapplyid";
             sqlOperation1.AddParameterWithValue("@locateapplyid", locateapplyid);
-            sqlOperation1.AddParameterWithValue("@ScanPart_ID", Convert.ToInt32(scanpart));
+            sqlOperation1.AddParameterWithValue("@ScanPart_ID",scanpart);
             sqlOperation1.AddParameterWithValue("@ScanMethod_ID", Convert.ToInt32(scanmethod));
             sqlOperation1.AddParameterWithValue("@UpperBound", up);
             sqlOperation1.AddParameterWithValue("@LowerBound", down);

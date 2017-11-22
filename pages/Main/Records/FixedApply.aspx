@@ -114,13 +114,25 @@
                     <div class="modal-body" style="overflow:hidden;">
                         <div class="panel-row">
                             <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
-                            <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
-                            <div class="col-xs-2">
-                                <button id="chooseProject" class="btn btn-default">查询该项</button>
+                            <div class="item col-xs-4">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                            <div class="item col-xs-3">
+                                <button type="button"  id="previousday" class="btn btn-default btn-sm">上一天</button>
+                                <button type="button" id="nextday" class="btn btn-default btn-sm">下一天</button>
+                               <%-- <button id="chooseProject" class="btn btn-default">查询该项</button>--%>
                             </div>
                         </div>
-                        <div class="panel-row">
+                       
+                        <div id="amappoint" class="panel-row">
+                        <div id="amlabel">
+                            <span class="label label-info" style="float:left;width:10%;height:auto" >上午</span>
+                        </div>
                             <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
+                        </div>
+                          <div id="pmappoint" class="panel-row">
+                         <div id="pmlabel" >
+                            <span class="label label-info" style="float:left;width:10%;height:auto" >下午</span>
+                        </div>
+                            <table id="apptiontTableForPm" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
                         </div>
                     </div>
                     <div class="modal-footer">

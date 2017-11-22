@@ -15,9 +15,9 @@ function Init(evt) {
     select4.addEventListener("change", function () {
         createselect2(select4.selectedIndex);
     }, false);
-    document.getElementById("chooseProject").addEventListener("click", function () {
-        CreateNewAppiontTable(event);
-    }, false);//根据条件创建预约表
+    //document.getElementById("chooseProject").addEventListener("click", function () {
+    //    CreateNewAppiontTable(event);
+    //}, false);//根据条件创建预约表
     getPatientInfo(treatID);
     document.getElementById("treatID").value = treatID;
     document.forms[0].addEventListener("reset", resetForm, false);//添加表单rest事件函数
@@ -183,35 +183,117 @@ function changeAppoint(e) {
     var item = $e.parent().parent().children().first().text();
     var oldappoint = $e.parent().parent().attr("ID").split("_")[1];
     if (item == "体位固定") {
-        createfixEquipmachine(document.getElementById("equipmentName"), "Fixed")
-        $("#chooseProject").unbind("click").bind("click", function () {
-            CreateNewAppiontTable(e);
+        createfixEquipmachine(document.getElementById("equipmentName"), "Fixed");
+        var datetext = $e.parent().parent().children().eq(1).text();
+        var date = datetext.split(",")[0];
+        $("#AppiontDate").val(date);
+        $("#AppiontDate").unbind("change").change(function () {
+            if ($("#AppiontDate").val() == "") {
+                var date = new Date();
+                $("#AppiontDate").val(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+            }
+            CreateNewAppiontTable(event);
+        });
+        $("#previousday").unbind("click").click(function () {
+            var date = $("#AppiontDate").val();
+            var newdate = dateAdd2(date, -1);
+            $("#AppiontDate").val(newdate);
+            CreateNewAppiontTable(event);
+        });
+        $("#nextday").unbind("click").click(function () {
+            var date = $("#AppiontDate").val();
+            var newdate = dateAdd2(date, 1);
+            $("#AppiontDate").val(newdate);
+            CreateNewAppiontTable(event);
         });
     }
-    if (item == "模拟定位") {
+    if (item == "模拟定位" || item == "CT复查") {
         createfixEquipmachine(document.getElementById("equipmentName"), "Location")
-        $("#chooseProject").unbind("click").bind("click", function () {
-            CreateNewAppiontTable(e);
+        var datetext = $e.parent().parent().children().eq(1).text();
+        var date = datetext.split(",")[0];
+        $("#AppiontDate").val(date);
+        $("#AppiontDate").unbind("change").change(function () {
+            if ($("#AppiontDate").val() == "") {
+                var date = new Date();
+                $("#AppiontDate").val(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+            }
+            CreateNewAppiontTable(event);
+        });
+        $("#previousday").unbind("click").click(function () {
+            var date = $("#AppiontDate").val();
+            var newdate = dateAdd2(date, -1);
+            $("#AppiontDate").val(newdate);
+            CreateNewAppiontTable(event);
+        });
+        $("#nextday").unbind("click").click(function () {
+            var date = $("#AppiontDate").val();
+            var newdate = dateAdd2(date, 1);
+            $("#AppiontDate").val(newdate);
+            CreateNewAppiontTable(event);
         });
     }
     if (item == "加速器") {
         createaccerEquipmachine(document.getElementById("equipmentName"), treatID)
-        $("#chooseProject").unbind("click").bind("click", function () {
-            CreateNewAccerAppiontTable(e);
+        var datetext = $e.parent().parent().children().eq(1).text();
+        var date = datetext.split(",")[0];
+        $("#AppiontDate").val(date);
+        $("#AppiontDate").unbind("change").change(function () {
+            if ($("#AppiontDate").val() == "") {
+                var date = new Date();
+                $("#AppiontDate").val(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+            }
+            CreateNewAccerAppiontTable(event);
+        });
+        $("#previousday").unbind("click").click(function () {
+            var date = $("#AppiontDate").val();
+            var newdate = dateAdd2(date, -1);
+            $("#AppiontDate").val(newdate);
+            CreateNewAccerAppiontTable(event);
+        });
+        $("#nextday").unbind("click").click(function () {
+            var date = $("#AppiontDate").val();
+            var newdate = dateAdd2(date, 1);
+            $("#AppiontDate").val(newdate);
+            CreateNewAccerAppiontTable(event);
         });
     }
     if (item == "复位模拟") {
         createfixEquipmachine(document.getElementById("equipmentName"), "Replacement")
-        $("#chooseProject").unbind("click").bind("click", function () {
-            CreateNewAppiontTable(e);
+        var datetext = $e.parent().parent().children().eq(1).text();
+        var date = datetext.split(",")[0];
+        $("#AppiontDate").val(date);
+        $("#AppiontDate").unbind("change").change(function () {
+            if ($("#AppiontDate").val() == "") {
+                var date = new Date();
+                $("#AppiontDate").val(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+            }
+            CreateNewAppiontTable(event);
+        });
+        $("#previousday").unbind("click").click(function () {
+            var date = $("#AppiontDate").val();
+            var newdate = dateAdd2(date, -1);
+            $("#AppiontDate").val(newdate);
+            CreateNewAppiontTable(event);
+        });
+        $("#nextday").unbind("click").click(function () {
+            var date = $("#AppiontDate").val();
+            var newdate = dateAdd2(date, 1);
+            $("#AppiontDate").val(newdate);
+            CreateNewAppiontTable(event);
         });
     }
-    var date = new Date();
-    var date = date.Format('yyyy-MM-dd');
-    document.getElementById("AppiontDate").value = date;
+    //var date = new Date();
+    //var date = date.Format('yyyy-MM-dd');
+    //document.getElementById("AppiontDate").value = date;
     if (item != "加速器") {
+        var datetext = $e.parent().parent().children().eq(1).text();
+        var date = datetext.split(",")[0];
+        $("#AppiontDate").val(date);
         CreateNewAppiontTable(e);
     } else {
+        var datetext = $e.parent().parent().children().eq(1).text();
+        var date = datetext.split(",")[0];
+        $("#AppiontDate").val(date);
         CreateNewAccerAppiontTable(e);
     }
     $("#sure").unbind("click").bind("click", function () {
@@ -719,26 +801,46 @@ function getmachineItem(item) {
     var Items = xmlHttp.responseText;
     return Items;
 }
-//创建某设备某天的预约表
 function CreateCurrentEquipmentTbale(equiment, dateString) {
     $("#timechoose").hide();
+    $("#commonapp1").hide();
     var table = document.getElementById("apptiontTable");
+    var table1 = document.getElementById("apptiontTableForPm");
     RemoveAllChild(table);
+    RemoveAllChild(table1);
     if (equiment.length != 0) {
+        var amlength = 0
+        for (var i = 0; i < equiment.length; i++) {
+            if (equiment[i].Begin > 720) {
+                amlength = i;
+                break;
+            }
+        }
+        var pmlength = equiment.length - amlength;
+        if (amlength != 0) {
+            $("#amlabel").show();
+        } else {
+            $("#amlabel").hide();
+        }
+        $("#pmlabel").show();
         var tbody = document.createElement("tbody");
-        for (var i = 0; i < Math.ceil(equiment.length / 5) * 5 ; i++) {
+        for (var i = 0; i < Math.ceil(amlength / 5) * 5 ; i++) {
             var count = i % 5;
             var tr;
             if (count == 0) {
                 tr = document.createElement("tr");
             }
-            if (i <= equiment.length - 1) {
+            if (i <= amlength - 1) {
                 var td = document.createElement("td");
                 var sign = document.createElement("i");
-                if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+                if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(equiment[i].Begin).split(":")[0];
                     var minute = toTime(equiment[i].Begin).split(":")[1];
-                    var beginhour = parseInt(hour) - 24;
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
                     var begin = beginhour + ":" + minute;
                     var endhour = toTime(equiment[i].End).split(":")[0];
                     var endminute = toTime(equiment[i].End).split(":")[1];
@@ -762,10 +864,14 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                     sign.className = "fa fa-fw fa-ban td-sign";
                     td.addEventListener("click", hasChosen, false);
                 }
-                if (parseInt(toTime(equiment[i].Begin).split(":")[0]) >= 24) {
+                if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
                     var hour = toTime(equiment[i].Begin).split(":")[0];
                     var minute = toTime(equiment[i].Begin).split(":")[1];
-                    var beginhour = parseInt(hour) - 24;
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
                     var begin = beginhour + ":" + minute;
                     var endhour = toTime(equiment[i].End).split(":")[0];
                     var endminute = toTime(equiment[i].End).split(":")[1];
@@ -779,11 +885,10 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
                 td.appendChild(sign);
                 tr.appendChild(td);
             }
-            if (i == equiment.length) {
+            if (i == amlength) {
                 var k;
-                for (k = equiment.length; k <= Math.ceil(equiment.length / 5) * 5 - 1; k++) {
+                for (k = amlength; k <= Math.ceil(amlength / 5) * 5 - 1; k++) {
                     var td = document.createElement("td");
-
                     tr.appendChild(td);
                 }
             }
@@ -792,13 +897,93 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
             }
         }
         table.appendChild(tbody);
+        var tbody2 = document.createElement("tbody");
+        for (var m = 0; m < Math.ceil(pmlength / 5) * 5 ; m++) {
+            var count = m % 5;
+            var tr;
+            var i = m + amlength;
+            if (count == 0) {
+                tr = document.createElement("tr");
+            }
+            if (m <= pmlength - 1) {
+                var td = document.createElement("td");
+                var sign = document.createElement("i");
+                if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
+                    var hour = toTime(equiment[i].Begin).split(":")[0];
+                    var minute = toTime(equiment[i].Begin).split(":")[1];
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(equiment[i].End).split(":")[0];
+                    var endminute = toTime(equiment[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + begin + "-" + end + "(次日)" + "_" + equiment[i].Euqipment);
+                } else {
+                    td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+                }
+                if (equiment[i].State == "0") {
+                    if (compareWithToday(dateString)) {
+                        sign.className = "";
+                        td.addEventListener("click", chooseItem, false);
+                    } else {
+                        td.style.backgroundColor = "#C1C1C1";
+                        sign.className = "fa fa-fw fa-ban td-sign";
+                        td.addEventListener("click", hasChosen, false);
+                    }
+                } else {
+                    td.style.backgroundColor = "#C1C1C1";
+                    sign.className = "fa fa-fw fa-ban td-sign";
+                    td.addEventListener("click", hasChosen, false);
+                }
+                if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
+                    var hour = toTime(equiment[i].Begin).split(":")[0];
+                    var minute = toTime(equiment[i].Begin).split(":")[1];
+                    if (hour >= 24) {
+                        var beginhour = parseInt(hour) - 24;
+                    } else {
+                        var beginhour = hour;
+                    }
+                    var begin = beginhour + ":" + minute;
+                    var endhour = toTime(equiment[i].End).split(":")[0];
+                    var endminute = toTime(equiment[i].End).split(":")[1];
+                    var hourend = parseInt(endhour) - 24;
+                    var end = hourend + ":" + endminute;
+                    var text = document.createTextNode(begin + " - " + end + "(次日)");
+                } else {
+                    var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+                }
+                td.appendChild(text);
+                td.appendChild(sign);
+                tr.appendChild(td);
+            }
+            if (m == pmlength) {
+                var k;
+                for (k = pmlength; k <= Math.ceil(pmlength / 5) * 5 - 1; k++) {
+                    var td = document.createElement("td");
+                    tr.appendChild(td);
+                }
+            }
+            if (count == 4) {
+                tbody2.appendChild(tr);
+            }
+        }
+        table1.appendChild(tbody2);
     } else {
+        $("#amlabel").hide();
+        $("#pmlabel").hide();
         table.innerHTML = "今天已经不可以预约了,改天吧！";
 
     }
 }
 function CreateCurrentAccerEquipmentTbale(dateString) {
     $("#timechoose").show();
+    $("#amlabel").hide();
+    $("#pmappoint").hide();
+    $("#commonapp").hide();
     var table = document.getElementById("apptiontTable");
     var equiment;
     if (equipmentfrominfo != "") {
@@ -941,6 +1126,7 @@ function chooseItem() {
 function ChoseID() {
     var td_id = null;
     var table = document.getElementById("apptiontTable");
+    var table1 = document.getElementById("apptiontTableForPm");
     for (var i = 0; i < table.rows.length; i++) {
         for (var j = 0; j < table.rows[i].cells.length; j++) {
             var cell = table.rows[i].cells[j];
@@ -949,10 +1135,20 @@ function ChoseID() {
             }
         }
     }
+    for (var i = 0; i < table1.rows.length; i++) {
+        for (var j = 0; j < table1.rows[i].cells.length; j++) {
+            var cell = table1.rows[i].cells[j];
+            if (cell.className != "") {
+                td_id = cell.id;
+            }
+        }
+    }
     return td_id;
 }
+
 function Clear() {
     var table = document.getElementById("apptiontTable");
+    var table1 = document.getElementById("apptiontTableForPm");
     for (var i = 0; i < table.rows.length; i++) {
         for (var j = 0; j < table.rows[i].cells.length; j++) {
             var cell = table.rows[i].cells[j];
@@ -963,9 +1159,41 @@ function Clear() {
             }
         }
     }
+    for (var i = 0; i < table1.rows.length; i++) {
+        for (var j = 0; j < table1.rows[i].cells.length; j++) {
+            var cell = table1.rows[i].cells[j];
+            if (cell.className != "") {
+                cell.className = "";
+                cell.lastChild.className = "";
+                return;
+            }
+        }
+    }
 }
 function hasChosen() {
     alert("该时间段已被预约！");
+}
+function dateAdd2(dd, n) {
+    var strs = new Array();
+    strs = dd.split("-");
+    var y = strs[0];
+    var m = strs[1];
+    var d = strs[2];
+    var t = new Date(y, m - 1, d);
+    var str = t.getTime() + n * (1000 * 60 * 60 * 24);
+    var newdate = new Date();
+    newdate.setTime(str);
+    var strYear = newdate.getFullYear();
+    var strDay = newdate.getDate();
+    if (strDay < 10) {
+        strDay = "0" + strDay;
+    }
+    var strMonth = newdate.getMonth() + 1;
+    if (strMonth < 10) {
+        strMonth = "0" + strMonth;
+    }
+    var strdate = strYear + "-" + strMonth + "-" + strDay;
+    return strdate;
 }
 //清楚所有子节点
 function RemoveAllChild(area) {
@@ -981,10 +1209,6 @@ function CreateNewAppiontTable(evt) {
     var currentIndex = equipmentName.selectedIndex;
     var equipmentID = equipmentName.options[currentIndex].value;
     var AppiontDate = document.getElementById("AppiontDate");
-    if (!compareWithToday(AppiontDate.value)) {
-        alert("不能选择小于当天的日期");
-        return;
-    }
     var date = AppiontDate.value;
     var xmlHttp = new XMLHttpRequest();
     var url = "GetEquipmentAppointment.ashx?equipmentID=" + equipmentID + "&date=" + date;
@@ -999,13 +1223,6 @@ function CreateNewAccerAppiontTable(evt) {
     var currentIndex = equipmentName.selectedIndex;
     var equipmentID = equipmentName.options[currentIndex].value;
     var AppiontDate = document.getElementById("AppiontDate");
-    if (!compareWithToday(AppiontDate.value)) {
-        alert("不能选择小于当天的日期");
-        var table = document.getElementById("apptiontTable");
-        RemoveAllChild(table);
-        equipmentfrominfo = [];
-        return;
-    }
     var date = AppiontDate.value;
     var xmlHttp = new XMLHttpRequest();
     var url = "GetEquipmentWorktime.ashx?equipmentID=" + equipmentID + "&date=" + date;

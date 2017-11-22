@@ -28,13 +28,22 @@ public class getappointinfo : IHttpHandler {
         string selectallappoint = "select count(*) from appointment where Treatment_ID=@treatid";
         sqlOperation.AddParameterWithValue("@treatid", treat);
         int count=int.Parse(sqlOperation.ExecuteScalar(selectallappoint));
-        string selectall = "select appointment.ID as appointid,equipment.Name as equipname,Begin,End,Date,Completed,Task from equipment,appointment where appointment.Equipment_ID=equipment.ID and Treatment_ID=@treatid order by Date,Begin";
+        string selectall = "select appointment.ID as appointid,ischecked,equipment.Name as equipname,Begin,End,Date,Completed,Task from equipment,appointment where appointment.Equipment_ID=equipment.ID and Treatment_ID=@treatid order by Date,Begin";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(selectall);
         StringBuilder backText = new StringBuilder("{\"appoint\":[");
         int i=0;
         while (reader.Read())
         {
-            backText.Append("{\"Task\":\"" + reader["Task"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\",\"appointid\":\"" + reader["appointid"].ToString() + "\",\"equipname\":\"" + reader["equipname"].ToString() + "\",\"Completed\":\"" + reader["Completed"].ToString() + "\"}");
+            string task = "";
+            if (reader["ischecked"].ToString() == "1")
+            {
+                task = "CT复查";
+            }
+            else
+            {
+                task = reader["Task"].ToString();
+            }
+            backText.Append("{\"Task\":\"" + task + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\",\"appointid\":\"" + reader["appointid"].ToString() + "\",\"equipname\":\"" + reader["equipname"].ToString() + "\",\"Completed\":\"" + reader["Completed"].ToString() + "\"}");
             if (i < count-1)
             {
                 backText.Append(",");

@@ -68,8 +68,9 @@ public class GetBasicTableInfo : IHttpHandler {
                     beginbegin = reader["Begin"].ToString();
                     beginend = reader["End"].ToString();
                 }
-                count++;
+                
             }
+            count++;
         }
         reader.Close();
         

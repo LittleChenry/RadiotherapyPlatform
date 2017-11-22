@@ -58,7 +58,7 @@ public class TreatmentReviewRecord : IHttpHandler {
                 //各参数赋予实际值
                 sqlOperation.AddParameterWithValue("@appoint", appointid);
                 sqlOperation.AddParameterWithValue("@thickness", thickness);
-                sqlOperation.AddParameterWithValue("@ScanPart_ID", Convert.ToInt32(scanpart));
+                sqlOperation.AddParameterWithValue("@ScanPart_ID", scanpart);
                 sqlOperation.AddParameterWithValue("@ScanMethod_ID", Convert.ToInt32(scanmethod));
                 sqlOperation.AddParameterWithValue("@LocationRequirements_ID", Convert.ToInt32(requirement));
                 sqlOperation.AddParameterWithValue("@Enhance", Convert.ToInt32(add));

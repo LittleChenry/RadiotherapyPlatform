@@ -40,8 +40,9 @@ public class getallfirstappoint : IHttpHandler {
             if (reader["Treat_User_ID"].ToString() == "")
             {
                 appointid = int.Parse(reader["Appointment_ID"].ToString()); 
-                count++;
+               
             }
+            count++;
         }
         reader.Close();
 

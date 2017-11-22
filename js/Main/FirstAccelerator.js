@@ -159,9 +159,28 @@ function Init(evt) {
             document.getElementById("chooseappoint").addEventListener("click", function () {
                 CreateNewAppiontTable(event);
             }, false);
-            document.getElementById("chooseProject").addEventListener("click", function () {
+        //document.getElementById("chooseProject").addEventListener("click", function () {
+        //    CreateNewAppiontTable(event);
+        //}, false);//根据条件创建预约表
+            $("#AppiontDate").unbind("change").change(function () {
+                if ($("#AppiontDate").val() == "") {
+                    var date = new Date();
+                    $("#AppiontDate").val(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+                }
                 CreateNewAppiontTable(event);
-            }, false);//根据条件创建预约表
+            });
+            $("#previousday").click(function () {
+                var date = $("#AppiontDate").val();
+                var newdate = dateAdd2(date, -1);
+                $("#AppiontDate").val(newdate);
+                CreateNewAppiontTable(event);
+            });
+            $("#nextday").click(function () {
+                var date = $("#AppiontDate").val();
+                var newdate = dateAdd2(date, 1);
+                $("#AppiontDate").val(newdate);
+                CreateNewAppiontTable(event);
+            });
             document.getElementById("sure").addEventListener("click", checkAllTable, false);
             $("#changetotalnumber").bind("click", function () {
                 if ($(this).html() == "更改") {
@@ -189,7 +208,28 @@ function Init(evt) {
     });
 
 }
-
+function dateAdd2(dd, n) {
+    var strs = new Array();
+    strs = dd.split("-");
+    var y = strs[0];
+    var m = strs[1];
+    var d = strs[2];
+    var t = new Date(y, m - 1, d);
+    var str = t.getTime() + n * (1000 * 60 * 60 * 24);
+    var newdate = new Date();
+    newdate.setTime(str);
+    var strYear = newdate.getFullYear();
+    var strDay = newdate.getDate();
+    if (strDay < 10) {
+        strDay = "0" + strDay;
+    }
+    var strMonth = newdate.getMonth() + 1;
+    if (strMonth < 10) {
+        strMonth = "0" + strMonth;
+    }
+    var strdate = strYear + "-" + strMonth + "-" + strDay;
+    return strdate;
+}
 function getfieldinfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getallfieldinfo.ashx?treatmentID=" + treatmentID;
@@ -797,13 +837,13 @@ function CreateNewAppiontTable(evt) {
     var currentIndex = equipmentName.selectedIndex;
     var equipmentID = equipmentName.options[currentIndex].value;
     var AppiontDate = document.getElementById("AppiontDate");
-    if (!compareWithToday(AppiontDate.value)) {
-        alert("不能选择小于当天的日期");
-        var table = document.getElementById("apptiontTable");
-        RemoveAllChild(table);
-        equipmentfrominfo = [];
-        return;
-    }
+    //if (!compareWithToday(AppiontDate.value)) {
+    //    alert("不能选择小于当天的日期");
+    //    var table = document.getElementById("apptiontTable");
+    //    RemoveAllChild(table);
+    //    equipmentfrominfo = [];
+    //    return;
+    //}
     var date = AppiontDate.value;
     var xmlHttp = new XMLHttpRequest();
     var url = "GetEquipmentWorktime.ashx?equipmentID=" + equipmentID + "&date=" + date;

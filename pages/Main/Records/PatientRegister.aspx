@@ -230,13 +230,15 @@
                     <h4 class="modal-title">修改预约时间</h4>
                 </div>
                 <div class="modal-body" style="overflow:hidden;">
-                    <div class="panel-row">
-                        <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
-                        <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
-                        <div class="col-xs-2">
-                            <button id="chooseProject" class="btn btn-default">查询该项</button>
+                   <div class="panel-row">
+                             <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
+                            <div class="item col-xs-4">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                            <div class="item col-xs-3">
+                                <button type="button"  id="previousday" class="btn btn-default btn-sm">上一天</button>
+                                <button type="button" id="nextday" class="btn btn-default btn-sm">下一天</button>
+                               <%-- <button id="chooseProject" class="btn btn-default">查询该项</button>--%>
+                            </div>
                         </div>
-                    </div>
                       <div id="timechoose" class="panel-row" style="display:none">
                             <div class="item col-xs-7">时间筛选：<select id="timeselect" name="timeselect" class="form-item">
                                                                    <option value="360-720">06:00-12:00</option>
@@ -253,9 +255,18 @@
 
                             </div>
                          </div>
-                    <div class="panel-row">
-                        <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
-                    </div>
+                     <div id="amappoint" class="panel-row">
+                        <div id="amlabel">
+                            <span class="label label-info" style="float:left;width:10%;height:auto" >上午</span>
+                        </div>
+                            <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
+                        </div>
+                          <div id="pmappoint" class="panel-row">
+                         <div id="pmlabel" >
+                            <span class="label label-info" style="float:left;width:10%;height:auto" >下午</span>
+                        </div>
+                            <table id="apptiontTableForPm" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal">取消</button>

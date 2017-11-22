@@ -59,9 +59,9 @@
                  <div id="tab-content" class="tab-content">
                     <div class="tab-pane active" id="tab">
                    <div class="single-row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-6" style="position:static;">
                         <span class="form-text col-xs-4" style="padding-left:0px;">扫描部位：</span>
-                        <select id="scanpart" name="scanpart" class="form-item" disabled="disabled"></select>
+                        <input id="scanpart" name="scanpart" class="form-item" disabled="disabled"></input>
                     </div>
                     <div class="col-xs-6">
                         <span class="form-text col-xs-4">扫描方式：</span>
@@ -132,14 +132,25 @@
                     </div>
                     <div class="modal-body" style="overflow:hidden;">
                         <div class="panel-row">
-                            <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
-                            <div class="item col-xs-5">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
-                            <div class="col-xs-2">
-                                <button id="chooseProject" class="btn btn-default">查询该项</button>
+                             <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
+                            <div class="item col-xs-4">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                            <div class="item col-xs-3">
+                                <button type="button"  id="previousday" class="btn btn-default btn-sm">上一天</button>
+                                <button type="button" id="nextday" class="btn btn-default btn-sm">下一天</button>
+                               <%-- <button id="chooseProject" class="btn btn-default">查询该项</button>--%>
                             </div>
                         </div>
-                        <div class="panel-row">
+                         <div id="amappoint" class="panel-row">
+                        <div id="amlabel">
+                            <span class="label label-info" style="float:left;width:10%;height:auto" >上午</span>
+                        </div>
                             <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
+                        </div>
+                          <div id="pmappoint" class="panel-row">
+                         <div id="pmlabel" >
+                            <span class="label label-info" style="float:left;width:10%;height:auto" >下午</span>
+                        </div>
+                            <table id="apptiontTableForPm" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -148,7 +159,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+       </div>
     </section>
     
     <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">

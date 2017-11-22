@@ -95,7 +95,7 @@ function Init(evt) {
             } else {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '模拟定位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
-                    + '<div class="item col-xs-6">扫描部位：<span class="underline">' + info[i].scanpartname + '</span></div>'
+                    + '<div class="item col-xs-6">扫描部位：<span class="underline">' + info[i].scanpartID + '</span></div>'
                     + '<div class="item col-xs-6">扫描方式：<span class="underline">' + info[i].scanmethod + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">上界:<span class="underline">' + info[i].UpperBound + '</span></div>'
                     + '<div class="item col-xs-6">下界：<span class="underline">' + info[i].LowerBound + '</span></div></div>'
@@ -129,20 +129,42 @@ function Init(evt) {
         createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
         var date = new Date();
         document.getElementById("applyuser").innerHTML = userName;
-        document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+        var fixtime = getfixtime(treatmentID);
+        var fixtime = JSON.parse(fixtime).fixtime;
+        var fixtimebiaozhun = fixtime[0].Date.split(" ")[0].replace(/\//g,"-");
+        document.getElementById("AppiontDate").value = fixtimebiaozhun;
         document.getElementById("time").innerHTML = getNowFormatDate();
         document.getElementById("chooseappoint").addEventListener("click", function () {
             CreateNewAppiontTable(event);
         }, false);
-        document.getElementById("chooseProject").addEventListener("click", function () {
+        //document.getElementById("chooseProject").addEventListener("click", function () {
+        //    CreateNewAppiontTable(event);
+        //}, false);//根据条件创建预约表
+        $("#AppiontDate").unbind("change").change(function () {
+            if ($("#AppiontDate").val() == "") {
+                var date = new Date();
+                $("#AppiontDate").val(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+            }
             CreateNewAppiontTable(event);
-        }, false);//根据条件创建预约表
+        });
+        $("#previousday").click(function () {
+            var date = $("#AppiontDate").val();
+            var newdate = dateAdd2(date, -1);
+            $("#AppiontDate").val(newdate);
+            CreateNewAppiontTable(event);
+        });
+        $("#nextday").click(function () {
+            var date = $("#AppiontDate").val();
+            var newdate = dateAdd2(date, 1);
+            $("#AppiontDate").val(newdate);
+            CreateNewAppiontTable(event);
+        });
         document.getElementById("sure").addEventListener("click", checkAllTable, false);
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatname != patient.Treatmentname) {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '模拟定位申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
-                    + '<div class="item col-xs-6">扫描部位：<span class="underline">' + info[i].scanpartname + '</span></div>'
+                    + '<div class="item col-xs-6">扫描部位：<span class="underline">' + info[i].scanpartID + '</span></div>'
                     + '<div class="item col-xs-6">扫描方式：<span class="underline">' + info[i].scanmethod + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">上界:<span class="underline">' + info[i].UpperBound + '</span></div>'
                     + '<div class="item col-xs-6">下界：<span class="underline">' + info[i].LowerBound + '</span></div></div>'
@@ -335,7 +357,7 @@ function save() {
     var addmethod = document.getElementById("addmethod").value;
     var appointid = document.getElementById("idforappoint").value;
     var remark = document.getElementById("remark").value;
-    if (document.getElementById("scanpart").value == "allItem") {
+    if (document.getElementById("scanpart").value == " ") {
         window.alert("请选择扫描部位");
         return false;
     }
@@ -419,7 +441,7 @@ function saveTemplate(TemplateName) {
     var down = document.getElementById("down").value;
     var addmethod = document.getElementById("addmethod").value;   
     var remark = document.getElementById("remark").value;
-    if (document.getElementById("scanpart").value == "allItem") {
+    if (document.getElementById("scanpart").value == "") {
         window.alert("请选择扫描部位");
         return false;
     }
@@ -461,16 +483,32 @@ function saveTemplate(TemplateName) {
 //创建某设备某天的预约表
 function CreateCurrentEquipmentTbale(equiment, dateString) {
     var table = document.getElementById("apptiontTable");
+    var table1 = document.getElementById("apptiontTableForPm");
     RemoveAllChild(table);
+    RemoveAllChild(table1);
     if (equiment.length != 0) {
+        var amlength = 0
+        for (var i = 0; i < equiment.length; i++) {
+            if (equiment[i].Begin > 720) {
+                amlength = i;
+                break;
+            }
+        }
+        var pmlength = equiment.length - amlength;
+        if (amlength != 0) {
+            $("#amlabel").show();
+        } else {
+            $("#amlabel").hide();
+        }
+        $("#pmlabel").show();
     var tbody = document.createElement("tbody");
-    for (var i = 0; i < Math.ceil(equiment.length / 5) * 5 ; i++) {
+    for (var i = 0; i < Math.ceil(amlength / 5) * 5 ; i++) {
         var count = i % 5;
         var tr;
         if (count == 0) {
             tr = document.createElement("tr");
         }
-        if (i <= equiment.length - 1) {
+        if (i <= amlength - 1) {
             var td = document.createElement("td");
             var sign = document.createElement("i");
             if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
@@ -531,11 +569,10 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
             td.appendChild(sign);
             tr.appendChild(td);
         }
-        if (i == equiment.length) {
+        if (i == amlength) {
             var k;
-            for (k = equiment.length; k <= Math.ceil(equiment.length / 5) * 5 - 1; k++) {
+            for (k = amlength; k <= Math.ceil(amlength / 5) * 5 - 1; k++) {
                 var td = document.createElement("td");
-
                 tr.appendChild(td);
             }
         }
@@ -544,7 +581,90 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
         }
     }
     table.appendChild(tbody);
+    var tbody2 = document.createElement("tbody");
+    for (var m = 0; m < Math.ceil(pmlength / 5) * 5 ; m++) {
+        var count = m % 5;
+        var i = m + amlength;
+        var tr;
+        if (count == 0) {
+            tr = document.createElement("tr");
+        }
+        if (m <= pmlength - 1) {
+            var td = document.createElement("td");
+            var sign = document.createElement("i");
+            if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
+                var hour = toTime(equiment[i].Begin).split(":")[0];
+                var minute = toTime(equiment[i].Begin).split(":")[1];
+                if (hour >= 24) {
+                    var beginhour = parseInt(hour) - 24;
+                } else {
+                    var beginhour = hour;
+                }
+                var begin = beginhour + ":" + minute;
+                var endhour = toTime(equiment[i].End).split(":")[0];
+                var endminute = toTime(equiment[i].End).split(":")[1];
+                var hourend = parseInt(endhour) - 24;
+                var end = hourend + ":" + endminute;
+                td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + begin + "-" + end + "(次日)" + "_" + equiment[i].Euqipment);
+            } else {
+                td.setAttribute("id", equiment[i].ID + "_" + dateString + "_" + toTime(equiment[i].Begin) + "-" + toTime(equiment[i].End) + "_" + equiment[i].Euqipment);
+            }
+            if (equiment[i].State == "0") {
+                if (getFixApplyTime(equiment[i], dateString)) {
+                    if (compareWithToday(dateString)) {
+                        sign.className = "";
+                        td.addEventListener("click", chooseItem, false);
+                    } else {
+                        td.style.backgroundColor = "#C1C1C1";
+                        sign.className = "fa fa-fw fa-ban td-sign";
+                        td.addEventListener("click", hasChosen, false);
+                    }
+                } else {
+                    td.style.backgroundColor = "#C1C1C1";
+                    sign.className = "fa fa-fw fa-ban td-sign";
+                    td.addEventListener("click", hasChosen, false);
+                }
+            } else {
+                td.style.backgroundColor = "#C1C1C1";
+                sign.className = "fa fa-fw fa-ban td-sign";
+                td.addEventListener("click", hasChosen, false);
+            }
+            if (parseInt(toTime(equiment[i].End).split(":")[0]) >= 24) {
+                var hour = toTime(equiment[i].Begin).split(":")[0];
+                var minute = toTime(equiment[i].Begin).split(":")[1];
+                if (hour >= 24) {
+                    var beginhour = parseInt(hour) - 24;
+                } else {
+                    var beginhour = hour;
+                }
+                var begin = beginhour + ":" + minute;
+                var endhour = toTime(equiment[i].End).split(":")[0];
+                var endminute = toTime(equiment[i].End).split(":")[1];
+                var hourend = parseInt(endhour) - 24;
+                var end = hourend + ":" + endminute;
+                var text = document.createTextNode(begin + " - " + end + "(次日)");
+            } else {
+                var text = document.createTextNode(toTime(equiment[i].Begin) + " - " + toTime(equiment[i].End));
+            }
+            td.appendChild(text);
+            td.appendChild(sign);
+            tr.appendChild(td);
+        }
+        if (m == pmlength) {
+            var k;
+            for (k = pmlength; k <= Math.ceil(pmlength / 5) * 5 - 1; k++) {
+                var td = document.createElement("td");
+                tr.appendChild(td);
+            }
+        }
+        if (count == 4) {
+            tbody2.appendChild(tr);
+        }
+    }
+    table1.appendChild(tbody2);
     } else {
+        $("#amlabel").hide();
+        $("#pmlabel").hide();
         table.innerHTML = "今天已经不可以预约了,改天吧！";
 
     }
@@ -563,29 +683,34 @@ function getFixApplyTime(equiment, dateString){
     return compare(fixtimebiaozhun, group);
 }
 
-function chooseItem(){
-    if (ChoseID() == null) {
+function chooseItem() {
+    var ID = ChoseID();
+    if (ID == null) {
         if (this.lastChild.className) {
             this.className = "";
             this.lastChild.className = "";
-        }else{
+        } else {
             this.className = "chosen";
             this.lastChild.className = "fa fa-fw fa-check td-sign";
         }
-    }else{
+    } else {
         if (this.lastChild.className) {
             this.className = "";
             this.lastChild.className = "";
-        }else{
-            alert("只能选择一个时间段！");
+        } else {
+            document.getElementById("" + ID).className = "";
+            document.getElementById("" + ID).lastChild.className = "";
+            this.className = "chosen";
+            this.lastChild.className = "fa fa-fw fa-check td-sign";
         }
     }
-    
+
 }
 
-function ChoseID(){
+function ChoseID() {
     var td_id = null;
     var table = document.getElementById("apptiontTable");
+    var table1 = document.getElementById("apptiontTableForPm");
     for (var i = 0; i < table.rows.length; i++) {
         for (var j = 0; j < table.rows[i].cells.length; j++) {
             var cell = table.rows[i].cells[j];
@@ -594,8 +719,17 @@ function ChoseID(){
             }
         }
     }
+    for (var i = 0; i < table1.rows.length; i++) {
+        for (var j = 0; j < table1.rows[i].cells.length; j++) {
+            var cell = table1.rows[i].cells[j];
+            if (cell.className != "") {
+                td_id = cell.id;
+            }
+        }
+    }
     return td_id;
 }
+
 
 function hasChosen(){
     alert("该时间段不能预约！");
@@ -648,10 +782,6 @@ function CreateNewAppiontTable(evt) {
     var currentIndex = equipmentName.selectedIndex;
     var equipmentID = equipmentName.options[currentIndex].value;
     var AppiontDate = document.getElementById("AppiontDate");
-    if (!compareWithToday(AppiontDate.value)) {
-        alert("不能选择小于当天的日期");
-        return;
-    }
     var date = AppiontDate.value;
     var xmlHttp = new XMLHttpRequest();
     var url = "GetEquipmentAppointment.ashx?equipmentID=" + equipmentID + "&date=" + date;
@@ -703,16 +833,69 @@ function getfixtime(treatid) {
 function createscanpartItem(thiselement) {
     var PartItem = JSON.parse(getscanpartItem()).Item;
     var defaultItem = JSON.parse(getscanpartItem()).defaultItem;
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i] = new Option(PartItem[i].Name);
-            thiselement.options[i].value = parseInt(PartItem[i].ID);
-        }
+    if (defaultItem == "") {
+        $(thiselement).attr("value", "");
+    } else {
+        $(thiselement).attr("value", defaultItem.Name);
     }
-    if (defaultItem != "") {
-        thiselement.value = defaultItem.ID;
-    }
+    $(thiselement).bind("click", function () {
+        event.stopPropagation();
+        autoList(this, PartItem);
+    });
 }
+function autoList(e, data) {
+    if ($(e).next().length == 0) {
+        var position = $(e).offset();
+        var parentelement = $(e).parent();
+        var pickerTop = position.top + 30;
+        var pickerLeft = position.left;
+        var pickerWidth = $(e).width() + 12;
+        $(document).click(function () {
+            $(e).next().fadeOut(200);
+        });
+        var selectArea = "<div class='pickerarea'><ul class='auto_ul'>";
+        for (var i = 0; i < data.length; i++) {
+            li = "<li id='" + data[i].ID + "' class='auto_list'>" + data[i].Name + "</li>";
+            selectArea += li;
+        }
+        selectArea += "</ul></div>";
+        $(parentelement).append(selectArea);
+        $(e).next().css({ minWidth: pickerWidth });
+        $(e).next().offset({ top: pickerTop, left: pickerLeft });
+        $(e).next().find("ul").find("li").each(function () {
+            $(this).mouseover(function () {
+                $(this).css("color", "#FFFFFF");
+                $(this).css("background", "#3C8DBC");
+            });
+            $(this).mouseout(function () {
+                $(this).css("color", "#333333");
+                $(this).css("background", "#FFFFFF");
+            });
+            $(this).bind("click", function () {
+                event.stopPropagation();
+                if ($(this).find("i").length == 0) {
+                    var ispan = "<i class='pull-right fa fa-fw fa-check'></i>"
+                    $(this).append(ispan);
+                } else {
+                    $(this).find("i")[0].remove();
+                }
+                $(this).parent().parent().prev().val("");
+                $(this).parent().find("li").each(function (index, element) {
+                    if ($(this).find("i").length != 0) {
+                        var text = $(this).parent().parent().prev().val() + $(this).text().split("<")[0] + "，";
+                        $(this).parent().parent().prev().val(text);
+                    }
+                });
+                if ($(this).parent().parent().prev().val()) {
+                    var temp = $(this).parent().parent().prev().val();
+                    $(this).parent().parent().prev().val(temp.substring(0, temp.length - 1));
+                }
+            });
+        });
+    }
+    $(e).next().fadeIn(200);
+}
+
 
 function getscanpartItem() {
     var xmlHttp = new XMLHttpRequest();
@@ -828,6 +1011,28 @@ function compare(evt1, evt2) {
     }
     return true;
 
+}
+function dateAdd2(dd, n) {
+    var strs = new Array();
+    strs = dd.split("-");
+    var y = strs[0];
+    var m = strs[1];
+    var d = strs[2];
+    var t = new Date(y, m - 1, d);
+    var str = t.getTime() + n * (1000 * 60 * 60 * 24);
+    var newdate = new Date();
+    newdate.setTime(str);
+    var strYear = newdate.getFullYear();
+    var strDay = newdate.getDate();
+    if (strDay < 10) {
+        strDay = "0" + strDay;
+    }
+    var strMonth = newdate.getMonth() + 1;
+    if (strMonth < 10) {
+        strMonth = "0" + strMonth;
+    }
+    var strdate = strYear + "-" + strMonth + "-" + strDay;
+    return strdate;
 }
 function compareWithToday(time) {
     var year = time.split("-")[0];

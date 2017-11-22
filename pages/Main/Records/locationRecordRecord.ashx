@@ -100,7 +100,7 @@ public class locationRecordRecord : IHttpHandler {
                 //各参数赋予实际值
                 sqlOperation.AddParameterWithValue("@locationID", LocationID);
                 sqlOperation.AddParameterWithValue("@thickness", context.Request.Form["Thickness"]);
-                sqlOperation.AddParameterWithValue("@ScanPart_ID", Convert.ToInt32(context.Request.Form["scanpart"]));
+                sqlOperation.AddParameterWithValue("@ScanPart_ID", context.Request.Form["scanpart"]);
                 sqlOperation.AddParameterWithValue("@ScanMethod_ID", Convert.ToInt32(context.Request.Form["scanmethod"]));
                 sqlOperation.AddParameterWithValue("@LocationRequirements_ID", Convert.ToInt32(context.Request.Form["special"]));
                 sqlOperation.AddParameterWithValue("@Enhance", Convert.ToInt32(context.Request.Form["add"]));
@@ -154,7 +154,7 @@ public class locationRecordRecord : IHttpHandler {
                 //各参数赋予实际值
                 sqlOperation.AddParameterWithValue("@locationID", LocationID);
                 sqlOperation.AddParameterWithValue("@thickness", context.Request.Form["Thickness"]);
-                sqlOperation.AddParameterWithValue("@ScanPart_ID", Convert.ToInt32(context.Request.Form["scanpart"]));
+                sqlOperation.AddParameterWithValue("@ScanPart_ID", context.Request.Form["scanpart"]);
                 sqlOperation.AddParameterWithValue("@ScanMethod_ID", Convert.ToInt32(context.Request.Form["scanmethod"]));
                 sqlOperation.AddParameterWithValue("@LocationRequirements_ID", Convert.ToInt32(context.Request.Form["special"]));
                 sqlOperation.AddParameterWithValue("@Enhance", Convert.ToInt32(context.Request.Form["add"]));
