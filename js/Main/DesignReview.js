@@ -271,7 +271,7 @@ function check() {
         document.getElementById("check11").style.color = "#ff0000";
 
     }
-    if (document.getElementById("pinyin1").innerHTML.toLowerCase() == document.getElementById("pinyin2").innerHTML.toLowerCase()) {
+    if (pinyinequal()) {
         document.getElementById("check13").innerHTML = "通过";
         document.getElementById("check13").style.color = "#0000ff";
     } else {
@@ -293,7 +293,12 @@ function check() {
     if (item == 0) {
         signal = 0;
     }
-} 
+}
+function pinyinequal() {
+    var text = document.getElementById("pinyin1").innerHTML;
+    var value = text.replace(/[^a-zA-Z]/ig, "");
+    return value.toLowerCase() == document.getElementById("pinyin2").innerHTML.toLowerCase()
+}
 function isequal1() {
     var str1 = document.getElementById("MU1").innerHTML;
     var str2 = document.getElementById("MU2").innerHTML;
