@@ -46,7 +46,7 @@ public class LocationApplytemplate : IHttpHandler
         //将信息写入数据库，并返回是否成功
         string strSqlCommand = "INSERT INTO location(ScanPart_ID,ScanMethod_ID,UpperBound,Enhance,EnhanceMethod_ID,LowerBound,LocationRequirements_ID,Remarks,Application_User_ID,ApplicationTime) " +
                                 "VALUES(@ScanPart_ID,@ScanMethod_ID,@UpperBound,@Enhance,@EnhanceMethod_ID,@LowerBound,@LocationRequirements_ID,@Remarks,@Application_User_ID,@ApplicationTime)";
-        sqlOperation1.AddParameterWithValue("@ScanPart_ID", Convert.ToInt32(scanpart));
+        sqlOperation1.AddParameterWithValue("@ScanPart_ID", scanpart);
         sqlOperation1.AddParameterWithValue("@ScanMethod_ID", Convert.ToInt32(scanmethod));
         sqlOperation1.AddParameterWithValue("@UpperBound", up);
         sqlOperation1.AddParameterWithValue("@ApplicationTime", date);
