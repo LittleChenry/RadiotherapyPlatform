@@ -43,6 +43,36 @@ function Init(evt) {
     var groupprogress = patient.Progress.split(",");
     if (contains(groupprogress, "2")) {
         ti = 1;
+        createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
+        var date = new Date();
+        document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        document.getElementById("applyuser").innerHTML = userName;
+        document.getElementById("chooseappoint").addEventListener("click", function () {
+            CreateNewAppiontTable(event);
+        }, false);
+        //document.getElementById("chooseProject").addEventListener("click", function () {
+        //    CreateNewAppiontTable(event);
+        //}, false);//根据条件创建预约表
+        $("#AppiontDate").unbind("change").change(function () {
+            if ($("#AppiontDate").val() == "") {
+                var date = new Date();
+                $("#AppiontDate").val(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+            }
+            CreateNewAppiontTable(event);
+        });
+        $("#previousday").click(function () {
+            var date = $("#AppiontDate").val();
+            var newdate = dateAdd2(date, -1);
+            $("#AppiontDate").val(newdate);
+            CreateNewAppiontTable(event);
+        });
+        $("#nextday").click(function () {
+            var date = $("#AppiontDate").val();
+            var newdate = dateAdd2(date, 1);
+            $("#AppiontDate").val(newdate);
+            CreateNewAppiontTable(event);
+        });
+        document.getElementById("sure").addEventListener("click", checkAllTable, false);
         for (var i = 0; i < info.length; i++) {
             if (info[i].treatmentname == patient.Treatmentname) {
                 document.getElementById("modelselect").value = info[i].materialID;
@@ -50,29 +80,36 @@ function Init(evt) {
                 document.getElementById("fixEquip").value = info[i].fixedequipid;
                 document.getElementById("bodyPost").value = info[i].bodyid;
                 document.getElementById("Remarks").value = info[i].Remarks;
-                if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
-                    var hour = toTime(info[i].Begin).split(":")[0];
-                    var minute = toTime(info[i].Begin).split(":")[1];
-                    if (hour >= 24) {
-                        var beginhour = parseInt(hour) - 24;
+                if (info[i].equipname != "") {
+                    if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
+                        var hour = toTime(info[i].Begin).split(":")[0];
+                        var minute = toTime(info[i].Begin).split(":")[1];
+                        if (hour >= 24) {
+                            var beginhour = parseInt(hour) - 24;
+                        } else {
+                            var beginhour = hour;
+                        }
+                        var begin = beginhour + ":" + minute;
+                        var endhour = toTime(info[i].End).split(":")[0];
+                        var endminute = toTime(info[i].End).split(":")[1];
+                        var hourend = parseInt(endhour) - 24;
+                        var end = hourend + ":" + endminute;
+                        document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date + " " + begin + "-" + end + "(次日)";
                     } else {
-                        var beginhour = hour;
+                        document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
                     }
-                    var begin = beginhour + ":" + minute;
-                    var endhour = toTime(info[i].End).split(":")[0];
-                    var endminute = toTime(info[i].End).split(":")[1];
-                    var hourend = parseInt(endhour) - 24;
-                    var end = hourend + ":" + endminute;
-                    document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date + " " + begin + "-" + end+"(次日)";
-                } else {
-                    document.getElementById("appointtime").value = info[i].equipname + " " + info[i].Date + " " + toTime(info[i].Begin) + "-" + toTime(info[i].End);
                 }
+
                 document.getElementById("applyuser").innerHTML = info[i].username;
                 document.getElementById("time").innerHTML = info[i].ApplicationTime;
                 
                 if (info[i].userID == userID) {
                     window.parent.document.getElementById("edit").removeAttribute("disabled");
-                    document.getElementById("idforappoint").value = info[i].appointid;
+                    if (info[i].equipname != "") {
+                        document.getElementById("idforappoint").value = info[i].appointid;
+                    } else {
+                        document.getElementById("chooseappoint").removeAttribute("disabled");
+                    }
                 }
             } else {
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + info[i].Treatmentdescribe + '体位固定申请</a></li>';
@@ -81,26 +118,33 @@ function Init(evt) {
                     + '<div class="item col-xs-6">固定装置：<span class="underline">' + info[i].fixedequipname + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">体位:<span class="underline">' + info[i].BodyPosition + '</span></div>'
                     + '<div class="item col-xs-6">特殊要求：<span class="underline">' + info[i].fixedrequire + '</span></div></div>';
-                if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
-                    var hour = toTime(info[i].Begin).split(":")[0];
-                    var minute = toTime(info[i].Begin).split(":")[1];
-                    if (hour >= 24) {
-                        var beginhour = parseInt(hour) - 24;
+                if (info[i].equipname != "") {
+                    if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
+                        var hour = toTime(info[i].Begin).split(":")[0];
+                        var minute = toTime(info[i].Begin).split(":")[1];
+                        if (hour >= 24) {
+                            var beginhour = parseInt(hour) - 24;
+                        } else {
+                            var beginhour = hour;
+                        }
+                        var begin = beginhour + ":" + minute;
+                        var endhour = toTime(info[i].End).split(":")[0];
+                        var endminute = toTime(info[i].End).split(":")[1];
+                        var hourend = parseInt(endhour) - 24;
+                        var end = hourend + ":" + endminute;
+                        content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + begin + '-' + end + '(次日)</span></div>'
+                         + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
+                         + '<div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
+
                     } else {
-                        var beginhour = hour;
+                        content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div>'
+                         + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
+                         + '<div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                     }
-                    var begin = beginhour + ":" + minute;
-                    var endhour = toTime(info[i].End).split(":")[0];
-                    var endminute = toTime(info[i].End).split(":")[1];
-                    var hourend = parseInt(endhour) - 24;
-                    var end = hourend + ":" + endminute;
-                    content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + begin + '-' + end + '(次日)</span></div>'
-                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
-                     + '<div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                 } else {
-                    content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div>'
-                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
-                     + '<div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
+                     content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">无</span></div>'
+                        + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
+                        + '<div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                 }
     
                 $("#tabs").append(tab);
@@ -147,26 +191,32 @@ function Init(evt) {
                     + '<div class="item col-xs-6">固定装置：<span class="underline">' + info[i].fixedequipname + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">体位:<span class="underline">' + info[i].BodyPosition + '</span></div>'
                     + '<div class="item col-xs-6">特殊要求：<span class="underline">' + info[i].fixedrequire + '</span></div></div>';
-                if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
-                    var hour = toTime(info[i].Begin).split(":")[0];
-                    var minute = toTime(info[i].Begin).split(":")[1];
-                    if (hour >= 24) {
-                        var beginhour = parseInt(hour) - 24;
+                if (info[i].equipname != "") {
+                    if (parseInt(toTime(info[i].End).split(":")[0]) >= 24) {
+                        var hour = toTime(info[i].Begin).split(":")[0];
+                        var minute = toTime(info[i].Begin).split(":")[1];
+                        if (hour >= 24) {
+                            var beginhour = parseInt(hour) - 24;
+                        } else {
+                            var beginhour = hour;
+                        }
+                        var begin = beginhour + ":" + minute;
+                        var endhour = toTime(info[i].End).split(":")[0];
+                        var endminute = toTime(info[i].End).split(":")[1];
+                        var hourend = parseInt(endhour) - 24;
+                        var end = hourend + ":" + endminute;
+                        content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + begin + '-' + end + '(次日)</span></div>'
+                         + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
+                         + '<div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';
                     } else {
-                        var beginhour = hour;
+                        content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div>'
+                         + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
+                         + '<div class="item col-xs-4"><button class="btn btn-success" type="button"  id="' + i + '">载入历史信息</button></div></div>';
                     }
-                    var begin = beginhour + ":" + minute;
-                    var endhour = toTime(info[i].End).split(":")[0];
-                    var endminute = toTime(info[i].End).split(":")[1];
-                    var hourend = parseInt(endhour) - 24;
-                    var end = hourend + ":" + endminute;
-                    content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + begin + '-' + end + '(次日)</span></div>'
-                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
-                     + '<div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';
                 } else {
-                    content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">' + info[i].equipname + '' + info[i].Date + ' ' + toTime(info[i].Begin) + '-' + toTime(info[i].End) + '</span></div>'
-                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
-                     + '<div class="item col-xs-4"><button class="btn btn-success" type="button"  id="' + i + '">载入历史信息</button></div></div>';
+                       content = content + '<div class="single-row"><div class="item col-xs-8">设备与时间：<span class="underline">无</span></div>'
+                         + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + info[i].Remarks + '</span></div></div>'
+                         + '<div class="item col-xs-4"><button class="btn btn-success" type="button"  id="' + i + '">载入历史信息</button></div></div>';
                 }
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);

@@ -120,35 +120,63 @@ public class LocationApplyRecord : IHttpHandler {
             }
 
         }else{
-            string locateapply = "select Location_ID from treatment where treatment.ID=@treatid";
-            sqlOperation.AddParameterWithValue("@treatid", treatid);
-            int locateapplyid = int.Parse(sqlOperation.ExecuteScalar(locateapply));
-            string strupdate = "update location set ScanPart_ID=@ScanPart_ID,ScanMethod_ID=@ScanMethod_ID,UpperBound=@UpperBound,LowerBound=@LowerBound,Enhance=@Enhance,EnhanceMethod_ID=@EnhanceMethod_ID,LocationRequirements_ID=@LocationRequirements_ID,Remarks=@Remarks where ID=@locateapplyid";
-            sqlOperation1.AddParameterWithValue("@locateapplyid", locateapplyid);
-            sqlOperation1.AddParameterWithValue("@ScanPart_ID",scanpart);
-            sqlOperation1.AddParameterWithValue("@ScanMethod_ID", Convert.ToInt32(scanmethod));
-            sqlOperation1.AddParameterWithValue("@UpperBound", up);
-            sqlOperation1.AddParameterWithValue("@LowerBound", down);
-            sqlOperation1.AddParameterWithValue("@LocationRequirements_ID", Convert.ToInt32(requirement));
-            sqlOperation1.AddParameterWithValue("@Remarks", remark);
-            sqlOperation1.AddParameterWithValue("@Enhance", Convert.ToInt32(add));
-            if (Convert.ToInt32(add) == 1)
+             string strcommand = "select State from appointment where ID=@appointid";
+            sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));
+            string count = sqlOperation.ExecuteScalar(strcommand);
+            if (count == "1")
             {
-                sqlOperation1.AddParameterWithValue("@EnhanceMethod_ID", Convert.ToInt32(addmethod));
+                return "busy";
             }
             else
             {
-                sqlOperation1.AddParameterWithValue("@EnhanceMethod_ID", null);
-            }
+                string strcommand1 = "update appointment set State=1 where ID=@appointid and State=0";
+                int intSuccess = sqlOperation.ExecuteNonQuery(strcommand1);
+                if (intSuccess == 0)
+                {
+                    return "busy";
+                }
+                else
+                {
+                    string strcommand2 = "select Patient_ID from treatment where ID=@treat";
+                    sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
+                    string patient_ID = sqlOperation.ExecuteScalar(strcommand2);
 
-            int Success2 = sqlOperation1.ExecuteNonQuery(strupdate);
-            if ( Success2 > 0)
-            {
-                return "success";
-            }
-            else
-            {
-                return "failure";
+                    string finishappoint = "update appointment set Patient_ID=@Patient,Treatment_ID=@treat where ID=@appointid";
+                    sqlOperation.AddParameterWithValue("@Patient", Convert.ToInt32(patient_ID));
+                    int Success1 = sqlOperation.ExecuteNonQuery(finishappoint);
+                    
+                    string locateapply = "select Location_ID from treatment where treatment.ID=@treatid";
+                    sqlOperation.AddParameterWithValue("@treatid", treatid);
+                    int locateapplyid = int.Parse(sqlOperation.ExecuteScalar(locateapply));
+                    string strupdate = "update location set ScanPart_ID=@ScanPart_ID,ScanMethod_ID=@ScanMethod_ID,UpperBound=@UpperBound,LowerBound=@LowerBound,Enhance=@Enhance,EnhanceMethod_ID=@EnhanceMethod_ID,LocationRequirements_ID=@LocationRequirements_ID,Remarks=@Remarks,Appointment_ID=@Appointment_ID where ID=@locateapplyid";
+                    sqlOperation1.AddParameterWithValue("@locateapplyid", locateapplyid);
+                    sqlOperation1.AddParameterWithValue("@Appointment_ID", Convert.ToInt32(appoint));
+                    sqlOperation1.AddParameterWithValue("@ScanPart_ID", scanpart);
+                    sqlOperation1.AddParameterWithValue("@ScanMethod_ID", Convert.ToInt32(scanmethod));
+                    sqlOperation1.AddParameterWithValue("@UpperBound", up);
+                    sqlOperation1.AddParameterWithValue("@LowerBound", down);
+                    sqlOperation1.AddParameterWithValue("@LocationRequirements_ID", Convert.ToInt32(requirement));
+                    sqlOperation1.AddParameterWithValue("@Remarks", remark);
+                    sqlOperation1.AddParameterWithValue("@Enhance", Convert.ToInt32(add));
+                    if (Convert.ToInt32(add) == 1)
+                    {
+                        sqlOperation1.AddParameterWithValue("@EnhanceMethod_ID", Convert.ToInt32(addmethod));
+                    }
+                    else
+                    {
+                        sqlOperation1.AddParameterWithValue("@EnhanceMethod_ID", null);
+                    }
+
+                    int Success2 = sqlOperation1.ExecuteNonQuery(strupdate);
+                    if (Success2 > 0)
+                    {
+                        return "success";
+                    }
+                    else
+                    {
+                        return "failure";
+                    }
+                }
             }
         }
 
