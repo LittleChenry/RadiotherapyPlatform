@@ -6,6 +6,7 @@ using System.Web;
 public class FirstAcclerateRecord : IHttpHandler {
     DataLayer sqlOperation = new DataLayer("sqlStr");
     DataLayer sqlOperation1 = new DataLayer("sqlStr");
+    DataLayer sqlOperation2 = new DataLayer("sqlStr");
     public void ProcessRequest(HttpContext context)
     {
         context.Response.ContentType = "text/plain";
@@ -16,6 +17,9 @@ public class FirstAcclerateRecord : IHttpHandler {
         sqlOperation1.Close();
         sqlOperation1.Dispose();
         sqlOperation1 = null;
+        sqlOperation2.Close();
+        sqlOperation2.Dispose();
+        sqlOperation2 = null;
         context.Response.Write(result);
     }
 
@@ -48,13 +52,25 @@ public class FirstAcclerateRecord : IHttpHandler {
             int Success = 0;
             if (Convert.ToInt32(isfinished) == 1)
             {
+                string selectallaccerappoint = "select ID from appointment_accelerate where Treatment_ID=@treat and Completed=0";
+                sqlOperation2.AddParameterWithValue("@treat", treatid);
+                MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(selectallaccerappoint);
+                while (reader.Read())
+                {
+                    string deletecommand = "delete from appointment_accelerate where ID=@appointid";
+                    sqlOperation1.AddParameterWithValue("@appointid", reader["ID"].ToString());
+                    sqlOperation1.ExecuteNonQuery(deletecommand);
+                    string deletecommand2 = "delete from treatmentrecord where Appointment_ID=@appointid";
+                    sqlOperation1.ExecuteNonQuery(deletecommand2);
+                }
+                reader.Close();
                     string select = "select ChangeLog from treatment where ID=@treat";
                     string log = sqlOperation.ExecuteScalar(select);
                     string select1 = "select Progress from treatment where ID=@treat";
                     string progress = sqlOperation.ExecuteScalar(select1);
                     //将诊断ID填入treatment表
                     string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log,SplitWay_ID=@split,SpecialEnjoin=@remark where ID=@treat";
-                    sqlOperation.AddParameterWithValue("@progress", progress + "13,14,15");
+                    sqlOperation.AddParameterWithValue("@progress", progress + ",13,14");
                     sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
                     sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                     sqlOperation.AddParameterWithValue("@split", context.Request["splitway"]);
@@ -118,13 +134,25 @@ public class FirstAcclerateRecord : IHttpHandler {
              int Success = 0;
                     if (Convert.ToInt32(isfinished) == 1)
                     {
+                        string selectallaccerappoint = "select ID from appointment_accelerate where Treatment_ID=@treat and Completed=0";
+                        sqlOperation2.AddParameterWithValue("@treat", treatid);
+                        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(selectallaccerappoint);
+                        while (reader.Read())
+                        {
+                            string deletecommand = "delete from appointment_accelerate where ID=@appointid";
+                            sqlOperation1.AddParameterWithValue("@appointid", reader["ID"].ToString());
+                            sqlOperation1.ExecuteNonQuery(deletecommand);
+                            string deletecommand2 = "delete from treatmentrecord where Appointment_ID=@appointid";
+                            sqlOperation1.ExecuteNonQuery(deletecommand2);
+                        }
+                        reader.Close();
                         string select = "select ChangeLog from treatment where ID=@treat";
                         string log = sqlOperation.ExecuteScalar(select);
                         string select1 = "select Progress from treatment where ID=@treat";
                         string progress = sqlOperation.ExecuteScalar(select1);
                         //将诊断ID填入treatment表
                         string inserttreat = "update treatment set Progress=@progress,TotalNumber=@total,ChangeLog=@log,SplitWay_ID=@split,SpecialEnjoin=@remark where ID=@treat";
-                        sqlOperation.AddParameterWithValue("@progress", progress + ",14,15");
+                        sqlOperation.AddParameterWithValue("@progress", progress + ",13,14");
                         sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);
                         sqlOperation.AddParameterWithValue("@total", Convert.ToInt32(totalnumber));
                         sqlOperation.AddParameterWithValue("@split", context.Request["splitway"]);
