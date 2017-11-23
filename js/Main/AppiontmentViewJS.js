@@ -99,8 +99,20 @@ function createdate(jsonObj, isDouble) {
             //    arr[row + 1] = arr[row + 1] - 1;
             //    i++;
             //} else {
-                var span = document.createElement("span");
-                var text = document.createTextNode(jsonObj[i].PatientName + ' : ' + jsonObj[i].Task);
+            var span = document.createElement("span");
+            if (jsonObj[i].Completed == "1") {
+                if (jsonObj[i].ischecked == "1") {
+                    var text = document.createTextNode(jsonObj[i].PatientName + ' : CT复查(已完成)');
+                } else {
+                    var text = document.createTextNode(jsonObj[i].PatientName + ' : ' + jsonObj[i].Task + '(已完成)');
+                }
+            } else {
+                if (jsonObj[i].ischecked == "1") {
+                    var text = document.createTextNode(jsonObj[i].PatientName + ' : CT复查(未完成)');
+                } else {
+                    var text = document.createTextNode(jsonObj[i].PatientName + ' : ' + jsonObj[i].Task + '(未完成)');
+                }
+            }
                 span.setAttribute("id", jsonObj[i].Treatment_ID + '_' + jsonObj[i].ID);
                 span.appendChild(text);
                 $($tr[row]).find("td")[col + arr[row]].appendChild(span);

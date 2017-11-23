@@ -74,7 +74,7 @@ public class getAppointmentByTime : IHttpHandler {
         }
         else
         {
-            string sqlCommand = "SELECT appointment.Patient_ID,appointment.ID aid,appointment.Task,appointment.Date,appointment.Equipment_ID,appointment.Begin,appointment.End,appointment.State,appointment.Completed,appointment.Treatment_ID,patient.Name FROM appointment LEFT JOIN patient ON appointment.Patient_ID=patient.ID WHERE Date >= @datebegin AND Date <= @dateend AND Equipment_ID=@id order by Date,Begin";
+            string sqlCommand = "SELECT appointment.ischecked,appointment.Patient_ID,appointment.ID aid,appointment.Task,appointment.Date,appointment.Equipment_ID,appointment.Begin,appointment.End,appointment.State,appointment.Completed,appointment.Treatment_ID,patient.Name FROM appointment LEFT JOIN patient ON appointment.Patient_ID=patient.ID WHERE Date >= @datebegin AND Date <= @dateend AND Equipment_ID=@id order by Date,Begin";
             sqlOperator.AddParameterWithValue("@datebegin", year + "-" + month + "-" + day);
             sqlOperator.AddParameterWithValue("@dateend", lyear + "-" + lmonth + "-" + lday);
             sqlOperator.AddParameterWithValue("@id", id);
@@ -102,6 +102,8 @@ public class getAppointmentByTime : IHttpHandler {
                          .Append(reader["State"].ToString())
                          .Append("\",\"Completed\":\"")
                          .Append(reader["Completed"].ToString())
+                          .Append("\",\"ischecked\":\"")
+                         .Append(reader["ischecked"].ToString())
                          .Append("\",\"Treatment_ID\":\"")
                          .Append(reader["Treatment_ID"].ToString())
                          .Append("\"},");
