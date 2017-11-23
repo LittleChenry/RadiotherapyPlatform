@@ -1484,7 +1484,7 @@ function removeSession() {
 
 function Recover() {
     if (currentID != "0" && $("#" + currentID).length > 0) {
-        $("#" + currentID).addClass("chose");
+        $("#" + currentID).click();
     }
 }
 

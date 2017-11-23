@@ -62,7 +62,7 @@ function createTime(obj) {
     var $tbody = $("#tbody");
     for (var i = 0; i < obj.length; ++i) {
         if (date == obj[i].Date) {
-            var $tr = $("<tr><td>" + convertTime(obj[i].Begin) + "-" + convertTime(obj[i].End) + "</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+            var $tr = $("<tr><td>" + convertTime(obj[i].Begin) + "-" + convertTime(obj[i].End) + "</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
             $tbody.append($tr);
         } else {
             break;
@@ -99,7 +99,12 @@ function createdate(jsonObj, isDouble) {
             //    arr[row + 1] = arr[row + 1] - 1;
             //    i++;
             //} else {
-                $($tr[row]).find("td")[col + arr[row]].innerText = jsonObj[i].PatientName + " : " + jsonObj[i].Task;
+                var span = document.createElement("span");
+                var text = document.createTextNode(jsonObj[i].PatientName + ' : ' + jsonObj[i].Task);
+                span.setAttribute("id", jsonObj[i].Treatment_ID + '_' + jsonObj[i].ID);
+                span.appendChild(text);
+                $($tr[row]).find("td")[col + arr[row]].appendChild(span);
+            
             //}
         }
     }
