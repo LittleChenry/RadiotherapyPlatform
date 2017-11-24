@@ -1745,3 +1745,27 @@ function checkAddTreatment(Radiotherapy_ID) {
     }
     return false;
 }
+function remove() {
+    document.getElementById("userName").removeAttribute("disabled");
+    document.getElementById("usernamepingyin").removeAttribute("disabled");
+    document.getElementById("Nation").removeAttribute("disabled");
+    document.getElementById("IDcardNumber").removeAttribute("disabled");
+    document.getElementById("Birthday").removeAttribute("disabled");
+    document.getElementById("Address").removeAttribute("disabled");
+    document.getElementById("Number1").removeAttribute("disabled");
+    document.getElementById("Number2").removeAttribute("disabled");
+    document.getElementById("height").removeAttribute("disabled");
+    document.getElementById("weight").removeAttribute("disabled");
+    document.getElementById("hospitalnumber").removeAttribute("disabled");
+    document.getElementById("doctor").removeAttribute("disabled");
+    var add = document.getElementsByName("Gender");
+    add[0].removeAttribute("disabled");
+    add[1].removeAttribute("disabled");
+    var ad = document.getElementsByName("RecordNumber");
+    ad[0].removeAttribute("disabled");
+    ad[1].removeAttribute("disabled");
+    document.getElementById("group").removeAttribute("disabled");
+    document.getElementById("Sub").removeAttribute("disabled");
+    document.getElementById("Hospital").removeAttribute("disabled");
+    document.getElementById("radionumber").removeAttribute("disabled");
+}

@@ -141,7 +141,7 @@ public class designConfirmInfo : IHttpHandler {
                 string a1 = parameters.Split(new char[1] { ';' })[0];
                 string a2 = parameters.Split(new char[1] { ';' })[1];
                 string a3 = parameters.Split(new char[1] { ';' })[2];
-                if (Convert.ToDouble(a1) > 0)
+                if (Convert.ToDouble(a1) >= 0 && a1 != "-0")
                 {
                     left = a1;
                 }
@@ -149,7 +149,7 @@ public class designConfirmInfo : IHttpHandler {
                 {
                     right = a1.Substring(1);
                 }
-                if (Convert.ToDouble(a2) > 0)
+                if (Convert.ToDouble(a2) >= 0 && a2 != "-0")
                 {
                     rise = a2;
                 }
@@ -157,7 +157,7 @@ public class designConfirmInfo : IHttpHandler {
                 {
                     drop = a2.Substring(1);
                 }
-                if (Convert.ToDouble(a3) > 0)
+                if (Convert.ToDouble(a3) >= 0 && a3 != "-0")
                 {
                     enter = a3;
                 }

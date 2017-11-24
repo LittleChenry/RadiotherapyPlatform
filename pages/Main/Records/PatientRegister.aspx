@@ -61,21 +61,21 @@
                         <div class="item col-xs-5">
                             <div class="item col-xs-5" style="padding-left:0px;">
                             姓名：
-                            <input id="userName" name="userName" type="text" class="form-item" />
+                            <input id="userName" name="userName" type="text" class="form-item" disabled="disabled"/>
                             </div>
                             <div class="item col-xs-5" style="padding-left:0px;">
                              拼音：
-                            <input id="usernamepingyin" name="usernamepingyin" type="text" class="form-item" />
+                            <input id="usernamepingyin" name="usernamepingyin" type="text" class="form-item" disabled="disabled"/>
                            </div>
                         </div>
                         <div class="item col-xs-5" style="padding-top:5px;">
                             <span class="col-xs-3" style="padding-left:0px;">性别：</span>
                             <span class="col-xs-3" style="padding-left:0px;">
-                                <input type="radio" name="Gender" id="male" value="M" />
+                                <input type="radio" name="Gender" id="male" value="M" disabled="disabled"/>
                                 男
                             </span>
                             <span class="col-xs-3" style="padding-left:0px;">
-                                <input type="radio" name="Gender" id="female" value="F" />
+                                <input type="radio" name="Gender" id="female" value="F" disabled="disabled"/>
                                 女
                             </span>
                         </div>
@@ -83,45 +83,45 @@
                     <div class="single-row">
                         <div class="item col-xs-5">
                             民族：
-                            <input id="Nation" name="Nation" type="text" class="form-item" />
+                            <input id="Nation" name="Nation" type="text" class="form-item" disabled="disabled"/>
                         </div>
                         <div class="item col-xs-7">
                             身份证号：
-                            <input id="IDcardNumber"  name="IDcardNumber" type="text" class="form-item" />
+                            <input id="IDcardNumber"  name="IDcardNumber" type="text" class="form-item" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="item col-xs-5">
                             出生日期：
-                            <input type="text" class="form-item" id="Birthday" name="Birthday" placeholder="选择日期" />
+                            <input type="text" class="form-item" id="Birthday" name="Birthday" placeholder="选择日期" disabled="disabled"/>
                         </div>
                         <div class="item col-xs-7">
                             地址：
-                            <input id="Address"  name="Address" type="text" class="form-item" />
+                            <input id="Address"  name="Address" type="text" class="form-item" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="item col-xs-5">
                             联系电话1：
-                            <input id="Number1" name="Number1" type="text" class="form-item" />
+                            <input id="Number1" name="Number1" type="text" class="form-item" disabled="disabled"/>
                         </div>
                         <div class="item col-xs-5">
                             联系电话2：
-                            <input id="Number2"  name="Number2" type="text" class="form-item" />
+                            <input id="Number2"  name="Number2" type="text" class="form-item" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="item col-xs-5">
                             身高：
                             <div class="group-item">
-                                <input type="number" id="height" name="height" class="form-group-input" />
+                                <input type="number" id="height" name="height" class="form-group-input" disabled="disabled"/>
                                 <span class="input-group-addon">cm</span>
                             </div>
                         </div>
                         <div class="item col-xs-5">
                             体重：
                             <div class="group-item">
-                                <input type="number" id="weight" name="weight" class="form-group-input" />
+                                <input type="number" id="weight" name="weight" class="form-group-input" disabled="disabled"/>
                                 <span class="input-group-addon">kg</span>
                             </div>
                         </div>
@@ -135,25 +135,25 @@
                             <div class="col-xs-6">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">是否住院：</span>
                                 <span class="col-xs-2" style="padding-left:0px;">
-                                <input  name="RecordNumber" type="radio" value="1"  />是
+                                <input  name="RecordNumber" type="radio" value="1"  disabled="disabled"/>是
                                 </span>
                                  <span class="col-xs-2" style="padding-left:0px;">
-                                <input  name="RecordNumber" type="radio" value="0"  />否
+                                <input  name="RecordNumber" type="radio" value="0" disabled="disabled" />否
                                </span>
                             </div>
                             <div id="ishospital" class="col-xs-6">
                                住院号：
-                                <input id="hospitalnumber" name="hospitalnumber" type="text" class="form-item" />
+                                <input id="hospitalnumber" name="hospitalnumber" type="text" class="form-item" disabled="disabled"/>
                             </div>
                         </div>
                     <div class="single-row">              
                         <div class="item col-xs-6">
                             主管医生：
-                            <select id="doctor" name="doctor" class="form-item"></select>
+                            <select id="doctor" name="doctor" class="form-item" disabled="disabled"></select>
                         </div>
                         <div class="item col-xs-6">
                             所属分组：
-                            <select id="group" name="group" class="form-item">
+                            <select id="group" name="group" class="form-item" disabled="disabled">
                                   <option value="allItem">----分组选择-----</option>
                             </select>
                         </div>
@@ -161,17 +161,17 @@
                     <div class="single-row">
                         <div class="item col-xs-6">
                             分中心医院：
-                            <input id="Hospital" name="Hospital" type="text" class="form-item" />
+                            <input id="Hospital" name="Hospital" type="text" class="form-item" disabled="disabled"/>
                         </div>
                         <div class="item col-xs-6">
                             分中心负责人：
-                            <input id="Sub" name="Sub" type="text" class="form-item" />
+                            <input id="Sub" name="Sub" type="text" class="form-item" disabled="disabled"/>
                         </div>
                     </div>
                      <div class="single-row">
                             <div class="col-xs-6">
                                放疗号：
-                                <input id="radionumber" name="radionumber" class="form-item"/>
+                                <input id="radionumber" name="radionumber" class="form-item" disabled="disabled"/>
                             </div>
                      </div>
                 </div>
