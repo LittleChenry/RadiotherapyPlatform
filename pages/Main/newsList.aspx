@@ -206,6 +206,9 @@
                         <li>
                             <a id="Menu-EquipmentInspectionResult" href="EquipmentInspectionResult.aspx"><i class="fa fa-circle-o"></i>设备检查结果</a>
                         </li>
+                        <li>
+                            <a id="Menu-EquipmentStatistics" href="EquipmentStatistics.aspx"><i class="fa fa-circle-o"></i>设备检查统计</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview">
