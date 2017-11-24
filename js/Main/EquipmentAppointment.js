@@ -294,7 +294,7 @@ function AccelerateAppointView(){
                 type: "POST",
                 async: false,
                 data:{
-                    EquipmentID:currentEquipmentID，
+                    EquipmentID:currentEquipmentID,
                     day1:day1,
                     day2:day2
                 },
