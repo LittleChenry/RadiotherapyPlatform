@@ -134,6 +134,7 @@ public class ChangeDiffAppoint : IHttpHandler {
                     sqlOperation.ExecuteNonQuery(updatetime);
                 }
                 point1++;
+                continue;
  
             }
             if (int.Parse(jday1[point1]["Begin"].ToString()) > int.Parse(jday2[point2]["Begin"].ToString()))
@@ -151,6 +152,7 @@ public class ChangeDiffAppoint : IHttpHandler {
                     sqlOperation.ExecuteNonQuery(updatetime);
                 }
                 point2++;
+                continue;
  
 
             }
@@ -167,6 +169,7 @@ public class ChangeDiffAppoint : IHttpHandler {
                 sqlOperation.ExecuteNonQuery(updatetime2);
                 point1++;
                 point2++;
+                continue;
 
             }
            
