@@ -298,7 +298,7 @@ function AccelerateAppointView(){
                     day1:day1,
                     day2:day2
                 },
-                url: "",
+                url: "ChangeDiffAppoint.ashx",
                 success:function(){
                     AccelerateAppointView();
                 }

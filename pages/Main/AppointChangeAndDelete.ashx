@@ -25,7 +25,7 @@ public class AppointChangeAndDelete : IHttpHandler {
     {
         string oldappoint = context.Request["appoint"];
         JArray ja;
-        if (oldappoint != "")
+        if (oldappoint != "[\"\"]")
         {
               ja = (JArray)JsonConvert.DeserializeObject(oldappoint);
         }
