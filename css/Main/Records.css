@@ -368,14 +368,6 @@
     padding: 5px 20px;
 }
 
-.afternoon {
-    display: none;
-}
-
-.evening {
-    display: none;
-}
-
 .hide-table {
     display: none;
 }
@@ -386,7 +378,6 @@
 
 .selected-td {
     background-color: #c1c1c1;
-    font-weight: 600;
 }
 
 .treat-td {

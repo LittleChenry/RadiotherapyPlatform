@@ -320,17 +320,19 @@
                                 <div class="btn-area col-xs-12">
                                     <div class="col-xs-6">
                                         <button id="startchoose" type="button" class="time-btn">编辑</button>
+                                        <input id="currentEquipment" type="hidden" />
                                     </div>
                                     <div id="optionWay" class="col-xs-6" style="display:none;">
                                         <button id="DeleteAppoint" type="button" class="time-btn pull-right" style="margin-left:5px;">删除预约</button>
-                                        <button id="CancelTreatment" type="button" class="time-btn pull-right">取消选择</button>
+                                        <button id="CancelTreatment" type="button" class="time-btn pull-right" style="margin-left:5px;">取消选择</button>
+                                        <button id="RemoveByDay" type="button" class="time-btn pull-right" data-toggle="modal" data-target="#RemoveAppointment">按天转移</button>
                                     </div>
                                 </div>
                                 <div class="btn-area col-xs-12">
                                     <div id="chooseTime" class="col-xs-3">
                                         <button type="button" class="time-btn selected-btn">上午</button>
-                                        <button type="button" class="time-btn">下午</button>
-                                        <button type="button" class="time-btn">晚上</button>
+                                        <button type="button" class="time-btn selected-btn">下午</button>
+                                        <button type="button" class="time-btn selected-btn">晚上</button>
                                     </div>
                                     <div id="chooseWeek" class="col-xs-6"></div>
                                     <div id="chooseWay" class="col-xs-3" style="display:none;">
@@ -348,7 +350,7 @@
             </div>
         </section>
     </div>
-       <div id="changeAppoint" class="modal fade" tabindex="-1" role="dialog">
+    <div id="changeAppoint" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document" style="width:700px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -356,47 +358,62 @@
                     <h4 class="modal-title">修改预约时间</h4>
                 </div>
                 <div class="modal-body" style="overflow:hidden;">
-                   <div class="panel-row">
-                             <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
+                    <div class="panel-row">
+                                <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
                             <div class="item col-xs-4">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
                             <div class="item col-xs-3">
                                 <button type="button"  id="previousday" class="btn btn-default btn-sm">上一天</button>
                                 <button type="button" id="nextday" class="btn btn-default btn-sm">下一天</button>
-                               <%-- <button id="chooseProject" class="btn btn-default">查询该项</button>--%>
+                                <%-- <button id="chooseProject" class="btn btn-default">查询该项</button>--%>
                             </div>
                         </div>
-                      <div id="timechoose" class="panel-row" style="display:none">
-                            <div class="item col-xs-7">时间筛选：<select id="timeselect" name="timeselect" class="form-item">
-                                                                   <option value="360-720">06:00-12:00</option>
-                                                                    <option value="720-1080">12:00-18:00</option>
-                                                                    <option value="1080-1440">18:00-24:00</option>
-                                                                    <option value="1440-1800">00:00-06:00(次日)</option>
-                                                                  </select>
-
+                        <div id="timechoose" class="panel-row" style="display:none">
+                            <div class="item col-xs-7">
+                                时间筛选：
+                                <select id="timeselect" name="timeselect" class="form-item">
+                                    <option value="360-720">06:00-12:00</option>
+                                    <option value="720-1080">12:00-18:00</option>
+                                    <option value="1080-1440">18:00-24:00</option>
+                                    <option value="1440-1800">00:00-06:00(次日)</option>
+                                </select>
                             </div>
-                            <div class="item col-xs-5" style="padding-left:20px;display:none">是否占用两格：<select id="isspecial" name="isspecial" class="form-item">
-                                                                      <option value="0">否</option>
-                                                                      <%--<option value="1">是</option>--%>
-                                                                  </select>
-
+                            <div class="item col-xs-5" style="padding-left:20px;display:none">
+                                是否占用两格：
+                                <select id="isspecial" name="isspecial" class="form-item">
+                                    <option value="0">否</option>
+                                    <%--<option value="1">是</option>--%>
+                                </select>
                             </div>
-                         </div>
-                     <div id="amappoint" class="panel-row">
-                        <div id="amlabel">
-                            <span class="label label-info" style="float:left;width:10%;height:auto" >上午</span>
+                            </div>
+                        <div id="amappoint" class="panel-row">
+                            <div id="amlabel">
+                                <span class="label label-info" style="float:left;width:10%;height:auto" >上午</span>
+                            </div>
+                                <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
                         </div>
-                            <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
-                        </div>
-                          <div id="pmappoint" class="panel-row">
-                         <div id="pmlabel" >
-                            <span class="label label-info" style="float:left;width:10%;height:auto" >下午</span>
-                        </div>
+                        <div id="pmappoint" class="panel-row">
+                            <div id="pmlabel" >
+                                <span class="label label-info" style="float:left;width:10%;height:auto" >下午</span>
+                            </div>
                             <table id="apptiontTableForPm" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
                         </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal">取消</button>
                     <button class="btn btn-primary" id="sure" type="button" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="RemoveAppointment" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">按天转移</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="DayRemoveTable" class="table table-bordered"></table>
                 </div>
             </div>
         </div>

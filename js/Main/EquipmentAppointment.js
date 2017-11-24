@@ -12,6 +12,7 @@ $(document).ready(function () {
 	$("#sureEquipment").unbind("click").click(function(){
         var equipmentType = $("#equipmentType").val();
 		var equipmentID = $("#equipment").val();
+        $("#currentEquipment").val(equipmentID);
 		if (equipmentID == null) {
 			alert("请选择设备！");
 			return false;
@@ -63,11 +64,16 @@ function AccelerateAppointView(){
     WeekArea.html("");
     var chooseWeek = $("#chooseWeek");
     chooseWeek.html("");
+    var DayRemoveTable = $("#DayRemoveTable");
     var begintime = parseInt(appointinfo[0].Begin);
     var maxbegin = parseInt(appiontview.maxbegin);
     var timelength = parseInt(machineinfo.Timelength);
     var rows = (maxbegin - begintime) / timelength + 1;
     var endtime = begintime + timelength;
+    var optionWay = $("#optionWay");
+    var chooseWay = $("#chooseWay");
+    optionWay.hide();
+    chooseWay.hide();
     while(count < num){
         var currentdate = appointinfo[count].Date;
         var datediff = GetDateDiff(new Date().Format("yyyy-MM-dd"),new Date(currentdate).Format("yyyy-MM-dd"));
@@ -137,7 +143,7 @@ function AccelerateAppointView(){
     }
 
     $("#chooseWeek").find("button").each(function(index,e){
-        $(this).bind("click",{index:index},function(e){
+        $(this).unbind("click").bind("click",{index:index},function(e){
             var WeekArea = $("#WeekArea");
             var btnindex = e.data.index;
             chooseWeek.find("button").each(function(index,e){
@@ -159,9 +165,10 @@ function AccelerateAppointView(){
             });
         });
     });
+
     var chooseTime = $("#chooseTime");
     chooseTime.find("button").each(function(index,e){
-        $(this).bind("click",{index:index},function(e){
+        $(this).unbind("click").bind("click",{index:index},function(e){
             switch(e.data.index){
                 case 0:
                     if ($(this).hasClass("selected-btn")) {
@@ -196,7 +203,7 @@ function AccelerateAppointView(){
     });
 
     $("#chooseWay").find("button").each(function(index,e){
-        $(this).bind("click",{index:index},function(e){
+        $(this).unbind("click").bind("click",{index:index},function(e){
             if (e.data.index == 0) {
                 CancelClick();
                 UnlimitedChooseTreat();
@@ -212,6 +219,90 @@ function AccelerateAppointView(){
                     $(this).prev().removeClass("selected-btn");
                 }
             }
+        });
+    });
+
+
+    $("#RemoveByDay").unbind("click").bind("click",function(){
+        DayRemoveTable.html("");
+        $("#chooseWeek").find("button").each(function(index,e){
+            if ($(this).hasClass("selected-btn")) {
+                var tbody = '<tbody>';
+                for (var i = 0; i < 7; i++) {
+                    var thisDate = new Date(dateAdd(new Date().Format("yyyy-MM-dd"),i + index * 7));
+                    var weekday = thisDate.getDay();
+                    var time = thisDate.Format("MM/dd") + '('+ num2week(weekday) +')';
+                    var idtime = thisDate.Format("yyyy-MM-dd");
+                    table += th;
+                    if (i == 0) {
+                        var tr = '<tr><td id='+ idtime +' class="RemoveDay">'+ time + '</td><td rowspan="7"><button id="ExchangeDayAppoint" class="time-btn" type="button" disabled="disabled" data-dismiss="modal"><i class="fa fa-fw fa-exchange"></i></button></td><td id='+ idtime + '_1' +' class="RemoveDay1">'+ time + '</td></tr>';
+                    }else{
+                        var tr = '<tr><td id='+ idtime +' class="RemoveDay">'+ time + '</td><td id='+ idtime + '_1' +' class="RemoveDay1">'+ time + '</td></tr>';
+                    }
+                    tbody += tr;
+                }
+                tbody += '</tbody>';
+                DayRemoveTable.append(tbody);
+            }
+        });
+        DayRemoveTable.find(".RemoveDay").each(function(index,e){
+            $(this).unbind("click").bind("click",function(){
+                $("#ExchangeDayAppoint").attr("disabled","disabled");
+                DayRemoveTable.find(".RemoveDay").each(function(index,e){
+                    if ($(this).hasClass("treat-td")) {
+                        $(this).removeClass("treat-td");
+                    }
+                });
+                $(this).removeClass("treat-td").addClass("treat-td");
+                DayRemoveTable.find(".RemoveDay1").each(function(index,e){
+                    if ($(this).hasClass("treat-td")) {
+                        $(this).removeClass("treat-td");
+                    }else if ($(this).hasClass("selected-td")) {
+                        $(this).removeClass("selected-td");
+                    }
+                    $(this).unbind("click").bind("click",function(){
+                        DayRemoveTable.find(".RemoveDay1").each(function(index,e){
+                            if ($(this).hasClass("treat-td")) {
+                                $(this).removeClass("treat-td");
+                            }
+                        });
+                        $(this).removeClass("treat-td").addClass("treat-td");
+                        $("#ExchangeDayAppoint").removeAttr("disabled");
+                    });
+                });
+                var tdid1 = $(this).attr("id") + "_1";
+                $("#" + tdid1).addClass("selected-td");
+                $("#" + tdid1).unbind("click");
+            });
+        });
+        $("#ExchangeDayAppoint").bind("click",function(){
+            var day1,day2;
+            DayRemoveTable.find(".RemoveDay").each(function(index,e){
+                if ($(this).hasClass("treat-td")) {
+                    day1 = $(this).attr("id");
+                    return day1;
+                }
+            });
+            DayRemoveTable.find(".RemoveDay1").each(function(index,e){
+                if ($(this).hasClass("treat-td")) {
+                    day2 = $(this).attr("id").split("_")[0];
+                    return day2;
+                }
+            });
+            var currentEquipmentID = $("#currentEquipment").val();
+            $.ajax({
+                type: "POST",
+                async: false,
+                data:{
+                    EquipmentID:currentEquipmentID，
+                    day1:day1,
+                    day2:day2
+                },
+                url: "",
+                success:function(){
+                    AccelerateAppointView();
+                }
+            });
         });
     });
 
@@ -920,7 +1011,7 @@ function getViewPatient(equipmentID){
 function chooseEquipment() {
     var session = getSession();
     $("#equipmentType").html("");
-    var options = '<option value="">----选择项目----</option><option value="体位固定">体位固定</option><option value="模拟定位">CT模拟</option><option value="复位模拟">复位验证</option></option><option value="加速器">加速器治疗</option>';
+    var options = '<option value="">----选择项目----</option><option value="体位固定">体位固定</option><option value="模拟定位">CT模拟</option><option value="加速器">加速器治疗</option>';
     $("#equipmentType").append(options);
     $.ajax({
         type: "GET",
