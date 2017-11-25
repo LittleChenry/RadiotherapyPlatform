@@ -44,10 +44,8 @@
                             <div class="boxes">
                                 <div class="imgnum">
                                     <input type="file" id="FileUpload" accept="image/jpg,image/png" name="FileUpload" class="singlefilepath filepath" />
-                                    <!-- <asp:FileUpload id="FileUpload1" name="FileUpload" class="singlefilepath filepath" runat="server" /> -->
                                     <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
                                     <img id="background-photo" src="../../../img/avatar.jpg" class="camera-picture" />
-                                    <!-- <i class="camera fa fa-camera" style="font-size:110px;"></i> -->
                                     <img src="" id="photo" class="img" />
                                 </div>
                             </div>
@@ -58,17 +56,19 @@
                         </div>
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-5">
-                            <div class="item col-xs-5" style="padding-left:0px;">
-                            姓名：
-                            <input id="userName" name="userName" type="text" class="form-item" disabled="disabled"/>
+                        <div class="item col-xs-3">
+                            <div class="item" style="padding-left:0px;">
+                                姓名：
+                                <input id="userName" name="userName" type="text" class="form-item" disabled="disabled"/>
                             </div>
-                            <div class="item col-xs-5" style="padding-left:0px;">
-                             拼音：
-                            <input id="usernamepingyin" name="usernamepingyin" type="text" class="form-item" disabled="disabled"/>
-                           </div>
                         </div>
-                        <div class="item col-xs-5" style="padding-top:5px;">
+                        <div class="item col-xs-3">
+                            <div class="item" style="padding-left:0px;">
+                                拼音：
+                                <input id="usernamepingyin" name="usernamepingyin" type="text" class="form-item" disabled="disabled"/>
+                            </div>
+                        </div>
+                        <div class="item col-xs-5" style="padding-top:0px;">
                             <span class="col-xs-3" style="padding-left:0px;">性别：</span>
                             <span class="col-xs-3" style="padding-left:0px;">
                                 <input type="radio" name="Gender" id="male" value="M" disabled="disabled"/>
