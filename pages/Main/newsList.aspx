@@ -175,7 +175,7 @@
                     </a>
                 </li>
                 <li class="treeview">
-                    <a href="EquipmentAppointment.aspx">
+                    <a href="EquipmentAppointment.aspx" target="_blank">
                         <i class="fa fa-clock-o"></i>
                         <span>设备预约管理</span>
                     </a>

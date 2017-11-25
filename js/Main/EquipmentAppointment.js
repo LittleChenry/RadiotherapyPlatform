@@ -72,6 +72,7 @@ function AccelerateAppointView(){
     var endtime = begintime + timelength;
     var optionWay = $("#optionWay");
     var chooseWay = $("#chooseWay");
+    $("#startchoose").removeClass("selected-btn");
     optionWay.hide();
     chooseWay.hide();
     while(count < num){
@@ -275,7 +276,7 @@ function AccelerateAppointView(){
                 $("#" + tdid1).unbind("click");
             });
         });
-        $("#ExchangeDayAppoint").bind("click",function(){
+        $("#ExchangeDayAppoint").unbind("click").bind("click",function(){
             var day1,day2;
             DayRemoveTable.find(".RemoveDay").each(function(index,e){
                 if ($(this).hasClass("treat-td")) {
@@ -301,6 +302,7 @@ function AccelerateAppointView(){
                 url: "ChangeDiffAppoint.ashx",
                 success:function(){
                     AccelerateAppointView();
+                    alert("修改成功！");
                 }
             });
         });
@@ -326,12 +328,13 @@ function AccelerateAppointView(){
         
     });
 
-    $("#CancelTreatment").bind("click",function(){
+    $("#CancelTreatment").unbind("click").bind("click",function(){
         CancelTreatment();
     });
 
-    $("#DeleteAppoint").bind("click",function(){
+    $("#DeleteAppoint").unbind("click").bind("click",function(){
         DeleteTreatment(timelength,begintime);
+        AccelerateAppointView();
     });
 }
 

@@ -176,7 +176,7 @@
                     </a>
                 </li>
                 <li class="treeview">
-                    <a href="EquipmentAppointment.aspx">
+                    <a href="EquipmentAppointment.aspx" target="_blank">
                         <i class="fa fa-clock-o"></i>
                         <span>设备预约管理</span>
                     </a>
@@ -287,7 +287,7 @@
                             </div>
                             <div class="col-xs-5">
                                 <span class="form-text col-xs-4">姓名拼音：</span>
-                                <input id="usernamepingyin" name="usernamepingyin" class="form-item" type="text" AUTOCOMPLETE="OFF"/>
+                                <input id="usernamepingyin" name="usernamepingyin" class="form-item" type="text" AUTOCOMPLETE="OFF" placeholder="示例：ZHANG SAN"/>
                             </div>
                         </div>
 
