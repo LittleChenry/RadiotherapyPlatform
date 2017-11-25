@@ -1855,7 +1855,11 @@ function tem(userID, type) {
     tbody.html("");
     if (template != "") {
         for (var i = 0; i < template.length; i++) {
-            var tr = '<tr id="Template_'+ template[i].ID +'"><td style="text-align:center;"><label><input type="radio" name="singleTemplate" class="minimal"></label></td><td style="text-align:center;">'+ template[i].Name +'</td><td style="text-align:center;"><button class="btn btn-info" onclick="deleteTemplate(this,'+ template[i].ID +')">删除</button></td></tr>';
+            if (template[i].Ispublic != 0) {
+                var tr = '<tr id="Template_'+ template[i].ID +'"><td style="text-align:center;"><label><input type="radio" name="singleTemplate" class="minimal"></label></td><td style="text-align:center;">'+ template[i].Name +'</td><td style="text-align:center;"><button class="btn btn-info" onclick="deleteTemplate(this,'+ template[i].ID +')">删除</button></td></tr>';
+            }else{
+                var tr = '<tr id="Template_'+ template[i].ID +'"><td style="text-align:center;"><label><input type="radio" name="singleTemplate" class="minimal"></label></td><td style="text-align:center;">'+ template[i].Name +'</td><td style="text-align:center;"><button class="btn btn-info disabled" disabled="disabled">删除</button></td></tr>';
+            }
             tbody.append(tr);
         }
         tbody.find("tr").each(function(){
