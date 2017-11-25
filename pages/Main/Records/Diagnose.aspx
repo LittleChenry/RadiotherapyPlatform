@@ -114,11 +114,9 @@
                       <div class="single-row">
                             <div class="col-xs-6">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">普精放选择：</span>
-                                <span class="col-xs-2" style="padding-left:0px;">
-                                <input  name="patientjudge" type="radio" checked="checked" disabled="disabled" value="1"  />精放
-                                </span>
-                                 <span class="col-xs-2" style="padding-left:0px;">
-                                <input  name="patientjudge" type="radio"  disabled="disabled" value="0"  />普放
+                                <span>
+                                <input  name="patientjudge" type="radio" style="width:20pt" checked="checked" disabled="disabled" value="1"  />精放
+                                <input  name="patientjudge" type="radio" style="width:20pt"  disabled="disabled" value="0"  />普放
                                </span>
                             </div>
                           </div>
