@@ -1,5 +1,7 @@
 ﻿var type = 1;
 $(function () {
+    document.getElementById('aa').value = 0;
+    document.getElementById('bb').value = 0;
     createTable(type);
     $("#sureSelect").off("click").on("click", function () {
         type = $("#typeSelect").val();
@@ -32,6 +34,12 @@ $(function () {
             $("#sureDeleteLocate").hide();
         }
         if (type == "7") {
+            $("#add_design").modal({
+                backdrop:false
+            });
+              clearAddDesign();
+              createAddDesign();
+             $("#sureDeleteDesign").hide();
         }
     });
 
@@ -151,7 +159,512 @@ function createTable(type) {
     }
     if (type == "7") {
         $("#tabletitle").text("计划申请模板");
+        $.ajax({
+            url: "Template-getTable.ashx",
+            type: "post",
+            data: {
+                type: type
+            },
+            success: function (data) {
+                var dataObj = $.parseJSON(data);
+
+                for (var i = 0; i < dataObj.length; i++) {
+                    var $row = $("<tr></tr>");
+                    var $tds = $("<td>" + dataObj[i].Name + "</td>" + "<td hidden>" + dataObj[i].id + "</td>" + "<td hidden>" + dataObj[i].TemplateID + "</td>");
+                    $row.append($tds);
+                    $("#body").append($row);
+                }
+                $("#body").find("tr").each(function () {
+                    $(this).off("click").on("click", function () {
+                        createAddDesign();
+                        $("#add_design").modal({
+                            backdrop: false
+                        });
+                        $("#sureDeleteDesign").show();
+                        fillDesignData($(this));
+                        var $tr = $(this);
+                        $("#sureDeleteDesign").off("click").on("click", function () {
+                            deleteTemplate($tr);
+                        });
+                        $("#sureAddDesign").off("click").on("click", function () {
+                            updateDesign($tr);
+                        });
+                    });
+                });
+            }
+        });
     }
+}
+//删除模板
+function deleteTemplate($tr) {
+    var id = $tr.find("td").eq(1).text();
+    $.ajax({
+        url: "../../pages/Main/Records/deleteTemplate.ashx?templateID=" + id,
+        type: "get",
+        async: false,
+        success: function (data) {
+            if (data == "success") {
+                $("#add_diagnose").modal("hide");
+                $("#add_fix").modal("hide");
+                $("#add_locate").modal("hide");
+                $("#add_design").modal("hide");
+                window.alert("删除成功");
+                createTable(type);
+            } else {
+                window.alert("网络忙");
+                return false;
+            }
+        },
+        error: function () {
+            alert("网络忙");
+        }
+    });
+}
+//---------------------------------------------------------------------------------------------------------------
+//生成modal下拉框等数据
+function createAddDesign(){
+    //
+
+    createTechnologyItem(document.getElementById("technology_design"));
+    createEquipmentItem(document.getElementById("equipment_design"));
+    $("#sureAddDesign").off("click").on("click", function () {
+        postDesign();
+    });
+}
+//清空modal数据
+function clearAddDesign(){
+    $("#templateName_design").val("");
+    $("#Remarks_design").val("");
+    for (var i = parseInt($("#aa").val()); i >= 0; i--) {
+        deleteDosagePriority(i);
+    }
+    for (var i = parseInt($("#bb").val()); i >= 0; i--) {
+        deleteDosage(i);
+    }
+    $("#technology_design").val("allItem");
+    $("#equipment_design").val("allItem");
+}
+//根据选中$tr的id值，查询此条模版的相关数据,填入modal
+function fillDesignData($tr){
+    $("#templateName_design").val($tr.find("td").eq(0).text());
+    var xmlHttp = new XMLHttpRequest();
+    var url = "../../pages/Main/Records/GetTemplateDesignApply.ashx?templateID=" + $tr.find("td").eq(1).text();
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    json = json.replace(/\r/g, "");
+    json = json.replace(/\n/g, "\\n");
+    var obj1 = eval("(" + json + ")");
+    document.getElementById("Remarks_design").value = obj1.templateInfo[0].RadiotherapyHistory;
+    if(obj1.templateInfo[0].DosagePriority!=""){
+        addDosagePriority1(obj1.templateInfo[0].DosagePriority);
+    }
+    if(obj1.templateInfo[0].Dosage!=""){
+        addDosage1(obj1.templateInfo[0].Dosage);
+    }
+    document.getElementById("technology_design").value = obj1.templateInfo[0].technology;
+    document.getElementById("equipment_design").value = obj1.templateInfo[0].equipment;
+}
+//更新
+function updateDesign($tr){
+    var templateName_design = document.getElementById("templateName_design").value
+    if(templateName_design==""){
+        window.alert("请填写模版名称");
+        return false;
+    }
+    if (document.getElementById("technology_design").value == "allItem") {
+        window.alert("治疗技术没有选择");
+        return false;
+    }
+    if (document.getElementById("equipment_design").value == "allItem") {
+        window.alert("放疗设备没有选择");
+        return false;
+    }
+    $("#updateID").val($tr.find("td").eq(2).text());
+    var form = new FormData(document.getElementById("design_form"));
+    $.ajax({
+        url: "updateDesigntemplate.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (data) {
+            alert("模板保存成功");
+            $("#add_design").modal("hide");
+            createTable(type);         
+        },
+        error: function (e) {
+            alert("error");
+        },
+        failure: function (e) {
+             alert("模板保存失败");
+        }
+    });
+}
+//添加
+function postDesign(){
+    var templateName_design = document.getElementById("templateName_design").value
+    if(templateName_design==""){
+        window.alert("请填写模版名称");
+        return false;
+    }
+    $("#templateName_design").val(templateName_design+"(公共模版)");
+    if (document.getElementById("technology_design").value == "allItem") {
+        window.alert("治疗技术没有选择");
+        return false;
+    }
+    if (document.getElementById("equipment_design").value == "allItem") {
+        window.alert("放疗设备没有选择");
+        return false;
+    }
+    var form = new FormData(document.getElementById("design_form"));
+    $.ajax({
+        url: "AddDesignTemplateByPost.ashx",
+        type: "post",
+        data: form,
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (data) {
+            alert("模板保存成功");
+            $("#add_design").modal("hide");
+            createTable(type);         
+        },
+        error: function (e) {
+            alert("error");
+        },
+        failure: function (e) {
+             alert("模板保存失败");
+        }
+    });
+}
+function addDosagePriority() {
+    var table = document.getElementById("Priority");
+    var rows = table.rows.length;
+    var row = table.insertRow(rows);
+    rows--;
+    var t1 = row.insertCell(0);
+    var t2 = row.insertCell(1);
+    var t3 = row.insertCell(2);
+    var t4 = row.insertCell(3);
+    var t5 = row.insertCell(4);
+    var t6 = row.insertCell(5);
+    var t7 = row.insertCell(6);
+    var t8 = row.insertCell(7);
+    var t9 = row.insertCell(8);
+    t1.style.padding = "0px";
+    t2.style.padding = "0px";
+    t3.style.padding = "0px";
+    t4.style.padding = "0px";
+    t5.style.padding = "0px";
+    t6.style.padding = "0px";
+    t7.style.padding = "0px";
+    t8.style.padding = "0px";  
+    t9.style.cssText = "text-align: center;padding:0px;vertical-align: middle";
+    t9.id = "delete"+rows;
+    t1.innerHTML = '<input id="Prioritytype' + rows + '" name="Prioritytype' + rows + '" type="text" class="td-input" />';
+    t2.innerHTML = '<input id="Priorityout' + rows + '" name="Priorityout' + rows + '" type="text" class="td-input" />';
+    t3.innerHTML = '<input id="Prioritptv' + rows + '" name="Prioritptv' + rows + '" type="text" class="td-input" />';
+    t4.innerHTML = '<input id="Prioritcgy' + rows + '" name="Prioritcgy' + rows + '" type="number" class="td-input" />';
+    t5.innerHTML = '<input id="Priorittime' + rows + '" name="Priorittime' + rows + '" type="number" class="td-input" />';
+    t6.innerHTML = '<input id="Prioritsum' + rows + '" name="Prioritsum' + rows + '" type="number" class="td-input" />';
+    t7.innerHTML = '<input id="Prioritremark' + rows + '" name="Prioritremark' + rows + '" type="text" class="td-input" />';
+    t8.innerHTML = '<input id="Priorit' + rows + '" name="Priorit' + rows + '" type="number" class="td-input" />';
+    t9.innerHTML = '<a href="javascript:deleteDosagePriority(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>'; 
+    var i = rows;
+    $('#Prioritcgy' + i).bind('input propertychange', { i: i }, function (e) {
+        if (document.getElementById("Prioritcgy" + e.data.i).value == "") {
+            document.getElementById("Prioritsum" + e.data.i).value = "";
+        } else {
+            document.getElementById("Prioritsum" + e.data.i).value = parseInt(document.getElementById("Prioritcgy" + e.data.i).value) * parseInt(document.getElementById("Priorittime" + e.data.i).value);
+        }
+    });
+    $('#Priorittime' + i).bind('input propertychange', { i: i }, function (e) {
+        if (document.getElementById("Priorittime" + e.data.i).value == "") {
+            document.getElementById("Prioritsum" + e.data.i).value = "";
+        } else {
+            document.getElementById("Prioritsum" + e.data.i).value = parseInt(document.getElementById("Prioritcgy" + e.data.i).value) * parseInt(document.getElementById("Priorittime" + e.data.i).value);
+        }
+    });
+    aa = rows;
+    document.getElementById("aa").value = aa;
+}
+function deleteDosagePriority(row) {
+    var table = document.getElementById("Priority");
+    var maxrow = table.rows.length;
+    //var row = Number(currentbutton.id.replace(/[^0-9]/ig, ""));
+    for (var i = row + 1; i < maxrow - 1; i++) {
+        var j = i - 1;
+        var td1 = document.getElementById("Prioritytype" + i);
+        td1.id = "Prioritytype" + j;
+        td1.name = "Prioritytype" + j;
+        var td2 = document.getElementById("Priorityout" + i);
+        td2.id = "Priorityout" + j;
+        td2.name = "Priorityout" + j;
+        var td3 = document.getElementById("Prioritptv" + i);
+        td3.id = "Prioritptv" + j
+        td3.name = "Prioritptv" + j;
+        var td4 = document.getElementById("Prioritcgy" + i);
+        td4.id = "Prioritcgy" + j;
+        td4.name = "Prioritcgy" + j;
+        var td5 = document.getElementById("Priorittime" + i);
+        td5.id = "Priorittime" + j;
+        td5.name = "Priorittime" + j;
+        var td6 = document.getElementById("Prioritsum" + i);
+        td6.id = "Prioritsum" + j;
+        td6.name = "Prioritsum" + j;
+        var td7 = document.getElementById("Prioritremark" + i);
+        td7.id = "Prioritremark" + j;
+        td7.name = "Prioritremark" + j;
+        var td8 = document.getElementById("Priorit" + i);
+        td8.id = "Priorit" + j;
+        td8.name = "Priorit" + j;        
+        var td9 = document.getElementById("delete" + i);
+        td9.id = "delete" + j;
+        td9.innerHTML = '<a  href="javascript:deleteDosagePriority(' + j + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';;
+    }
+    table.deleteRow(row + 1);
+    aa--;
+    document.getElementById("aa").value=aa;
+}
+function addDosage() {
+    var table = document.getElementById("Dosage");
+    var rows = table.rows.length;
+    var row = table.insertRow(rows);
+    rows--;
+    var t1 = row.insertCell(0);
+    var t2 = row.insertCell(1);
+    var t3 = row.insertCell(2);
+    var t4 = row.insertCell(3);
+    var t5 = row.insertCell(4);
+    var t6 = row.insertCell(5);
+    var t7 = row.insertCell(6);
+    var t8 = row.insertCell(7);
+    var t9 = row.insertCell(8);
+    var t10 = row.insertCell(9);
+    var t11 = row.insertCell(10);
+    t1.style.padding = "0px";
+    t2.style.padding = "0px";
+    t3.style.padding = "0px";
+    t4.style.padding = "0px";
+    t5.style.padding = "0px";
+    t6.style.padding = "0px";
+    t7.style.padding = "0px";
+    t8.style.padding = "0px";
+    t9.style.padding = "0px";
+    t10.style.padding = "0px";
+    t11.style.cssText = "text-align: center;padding:0px;vertical-align: middle";
+    t11.id = "deletes" + rows;
+    t1.innerHTML = '<input id="type' + rows + '" name="type' + rows + '" type="text" class="td-input" />';
+    t2.innerHTML = '<input id="dv' + rows + '" name="dv' + rows + '" type="text" class="td-input" />';
+    t3.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
+    t4.innerHTML = '<input id="number' + rows + '" name="number' + rows + '" type="number" class="td-input" />';
+    t5.innerHTML = '<input id="out' + rows + '" name="out' + rows + '" type="text" class="td-input" />';
+    t6.innerHTML = '<input id="prv' + rows + '" name="prv' + rows + '" type="text" class="td-input" />';
+    t7.innerHTML = '<input id="num' + rows + '" name="num' + rows + '" type="number" class="td-input" />';
+    t8.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
+    t9.innerHTML = '<input id="numbers' + rows + '" name="numbers' + rows + '" type="text" class="td-input" />';
+    t10.innerHTML = '<input id="pp' + rows + '" name="pp' + rows + '" type="number" class="td-input" />';
+    t11.innerHTML = '<a href="javascript:deleteDosage(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
+    bb = rows;
+    document.getElementById("bb").value =bb;
+}
+function addDosagePriority1(DosagePriority) {
+    var table = document.getElementById("Priority");
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    var rows = table.rows.length;
+    for (var j = rows-1; j > 0; j--) {
+        table.deleteRow(j);
+    }   
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var row = table.insertRow(i+1);        
+        var t1 = row.insertCell(0);
+        var t2 = row.insertCell(1);
+        var t3 = row.insertCell(2);
+        var t4 = row.insertCell(3);
+        var t5 = row.insertCell(4);
+        var t6 = row.insertCell(5);
+        var t7 = row.insertCell(6);
+        var t8 = row.insertCell(7);
+        var t9 = row.insertCell(8);
+        t1.style.padding = "0px";
+        t2.style.padding = "0px";
+        t3.style.padding = "0px";
+        t4.style.padding = "0px";
+        t5.style.padding = "0px";
+        t6.style.padding = "0px";
+        t7.style.padding = "0px";
+        t8.style.padding = "0px";
+        t9.style.cssText = "text-align: center;padding:0px;vertical-align: middle";
+        t9.id = "delete" + i;
+        t1.innerHTML = '<input id="Prioritytype' + i + '" name="Prioritytype' + i + '" value="'+list[0]+'" type="text" class="td-input" />';
+        t2.innerHTML = '<input id="Priorityout' + i + '" name="Priorityout' + i + '" value="' + list[1] + '" type="text" class="td-input" />';
+        t3.innerHTML = '<input id="Prioritptv' + i + '" name="Prioritptv' + i + '" value="' + list[2] + '" type="text" class="td-input" />';
+        t4.innerHTML = '<input id="Prioritcgy' + i + '" name="Prioritcgy' + i + '" value="' + list[3] + '" type="number" class="td-input" />';
+        t5.innerHTML = '<input id="Priorittime' + i + '" name="Priorittime' + i + '" value="' + list[4] + '" type="number" class="td-input" />';
+        t6.innerHTML = '<input id="Prioritsum' + i + '" name="Prioritsum' + i + '" value="' + list[5] + '" type="number" class="td-input" />';
+        t7.innerHTML = '<input id="Prioritremark' + i + '" name="Prioritremark' + i + '" value="' + list[6] + '" type="text" class="td-input" />';
+        t8.innerHTML = '<input id="Priorit' + i + '" name="Priorit' + i + '" type="number" value="' + list[7] + '" class="td-input" />';
+        t9.innerHTML = '<a href="javascript:deleteDosagePriority(' + i + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
+        $('#Prioritcgy' + i).bind('input propertychange', { i: i }, function (e) {
+            if (document.getElementById("Prioritcgy" + e.data.i).value == "") {
+                document.getElementById("Prioritsum" + e.data.i).value = "";
+            } else {
+                document.getElementById("Prioritsum" + e.data.i).value = parseInt(document.getElementById("Prioritcgy" + e.data.i).value) * parseInt(document.getElementById("Priorittime" + e.data.i).value);
+            }
+        });
+        $('#Priorittime' + i).bind('input propertychange', { i: i }, function (e) {
+            if (document.getElementById("Priorittime" + e.data.i).value == "") {
+                document.getElementById("Prioritsum" + e.data.i).value = "";
+            } else {
+                document.getElementById("Prioritsum" + e.data.i).value = parseInt(document.getElementById("Prioritcgy" + e.data.i).value) * parseInt(document.getElementById("Priorittime" + e.data.i).value);
+            }
+        });
+    }
+    aa = lists.length - 1;
+    document.getElementById("aa").value = aa;
+}
+function addDosage1(DosagePriority) {
+    var table = document.getElementById("Dosage");
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    var rows = table.rows.length;
+    for (var j = rows - 1; j > 0; j--) {
+        table.deleteRow(j);
+    }
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var row = table.insertRow(i + 1);
+        var t1 = row.insertCell(0);
+        var t2 = row.insertCell(1);
+        var t3 = row.insertCell(2);
+        var t4 = row.insertCell(3);
+        var t5 = row.insertCell(4);
+        var t6 = row.insertCell(5);
+        var t7 = row.insertCell(6);
+        var t8 = row.insertCell(7);
+        var t9 = row.insertCell(8);
+        var t10 = row.insertCell(9);
+        var t11 = row.insertCell(10);
+        t1.style.padding = "0px";
+        t2.style.padding = "0px";
+        t3.style.padding = "0px";
+        t4.style.padding = "0px";
+        t5.style.padding = "0px";
+        t6.style.padding = "0px";
+        t7.style.padding = "0px";
+        t8.style.padding = "0px";
+        t9.style.padding = "0px";
+        t10.style.padding = "0px";
+        t11.style.cssText = "text-align: center;padding:0px;vertical-align: middle";
+        t11.id = "deletes" + i;
+        t1.innerHTML = '<input id="type' + i + '" name="type' + i + '" value="' + list[0] + '"type="text" class="td-input" />';
+        t2.innerHTML = '<input id="dv' + i + '" name="dv' + i + '" type="text" value="' + list[1] + '" class="td-input" />';
+        t3.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
+        t4.innerHTML = '<input id="number' + i + '" name="number' + i + '" type="number" value="' + list[3] + '" class="td-input" />';
+        t5.innerHTML = '<input id="out' + i + '" name="out' + i + '" type="text" value="' + list[4] + '" class="td-input" />';
+        t6.innerHTML = '<input id="prv' + i + '" name="prv' + i + '" type="text" value="' + list[5] + '" class="td-input" />';
+        t7.innerHTML = '<input id="num' + i + '" name="num' + i + '" type="number" value="' + list[6] + '" class="td-input" />';
+        t8.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
+        t9.innerHTML = '<input id="numbers' + i + '" name="numbers' + i + '" type="text" value="' + list[8] + '" class="td-input" />';
+        t10.innerHTML = '<input id="pp' + i + '" name="pp' + i + '" type="number" value="' + list[9] + '" class="td-input" />';
+        t11.innerHTML = '<a href="javascript:deleteDosage(' + i + ');"><i class="fa fa-fw fa-minus-circle" value="' + list[10] + '" style="font-size:18px;"></i></a>';
+    }
+    bb = lists.length-1;
+    document.getElementById("bb").value = bb;
+}
+function deleteDosage(row) {
+    var table = document.getElementById("Dosage");
+    var maxrow = table.rows.length;
+    //var row = Number(currentbutton.id.replace(/[^0-9]/ig, ""));
+    for (var i = row + 1; i < maxrow - 1; i++) {
+        var j = i - 1;
+        var td1 = document.getElementById("type" + i);
+        td1.id = "type" + j;
+        td1.name = "type" + j;
+        var td2 = document.getElementById("dv" + i);
+        td2.id = "dv" + j;
+        td2.name = "dv" + j;
+
+        var td4 = document.getElementById("number" + i);
+        td4.id = "number" + j;
+        td4.name = "number" + j;
+        var td5 = document.getElementById("out" + i);
+        td5.id = "out" + j;
+        td5.name = "out" + j;
+        var td6 = document.getElementById("prv" + i);
+        td6.id = "prv" + j;
+        td6.name = "prv" + j;
+        var td7 = document.getElementById("num" + i);
+        td7.id = "num" + j;
+        td7.name = "num" + j;
+        var td9 = document.getElementById("numbers" + i);
+        td9.id = "numbers" + j;
+        td9.name = "numbers" + j;
+        var td10 = document.getElementById("pp" + i);
+        td10.id = "pp" + j;
+        td10.name = "pp" + j;        
+        var td11 = document.getElementById("deletes" + i);
+        td11.id = "deletes" + j;
+        td11.innerHTML = '<a  href="javascript:deleteDosage(' + j + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';;
+    }
+    table.deleteRow(row + 1);
+    bb--;
+    document.getElementById("bb").value = bb;
+}
+function createTechnologyItem(thiselement) {
+    var PartItem = JSON.parse(getTechnology()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--治疗技术选择--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+        }
+    }
+    if (PartItem[0].defaultItem != "") {
+        thiselement.value = PartItem[0].defaultItem;
+    }
+}
+function getTechnology() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "../../pages/Main/Records/getTechnology.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+
+function createEquipmentItem(thiselement) {
+    var PartItem = JSON.parse(getEquipment()).item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--放疗设备选择--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+        }
+    }
+    if (PartItem[0].defaultItem != "") {
+        thiselement.value = PartItem[0].defaultItem;
+    }
+}
+function getEquipment() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "../../pages/Main/Records/getEqForDesign.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
 }
 //---------------------------------------------------------------------------------------------------------------
 function createAddLocate(){
@@ -326,7 +839,7 @@ function forchange() {
     }
 }
 function postLocate(){
-    var templateName = document.getElementById("templateName_locate").value;
+    var templateName = document.getElementById("templateName_locate").value+"(公用模板)";
     var scanpart = $("#scanpart").next("div").find("button").attr("title").replace(/ /g, "").replace(/,/g, "，");
     var scanmethod = document.getElementById("scanmethod").value;
     var up = document.getElementById("up").value;
@@ -514,7 +1027,7 @@ function postFix(){
     var fixequip = document.getElementById("fixEquip").value;
     var Remarks = document.getElementById("Remarks_fix").value;
     var userID = "0";
-    var TemplateName = $("#templateName_fix").val();
+    var TemplateName = $("#templateName_fix").val()+"(公用模板)";
     if(TemplateName == ""){
         alert("请填写模板名称");
         return false;
@@ -687,30 +1200,7 @@ function updateDiagnose($tr){
         }
     });
 }
-//删除模板
-function deleteTemplate($tr) {
-    var id = $tr.find("td").eq(1).text();
-    $.ajax({
-        url: "../../pages/Main/Records/deleteTemplate.ashx?templateID=" + id,
-        type: "get",
-        async: false,
-        success: function (data) {
-            if (data == "success") {
-                $("#add_diagnose").modal("hide");
-                $("#add_fix").modal("hide");
-                $("#add_locate").modal("hide");
-                window.alert("删除成功");
-                createTable(type);
-            } else {
-                window.alert("网络忙");
-                return false;
-            }
-        },
-        error: function () {
-            alert("网络忙");
-        }
-    });
-}
+
 function fillDiagnoseData($tr) {
     var id = $tr.find("td").eq(1).text();
     var templateID = $tr.find("td").eq(2).text();
@@ -1012,7 +1502,7 @@ function postDiagnose() {
             remark: remark.value,
             part: part,
             newpart: newpart,
-            TemplateName: templateName.value,
+            TemplateName: templateName.value+"(公用模板)",
             Aim: Aim.value,
             copybingli1: copybingli1.value,
             copybingli2: copybingli2.value,
