@@ -39,13 +39,13 @@ public class getTemplateType : IHttpHandler {
         sqlOperation2.AddParameterWithValue("@userID", userid);
         sqlOperation2.AddParameterWithValue("@type", type);
         int count = int.Parse(sqlOperation2.ExecuteScalar(Count));
-        string sqlCommand1 = "select ID,Name,TemplateID from doctortemplate where (user_ID=@userID or user_ID=0) and Type=@type order by user_ID";
+        string sqlCommand1 = "select ID,Name,TemplateID,User_ID from doctortemplate where (user_ID=@userID or user_ID=0) and Type=@type order by user_ID";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand1);
         StringBuilder backText = new StringBuilder("{\"templateInfo\":[");
         while (reader.Read())
         {
 
-            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"] + "\",\"TemplateID\":\"" + reader["TemplateID"] + "\"}");
+            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"] + "\",\"TemplateID\":\"" + reader["TemplateID"] + "\",\"Ispublic\":\"" + reader["User_ID"] + "\"}");
             if (i < count)
             {
                 backText.Append(",");
