@@ -35,11 +35,11 @@ public class getTemplateType : IHttpHandler {
         int userid = Convert.ToInt32(context.Request.QueryString["userID"]);
         int type = Convert.ToInt32(context.Request.QueryString["type"]);
         int i = 1;
-        string Count = "select count(*) from doctortemplate where user_ID=@userID and Type=@type";
+        string Count = "select count(*) from doctortemplate where (user_ID=@userID or user_ID=0) and Type=@type";
         sqlOperation2.AddParameterWithValue("@userID", userid);
         sqlOperation2.AddParameterWithValue("@type", type);
         int count = int.Parse(sqlOperation2.ExecuteScalar(Count));
-        string sqlCommand1 = "select ID,Name,TemplateID from doctortemplate where user_ID=@userID and Type=@type";
+        string sqlCommand1 = "select ID,Name,TemplateID from doctortemplate where (user_ID=@userID or user_ID=0) and Type=@type order by user_ID";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand1);
         StringBuilder backText = new StringBuilder("{\"templateInfo\":[");
         while (reader.Read())
