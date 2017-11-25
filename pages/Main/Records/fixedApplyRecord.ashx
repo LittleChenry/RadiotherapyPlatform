@@ -106,54 +106,82 @@ public class fixedApplyRecord : IHttpHandler
         }
         else
         {
-            string strcommand = "select State from appointment where ID=@appointid";
-            sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));
-            string count = sqlOperation.ExecuteScalar(strcommand);
-            if (count == "1")
+            string check = "select Appointment_ID from fixed,treatment where treatment.ID=@treatid and treatment.Fixed_ID=fixed.ID";
+            sqlOperation.AddParameterWithValue("@treatid", treatid);
+            string checkresult = sqlOperation.ExecuteScalar(check);
+            if (checkresult == "")
             {
-                return "busy";
-            }
-            else
-            {
-                string strcommand1 = "update appointment set State=1 where ID=@appointid and State=0";
-                int intSuccess = sqlOperation.ExecuteNonQuery(strcommand1);
-                if (intSuccess == 0)
+                string strcommand = "select State from appointment where ID=@appointid";
+                sqlOperation.AddParameterWithValue("@appointid", Convert.ToInt32(appoint));
+                string count = sqlOperation.ExecuteScalar(strcommand);
+                if (count == "1")
                 {
                     return "busy";
                 }
                 else
                 {
-                    string strcommand2 = "select Patient_ID from treatment where ID=@treat";
-                    sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
-                    string patient_ID = sqlOperation.ExecuteScalar(strcommand2);
-
-                    string finishappoint = "update appointment set Patient_ID=@Patient,Treatment_ID=@treat where ID=@appointid";
-                    sqlOperation.AddParameterWithValue("@Patient", Convert.ToInt32(patient_ID));
-                    int Success1 = sqlOperation.ExecuteNonQuery(finishappoint);
-
-                    string fixapply = "select Fixed_ID from treatment where treatment.ID=@treatid";
-                    sqlOperation.AddParameterWithValue("@treatid", treatid);
-                    int fixapplyid = int.Parse(sqlOperation.ExecuteScalar(fixapply));
-                    string strupdate = "update fixed set Model_ID=@Model_ID,FixedRequirements_ID=@FixedRequirements_ID,BodyPosition=@BodyPosition,RemarksApply=@RemarksApply,FixedEquipment_ID=@FixedEquipment_ID,Appointment_ID=@Appointment_ID where ID=@fixapplyid";
-                    sqlOperation1.AddParameterWithValue("@fixapplyid", fixapplyid);
-                    sqlOperation1.AddParameterWithValue("@Appointment_ID", Convert.ToInt32(appoint));
-                    sqlOperation1.AddParameterWithValue("@Model_ID", Convert.ToInt32(model));
-                    sqlOperation1.AddParameterWithValue("@FixedRequirements_ID", Convert.ToInt32(fixreq));
-                    sqlOperation1.AddParameterWithValue("@BodyPosition", bodypost);
-                    sqlOperation1.AddParameterWithValue("@RemarksApply", Remarks);
-                    sqlOperation1.AddParameterWithValue("@FixedEquipment_ID", fixequip);
-                    int Success2 = sqlOperation1.ExecuteNonQuery(strupdate);
-                    if (Success2 > 0)
+                    string strcommand1 = "update appointment set State=1 where ID=@appointid and State=0";
+                    int intSuccess = sqlOperation.ExecuteNonQuery(strcommand1);
+                    if (intSuccess == 0)
                     {
-                        return "success";
+                        return "busy";
                     }
                     else
                     {
-                        return "failure";
+                        string strcommand2 = "select Patient_ID from treatment where ID=@treat";
+                        sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatid));
+                        string patient_ID = sqlOperation.ExecuteScalar(strcommand2);
+
+                        string finishappoint = "update appointment set Patient_ID=@Patient,Treatment_ID=@treat where ID=@appointid";
+                        sqlOperation.AddParameterWithValue("@Patient", Convert.ToInt32(patient_ID));
+                        int Success1 = sqlOperation.ExecuteNonQuery(finishappoint);
+
+                        string fixapply = "select Fixed_ID from treatment where treatment.ID=@treatid";
+                        sqlOperation.AddParameterWithValue("@treatid", treatid);
+                        int fixapplyid = int.Parse(sqlOperation.ExecuteScalar(fixapply));
+                        string strupdate = "update fixed set Model_ID=@Model_ID,FixedRequirements_ID=@FixedRequirements_ID,BodyPosition=@BodyPosition,RemarksApply=@RemarksApply,FixedEquipment_ID=@FixedEquipment_ID,Appointment_ID=@Appointment_ID where ID=@fixapplyid";
+                        sqlOperation1.AddParameterWithValue("@fixapplyid", fixapplyid);
+                        sqlOperation1.AddParameterWithValue("@Appointment_ID", Convert.ToInt32(appoint));
+                        sqlOperation1.AddParameterWithValue("@Model_ID", Convert.ToInt32(model));
+                        sqlOperation1.AddParameterWithValue("@FixedRequirements_ID", Convert.ToInt32(fixreq));
+                        sqlOperation1.AddParameterWithValue("@BodyPosition", bodypost);
+                        sqlOperation1.AddParameterWithValue("@RemarksApply", Remarks);
+                        sqlOperation1.AddParameterWithValue("@FixedEquipment_ID", fixequip);
+                        int Success2 = sqlOperation1.ExecuteNonQuery(strupdate);
+                        if (Success2 > 0)
+                        {
+                            return "success";
+                        }
+                        else
+                        {
+                            return "failure";
+                        }
                     }
                 }
-            }
 
+            }else {
+                string fixapply = "select Fixed_ID from treatment where treatment.ID=@treatid";
+                sqlOperation.AddParameterWithValue("@treatid", treatid);
+                int fixapplyid = int.Parse(sqlOperation.ExecuteScalar(fixapply));
+                string strupdate = "update fixed set Model_ID=@Model_ID,FixedRequirements_ID=@FixedRequirements_ID,BodyPosition=@BodyPosition,RemarksApply=@RemarksApply,FixedEquipment_ID=@FixedEquipment_ID,Appointment_ID=@Appointment_ID where ID=@fixapplyid";
+                sqlOperation1.AddParameterWithValue("@fixapplyid", fixapplyid);
+                sqlOperation1.AddParameterWithValue("@Appointment_ID", Convert.ToInt32(appoint));
+                sqlOperation1.AddParameterWithValue("@Model_ID", Convert.ToInt32(model));
+                sqlOperation1.AddParameterWithValue("@FixedRequirements_ID", Convert.ToInt32(fixreq));
+                sqlOperation1.AddParameterWithValue("@BodyPosition", bodypost);
+                sqlOperation1.AddParameterWithValue("@RemarksApply", Remarks);
+                sqlOperation1.AddParameterWithValue("@FixedEquipment_ID", fixequip);
+                int Success2 = sqlOperation1.ExecuteNonQuery(strupdate);
+                if (Success2 > 0)
+                {
+                    return "success";
+                }
+                else
+                {
+                    return "failure";
+                }
         }
+        }
+       
     }
 }

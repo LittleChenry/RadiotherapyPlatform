@@ -165,7 +165,7 @@
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
     <!-- javascript -->
     <script src="../../../js/Main/Diagnose.js" type="text/javascript"></script>
-    <script src="../../../js/Main/FixedRecordPrint.js"></script>
+    <script src="../../../js/Main/Diagnoseprint.js"></script>
     <!-- Page script -->
     <script type="text/javascript">
         $("#datepicker").datepicker({ autoclose: true });
