@@ -1871,7 +1871,7 @@ function tem(userID, type) {
         var tr = '<tr><td colspan="2" style="text-align:center;">无模板</td></tr>';
         tbody.append(tr);
     }
-    var tr = '<tr><td></td><td></td></tr>';
+    var tr = '<tr><td></td><td></td><td></td></tr>';
     tbody.append(tr);
     $('input[type="radio"].minimal').iCheck({
         checkboxClass: 'icheckbox_minimal-blue',
