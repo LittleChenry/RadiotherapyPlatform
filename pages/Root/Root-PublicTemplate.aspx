@@ -26,6 +26,21 @@
     <link href="../../css/Main/main.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../css/Root/equipmentMain.css" />
     <link href="../../css/Root/rootMain.css" rel="stylesheet" />
+    <style>
+        .td-input {
+    border-radius: 0;
+    box-shadow: none;
+    border-color: #000000;
+    padding: 4px 2px;
+    width: 100%;
+    height: 36px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 0px;
+}
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -598,6 +613,171 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                         <button type="button" class="btn btn-primary" id="sureAddLocate">确定</button>
                         <button type="button" class="btn btn-danger" id="sureDeleteLocate">删除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%-- 计划申请modal --%>
+        <div class="modal fade" id="add_design" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">计划申请</h4>
+                    </div>
+                    <div class="modal-body">
+                       <form class="form-horizontal" id="design_form">
+                           <input type="hidden"  id="aa" name="aa"/>
+                            <input type="hidden"  id="bb" name="bb" />
+                           <input type="hidden" id="updateID" name="updateID" />
+                           <div class="form-group">
+                               <label class="col-sm-2 control-label">模版名称：</label>
+                               <div class="col-sm-10">
+                                   <input type="text" class="form-control" id="templateName_design" name="templateName_design">
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               <label class="col-sm-2 control-label">特殊情况(放疗史)：</label>
+                               <div class="col-sm-10">
+                                   <textarea class="form-control" rows="5" id="Remarks_design" name="Remarks_design"></textarea>
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               <label class="col-sm-2 control-label">靶区处方剂量：</label>
+                                   <div class="col-sm-10 table-responsive" >
+                                       <table id="Priority" class="table table-bordered">
+                                           <thead>
+                                               <tr>
+                                                   <th>靶区</th>
+                                                   <th>外放/mm</th>
+                                                   <th>PTV</th>
+                                                   <th>单次量cGy</th>
+                                                   <th>次数</th>
+                                                   <th>总剂量cGy</th>
+                                                   <th>体积/%</th>
+                                                   <th>优先级</th>
+                                                   <th style="text-align: center;">
+                                                       <a href="javascript:addDosagePriority();"><i class="fa fa-fw fa-plus-circle" style="font-size: 18px;"></i></a>
+                                                   </th>
+                                               </tr>
+                                           </thead>
+                                           <tbody style="text-align: center;">
+                                               <tr>
+                                                   <td style="padding: 0px;">
+                                                       <input id="Prioritytype0" name="Prioritytype0" type="text" class="td-input"/>
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="Priorityout0" name="Priorityout0" type="text" class="td-input"/>
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="Prioritptv0" name="Prioritptv0" type="text" class="td-input"/>
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="Prioritcgy0" name="Prioritcgy0" type="number" class="td-input"/>
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="Priorittime0" name="Priorittime0" type="number" class="td-input"/>
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="Prioritsum0" name="Prioritsum0" type="number" class="td-input"/>
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="Prioritremark0" name="Prioritremark0" type="text" class="td-input"/>
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="Priorit0" name="Priorit0" type="number" class="td-input"/>
+                                                   </td>
+                                                   <td id="delete0" style="text-align: center; padding: 0px; vertical-align: middle;">
+                                                       <a href="javascript:deleteDosagePriority(0);"><i class="fa fa-fw fa-minus-circle" style="font-size: 18px;"></i></a>
+                                                   </td>
+                                               </tr>
+                                           </tbody>
+                                       </table>
+                                   </div>
+                               </div>
+                           <div class="form-group">
+                               <label class="col-sm-2 control-label">危及器官限量：</label>
+                                   <div class="col-sm-10 table-responsive" >
+                                       <table id="Dosage" class="table table-bordered">
+                                           <thead>
+                                               <tr>
+                                                   <th>危及器官</th>
+                                                   <th>剂量cGy</th>
+                                                   <th>限制</th>
+                                                   <th>体积/%</th>
+                                                   <th>外放mm</th>
+                                                   <th>PRV</th>
+                                                   <th>剂量cGy</th>
+                                                   <th>限制</th>
+                                                   <th>体积/%</th>
+                                                   <th>优先级</th>
+                                                   <th style="text-align: center;">
+                                                       <a href="javascript:addDosage();"><i class="fa fa-fw fa-plus-circle" style="font-size: 18px;"></i></a>
+                                                   </th>
+                                               </tr>
+                                           </thead>
+                                           <tbody style="text-align: center;">
+                                               <tr>
+                                                   <td style="padding: 0px;">
+                                                       <input id="type0" name="type0" type="text" class="td-input" />
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="dv0" name="dv0" type="text" class="td-input" />
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input type="text" class="td-input" value="<" readonly="true" />
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="number0" name="number0" type="number" class="td-input" />
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="out0" name="out0" type="text" class="td-input" />
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="prv0" name="prv0" type="text" class="td-input" />
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="num0" name="num0" type="text" class="td-input" />
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input type="text" class="td-input" value="<" readonly="true" />
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="numbers0" name="numbers0" type="number" class="td-input" />
+                                                   </td>
+                                                   <td style="padding: 0px;">
+                                                       <input id="pp0" name="pp0" type="number" class="td-input" />
+                                                   </td>
+                                                   <td id="deletes0" style="text-align: center; padding: 0px; vertical-align: middle;">
+                                                       <a href="javascript:deleteDosage(0);"><i class="fa fa-fw fa-minus-circle" style="font-size: 18px;"></i></a>
+                                                   </td>
+                                               </tr>
+                                           </tbody>
+                                       </table>
+                                   </div>
+                               </div>
+                           <div class="form-group">
+                               <label class="col-sm-2 control-label">治疗技术：</label>
+                               <div class="col-sm-10">
+                                   <select class="form-control" id="technology_design" name="technology_design">
+
+                                   </select>
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               <label class="col-sm-2 control-label">放疗设备：</label>
+                               <div class="col-sm-10">
+                                   <select class="form-control" id="equipment_design" name="equipment_design">
+
+                                   </select>
+                               </div>
+                           </div>
+                       </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="sureAddDesign">确定</button>
+                        <button type="button" class="btn btn-danger" id="sureDeleteDesign">删除</button>
                     </div>
                 </div>
             </div>

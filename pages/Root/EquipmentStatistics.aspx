@@ -298,6 +298,12 @@
                   <span class="pull-right-container"></span>
               </a>
           </li>
+          <li>
+              <a href="Root-PublicTemplate.aspx">
+                  <i class="fa fa-clone"></i><span>公共模版设置</span>
+                  <span class="pull-right-container"></span>
+              </a>
+          </li>
         <li class="treeview active">
           <a href="#">
             <i class="fa fa-bar-chart"></i>
