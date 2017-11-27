@@ -69,6 +69,21 @@ $(function () {
                     lessLength: max,
                     headName: head
                 });
+                $.ajax({
+                    type: "post",
+                    url: "/RadiotherapyPlatform/pages/Main/getMainItemLength.ashx",
+                    data: { "equipmentID": $equipment.val() },
+                    success: function (MainItem) {
+                        var jsonObj = $.parseJSON(MainItem);
+                        var MainTr = new Array();
+                        MainTr.push("<tr><th> </th>");
+                        for (var i = 0; i < jsonObj.length; i++) {
+                            MainTr.push("<th style='border-right:1px solid #ccc;border-left:1px solid #ccc;padding:2px' colspan=" + jsonObj[i].len + ">" + jsonObj[i].name + "</th>");
+                        }
+                        var trMain = MainTr.join('');
+                        $("#tableArea thead").prepend(trMain);
+                    }
+                });
             }
         })
     });
