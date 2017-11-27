@@ -40,7 +40,9 @@ function print() {
         parent.append(span);
     }
     $("#printArea :button").remove();
-    var inputs = $printArea.find("input:not([type=hidden])").filter(":not([type=radio])");
+    $("#printArea .input-group-btn").remove();
+
+    var inputs = $printArea.find("input:not([type=hidden])").filter(":not([type=radio])").filter(":not(.td-input)");
     for (var i = 0; i < inputs.length; ++i) {
         var _thiss = $(inputs[i]);
         var vals = _thiss.val();
@@ -53,6 +55,13 @@ function print() {
         var span = "<span class=form-text style=position:absolute>" + vals + nexttext + "</span>";
         _thiss.parent().append(span);
         _thiss.remove();
+    }
+
+    var tdInputs = $printArea.find(".td-input");
+    for (var i = 0; i < tdInputs.length; i++) {
+        var tdValue = $(tdInputs[i]).val();
+        var span = "<span class=form-text >" + tdValue + "</span>";
+        $(tdInputs[i]).closest("td").empty().append(span);
     }
 
     var radios = $printArea.find("input[type=radio]");
@@ -73,6 +82,13 @@ function print() {
         }
         thisRadio.parent().empty().append((radiotext == "1" ? "<span class='form-text col-xs-4'>是</span>" : "<span class='form-text col-xs-4'>否</span>"));
     }
+
+    var allTableTr = $("#printArea #Field").find("tr");
+    for (var i = 0; i < allTableTr.length; i++) {
+        $(allTableTr[i]).find("td:last").remove();
+    }
+    
+    $("#printArea #Field").find("tr th:last").remove();
 
     $("#printArea .paper").css("border", "0px");
     $("#printArea .tab-row").css("display", "none");
