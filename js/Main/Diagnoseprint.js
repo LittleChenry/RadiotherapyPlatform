@@ -32,12 +32,21 @@ function print() {
     var $selects = $printArea.find("select");
     var $oldSelect = $("#needPrint").find("select");
     for (var i = 0; i < $selects.length; ++i) {
-        var _this = $($selects[i]);
-        var parent = _this.parent();
-        var val = $($oldSelect[i]).find(":selected").text();
-        _this.remove();
-        var span = "<span class='form-text col-xs-4'>" + val + "</span>";
-        parent.append(span);
+        if (i >= 3) {
+            var _this = $($selects[i]);
+            var parent = _this.parent();
+            var val = $($oldSelect[i]).find(":selected").text();
+            _this.remove();
+            var span = "<span class='form-text col-xs-4'>" + val + "</span>";
+            parent.append(span);
+        } else {
+            var _this = $($selects[i]);
+            var parent = _this.parent();
+            var val = $($oldSelect[i]).find(":selected").text();
+            _this.remove();
+            var span = "<span class='form-text col-xs-3'>" + val + "</span>";
+            parent.append(span);
+        }
     }
     $("#printArea :button").remove();
     var inputs = $printArea.find("input:not([type=hidden])").filter(":not([type=radio])");
