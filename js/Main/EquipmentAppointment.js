@@ -108,11 +108,7 @@ function AccelerateAppointView(){
                     var tr = '<tr class="evening"><td>'+ toTime(TempBegin) + '-'+ toTime(TempEnd) +'</td>';
                 }
                 for (var j = 0; j < 7; j++) {
-                    if (appointinfo[count].Completed == 0) {
-                        tr += "<td id='"+ (needtable).toString() + i + j +"'></td>";
-                    }else{
-                        tr += "<td id='"+ (needtable).toString() + i + j +"' class='completed'></td>";
-                    }
+                    tr += "<td id='"+ (needtable).toString() + i + j +"'></td>";
                 }
                 tr += "</tr>";
                 table += tr;
@@ -136,10 +132,9 @@ function AccelerateAppointView(){
         var tdid = tablenum.toString() + row.toString() + col.toString();
         var span = '<span id='+ appointinfo[count].TreatmentID + '_' + appointinfo[count].appointid +'>'+ appointinfo[count].patientname + " " + appointinfo[count].treatdescribe +'</span>'
         $("#" + tdid).append(span);
-        /*$("#" + tdid).bind("click",function(){
-            var treatID = $(this).find("span").attr('id');
-            findAllTreatIDTd(treatID);
-        });*/
+        if (appointinfo[count].Completed == 1) {
+            $("#" + tdid).addClass("completed");
+        }
         count ++;
     }
 
@@ -403,7 +398,7 @@ function Appoint2Patient(e){
                     var flag = 1;
                     for (var i = 0; i < appoints.appoint.length; i++) {
                         var appointDate = new Date(appoints.appoint[i].Date);
-                        var completed = (appoints.appoint[i].Completed == "1") ? "已完成" : "未完成";
+                        var completed = (appoints.appoint[i].Completed == "1") ? "完成" : "待做";
                         if (parseInt(toTime(appoints.appoint[i].End).split(":")[0]) >= 24) {
                             var hour = toTime(appoints.appoint[i].Begin).split(":")[0];
                             var minute = toTime(appoints.appoint[i].Begin).split(":")[1];
@@ -595,7 +590,7 @@ function patientView(){
 				var flag = 1;
 				for (var i = 0; i < appoints.appoint.length; i++) {
 				    var appointDate = new Date(appoints.appoint[i].Date);
-				    var completed = (appoints.appoint[i].Completed == "1") ? "已完成" : "未完成";
+				    var completed = (appoints.appoint[i].Completed == "1") ? "完成" : "待做";
 				    if (parseInt(toTime(appoints.appoint[i].End).split(":")[0]) >= 24) {
 				        var hour = toTime(appoints.appoint[i].Begin).split(":")[0];
 				        var minute = toTime(appoints.appoint[i].Begin).split(":")[1];
@@ -948,7 +943,7 @@ function getAppointRecords(equipmentID){
     xmlHttp.send(null);
     var Items = xmlHttp.responseText;
     //alert(Items);
-    var data = $.parseJSON(Items)
+    var data = $.parseJSON(Items);
     return data;
 }
 
