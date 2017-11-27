@@ -43,11 +43,11 @@ public class TreatmentRecord : IHttpHandler {
         double machinenumber = Convert.ToDouble(context.Request["machinenumber"]);
         int Illuminated = Convert.ToInt32(context.Request["IlluminatedNumber"]);
         string remark = context.Request["remark"];
-        string design = "select Design_ID from treatment where ID=@treat";
+        string design = "select iscommon from treatment where ID=@treat";
         sqlOperation.AddParameterWithValue("@treat", treatid);
         string des = sqlOperation.ExecuteScalar(design);
      
-        if (design != "")
+        if (design == "1")
         {
             string sqlcommand1 = "select IlluminatedNumber,MachineNumbe,DosagePriority from design,treatment where design.ID=treatment.Design_ID and treatment.ID=@treat";
             sqlOperation.AddParameterWithValue("treat", treatid);

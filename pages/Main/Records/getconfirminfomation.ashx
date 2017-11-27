@@ -39,10 +39,10 @@ public class getconfirminfomation : IHttpHandler {
         string IlluminatedNumber = "";
         string MachineNumbe = "";
         int DosagePriority = 0;
-        string design = "select Design_ID from treatment where ID=@treat";
+        string design = "select iscommon from treatment where ID=@treat";
         sqlOperation.AddParameterWithValue("@treat", treatid);
         string des = sqlOperation.ExecuteScalar(design);
-        if (des != "")
+        if (des == "1")
         {
             string sqlcommand1 = "select IlluminatedNumber,MachineNumbe,DosagePriority from design,treatment where design.ID=treatment.Design_ID and treatment.ID=@treat";
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand1);
