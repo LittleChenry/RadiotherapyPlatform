@@ -72,7 +72,8 @@ public class ChangeDiffAppoint : IHttpHandler {
         JArray jday1 = (JArray)JsonConvert.DeserializeObject(backString1.ToString());
         JArray jday2 = (JArray)JsonConvert.DeserializeObject(backString2.ToString());
         int len1 = jday1.Count;
-        int len2 = jday2.Count;
+        //int len2 = jday2.Count;
+        int len2 = 0;
         int point1 = 0;
         int point2 = 0;
         while (true)
