@@ -66,10 +66,10 @@ public class patientInfoForMNJS : IHttpHandler {
         {
             string progress = reader["Progress"].ToString();
             string[] strArray = progress.Split(',');
-            if (reader["Task"].ToString() == "模拟定位" && Array.LastIndexOf(strArray, "4") < 0)
-            {
-                continue;
-            }
+            //if (reader["Task"].ToString() == "模拟定位" && Array.LastIndexOf(strArray, "4") < 0)
+            //{
+            //    continue;
+            //}
             if (reader["Task"].ToString() == "复位模拟" && (Array.LastIndexOf(strArray, "5") < 0 || Array.LastIndexOf(strArray, "4") < 0 ))
             {
                 continue;
@@ -89,7 +89,7 @@ public class patientInfoForMNJS : IHttpHandler {
             DateTime dt1 = Convert.ToDateTime(da);
             string date3 = dt1.ToString("yyyy-MM-dd");
             backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"date\":\"" + date3 + "\",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"state\":\"" + reader["treatstate"].ToString() +
-                    "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"Completed\":\"" + reader["Completed"].ToString() + "\",\"Task\":\"" + reader["Task"].ToString()
+                    "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"Completed\":\"" + reader["Completed"].ToString() + "\",\"Task\":\"" + reader["Task"].ToString() + "\",\"ischecked\":\"" + reader["ischecked"].ToString()
                     + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"appointid\":\"" + reader["appointid"].ToString() + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\"}");
 
             if (i < count)

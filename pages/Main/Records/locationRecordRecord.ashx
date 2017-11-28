@@ -123,7 +123,7 @@ public class locationRecordRecord : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@userid", userid);
                 sqlOperation.AddParameterWithValue("@picture", savepath1);
                 int intSuccess1 = sqlOperation.ExecuteNonQuery(strSqlCommand);
-                string strSqlCommand1 = "UPDATE  appointment  SET Completed=@state where Treatment_ID=@treat and Task='模拟定位'";
+                string strSqlCommand1 = "UPDATE  appointment  SET Completed=@state where Treatment_ID=@treat and Task='模拟定位' and ischecked=0";
                 sqlOperation1.AddParameterWithValue("@state", 1);
                 sqlOperation1.AddParameterWithValue("@treat", treatID);
                 int intSuccess2 = sqlOperation1.ExecuteNonQuery(strSqlCommand1);
