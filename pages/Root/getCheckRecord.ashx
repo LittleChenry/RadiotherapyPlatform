@@ -24,7 +24,7 @@ public class getCheckRecord : IHttpHandler {
         string date = context.Request.Form["date"];
         string eid = context.Request.Form["equipmentID"];
 
-        string sqlCommand = "SELECT inspections.ChildItem,checkresults.RealValue,DATE_FORMAT(checkrecord.checkDate,'%e') checkDate FROM inspections LEFT JOIN checkresults ON inspections.ID=checkresults.Inspections_ID LEFT JOIN checkrecord ON checkresults.Record_ID=checkrecord.ID WHERE checkrecord.checkCycle='day' AND DATE_FORMAT(checkrecord.checkDate,'%Y-%m')=@date AND checkrecord.Equipment_ID=@eid ORDER BY MainItem";
+        string sqlCommand = "SELECT inspections.ChildItem,checkresults.RealValue,DATE_FORMAT(checkrecord.checkDate,'%e') checkDate FROM inspections LEFT JOIN checkresults ON inspections.ID=checkresults.Inspections_ID LEFT JOIN checkrecord ON checkresults.Record_ID=checkrecord.ID WHERE checkrecord.checkCycle='day' AND DATE_FORMAT(checkrecord.checkDate,'%Y-%m')=@date AND checkrecord.Equipment_ID=@eid";
         sqlOperator.AddParameterWithValue("@date", date);
         sqlOperator.AddParameterWithValue("@eid", eid);
 
