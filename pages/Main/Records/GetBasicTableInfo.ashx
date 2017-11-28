@@ -84,12 +84,12 @@ public class GetBasicTableInfo : IHttpHandler {
                appointid = int.Parse(reader["Appointment_ID"].ToString());
                 date = reader["Date"].ToString();
                 begin = reader["Begin"].ToString();
-                if (begindate == "")
-                {
-                    begindate = reader["Date"].ToString();
-                    beginbegin = reader["Begin"].ToString();
-                    beginend = reader["End"].ToString();
-                }
+                //if (begindate == "")
+                //{
+                //    begindate = reader["Date"].ToString();
+                //    beginbegin = reader["Begin"].ToString();
+                //    beginend = reader["End"].ToString();
+                //}
                 break;
             }
         }
