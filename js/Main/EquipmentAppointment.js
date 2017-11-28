@@ -34,7 +34,7 @@ $(document).ready(function () {
             var WeekAreaNormal = $("#WeekAreaNormal");
             Appoint2Patient(WeekAreaNormal);
         }
-		//patientView();
+		patientView();
 	});
 
 	//document.getElementById("chooseProject").addEventListener("click", function () {
@@ -65,7 +65,11 @@ function AccelerateAppointView(){
     var chooseWeek = $("#chooseWeek");
     chooseWeek.html("");
     var DayRemoveTable = $("#DayRemoveTable");
-    var begintime = parseInt(appointinfo[0].Begin);
+    if (appointinfo.length != 0) {
+        var begintime = parseInt(appointinfo[0].Begin);
+    } else {
+        var begintime = 420;
+    }
     var maxbegin = parseInt(appiontview.maxbegin);
     var timelength = parseInt(machineinfo.Timelength);
     var rows = (maxbegin - begintime) / timelength + 1;
