@@ -1679,7 +1679,8 @@ function SingleTask(light, serious, singlepatient, currentProgress){
             completedTime = new Date(singlepatient.confirmTime);
             break;
     }
-    var TimeDifference = (currentTime.getTime() - completedTime.getTime())/3600000;
+    //var TimeDifference = (currentTime.getTime() - completedTime.getTime())/3600000;
+    var TimeDifference = CalculateWeekDay(completedTime,currentTime);
     if (TimeDifference > light) {
         if (TimeDifference < serious) {
             singletask = '<li><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
@@ -1692,6 +1693,30 @@ function SingleTask(light, serious, singlepatient, currentProgress){
         }
     }
     WarningTaskContent.append(singletask);
+}
+
+function CalculateWeekDay(beginDate,endDate){
+    var currentDate = beginDate;
+    var currentDay = currentDate.getDay();
+    var beginDay = beginDate.getDay();
+    var endDay = endDate.getDay();
+    var preferenceDay = beginDate;
+    preferenceDay.setHours(0);
+    preferenceDay.setMinutes(0);
+    preferenceDay.setSeconds(0);
+    preferenceDay.setMilliseconds(0);
+    var countWeekDay = 0;
+    //var diffDays = endDay - beginDay;
+    var diffDays = 0;
+    if (diffDays == 0) {
+        var TimeDifference = (endDate.getTime() - beginDate.getTime())/3600000;
+        return TimeDifference;
+    }else{
+        currentDay.setDate(currentDay.getDate() + 1);
+        while(currentDay <= endDay){
+            
+        }
+    }
 }
 
 function getProgressActive() {
