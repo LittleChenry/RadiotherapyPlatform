@@ -197,16 +197,29 @@
 
 .camera-picture {
 	width: 100%;
-	padding-top: 22px;
+	padding: 0px;
 }
 
 .head-picture {
 	position: absolute;
-    margin-left: 730px;
-    width: 122px;
-    top: 100px;
-    border: 1px solid #000000;
+    width: 102px;
+    margin-left: 800px;
+    top: 190px;
     z-index: 1;
+}
+
+.card-reader {
+    position: absolute;
+    width: 102px;
+    margin-left: 800px;
+    top: 371px;
+    z-index: 1;
+}
+
+.CardReaderInfo {
+    font-size: 14px;
+    margin-top: 20px;
+    color: red;
 }
 
 .picture-remark {

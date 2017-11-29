@@ -257,29 +257,22 @@
                         <div class="content-title">
                             <span>基本信息：</span>
                         </div>
-                        <div class="head-picture" style="margin-left:800px;top:175px;">
-                            <div class="imgbox">
-                                <div class="boxes">
-                                    <div class="imgnum">
-                                        <input type="file" accept="image/jpg,image/png" id="FileUpload" name="FileUpload" class="singlefilepath filepath" />
-                                        <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
-                                        <img id="background-photo" src="../../img/avatar.jpg" class="camera-picture" />
-                                        <img src="" id="photo" class="img" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="picture-remark">
-                                <p>上传头像</p>
-                                <p style="font-size:10px;">120*140像素</p>
+                        <div class="head-picture">
+                            <img id="self-photo" src="../../img/avatar.jpg" class="camera-picture" />
+                        </div>
+                        <div class="card-reader">
+                            <button id="ReadIDCard" type="button" class="btn btn-info btn-sm btn-flat" style="width:102px;">读身份证</button>
+                            <div class="CardReaderInfo">
+                                <span id="ReturnInfo">设备提示信息！</span>
                             </div>
                         </div>
-                        <div class="single-row">
+                        <%--<div class="single-row">
                             <div class="col-xs-5">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">就诊卡号：</span>
                                 <input id="CardID" name="CardID" class="form-item" type="text" AUTOCOMPLETE="OFF" style="width:37%;"/>
                                 <button id="sync" type="button" class="btn btn-info btn-sm btn-flat" style="margin-left:-1px;margin-top:-3px;">HIS同步</button>
                             </div>
-                        </div>
+                        </div>--%>
                          <div class="single-row">
                              <div class="col-xs-5">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">姓名：</span>
@@ -443,7 +436,6 @@
 <!-- js -->
 <script src="../../js/Main/HeaderOperate.js"></script>
 <script src="../../js/Main/AddPatient.js"></script>
-<script src="../../js/Main/addimgs.js"></script>
 <script src="../../js/Main/TestAddress.js"></script>
 <script src="../../js/Main/TestChooseAddress.js"></script>
 <script>

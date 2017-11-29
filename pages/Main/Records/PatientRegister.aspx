@@ -24,7 +24,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="../../../plugin/AdminLTE/dist/css/AdminLTE.min.css"/>
 </head>
-<body style="width:auto;width:900px;margin:auto;">
+<body style="width:auto;width:900px;margin:auto;overflow: auto;">
     <section>
         <div class="paper">
             <div class="paper-title">
@@ -42,20 +42,7 @@
                         <span>基本信息：</span>
                     </div>
                     <div class="head-picture">
-                        <div class="imgbox">
-                            <div class="boxes">
-                                <div class="imgnum">
-                                    <input type="file" id="FileUpload" accept="image/jpg,image/png" name="FileUpload" class="singlefilepath filepath" />
-                                    <span class="closecamera resetarra"><i class="fa fa-times"></i></span>
-                                    <img id="background-photo" src="../../../img/avatar.jpg" class="camera-picture" />
-                                    <img src="" id="photo" class="img" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="picture-remark">
-                            <p>上传头像</p>
-                            <p style="font-size:10px;">120*140像素</p>
-                        </div>
+                        <img id="self-photo" src="../../../img/avatar.jpg" class="camera-picture" />
                     </div>
                     <div class="single-row">
                         <div class="item col-xs-3">
