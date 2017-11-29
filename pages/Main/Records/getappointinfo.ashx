@@ -25,10 +25,10 @@ public class getappointinfo : IHttpHandler {
     {
         string treatid = context.Request["treatID"];
         int treat = Convert.ToInt32(treatid);
-        string selectallappoint = "select count(*) from appointment where Treatment_ID=@treatid";
+        string selectallappoint = "select count(*) from appointment where Treatment_ID=@treatid and Task not like '加速器'";
         sqlOperation.AddParameterWithValue("@treatid", treat);
         int count=int.Parse(sqlOperation.ExecuteScalar(selectallappoint));
-        string selectall = "select appointment.ID as appointid,ischecked,equipment.Name as equipname,Begin,End,Date,Completed,Task from equipment,appointment where appointment.Equipment_ID=equipment.ID and Treatment_ID=@treatid order by Date,Begin";
+        string selectall = "select appointment.ID as appointid,ischecked,equipment.Name as equipname,Begin,End,Date,Completed,Task from equipment,appointment where appointment.Equipment_ID=equipment.ID and Treatment_ID=@treatid and Task not like '加速器' order by Date,Begin";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(selectall);
         StringBuilder backText = new StringBuilder("{\"appoint\":[");
         int i=0;

@@ -168,7 +168,7 @@ function getAppointments(treatmentID) {
         async: false,
         dateType: "text",
         success: function (data) {
-            //alert(data);
+           //alert(data);
             appoints = $.parseJSON(data);
         },
         error: function () {

@@ -274,7 +274,8 @@
                 <div class="panel panel-default mintablewidth">
                     <div class="panel-heading mintablewidth">
                         <i class="fa fa-bar-chart-o fa-fw"></i>
-                        <span class="panel-title"></span>                 
+                        <span class="panel-title"></span>    
+                        <button id="print" type="button" class="btn btn-sm btn-primary" style="float:right;padding-top:3px;padding-bottom:2px;">打印</button>             
                     </div>
                     <div id="tableArea" class="panel-body mintablewidth" style="padding-top:0px;">
                         <table class="table table-striped table-hover" style="width:100%;">
@@ -282,6 +283,11 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">
+                <table class="table table-hover">
+
+                </table>
             </div>
         </div>        
     </section>
@@ -308,6 +314,9 @@
 
 <!-- createTable -->
 <script src="../../js/Root/createTable.js"></script>
+
+<!--printJS-->
+<script src="../../plugin/AdminLTE/jquery.PrintArea.js"></script>
 
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
