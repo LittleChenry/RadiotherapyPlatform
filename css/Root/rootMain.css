@@ -1,5 +1,8 @@
-﻿#tableArea > table {
+﻿#tableArea,#printArea > table {
     text-align:center;
+}
+#printArea td, #printArea th {
+    border: 1px solid #333;
 }
 
 #addGroup > tbody > tr > th, #editArea > tr > th {

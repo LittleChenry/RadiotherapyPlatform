@@ -41,6 +41,7 @@ public class updateDesigntemplate : IHttpHandler {
     {
         try
         {
+            string equipmentID = context.Request.Form["equipment_design"];
             string aa = context.Request.Form["aa"];
             string bb = context.Request.Form["bb"];
             string name = context.Request.Form["templateName_design"];
@@ -92,7 +93,14 @@ public class updateDesigntemplate : IHttpHandler {
             sqlOperation.AddParameterWithValue("@ID", Convert.ToInt32(updateID));
             sqlOperation.AddParameterWithValue("@RadiotherapyHistory", context.Request.Form["Remarks_design"]);
             sqlOperation.AddParameterWithValue("@Technology_ID", Convert.ToInt32(context.Request.Form["technology_design"]));
-            sqlOperation.AddParameterWithValue("@Equipment_ID", Convert.ToInt32(context.Request.Form["equipment_design"]));
+            if (context.Request.Form["equipment_design"] == "allItem" || context.Request.Form["equipment_design"]==null)
+            {
+                sqlOperation.AddParameterWithValue("@Equipment_ID", null);
+            }
+            else
+            {
+                sqlOperation.AddParameterWithValue("@Equipment_ID", Convert.ToInt32(context.Request.Form["equipment_design"]));
+            }
             sqlOperation.AddParameterWithValue("@DosagePriority", DosagePriority);
             int success1 = sqlOperation.ExecuteNonQuery(designSql);
             

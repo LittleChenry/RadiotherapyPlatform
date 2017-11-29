@@ -95,7 +95,15 @@ public class AddDesignTemplateByPost : IHttpHandler {
             // sqlOperation.AddParameterWithValue("@ID", Count);
             sqlOperation.AddParameterWithValue("@RadiotherapyHistory", context.Request.Form["Remarks_design"]);
             sqlOperation.AddParameterWithValue("@Technology_ID", Convert.ToInt32(context.Request.Form["technology_design"]));
-            sqlOperation.AddParameterWithValue("@Equipment_ID", Convert.ToInt32(context.Request.Form["equipment_design"]));
+            if (context.Request.Form["equipment_design"] == "allItem")
+            {
+                sqlOperation.AddParameterWithValue("@Equipment_ID", null);
+            }
+            else
+            {
+                sqlOperation.AddParameterWithValue("@Equipment_ID", Convert.ToInt32(context.Request.Form["equipment_design"]));
+            }
+            
             sqlOperation.AddParameterWithValue("@DosagePriority", DosagePriority);
             sqlOperation.AddParameterWithValue("@ApplicationTime", date1);
             sqlOperation.AddParameterWithValue("@Application_User_ID", userid);
