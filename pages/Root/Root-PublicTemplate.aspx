@@ -40,6 +40,42 @@
     background-image: none;
     border: 0px;
 }
+
+         .multiselect-wrapper {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    text-align: left;
+}
+
+    .multiselect-wrapper button {
+        text-align: left;
+    }
+
+    .multiselect-wrapper span {
+        margin-left: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+
+    .multiselect-wrapper .dropdown-menu {
+        width: 100%;
+    }
+
+    .multiselect-wrapper .caret {
+        position: absolute;
+        top: 13px;
+        right: 10px;
+        width: 0;
+        height: 0;
+    }
+
+    .multiselect-wrapper label.checkbox, .multiselect-wrapper label.radio {
+        padding: 3px 20px 3px 30px !important;
+        width: 100%;
+    }
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">

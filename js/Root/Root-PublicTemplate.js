@@ -276,10 +276,6 @@ function updateDesign($tr){
         window.alert("治疗技术没有选择");
         return false;
     }
-    if (document.getElementById("equipment_design").value == "allItem") {
-        window.alert("放疗设备没有选择");
-        return false;
-    }
     $("#updateID").val($tr.find("td").eq(2).text());
     var form = new FormData(document.getElementById("design_form"));
     $.ajax({
@@ -309,15 +305,12 @@ function postDesign(){
         window.alert("请填写模版名称");
         return false;
     }
-    $("#templateName_design").val(templateName_design+"(公共模版)");
+    
     if (document.getElementById("technology_design").value == "allItem") {
         window.alert("治疗技术没有选择");
         return false;
     }
-    if (document.getElementById("equipment_design").value == "allItem") {
-        window.alert("放疗设备没有选择");
-        return false;
-    }
+    $("#templateName_design").val(templateName_design + "(公共模版)");
     var form = new FormData(document.getElementById("design_form"));
     $.ajax({
         url: "AddDesignTemplateByPost.ashx",
@@ -758,8 +751,9 @@ function createscanpartItem(thiselement) {
             }
             $(thiselement).multiselect({
                 nonSelectedText: "请选择",
-                buttonWidth: '500px',
+                buttonWidth: "100%",
                 numberDisplayed: 10,
+                buttonContainer: "<div class='multiselect-wrapper' />"
             });
         }
     });
@@ -1026,12 +1020,13 @@ function postFix(){
     var bodypost = document.getElementById("bodyPost").value;
     var fixequip = document.getElementById("fixEquip").value;
     var Remarks = document.getElementById("Remarks_fix").value;
+    var TemplateName = $("#templateName_fix").val();
     var userID = "0";
-    var TemplateName = $("#templateName_fix").val()+"(公用模板)";
     if(TemplateName == ""){
         alert("请填写模板名称");
         return false;
     }
+    TemplateName = $("#templateName_fix").val() + "(公用模板)";
     var oStr = '';
     var postData = {"treatid":"","model":model,"fixreq":special,"user":"0","fixequip":fixequip,"bodypost":bodypost,"Remarks":Remarks,"templatename":TemplateName};
     //这里需要将json数据转成post能够进行提交的字符串  name1=value1&name2=value2格式
@@ -1408,9 +1403,11 @@ function createPartItem(thiselement) {
             }
             $(thiselement).multiselect({
                 nonSelectedText: "请选择",
-                buttonWidth: '500px',
+                buttonWidth: "100%",
                 numberDisplayed: 10,
+                buttonContainer: "<div class='multiselect-wrapper' />"
             });
+            $(thiselement).css('width', '500px');
         }
     });
 
@@ -1430,8 +1427,10 @@ function createNewPartIem(thiselement) {
             }
             $(thiselement).multiselect({
                 nonSelectedText: "请选择",
-                buttonWidth: '500px',
+                buttonWidth: "100%",
                 numberDisplayed: 10,
+                buttonContainer: "<div class='multiselect-wrapper' />"
+
             });
         }
     });
