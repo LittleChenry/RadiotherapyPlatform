@@ -253,6 +253,7 @@
                 <input type="hidden" id="regdoctor" name="regdoctor" />
                 <input id="patientID" type="hidden" name="patientID" />
                 <input id="treatID" type="hidden" name="treatID" />
+                <input id="pic" type="hidden" name="pic" />
                     <div class="paper-content">
                         <div class="content-title">
                             <span>基本信息：</span>

@@ -46,44 +46,43 @@ public class patientRegister : IHttpHandler
     }
     private string RecordPatientInformation(HttpContext context)
     {
-        string savePath = "";
-        string savepath1 = "";
-        HttpFileCollection files = HttpContext.Current.Request.Files;
-        savePath = System.Web.HttpContext.Current.Server.MapPath("~/upload/PatientPicture");
-        if (!System.IO.Directory.Exists(savePath))
-        {
-            System.IO.Directory.CreateDirectory(savePath);
-        }
-        savePath = savePath + "\\";
-        try
-        {
+        //string savePath = "";
+        //string savepath1 = "";
+        //HttpFileCollection files = HttpContext.Current.Request.Files;
+        //savePath = System.Web.HttpContext.Current.Server.MapPath("~/upload/PatientPicture");
+        //if (!System.IO.Directory.Exists(savePath))
+        //{
+        //    System.IO.Directory.CreateDirectory(savePath);
+        //}
+        //savePath = savePath + "\\";
+        //try
+        //{
 
-            System.Web.HttpPostedFile postedFile = files[0];
-            string fileName = postedFile.FileName;//完整的路径
-            if (fileName == "")
-            {
-                savepath1 = context.Request.Form["picture1"];
-            }
-            else
-            {
-                fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
-                string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
-                string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
-                files[0].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
-                savepath1 = "../../../upload/PatientPicture/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
-            }
-        }
-        catch (System.Exception Ex)
-        {
-            context.Response.Write(Ex);
-        }
+        //    System.Web.HttpPostedFile postedFile = files[0];
+        //    string fileName = postedFile.FileName;//完整的路径
+        //    if (fileName == "")
+        //    {
+        //        savepath1 = context.Request.Form["picture1"];
+        //    }
+        //    else
+        //    {
+        //        fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
+        //        string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
+        //        string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
+        //        files[0].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
+        //        savepath1 = "../../../upload/PatientPicture/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
+        //    }
+        //}
+        //catch (System.Exception Ex)
+        //{
+        //    context.Response.Write(Ex);
+        //}
 
             int doctorid = Convert.ToInt32(context.Request.Form["doctor"]);
-            string strSqlCommand = "UPDATE patient SET IdentificationNumber=@IdentificationNumber,Nameping=@nameping,Hospital=@Hospital,Picture=@Picture,Name=@Name,Gender=@Gender,Age=@Age,Birthday=@Birthday,Nation=@Nation,Address=@Address,Contact1=@Contact1,Contact2=@Contact2,Height=@Height,Weight=@Weight,Ishospital=@Ishospital,Hospital_ID=@Hospital_ID,Radiotherapy_ID=@Radiotherapy_ID where ID=@patientID";
+            string strSqlCommand = "UPDATE patient SET IdentificationNumber=@IdentificationNumber,Nameping=@nameping,Hospital=@Hospital,Name=@Name,Gender=@Gender,Age=@Age,Birthday=@Birthday,Nation=@Nation,Address=@Address,Contact1=@Contact1,Contact2=@Contact2,Height=@Height,Weight=@Weight,Ishospital=@Ishospital,Hospital_ID=@Hospital_ID,Radiotherapy_ID=@Radiotherapy_ID where ID=@patientID";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@IdentificationNumber", context.Request.Form["IDcardNumber"]);
             sqlOperation.AddParameterWithValue("@Hospital", context.Request.Form["Hospital"]);
-            sqlOperation.AddParameterWithValue("@Picture", savepath1);
             sqlOperation.AddParameterWithValue("@Name", context.Request.Form["userName"]);
             sqlOperation.AddParameterWithValue("@Gender", context.Request.Form["Gender"]);
             sqlOperation.AddParameterWithValue("@Birthday", context.Request.Form["Birthday"]);

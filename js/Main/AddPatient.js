@@ -598,3 +598,151 @@ function getSession() {
     });
     return Session;
 }
+//身份证读卡
+var socket;
+var sendFlag = 0;
+var zpFormat;
+$(function () {
+    openReader();
+    $("#ReadIDCard").off("click").on("click", function () {
+        clearText();
+        readIDCard();
+    });
+});
+
+function openReader() {
+    var host = "ws://127.0.0.1:6688";
+    if (socket == null) {
+        resultMsg("设备连接成功.");
+        socket = new WebSocket(host);
+
+    } else {
+        resultMsg("设备已打开.");
+    }
+    try {
+        socket.onopen = function (msg) {
+            clearZP(); //清除zp文件夹的身份证头像
+        };
+        socket.onerror = function () {
+            alert("请安装驱动.");
+        };
+        socket.onmessage = function (msg) {
+            if (typeof msg.data == "string") {
+                var msgM = msg.data + "";
+                if (sendFlag == 1) {
+                    //resultMsg("清除头像成功.");
+                    openReaderStart();
+                } else if (sendFlag == 2) {
+                    if (msgM[0] == "1") {  //1:连接设备成功
+                        resultMsg("连接成功.");
+                    } else { //2:连接设备失败
+                        resultMsg("请连接设备.");
+                    }
+                } else if (sendFlag == 3) {
+                    if (msgM[0] == "0") {
+                        resultMsg("身份证阅读器异常,请联系管理员.");
+                    } else if (msgM[0] == "3") {
+                        resultMsg("请连接设备.");
+                    } else if (msgM[0] == "4") {
+                        resultMsg("请放身份证.");
+                    } else if (msgM[0] == "5") {
+                        resultMsg("读取身份证信息失败,请查身份证是否有效.");
+                    } else if (msgM[0] == "6") {
+                        resultMsg("读取身份证头像失败,请查身份证是否有效.");
+                    } else {
+                        
+                        //获得身份信息
+                        //document.getElementById("text_ID").value = msgM.match(/identityCardID(\S*)identityCardID/)[1];   //证件ID
+                        document.getElementById("userName").value = msgM.match(/name(\S*)name/)[1];   //姓名    
+                        if (msgM.match(/sex(\S*)sex/)[1] == "男") {  //性别
+                            document.getElementById("Gender").value = "M";
+                        } else {
+                            document.getElementById("Gender").value = "F";
+                        }
+                        document.getElementById("Nation").value = msgM.match(/nation(\S*)nation/)[1];     //民族                      
+                        document.getElementById("Birthday").value = msgM.match(/birthDate(\S*)birthDate/)[1];       //出生日期                  
+                        document.getElementById("Address").value = msgM.match(/address(\S*)address/)[1];          //地址  
+                        document.getElementById("IDcardNumber").value = msgM.match(/IDCode(\S*)IDCode/)[1];         //身份证号      
+                        //document.getElementById("text_dept").value = msgM.match(/issuingAuthority(\S*)issuingAuthority/)[1];  //签发机关                         
+                        //document.getElementById("text_effDate").value = msgM.match(/beginPeriodOfValidity(\S*)beginPeriodOfValidity/)[1];       //有效日期起始                   
+                        //document.getElementById("text_expDate").value = msgM.match(/endPeriodOfValidity(\S*)endPeriodOfValidity/)[1];        //有效日期截止
+                        document.all("self-photo").src = "data:image/jpeg;base64," + msgM.match(/##(\S*)##/)[1];//显示头像
+                        document.getElementById("pic").value = "data:image/jpeg;base64," + msgM.match(/##(\S*)##/)[1];//显示头像
+                        resultMsg("");
+                    }
+                } else if (sendFlag == 4) {
+                    closeSocket();
+                    if (msgM[0] == "1") {  //1:关闭设备成功   
+                        resultMsg("关闭设备成功.");
+                    }
+                }
+            }
+            else {
+                alert("连接异常,请检查是否成功安装华旭J15S驱动.");
+            }
+        };
+    }
+    catch (ex) {
+        alert("连接异常,请检查是否成功安装华旭J15S驱动.");
+    }
+}
+function resultMsg(msg) {
+    $("#ReturnInfo").text(msg);
+}
+//清除BMP图片
+function clearZP() {
+    zpFormat = document.getElementById("self-photo").value;
+    sendFlag = 1;
+    socket.send("SDT_ClearZP#" + zpFormat + "#");
+}
+//连接设备
+function openReaderStart() {
+    sendFlag = 2;
+    socket.send("SDT_OpenReader#");
+}
+//读取身份信息
+function readIDCard() {
+    zpFormat = document.getElementById("self-photo").value;
+    sendFlag = 3;
+    try {
+        socket.send("SDT_ReadCard#" + zpFormat + "#");
+    }
+    catch (ex) {
+        resultMsg("请打开设备.");
+    }
+}
+//关闭设备
+function closeReader() {
+    sendFlag = 4;
+    try {
+        socket.send("SDT_CloseReader#");
+    }
+    catch (ex) {
+        resultMsg("请打开设备.");
+    }
+}
+function closeSocket() {
+    try {
+        if (socket != null) {
+            socket.close();
+            socket = null;
+        }
+    }
+    catch (ex) {
+    }
+}
+
+function clearText() {      
+    document.getElementById("Gender").value = "M";
+    document.all("self-photo").src = "../../img/avatar.jpg";
+    $("#userName").val("");
+    $("#usernamepingyin").val("");
+    $("#IDcardNumber").val("");
+    $("#Birthday").val("");
+    $("#Address").val("");
+    $("#Number1").val("");
+    $("#Number2").val("");
+    $("#height").val("");
+    $("#weight").val("");
+    $("#Nation").val("");
+}

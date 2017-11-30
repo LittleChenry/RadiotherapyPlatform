@@ -37,42 +37,42 @@ public class Addpatient : IHttpHandler {
     }
     private string RecordPatientInformation(HttpContext context)
     {
-        string savePath = "";
-        string savepath1 = "";
+        //string savePath = "";
+        //string savepath1 = "";
         int hospitalnumber = 0;
         if (context.Request.Form["hospitalnumber"] != "")
         {
             hospitalnumber = Convert.ToInt32(context.Request.Form["hospitalnumber"]);
         }
-        HttpFileCollection files = context.Request.Files;
-        savePath = System.Web.HttpContext.Current.Server.MapPath("~/upload/PatientPicture");
-        if (!System.IO.Directory.Exists(savePath))
-        {
-            System.IO.Directory.CreateDirectory(savePath);
-        }
-        savePath = savePath + "\\";
-        try
-        {
+        //HttpFileCollection files = context.Request.Files;
+        //savePath = System.Web.HttpContext.Current.Server.MapPath("~/upload/PatientPicture");
+        //if (!System.IO.Directory.Exists(savePath))
+        //{
+        //    System.IO.Directory.CreateDirectory(savePath);
+        //}
+        //savePath = savePath + "\\";
+        //try
+        //{
 
-            System.Web.HttpPostedFile postedFile = files[0];
-            string fileName = postedFile.FileName;//完整的路径
-            if (fileName == "")
-            {
-                savepath1 = "";
-            }
-            else
-            {
-                fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
-                string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
-                string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
-                files[0].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
-                savepath1 = "../../../upload/PatientPicture/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
-            }
-        }
-        catch (System.Exception Ex)
-        {
-            context.Response.Write(Ex);
-        }
+        //    System.Web.HttpPostedFile postedFile = files[0];
+        //    string fileName = postedFile.FileName;//完整的路径
+        //    if (fileName == "")
+        //    {
+        //        savepath1 = "";
+        //    }
+        //    else
+        //    {
+        //        fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
+        //        string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
+        //        string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
+        //        files[0].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
+        //        savepath1 = "../../../upload/PatientPicture/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
+        //    }
+        //}
+        //catch (System.Exception Ex)
+        //{
+        //    context.Response.Write(Ex);
+        //}
       
             int doctorid = Convert.ToInt32(context.Request.Form["doctor"]);
             int userID = Convert.ToInt32(context.Request.Form["userID"]);
@@ -85,7 +85,7 @@ public class Addpatient : IHttpHandler {
             sqlOperation.AddParameterWithValue("@IdentificationNumber", context.Request.Form["IDcardNumber"]);
             sqlOperation.AddParameterWithValue("@Hospital", context.Request.Form["Hospital"]);
             sqlOperation.AddParameterWithValue("@RecordNumber", context.Request.Form["RecordNumber"]);
-            sqlOperation.AddParameterWithValue("@Picture", savepath1);
+            sqlOperation.AddParameterWithValue("@Picture", context.Request.Form["pic"]);
             sqlOperation.AddParameterWithValue("@Name", context.Request.Form["userName"]);
             sqlOperation.AddParameterWithValue("@Gender", context.Request.Form["Gender"]);
             sqlOperation.AddParameterWithValue("@Birthday", context.Request.Form["Birthday"]);
