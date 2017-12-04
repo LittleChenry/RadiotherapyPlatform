@@ -264,16 +264,16 @@
                         <div class="card-reader">
                             <button id="ReadIDCard" type="button" class="btn btn-info btn-sm btn-flat" style="width:102px;">读身份证</button>
                             <div class="CardReaderInfo">
-                                <span id="ReturnInfo">设备提示信息！</span>
+                                <span id="ReturnInfo"></span>
                             </div>
                         </div>
-                        <%--<div class="single-row">
+                        <div class="single-row">
                             <div class="col-xs-5">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">就诊卡号：</span>
                                 <input id="CardID" name="CardID" class="form-item" type="text" AUTOCOMPLETE="OFF" style="width:37%;"/>
                                 <button id="sync" type="button" class="btn btn-info btn-sm btn-flat" style="margin-left:-1px;margin-top:-3px;">HIS同步</button>
                             </div>
-                        </div>--%>
+                        </div>
                          <div class="single-row">
                              <div class="col-xs-5">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">姓名：</span>

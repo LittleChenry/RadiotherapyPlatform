@@ -190,7 +190,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td style='max-width:160px;overflow:hidden;text-overflow:ellipsis;'>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress
                         + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -221,7 +221,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td style='max-width:160px;overflow:hidden;text-overflow:ellipsis;'>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress
                         + "</td><td>" + doctor + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -252,7 +252,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td style='max-width:160px;overflow:hidden;text-overflow:ellipsis;'>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress
                         + "</td><td>" + doctor + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -287,7 +287,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Completed+ "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td>"
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Completed+ "</td><td style='max-width:160px;overflow:hidden;text-overflow:ellipsis;'>" + diagnosisresult + "</td><td>" + treat + "</td>"
                         + "<td>" + doctor + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -324,7 +324,7 @@ function Paging(patient, role, userID) {
                         tr += "Parent";
                     }
                     trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Completed+ "</td><td>" + finishedtimes + "</td><td>" + totalnumber + "</td>"
-                        + "<td>" + totaltimes + "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + doctor + "</td></tr>";
+                        + "<td>" + totaltimes + "</td><td style='max-width:160px;overflow:hidden;text-overflow:ellipsis;'>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + doctor + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
                 }
@@ -354,7 +354,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td style='max-width:160px;overflow:hidden;text-overflow:ellipsis;'>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress
                         + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -385,7 +385,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td style='max-width:160px;overflow:hidden;text-overflow:ellipsis;'>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress
                         + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -416,7 +416,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td style='max-width:160px;overflow:hidden;text-overflow:ellipsis;'>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress
                         + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -1123,7 +1123,7 @@ function trAddClickforJS(patient, userID) {
                         });
                         break;
                     case 12:
-                        if (LightLi(this, Progresses, "12", "10", "-1")) {
+                        if (LightLi(this, Progresses, "12", "11", "-1")) {
                             var url = "Records/DesignReview.aspx?TreatmentID=" + e.data.ID;
                         } else {
                             var url = "Records/Blank.aspx";
@@ -1271,97 +1271,97 @@ function BubbleSort(arr) {
 
 function ProgressToString(pro) {
     var Progress = "";
-    var currentProgress = new Array();
-    var count = 0;
+    var currentProgress;
     for (var i = 0; i < pro.length; i++) {
         pro[i] = parseInt(pro[i]);
     }
     length = pro.length;
     pro = BubbleSort(pro);
     if (pro[length - 1] == (length - 1)) {
-        currentProgress[count++] = length;
+        currentProgress = length;
     }
     switch (length) {
         case 3:
-            currentProgress[count++] = 4;
+            if (pro[length - 1] != (length - 1)) {
+                currentProgress = 2;
+            }
             break;
         case 4:
-            if (pro[length - 1] != (length - 1)) {
-                currentProgress[count++] = 3;
+            switch(pro[length - 1]){
+                case 4:
+                    currentProgress = 3;
+                    break;
+                case 5:
+                    currentProgress = 2;
+                    break;
             }
             break;
-        case 11:
-            currentProgress[count++] = 12;
-            break;
-        case 12:
-            if (pro[length - 1] != (length - 1)) {
-                currentProgress[count++] = 11;
-                currentProgress[count++] = 13;
-            }
-            break;
-        case 13:
-            if (pro[length - 1] != (length - 1)) {
-                currentProgress[count++] = 11;
+        case 5:
+            switch(pro[length - 1]){
+                case 2:
+                    currentProgress = 4;
+                    break;
+                case 5:
+                    currentProgress = 4;
+                    break;
             }
             break;
     }
-    for (var i = 0; i < currentProgress.length; i++) {
-        switch (currentProgress[i]) {
-            case 0:
-                Progress += "登记信息、";
-                break;
-            case 1:
-                Progress += "病情诊断、";
-                break;
-            case 2:
-                Progress += "体位固定申请、";
-                break;
-            case 3:
-                Progress += "模拟定位申请、";
-                break;
-            case 4:
-                Progress += "体位固定、";
-                break;
-            case 5:
-                Progress += "模拟定位、";
-                break;
-            case 6:
-                Progress += "CT图像导入、";
-                break;
-            case 7:
-                Progress += "计划申请、";
-                break;
-            case 8:
-                Progress += "计划领取、";
-                break;
-            case 9:
-                Progress += "计划提交、";
-                break;
-            case 10:
-                Progress += "计划确认、";
-                break;
-            case 11:
-                Progress += "放疗计划导入、";
-                break;
-            case 12:
-                Progress += "计划复核、";
-                break;
-            case 13:
-                Progress += "加速器治疗、";
-                break;
-            case 14:
-                Progress += "加速器治疗、";
-                break;
-            case 15:
-                Progress += "总结随访、";
-                break;
-            case 16:
-                Progress += "CT扫描、";
-                break;
-            default:
-                Progress += "无、";
+    switch (currentProgress) {
+        case 0:
+            Progress += "登记信息、";
+            break;
+        case 1:
+            Progress += "病情诊断、";
+            break;
+        case 2:
+            Progress += "体位固定申请、";
+            break;
+        case 3:
+            Progress += "模拟定位申请、";
+            break;
+        case 4:
+            Progress += "体位固定、";
+            break;
+        case 5:
+            Progress += "模拟定位、";
+            break;
+        case 6:
+            Progress += "CT图像导入、";
+            break;
+        case 7:
+            Progress += "计划申请、";
+            break;
+        case 8:
+            Progress += "计划领取、";
+            break;
+        case 9:
+            Progress += "计划提交、";
+            break;
+        case 10:
+            Progress += "计划确认、";
+            break;
+        case 11:
+            Progress += "放疗计划导入、";
+            break;
+        case 12:
+            Progress += "计划复核、";
+            break;
+        case 13:
+            Progress += "加速器治疗、";
+            break;
+        case 14:
+            Progress += "加速器治疗、";
+            break;
+        case 15:
+            Progress += "总结随访、";
+            break;
+        case 16:
+            Progress += "CT扫描、";
+            break;
+        default:
+            Progress += "无、";
 
-        }
     }
     return Progress.substring(0, Progress.length - 1);
 }

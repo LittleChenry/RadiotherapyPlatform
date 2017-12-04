@@ -188,6 +188,7 @@
 		if (exist == remaintimes) {
 			var appointdata = findAllAppointData(ambegin,timelength,begindate.Format("yyyy-MM-dd"));
 			//showinfo(appointdata.toString());
+			$("#confirm").attr("disabled","disabled");
 			$.ajax({
 				type: "POST",
 		        async: false,

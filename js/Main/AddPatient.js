@@ -138,18 +138,18 @@ function Sync() {
             async: false,
             success: function (data) {
                 var patientInfo = $.parseJSON(data);
-                $("#userName").val(patientInfo.Item.name);
+                /*$("#userName").val(patientInfo.Item.name);
                 if (patientInfo.Item.sexid == "1") {
                     $("#Gender").val("F");
                 }else{
                     $("#Gender").val("M");
                 }
                 $("#Birthday").val(patientInfo.Item.birthdate.substring(0,10));
-                $("#Nation").val(patientInfo.Item.nation);
+                $("#Nation").val(patientInfo.Item.nation);*/
                 $("#Number1").val(patientInfo.Item.telenumber);
                 $("#Number2").val(patientInfo.Item.telenumber2);
-                $("#Address").val(patientInfo.Item.simpleaddress);
-                $("#IDcardNumber").val(patientInfo.Item.idcard);
+                /*$("#Address").val(patientInfo.Item.simpleaddress);
+                $("#IDcardNumber").val(patientInfo.Item.idcard);*/
             },
             error: function (e) { 
                 alert("error");
@@ -660,9 +660,10 @@ function openReader() {
                             document.getElementById("Gender").value = "F";
                         }
                         document.getElementById("Nation").value = msgM.match(/nation(\S*)nation/)[1];     //民族                      
-                        document.getElementById("Birthday").value = msgM.match(/birthDate(\S*)birthDate/)[1];       //出生日期                  
+                        //document.getElementById("Birthday").value = msgM.match(/birthDate(\S*)birthDate/)[1];       //出生日期                  
                         document.getElementById("Address").value = msgM.match(/address(\S*)address/)[1];          //地址  
                         document.getElementById("IDcardNumber").value = msgM.match(/IDCode(\S*)IDCode/)[1];         //身份证号      
+                        getBirthdate();
                         //document.getElementById("text_dept").value = msgM.match(/issuingAuthority(\S*)issuingAuthority/)[1];  //签发机关                         
                         //document.getElementById("text_effDate").value = msgM.match(/beginPeriodOfValidity(\S*)beginPeriodOfValidity/)[1];       //有效日期起始                   
                         //document.getElementById("text_expDate").value = msgM.match(/endPeriodOfValidity(\S*)endPeriodOfValidity/)[1];        //有效日期截止
@@ -744,5 +745,5 @@ function clearText() {
     $("#Number2").val("");
     $("#height").val("");
     $("#weight").val("");
-    $("#Nation").val("");
+    $("#Nation").val("汉族");
 }
