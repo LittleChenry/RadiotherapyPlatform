@@ -670,7 +670,7 @@ function trAddClick(patient, userID) {
                         });
                         break;
                     case 3:
-                        if (LightLi(this, Progresses, "3", "2", "-1")) {
+                        if (LightLi(this, Progresses, "3", "1", "-1")) {
                             var url = "Records/LocationApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location";
                         } else {
                             var url = "Records/Blank.aspx";
@@ -977,7 +977,7 @@ function trAddClickforJS(patient, userID) {
                         });
                         break;
                     case 3:
-                        if (LightLi(this, Progresses, "3", "2", "-1")) {
+                        if (LightLi(this, Progresses, "3", "1", "-1")) {
                             var url = "Records/LocationApply.aspx?TreatmentID=" + e.data.ID + "&TreatmentItem=Location";
                         } else {
                             var url = "Records/Blank.aspx";
