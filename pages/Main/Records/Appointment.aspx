@@ -70,8 +70,8 @@
             <div class="btn-area col-xs-12">
                 <div id="chooseTime" class="col-xs-2">
                     <button type="button" class="time-btn selected-btn">上午</button>
-                    <button type="button" class="time-btn">下午</button>
-                    <button type="button" class="time-btn">晚上</button>
+                    <button type="button" class="time-btn selected-btn">下午</button>
+                    <button type="button" class="time-btn selected-btn">晚上</button>
                 </div>
                 <div id="chooseWeek" class="col-xs-8"></div>
                 <div id="chooseWay" class="col-xs-2">

@@ -115,7 +115,7 @@
         			var tablenum = Math.floor(daysdiff / 7) + 1;
         			var col = daysdiff % 7;
         			var row = (info.appointinfo[i].Begin - ambegin) / timelength;
-        			var tdid = tablenum.toString() + row.toString() + col.toString();
+        			var tdid = tablenum.toString() + "_" +  row.toString() + "_" +  col.toString();
         			$("#"+ tdid).addClass("selected-td");
         		}
         	}
@@ -231,9 +231,9 @@ function findAllAppointData(ambegin,timelength,firstDate){
 		$(this).find("td").each(function(){
 			if ($(this).find("i").length > 0) {
 				var tdid = $(this).attr("id");
-				var rownum = parseInt(tdid.substring(1,tdid.length-1));
-				var tablenum = parseInt(tdid.substring(0,1));
-				var colnum = parseInt(tdid.substring(tdid.length-1,tdid.length));
+				var rownum = parseInt(tdid.split("_")[1]);
+				var tablenum = parseInt(tdid.split("_")[0]);
+				var colnum = parseInt(tdid.split("_")[2]);
 				var date = dateAdd(firstDate,(tablenum - 1) * 7 + colnum);
 				isdouble = 0;
 				var begin = ambegin + rownum * timelength;
@@ -252,31 +252,35 @@ function BatchAppoint(num,D,T,timelength,TimeInteral,appointnumber){
 	var table = $("#WeekArea").find("table");
 	table.find("td").each(function(index,e){
 		$(this).bind("click",function(){
-			if (!($(this).hasClass("selected-td")) && !($(this).hasClass("weekend"))) {
-				var tdid = $(this).attr("id");
-				var rownum = parseInt(tdid.substring(1,tdid.length-1));
-				var tablenum = parseInt(tdid.substring(0,1));
-				var colnum = parseInt(tdid.substring(tdid.length-1,tdid.length));
-				var rowTimes = new Array(T);
-				var aver = Math.floor(num/T);
-				var count = aver;
-				var extracount = 0;
-				var extra = num - aver * T;
-				var selectedrownum = parseInt($("#selectedrownum").val());
-				rowTimes[0] = aver;
-				for (var i = 1; i < T; i++) {
-					if (extracount < extra) {
-						rowTimes[i] = aver + 1;
-						extracount ++;
-					}else{
-						rowTimes[i] = aver;
+			var tdid = $(this).attr("id");
+			var tablenum = parseInt(tdid.split("_")[0]);
+			if (tablenum == 1) {
+				if (!($(this).hasClass("selected-td")) && !($(this).hasClass("weekend"))) {
+					var rownum = parseInt(tdid.split("_")[1]);
+					var colnum = parseInt(tdid.split("_")[2]);
+					var rowTimes = new Array(T);
+					var aver = Math.floor(num/T);
+					var count = aver;
+					var extracount = 0;
+					var extra = num - aver * T;
+					var selectedrownum = parseInt($("#selectedrownum").val());
+					rowTimes[0] = aver;
+					for (var i = 1; i < T; i++) {
+						if (extracount < extra) {
+							rowTimes[i] = aver + 1;
+							extracount ++;
+						}else{
+							rowTimes[i] = aver;
+						}
 					}
+					if ($(this).find("i").length == 0) {
+						RowBatchAppoint(this,rownum,colnum,num,rowTimes[selectedrownum],D,timelength,TimeInteral,appointnumber);
+					}
+				}else if ($(this).hasClass("weekend")) {
+					showinfo("不能选择周末!");
 				}
-				if ($(this).find("i").length == 0) {
-					RowBatchAppoint(this,rownum,colnum,num,rowTimes[selectedrownum],D,timelength,TimeInteral,appointnumber);
-				}
-			}else if ($(this).hasClass("weekend")) {
-				showinfo("不能选择周末!");
+			}else{
+				showinfo("请从第一周开始预约!");
 			}
 		});
 	});
@@ -293,7 +297,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 			var count = 0;
 			var TempD = D;
 			for (var i = colnum; i < 7 && count < num; i = i + TempD) {
-				var tdid = "1" + rownum.toString() + i.toString();
+				var tdid = "1" + "_" +  rownum.toString() + "_" +  i.toString();
 				if (!($("#" + tdid).hasClass("selected-td"))) {
 					if(!($("#" + tdid).hasClass("weekend"))){
 						$("#" + tdid).addClass("selected-td");
@@ -301,7 +305,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 						count ++;
 						TempD = D;
 					}else{
-						var tdidnext = "1" + rownum.toString() + (i + 1).toString();
+						var tdidnext = "1" + "_" +  rownum.toString() + "_" +  (i + 1).toString();
 						if ($("#" + tdidnext).hasClass("weekend")) {
 							TempD = 2;
 						}else{
@@ -345,7 +349,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 				currentTable = currentTable.next();
 				var TempD = D;
 				for (var i = TempI; i < 7 && count < num; i = i + TempD) {
-					var tdid = tablenum.toString() + rownum.toString() + i.toString();
+					var tdid = tablenum.toString() + "_" + rownum.toString() + "_" +  i.toString();
 					if (!($("#" + tdid).hasClass("selected-td"))) {
 						if(!($("#" + tdid).hasClass("weekend"))){
 							$("#" + tdid).addClass("selected-td");
@@ -353,7 +357,7 @@ function RowBatchAppoint(e,rownum,colnum,numTotal,num,D,timelength,TimeInteral,a
 							count ++;
 							TempD = D;
 						}else{
-							var tdidnext = "1" + rownum.toString() + (i + 1).toString();
+							var tdidnext = "1" + "_" +  rownum.toString() + "_" +  (i + 1).toString();
 							if ($("#" + tdidnext).hasClass("weekend")) {
 								TempD = 2;
 							}else{
@@ -421,8 +425,8 @@ function unbindSelectedClick(){
 
 function PartialAvoid(tablenum,rownum,colnum,range){
 	for (var i = 1; i <= range; i++) {
-		var tdid1 = tablenum.toString() + (rownum - i).toString() + colnum.toString();
-		var tdid2 = tablenum.toString() + (rownum + i).toString() + colnum.toString();
+		var tdid1 = tablenum.toString() + "_" +  (rownum - i).toString() + "_" +  colnum.toString();
+		var tdid2 = tablenum.toString() + "_" +  (rownum + i).toString() + "_" +  colnum.toString();
 		if ($("#" + tdid1).length > 0 && !($("#" + tdid1).hasClass("selected-td"))) {
 			$("#" + tdid1).addClass("selected-td");
 			$("#" + tdid1).append("<i class='fa fa-fw fa-check'></i>");
@@ -438,8 +442,8 @@ function PartialAvoid(tablenum,rownum,colnum,range){
 
 function UnconditionalAvoid(tablenum,rownum,colnum){
 	var i = 1;
-	var tdid1 = tablenum.toString() + (rownum - 1).toString() + colnum.toString();
-	var tdid2 = tablenum.toString() + (rownum + 1).toString() + colnum.toString();
+	var tdid1 = tablenum.toString() + "_" +  (rownum - 1).toString() + "_" +  colnum.toString();
+	var tdid2 = tablenum.toString() + "_" +  (rownum + 1).toString() + "_" +  colnum.toString();
 	while($("#" + tdid1).length > 0 || $("#" + tdid2).length > 0) {
 		if ($("#" + tdid1).length > 0 && !($("#" + tdid1).hasClass("selected-td"))) {
 			$("#" + tdid1).addClass("selected-td");
@@ -451,8 +455,8 @@ function UnconditionalAvoid(tablenum,rownum,colnum){
 			return true;
 		}
 		i ++;
-		tdid1 = tablenum.toString() + (rownum - i).toString() + colnum.toString();
-		tdid2 = tablenum.toString() + (rownum + i).toString() + colnum.toString();
+		tdid1 = tablenum.toString() + "_" +  (rownum - i).toString() + "_" +  colnum.toString();
+		tdid2 = tablenum.toString() + "_" +  (rownum + i).toString() + "_" +  colnum.toString();
 	}
 	return false;
 }
@@ -461,7 +465,7 @@ function RemoveRow(rownum){
 	$("#WeekArea").find("table").each(function(index,e){
 		for (var i = 0; i < 7; i++) {
 			var tablenum = index + 1;
-			var tdid = tablenum.toString() + rownum.toString() + i.toString();
+			var tdid = tablenum.toString() + "_" +  rownum.toString() + "_" +  i.toString();
 			if ($("#" + tdid).find("i").length > 0) {
 				$("#" + tdid).removeClass("selected-td");
 				$("#" + tdid).html("");
@@ -501,7 +505,7 @@ function CheckTimeInterva(row,timelength,TimeInteral){
 		$(this).find("td").each(function(){
 			if ($(this).find("i").length > 0) {
 				var tdid = $(this).attr("id");
-				var rownum = parseInt(tdid.substring(1,tdid.length-1));
+				var rownum = parseInt(tdid.split("_")[1]);
 				if (minInterval > timelength * Math.abs(rownum - row) && (rownum - row) != 0) {
 					minInterval = timelength * Math.abs(rownum - row);
 				}
@@ -612,9 +616,9 @@ function createDateTable(D, T, startDate, times, startTime, endTime, singleInter
 			}
 			for (var i = 0; i < 7 && countdays < days + 14 - extradays; i++) {
 				if (i == w0 || i == w1) {
-					tr += "<td id='"+ weeknum + rownum + i +"' class='td-single weekend'></td>";
+					tr += "<td id='"+ weeknum + "_" +  rownum + "_" +  i +"' class='td-single weekend'></td>";
 				}else{
-					tr += "<td id='"+ weeknum + rownum + i +"' class='td-single'></td>";
+					tr += "<td id='"+ weeknum + "_" +  rownum + "_" +  i +"' class='td-single'></td>";
 				}
 			}
 			tr += "</tr>";

@@ -112,7 +112,7 @@ function AccelerateAppointView(){
                     var tr = '<tr class="evening"><td>'+ toTime(TempBegin) + '-'+ toTime(TempEnd) +'</td>';
                 }
                 for (var j = 0; j < 7; j++) {
-                    tr += "<td id='"+ (needtable).toString() + i + j +"'></td>";
+                    tr += "<td id='"+ (needtable).toString() + "_" + i + "_" + j +"'></td>";
                 }
                 tr += "</tr>";
                 table += tr;
@@ -133,7 +133,7 @@ function AccelerateAppointView(){
         var tablenum = Math.floor(datediff / 7) + 1;
         var col = datediff - 7 * (tablenum - 1);
         var row = (currenttime - begintime) / timelength;
-        var tdid = tablenum.toString() + row.toString() + col.toString();
+        var tdid = tablenum.toString() + "_" +  row.toString() + "_" +  col.toString();
         var span = '<span id='+ appointinfo[count].TreatmentID + '_' + appointinfo[count].appointid +'>'+ appointinfo[count].patientname + " " + appointinfo[count].treatdescribe +'</span>'
         $("#" + tdid).append(span);
         if (appointinfo[count].Completed == 1) {
@@ -526,9 +526,9 @@ function findAllTreatData(timelength,begintime){
             if ($(this).hasClass("treat-td")) {
                 var tdid = $(this).attr("id").split("_")[0];
                 var appointid = $(this).find("span").attr("id").split("_")[1];
-                var rownum = parseInt(tdid.substring(1,tdid.length-1));
-                var tablenum = parseInt(tdid.substring(0,1));
-                var colnum = parseInt(tdid.substring(tdid.length-1,tdid.length));
+                var rownum = parseInt(tdid.split("_")[1]);
+                var tablenum = parseInt(tdid.split("_")[0]);
+                var colnum = parseInt(tdid.split("_")[2]);
                 var begindate = new Date();
                 var date = dateAdd(begindate.Format("yyyy-MM-dd"),(tablenum - 1) * 7 + colnum);
                 var begin = begintime + rownum * timelength;
