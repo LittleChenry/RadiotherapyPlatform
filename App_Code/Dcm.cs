@@ -104,6 +104,6 @@ public class Dcm
                   .Append(",\"childs\":\"").Append(child).Append("\"},");;
         }
 
-        return result.ToString();
+        return result.Remove(result.Length - 1, 1).Append("]}").ToString();
     }
 }

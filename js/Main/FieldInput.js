@@ -320,12 +320,12 @@ $(function () {
         }
         $.ajax({
             type: "post",
-            url: "getFieldInformation.ashx",
+            url: "../../Root/test.ashx",
             data: formDate,
             processData: false,
             contentType: false,
             success: function (data) {
-                var data = $.parseJSON(data);
+                var data = $.parseJSON(data);               
                 //if (document.getElementById("radiotherapy").innerHTML != data.information[0].id) {
                 //    alert("文件选择错误");
                 //    return false;
