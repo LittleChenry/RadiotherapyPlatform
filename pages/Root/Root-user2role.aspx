@@ -326,19 +326,10 @@
                 <h1 class="page-header">用户绑定</h1>              
             </div>
         </div>
-        <div class="row" style="margin-top:10px;">
-            <form id="frm" runat="server">
-                <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-                <asp:ObjectDataSource ID="user2roleObjectDataSource" runat="server" SelectMethod="Select" TypeName="userDataSource">
-                    <SelectParameters>
-                        <asp:FormParameter DefaultValue="allNumber" FormField="roles" Name="activate" Type="String" />
-                        <asp:FormParameter FormField="office" Name="office" Type="String" DefaultValue="allOffice" />
-                    </SelectParameters>
-                </asp:ObjectDataSource>
-                <div>
+        <div>
                     <div class="col-xs-12 search">
                         <div class="col-xs-4">
-                            <select id="role" name="roles" class="form-control" style="width:60%">
+                            <select id="roles" name="roles" class="form-control" style="width:60%">
                                 <option value="allNumber">全部账号</option>
                                 <option value="1">已激活账号</option>
                                 <option value="0">未激活账号</option>
@@ -358,55 +349,27 @@
                             </select>
                         </div>
                         <div class="col-xs-4">
-                            <input type="submit" class="btn btn-primary" value="查询" />
+                            <input type="button" id="search" class="btn btn-primary" value="查询" />
                         </div>
                     </div>
-                    <div class="col-xs-12">
-                        <asp:GridView ID="user2roleGridView" runat="server" CssClass="table table-striped table-bordered table-hover" AllowPaging="True" PageSize="8" DataSourceID="user2roleObjectDataSource" AutoGenerateColumns="False" >
-                            <PagerSettings Mode="NextPreviousFirstLast" NextPageText="下一页" PreviousPageText="上一页" FirstPageText="首页" LastPageText="末页" />
-                            <Columns>
-                                <asp:BoundField DataField="Number" HeaderText="账号" />
-                                <asp:BoundField DataField="Name" HeaderText="姓名" />
-                                <asp:BoundField DataField="Office" HeaderText="办公室" />
-                                <asp:TemplateField HeaderText="激活状态">
-                                    <EditItemTemplate>
-                                        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-                                    </EditItemTemplate>
-                                    <ItemTemplate>
-                                        <label><%# GetActivate(Eval("Activate")) %></label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="绑定角色">
-                                    <ItemTemplate>
-                                        <asp:Label ID="Label1" runat="server" Text='<%# GetRoles(Eval("ID")) %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="更改角色" ShowHeader="False">
-                                    <ItemTemplate>
-                                        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#changeRole">选择</a>
-                                        <input type="hidden" value='<%# Eval("Number") %>' />
-                                        <input type="hidden" value='<%# user2roleGridView.PageIndex %>' />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-                    </div>
-                </div>
-            </form>
-
+        </div>
+        <div class="row" style="margin-top:10px;">
+            <div id="tableArea" class="panel-body mintablewidth">
+                <table id="UserTable" class="table table-striped table-hover" style="width:100%">
+                </table>
+            </div>
+            <a id="model" href="#" class="btn btn-default" data-toggle="modal" data-target="#changeRole" style="display:none">选择</a>
             <div class="modal fade changebindArea" id="changeRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top:100px;">
-                <form id="bindFrm" method="post" action="Root-user2role.aspx">
-                    <input type="hidden" name="ispostback" value="true" />
+                <input id="recordNumber" type="hidden" value="" />
                     <div class="col-xs-3"></div>
                     <div class="col-xs-6">
-                        <div id="changeBind" class="panel panel-default tohidden">
+                        <div id="changeBind" class="panel panel-default">
                             <div class="panel-heading">
                                 绑定角色
                             </div>
                             <div class="panel-body">
                                 <h4 id="getNumber"></h4>
-                                <input type="hidden" id="userNumber" name="userNumber" value="" />
-                                <input type="hidden" id="pageIndex" name="pageIndex" value="" />
+
                                 <div class="col-sm-4 col-sm-offset-2">
                                     <ul class="list-unstyled" id="roles1">
 
@@ -419,16 +382,15 @@
                                 </div>
                                 <input type="hidden" value="" id="updateRoles" name="updateRoles" />
                                 <div class="col-sm-12" style="text-align:center;">
-                                    <input type="button" value="取消" class="btn btn-warning" data-dismiss="modal" aria-label="Close"/>
+                                    <input id="cannel" type="button" value="取消" class="btn btn-warning" data-dismiss="modal" aria-label="Close"/>
                                     <input type="reset" value="清空角色" class="btn btn-default" />    
                                     <input type="button" id="chooseAll" value="全选角色" class="btn btn-primary" />
-                                    <input type="submit" value="提交" class="btn btn-success" />
+                                    <input type="button" id="sureedit" value="提交" class="btn btn-success" />
                                 </div>
                             </div>
                             <!-- /.panel-body -->
                         </div>
                     </div>
-                </form>
             </div>
         </div>
     </section>
@@ -452,6 +414,7 @@
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/jquery.min.js"></script>
+    <script src="../../js/Root/createTable.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
 <!-- Bootstrap 3.3.6 -->

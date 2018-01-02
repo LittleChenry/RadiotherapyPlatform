@@ -81,7 +81,7 @@ public class Dcm
 
             //jjj变化
             String endjjj = d.Get<DicomSequence>(DicomTag.ControlPointSequence).Items.ElementAt(d.Get<DicomSequence>(DicomTag.ControlPointSequence).Items.Count-1).Get<String>(DicomTag.GantryAngle);
-            if (endjjj != jjj)
+            if (endjjj!=null && endjjj != jjj)
             {
                 jjj = jjj + "/" + endjjj;
             }

@@ -20,6 +20,7 @@
 			lessLength: 0,//每行最小列数，0不开启该功能
 			pages: 1,//创建第几页
 			needKey: false,//是否需要在第一列添加hidden记录id
+            key:"",
 			maxcols: 0,//一行最大几列，0不开启
 			link: false,
 			linkcols: 0,
@@ -92,6 +93,8 @@
 			var linkcols = args["linkcols"];
 			var linkdata = args["linkdata"];
 
+			var key = args["key"];
+
 			var needDate = args["needDate"];
 			var now = "";
 			var nows;
@@ -127,6 +130,7 @@
 					$tr.append("<td>" + nows[1] + "月" + dayArray[i] + "日</td>");
 				}
 				var count = 0;
+				var flag = false;
 				var tds = new Array();
 				for (x in jsonObj[i]) {
 				    if (max != 0 && count > max)
@@ -134,10 +138,12 @@
 					if(ignoreNull && jsonObj[i][x] == null)
 						continue;
 				    //$tr.append("<td>" + jsonObj[i][x] + "</td>");
-					if (needKey && count == 0) {
-					    tds.push("<td><input type=hidden value=" + jsonObj[i][x] + " />");
-					} else if (needKey && count == 1) {
+					if (needKey && key.indexOf(x) > -1 && !flag) {
+					    tds.push("<td><input type=hidden value='" + jsonObj[i][x] + "' />");
+					    flag = true;
+					} else if (needKey && flag) {
 					    tds.push(jsonObj[i][x] + "</td>");
+					    flag = false;
 					} else if (link && count == linkcols && jsonObj[i][linkdata] != null && jsonObj[i][linkdata] != "") {
 					    tds.push("<td>" + jsonObj[i][x] + "<br/><a href='" + jsonObj[i][linkdata] + "' target=_blank >文件</a>" + "</td>");
 					} else {

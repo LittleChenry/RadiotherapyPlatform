@@ -15,7 +15,6 @@ public partial class Root_Root_user2role : System.Web.UI.Page
         {
             recordNewRole();
             int index = int.Parse(Request.Form["pageIndex"]);
-            user2roleGridView.PageIndex = index;
             MessageBox.Message("更改成功");
         }
         if (Session["loginUser"] == null)

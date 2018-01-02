@@ -206,7 +206,7 @@ function check() {
         document.getElementById("check12").innerHTML = "不通过";
         document.getElementById("check12").style.color = "#ff0000";
     }
-    if (document.getElementById("Irradiation1").innerHTML == document.getElementById("Irradiation2").innerHTML) {
+    if (document.getElementById("Irradiation1").innerHTML.toLowerCase() == document.getElementById("Irradiation2").innerHTML.toLowerCase()) {
         document.getElementById("check5").innerHTML = "通过";
         document.getElementById("check5").style.color = "#0000ff";
     } else {
@@ -227,7 +227,7 @@ function check() {
     var reg = /(\d*)([a-z]*[A-Z]*)(\d*)/;
     reg.exec(enery);
     var deleteChar = RegExp.$1 + RegExp.$3;
-    if (deleteChar == document.getElementById("energy2").innerHTML) {
+    if (deleteChar == parseInt(document.getElementById("energy2").innerHTML)) {
         document.getElementById("check7").innerHTML = "通过";
         document.getElementById("check7").style.color = "#0000ff";
 
@@ -401,7 +401,7 @@ function charge4(arr) {
         if (array[i] == "3DCRT" || array[i] == "Step and shot" || array[i] == "Static") {
             yuansu[i]= "Static";
         }
-        if (array[i] == "dMLC" || array[i] == "VMAT" || array[i] == "Dynamic") {
+        if (array[i] == "dMLC" || array[i] == "VMAT" || array[i] == "Dynamic" || array[i] == "DYNAMIC") {
             yuansu[i] = "Dynamic";
         }
     }

@@ -2,29 +2,66 @@
 
 var obj;
 var backString;
+var jsonObj = [];
+var headName;
+
+$(function () {
+    headName = new Array("账号","姓名","办公室","激活状态","绑定角色");
+    $.ajax({
+        type: "post",
+        url: "getAllRoles.ashx",
+        async: false,
+        success:function(data){
+            jsonObj = $.parseJSON(data);
+            $("#tableArea").createTable(jsonObj, {
+                rows: 10,
+                headName:headName
+            });
+        }
+    });
+
+    $("#UserTable").bind("click", function (evt) {
+        var which = evt.target;
+        var $tr = $(which).closest("tr");
+        editModel($tr);
+    });
+
+    $("#search").bind("click", function () {
+        var role = $("#roles").find("option:selected").val();
+        if (role == "1")
+            role = "激活";
+        else if (role == "0") {
+            role = "未激活";
+        }
+        var office = $("#office").find(":selected").val();
+        var temp = [];
+        for (var i = 0; i < jsonObj.length; i++) {
+            if ((role == "allNumber" || jsonObj[i].Activate == role) && (office == "allOffice" || jsonObj[i].Office == office)) {
+                temp.push(jsonObj[i]);
+            }
+        }
+        $("#tableArea").createTable(temp, {
+            rows: 10,
+            headName: headName
+        });
+    });
+
+    $("#sureedit").bind("click", function () {
+        recordRole();
+    });
+});
+
+function editModel($tr) {
+    $("#recordNumber").val($tr.find("td:eq(0)").text());
+    chooseRole($tr.find("td:eq(0)").text());
+    $("#model").click();
+}
 
 function Init() {
     getAllRole();   //获取所有存在的角色
-    var select = document.getElementsByTagName("A");
-    //给GridView上的选择用户的按钮添加事件
-    for (var i = 0; i < select.length; i++) {
-        if (select[i].innerHTML == "选择") {
-            select[i].addEventListener("click", selectedUser, false);
-        }
-        if (select[i].innerHTML == "首页" || select[i].innerHTML == "上一页" || select[i].innerHTML == "下一页" || select[i].innerHTML == "末页") {
-            select[i].className += "btn btn-primary btn-sm";
-            select[i].style = "margin-left:5px;";
-        }
-    }
+
     createRole();   //生成修改角色的多选框
     document.getElementById("chooseAll").addEventListener("click", chooseAll, false);       //全选按钮添加点击事件
-    document.getElementById("bindFrm").addEventListener("submit", recordRole, false);       //修改角色的表单添加提交事件
-    document.getElementById("refresh").addEventListener("click", Refresh, false);
-}
-
-function Refresh(evt) {
-    evt.preventDefault();
-    window.location = 'Root-user2role.aspx';
 }
 
 //记录角色，保存在hidden里，方便后端查询。保存形式： "ROOT WLS YS "。
@@ -33,18 +70,46 @@ function recordRole() {
     var area1 = document.getElementById("roles1").getElementsByTagName("INPUT");
     var area2 = document.getElementById("roles2").getElementsByTagName("INPUT");
     var selected = "";
+    var next = "";
     for (var i = 0; i < area1.length; i++) {
         if (area1[i].checked == true) {
             selected += area1[i].title + " ";
+            next += $(area1[i]).next("span").text() + " ";
         }
     }
     for (var i = 0; i < area2.length; i++) {
         if (area2[i].checked == true) {
             selected += area2[i].title + " ";
+            next += $(area2[i]).next("span").text() + " ";
         }
     }
+    var page = parseInt($("#currentPage").val());
+    $.ajax({
+        type: "POST",
+        url: "changeRoles.ashx",
+        data: { "number": $("#recordNumber").val(), "role":selected},
+        success: function (data) {
+            changeDate($("#recordNumber").val(), next);
+            $("#tableArea").createTable(jsonObj, {
+                rows: 10,
+                headName: headName,
+                pages: page
+            });
+            $("#cannel").click();
+        }
+    });
     hidden.value = selected;
 }
+
+function changeDate(number, next) {
+    for (var i = 0; i < jsonObj.length; i++) {
+        if (jsonObj[i].number == number) {
+            jsonObj[i].description = next;
+            break;
+        }
+    }
+}
+
 //选择需要修改角色的用户
 function selectedUser(evt) {
     var Number = this.parentNode.childNodes[3].value;

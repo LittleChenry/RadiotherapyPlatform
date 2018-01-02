@@ -281,7 +281,7 @@
                             </div>
                             <div class="col-xs-5">
                                 <span class="form-text col-xs-4">姓名拼音：</span>
-                                <input id="usernamepingyin" name="usernamepingyin" class="form-item" type="text" AUTOCOMPLETE="OFF" placeholder="示例：ZHANG SAN"/>
+                                <input id="usernamepingyin" name="usernamepingyin" class="form-item" type="text" AUTOCOMPLETE="OFF" placeholder="示例：ZHANG YUNFENG"/>
                             </div>
                         </div>
 

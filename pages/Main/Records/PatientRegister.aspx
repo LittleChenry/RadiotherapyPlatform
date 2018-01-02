@@ -41,7 +41,7 @@
                     <div class="content-title">
                         <span>基本信息：</span>
                     </div>
-                    <div class="head-picture">
+                    <div class="head-picture" style=" margin-left:750px;top:130px;">
                         <img id="self-photo" src="../../../img/avatar.jpg" class="camera-picture" />
                     </div>
                     <div class="single-row">

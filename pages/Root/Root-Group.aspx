@@ -348,20 +348,10 @@
                         <input type="button" class="tohidden" id="EditGroup" data-toggle="modal" data-target="#editModal" />
                     </div>
                     <div id="tableArea" class="panel-body mintablewidth">
-                        <table class="table table-striped table-hover" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>组名</th>
-                                    <th>高资历</th>
-                                    <th>组长</th>
-                                    <th colspan="8">组员</th>
-                                </tr>
-                            </thead>
-                            <tbody id="groupArea">
-
-                            </tbody>
+                        <table id="groupArea" class="table table-striped table-hover" style="width:100%">
+                         
                         </table>
-                        <div class="row">
+                       <%-- <div class="row">
                             <div class="col-sm-6">&nbsp;</div>
                             <div class="col-sm-6">
                                 <input id="currentPage" type="hidden" value="1" />
@@ -376,7 +366,7 @@
                                     <input type="button" id="refresh" class="btn btn-primary btn-sm" value="显示全部" />
                                 </div>
                             </div>
-                        </div>
+                        </div>--%>
                     </div>
                 </div>
             </div>
@@ -480,6 +470,7 @@
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/jquery.min.js"></script>
+<script src="../../js/Root/createTable.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
