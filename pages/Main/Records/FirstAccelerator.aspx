@@ -254,7 +254,7 @@
     <script src="../../../plugin/AdminLTE/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../../plugin/AdminLTE/dist/js/demo.js"></script>
-      <script src="../../../js/Main/FixedRecordPrint.js"></script>
+      <script src="../../../js/Main/FirstAcceratorPrint.js"></script>
     <!-- javascript -->
     <script src="../../../js/Main/addimgs.js"></script> 
     <script src="../../../js/Main/FirstAccelerator.js" type="text/javascript"></script>
