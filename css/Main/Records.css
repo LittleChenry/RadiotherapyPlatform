@@ -427,3 +427,7 @@
 .completed {
     background-color: #c1c1c1;
 }
+
+.patientType {
+    padding-left: 10px;
+}

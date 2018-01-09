@@ -230,7 +230,7 @@
                 </div>
             </div>
     </section>
-     <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;">
+     <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;position:absolute;">
                 
     </section>
      <!-- jQuery 2.2.3 -->
