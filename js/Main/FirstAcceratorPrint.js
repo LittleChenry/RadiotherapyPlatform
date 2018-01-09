@@ -112,13 +112,13 @@ function print() {
     $printArea.hide();
 }
 function zhengfu(str) {
-    if (parseInt(str) == 0) {
+    if (parseFloat(str) == 0) {
         return "0";
     }
-    if (parseInt(str) > 0) {
-        return "左"+Math.abs(parseInt(str));
+    if (parseFloat(str) > 0) {
+        return "左" + Math.abs(parseFloat(str));
     }
-    if (parseInt(str) < 0) {
-        return "右" + Math.abs(parseInt(str));
+    if (parseFloat(str) < 0) {
+        return "右" + Math.abs(parseFloat(str));
     }
 }
