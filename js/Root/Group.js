@@ -520,16 +520,18 @@ function editGroup($tr) {
     $editArea.find("#editCharger").after($td);
 
     var len = $($tds[3]).text().split(" ");
-    var lenid = $($tds[3]).find(":hidden").val().split(" ");
-    for (var i = 0; i < len.length; i++) {
-        if (len[i] != "" && len[i] != " ") {
-            $grouptr = $("<tr><th>组员<input type=button class=close value=× /></th></tr>")
-            $grouptd = $("<td></td>");
-            $hide = $("<input type=hidden value=" + lenid[i] + " />");
-            $grouptd.append($select.clone(true).val(lenid[i]))
-                    .append($hide);
-            $grouptr.append($grouptd);
-            $editArea.append($grouptr);
+    if ($($tds[3]).find(":hidden").val() != undefined && $($tds[3]).find(":hidden").val() != null) {
+        var lenid = $($tds[3]).find(":hidden").val().split(" ");
+        for (var i = 0; i < len.length; i++) {
+            if (len[i] != "" && len[i] != " ") {
+                $grouptr = $("<tr><th>组员<input type=button class=close value=× /></th></tr>")
+                $grouptd = $("<td></td>");
+                $hide = $("<input type=hidden value=" + lenid[i] + " />");
+                $grouptd.append($select.clone(true).val(lenid[i]))
+                        .append($hide);
+                $grouptr.append($grouptd);
+                $editArea.append($grouptr);
+            }
         }
     }
     //for (var i = 3; i < $tds.length; ++i) {

@@ -41,25 +41,58 @@ public class UpdateGroup : IHttpHandler {
         sqlOperation.ExecuteNonQuery(sqlCommand);
         try
         {
-            sqlCommand = "UPDATE groups2user SET state=0,identity=1 WHERE Group_ID=@gid AND User_ID=@uid";
-            sqlOperation.AddParameterWithValue("@uid", int.Parse(nows[0]));
-            if (nows[0] == nows[1])
+            if (hasUser(gid, nows[0]))
             {
-                sqlCommand = "UPDATE groups2user SET state=1,identity=1 WHERE Group_ID=@gid AND User_ID=@uid";
+                sqlCommand = "UPDATE groups2user SET state=0,identity=1 WHERE Group_ID=@gid AND User_ID=@uid";
+                sqlOperation.AddParameterWithValue("@uid", int.Parse(nows[0]));
+                if (nows[0] == nows[1])
+                {
+                    sqlCommand = "UPDATE groups2user SET state=1,identity=1 WHERE Group_ID=@gid AND User_ID=@uid";
+                }
+                sqlOperation.ExecuteNonQuery(sqlCommand);
+            }else{
+                if(nows[0] != nows[1])
+                    sqlCommand = "INSERT INTO groups2user(User_ID,Group_ID,identity,state) VALUES(@uid,@gid,1,0)";
+                else
+                    sqlCommand = "INSERT INTO groups2user(User_ID,Group_ID,identity,state) VALUES(@uid,@gid,1,1)";
+                sqlOperation.AddParameterWithValue("@uid", int.Parse(nows[0]));
+                sqlOperation.AddParameterWithValue("@gid", gid);
+                sqlOperation.ExecuteNonQuery(sqlCommand);
             }
-            sqlOperation.ExecuteNonQuery(sqlCommand);
+            
             if (nows[0] != nows[1])
             {
-                sqlCommand = "UPDATE groups2user SET state=1,identity=2 WHERE Group_ID=@gid AND User_ID=@uid";
-                sqlOperation.AddParameterWithValue("@uid", int.Parse(nows[1]));
-                sqlOperation.ExecuteNonQuery(sqlCommand);
+                if (hasUser(gid, nows[1]))
+                {
+                    sqlCommand = "UPDATE groups2user SET state=1,identity=2 WHERE Group_ID=@gid AND User_ID=@uid";
+                    sqlOperation.AddParameterWithValue("@uid", int.Parse(nows[1]));
+                    sqlOperation.ExecuteNonQuery(sqlCommand);
+                }
+                else
+                {
+                    sqlCommand = "INSERT INTO groups2user(User_ID,Group_ID,identity,state) VALUES(@uid,@gid,2,1)";
+                    sqlOperation.AddParameterWithValue("@uid", int.Parse(nows[1]));
+                    sqlOperation.ExecuteNonQuery(sqlCommand);
+                }
             }
 
-            for (int i = 2; i < nows.Length - 1; ++i)
+            for (int i = 2; i < nows.Length; ++i)
             {
-                sqlCommand = "UPDATE groups2user SET state=1,identity=3 WHERE Group_ID=@gid AND User_ID=@uid";
-                sqlOperation.AddParameterWithValue("@uid", int.Parse(nows[i]));
-                sqlOperation.ExecuteNonQuery(sqlCommand);
+                if (nows[i] != "")
+                {
+                    if (hasUser(gid, nows[i]))
+                    {
+                        sqlCommand = "UPDATE groups2user SET state=1,identity=3 WHERE Group_ID=@gid AND User_ID=@uid";
+                        sqlOperation.AddParameterWithValue("@uid", int.Parse(nows[i]));
+                        sqlOperation.ExecuteNonQuery(sqlCommand);
+                    }
+                    else
+                    {
+                        sqlCommand = "INSERT INTO groups2user(User_ID,Group_ID,identity,state) VALUES(@uid,@gid,3,1)";
+                        sqlOperation.AddParameterWithValue("@uid", int.Parse(nows[i]));
+                        sqlOperation.ExecuteNonQuery(sqlCommand);
+                    }
+                }
             }
         }
         catch (Exception e)
@@ -89,5 +122,15 @@ public class UpdateGroup : IHttpHandler {
         sqlOperation.Close();
         sqlOperation.Dispose();
         sqlOperation = null;
+    }
+
+    private bool hasUser(string gid, string uid)
+    {
+        DataLayer sqlOperation = new DataLayer("sqlStr");
+        string sqlCommand = "Select COUNT(id) From groups2user Where Group_ID=@gid and User_ID=@uid";
+        sqlOperation.AddParameterWithValue("@gid", gid);
+        sqlOperation.AddParameterWithValue("@uid", int.Parse(uid));
+        int hasUser = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
+        return hasUser != 0;
     }
 }
