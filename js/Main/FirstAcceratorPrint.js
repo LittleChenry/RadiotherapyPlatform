@@ -56,7 +56,7 @@ function print() {
                         '<div class="item col-xs-12">摆位信息：<span class="underline">' + patientbasic.pos + fixedeq + model + headrest + specialrequire + remarkinfo + '</span></div></div>';
 
     if (patientbasic.parameterx != "") {
-        content = content + '<div class="single-row" style="min-height:28px;"><div class="item col-xs-12">移床参数：X:<span  class="underline">' + patientbasic.parameterx + '</span>(cm) , Y:<span  class="underline">' + patientbasic.parametery + '</span>(cm) , Z:<span  class="underline">' + patientbasic.parameterz + '</span>(cm)</div></div>';
+        content = content + '<div class="single-row" style="min-height:28px;"><div class="item col-xs-12">移床参数：X:<span  class="underline">' + zhengfu(patientbasic.parameterx) + '</span>(cm) , Y:<span  class="underline">' + zhengfu(patientbasic.parametery) + '</span>(cm) , Z:<span  class="underline">' + zhengfu(patientbasic.parameterz) + '</span>(cm)</div></div>';
     }
 
     content = content + '<div class="single-row" style="min-height:28px;">'+
@@ -99,7 +99,7 @@ function print() {
     } else {
         var table = $("#Fieldprint");
         for (var k = 0; k < fildinfo.length; k++) {
-            var content = '<tr><td style="padding:5px 8px;">' + fildinfo[k].code + '</td><td style="padding:5px 8px;">' + fildinfo[k].mu + '</td><td style="padding:5px 8px;">' + fildinfo[k].equipment + '</td><td style="padding:5px 8px;">' + fildinfo[k].radiotechnique;
+            var content = '<tr><td style="padding:5px 8px;">' + fildinfo[k].code + '</td><td style="padding:5px 8px;">' + parseFloat(fildinfo[k].mu).toFixed(2) + '</td><td style="padding:5px 8px;">' + fildinfo[k].equipment + '</td><td style="padding:5px 8px;">' + fildinfo[k].radiotechnique;
             content = content + '</td><td style="padding:5px 8px;">' + fildinfo[k].radiotype + '</td><td style="padding:5px 8px;">' + fildinfo[k].energy + '</td><td style="padding:5px 8px;">' + fildinfo[k].wavedistance + '</td><td style="padding:5px 8px;">' + fildinfo[k].angleframe;
             content = content + '</td><td style="padding:5px 8px;">' + fildinfo[k].noseangle + '</td><td style="padding:5px 8px;">' + fildinfo[k].bedrotation + '</td><td style="padding:5px 8px;">' + fildinfo[k].subfieldnumber + '</td></tr>';
             table.append(content);
@@ -110,4 +110,15 @@ function print() {
     $printArea.printArea({ "mode": "popup", "popClose": true });
     $pagetitle.prev().remove();
     $printArea.hide();
+}
+function zhengfu(str) {
+    if (parseInt(str) == 0) {
+        return "0";
+    }
+    if (parseInt(str) > 0) {
+        return "左"+Math.abs(parseInt(str));
+    }
+    if (parseInt(str) < 0) {
+        return "右" + Math.abs(parseInt(str));
+    }
 }
