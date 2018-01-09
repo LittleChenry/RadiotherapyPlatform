@@ -2,7 +2,8 @@
 function print() {
     var $printArea = $("#printArea");
     $printArea.empty();
-    var content='<div class="paper-title">江苏省人民医院放射治疗单</div>';
+    var content = '<div style="margin-right:10px">门诊&nbsp&nbsp病区1&nbsp&nbsp病区2</div>';
+    content = content + '<div class="paper-title">江&nbsp&nbsp苏&nbsp&nbsp省&nbsp&nbsp人&nbsp&nbsp民&nbsp&nbsp医&nbsp&nbsp院<br/><font size="5.5">放&nbsp射&nbsp治&nbsp疗&nbsp单</font></div>';
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
     $.ajax({

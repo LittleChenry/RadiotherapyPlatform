@@ -24,6 +24,7 @@ public class patientforprint : IHttpHandler {
     {
         string treatid = context.Request["treat"];
         DataLayer sqlOperation = new DataLayer("sqlStr");
+        DataLayer sqlOperation3 = new DataLayer("sqlStr");
         string sqlCommand = "SELECT count(*) from patient,treatment where treatment.Patient_ID=patient.ID and treatment.ID=@id";
         sqlOperation.AddParameterWithValue("@id", treatid);
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
@@ -91,11 +92,32 @@ public class patientforprint : IHttpHandler {
                 firsttime = "尚未开始治疗";
             }
             reader2.Close();
+            string model = "";
+            string fixedeq = "";
+            string headrest = "";
+            string specialrequire = "";
+            string remarkinfo = "";
+            if (reader["iscommon"].ToString() == "1")
+            {
+                string fixedinfo = "select fixed.Remarks as fixedremark,material.Name as materialName,fixedrequirements.Requirements as fixedrequire,fixedequipment.Name as fixedequipname,headrest.Name as headname from treatment,fixed,fixedequipment,fixedrequirements,material,headrest where treatment.Fixed_ID=fixed.ID and material.ID=fixed.Model_ID  and fixed.FixedEquipment_ID=fixedequipment.ID  and fixed.FixedRequirements_ID=fixedrequirements.ID and fixed.HeadRest_ID= headrest.ID and treatment.ID=@treatid";
+                sqlOperation3.AddParameterWithValue("@treatid", treatid);
+                MySql.Data.MySqlClient.MySqlDataReader reader3 = sqlOperation3.ExecuteReader(fixedinfo);
+                if (reader3.Read())
+                {
+                    model = reader3["materialName"].ToString();
+                    fixedeq = reader3["fixedequipname"].ToString();
+                    headrest = reader3["headname"].ToString();
+                    specialrequire = reader3["fixedrequire"].ToString();
+                    remarkinfo = reader3["fixedremark"].ToString();
+                }
+
+                reader3.Close();
+            }
             backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Priority\":\"" + Priority + "\",\"IdentificationNumber\":\"" + reader["IdentificationNumber"] + "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() +
                  "\",\"Hospital\":\"" + reader["Hospital"].ToString() + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() +
                  "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"RegisterDoctor\":\"" + reader["doctor"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
                  "\",\"Nation\":\"" + reader["Nation"].ToString() + "\",\"Address\":\"" + reader["Address"].ToString() + "\",\"Contact1\":\"" + reader["Contact1"].ToString() + "\",\"diagnosisresult\":\"" + result +
-                 "\",\"Contact2\":\"" + reader["Contact2"].ToString() + "\",\"parameterz\":\"" + parameterz + "\",\"parameterx\":\"" + parameterx + "\",\"parametery\":\"" + parametery + "\",\"total\":\"" + total + "\",\"splitway\":\"" + splitway + "\",\"firsttime\":\"" + firsttime + "\",\"pos\":\"" + reader["pos"].ToString() + "\",\"treatmentaim\":\"" + reader["treatmentaim"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"Hospital_ID\":\"" + reader["Hospital_ID"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"partID\":\"" + reader["partID"].ToString() + "\",\"LightPart_ID\":\"" + reader["LightPart_ID"].ToString() + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\"}");
+                 "\",\"Contact2\":\"" + reader["Contact2"].ToString() + "\",\"model\":\"" + model + "\",\"fixedeq\":\"" + fixedeq + "\",\"headrest\":\"" + headrest + "\",\"specialrequire\":\"" + specialrequire + "\",\"remarkinfo\":\"" + remarkinfo + "\",\"parameterz\":\"" + parameterz + "\",\"parameterx\":\"" + parameterx + "\",\"parametery\":\"" + parametery + "\",\"total\":\"" + total + "\",\"splitway\":\"" + splitway + "\",\"firsttime\":\"" + firsttime + "\",\"pos\":\"" + reader["pos"].ToString() + "\",\"treatmentaim\":\"" + reader["treatmentaim"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"Hospital_ID\":\"" + reader["Hospital_ID"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"partID\":\"" + reader["partID"].ToString() + "\",\"LightPart_ID\":\"" + reader["LightPart_ID"].ToString() + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");
@@ -112,6 +134,9 @@ public class patientforprint : IHttpHandler {
         sqlOperation2.Close();
         sqlOperation2.Dispose();
         sqlOperation2 = null;
+        sqlOperation3.Close();
+        sqlOperation3.Dispose();
+        sqlOperation3 = null;
         return backText.ToString();
     }
 
