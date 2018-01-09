@@ -2,7 +2,7 @@
 function print() {
     var $printArea = $("#printArea");
     $printArea.empty();
-    var content = '<div style="text-align:right;"><i class="fa fa-square-o patientType">门诊</i><i class="fa fa-square-o patientType">病区1</i><i class="fa fa-square-o patientType">病区2</i></div>';
+    var content = '<div style="text-align:right;"><i class="fa fa-square-o patientType"> 门诊</i><i class="fa fa-square-o patientType"> 病区1</i><i class="fa fa-square-o patientType"> 病区2</i></div>';
     content = content + '<div class="paper-title" style="margin-bottom: 0px;">'+
                         '<p style="font-size:18px;margin-bottom:0px;">江&nbsp苏&nbsp省&nbsp人&nbsp民&nbsp医&nbsp院</p>'+
                         '<p style="font-size:22px;margin-bottom:5px;">放射治疗单</p></div>';
