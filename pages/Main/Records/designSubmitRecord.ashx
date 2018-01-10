@@ -53,10 +53,10 @@ public class designSubmitRecord : IHttpHandler {
             string receive = "select Receive_User_ID from design where design.ID=@designID";
             sqlOperation1.AddParameterWithValue("@designID", designID);
             int receiver = Convert.ToInt32(sqlOperation1.ExecuteScalar(receive));
-            if (receiver != userid)
-            {
-                return "message";
-            }
+            //if (receiver != userid)
+            //{
+            //    return "message";
+            //}
             string aa = context.Request.Form["a1"];
             string bb = context.Request.Form["a2"];
             string DosagePriority = "";
