@@ -79,10 +79,11 @@ public class patientRegister : IHttpHandler
         //}
 
             int doctorid = Convert.ToInt32(context.Request.Form["doctor"]);
-            string strSqlCommand = "UPDATE patient SET IdentificationNumber=@IdentificationNumber,Nameping=@nameping,Hospital=@Hospital,Name=@Name,Gender=@Gender,Age=@Age,Birthday=@Birthday,Nation=@Nation,Address=@Address,Contact1=@Contact1,Contact2=@Contact2,Height=@Height,Weight=@Weight,Ishospital=@Ishospital,Hospital_ID=@Hospital_ID,Radiotherapy_ID=@Radiotherapy_ID where ID=@patientID";
+            string strSqlCommand = "UPDATE patient SET  RegisterDoctor=@register,Picture=@pic,IdentificationNumber=@IdentificationNumber,Nameping=@nameping,Hospital=@Hospital,Name=@Name,Gender=@Gender,Age=@Age,Birthday=@Birthday,Nation=@Nation,Address=@Address,Contact1=@Contact1,Contact2=@Contact2,Height=@Height,Weight=@Weight,Ishospital=@Ishospital,Hospital_ID=@Hospital_ID,Radiotherapy_ID=@Radiotherapy_ID where ID=@patientID";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@IdentificationNumber", context.Request.Form["IDcardNumber"]);
             sqlOperation.AddParameterWithValue("@Hospital", context.Request.Form["Hospital"]);
+            sqlOperation.AddParameterWithValue("@pic", context.Request.Form["pic"]);
             sqlOperation.AddParameterWithValue("@Name", context.Request.Form["userName"]);
             sqlOperation.AddParameterWithValue("@Gender", context.Request.Form["Gender"]);
             sqlOperation.AddParameterWithValue("@Birthday", context.Request.Form["Birthday"]);
@@ -95,6 +96,7 @@ public class patientRegister : IHttpHandler
             sqlOperation.AddParameterWithValue("@Weight", context.Request.Form["weight"]);
             sqlOperation.AddParameterWithValue("@Radiotherapy_ID", context.Request.Form["radionumber"]);
             sqlOperation.AddParameterWithValue("@nameping", context.Request.Form["usernamepingyin"]);
+            sqlOperation.AddParameterWithValue("@register", doctorid);
             if (context.Request.Form["RecordNumber"] == "1")
             {
                 sqlOperation.AddParameterWithValue("@Hospital_ID", context.Request.Form["hospitalnumber"]);

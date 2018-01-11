@@ -26,7 +26,7 @@ public class getdoctorandgroup : IHttpHandler {
     }
     private string getdocandgroup(HttpContext context)
     {
-        string users = "SELECT distinct(user.ID) as userid FROM user,user2role where user.ID=user2role.User_ID and user2role.Role_ID=2";
+        string users = "SELECT distinct(groups2user.User_ID) as userid FROM groups2user where groups2user.identity=2";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(users);
         ArrayList array = new ArrayList();
         while (reader.Read())
@@ -44,14 +44,14 @@ public class getdoctorandgroup : IHttpHandler {
               backText.Append("\"" + username + element + "\":[{\"userid\":\"" + element + "\",\"username\":\"");
               backText.Append(username + "\"}");
              string user = element;
-             string countItem = "SELECT count(distinct(groups.ID)) FROM groups2user,groups where groups2user.User_ID=@user and groups2user.Group_ID=groups.ID and groups2user.identity<>0";
+             string countItem = "SELECT count(distinct(groups.ID)) FROM groups2user,groups where groups2user.User_ID=@user and groups2user.Group_ID=groups.ID and groups2user.identity=2";
              sqlOperation.AddParameterWithValue("@user", Convert.ToInt32(user));
              int count = int.Parse(sqlOperation.ExecuteScalar(countItem));
              if (count > 0)
              {
                  backText.Append(",");
              }
-             string sqlCommand = "SELECT distinct(groups2user.ID) as groupid,groups.groupName as groupname FROM groups2user,groups where groups2user.User_ID=@user and groups2user.Group_ID=groups.ID and groups2user.identity<>0";
+             string sqlCommand = "SELECT distinct(groups2user.ID) as groupid,groups.groupName as groupname FROM groups2user,groups where groups2user.User_ID=@user and groups2user.Group_ID=groups.ID and groups2user.identity=2";
              MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(sqlCommand);
              int i = 1;
             while (reader1.Read())

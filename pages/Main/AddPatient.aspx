@@ -260,6 +260,7 @@
                         </div>
                         <div class="head-picture">
                             <img id="self-photo" src="../../img/avatar.jpg" class="camera-picture" />
+                            <input id="mypic"  type="file"  style="display:none" accept="image/*" onchange="handleFiles(event)"/> 
                         </div>
                         <div class="card-reader">
                             <button id="ReadIDCard" type="button" class="btn btn-info btn-sm btn-flat" style="width:102px;">读身份证</button>

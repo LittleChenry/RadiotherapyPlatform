@@ -84,6 +84,9 @@ function Init() {
 
     $("#selectAddress").bind("click",SelectAddress);
     $("#IDcardNumber").bind("input propertychange", getBirthdate);
+    $("#self-photo").unbind("click").click(function (e) {
+        $("#mypic").click();
+    });
     
 }
 
@@ -265,16 +268,13 @@ function createselect2(index) {
     }
     if (groupitem == "") {
         thiselement.options.length = 0;
-        thiselement.options[0] = new Option("----分组选择-----");
+        thiselement.options[0] = new Option("----请选择分组-----");
         thiselement.options[0].value = "allItem";
     } else {
-        thiselement.options.length = 0;
-        thiselement.options[0] = new Option("----分组选择-----");
-        thiselement.options[0].value = "allItem";
-        for (var i = 1; i <= groupitem.length - 1; i++)
-            {
-            thiselement.options[i] = new Option(groupitem[i].groupname);
-            thiselement.options[i].value = parseInt(groupitem[i].groupid);
+        for (var i = 0; i < groupitem.length - 1; i++)
+       {
+            thiselement.options[i] = new Option(groupitem[i+1].groupname);
+            thiselement.options[i].value = parseInt(groupitem[i+1].groupid);
         }
     }
 }
@@ -746,4 +746,16 @@ function clearText() {
     $("#height").val("");
     $("#weight").val("");
     $("#Nation").val("汉族");
+}
+
+function handleFiles(e) {
+    var groupfiles = e.target.files;
+    var reader = new FileReader();
+    reader.onload = (function (file) {
+        return function (e) {
+            $("#self-photo").attr("src", this.result);
+            $("#pic").attr("value", this.result);
+        };
+    })(groupfiles[0]);
+    reader.readAsDataURL(groupfiles[0]);
 }

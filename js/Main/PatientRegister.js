@@ -110,7 +110,10 @@ function Init(evt) {
         $("#timeselect").bind("change", function () {
         var dateString = document.getElementById("AppiontDate").value;
         CreateCurrentAccerEquipmentTbale(dateString);
-    });
+        });
+        $("#self-photo").unbind("click").click(function (e) {
+            $("#mypic").click();
+        });
 }
 function isradio() {
     var radio = document.getElementById("radionumber").value;
@@ -520,6 +523,7 @@ function writePatientInfo(PatientInfo) {
     if (PatientInfo.patientInfo[0].Picture != "") {
         //document.getElementById("photo").style.display = "inline";
         document.getElementById("self-photo").src = PatientInfo.patientInfo[0].Picture;
+        document.getElementById("pic").value = PatientInfo.patientInfo[0].Picture;
     }
     document.getElementById("operator").innerHTML = PatientInfo.patientInfo[0].Registeruser;
     document.getElementById("date").innerHTML = PatientInfo.patientInfo[0].date;
@@ -563,12 +567,9 @@ function createselect2(index) {
         thiselement.options[0] = new Option("----分组选择-----");
         thiselement.options[0].value = "allItem";
     } else {
-        thiselement.options.length = 0;
-        thiselement.options[0] = new Option("----分组选择-----");
-        thiselement.options[0].value = "allItem";
-        for (var i = 1; i <= groupitem.length - 1; i++) {
-            thiselement.options[i] = new Option(groupitem[i].groupname);
-            thiselement.options[i].value = parseInt(groupitem[i].groupid);
+        for (var i = 0; i < groupitem.length - 1; i++) {
+            thiselement.options[i] = new Option(groupitem[i+1].groupname);
+            thiselement.options[i].value = parseInt(groupitem[i+1].groupid);
         }
     }
 
@@ -1767,4 +1768,15 @@ function remove() {
     document.getElementById("Sub").removeAttribute("disabled");
     document.getElementById("Hospital").removeAttribute("disabled");
     document.getElementById("radionumber").removeAttribute("disabled");
+}
+function handleFiles(e) {
+    var groupfiles = e.target.files;
+    var reader = new FileReader();
+    reader.onload = (function (file) {
+        return function (e) {
+            $("#self-photo").attr("src", this.result);
+            $("#pic").attr("value", this.result);
+        };
+    })(groupfiles[0]);
+    reader.readAsDataURL(groupfiles[0]);
 }

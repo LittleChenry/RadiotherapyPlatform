@@ -37,12 +37,14 @@
                
                 <input id="patientID" type="hidden" name="patientID" />
                 <input id="treatID" type="hidden" name="treatID" />
+                <input id="pic" type="hidden" name="pic" />
                 <div class="paper-content">
                     <div class="content-title">
                         <span>基本信息：</span>
                     </div>
                     <div class="head-picture" style=" margin-left:750px;top:130px;">
                         <img id="self-photo" src="../../../img/avatar.jpg" class="camera-picture" />
+                        <input id="mypic"  type="file"  style="display:none" accept="image/*" onchange="handleFiles(event)"/> 
                     </div>
                     <div class="single-row">
                         <div class="item col-xs-3">
@@ -143,7 +145,7 @@
                         <div class="item col-xs-6">
                             所属分组：
                             <select id="group" name="group" class="form-item" disabled="disabled">
-                                  <option value="allItem">----分组选择-----</option>
+                                <%--  <option value="allItem">----分组选择-----</option>--%>
                             </select>
                         </div>
                     </div>
