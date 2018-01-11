@@ -112,7 +112,7 @@
                 </div>
              </div>
   
-            <div class="paper-content"> 
+          <%--  <div class="paper-content"> 
                 <div class="content-title">
                     <span>复查填写：</span>
                 </div>
@@ -200,10 +200,10 @@
                     </div>
                     </div>
 
-            </div>
+            </div>--%>
            <div class="paper-footer"> 
                 <div class="content-title">
-                    <span>复查记录：</span>
+                    <span>复查记录：<button id="appointtreat" class="btn btn-primary"  disabled="disabled">记录复查</button></span>
                 </div>
                 <div class="single-row">
                      <div class="item area-group col-xs-12">

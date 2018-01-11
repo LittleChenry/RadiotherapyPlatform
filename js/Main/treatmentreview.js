@@ -41,27 +41,27 @@ function Init(evt) {
         document.getElementById("addmethod").disabled = "true";
 
     }
-    var select11 = document.getElementById("scanpart1");
-    createscanpartItem(select11);
-    var select21 = document.getElementById("scanmethod1");
-    createscanmethodItem(select21);
-    var select31 = document.getElementById("special1");
-    createspecialItem(select31);
-    var add = document.getElementsByName("add1");
-    if (add[0].checked) {
-        var select41 = document.getElementById("addmethod1");
-        createaddmethodItem(select41);
-    } else {
-        document.getElementById("addmethod1").disabled = "true";
+    //var select11 = document.getElementById("scanpart1");
+    //createscanpartItem(select11);
+    //var select21 = document.getElementById("scanmethod1");
+    //createscanmethodItem(select21);
+    //var select31 = document.getElementById("special1");
+    //createspecialItem(select31);
+    //var add = document.getElementsByName("add1");
+    //if (add[0].checked) {
+    //    var select41 = document.getElementById("addmethod1");
+    //    createaddmethodItem(select41);
+    //} else {
+    //    document.getElementById("addmethod1").disabled = "true";
 
-    }
+    //}
     var alltreatmentreviewinfo = getalltreatreview(treatmentID);
     var table = $("#checkrecord");
     for (var k = 0; k < alltreatmentreviewinfo.length; k++) {
         var content = '<tr><td>扫描部位:' + alltreatmentreviewinfo[k].scanpart + ';扫描方式:' + alltreatmentreviewinfo[k].scanmethod + ';上界:' + alltreatmentreviewinfo[k].up + ';下界:' + alltreatmentreviewinfo[k].down;
-        content = content + ';增强情况:' + transferenhance(alltreatmentreviewinfo[k].enhance, alltreatmentreviewinfo[k].enhancemethod) + ';特殊要求:' + alltreatmentreviewinfo[k].specialrequest + ';层厚:' + alltreatmentreviewinfo[k].thick;
-        content = content + ';层数:' + alltreatmentreviewinfo[k].number + ';参考中心:' + alltreatmentreviewinfo[k].ReferenceNumber + ';体表参考刻度:' + alltreatmentreviewinfo[k].ReferenceScale+'</td>';
-        content = content + '<td>申请备注:' + alltreatmentreviewinfo[k].applyremark + ';记录备注:' + alltreatmentreviewinfo[k].remark + '</td>';
+        content = content + ';增强情况:' + transferenhance(alltreatmentreviewinfo[k].enhance, alltreatmentreviewinfo[k].enhancemethod) + ';特殊要求:' + alltreatmentreviewinfo[k].specialrequest;
+        content = content + '</td>';
+        content = content + '<td>' + alltreatmentreviewinfo[k].applyremark + '</td>';
         content = content + '<td>申请人:' + alltreatmentreviewinfo[k].applyuser + ';记录人:' + alltreatmentreviewinfo[k].operateuer + '</td>';
         table.append(content);
 
@@ -125,23 +125,75 @@ function Init(evt) {
         var treatmentgroup2 = window.location.search.split("&")[1];//?后第一个变量信息
         var appointid = treatmentgroup2.split("=")[1];
         var reviewinfo = gettreatmentreviewinfo(appointid, treatmentID);
-        document.getElementById("scanmethod1").value = reviewinfo.scanmethod;
-        document.getElementById("scanpart1").value = reviewinfo.scanpart;
-        document.getElementById("up1").value = reviewinfo.up;
-        document.getElementById("down1").value = reviewinfo.down;
-        document.getElementById("special1").value = reviewinfo.specialrequest;
-        document.getElementById("remark1").value = reviewinfo.applyremark;
-        var add = document.getElementsByName("add1");
-        if (reviewinfo.enhance == "1") {
-            add[0].checked = "true";
-            document.getElementById("addmethod1").value = reviewinfo.enhancemethod;
-        } else {
-            add[1].checked = "true";
-            document.getElementById("enhancemethod1").style.display = "none";
+        document.getElementById("scanmethod").value = reviewinfo.scanmethod;
+        document.getElementById("scanpart").value = reviewinfo.scanpart;
+        document.getElementById("up").value = reviewinfo.up;
+        document.getElementById("down").value = reviewinfo.down;
+        document.getElementById("special").value = reviewinfo.specialrequest;
+        document.getElementById("remark").value = reviewinfo.applyremark;
+        document.getElementById("appointtime").value = reviewinfo.equipname + " " + reviewinfo.Date.split(" ")[0] + " " + toTime(reviewinfo.Begin) + "-" + toTime(reviewinfo.End);
+        //var add = document.getElementsByName("add1");
+        //if (reviewinfo.enhance == "1") {
+        //    add[0].checked = "true";
+        //    document.getElementById("addmethod1").value = reviewinfo.enhancemethod;
+        //} else {
+        //    add[1].checked = "true";
+        //    document.getElementById("enhancemethod1").style.display = "none";
+        //}
+        if (reviewinfo.operateuser != "") {
+            $("#appointtreat").html("已复查");
         }
 
     }
+    $("#appointtreat").unbind("click").click(function (e) {
+        var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
+        var treatmentid = treatmentgroup.split("=")[1];
+        var treatmentgroup2 = window.location.search.split("&")[1];//?后第一个变量信息
+        var appointid = treatmentgroup2.split("=")[1];
+        if ((typeof (userID) == "undefined")) {
+            if (confirm("用户身份已经失效,是否选择重新登录?")) {
+                parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+            }
+        }
+        $.ajax({
+            type: "POST",
+            url: "TreatmentReviewRecord.ashx",
+            async: false,
+            data: {
+                appointid: appointid,
+                treatmentid: treatmentid,
+                user: userID,
+               
+            },
+            dateType: "json",
+            success: function (data) {
+                if (data == "success") {
+                    window.alert("记录成功");
+                    // window.location.reload();
+                    var alltreatmentreviewinfo = getalltreatreview(treatmentID);
+                    var table = $("#checkrecord");
+                    table.empty();
+                    for (var k = 0; k < alltreatmentreviewinfo.length; k++) {
+                        var content = '<tr><td>扫描部位:' + alltreatmentreviewinfo[k].scanpart + ';扫描方式:' + alltreatmentreviewinfo[k].scanmethod + ';上界:' + alltreatmentreviewinfo[k].up + ';下界:' + alltreatmentreviewinfo[k].down;
+                        content = content + ';增强情况:' + transferenhance(alltreatmentreviewinfo[k].enhance, alltreatmentreviewinfo[k].enhancemethod) + ';特殊要求:' + alltreatmentreviewinfo[k].specialrequest;
+                        content = content + '</td>';
+                        content = content + '<td>' + alltreatmentreviewinfo[k].applyremark + '</td>';
+                        content = content + '<td>申请人:' + alltreatmentreviewinfo[k].applyuser + ';记录人:' + alltreatmentreviewinfo[k].operateuer + '</td>';
+                        table.append(content);
 
+                    }
+                }
+
+                if (data == "failure") {
+                    window.alert("记录失败");
+                    return false;
+                }
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    });
 }
 function transferenhance(enhance, enhancemethod) {
     if (enhance == "1") {
@@ -667,23 +719,15 @@ function forchange() {
     var add = document.getElementsByName("add");
     if (add[0].checked) {
         var select4 = document.getElementById("addmethod");
-        select4.removeAttribute("disabled");
+        //select4.removeAttribute("disabled");
         createaddmethodItem(select4);
+        document.getElementById("enhancemethod").style.display = "block";
     }
     if (add[1].checked) {
-        document.getElementById("addmethod").disabled = "true";
-
+       // document.getElementById("addmethod").disabled = "true";
+        document.getElementById("enhancemethod").style.display = "none";
     }
-    var add1 = document.getElementsByName("add1");
-    if (add1[0].checked) {
-        var select5 = document.getElementById("addmethod1");
-        select5.removeAttribute("disabled");
-        createaddmethodItem(select5);
-    }
-    if (add1[1].checked) {
-        document.getElementById("addmethod1").disabled = "true";
-
-    }
+  
 
 }
 //比较体位固定与模拟定位申请时间
@@ -774,21 +818,14 @@ function remove() {
         document.getElementById("chooseappoint").removeAttribute("disabled");
     }
     if (session.role == "模拟技师") {
-        document.getElementById("scanmethod1").removeAttribute("disabled");
-        document.getElementById("scanpart1").removeAttribute("disabled");
-        document.getElementById("up1").removeAttribute("disabled");
-        document.getElementById("down1").removeAttribute("disabled");
-        document.getElementById("special1").removeAttribute("disabled");
-        document.getElementById("remark1").removeAttribute("disabled");
-        document.getElementById("add1").removeAttribute("disabled");
-        document.getElementById("add2").removeAttribute("disabled");
-        document.getElementById("addmethod1").removeAttribute("disabled");
-        document.getElementById("Thickness").removeAttribute("disabled");
-        document.getElementById("Number").removeAttribute("disabled");
-        document.getElementById("ReferenceNumber").removeAttribute("disabled");
-        document.getElementById("ReferenceScale").removeAttribute("disabled");
-        document.getElementById("Remarks").removeAttribute("disabled");
-
+        var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
+        var treatmentID = treatmentgroup.split("=")[1];
+        var treatmentgroup2 = window.location.search.split("&")[1];//?后第一个变量信息
+        var appointid = treatmentgroup2.split("=")[1];
+        var reviewinfo = gettreatmentreviewinfo(appointid, treatmentID);
+        if (reviewinfo.operateuser == "") {
+            document.getElementById("appointtreat").removeAttribute("disabled");
+        } 
     }
     
 
@@ -964,105 +1001,105 @@ function save() {
             }
         });
     }
-    if (session.role == "模拟技师") {
-        var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
-        var treatmentid = treatmentgroup.split("=")[1];
-        var treatmentgroup2 = window.location.search.split("&")[1];//?后第一个变量信息
-        var appointid = treatmentgroup2.split("=")[1];
-        var special = document.getElementById("special1").value;
-        var addgroup = document.getElementsByName("add1");
-        var add;
-        if (addgroup[0].checked == true) {
-            add = addgroup[0].value;
-        } else {
-            add = addgroup[1].value;
-        }
-        if (document.getElementById("scanpart1").value == "allItem") {
-            window.alert("请选择扫描部位");
-            return false;
-        }
-        if (document.getElementById("scanmethod1").value == "allItem") {
-            window.alert("请选择扫描方式");
-            return false;
-        }
-        if (document.getElementById("up1").value == "") {
-            window.alert("请填写上界");
-            return false;
-        }
-        if (document.getElementById("down1").value == "") {
-            window.alert("请填写下界");
-            return false;
-        }
-        if (add == "1") {
-            if (document.getElementById("addmethod1").value == "allItem") {
-                window.alert("请选择增强方式");
-                return false;
-            }
-        }
-        if (special == "allItem") {
-            window.alert("请选择特殊要求");
-            return false;
-        }
-        if (document.getElementById("Thickness").value == "") {
-            alert("请填写层厚");
-            return false;
-        }
-        if (document.getElementById("Number").value == "") {
-            alert("请填写层数");
-            return false;
-        }
-        if (document.getElementById("ReferenceNumber").value == "") {
-            alert("请填写参考中心层面");
-            return false;
-        }
-        if (document.getElementById("ReferenceScale").value == "") {
-            alert("请填写体表参考刻度");
-            return false;
-        }
-        if ((typeof (userID) == "undefined")) {
-            if (confirm("用户身份已经失效,是否选择重新登录?")) {
-                parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
-            }
-        }
-        $.ajax({
-            type: "POST",
-            url: "TreatmentReviewRecord.ashx",
-            async: false,
-            data: {
-                appointid: appointid,
-                treatmentid: treatmentid,
-                scanpart: document.getElementById("scanpart1").value,
-                scanmethod: document.getElementById("scanmethod1").value,
-                user: userID,
-                addmethod: document.getElementById("addmethod1").value,
-                up: document.getElementById("up1").value,
-                down: document.getElementById("down1").value,
-                remark: document.getElementById("remark1").value,
-                requirement: special,
-                add: add,
-                thickness:document.getElementById("Thickness").value,
-                number: document.getElementById("Number").value,
-                ReferenceNumber: document.getElementById("ReferenceNumber").value,
-                ReferenceScale: document.getElementById("ReferenceScale").value,
-                newremark: document.getElementById("Remarks").value
-            },
-            dateType: "json",
-            success: function (data) {
-                if (data == "success") {
-                    window.alert("记录成功");
-                    window.location.reload();
-                }
+    //if (session.role == "模拟技师") {
+    //    var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
+    //    var treatmentid = treatmentgroup.split("=")[1];
+    //    var treatmentgroup2 = window.location.search.split("&")[1];//?后第一个变量信息
+    //    var appointid = treatmentgroup2.split("=")[1];
+        //var special = document.getElementById("special1").value;
+        //var addgroup = document.getElementsByName("add1");
+        //var add;
+        //if (addgroup[0].checked == true) {
+        //    add = addgroup[0].value;
+        //} else {
+        //    add = addgroup[1].value;
+        //}
+        //if (document.getElementById("scanpart1").value == "allItem") {
+        //    window.alert("请选择扫描部位");
+        //    return false;
+        //}
+        //if (document.getElementById("scanmethod1").value == "allItem") {
+        //    window.alert("请选择扫描方式");
+        //    return false;
+        //}
+        //if (document.getElementById("up1").value == "") {
+        //    window.alert("请填写上界");
+        //    return false;
+        //}
+        //if (document.getElementById("down1").value == "") {
+        //    window.alert("请填写下界");
+        //    return false;
+        //}
+        //if (add == "1") {
+        //    if (document.getElementById("addmethod1").value == "allItem") {
+        //        window.alert("请选择增强方式");
+        //        return false;
+        //    }
+        //}
+        //if (special == "allItem") {
+        //    window.alert("请选择特殊要求");
+        //    return false;
+        //}
+        //if (document.getElementById("Thickness").value == "") {
+        //    alert("请填写层厚");
+        //    return false;
+        //}
+        //if (document.getElementById("Number").value == "") {
+        //    alert("请填写层数");
+        //    return false;
+        //}
+        //if (document.getElementById("ReferenceNumber").value == "") {
+        //    alert("请填写参考中心层面");
+        //    return false;
+        //}
+        //if (document.getElementById("ReferenceScale").value == "") {
+        //    alert("请填写体表参考刻度");
+        //    return false;
+        //}
+        //if ((typeof (userID) == "undefined")) {
+        //    if (confirm("用户身份已经失效,是否选择重新登录?")) {
+        //        parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        //    }
+        //}
+        //$.ajax({
+        //    type: "POST",
+        //    url: "TreatmentReviewRecord.ashx",
+        //    async: false,
+        //    data: {
+        //        appointid: appointid,
+        //        treatmentid: treatmentid,
+                //scanpart: document.getElementById("scanpart1").value,
+                //scanmethod: document.getElementById("scanmethod1").value,
+                //user: userID,
+                //addmethod: document.getElementById("addmethod1").value,
+                //up: document.getElementById("up1").value,
+                //down: document.getElementById("down1").value,
+                //remark: document.getElementById("remark1").value,
+                //requirement: special,
+                //add: add,
+                //thickness:document.getElementById("Thickness").value,
+                //number: document.getElementById("Number").value,
+                //ReferenceNumber: document.getElementById("ReferenceNumber").value,
+                //ReferenceScale: document.getElementById("ReferenceScale").value,
+                //newremark: document.getElementById("Remarks").value
+    //        },
+    //        dateType: "json",
+    //        success: function (data) {
+    //            if (data == "success") {
+    //                window.alert("记录成功");
+    //                window.location.reload();
+    //            }
               
-                if (data == "failure") {
-                    window.alert("记录失败");
-                    return false;
-                }
-            },
-            error: function () {
-                alert("error");
-            }
-        });
-    }
+    //            if (data == "failure") {
+    //                window.alert("记录失败");
+    //                return false;
+    //            }
+    //        },
+    //        error: function () {
+    //            alert("error");
+    //        }
+    //    });
+    //}
 
     
 
@@ -1093,3 +1130,8 @@ function sex(evt) {
         return "男";
 }
 
+function toTime(minute) {
+    var hour = parseInt(parseInt(minute) / 60);
+    var min = parseInt(minute) - hour * 60;
+    return hour.toString() + ":" + (min < 10 ? "0" : "") + min.toString();
+}
