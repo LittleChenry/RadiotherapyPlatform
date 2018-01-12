@@ -684,8 +684,33 @@ function getmachineItem(item, type) {
 }
 
 function remove() {
-    document.getElementById("treatmentedit").removeAttribute("disabled");
-    document.getElementById("finishigrt").removeAttribute("disabled");
+    var appoint = window.location.search.split("&")[1];//?后第一个变量信息
+    var appointid = appoint.split("=")[1];
+    $.ajax({
+        type: "GET",
+        url: "getappointtime.ashx",
+        async: false,
+        data:{appoint:appointid},
+        dateType: "json",
+        success: function (data) {
+            var dataappoint = $.parseJSON(data);
+            dataappoint = dataappoint.time[0];
+            var end_time = new Date();
+            var t = end_time.getTime();
+            var appoint = new Date(dataappoint.Date.split(" ")[0] + " " + toTime(dataappoint.Begin) + ":" + "00");
+            var t2 = appoint.getTime();
+           if(parseInt(t)<parseInt(t2))
+           {
+            document.getElementById("treatmentedit").removeAttribute("disabled");
+            document.getElementById("finishigrt").removeAttribute("disabled");
+           }
+
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+   
 }
 
 function save() {
