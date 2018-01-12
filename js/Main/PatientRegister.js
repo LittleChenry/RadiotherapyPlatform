@@ -1385,7 +1385,7 @@ function saveTreatment() {
     $.ajax({
         type: "post",
         url: "AddTreatment.ashx",
-        async: true,
+        async: false,
         datetype: "json",
         data: {
             diagnose: diagnose,
@@ -1402,9 +1402,7 @@ function saveTreatment() {
         },
         success: function (data) {
             alert("新增成功！");
-            $("#addTreatmentRecord").html("");
-            var patient = getpatient();
-            paging(patient);
+            parent.location.reload();
         },
         error: function () {
             alert("error");

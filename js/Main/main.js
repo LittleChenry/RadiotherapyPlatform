@@ -12,6 +12,14 @@ $(document).ready(function () {
     var patient = RolesToPatients();
     if (session.role != "模拟技师" && session.role != "治疗技师") {
         adjustTable();
+        $("#patient-search").bind('input propertychange', function () {
+            var session = getSession();
+            var Searchedpatients = Search($("#patient-search").val(), patient, session.role);
+            Paging(Searchedpatients, session.role, session.userID);
+            if (session.role != "模拟技师" && session.role != "治疗技师") {
+                adjustTable();
+            }
+        });
     }
     if (session.role != "物理师" && session.role != "模拟技师" && session.role != "治疗技师") {
          $("#Menu-EquipmentInspection").attr("href", "javascript:;");
@@ -27,14 +35,7 @@ $(document).ready(function () {
             alert("权限不够！");
          });
     }
-    $("#patient-search").bind('input propertychange', function () {
-        var session = getSession();
-        var Searchedpatients = Search($("#patient-search").val(), patient, session.role);
-        Paging(Searchedpatients, session.role, session.userID);
-        if (session.role != "模拟技师" && session.role != "治疗技师") {
-            adjustTable();
-        }
-    });
+    
     $("#save").unbind("click").click(function () {
         var result = $("#record-iframe")[0].contentWindow.save();
         if (result == false) {
@@ -132,9 +133,10 @@ function RolesToPatients() {
             parameters[2] = enddate;
             sortPatient = getPatient(session.userID, session.role, parameters);
             Paging(sortPatient, session.role, session.userID);
+            
             $.ajax({
                 type: "POST",
-                async: true,
+                async: false,
                 url: "../../pages/Main/Records/setEquipment.ashx",
                 data: {
                     id: $("#equipment").val(),
@@ -147,7 +149,14 @@ function RolesToPatients() {
                 }
             });
         });
-
+        $("#patient-search").bind('input propertychange', function () {
+            var session = getSession();
+            var Searchedpatients = Search($("#patient-search").val(), sortPatient, session.role);
+            Paging(Searchedpatients, session.role, session.userID);
+            if (session.role != "模拟技师" && session.role != "治疗技师") {
+                adjustTable();
+            }
+        });
     } else {
         var parameters = new Array();
         patient = getPatient(session.userID, session.role, parameters);
@@ -281,7 +290,11 @@ function Paging(patient, role, userID) {
                     begin = toTime(patient.PatientInfo[i].begin);
                     end = toTime(patient.PatientInfo[i].end);
                     iscommon = patient.PatientInfo[i].iscommon;
-                    var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='";
+                    if (patient.PatientInfo[i].Completed == "1") {
+                        var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='";
+                    }else {
+                        var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='waiting ";
+                    }
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
                     }else{
@@ -317,7 +330,11 @@ function Paging(patient, role, userID) {
                     totalnumber = patient.PatientInfo[i].totalnumber;
                     totaltimes = patient.PatientInfo[i].totaltimes;
                     iscommon = patient.PatientInfo[i].iscommon;
-                    var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='";
+                    if (patient.PatientInfo[i].Completed == "1") {
+                        var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='";
+                    }else {
+                        var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='waiting ";
+                    }
                     if (i > 0 && patient.PatientInfo[i].Radiotherapy_ID == patient.PatientInfo[i - 1].Radiotherapy_ID) {
                         tr += "Child";
                     }else{

@@ -100,22 +100,21 @@ function createdate(jsonObj, isDouble) {
             //    i++;
             //} else {
             var span = document.createElement("span");
-            if (jsonObj[i].Completed == "1") {
-                if (jsonObj[i].ischecked == "1") {
-                    var text = document.createTextNode(jsonObj[i].PatientName + ' : CT复查(已完成)');
-                } else {
-                    var text = document.createTextNode(jsonObj[i].PatientName + ' : ' + jsonObj[i].Task + '(已完成)');
-                }
+            if (jsonObj[i].ischecked == "1") {
+                var text = document.createTextNode(jsonObj[i].PatientName + ' : CT复查');
             } else {
-                if (jsonObj[i].ischecked == "1") {
-                    var text = document.createTextNode(jsonObj[i].PatientName + ' : CT复查(未完成)');
-                } else {
-                    var text = document.createTextNode(jsonObj[i].PatientName + ' : ' + jsonObj[i].Task + '(未完成)');
-                }
+                var text = document.createTextNode(jsonObj[i].PatientName + ' : ' + jsonObj[i].Task);
             }
-                span.setAttribute("id", jsonObj[i].Treatment_ID + '_' + jsonObj[i].ID);
-                span.appendChild(text);
+            span.setAttribute("id", jsonObj[i].Treatment_ID + '_' + jsonObj[i].ID);
+            span.appendChild(text);
+            if (jsonObj[i].Completed == "1") {
                 $($tr[row]).find("td")[col + arr[row]].appendChild(span);
+            }else {
+                $($tr[row]).find("td")[col + arr[row]].appendChild(span);
+                $($tr[row]).find("td")[col + arr[row]].style.backgroundColor = "wheat";
+            }
+                
+                
             
             //}
         }

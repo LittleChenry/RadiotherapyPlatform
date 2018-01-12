@@ -125,12 +125,16 @@
 
 }
 
-.chose {
-	background-color: #3177BC;
-	color: #FFFFFF;
-}
-
 .scroll-content {
 	overflow-x:auto;
 	border-bottom:1px solid #c1c1c1;
+}
+
+.waiting {
+	background-color: wheat;
+}
+
+.chose {
+	background-color: #3177BC;
+	color: #FFFFFF;
 }

@@ -136,8 +136,8 @@ function AccelerateAppointView(){
         var tdid = tablenum.toString() + "_" +  row.toString() + "_" +  col.toString();
         var span = '<span id='+ appointinfo[count].TreatmentID + '_' + appointinfo[count].appointid +'>'+ appointinfo[count].patientname + " " + appointinfo[count].treatdescribe +'</span>'
         $("#" + tdid).append(span);
-        if (appointinfo[count].Completed == 1) {
-            $("#" + tdid).addClass("completed");
+        if (appointinfo[count].Completed == 0) {
+            $("#" + tdid).addClass("waiting");
         }
         count ++;
     }
