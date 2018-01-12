@@ -229,7 +229,7 @@ function autoList(e, data){
         $(e).next().find("ul").find("li").each(function(){
             $(this).mouseover(function(){
                 $(this).css("color","#FFFFFF");
-                $(this).css("background","#3C8DBC");
+                $(this).css("background","#1E90FF");
             });
             $(this).mouseout(function(){
                 $(this).css("color","#333333");
