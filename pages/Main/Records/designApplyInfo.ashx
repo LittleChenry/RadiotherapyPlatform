@@ -43,7 +43,7 @@ public class designApplyInfo : IHttpHandler {
         int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
         int i = 1;
 
-        string sqlCommand1 = "select design.ID as designid,Treatmentname,Treatmentdescribe,technology.ID as teID,equipmenttype.ID as eqID,technology.Name as tname,equipmenttype.Type as eqname,user.Name as doctor,design.* from technology,equipmenttype,design,user,treatment where technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";
+        string sqlCommand1 = "select splitway.Ways as ways,SplitWay_ID,design.ID as designid,Treatmentname,Treatmentdescribe,technology.ID as teID,equipmenttype.ID as eqID,technology.Name as tname,equipmenttype.Type as eqname,user.Name as doctor,design.* from technology,equipmenttype,design,user,treatment,splitway where treatment.SplitWay_ID=splitway.ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";
         //  string sqlCommand1 = "select user.Name as appuser,from user,treatment,patient,fixed where patient.ID=treatment.Patient_ID and treatment.Fixed_ID=fixed.ID and fixed.Application_User_ID=user.ID and fixed.Application_User_ID is not NULL and fixed.Operate_User_ID is NULL and fixed.ID = @fixedid";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand1);
 
@@ -59,7 +59,7 @@ public class designApplyInfo : IHttpHandler {
             string Priority = Do.Split(new char[1] {'&'})[0];
             string Dosage = Do.Split(new char[1] { '&' })[1];
             backText.Append("{\"apptime\":\"" + date1 +
-                 "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"designID\":\"" + reader["designid"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
+                 "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"ways\":\"" + reader["ways"].ToString() + "\",\"SplitWay_ID\":\"" + reader["SplitWay_ID"].ToString() + "\",\"designID\":\"" + reader["designid"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
                   "\",\"technology\":\"" + reader["teID"].ToString() + "\",\"equipment\":\"" + reader["eqID"].ToString() + "\",\"technologyname\":\"" + reader["tname"].ToString() + "\",\"equipmentname\":\"" + reader["eqname"].ToString() +"\",\"userID\":\"" + reader["Application_User_ID"].ToString()+
                   "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\"}");
 

@@ -126,10 +126,11 @@ public class designApplyRecord : IHttpHandler {
 
                 int Success = 0;
 
-                string inserttreat = "update treatment set Design_ID=@Design_ID,Progress=@progress where ID=@treat";
+                string inserttreat = "update treatment set Design_ID=@Design_ID,Progress=@progress,SplitWay_ID=@split where ID=@treat";
                 sqlOperation2.AddParameterWithValue("@progress", progress + ",7");
                 sqlOperation2.AddParameterWithValue("@Design_ID", Count);
                 sqlOperation2.AddParameterWithValue("@treat", treatID);
+                sqlOperation2.AddParameterWithValue("@split", Convert.ToInt32(context.Request.Form["splitway"]));
                 Success = sqlOperation2.ExecuteNonQuery(inserttreat);
 
                 if (intSuccess > 0 && Success > 0)
@@ -156,7 +157,12 @@ public class designApplyRecord : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@ApplicationTime", date1);
                 sqlOperation.AddParameterWithValue("@Application_User_ID", userid);
                 int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-                if (intSuccess > 0)
+                string inserttreat = "update treatment set SplitWay_ID=@split where ID=@treat";
+                sqlOperation2.AddParameterWithValue("@treat", treatID);
+                sqlOperation2.AddParameterWithValue("@split", Convert.ToInt32(context.Request.Form["splitway"]));
+                int Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+
+                if (intSuccess > 0 && Success > 0)
                 {
                     return "success";
                 }
@@ -164,6 +170,7 @@ public class designApplyRecord : IHttpHandler {
                 {
                     return "failure";
                 }
+                
             }
         }
         catch (System.Exception Ex1)

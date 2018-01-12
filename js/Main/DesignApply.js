@@ -42,6 +42,7 @@ function Init(evt) {
     createTechnologyItem(select1);
     var select2 = document.getElementById("equipment");
     createEquipmentItem(select2);
+    createSplitway(document.getElementById("splitway"));
     $("#current-tab").text(patient.Treatmentdescribe + "计划申请");
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '7')) {
@@ -53,6 +54,7 @@ function Init(evt) {
                 readDosagePriority(designInfo[i].DosagePriority);
                 readDosage(designInfo[i].Dosage);
                 document.getElementById("technology").value = designInfo[i].technology;
+                document.getElementById("splitway").value = designInfo[i].SplitWay_ID;
                 document.getElementById("equipment").value = designInfo[i].equipment;
                 document.getElementById("applyuser").innerHTML = designInfo[i].doctor;
                 document.getElementById("time").innerHTML = designInfo[i].apptime;
@@ -70,7 +72,8 @@ function Init(evt) {
                         '<div class="single-row"><div class="item area-group col-xs-12"><table id="Dosage' + i + '" class="table table-bordered">' +
                         '<thead><tr><th>危及器官</th><th>剂量</th><th>限制</th><th>体积</th><th>外放</th><th>PRV</th><th>剂量</th><th>限制</th><th>体积</th><th>优先级</th>' +
                         '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-4">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
-                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
+                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4">分割方式：<span class="underline">' + designInfo[i].ways + '</span></div></div>' +
+                        '<div class="single-row"><div class="item col-xs-4"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
                 readDosagePriority1(designInfo[i].DosagePriority, i);
@@ -96,7 +99,8 @@ function Init(evt) {
                         '<div class="single-row"><div class="item area-group col-xs-12"><table id="Dosage' + i + '" class="table table-bordered">' +
                         '<thead><tr><th>危及器官</th><th>剂量</th><th>限制</th><th>体积</th><th>外放</th><th>PRV</th><th>剂量</th><th>限制</th><th>体积</th><th>优先级</th>' +
                         '</tr></thead></table></div></div><div class="single-row"><div class="item col-xs-4">治疗技术：<span class="underline">' + designInfo[i].technologyname + '</span></div>' +
-                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div>';
+                        '<div class="item col-xs-4">放疗设备：<span class="underline">' + designInfo[i].equipmentname + '</span></div><div class="item col-xs-4">分割方式：<span class="underline">' + designInfo[i].ways + '</span></div></div>' +
+                        '<div class="single-row"><div class="item col-xs-4"><button class="btn btn-success" type="button"  id="' + i + '">载入历史信息</button></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
                 readDosagePriority1(designInfo[i].DosagePriority, i);
@@ -112,6 +116,7 @@ function Init(evt) {
             addDosage1(designInfo[k].Dosage);
             document.getElementById("technology").value = designInfo[k].technology;
             document.getElementById("equipment").value = designInfo[k].equipment;
+            document.getElementById("splitway").value = designInfo[k].SplitWay_ID;
         });
     });
     
@@ -130,6 +135,7 @@ function Init(evt) {
             document.getElementById("Prioritsum" + e.data.i).value = parseInt(document.getElementById("Prioritcgy" + e.data.i).value) * parseInt(document.getElementById("Priorittime" + e.data.i).value);
         }
     });
+
 }
 function hosttext(str) {
     if (str == "") {
@@ -735,6 +741,10 @@ function save() {
         window.alert("治疗技术没有选择");
         return false;
     }
+    if (document.getElementById("splitway").value == "allItem") {
+        window.alert("分割方式没有设置");
+        return false;
+    }
     if (document.getElementById("equipment").value == "allItem") {
         window.alert("放疗设备没有选择");
         return false;
@@ -772,6 +782,10 @@ function save() {
 function saveTemplate(TemplateName) {
     if (document.getElementById("technology").value == "allItem") {
         window.alert("治疗技术没有选择");
+        return false;
+    }
+    if (document.getElementById("splitway").value == "allItem") {
+        window.alert("分割方式没有设置");
         return false;
     }
     if (document.getElementById("equipment").value == "allItem") {
@@ -829,6 +843,7 @@ function dateformat(format) {
 }
 function remove() {
     document.getElementById("Remarks").removeAttribute("disabled");
+    document.getElementById("splitway").removeAttribute("disabled");
     //document.getElementById("Priority").removeAttribute("disabled");
     //document.getElementById("Dosage").removeAttribute("disabled");
     document.getElementById("technology").removeAttribute("disabled");
@@ -849,4 +864,27 @@ function remove() {
             }
         }
     }
+}
+function createSplitway(thiselement) {
+    var getsplitwayItem = JSON.parse(getsplitway()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("-- 分割方式--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < getsplitwayItem.length; i++) {
+        if (getsplitwayItem[i] != "") {
+            thiselement.options[i + 1] = new Option(getsplitwayItem[i].Ways);
+            thiselement.options[i + 1].value = parseInt(getsplitwayItem[i].ID);
+        }
+    }
+    if (getsplitwayItem[0].defaultItem != "") {
+        thiselement.value = getsplitwayItem[0].defaultItem;
+    }
+}
+function getsplitway() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getsplitwayItem.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
 }

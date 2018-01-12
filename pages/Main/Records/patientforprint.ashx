@@ -35,7 +35,7 @@ public class patientforprint : IHttpHandler {
 
         DataLayer sqlOperation2 = new DataLayer("sqlStr");
         StringBuilder backText = new StringBuilder("{\"patient\":[");
-        string sqlCommand2 = "select design.parameters as parameter,SplitWay_ID,treatment.TotalNumber as total,treatment.positioninfomation as pos,design.DosagePriority as DosagePriority,treataim.Aim as treatmentaim,treatment.Treatmentdescribe,Treatmentname,Progress,iscommon,patient.*,user.Name as doctor,diagnosisrecord.Part_ID as partID,diagnosisrecord.LightPart_ID as LightPart_ID,diagnosisrecord.DiagnosisResult_ID as diag from treatment,patient,user,diagnosisrecord,treataim,design where treatment.Design_ID=design.ID and treatment.DiagnosisRecord_ID=diagnosisrecord.ID  and patient.RegisterDoctor=user.ID and treatment.Patient_ID=patient.ID and treatment.ID=@id and diagnosisrecord.TreatAim_ID=treataim.ID";
+        string sqlCommand2 = "select design.parameters as parameter,SplitWay_ID,treatment.TotalNumber as total,treatment.positioninfomation as pos,design.DosagePriority as DosagePriority,treataim.Aim as treatmentaim,treatment.Treatmentdescribe,Treatmentname,Progress,iscommon,patient.*,user.Name as doctor,diagnosisrecord.Part_ID as partID,diagnosisrecord.LightPart_ID as LightPart_ID,diagnosisrecord.DiagnosisResult_ID as diag from treatment,patient,user,diagnosisrecord,treataim,design where treatment.Design_ID=design.ID and treatment.DiagnosisRecord_ID=diagnosisrecord.ID  and treatment.Belongingdoctor=user.ID and treatment.Patient_ID=patient.ID and treatment.ID=@id and diagnosisrecord.TreatAim_ID=treataim.ID";
         sqlOperation2.AddParameterWithValue("@id", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         int i = 1;
@@ -89,7 +89,7 @@ public class patientforprint : IHttpHandler {
             }
             else
             {
-                firsttime = "尚未开始治疗";
+                firsttime = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
             }
             reader2.Close();
             string model = "";
@@ -97,9 +97,10 @@ public class patientforprint : IHttpHandler {
             string headrest = "";
             string specialrequire = "";
             string remarkinfo = "";
+            string refer = "";
             if (reader["iscommon"].ToString() == "1")
             {
-                string fixedinfo = "select fixed.Remarks as fixedremark,material.Name as materialName,fixedrequirements.Requirements as fixedrequire,fixedequipment.Name as fixedequipname,headrest.Name as headname from treatment,fixed,fixedequipment,fixedrequirements,material,headrest where treatment.Fixed_ID=fixed.ID and material.ID=fixed.Model_ID  and fixed.FixedEquipment_ID=fixedequipment.ID  and fixed.FixedRequirements_ID=fixedrequirements.ID and fixed.HeadRest_ID= headrest.ID and treatment.ID=@treatid";
+                string fixedinfo = "select location.ReferenceNumber as refer,fixed.Remarks as fixedremark,material.Name as materialName,fixedrequirements.Requirements as fixedrequire,fixedequipment.Name as fixedequipname,headrest.Name as headname from treatment,fixed,fixedequipment,fixedrequirements,material,headrest,location where treatment.Location_ID=location.ID and treatment.Fixed_ID=fixed.ID and material.ID=fixed.Model_ID  and fixed.FixedEquipment_ID=fixedequipment.ID  and fixed.FixedRequirements_ID=fixedrequirements.ID and fixed.HeadRest_ID= headrest.ID and treatment.ID=@treatid";
                 sqlOperation3.AddParameterWithValue("@treatid", treatid);
                 MySql.Data.MySqlClient.MySqlDataReader reader3 = sqlOperation3.ExecuteReader(fixedinfo);
                 if (reader3.Read())
@@ -109,11 +110,12 @@ public class patientforprint : IHttpHandler {
                     headrest = reader3["headname"].ToString();
                     specialrequire = reader3["fixedrequire"].ToString();
                     remarkinfo = reader3["fixedremark"].ToString();
+                    refer = reader3["refer"].ToString();
                 }
 
                 reader3.Close();
             }
-            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Priority\":\"" + Priority + "\",\"IdentificationNumber\":\"" + reader["IdentificationNumber"] + "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() +
+            backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Priority\":\"" + Priority + "\",\"refer\":\"" + refer + "\",\"IdentificationNumber\":\"" + reader["IdentificationNumber"] + "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() +
                  "\",\"Hospital\":\"" + reader["Hospital"].ToString() + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() +
                  "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"RegisterDoctor\":\"" + reader["doctor"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
                  "\",\"Nation\":\"" + reader["Nation"].ToString() + "\",\"Address\":\"" + reader["Address"].ToString() + "\",\"Contact1\":\"" + reader["Contact1"].ToString() + "\",\"diagnosisresult\":\"" + result +

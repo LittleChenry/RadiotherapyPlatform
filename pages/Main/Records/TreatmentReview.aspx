@@ -203,14 +203,14 @@
             </div>--%>
            <div class="paper-footer"> 
                 <div class="content-title">
-                    <span>复查记录：<button id="appointtreat" class="btn btn-primary"  disabled="disabled">记录复查</button></span>
+                    <span>复查记录：<button id="appointtreat" class="btn btn-primary"  disabled="disabled">确认复查</button></span>
                 </div>
                 <div class="single-row">
                      <div class="item area-group col-xs-12">
                         <table  class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
                             <thead>
                                 <tr>
-                                    <th>扫描要求</th>
+                                    <th>扫描信息</th>
                                     <th>备注信息</th>
                                     <th>实施人员</th>
                                 </tr>

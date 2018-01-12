@@ -51,9 +51,20 @@ function print() {
     var model = patientbasic.model == "" ? "":'，' + patientbasic.model;
     var headrest = patientbasic.headrest == "" ? "":'，' + patientbasic.headrest;
     var specialrequire = patientbasic.specialrequire == "" ? "":'，' + patientbasic.specialrequire;
-    var remarkinfo = patientbasic.remarkinfo == "" ? "":'，' + patientbasic.remarkinfo;
-    content = content + '<div class="single-row" style="min-height:28px;">'+
-                        '<div class="item col-xs-12">摆位信息：<span class="underline">' + patientbasic.pos + fixedeq + model + headrest + specialrequire + remarkinfo + '</span></div></div>';
+    var remarkinfo = patientbasic.remarkinfo == "" ? "" : '，' + patientbasic.remarkinfo;
+    var refer = patientbasic.refer;
+    content = content + '<div class="single-row" style="min-height:28px;">' +
+                        '<div class="item col-xs-8">摆位信息：<span class="underline">' + patientbasic.pos + fixedeq + model + headrest + specialrequire + remarkinfo + '</span></div>';
+    if (refer != "") {
+        if (!isNaN(refer)) {
+            content = content + '<div class="item col-xs-4">体表参考刻度：<span class="underline">' + refer + '</span>(cm)</div></div>';
+        } else {
+            content = content + '<div class="item col-xs-4">体表参考刻度：<span class="underline">' + refer + '</span></div></div>';
+        }
+    } else {
+        content = content + '</div>'
+    }
+                       
 
     if (patientbasic.parameterx != "") {
         content = content + '<div class="single-row" style="min-height:28px;"><div class="item col-xs-12">移床参数：X:<span  class="underline">' + zhengfu(patientbasic.parameterx) + '</span>(cm) , Y:<span  class="underline">' + zhengfu(patientbasic.parametery) + '</span>(cm) , Z:<span  class="underline">' + zhengfu(patientbasic.parameterz) + '</span>(cm)</div></div>';

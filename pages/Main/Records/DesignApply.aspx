@@ -198,13 +198,18 @@
                     </div>
                 </div>
                 <div class="single-row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-4">
                         <span class="form-text col-xs-4" style="padding-left:0px;">治疗技术：</span>
                         <select id="technology" name="technology" class="form-item" disabled="disabled"></select>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-4">
                         <span class="form-text col-xs-4" style="padding-left:0px;">放疗设备：</span>
                         <select id="equipment" name="equipment" class="form-item" disabled="disabled"></select>
+                    </div>
+                     <div class="col-xs-4">
+                        <span class="form-text col-xs-4" style="padding-left:0px;">分割方式：</span>
+                           <select  id="splitway" disabled="disabled" class="form-item" name="splitway">
+                           </select>
                     </div>
                 </div>
             </div>

@@ -173,17 +173,19 @@ function Init(evt) {
                     var alltreatmentreviewinfo = getalltreatreview(treatmentID);
                     var table = $("#checkrecord");
                     table.empty();
+                    var content = "";
                     for (var k = 0; k < alltreatmentreviewinfo.length; k++) {
-                        var content = '<tr><td>扫描部位:' + alltreatmentreviewinfo[k].scanpart + ';扫描方式:' + alltreatmentreviewinfo[k].scanmethod + ';上界:' + alltreatmentreviewinfo[k].up + ';下界:' + alltreatmentreviewinfo[k].down;
+                        content = content+'<tr><td>扫描部位:' + alltreatmentreviewinfo[k].scanpart + ';扫描方式:' + alltreatmentreviewinfo[k].scanmethod + ';上界:' + alltreatmentreviewinfo[k].up + ';下界:' + alltreatmentreviewinfo[k].down;
                         content = content + ';增强情况:' + transferenhance(alltreatmentreviewinfo[k].enhance, alltreatmentreviewinfo[k].enhancemethod) + ';特殊要求:' + alltreatmentreviewinfo[k].specialrequest;
                         content = content + '</td>';
                         content = content + '<td>' + alltreatmentreviewinfo[k].applyremark + '</td>';
                         content = content + '<td>申请人:' + alltreatmentreviewinfo[k].applyuser + ';记录人:' + alltreatmentreviewinfo[k].operateuer + '</td>';
-                        table.append(content);
 
                     }
+                    table.append(content);
+                    $("#appointtreat").attr('disabled', true);
+                    $("#appointtreat").html("已复查");
                 }
-
                 if (data == "failure") {
                     window.alert("记录失败");
                     return false;
