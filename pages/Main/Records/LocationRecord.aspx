@@ -136,7 +136,7 @@
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">体表参考刻度：</span>
                             <div class="group-item">
-                                <input id="ReferenceScale" step="0.00001" class="form-group-input" type="number" name="ReferenceScale" disabled="disabled"/>
+                                <input id="ReferenceScale" class="form-group-input" type="text" name="ReferenceScale" disabled="disabled"/>
                                 <span class="input-group-addon">cm</span>
                             </div>
                         </div>

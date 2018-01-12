@@ -41,7 +41,7 @@ function Init(evt) {
             receiveDesign(treatID);
         }, false);
         if (isInArray(progress, '8')) {
-            document.getElementById("applyuser").innerHTML = designre.name;
+            document.getElementById("applyuser").innerHTML = designre.ReceiveUser;
             document.getElementById("time").innerHTML = designre.ReceiveTime;
             document.getElementById("receive").disabled = true;
         }
