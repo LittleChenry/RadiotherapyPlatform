@@ -48,7 +48,7 @@ public class patientInfoForWLS : IHttpHandler
         }
 
         int i = 1;
-        string sqlCommand2 = "select treatment.State as treatstate,treatment.ID as treatid,patient.*,user.Name as doctor,Progress,iscommon,treatment.Treatmentdescribe,DiagnosisRecord_ID,Design_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and Progress like '%10%' and treatment.State=0 order by patient.ID desc";
+        string sqlCommand2 = "select treatment.State as treatstate,treatment.ID as treatid,patient.*,user.Name as doctor,Progress,iscommon,treatment.Treatmentdescribe,DiagnosisRecord_ID,Design_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and treatment.Belongingdoctor=user.ID and Progress like '%10%' and treatment.State=0 order by patient.ID desc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
 

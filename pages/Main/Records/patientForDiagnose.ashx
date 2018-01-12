@@ -36,7 +36,7 @@ public class patientForDiagnose : IHttpHandler {
 
         DataLayer sqlOperation2 = new DataLayer("sqlStr");
         StringBuilder backText = new StringBuilder("{\"patient\":[");
-        string sqlCommand2 = "select treatment.ID as treatid,Progress,iscommon,patient.*,Treatmentname,Treatmentdescribe,user.Name as doctor from treatment,patient,user where patient.RegisterDoctor=user.ID and treatment.Patient_ID=patient.ID and treatment.ID=@id";
+        string sqlCommand2 = "select treatment.ID as treatid,Progress,iscommon,patient.*,Treatmentname,Treatmentdescribe,user.Name as doctor from treatment,patient,user where treatment.Belongingdoctor=user.ID and treatment.Patient_ID=patient.ID and treatment.ID=@id";
         sqlOperation2.AddParameterWithValue("@id", treatid);        
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
         int i = 1;

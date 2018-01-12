@@ -84,7 +84,7 @@ public class patientInfoForDoctor : IHttpHandler {
            string sqlCommand11 = "select groups.groupName as groupname from groups,groups2user where groups.ID=groups2user.Group_ID and groups2user.ID=@groupid";
            sqlOperation.AddParameterWithValue("@groupid", Convert.ToInt32(element));
            string groupname = sqlOperation.ExecuteScalar(sqlCommand11);
-           string sqlCommand2 = "select treatment.State as treatstate,treatment.Group_ID as groupID,treatment.ID as treatid,patient.*,State,Progress,iscommon,user.Name as doctor,treatment.Treatmentdescribe,Group_ID,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and treatment.Group_ID=@groupid  order by patient.ID desc";
+           string sqlCommand2 = "select treatment.State as treatstate,treatment.Group_ID as groupID,treatment.ID as treatid,patient.*,State,Progress,iscommon,user.Name as doctor,treatment.Treatmentdescribe,Group_ID,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and treatment.Belongingdoctor=user.ID and treatment.Group_ID=@groupid  order by patient.ID desc";
            sqlOperation2.AddParameterWithValue("@groupid", Convert.ToInt32(element));
            MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
            while (reader.Read())
@@ -133,7 +133,7 @@ public class patientInfoForDoctor : IHttpHandler {
        {
            backText.Append(",");
        }
-       string command3 = "select treatment.State as treatstate,treatment.ID as treatid,patient.*,State,Progress,iscommon,user.Name as doctor,treatment.Treatmentdescribe,Group_ID,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID and treatment.Group_ID is NULL and treatment.Belongingdoctor=@userid  order by patient.ID desc";
+       string command3 = "select treatment.State as treatstate,treatment.ID as treatid,patient.*,State,Progress,iscommon,user.Name as doctor,treatment.Treatmentdescribe,Group_ID,DiagnosisRecord_ID from treatment,patient,user where patient.ID=treatment.Patient_ID and treatment.Belongingdoctor=user.ID and treatment.Group_ID is NULL and treatment.Belongingdoctor=@userid  order by patient.ID desc";
        MySql.Data.MySqlClient.MySqlDataReader reader3 = sqlOperation2.ExecuteReader(command3);
        int temp=0;
        while (reader3.Read())

@@ -55,7 +55,7 @@ public class patientInfoForMNJS : IHttpHandler {
         }
         
         int i = 1;
-        string sqlCommand2 = "select treatment.State as treatstate,Progress,iscommon,treatment.ID as treatid,patient.*,user.Name as doctor,appointment.ID as appointid,appointment.*,equipment.Name as eqname,treatment.Treatmentdescribe,DiagnosisRecord_ID,Completed from appointment,treatment,patient,user,equipment where appointment.Equipment_ID=equipment.ID and appointment.Equipment_ID=@groupid and appointment.Date >= @date1 and appointment.Date <= @date2 and appointment.State=1 and appointment.Treatment_ID=treatment.ID and patient.ID=treatment.Patient_ID and patient.RegisterDoctor=user.ID order by appointment.Date,appointment.Begin";
+        string sqlCommand2 = "select treatment.State as treatstate,Progress,iscommon,treatment.ID as treatid,patient.*,user.Name as doctor,appointment.ID as appointid,appointment.*,equipment.Name as eqname,treatment.Treatmentdescribe,DiagnosisRecord_ID,Completed from appointment,treatment,patient,user,equipment where appointment.Equipment_ID=equipment.ID and appointment.Equipment_ID=@groupid and appointment.Date >= @date1 and appointment.Date <= @date2 and appointment.State=1 and appointment.Treatment_ID=treatment.ID and patient.ID=treatment.Patient_ID and treatment.Belongingdoctor=user.ID order by appointment.Date,appointment.Begin";
         sqlOperation2.AddParameterWithValue("@groupid", equipmentID);
         sqlOperation2.AddParameterWithValue("@date1", date1);
         sqlOperation2.AddParameterWithValue("@date2", date2);
