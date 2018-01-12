@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using Dicom;
 using System.Text;
+using System.Text.RegularExpressions;
+
 
 
 /// <summary>
@@ -45,10 +47,17 @@ public class Dcm
         //Mu,射野总数
         DicomDataset fractionGroupSequence = dcmDataSet.Get<DicomSequence>(DicomTag.FractionGroupSequence).Items[0];
         String fieldTimes = fractionGroupSequence.Get<String>(DicomTag.NumberOfBeams);//射野总数
-
+        String all = "";
         //总剂量
-        DicomDataset doseReferenceSequence = dcmDataSet.Get<DicomSequence>(DicomTag.DoseReferenceSequence).Items[0];
-        String all = doseReferenceSequence.Get<String>(DicomTag.TargetPrescriptionDose);
+        try
+        {
+            DicomDataset doseReferenceSequence = dcmDataSet.Get<DicomSequence>(DicomTag.DoseReferenceSequence).Items[0];
+            all = doseReferenceSequence.Get<String>(DicomTag.TargetPrescriptionDose);
+        }
+        catch (Exception e)
+        {
+            all = "0";
+        }
 
         //剂量次数
         String numberOfFractionsPlanned = fractionGroupSequence.Get<String>(DicomTag.NumberOfFractionsPlanned);
@@ -75,9 +84,9 @@ public class Dcm
 
             //3个角
             DicomDataset three = d.Get<DicomSequence>(DicomTag.ControlPointSequence).Items.ElementAt(0);
-            String jjj = three.Get<String>(DicomTag.GantryAngle);
-            String jtj = three.Get<String>(DicomTag.BeamLimitingDeviceAngle);
-            String czj = three.Get<String>(DicomTag.PatientSupportAngle);
+            String jjj = deleteLast(three.Get<String>(DicomTag.GantryAngle),1);
+            String jtj = deleteLast(three.Get<String>(DicomTag.BeamLimitingDeviceAngle),1);
+            String czj = deleteLast(three.Get<String>(DicomTag.PatientSupportAngle),1);
 
             //jjj变化
             String endjjj = d.Get<DicomSequence>(DicomTag.ControlPointSequence).Items.ElementAt(d.Get<DicomSequence>(DicomTag.ControlPointSequence).Items.Count-1).Get<String>(DicomTag.GantryAngle);
@@ -91,6 +100,11 @@ public class Dcm
 
             String ypj = d.Get<DicomSequence>(DicomTag.ControlPointSequence).Items.ElementAt(0).Get<String>(DicomTag.SourceToSurfaceDistance);//源皮距
             double ypjd = double.Parse(ypj) / 10.0;
+            if (mu != null && mu != "")
+            {
+                double mudouble = Math.Round(double.Parse(mu), 2);
+                mu = mudouble.ToString();
+            }
             result.Append("{\"a1\":\"").Append(a1).Append("\"")
                   .Append(",\"mu\":\"").Append(mu).Append("\"")
                   .Append(",\"equipment\":\"").Append(equipment).Append("\"")
@@ -101,9 +115,28 @@ public class Dcm
                   .Append(",\"jjj\":\"").Append(jjj).Append("\"")
                   .Append(",\"jtj\":\"").Append(jtj).Append("\"")
                   .Append(",\"czj\":\"").Append(czj).Append("\"")
-                  .Append(",\"childs\":\"").Append(child).Append("\"},");;
+                  .Append(",\"childs\":\"").Append((int.Parse(child) / 2)).Append("\"},");;
         }
 
         return result.Remove(result.Length - 1, 1).Append("]}").ToString();
+    }
+
+    private static string deleteLast(string s, int bit)
+    {
+        try
+        {
+            double d = double.Parse(s);
+            string ans = Math.Round(d, bit).ToString();
+            Regex right = new Regex("(\\d*)\\.(\\d*)");
+            if (!right.IsMatch(ans))
+            {
+                ans += ".0";
+            }
+            return ans;
+        }
+        catch (Exception e)
+        {
+            return "";
+        }
     }
 }

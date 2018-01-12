@@ -25,8 +25,8 @@ function InitAll() {
     document.getElementById("login").addEventListener("click", checkAll, false);//点击登陆进行是否填写验证
     document.getElementById("registration").addEventListener("click", TransferRegedit, false);//转到注册界面
     document.getElementById("login2").addEventListener("click", TransferMain, false);//多角色登陆
-    readUserIDCookie();//读取cookie的用户名
-    if (readUserKeyCookie()) {//读取cookie的用户密码
+    //readUserIDCookie();//读取cookie的用户名
+    if (readUserIDCookie()) {//读取cookie的用户密码
         document.getElementById("saveUserKey").checked = true;
     } else {
         document.getElementById("saveUserKey").checked = false;
@@ -45,11 +45,12 @@ function checkAll() {
     }
     //所有信息填写后保存用户名到cookie
     if (isAllGood == true) {
-        setUserIDCookie();
+        //setUserIDCookie();
         if (document.getElementById("saveUserKey").checked == true) {
-            setUserKeyCookie();
+            // setUserKeyCookie();
+            setUserIDCookie();
         } else {
-            DeleteCookie("userKey");
+            DeleteCookie("userID");
         }
     }
     if (isAllGood) {
@@ -204,22 +205,23 @@ function readUserIDCookie() {
         var strUserID = CookieValue("userID");
         if (strUserID != 0) {
             document.getElementById("userNumber").value = strUserID;
+            return true;
         }
     }
 }
 
-function readUserKeyCookie() {
-    if (document.cookie != "") {
-        var thisCookie = document.cookie.split("; ");
-        for (var i = 0; i < thisCookie.length; i++) {
-            if ("userKey" == thisCookie[i].split("=")[0]) {
-                document.getElementById("userKey").value = thisCookie[i].split("=")[1];
-                return true;
-            }
-        }
-    }
-    return false;
-}
+//function readUserKeyCookie() {
+//    if (document.cookie != "") {
+//        var thisCookie = document.cookie.split("; ");
+//        for (var i = 0; i < thisCookie.length; i++) {
+//            if ("userKey" == thisCookie[i].split("=")[0]) {
+//                document.getElementById("userKey").value = thisCookie[i].split("=")[1];
+//                return true;
+//            }
+//        }
+//    }
+//    return false;
+//}
 
 function setUserIDCookie() {
     var expireDate = new Date();
@@ -228,12 +230,12 @@ function setUserIDCookie() {
     document.cookie = "userID=" + strUserID + ";expires" + expireDate.toGMTString();
 }
 
-function setUserKeyCookie() {
-    var expireDate = new Date();
-    expireDate.setMonth(expireDate.getMonth() + 10);
-    var strUserKey = document.getElementById("userKey").value;
-    document.cookie = "userKey=" + strUserKey + ";expires" + expireDate.toGMTString();
-}
+//function setUserKeyCookie() {
+//    var expireDate = new Date();
+//    expireDate.setMonth(expireDate.getMonth() + 10);
+//    var strUserKey = document.getElementById("userKey").value;
+//    document.cookie = "userKey=" + strUserKey + ";expires" + expireDate.toGMTString();
+//}
 
 function CookieValue(cookieName) {
     var thisCookie = document.cookie.split("; ");
