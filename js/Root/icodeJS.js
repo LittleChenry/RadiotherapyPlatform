@@ -133,7 +133,8 @@ function createSelect(id, data, name) {
 function createTable(data) {
     $("#tableArea").createTable(data, {
         headName: new Array("编码", "名称"),
-        needKey: true
+        needKey: true,
+        key: "id"
     });
 }
 
@@ -155,6 +156,7 @@ function addCode(code, name) {
             $("#tableArea").createTable(obj, {
                 headName: new Array("编码", "名称"),
                 needKey: true,
+                key: "id",
                 pages:parseInt(currentPage)
             });
             alert("新增成功");
@@ -178,6 +180,7 @@ function updateCode(id, code, name) {
             $("#tableArea").createTable(obj, {
                 headName: new Array("编码", "名称"),
                 needKey: true,
+                key: "id",
                 pages: parseInt(currentPage)
             });
             alert("修改成功");
