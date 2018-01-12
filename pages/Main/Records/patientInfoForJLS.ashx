@@ -65,11 +65,11 @@ public class patientInfoForJLS : IHttpHandler {
                 string sqlCommand5 = "select Receive_User_ID from design,treatment where design.ID=treatment.Design_ID and treatment.ID =@treatID";
                 sqlOperation1.AddParameterWithValue("@treatID", reader["treatid"].ToString());
                 string receiveID = sqlOperation1.ExecuteScalar(sqlCommand5);
-                if (receiveID != userid)
-                {
-                    count--;
-                    continue;
-                }
+                //if (receiveID != userid)
+                //{
+                //    count--;
+                //    continue;
+                //}
                 string sqlCommand8 = "select ReceiveTime from design,treatment where design.ID=treatment.Design_ID and treatment.ID =@treatID";
                 receiveTime = sqlOperation1.ExecuteScalar(sqlCommand8);
             }

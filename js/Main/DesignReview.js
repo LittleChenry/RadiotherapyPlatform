@@ -398,10 +398,10 @@ function charge4(arr) {
     var yuansu = new Array();
  
     for (var i = 0; i < array.length; i++) {
-        if (array[i] == "3DCRT" || array[i] == "Step and shot" || array[i] == "Static") {
+        if (array[i].toLowerCase() == "3DCRT".toLowerCase() || array[i].toLowerCase() == "Step and shot".toLowerCase() || array[i].toLowerCase() == "Static".toLowerCase()) {
             yuansu[i]= "Static";
         }
-        if (array[i] == "dMLC" || array[i] == "VMAT" || array[i] == "Dynamic" || array[i] == "DYNAMIC") {
+        if (array[i].toLowerCase() == "dMLC".toLowerCase() || array[i].toLowerCase() == "VMAT".toLowerCase() || array[i].toLowerCase() == "Dynamic".toLowerCase()) {
             yuansu[i] = "Dynamic";
         }
     }
