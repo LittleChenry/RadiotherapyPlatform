@@ -780,8 +780,8 @@ function getscanmethodItem() {
     return Items;
 }
 function createspecialItem(thiselement) {
-    var PartItem = JSON.parse(getspecialItem()).Item;
-    var defaultItem = JSON.parse(getspecialItem()).defaultItem;
+    var PartItem = JSON.parse(getlocatespecialItem()).Item;
+    var defaultItem = JSON.parse(getlocatespecialItem()).defaultItem;
     for (var i = 0; i < PartItem.length; i++) {
         if (PartItem[i] != "") {
             thiselement.options[i] = new Option(PartItem[i].Requirements);
@@ -792,7 +792,7 @@ function createspecialItem(thiselement) {
         thiselement.value = defaultItem.ID;
     }
 }
-function getspecialItem() {
+function getlocatespecialItem() {
     var xmlHttp = new XMLHttpRequest();
     var url = "../../pages/Main/Records/getscanspecial.ashx";
     xmlHttp.open("GET", url, false);
