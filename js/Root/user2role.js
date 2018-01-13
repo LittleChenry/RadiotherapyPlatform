@@ -90,7 +90,20 @@ function recordRole() {
         data: { "number": $("#recordNumber").val(), "role":selected},
         success: function (data) {
             changeDate($("#recordNumber").val(), next);
-            $("#tableArea").createTable(jsonObj, {
+            var role = $("#roles").find("option:selected").val();
+            if (role == "1")
+                role = "激活";
+            else if (role == "0") {
+                role = "未激活";
+            }
+            var office = $("#office").find(":selected").val();
+            var temp = [];
+            for (var i = 0; i < jsonObj.length; i++) {
+                if ((role == "allNumber" || jsonObj[i].Activate == role) && (office == "allOffice" || jsonObj[i].Office == office)) {
+                    temp.push(jsonObj[i]);
+                }
+            }
+            $("#tableArea").createTable(temp, {
                 rows: 10,
                 headName: headName,
                 pages: page
