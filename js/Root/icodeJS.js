@@ -75,7 +75,7 @@ $(function () {
 function getFirst() {
     $.ajax({
         type: "post",
-        url: "getFirst.ashx",
+        url: "../../pages/Root/getFirst.ashx",
         success: function (data) {
             var firstObj = $.parseJSON(data);
             createSelect("first", firstObj, "group");
@@ -86,7 +86,7 @@ function getFirst() {
 function getSecond() {
     $.ajax({
         type: "post",
-        url: "getSecond.ashx",
+        url: "../../pages/Root/getSecond.ashx",
         data: {"first" : $("#first").find(":selected").text()},
         success: function (data) {
             var secondObj = $.parseJSON(data);
@@ -98,7 +98,7 @@ function getSecond() {
 function getThird() {
     $.ajax({
         type: "post",
-        url: "getThird.ashx",
+        url: "../../pages/Root/getThird.ashx",
         data: { "second": $("#second :selected").text() },
         success: function (data) {
             if (data == "[")
@@ -149,7 +149,7 @@ function addCode(code, name) {
     var currentPage = $("#currentPage").val();
     $.ajax({
         type: "post",
-        url: "addCode.ashx",
+        url: "../../pages/Root/addCode.ashx",
         data: { "first": currentFirst, "second": currentSecond, "code": code, "name": name },
         success: function (id) {
             objAdd(id,code, name);
@@ -173,7 +173,7 @@ function updateCode(id, code, name) {
     var currentPage = $("#currentPage").val();
     $.ajax({
         type: "post",
-        url: "updateCode.ashx",
+        url: "../../pages/Root/updateCode.ashx",
         data: { "id": id, "code": code, "name": name },
         success: function () {
             updateObj(id, code, name);
