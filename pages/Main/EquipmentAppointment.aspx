@@ -327,7 +327,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="active tab-pane col-xs-12" id="appointView" style="overflow:hidden;">
+                            <div class="active tab-pane" id="appointView" style="overflow:hidden;">
                                 <div id="WeekAreaNormal" class="col-md-12">
                                     <table id="appointTable" class="table table-bordered table-hover dataTable">
                                         <thead id="thead"></thead>
@@ -364,7 +364,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="bottom:30px;left:54px;position:absolute;">
+                        <div style="bottom:30px;left:50px;position:absolute;">
                             <span style="background-color:wheat;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                             <span>：未完成</span>
                         </div>
