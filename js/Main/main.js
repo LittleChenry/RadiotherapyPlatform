@@ -21,20 +21,6 @@ $(document).ready(function () {
             }
         });
     }
-    if (session.role != "物理师" && session.role != "模拟技师" && session.role != "治疗技师") {
-         $("#Menu-EquipmentInspection").attr("href", "javascript:;");
-         $("#Menu-EquipmentInspectionResult").attr("href", "javascript:;");
-         $("#Menu-EquipmentStatistics").attr("href", "javascript:;");
-         $("#Menu-EquipmentInspection").bind("click", function(){
-            alert("权限不够！");
-         });
-         $("#Menu-EquipmentInspectionResult").bind("click", function(){
-            alert("权限不够！");
-         });
-         $("#Menu-EquipmentStatistics").bind("click", function(){
-            alert("权限不够！");
-         });
-    }
     
     $("#save").unbind("click").click(function () {
         var result = $("#record-iframe")[0].contentWindow.save();

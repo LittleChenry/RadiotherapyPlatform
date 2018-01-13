@@ -5,7 +5,30 @@
         removeSession();//ajax 注销用户Session
         window.location.replace("../Login/Login.aspx");
     });
-
+    if (session.role != "物理师" && session.role != "模拟技师" && session.role != "治疗技师") {
+         $("#Menu-EquipmentInspection").attr("href", "javascript:;");
+         $("#Menu-EquipmentInspectionResult").attr("href", "javascript:;");
+         $("#Menu-EquipmentStatistics").attr("href", "javascript:;");
+         $("#Menu-EquipmentInspection").bind("click", function(){
+            alert("权限不够！");
+         });
+         $("#Menu-EquipmentInspectionResult").bind("click", function(){
+            alert("权限不够！");
+         });
+         $("#Menu-EquipmentStatistics").bind("click", function(){
+            alert("权限不够！");
+         });
+    }
+    if (session.role != "医师") {
+         $("#Menu-ConditionResultManage").attr("href", "javascript:;");
+         $("#Menu-PathologyResultManage").attr("href", "javascript:;");
+         $("#Menu-ConditionResultManage").bind("click", function(){
+            alert("权限不够！");
+         });
+         $("#Menu-PathologyResultManage").bind("click", function(){
+            alert("权限不够！");
+         });
+    }
 })
 
 function getSession() {

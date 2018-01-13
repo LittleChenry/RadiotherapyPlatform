@@ -207,6 +207,22 @@
                 </li>
                 <li class="treeview">
                     <a href="#">
+                        <i class="fa fa-plus-square"></i> <span>诊断结果管理</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a id="Menu-ConditionResultManage" href="ConditionResultManage.aspx"><i class="fa fa-circle-o"></i>病情诊断结果管理</a>
+                        </li>
+                        <li>
+                            <a id="Menu-PathologyResultManage" href="PathologyResultManage.aspx"><i class="fa fa-circle-o"></i>病理诊断结果管理</a>
+                        </li>
+                    </ul>
+                </li>
+                <%--<li class="treeview">
+                    <a href="#">
                         <i class="fa fa-rmb"></i>
                         <span>收费</span>
                     </a>
@@ -228,7 +244,7 @@
                         <i class="fa fa-table"></i>
                         <span>排队叫号</span>
                     </a>
-                </li>
+                </li>--%>
             </ul>
         </section>
     </aside>

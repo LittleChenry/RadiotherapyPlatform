@@ -55,7 +55,7 @@ $(function () {
 function getFirst() {
     $.ajax({
         type: "post",
-        url: "getMorphoFirst.ashx",
+        url: "../../pages/Root/getMorphoFirst.ashx",
         success: function (data) {
             var firstObj = $.parseJSON(data);
             createSelect("first", firstObj, "group");
@@ -76,7 +76,7 @@ function createSelect(id, data, name) {
 function getSecond() {
     $.ajax({
         type: "post",
-        url: "getmorphoSecond.ashx",
+        url: "../../pages/Root/getmorphoSecond.ashx",
         data: { "first": $("#first :selected").text() },
         success: function (data) {
             if (data == "[")
@@ -90,7 +90,8 @@ function getSecond() {
 function createTable(data) {
     $("#tableArea").createTable(data, {
         headName: new Array("名称"),
-        needKey: true
+        needKey: true,
+        key:"id"
     });
 }
 
@@ -98,13 +99,14 @@ function addCode(name) {
     var currentPage = $("#currentPage").val();
     $.ajax({
         type: "post",
-        url: "addmorpholCode.ashx",
+        url: "../../pages/Root/addmorpholCode.ashx",
         data: { "first": currentFirst, "name": name },
         success: function (id) {
             objAdd(id, name);
             $("#tableArea").createTable(obj, {
                 headName: new Array("名称"),
                 needKey: true,
+                key:"id",
                 pages: parseInt(currentPage)
             });
             alert("新增成功");
@@ -121,13 +123,14 @@ function updateCode(id, name) {
     var currentPage = $("#currentPage").val();
     $.ajax({
         type: "post",
-        url: "updatemorpholCode.ashx",
+        url: "../../pages/Root/updatemorpholCode.ashx",
         data: { "id": id, "name": name },
         success: function () {
             updateObj(id, name);
             $("#tableArea").createTable(obj, {
                 headName: new Array("名称"),
                 needKey: true,
+                key:"id",
                 pages: parseInt(currentPage)
             });
             alert("修改成功");
