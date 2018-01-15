@@ -20,7 +20,7 @@
 			lessLength: 0,//每行最小列数，0不开启该功能
 			pages: 1,//创建第几页
 			needKey: false,//是否需要在第一列添加hidden记录id
-            key:"",
+            key:"id",
 			maxcols: 0,//一行最大几列，0不开启
 			link: false,
 			linkcols: 0,
