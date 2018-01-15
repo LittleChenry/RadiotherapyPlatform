@@ -52,7 +52,8 @@ function Init(evt) {
                     window.parent.document.getElementById("edit").removeAttribute("disabled");
                 }
                 
-                document.getElementById("modelselect").value =  fixedInfo.fixedInfo[i].modelID;
+                document.getElementById("modelselect").value = fixedInfo.fixedInfo[i].modelID;
+                document.getElementById("place").value = fixedInfo.fixedInfo[i].place;
                 document.getElementById("specialrequest").value = fixedInfo.fixedInfo[i].requireID;
                 document.getElementById("fixEquip").value = fixedInfo.fixedInfo[i].fixedEquipment;
                 document.getElementById("bodyPost").value = fixedInfo.fixedInfo[i].body;
@@ -89,7 +90,7 @@ function Init(evt) {
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + fixedInfo.fixedInfo[i].Treatmentdescribe + '体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab'+ i +'">'
-                    + '<div class="single-row"><div class="item col-xs-6">头枕:<span class="underline">' + fixedInfo.fixedInfo[i].headrestname + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">头枕:<span class="underline">' + fixedInfo.fixedInfo[i].headrestname + '</span></div><div class="item col-xs-6">模具摆放位置:<span class="underline">' + fixedInfo.fixedInfo[i].place + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">'+ fixedInfo.fixedInfo[i].Remarks +'</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">体位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
@@ -124,7 +125,7 @@ function Init(evt) {
                 var pictures = fixedInfo.fixedInfo[i].Pictures.split(",");
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + fixedInfo.fixedInfo[i].Treatmentdescribe + '体位固定记录</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '">'
-                    + '<div class="single-row"><div class="item col-xs-6">头枕:<span class="underline">' + fixedInfo.fixedInfo[i].headrestname + '</span></div></div>'
+                    + '<div class="single-row"><div class="item col-xs-6">头枕:<span class="underline">' + fixedInfo.fixedInfo[i].headrestname + '</span></div><div class="item col-xs-6">模具摆放位置:<span class="underline">' + fixedInfo.fixedInfo[i].place + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12">备注：<span class="underline">' + fixedInfo.fixedInfo[i].Remarks + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">体位图片：</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-12"><div id="multipic" class="imgbox multifile">';
@@ -145,7 +146,7 @@ function Init(evt) {
                     $(this).bind("click", showPicture);
                 });
             } else {
-                document.getElementById("modelselect").value = fixedInfo.fixedInfo[i].modelID;
+                document.getElementById("modelselect").value = fixedInfo.fixedInfo[i].modelID;                
                 document.getElementById("specialrequest").value = fixedInfo.fixedInfo[i].requireID;
                 document.getElementById("fixEquip").value = fixedInfo.fixedInfo[i].fixedEquipment;
                 document.getElementById("bodyPost").value = fixedInfo.fixedInfo[i].body;              
@@ -159,6 +160,7 @@ function Init(evt) {
             //document.getElementById("specialrequest").value = fixedInfo.fixedInfo[k].requireID;
             //document.getElementById("fixEquip").value = fixedInfo.fixedInfo[k].fixedEquipment;
             //document.getElementById("bodyPost").value = fixedInfo.fixedInfo[k].body;
+            document.getElementById("place").value = fixedInfo.fixedInfo[i].place;
             document.getElementById("Head").value = fixedInfo.fixedInfo[k].headrest;
             document.getElementById("Remarks").value = fixedInfo.fixedInfo[k].Remarks;
         });
@@ -456,4 +458,5 @@ function remove() {
     document.getElementById("bodyPost").removeAttribute("disabled");
     document.getElementById("Remarks").removeAttribute("disabled");
     document.getElementById("Head").removeAttribute("disabled");
+    document.getElementById("place").removeAttribute("disabled");
 }

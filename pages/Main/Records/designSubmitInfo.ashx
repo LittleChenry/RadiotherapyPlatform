@@ -51,7 +51,7 @@ public class designSubmitInfo : IHttpHandler {
         sqlOperation.AddParameterWithValue("@patient", patientid);
         int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
         int i = 1;
-        string sqlCommand3 = "select design.ID as designid,Treatmentdescribe,Treatmentname,technology.name as tname,equipmenttype.type as eqname,user.Name as doctor,design.* from technology,equipmenttype,design,user,treatment where technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";      
+        string sqlCommand3 = "select design.ID as designid,Treatmentdescribe,Treatmentname,technology.name as tname,equipmenttype.type as eqname,design.Technology_ID as techid,user.Name as doctor,design.* from technology,equipmenttype,design,user,treatment where technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and design.Application_User_ID =user.ID  and treatment.Patient_ID=@patient";      
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand3);
 
         StringBuilder backText = new StringBuilder("{\"designInfo\":[");
@@ -155,8 +155,8 @@ public class designSubmitInfo : IHttpHandler {
             backText.Append("{\"apptime\":\"" + date1 +
                  "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"ReceiveUser\":\"" + receiver + "\",\"ReceiveTime\":\"" + date2 + "\",\"SubmitUser\":\"" + operate + "\",\"SubmitTime\":\"" + date3 +
                   "\",\"technology\":\"" + reader["tname"].ToString() + "\",\"equipment\":\"" + reader["eqname"].ToString() + "\",\"PlanSystem\":\"" + reader["PlanSystem_ID"].ToString() +
-                  "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +                  
-                  "\",\"Raytype\":\"" + reader["Raytype_ID"].ToString() + "\",\"equipmentid\":\"" + reader["Equipment_ID"].ToString() +
+                  "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
+                  "\",\"Raytype\":\"" + reader["Raytype_ID"].ToString() + "\",\"equipmentid\":\"" + reader["Equipment_ID"].ToString() + "\",\"technologyid\":\"" + reader["techid"].ToString() +
                    "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"Raytypename\":\"" + raytypename + "\",\"left\":\"" + left + "\",\"right\":\"" + right + "\",\"rise\":\"" + rise + "\",\"drop\":\"" + drop + "\",\"enter\":\"" + enter + "\",\"out\":\"" + out1 +
                    "\",\"PlanSystemname\":\"" + planname + "\",\"designID\":\"" + reader["designid"].ToString() + "\",\"userID\":\"" + reader["Submit_User_ID"].ToString() + "\"}");
 

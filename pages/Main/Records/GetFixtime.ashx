@@ -35,18 +35,32 @@ public class GetFixtime : IHttpHandler {
         String treatid=context.Request.QueryString["treatid"];
         string command = "select fixed.Appointment_ID as appoint from treatment,fixed where treatment.ID=@treatid and treatment.Fixed_ID=fixed.ID ";
         sqlOperation.AddParameterWithValue("@treatid", Convert.ToInt32(treatid));
-        int appoint = int.Parse(sqlOperation.ExecuteScalar(command));
-       
-        string sqlCommand = "select Date,Begin,End from Appointment where ID=@appoint";
-        sqlOperation.AddParameterWithValue("@appoint", appoint);
-        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
-        StringBuilder backText = new StringBuilder("{\"fixtime\":[");
-        if(reader.Read())
+        string appointid = sqlOperation.ExecuteScalar(command);
+        int appoint = 0;
+        if (appointid != "")
         {
-            backText.Append("{\"Date\":\"" + reader["Date"].ToString() + "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\"}");
+            appoint = int.Parse(appointid);
+            string sqlCommand = "select Date,Begin,End from Appointment where ID=@appoint";
+            sqlOperation.AddParameterWithValue("@appoint", appoint);
+            MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
+            StringBuilder backText = new StringBuilder("{\"fixtime\":[");
+            if (reader.Read())
+            {
+                backText.Append("{\"Date\":\"" + reader["Date"].ToString() + "\",\"Begin\":\"" + reader["Begin"].ToString() + "\",\"End\":\"" + reader["End"].ToString() + "\"}");
+            }
+            backText.Append("]}");
+            return backText.ToString();
+
         }
-        backText.Append("]}");
-        return backText.ToString();
+        else
+        {
+            StringBuilder backText = new StringBuilder("{\"fixtime\":[");
+            backText.Append("]}");
+            return backText.ToString();
+        }
+      
+       
+       
     }
 
 }

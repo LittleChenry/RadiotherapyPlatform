@@ -26,7 +26,7 @@ public class GetGroupInformation : IHttpHandler {
         string zy = "";
         string zyid = "";
         bool flag = false;
-        string sqlCommand = "SELECT `user`.`Name`,`user`.ID uid,groups.ID gid,groups.groupName,groups2user.identity FROM "
+        string sqlCommand = "SELECT `user`.`Name`,`user`.ID uid,groups.ID gid,groups.groupName,groups2user.identity,groups2user.state FROM "
                             + "`user` RIGHT JOIN groups2user ON `user`.ID=groups2user.User_ID "
                             +"RIGHT JOIN groups ON groups2user.Group_ID=groups.ID WHERE groups2user.state=1 OR groups2user.identity=1 ORDER BY gid,identity";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
@@ -53,6 +53,14 @@ public class GetGroupInformation : IHttpHandler {
                       .Append(havehigh ? reader["uid"].ToString() : "")
                       .Append("\",\"high\":\"")
                       .Append(havehigh ? reader["Name"].ToString(): "");
+                if (havehigh && reader["state"].ToString() == "1")
+                {
+                    result.Append("\",\"gzid\":\"")
+                     .Append(reader["uid"].ToString())
+                     .Append("\",\"gz\":\"")
+                     .Append(reader["Name"].ToString());
+                        count++;
+                }
                 if (!havehigh)
                 {
                     if (iszz)

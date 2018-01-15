@@ -986,7 +986,7 @@ function showEquipmentInfo(equipmentinfo){
 	EquipmentTime.nextAll().each(function(){
 		$(this).remove();
 	});
-	EquipmentTime.html("一次治疗时间：" + equipmentinfo.Timelength + "min");
+	EquipmentTime.html("时间间隔：" + equipmentinfo.Timelength + "min");
 	var TimeRangeAM = '<p class="text-muted" style="padding-left:20px;margin-top:10px;">上午工作时间：'+ toTime(equipmentinfo.BeginTimeAM) + ' - ' + toTime(equipmentinfo.EndTimeAM) +'</p>';
 	var TimeRangePM = '<p class="text-muted" style="padding-left:20px;margin-top:10px;">下午工作时间：'+ toTime2(equipmentinfo.BegTimePM) + ' - ' + toTime2(equipmentinfo.EndTimePM) +'</p>';
 	EquipmentTime.after(TimeRangePM);

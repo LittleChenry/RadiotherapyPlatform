@@ -49,7 +49,7 @@
                        <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
                     </div>
                     <div class="single-row">
-                        <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
+                        <div class="item col-xs-12">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
                     </div>
                 </div>                  
                 <div class="paper-content">
@@ -88,7 +88,11 @@
                                 <div class="col-xs-6">
                                     <span class="form-text col-xs-4" style="padding-left:0px;">头枕：</span>
                                     <select id="Head" name="Head" class="form-item" disabled="disabled"></select>
-                                </div>                                
+                                </div>
+                                <div class="col-xs-6">
+                                    <span class="form-text col-xs-4" style="padding-left:0px;">模具摆放位置：</span>
+                                    <input id="place" name="place" class="form-item" disabled="disabled"/>
+                                </div>                                  
                             </div>  
                             <div class="single-row">
                                 <div class="item area-group col-xs-12">

@@ -96,7 +96,7 @@ public class FixInfo : IHttpHandler
                      "\",\"bodyname\":\"" + reader["bodyname"].ToString() + "\",\"body\":\"" + reader["BodyPosition"].ToString() + "\",\"fixedEquipment\":\"" + reader["FixedEquipment_ID"].ToString() + "\",\"operate\":\"" + operate + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
                      "\",\"ApplicationTime\":\"" + date1 + "\",\"ApplicationUser\":\"" + reader["doctor"].ToString() + "\",\"BodyPositionDetail\":\"" + reader["BodyPositionDetail"].ToString() + "\",\"headrest\":\"" + reader["HeadRest_ID"].ToString() +
                      "\",\"AnnexDescription\":\"" + reader["AnnexDescription"].ToString() + "\",\"Remarks\":\"" + reader["Remarks"].ToString() + "\",\"Pictures\":\"" + reader["Pictures"].ToString() + "\",\"OperateTime\":\"" + date2 + "\",\"headrestname\":\"" + headname+
-                     "\",\"fixedID\":\"" + reader["fixedid"].ToString() + "\",\"modelname\":\"" + reader["mname"].ToString() + "\",\"requirename\":\"" + reader["Requirements"].ToString() + "\",\"fixedEquipmentname\":\"" + reader["fename"].ToString() + "\"}");
+                     "\",\"fixedID\":\"" + reader["fixedid"].ToString() + "\",\"place\":\"" + reader["place"].ToString() + "\",\"modelname\":\"" + reader["mname"].ToString() + "\",\"requirename\":\"" + reader["Requirements"].ToString() + "\",\"fixedEquipmentname\":\"" + reader["fename"].ToString() + "\"}");
                 if (i < count)
                 {
                     backText.Append(",");

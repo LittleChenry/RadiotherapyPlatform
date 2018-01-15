@@ -58,7 +58,13 @@ function Init(evt) {
         document.getElementById("applyuser").innerHTML = userName;
         var fixtime = getfixtime(treatmentID);
         var fixtime = JSON.parse(fixtime).fixtime;
-        var fixtimebiaozhun = fixtime[0].Date.split(" ")[0].replace(/\//g, "-");
+        var fixtimebiaozhun = "";
+        if (fixtime.length != 0) {
+           fixtimebiaozhun = fixtime[0].Date.split(" ")[0].replace(/\//g, "-");
+        } else {
+            alert("体位固定尚未预约");
+            fixtimebiaozhun = new Date();
+        }
         document.getElementById("AppiontDate").value = fixtimebiaozhun;
         document.getElementById("chooseappoint").addEventListener("click", function () {
             CreateNewAppiontTable(event);
@@ -175,7 +181,13 @@ function Init(evt) {
         document.getElementById("applyuser").innerHTML = userName;
         var fixtime = getfixtime(treatmentID);
         var fixtime = JSON.parse(fixtime).fixtime;
-        var fixtimebiaozhun = fixtime[0].Date.split(" ")[0].replace(/\//g,"-");
+        var fixtimebiaozhun = "";
+        if (fixtime.length != 0) {
+            fixtimebiaozhun = fixtime[0].Date.split(" ")[0].replace(/\//g, "-");
+        } else {
+            alert("体位固定尚未预约");
+            fixtimebiaozhun = new Date();
+        }
         document.getElementById("AppiontDate").value = fixtimebiaozhun;
         document.getElementById("time").innerHTML = getNowFormatDate();
         document.getElementById("chooseappoint").addEventListener("click", function () {
@@ -724,13 +736,18 @@ function getFixApplyTime(equiment, dateString){
     var treatid = window.location.search.split("=")[1];
     var fixtime = getfixtime(treatid);
     var fixtime = JSON.parse(fixtime).fixtime;
-    var begintime = toTime(fixtime[0].Begin);
-    var endtime = toTime(fixtime[0].End);
-    var fixtimebiaozhun = fixtime[0].Date.split(" ")[0] + " " + begintime + "-" + endtime;
-    var datedate = dateString.split("-");
-    var groupstring = "-" + datedate[1] + "-" + datedate[2] + "-" + equiment.Begin + "-" + equiment.End;
-    var group = groupstring.split("-");
-    return compare(fixtimebiaozhun, group);
+    if (fixtime.length != 0) {
+        var begintime = toTime(fixtime[0].Begin);
+        var endtime = toTime(fixtime[0].End);
+        var fixtimebiaozhun = fixtime[0].Date.split(" ")[0] + " " + begintime + "-" + endtime;
+        var datedate = dateString.split("-");
+        var groupstring = "-" + datedate[1] + "-" + datedate[2] + "-" + equiment.Begin + "-" + equiment.End;
+        var group = groupstring.split("-");
+        return compare(fixtimebiaozhun, group);
+    } else {
+         return true;
+    }
+  
 }
 
 function chooseItem() {
@@ -1051,7 +1068,7 @@ function compare(evt1, evt2) {
         return false;
     }
     if (parseInt(month) == parseInt(evt2[1]) && parseInt(day) == parseInt(evt2[2])) {
-        if ((parseInt(evt2[3]) - Min) >= 30) {
+        if ((parseInt(evt2[3]) - Min) >= 10) {
             return true;
         }
         else {

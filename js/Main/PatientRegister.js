@@ -107,13 +107,17 @@ function Init(evt) {
             $(this).css("background", "white");
         }
     });
-        $("#timeselect").bind("change", function () {
-        var dateString = document.getElementById("AppiontDate").value;
-        CreateCurrentAccerEquipmentTbale(dateString);
-        });
-        $("#self-photo").unbind("click").click(function (e) {
-            $("#mypic").click();
-        });
+    $("#timeselect").bind("change", function () {
+    var dateString = document.getElementById("AppiontDate").value;
+    CreateCurrentAccerEquipmentTbale(dateString);
+    });
+    $("#self-photo").unbind("click").click(function (e) {
+        $("#mypic").click();
+    });
+
+    $("#importPhoto").bind("click",function(){
+        $("#cutphoto").modal({ backdrop: 'static' });
+    });
 }
 function isradio() {
     var radio = document.getElementById("radionumber").value;
@@ -1352,6 +1356,11 @@ function saveTreatment() {
             var temp = $(this).attr("id").split("_");
             diagnose = temp[1];
             group = temp[2];
+        } else {
+            if ($(this).attr("id") != undefined) {
+                var temp = $(this).attr("id").split("_");
+                group = temp[2];
+            }
         }
     });
     $("#fixed").find("td").each(function () {

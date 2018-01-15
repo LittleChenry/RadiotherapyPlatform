@@ -32,6 +32,7 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+<link rel="stylesheet" href="../../plugin/cropper/cropper.min.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
 <div class="wrapper">
@@ -279,7 +280,8 @@
                             <input id="mypic"  type="file"  style="display:none" accept="image/*" onchange="handleFiles(event)"/> 
                         </div>
                         <div class="card-reader">
-                            <button id="ReadIDCard" type="button" class="btn btn-info btn-sm btn-flat" style="width:102px;">读身份证</button>
+                            <button id="ReadIDCard" type="button" class="btn btn-info btn-sm btn-flat" style="width:70px;">读身份证</button>
+                            <button id="importPhoto" type="button" class="btn btn-info btn-sm btn-flat" style="width:70px;">导入图片</button>
                             <div class="CardReaderInfo">
                                 <span id="ReturnInfo"></span>
                             </div>
@@ -423,6 +425,41 @@
             </form>
         </section>
     </div>
+    <div id="cutphoto" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">选择照片</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div style="text-align: right;">
+                            <label for="input" class="btn btn-danger" id="">
+                            <span>选择图片</span>
+                            <input type="file" id="input" class="sr-only">
+                            </label>
+                            <a class="btn btn-primary" onclick="crop()" data-dismiss="modal">确定</a>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-sm-8 col-sm-offset-2" style="height:200px;border:1px solid #c1c1c1;">
+                            <img src="" id="photo">
+                        </div>
+                        <%--<div class="col-sm-8 col-sm-offset-2">
+                            <div class="col-sm-4 col-sm-offset-4">
+                                <p>
+                                    预览(102*126)：
+                                </p>
+                                <div class="img-preview">
+                                </div>
+                            </div>
+                        </div>--%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.0
@@ -454,12 +491,78 @@
 <!-- js -->
 <script src="../../js/Main/HeaderOperate.js"></script>
 <script src="../../js/Main/AddPatient.js"></script>
+<script src="../../plugin/cropper/cropper.min.js"></script>
 <script src="../../js/Main/TestAddress.js"></script>
 <script src="../../js/Main/TestChooseAddress.js"></script>
 <script>
     $("#addpatient-content").css("minHeight", $(document).height() - 101);
     $("#choosepatient-content").css("minHeight", $(document).height() - 101);
     //$("#Birthday").datepicker({ autoclose: true });
+</script>
+<script>
+    // 修改自官方demo的js
+    var initCropper = function (img, input) {
+        var $image = img;
+        var options = {
+            aspectRatio: 102 / 126, // 纵横比
+            viewMode: 2,
+            preview: '.img-preview' // 预览图的class名
+        };
+        $image.cropper(options);
+        var $inputImage = input;
+        var uploadedImageURL;
+        if (URL) {
+            // 给input添加监听
+            $inputImage.change(function () {
+                var files = this.files;
+                var file;
+                if (!$image.data('cropper')) {
+                    return;
+                }
+                if (files && files.length) {
+                    file = files[0];
+                    // 判断是否是图像文件
+                    if (/^image\/\w+$/.test(file.type)) {
+                        // 如果URL已存在就先释放
+                        if (uploadedImageURL) {
+                            URL.revokeObjectURL(uploadedImageURL);
+                        }
+                        uploadedImageURL = URL.createObjectURL(file);
+                        // 销毁cropper后更改src属性再重新创建cropper
+                        $image.cropper('destroy').attr('src', uploadedImageURL).cropper(options);
+                        $inputImage.val('');
+                    } else {
+                        window.alert('请选择一个图像文件！');
+                    }
+                }
+            });
+        } else {
+            $inputImage.prop('disabled', true).addClass('disabled');
+        }
+    }
+    var crop = function () {
+        var $image = $('#photo');
+        var $target = $('#self-photo');
+        var $pic = $('#pic');
+        var $mypic = $('#mypic');
+        $image.cropper('getCroppedCanvas', {
+            width: 102, // 裁剪后的长宽
+            height: 126
+        }).toBlob(function (blob) {
+            // 裁剪后将图片放到指定标签
+            $target.attr('src', URL.createObjectURL(blob));
+            var reader = new FileReader();
+            reader.onload = (function (file) {
+                return function (e) {
+                    $pic.attr("value", this.result);
+                };
+            })(blob);
+            reader.readAsDataURL(blob);
+        });
+    }
+    $(function () {
+        initCropper($('#photo'), $('#input'));
+    });
 </script>
 </body>
 </html>

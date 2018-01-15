@@ -34,6 +34,8 @@ function Init(evt) {
     var texthos = hosttext(patient.Hospital_ID);
     document.getElementById("hospitalid").innerHTML = texthos;
     document.getElementById("lightpart").innerHTML = patient.LightPart_ID;
+    var select4 = document.getElementById("technology");
+    createTechnologyItem(select4);
     var select1 = document.getElementById("PlanSystem");
     createPlanSystemItem(select1);
     var select2 = document.getElementById("equipment");
@@ -50,7 +52,7 @@ function Init(evt) {
                 document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
                 addDosagePriority1(designInfo[i].DosagePriority);
                 addDosage1(designInfo[i].Dosage);
-                document.getElementById("technology").innerHTML = designInfo[i].technology;
+                //document.getElementById("technology").innerHTML = designInfo[i].technology;
                 
                 document.getElementById("ApplicationUser").innerHTML = designInfo[i].doctor;
                 document.getElementById("ApplicationTime").innerHTML = designInfo[i].apptime;
@@ -61,7 +63,7 @@ function Init(evt) {
                 document.getElementById("PlanSystem").value = designInfo[i].PlanSystem;
                 document.getElementById("Raytype").value = designInfo[i].Raytype;
                 document.getElementById("left").value = designInfo[i].left;
-                
+                document.getElementById("technology").value = designInfo[i].technologyid;
                 document.getElementById("right").value = designInfo[i].right;
                 document.getElementById("rise").value = designInfo[i].rise;
                 document.getElementById("drop").value = designInfo[i].drop;
@@ -117,7 +119,7 @@ function Init(evt) {
                     document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
                     addDosagePriority1(designInfo[i].DosagePriority);
                     addDosage1(designInfo[i].Dosage);
-                    document.getElementById("technology").innerHTML = designInfo[i].technology;
+                    document.getElementById("technology").value = designInfo[i].technologyid;
                     document.getElementById("equipment").value = designInfo[i].equipmentid;
                     document.getElementById("ApplicationUser").innerHTML = designInfo[i].doctor;
                     document.getElementById("ApplicationTime").innerHTML = designInfo[i].apptime;
@@ -136,6 +138,7 @@ function Init(evt) {
             document.getElementById("right").value = designInfo[k].right;
             document.getElementById("rise").value = designInfo[k].rise;
             document.getElementById("drop").value = designInfo[k].drop;
+            document.getElementById("technology").value = designInfo[i].technologyid;
             document.getElementById("enter").value = designInfo[k].enter;
             document.getElementById("out").value = designInfo[k].out;
         });
@@ -216,7 +219,31 @@ function transfer(number) {
     }
 
 }
+function createTechnologyItem(thiselement) {
+    var PartItem = JSON.parse(getPartIte()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--治疗技术选择--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+        }
+    }
+    if (PartItem[0].defaultItem != "") {
+        thiselement.value = PartItem[0].defaultItem;
+    }
 
+}
+//第二步部位项数据库调取
+function getPartIte() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getTechnology.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
 function createEquipmentItem(thiselement) {
     var PartItem = JSON.parse(getPartItem2()).item;
     thiselement.options.length = 0;
@@ -541,6 +568,10 @@ function save() {
         window.alert("计划系统没有选择");
         return false;
     }
+    if (document.getElementById("technology").value == "allItem") {
+        window.alert("治疗技术没有选择");
+        return false;
+    }
     if (document.getElementById("equipment").value == "allItem") {
         window.alert("放疗设备没有选择");
         return false;
@@ -595,7 +626,7 @@ function remove() {
     document.getElementById("equipment").removeAttribute("disabled");
     document.getElementById("PlanSystem").removeAttribute("disabled");
     document.getElementById("Raytype").removeAttribute("disabled");
-    
+    document.getElementById("technology").removeAttribute("disabled");
     document.getElementById("left").removeAttribute("disabled");
     document.getElementById("right").removeAttribute("disabled");
     document.getElementById("rise").removeAttribute("disabled");

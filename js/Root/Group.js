@@ -203,6 +203,7 @@ function cannelAddGroup() {
 /**
  * 确定新增一组
  */
+var canAdd = true;
 function sureAddGroup() {
     if (canAdd) {
         canAdd = false;
@@ -216,10 +217,12 @@ function sureAddGroup() {
     }
         if ($selectedMember[0].value == "") {
             alert("请选择高资历");
+            canAdd = true;
             return false;
         }
         if ($selectedMember[1].value == "") {
             alert("请选择组长");
+            canAdd = true;
             return false;
         }
 
@@ -232,7 +235,6 @@ function sureAddGroup() {
 
 }
 
-var canAdd = true;
 /**
  * 后台处理新增一组事件
  */

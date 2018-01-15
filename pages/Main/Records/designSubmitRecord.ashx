@@ -121,11 +121,12 @@ public class designSubmitRecord : IHttpHandler {
                 eo = context.Request.Form["enter"];
             }            
             string para = lr+";"+rd+";"+eo;
-            string strSqlCommand = "UPDATE  design  SET PlanSystem_ID=@PlanSystem_ID,DosagePriority=@DosagePriority,Equipment_ID=@Equipment_ID,Raytype_ID=@Raytype_ID,parameters=@parameters,SubmitTime=@datetime,Submit_User_ID=@userid where design.ID=@ctID";
+            string strSqlCommand = "UPDATE  design  SET Technology_ID=@Technology_ID,PlanSystem_ID=@PlanSystem_ID,DosagePriority=@DosagePriority,Equipment_ID=@Equipment_ID,Raytype_ID=@Raytype_ID,parameters=@parameters,SubmitTime=@datetime,Submit_User_ID=@userid where design.ID=@ctID";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@PlanSystem_ID", Convert.ToInt32(context.Request.Form["PlanSystem"]));
             sqlOperation.AddParameterWithValue("@Equipment_ID", Convert.ToInt32(context.Request.Form["equipment"]));
             sqlOperation.AddParameterWithValue("@Raytype_ID", Convert.ToInt32(context.Request.Form["Raytype"]));
+            sqlOperation.AddParameterWithValue("@Technology_ID", Convert.ToInt32(context.Request.Form["technology"]));
             sqlOperation.AddParameterWithValue("@parameters", para);
             sqlOperation.AddParameterWithValue("@datetime", datetime);
             sqlOperation.AddParameterWithValue("@DosagePriority", DosagePriority);

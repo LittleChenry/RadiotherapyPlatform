@@ -45,7 +45,7 @@
                    <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
+                    <div class="item col-xs-12">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
                 </div>
             </div>   
             <div class="paper-content">

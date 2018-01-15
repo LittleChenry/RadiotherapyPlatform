@@ -97,10 +97,11 @@ public class fixRecordRecord : IHttpHandler {
             if (!exists)
             {
 
-                string strSqlCommand = "UPDATE  fixed  SET Pictures=@picture,BodyPosition=@detail,Model_ID=@modelID,HeadRest_ID=@HeadRest_ID,FixedRequirements_ID=@FixedRequirements_ID,FixedEquipment_ID=@FixedEquipment_ID,Remarks=@remarks,OperateTime=@datetime,Operate_User_ID=@userid where fixed.ID=@fixedID";
+                string strSqlCommand = "UPDATE  fixed  SET place=@place,Pictures=@picture,BodyPosition=@detail,Model_ID=@modelID,HeadRest_ID=@HeadRest_ID,FixedRequirements_ID=@FixedRequirements_ID,FixedEquipment_ID=@FixedEquipment_ID,Remarks=@remarks,OperateTime=@datetime,Operate_User_ID=@userid where fixed.ID=@fixedID";
                 //各参数赋予实际值
                 sqlOperation.AddParameterWithValue("@fixedID", FixedID);
                 sqlOperation.AddParameterWithValue("@detail", context.Request.Form["bodypost"]);
+                sqlOperation.AddParameterWithValue("@place", context.Request.Form["place"]);
                 sqlOperation.AddParameterWithValue("@modelID", Convert.ToInt32(context.Request.Form["modelselect"]));
                 sqlOperation.AddParameterWithValue("@HeadRest_ID", Convert.ToInt32(context.Request.Form["Head"]));
                 sqlOperation.AddParameterWithValue("@FixedRequirements_ID", Convert.ToInt32(context.Request.Form["specialrequest"]));
@@ -133,9 +134,10 @@ public class fixRecordRecord : IHttpHandler {
             }
             else
             {
-                string strSqlCommand = "UPDATE  fixed  SET BodyPosition=@detail,Model_ID=@modelID,HeadRest_ID=@HeadRest_ID,FixedRequirements_ID=@FixedRequirements_ID,FixedEquipment_ID=@FixedEquipment_ID,Remarks=@remarks,OperateTime=@datetime,Operate_User_ID=@userid where fixed.ID=@fixedID";
+                string strSqlCommand = "UPDATE  fixed  SET place=@place,BodyPosition=@detail,Model_ID=@modelID,HeadRest_ID=@HeadRest_ID,FixedRequirements_ID=@FixedRequirements_ID,FixedEquipment_ID=@FixedEquipment_ID,Remarks=@remarks,OperateTime=@datetime,Operate_User_ID=@userid where fixed.ID=@fixedID";
                 //各参数赋予实际值
                 sqlOperation.AddParameterWithValue("@fixedID", FixedID);
+                sqlOperation.AddParameterWithValue("@place", context.Request.Form["place"]);
                 sqlOperation.AddParameterWithValue("@detail", context.Request.Form["bodypost"]);
                 sqlOperation.AddParameterWithValue("@modelID", Convert.ToInt32(context.Request.Form["modelselect"]));
                 sqlOperation.AddParameterWithValue("@HeadRest_ID", Convert.ToInt32(context.Request.Form["Head"]));

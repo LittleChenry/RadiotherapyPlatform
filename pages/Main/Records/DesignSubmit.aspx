@@ -116,13 +116,13 @@
                     </div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">治疗技术：<span id="technology" class="underline"></span></div>
-                    <div class="item col-xs-4">申请医生：<span id="ApplicationUser" class="underline"></span></div>
-                    <div class="item col-xs-4">申请时间：<span id="ApplicationTime" class="underline"></span></div>
+                   
+                    <div class="item col-xs-6">申请医生：<span id="ApplicationUser" class="underline"></span></div>
+                    <div class="item col-xs-6">申请时间：<span id="ApplicationTime" class="underline"></span></div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4">领取医生：<span id="receiveUser" class="underline"></span></div>
-                    <div class="item col-xs-4">领取时间：<span id="receiveTime" class="underline"></span></div>
+                    <div class="item col-xs-6">领取医生：<span id="receiveUser" class="underline"></span></div>
+                    <div class="item col-xs-6">领取时间：<span id="receiveTime" class="underline"></span></div>
                 </div>
             </div>
             <div class="paper-content">
@@ -150,7 +150,11 @@
                             <div class="col-xs-6">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">射线类型：</span>
                                 <select id="Raytype" name="Raytype" class="form-item" disabled="disabled"></select>
-                            </div>                        
+                            </div> 
+                            <div class="col-xs-6">
+                                <span class="form-text col-xs-4" style="padding-left:0px;">治疗技术：</span>
+                                <select id="technology" name="technology" class="form-item" disabled="disabled"></select>
+                            </div>                          
                         </div>
                         <div class="single-row">
                             <div class="col-xs-6">

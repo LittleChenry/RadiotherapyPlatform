@@ -87,7 +87,9 @@ function Init() {
     $("#self-photo").unbind("click").click(function (e) {
         $("#mypic").click();
     });
-    
+    $("#importPhoto").bind("click",function(){
+        $("#cutphoto").modal({ backdrop: 'static' });
+    });
 }
 
 function SelectAddress() {

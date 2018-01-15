@@ -105,6 +105,7 @@ public class Dcm
                 double mudouble = Math.Round(double.Parse(mu), 2);
                 mu = mudouble.ToString();
             }
+            TechnologyType ttype = TrchnologyTypeFactory.newInstance(technology);
             result.Append("{\"a1\":\"").Append(a1).Append("\"")
                   .Append(",\"mu\":\"").Append(mu).Append("\"")
                   .Append(",\"equipment\":\"").Append(equipment).Append("\"")
@@ -115,7 +116,7 @@ public class Dcm
                   .Append(",\"jjj\":\"").Append(jjj).Append("\"")
                   .Append(",\"jtj\":\"").Append(jtj).Append("\"")
                   .Append(",\"czj\":\"").Append(czj).Append("\"")
-                  .Append(",\"childs\":\"").Append((int.Parse(child) / 2)).Append("\"},");;
+                  .Append(",\"childs\":\"").Append(ttype.change(int.Parse(child))).Append("\"},");;
         }
 
         return result.Remove(result.Length - 1, 1).Append("]}").ToString();

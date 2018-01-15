@@ -210,8 +210,9 @@
 
 .card-reader {
     position: absolute;
-    width: 102px;
-    margin-left: 800px;
+    text-align: center;
+    width: 150px;
+    margin-left: 775px;
     top: 371px;
     z-index: 1;
 }
