@@ -160,7 +160,7 @@ function Init(evt) {
             //document.getElementById("specialrequest").value = fixedInfo.fixedInfo[k].requireID;
             //document.getElementById("fixEquip").value = fixedInfo.fixedInfo[k].fixedEquipment;
             //document.getElementById("bodyPost").value = fixedInfo.fixedInfo[k].body;
-            document.getElementById("place").value = fixedInfo.fixedInfo[i].place;
+            document.getElementById("place").value = fixedInfo.fixedInfo[k].place;
             document.getElementById("Head").value = fixedInfo.fixedInfo[k].headrest;
             document.getElementById("Remarks").value = fixedInfo.fixedInfo[k].Remarks;
         });

@@ -57,7 +57,7 @@ function print() {
                         '<div class="item col-xs-12">摆位信息：<span class="underline">' + patientbasic.pos + fixedeq + model + headrest + specialrequire + remarkinfo + '</span></div></div>';
    
     if (patientbasic.parameterx != "") {
-        content = content + '<div class="single-row" style="min-height:28px;"><div class="item col-xs-8">移床参数：X:<span  class="underline">' + zhengfu(patientbasic.parameterx) + '</span>(cm) , Y:<span  class="underline">' + zhengfu(patientbasic.parametery) + '</span>(cm) , Z:<span  class="underline">' + zhengfu(patientbasic.parameterz) + '</span>(cm)</div>';
+        content = content + '<div class="single-row" style="min-height:28px;"><div class="item col-xs-8">移床参数：X:<span  class="underline">' + zhengfu(patientbasic.parameterx) + '</span>(cm) , Y:<span  class="underline">' + zhengfuy(patientbasic.parameterz) + '</span>(cm) , Z:<span  class="underline">' + zhengfuz(patientbasic.parametery) + '</span>(cm)</div>';
     }
     if (refer != "") {
         if (!isNaN(refer)) {
@@ -129,5 +129,28 @@ function zhengfu(str) {
     }
     if (parseFloat(str) < 0) {
         return "右" + Math.abs(parseFloat(str));
+    }
+}
+
+function zhengfuz(str) {
+    if (parseFloat(str) == 0) {
+        return "0";
+    }
+    if (parseFloat(str) > 0) {
+        return "升" + Math.abs(parseFloat(str));
+    }
+    if (parseFloat(str) < 0) {
+        return "降" + Math.abs(parseFloat(str));
+    }
+}
+function zhengfuy(str) {
+    if (parseFloat(str) == 0) {
+        return "0";
+    }
+    if (parseFloat(str) > 0) {
+        return "进" + Math.abs(parseFloat(str));
+    }
+    if (parseFloat(str) < 0) {
+        return "出" + Math.abs(parseFloat(str));
     }
 }
