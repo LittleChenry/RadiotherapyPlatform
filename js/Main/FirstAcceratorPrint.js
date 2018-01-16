@@ -18,6 +18,9 @@ function print() {
         },
         dateType: "json",
         success: function (data) {
+            data = data.replace(/\r/g, "");
+            data = data.replace(/\n/g, "\\n");
+            data = data.replace(/\t/g, "");
             patientbasic =eval("(" + data + ")");
             patientbasic=patientbasic.patient[0];
         },
