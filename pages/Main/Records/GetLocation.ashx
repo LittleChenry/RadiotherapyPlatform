@@ -39,7 +39,7 @@ public class getLocation : IHttpHandler {
         StringBuilder backText = new StringBuilder("{\"info\":[");
         while (reader.Read())
         {
-            backText.Append("{\"Thickness\":\"" + reader["Thickness"].ToString() + "\",\"Number\":\"" + reader["Number"] + "\",\"ReferenceScale\":\"" + reader["ReferenceScale"] + "\"}");           
+            backText.Append("{\"Thickness\":\"" + reader["Thickness"].ToString() + "\",\"Number\":\"" + reader["Number"] + "\",\"ReferenceNumber\":\"" + reader["ReferenceNumber"] + "\"}");           
         }
         backText.Append("]}");
         reader.Close();
