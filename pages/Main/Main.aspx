@@ -279,7 +279,7 @@
                 <div id="legend" class="col-sm-9" style="display:none;padding-top:8px;padding-left:25px;">
                     <span style="background-color:wheat;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                     <span>：等待</span>
-                    <span style="color:red;margin-left:10px;">患者纪录</span>
+                    <span style="color:#00A65A;margin-left:10px;">患者纪录</span>
                     <span>：增强</span>
                 </div>
                 <div class="col-sm-3 pull-right">
