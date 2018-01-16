@@ -278,7 +278,7 @@
                     </div>
 
                     <div id="pdfplan" class="single-row">
-                        <div class="col-xs-12">
+                        <div id="firstplan" class="col-xs-12">
                             <span class="form-text col-xs-2" style="padding-left:0px;">计划PDF上传：</span>
                             <div class="group-item col-xs-3">                        
                                 <input id="fp_upload" type="file" accept="application/pdf" name="fp_upload" disabled="disabled"/>

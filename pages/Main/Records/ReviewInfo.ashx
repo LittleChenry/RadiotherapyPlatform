@@ -48,7 +48,7 @@ public class ReviewInfo : IHttpHandler {
             string date1 = dt1.ToString("yyyy-MM-dd HH:mm");
             backText.Append("{\"ReviewTime\":\"" + date1 + "\",\"name\":\"" + reader["username"] + "\",\"sum\":\"" + reader["SUM"] +
                 "\",\"degree\":\"" + reader["Percent"] + "\",\"PlanQA\":\"" + reader["PlanQA"] + "\",\"userID\":\"" + reader["_User_ID"] +
-                "\",\"Remark\":\"" + reader["Remark"] + "\"}");
+                "\",\"Remark\":\"" + reader["Remark"] + "\",\"PDF1\":\"" + reader["PDF1"] + "\",\"PDF2\":\"" + reader["PDF2"] + "\"}");
           
         }
         backText.Append("]}");

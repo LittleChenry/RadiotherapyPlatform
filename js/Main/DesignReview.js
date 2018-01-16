@@ -132,7 +132,17 @@ if (isInArray(progress, '11')) {
                     document.getElementById("check13").style.color = "#0000ff";
                     document.getElementById("check14").style.color = "#0000ff";
                     document.getElementById("applyuser").innerHTML = reviewInfo.name;
-                    document.getElementById("time").innerHTML = reviewInfo.ReviewTime;              
+                    document.getElementById("time").innerHTML = reviewInfo.ReviewTime;
+                    if (reviewInfo.PDF1 != "") {
+                        var content = '<div class="group-item col-xs-3"><a href="' + reviewInfo.PDF1 + '"target="_blank"   class="btn btn-default">查看已传计划PDF文档</a></div>';
+                        $("#firstplan").append(content);
+
+                    }
+                    if (reviewInfo.PDF2 != "") {
+                        var content = '<div class="group-item col-xs-3"><a href="' + reviewInfo.PDF2 + '"target="_blank"   class="btn btn-default">查看已传复核PDF文档</a></div>';
+                        $("#reviewplan").append(content);
+
+                    }
                 }
                 if (reviewInfo.userID == userID) {
                     window.parent.document.getElementById("edit").removeAttribute("disabled");
