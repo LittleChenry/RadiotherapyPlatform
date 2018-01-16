@@ -5,6 +5,7 @@ var userID;
 var signal = 0;
 var signal1 = 0;
 var role;
+var item11 = 0;
 function Init(evt) {
 
 //获得当前执行人姓名与ID,
@@ -98,11 +99,16 @@ if (isInArray(progress, '11')) {
     document.getElementById("time").innerHTML = getNowFormatDate();
     document.getElementById("hidetreatID").value = treatID;
     if (isInArray(progress, '12')) {
+        item11 = 1;
         var reviewInfo = getReviewInfo(treatID);       
                 document.getElementById(plan(reviewInfo.PlanQA)).checked = true;
                 document.getElementById("degree").value = reviewInfo.degree;
                 document.getElementById("remark").value = reviewInfo.Remark;
-                if(reviewInfo.sum=="1"){
+                if (reviewInfo.sum == "1") {
+                    signal = 1;
+                    document.getElementById("TechnologyConfirm1").value = 1;
+                    document.getElementById("confirmPlanSystem1").value = 1;
+                    document.getElementById("EquipmentConfirm1").value = 1;
                     document.getElementById("check1").innerHTML = "通过";
                     document.getElementById("check1").style.color = "#0000ff";
                     document.getElementById("check2").innerHTML = "通过";
@@ -119,6 +125,12 @@ if (isInArray(progress, '11')) {
                     document.getElementById("check12").innerHTML = "通过";
                     document.getElementById("check13").innerHTML = "通过";
                     document.getElementById("check14").innerHTML = "通过";
+                    document.getElementById("check97").innerHTML = "通过";
+                    document.getElementById("check97").style.color = "#0000ff";
+                    document.getElementById("check98").innerHTML = "通过";
+                    document.getElementById("check98").style.color = "#0000ff";
+                    document.getElementById("check99").innerHTML = "通过";
+                    document.getElementById("check99").style.color = "#0000ff";
                     document.getElementById("check3").style.color = "#0000ff";
                     document.getElementById("check4").style.color = "#0000ff";
                     document.getElementById("check5").style.color = "#0000ff";
@@ -132,7 +144,17 @@ if (isInArray(progress, '11')) {
                     document.getElementById("check13").style.color = "#0000ff";
                     document.getElementById("check14").style.color = "#0000ff";
                     document.getElementById("applyuser").innerHTML = reviewInfo.name;
-                    document.getElementById("time").innerHTML = reviewInfo.ReviewTime;              
+                    document.getElementById("time").innerHTML = reviewInfo.ReviewTime;
+                    if (reviewInfo.PDF1 != "") {
+                        var content = '<div class="group-item col-xs-3"><a href="' + reviewInfo.PDF1 + '"target="_blank"   class="btn btn-default">查看已传计划PDF文档</a></div>';
+                        $("#firstplan").append(content);
+
+                    }
+                    if (reviewInfo.PDF2 != "") {
+                        var content = '<div class="group-item col-xs-3"><a href="' + reviewInfo.PDF2 + '"target="_blank"   class="btn btn-default">查看已传复核PDF文档</a></div>';
+                        $("#secondplan").append(content);
+
+                    }
                 }
                 if (reviewInfo.userID == userID) {
                     window.parent.document.getElementById("edit").removeAttribute("disabled");
@@ -805,12 +827,14 @@ function save() {
 }
 function remove() {
     document.getElementById("confirm").removeAttribute("disabled");
-    document.getElementById("confirmCoplanar").removeAttribute("disabled");
-    document.getElementById("Button1").removeAttribute("disabled");
     if (role == "科主任") {
         document.getElementById("Forced").removeAttribute("disabled");
     }
-    document.getElementById("Button3").removeAttribute("disabled");
+    if (item11 == 0) {
+        document.getElementById("confirmCoplanar").removeAttribute("disabled");
+        document.getElementById("Button1").removeAttribute("disabled");
+        document.getElementById("Button3").removeAttribute("disabled");
+    }
     document.getElementById("degree").removeAttribute("disabled");
     document.getElementById("degree").removeAttribute("disabled");
     document.getElementById("remark").removeAttribute("disabled");

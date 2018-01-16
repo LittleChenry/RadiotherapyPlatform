@@ -205,7 +205,7 @@
                                         <td id="left"></td>
                                         <td>右</td>
                                         <td id="right"></td>
-                                        <td rowspan="3">
+                                        <td rowspan="3" id="check97">
                                             <button id="confirmCoplanar" class="btn btn-success" type="button" onclick="confirm1(this,confirmCoplanar, cancelconfirmCoplanar,TechnologyConfirm1)" disabled="disabled" style="margin:auto;">通过</button>
                                             <button id="cancelconfirmCoplanar" class="btn btn-warning" type="button" onclick="cancelconfirm(this,confirmCoplanar, cancelconfirmCoplanar,TechnologyConfirm1)" style="display:none;margin:auto;" >取消通过</button>
                                         </td>
@@ -226,7 +226,7 @@
                                         <td>14</td>
                                         <td>治疗计划打印与传输</td>
                                         <td colspan="4"></td>
-                                        <td>
+                                        <td id="check98">
                                             <button id="Button1" class="btn btn-success" type="button" onclick="confirm1(this,Button1,Button2,confirmPlanSystem1)" disabled="disabled" style="margin:auto;">通过</button>
                                             <button id="Button2" class="btn btn-warning" type="button" onclick="cancelconfirm(this,Button1,Button2,confirmPlanSystem1)" style="display:none;margin:auto;" >取消通过</button>
                                         </td>
@@ -235,7 +235,7 @@
                                         <td>15</td>
                                         <td>参考图像传输</td>
                                         <td colspan="4"></td>
-                                        <td>
+                                        <td id="check99">
                                             <button id="Button3" class="btn btn-success" type="button" onclick="confirm1(this,Button3,Button4,EquipmentConfirm1)" disabled="disabled" style="margin:auto;">通过</button>
                                             <button id="Button4" class="btn btn-warning" type="button" onclick="cancelconfirm(this,Button3,Button4,EquipmentConfirm1)" style="display:none;margin:auto;" >取消通过</button>
                                         </td>
@@ -278,7 +278,7 @@
                     </div>
 
                     <div id="pdfplan" class="single-row">
-                        <div class="col-xs-12">
+                        <div id="firstplan" class="col-xs-12">
                             <span class="form-text col-xs-2" style="padding-left:0px;">计划PDF上传：</span>
                             <div class="group-item col-xs-3">                        
                                 <input id="fp_upload" type="file" accept="application/pdf" name="fp_upload" disabled="disabled"/>
@@ -287,7 +287,7 @@
                     </div>
 
                     <div  id="reviewplan" class="single-row">
-                        <div class="col-xs-12">
+                        <div  id="secondplan" class="col-xs-12">
                             <span class="form-text col-xs-2" style="padding-left:0px;">复核PDF上传：</span>
                             <div class="group-item col-xs-3">                        
                                 <input id="fp_upload1" type="file" accept="application/pdf" name="fp_upload1" disabled="disabled"/>
