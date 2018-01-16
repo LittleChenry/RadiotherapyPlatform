@@ -275,8 +275,14 @@
             <div id="patient-table-content" class="scroll-content">
                 <table id="patient-table" class="table table-bordered" style="white-space:nowrap;margin-bottom:0px;"></table>
             </div>
-            <div class="row" style="margin:1px;float:right;">
-                <div class="col-sm-3">
+            <div class="row">
+                <div id="legend" class="col-sm-9" style="display:none;padding-top:8px;padding-left:25px;">
+                    <span style="background-color:wheat;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                    <span>：等待</span>
+                    <span style="color:red;margin-left:10px;">患者纪录</span>
+                    <span>：增强</span>
+                </div>
+                <div class="col-sm-3 pull-right">
                     <div class="dataTables_info" id="patient_info" role="status" aria-live="polite"></div>
                 </div>
             </div>

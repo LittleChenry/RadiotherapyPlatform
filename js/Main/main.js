@@ -257,6 +257,7 @@ function Paging(patient, role, userID) {
                 trAddClick(patient, userID);
                 break;
             case "模拟技师":
+                $("#legend").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Task, date, begin, end, Completed, doctor;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th>'
                     + '<th>患者姓名</th><th>状态</th><th>诊断结果</th><th>疗程</th><th>主治医生</th></tr></thead>';
@@ -276,6 +277,7 @@ function Paging(patient, role, userID) {
                     begin = toTime(patient.PatientInfo[i].begin);
                     end = toTime(patient.PatientInfo[i].end);
                     iscommon = patient.PatientInfo[i].iscommon;
+                    Enhance = patient.PatientInfo[i].Enhance;
                     if (patient.PatientInfo[i].Completed == "1") {
                         var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='";
                     }else {
@@ -285,6 +287,9 @@ function Paging(patient, role, userID) {
                         tr += "Child";
                     }else{
                         tr += "Parent";
+                    }
+                    if (Enhance == "1") {
+                        tr += " Enhance";
                     }
                     trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Completed+ "</td><td style='max-width:160px;overflow:hidden;text-overflow:ellipsis;'>" + diagnosisresult + "</td><td>" + treat + "</td>"
                         + "<td>" + doctor + "</td></tr>";
@@ -1563,8 +1568,9 @@ function Search(str, patient, role) {
                 begin = toTime(patient.PatientInfo[i].begin);
                 end = toTime(patient.PatientInfo[i].end);
                 iscommon = patient.PatientInfo[i].iscommon;
+                Enhance = patient.PatientInfo[i].Enhance;
                 if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || doctor.search(str) >= 0 || Completed.search(str) >= 0) {
-                    var singlepatient = {iscommon:iscommon, treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, Progress: patient.PatientInfo[i].Progress, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed, Task:patient.PatientInfo[i].Task };
+                    var singlepatient = {Enhance:Enhance, iscommon:iscommon, treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, Progress: patient.PatientInfo[i].Progress, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed, Task:patient.PatientInfo[i].Task };
                     Searchedpatient[count++] = singlepatient;
                 }
             }
