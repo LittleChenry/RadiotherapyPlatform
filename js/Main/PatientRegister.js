@@ -1457,6 +1457,7 @@ function checkAddTreatment(Radiotherapy_ID) {
                         table.append(thead);
                         table.append(tbody);
                         data = data.replace(/\r/g, "");
+                        data = data.replace(/\t/g, "");
                         data = data.replace(/\n/g, "\\n");
                         obj = $.parseJSON(data);
                         var newTreatname = obj.treatinfo.length + 1;
