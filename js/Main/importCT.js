@@ -70,7 +70,7 @@ function Init(evt) {
     } else {
         var location = getLocation(treatmentID);
         document.getElementById("Thickness").value = location.Thickness;
-        document.getElementById("ReferenceScale").value = location.ReferenceScale;
+        document.getElementById("ReferenceScale").value = location.ReferenceNumber;
         document.getElementById("Number").value = location.Number;
         var date = new Date();
         document.getElementById("treatmentID").value = treatmentID;

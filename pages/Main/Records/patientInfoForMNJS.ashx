@@ -66,10 +66,13 @@ public class patientInfoForMNJS : IHttpHandler {
         {
             string progress = reader["Progress"].ToString();
             string[] strArray = progress.Split(',');
-            //if (reader["Task"].ToString() == "模拟定位" && Array.LastIndexOf(strArray, "4") < 0)
-            //{
-            //    continue;
-            //}
+            string Enhance="0";
+            if (Array.LastIndexOf(strArray, "3") > 0)
+            {
+                string sel = "select Enhance from location,treatment where treatment.ID=@treatid and treatment.location_ID=location.ID";
+                sqlOperation.AddParameterWithValue("@treatid", reader["treatid"].ToString());
+                Enhance = sqlOperation.ExecuteScalar(sel);
+            }
             if (reader["Task"].ToString() == "复位模拟" && (Array.LastIndexOf(strArray, "5") < 0 || Array.LastIndexOf(strArray, "4") < 0 ))
             {
                 continue;
@@ -88,7 +91,7 @@ public class patientInfoForMNJS : IHttpHandler {
             string da = reader["Date"].ToString();
             DateTime dt1 = Convert.ToDateTime(da);
             string date3 = dt1.ToString("yyyy-MM-dd");
-            backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"date\":\"" + date3 + "\",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"state\":\"" + reader["treatstate"].ToString() +
+            backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"date\":\"" + date3 + "\",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"state\":\"" + reader["treatstate"].ToString() + "\",\"Enhance\":\"" + Enhance +
                     "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"Completed\":\"" + reader["Completed"].ToString() + "\",\"Task\":\"" + reader["Task"].ToString() + "\",\"ischecked\":\"" + reader["ischecked"].ToString()
                     + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"appointid\":\"" + reader["appointid"].ToString() + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\"}");
 
