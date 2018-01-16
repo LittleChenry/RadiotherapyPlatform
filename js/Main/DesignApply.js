@@ -741,11 +741,11 @@ function save() {
         window.alert("治疗技术没有选择");
         return false;
     }
-    if (document.getElementById("splitway").value == "allItem") {
+    if (document.getElementById("splitway").value == "allItem" || document.getElementById("splitway").value == "" || document.getElementById("splitway").value == "0") {
         window.alert("分割方式没有设置");
         return false;
     }
-    if (document.getElementById("equipment").value == "allItem") {
+    if (document.getElementById("equipment").value == "allItem" || document.getElementById("equipment").value == "" || document.getElementById("equipment").value == "0") {
         window.alert("放疗设备没有选择");
         return false;
     }
