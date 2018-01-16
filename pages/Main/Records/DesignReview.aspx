@@ -287,7 +287,7 @@
                     </div>
 
                     <div  id="reviewplan" class="single-row">
-                        <div class="col-xs-12">
+                        <div  id="secondplan" class="col-xs-12">
                             <span class="form-text col-xs-2" style="padding-left:0px;">复核PDF上传：</span>
                             <div class="group-item col-xs-3">                        
                                 <input id="fp_upload1" type="file" accept="application/pdf" name="fp_upload1" disabled="disabled"/>

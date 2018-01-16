@@ -152,7 +152,7 @@ if (isInArray(progress, '11')) {
                     }
                     if (reviewInfo.PDF2 != "") {
                         var content = '<div class="group-item col-xs-3"><a href="' + reviewInfo.PDF2 + '"target="_blank"   class="btn btn-default">查看已传复核PDF文档</a></div>';
-                        $("#reviewplan").append(content);
+                        $("#secondplan").append(content);
 
                     }
                 }
