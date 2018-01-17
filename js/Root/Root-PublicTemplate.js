@@ -286,9 +286,14 @@ function updateDesign($tr){
         contentType: false,
         async: false,
         success: function (data) {
-            alert("模板保存成功");
-            $("#add_design").modal("hide");
-            createTable(type);         
+            if (data == "success") {
+                alert("模板保存成功");
+                $("#add_design").modal("hide");
+                createTable(type);
+            } else {
+                alert("模板保存失败");
+            }
+                     
         },
         error: function (e) {
             alert("error");
@@ -320,9 +325,13 @@ function postDesign(){
         contentType: false,
         async: false,
         success: function (data) {
-            alert("模板保存成功");
-            $("#add_design").modal("hide");
-            createTable(type);         
+            if (data == "success") {
+                alert("模板保存成功");
+                $("#add_design").modal("hide");
+                createTable(type);
+            } else {
+                alert("模板保存失败");
+            }
         },
         error: function (e) {
             alert("error");
