@@ -85,9 +85,9 @@
                                 </div>
                             </div>  
                             <div class="single-row">
-                                <div class="col-xs-6">
+                                <div class="col-xs-6" style="position:static;">
                                     <span class="form-text col-xs-4" style="padding-left:0px;">头枕：</span>
-                                    <select id="Head" name="Head" class="form-item" disabled="disabled"></select>
+                                    <input id="Head" name="Head" class="form-item" disabled="disabled"/>
                                 </div>
                                 <div class="col-xs-6">
                                     <span class="form-text col-xs-4" style="padding-left:0px;">模具摆放位置：</span>

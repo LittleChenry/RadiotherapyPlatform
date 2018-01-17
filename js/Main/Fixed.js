@@ -190,17 +190,69 @@ function getbodyposItem() {
 function createheadrestItem(thiselement) {
     var PartItem = JSON.parse(getrestItem()).Item;
     var defaultItem = JSON.parse(getrestItem()).defaultItem;
-    for (var i = 0; i < PartItem.length; i++) {
-        if (PartItem[i] != "") {
-            thiselement.options[i] = new Option(PartItem[i].Name);
-            thiselement.options[i].value = parseInt(PartItem[i].ID);
-        }
+    if (defaultItem == "") {
+        $(thiselement).attr("value", "");
+    } else {
+        $(thiselement).attr("value", defaultItem.Name);
     }
-    if (defaultItem != "") {
-        thiselement.value = defaultItem.ID;
-    }
-
+    $(thiselement).bind("click", function () {
+        event.stopPropagation();
+        autoList(this, PartItem);
+    });
 }
+function autoList(e, data) {
+    if ($(e).next().length == 0) {
+        var position = $(e).offset();
+        var parentelement = $(e).parent();
+        var pickerTop = position.top + 30;
+        var pickerLeft = position.left;
+        var pickerWidth = $(e).width() + 12;
+        $(document).click(function () {
+            $(e).next().fadeOut(200);
+        });
+        var selectArea = "<div class='pickerarea'><ul class='auto_ul'>";
+        for (var i = 0; i < data.length; i++) {
+            li = "<li id='" + data[i].ID + "' class='auto_list'>" + data[i].Name + "</li>";
+            selectArea += li;
+        }
+        selectArea += "</ul></div>";
+        $(parentelement).append(selectArea);
+        $(e).next().css({ minWidth: pickerWidth });
+        $(e).next().offset({ top: pickerTop, left: pickerLeft });
+        $(e).next().find("ul").find("li").each(function () {
+            $(this).mouseover(function () {
+                $(this).css("color", "#FFFFFF");
+                $(this).css("background", "#1E90FF");
+            });
+            $(this).mouseout(function () {
+                $(this).css("color", "#333333");
+                $(this).css("background", "#FFFFFF");
+            });
+            $(this).bind("click", function () {
+                event.stopPropagation();
+                if ($(this).find("i").length == 0) {
+                    var ispan = "<i class='pull-right fa fa-fw fa-check'></i>"
+                    $(this).append(ispan);
+                } else {
+                    $(this).find("i")[0].remove();
+                }
+                $(this).parent().parent().prev().val("");
+                $(this).parent().find("li").each(function (index, element) {
+                    if ($(this).find("i").length != 0) {
+                        var text = $(this).parent().parent().prev().val() + $(this).text().split("<")[0] + "，";
+                        $(this).parent().parent().prev().val(text);
+                    }
+                });
+                if ($(this).parent().parent().prev().val()) {
+                    var temp = $(this).parent().parent().prev().val();
+                    $(this).parent().parent().prev().val(temp.substring(0, temp.length - 1));
+                }
+            });
+        });
+    }
+    $(e).next().fadeIn(200);
+}
+
 function getrestItem() {
     var xmlHttp = new XMLHttpRequest();
     var url = "getheadrest.ashx";
@@ -419,7 +471,7 @@ function save() {
         window.alert("固定装置没有选择");
         return false;
     }
-    if (document.getElementById("Head").value == "allItem") {
+    if (document.getElementById("Head").value == "") {
         window.alert("头枕没有选择");
         return false;
     }

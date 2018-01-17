@@ -100,7 +100,7 @@ public class patientforprint : IHttpHandler {
             string refer = "";
             if (reader["iscommon"].ToString() == "1")
             {
-                string fixedinfo = "select location.ReferenceScale as refer,fixed.Remarks as fixedremark,material.Name as materialName,fixedrequirements.Requirements as fixedrequire,fixedequipment.Name as fixedequipname,headrest.Name as headname from treatment,fixed,fixedequipment,fixedrequirements,material,headrest,location where treatment.Location_ID=location.ID and treatment.Fixed_ID=fixed.ID and material.ID=fixed.Model_ID  and fixed.FixedEquipment_ID=fixedequipment.ID  and fixed.FixedRequirements_ID=fixedrequirements.ID and fixed.HeadRest_ID= headrest.ID and treatment.ID=@treatid";
+                string fixedinfo = "select location.ReferenceScale as refer,fixed.Remarks as fixedremark,material.Name as materialName,fixedrequirements.Requirements as fixedrequire,fixedequipment.Name as fixedequipname,fixed.HeadRest_ID as headname from treatment,fixed,fixedequipment,fixedrequirements,material,location where treatment.Location_ID=location.ID and treatment.Fixed_ID=fixed.ID and material.ID=fixed.Model_ID  and fixed.FixedEquipment_ID=fixedequipment.ID  and fixed.FixedRequirements_ID=fixedrequirements.ID and treatment.ID=@treatid";
                 sqlOperation3.AddParameterWithValue("@treatid", treatid);
                 MySql.Data.MySqlClient.MySqlDataReader reader3 = sqlOperation3.ExecuteReader(fixedinfo);
                 if (reader3.Read())

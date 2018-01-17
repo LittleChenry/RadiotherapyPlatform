@@ -103,7 +103,7 @@ public class fixRecordRecord : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@detail", context.Request.Form["bodypost"]);
                 sqlOperation.AddParameterWithValue("@place", context.Request.Form["place"]);
                 sqlOperation.AddParameterWithValue("@modelID", Convert.ToInt32(context.Request.Form["modelselect"]));
-                sqlOperation.AddParameterWithValue("@HeadRest_ID", Convert.ToInt32(context.Request.Form["Head"]));
+                sqlOperation.AddParameterWithValue("@HeadRest_ID",context.Request.Form["Head"]);
                 sqlOperation.AddParameterWithValue("@FixedRequirements_ID", Convert.ToInt32(context.Request.Form["specialrequest"]));
                 sqlOperation.AddParameterWithValue("@FixedEquipment_ID", Convert.ToInt32(context.Request.Form["fixEquip"]));
                 sqlOperation.AddParameterWithValue("@remarks", context.Request.Form["Remarks"]);
@@ -140,7 +140,7 @@ public class fixRecordRecord : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@place", context.Request.Form["place"]);
                 sqlOperation.AddParameterWithValue("@detail", context.Request.Form["bodypost"]);
                 sqlOperation.AddParameterWithValue("@modelID", Convert.ToInt32(context.Request.Form["modelselect"]));
-                sqlOperation.AddParameterWithValue("@HeadRest_ID", Convert.ToInt32(context.Request.Form["Head"]));
+                sqlOperation.AddParameterWithValue("@HeadRest_ID",context.Request.Form["Head"]);
                 sqlOperation.AddParameterWithValue("@FixedRequirements_ID", Convert.ToInt32(context.Request.Form["specialrequest"]));
                 sqlOperation.AddParameterWithValue("@FixedEquipment_ID", Convert.ToInt32(context.Request.Form["fixEquip"]));
                 sqlOperation.AddParameterWithValue("@remarks", context.Request.Form["Remarks"]);

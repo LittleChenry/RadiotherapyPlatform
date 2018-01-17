@@ -83,13 +83,14 @@ public class FixInfo : IHttpHandler
                 if (reader["HeadRest_ID"] is DBNull)
                 {
 
-                    headname = null;
+                    headname = "";
                 }
                 else
                 {
-                    string sqlCommand4 = "select Name from headrest where headrest.ID=@headrest";
-                    sqlOperation1.AddParameterWithValue("@headrest", Convert.ToInt32(reader["HeadRest_ID"].ToString()));
-                    headname = sqlOperation1.ExecuteScalar(sqlCommand4);
+                    //string sqlCommand4 = "select Name from headrest where headrest.ID=@headrest";
+                    //sqlOperation1.AddParameterWithValue("@headrest", Convert.ToInt32(reader["HeadRest_ID"].ToString()));
+                    //headname = sqlOperation1.ExecuteScalar(sqlCommand4);
+                    headname = reader["HeadRest_ID"].ToString();
 
                 }
                 backText.Append("{\"modelID\":\"" + reader["Model_ID"].ToString() + "\",\"requireID\":\"" + reader["FixedRequirements_ID"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"userID\":\"" + operateid +
