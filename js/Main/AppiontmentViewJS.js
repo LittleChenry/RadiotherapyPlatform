@@ -10,25 +10,31 @@ $(function () {
     day = date.getDate();
     month = date.getMonth() + 1;
     year = date.getFullYear();
-    
+});
 
+/**
+ **创建函数
+ */
+function appointView(date){
+    var id = $("#equipment").val();
+    createHead(date);
+    createBody(id);
+}
+
+function createHead(begin) {
+    var date = new Date(begin.getFullYear(),begin.getMonth(),begin.getDate());
+    day = date.getDate();
+    month = date.getMonth() + 1;
+    year = date.getFullYear();
     var $thead = $("#thead");
     var str = "<tr><th style=width:12.5%>时间\\日期</th>";
     for (var i = 0; i < 7; ++i) {
         str += "<th style=width:12.5%>" + (date.getMonth() + 1) + "月" + date.getDate() + "日</th>";
         date.setDate(date.getDate() + 1);
     }
+    //date.setDate(date.getDate() - 7);
     str += "</tr>";
-
-    $thead.append(str);
-});
-
-/**
- **创建函数
- */
-function appointView(){
-    var id = $("#equipment").val();
-    createBody(id);
+    $thead.empty().append(str);
 }
 
 /**
@@ -36,19 +42,24 @@ function appointView(){
  * @param id 设备id
  */
 function createBody(id) {
-    $("#tbody").empty();
     var jsonObj = [];
-    var lastDate = new Date();
-    lastDate.setDate(lastDate.getDate() + 7);
+    var lastDate = new Date(year,month,day);
+    lastDate.setDate(lastDate.getDate() + 6);
     $.ajax({
         type: "post",
         url: "../../pages/Root/getAppointmentByTime.ashx",
         async: false,
-        data: { "id": id, "year": year, "month": month, "day": day, "lyear":lastDate.getFullYear(), "lmonth": lastDate.getMonth() + 1, "lday":lastDate.getDate() },
+        data: { "id": id, "year": year, "month": month, "day": day, "lyear":lastDate.getFullYear(), "lmonth": lastDate.getMonth(), "lday":lastDate.getDate() },
         dataType: "text",
         success: function (data) {
-            if (data == "]")
+            if (data == "]") {
+                var $trs = $("#tbody").find("tr");
+                for(var i = 0;i < $trs.length;i++){
+                    $($trs[i]).find("td:not(:first)").empty().css({"background-color":"white"});
+                }
                 return;
+            }
+            $("#tbody").empty();
             jsonObj = $.parseJSON(data);
             
             createTime(jsonObj);
@@ -83,7 +94,7 @@ function createdate(jsonObj, isDouble) {
     $tr = $("#tbody").find("tr");
     var size = $tr.length;
 
-    var currentDate = jsonObj[0].Date;
+    var currentDate = year + '-' + month + '-' + day;
     var arr = new Array();
     for (var i = 0; i < size; i++) {
         arr.push(1);
