@@ -1,5 +1,6 @@
 ﻿var equipmentfrominfo = "";
 var temptreatmentID = "";
+var nowDate = new Date();
 $(document).ready(function () {
     var session = getSession();
     if (session.role != "物理师" && session.role != "模拟技师" && session.role != "治疗技师") {
@@ -9,7 +10,8 @@ $(document).ready(function () {
          });
     }
 	chooseEquipment();
-	$("#sureEquipment").unbind("click").click(function(){
+	$("#sureEquipment").unbind("click").click(function () {
+	    nowDate = new Date();
         var equipmentType = $("#equipmentType").val();
 		var equipmentID = $("#equipment").val();
         $("#currentEquipment").val(equipmentID);
@@ -17,7 +19,8 @@ $(document).ready(function () {
 			alert("请选择设备！");
 			return false;
 		}
-        if (equipmentType == "加速器") {
+		if (equipmentType == "加速器") {
+		    $("#buttonArea").hide();
             $("#AppointType").attr("href","#appointViewAccelerate");
             if ($("#appointViewAccelerate").hasClass("active") || $("#appointView").hasClass("active")) {
                 $("#appointView").removeClass("active");
@@ -30,7 +33,8 @@ $(document).ready(function () {
                 $("#appointViewAccelerate").removeClass("active");
                 $("#appointView").addClass("active");
             }
-            appointView();
+            createButton();
+            appointView(nowDate);
             var WeekAreaNormal = $("#WeekAreaNormal");
             Appoint2Patient(WeekAreaNormal);
         }
@@ -46,8 +50,34 @@ $(document).ready(function () {
 	    CreateCurrentAccerEquipmentTbale(dateString);
 	});
     
+	$("#lastWeek").bind("click", function () {
+	    changeDate(-7);
+	});
+
+	$("#lastDay").bind("click", function () {
+	    changeDate(-1);
+	});
+
+	$("#nextDay").bind("click", function () {
+	    changeDate(1);
+	});
+
+	$("#nextWeek").bind("click", function () {
+	    changeDate(7);
+	});
 
 });
+
+function changeDate(days) {
+    nowDate.setDate(nowDate.getDate() + days);
+    appointView(nowDate);
+    var WeekAreaNormal = $("#WeekAreaNormal");
+    Appoint2Patient(WeekAreaNormal);
+}
+
+function createButton() {
+    $("#buttonArea").show();
+}
 
 function AccelerateAppointView(){
     var equipmentID = $("#equipment").val();

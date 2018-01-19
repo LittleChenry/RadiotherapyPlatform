@@ -327,8 +327,28 @@
                                     </table>
                                 </div>
                             </div>
+
+                           <%-- <div>
+                              <div class="col-md-9">&nbsp;</div>
+                              <div class="col-md-3" style="margin-bottom: 5px;">
+                                 <button class="time-btn selected-btn">上一周</button>
+                                 <button class="time-btn selected-btn">上一天</button>
+                                 <button class="time-btn selected-btn">下一天</button>
+                                 <button class="time-btn selected-btn">下一周</button>
+                              </div>
+                            </div>--%>
+
                             <div class="active tab-pane" id="appointView" style="overflow:hidden;">
                                 <div id="WeekAreaNormal" class="col-md-12">
+                                    <div id="buttonArea" class="col-md-12" style="display:none;" >
+                                        <div class='col-md-9'>&nbsp;</div>
+                                        <div class='col-md-3' style='margin-bottom: 5px;'>
+                                            <button id="lastWeek" class='time-btn selected-btn'>上一周</button>
+                                            <button id="lastDay" class='time-btn selected-btn buttonSpace'>上一天</button>
+                                            <button id="nextDay" class='time-btn selected-btn buttonSpace'>下一天</button>
+                                            <button id="nextWeek" class='time-btn selected-btn buttonSpace'>下一周</button>
+                                        </div>
+                                    </div>
                                     <table id="appointTable" class="table table-bordered table-hover dataTable">
                                         <thead id="thead"></thead>
                                         <tbody id="tbody"></tbody>
