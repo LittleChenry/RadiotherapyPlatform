@@ -2,26 +2,12 @@ var currentID = 0;
 var functions = new Array();
 
 $(document).ready(function () {
-    $(".frame-content").height($(document).height() - 151);
-    $("#patient-content").height($(document).height() - 151);
-    $("#patient-table-content").height($(document).height() - 190);
-    $("#record-iframe").width($("#record-content").width());
-    $("#progress-iframe").width($("#progress-content").width());
+    adjustPage();
     var session = getSession();
+    var sortPatient = RolesToPatients(session);
+    adjustTable();
     functions = session.progress.split(" ");
-    var patient = RolesToPatients();
-    if (session.role != "模拟技师" && session.role != "治疗技师") {
-        adjustTable();
-        $("#patient-search").bind('input propertychange', function () {
-            var session = getSession();
-            var Searchedpatients = Search($("#patient-search").val(), patient, session.role);
-            Paging(Searchedpatients, session.role, session.userID);
-            if (session.role != "模拟技师" && session.role != "治疗技师") {
-                adjustTable();
-            }
-        });
-    }
-    
+
     $("#save").unbind("click").click(function () {
         var result = $("#record-iframe")[0].contentWindow.save();
         if (result == false) {
@@ -36,6 +22,7 @@ $(document).ready(function () {
         }
         Recover();
     });
+
     $('#edit').unbind("click").click(function () {
         $("#record-iframe")[0].contentWindow.remove();
         $("#save").removeAttr("disabled");
@@ -46,21 +33,30 @@ $(document).ready(function () {
     $("#saveTemplate-button").unbind("click").bind("click", function () {
         Template();
     });
+
     $("#printIframe").unbind("click").bind("click", function () {
         $("#record-iframe")[0].contentWindow.print();
     });
+
     $("#changeOperator").unbind("click").bind("click", function () {
         $("#record-iframe")[0].contentWindow.tankuang();
     });
+
     $("#changeEquipment").unbind("click").bind("click", function () {
         chooseEquipment();
     });
+    
     $("#changeDate").unbind("click").bind("click", function () {
         chooseEquipment();
     });
 })
 
 window.onresize=function(){
+    adjustPage();
+}
+
+//加载页面或者浏览器页面发生变化时，调整页面元素大小使适应浏览器窗口
+function adjustPage(){
     $(".frame-content").height($(document).height() - 151);
     $("#patient-content").height($(document).height() - 151);
     $("#patient-table-content").height($(document).height() - 190);
@@ -68,10 +64,10 @@ window.onresize=function(){
     $("#progress-iframe").width($("#progress-content").width());
 }
 
-function RolesToPatients() {
+//根据角色获取病患纪录
+function RolesToPatients(session) {
     var patient;
     var sortPatient;
-    var session = getSession();
     if (session.role == "模拟技师" || session.role == "治疗技师") {
         if (session.equipmentID == "0") {
             chooseEquipment();
@@ -80,7 +76,8 @@ function RolesToPatients() {
             parameters[0] = session.equipmentID;
             parameters[1] = session.beginTime;
             parameters[2] = session.endTime;
-            sortPatient = getPatient(session.userID, session.role, parameters);
+            patient = getPatient(session.userID, session.role, parameters);
+            sortPatient = patientSort(patient);
             Paging(sortPatient, session.role, session.userID);
             $("#chosenEquipment").html(session.equipmentName);
             $("#dateRange").html(session.beginTime + "~~" + session.endTime);
@@ -117,9 +114,10 @@ function RolesToPatients() {
             parameters[0] = equipmentID;
             parameters[1] = startdate;
             parameters[2] = enddate;
-            sortPatient = getPatient(session.userID, session.role, parameters);
+            patient = getPatient(session.userID, session.role, parameters);
+            sortPatient = patientSort(patient);
             Paging(sortPatient, session.role, session.userID);
-            
+            adjustTable();
             $.ajax({
                 type: "POST",
                 async: false,
@@ -139,16 +137,18 @@ function RolesToPatients() {
             var session = getSession();
             var Searchedpatients = Search($("#patient-search").val(), sortPatient, session.role);
             Paging(Searchedpatients, session.role, session.userID);
-            if (session.role != "模拟技师" && session.role != "治疗技师") {
-                adjustTable();
-            }
+            adjustTable();
         });
     } else {
         var parameters = new Array();
         patient = getPatient(session.userID, session.role, parameters);
         sortPatient = patientSort(patient);
         Paging(sortPatient, session.role, session.userID);
-        adjustTable();
+        $("#patient-search").bind('input propertychange', function (e) {
+            var Searchedpatients = Search($("#patient-search").val(), sortPatient, session.role);
+            Paging(Searchedpatients, session.role, session.userID);
+            adjustTable();
+        });
         if (session.role == "医师" || session.role == "剂量师" || session.role == "物理师") {
             TaskWarning(sortPatient);
         }
@@ -156,6 +156,7 @@ function RolesToPatients() {
     return sortPatient;
 }
 
+//将病患纪录生成表格
 function Paging(patient, role, userID) {
     if (patient.PatientInfo != "") {
         tableheight = $("#patient-content").height() - 160;
@@ -257,7 +258,8 @@ function Paging(patient, role, userID) {
                 trAddClick(patient, userID);
                 break;
             case "模拟技师":
-                $("#legend").show();
+                $("#legend-waiting").show();
+                $("#legend-enhance").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Task, date, begin, end, Completed, doctor;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th>'
                     + '<th>患者姓名</th><th>状态</th><th>诊断结果</th><th>疗程</th><th>主治医生</th></tr></thead>';
@@ -301,6 +303,7 @@ function Paging(patient, role, userID) {
                 trAddClickforJS(patient, userID);
                 break;
             case "治疗技师":
+                $("#legend-waiting").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, date, begin, end, Completed, doctor, finishedtimes, totalnumber, totaltimes;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>状态</th><th>完成次数</th><th>累次剂量</th>'
                     + '<th>总次数</th><th>诊断结果</th><th>疗程</th><th>主治医生</th></tr></thead>';
@@ -498,6 +501,7 @@ function Paging(patient, role, userID) {
     Recover();
 }
 
+//病人多疗程折叠布局调整
 function adjustTable(){
     var table = $("#patient-table");
     var tbody = table.find("tbody");
@@ -539,6 +543,7 @@ function adjustTable(){
     });
 }
 
+//打开合并在一起的患者纪录
 function CollapseTr(element){
     if ($(element).find("i")[0].className == "fa fa-fw fa-angle-double-down") {
         $(element).find("i")[0].className = "fa fa-fw fa-angle-double-up";
@@ -561,6 +566,7 @@ function CollapseTr(element){
     }
 }
 
+//打开同一患者多条纪录
 function openTr(){
     var table = $("#patient-table");
     tbody = table.find("tbody");
@@ -573,6 +579,7 @@ function openTr(){
     });
 }
 
+//关闭同一患者多条纪录
 function closeTr(){
     var table = $("#patient-table");
     tbody = table.find("tbody");
@@ -605,6 +612,7 @@ function ShowUl(ul, iscommon){
     }
 }
 
+//为患者纪录增加点击事件，角色为非技师
 function trAddClick(patient, userID) {
     for (var i = 0; i < patient.PatientInfo.length; i++) {
         $("#" + patient.PatientInfo[i].treatID + "").click({iscommon:patient.PatientInfo[i].iscommon, Radiotherapy_ID:patient.PatientInfo[i].Radiotherapy_ID, state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
@@ -914,6 +922,7 @@ function trAddClick(patient, userID) {
     }
 }
 
+//为患者纪录增加点击事件，角色为技师
 function trAddClickforJS(patient, userID) {
     for (var i = 0; i < patient.PatientInfo.length; i++) {
         $("#" + patient.PatientInfo[i].treatID + "_" + patient.PatientInfo[i].appointid).click({appointid:patient.PatientInfo[i].appointid,iscommon:patient.PatientInfo[i].iscommon, Radiotherapy_ID:patient.PatientInfo[i].Radiotherapy_ID, state:patient.PatientInfo[i].state, appointid: patient.PatientInfo[i].appointid, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, ID: patient.PatientInfo[i].treatID, treat: patient.PatientInfo[i].treat, count: patient.PatientInfo[i].Progress }, function (e) {
@@ -1221,6 +1230,11 @@ function trAddClickforJS(patient, userID) {
     }
 }
 
+/*
+根据当前疗程的Progress
+@param Progresses:数据库progress字段;currentProgress:需要判断状态的流程编号;
+preProgress:该流程为编辑状态的必要条件1;preProgress2:该流程为编辑状态的必要条件2
+*/
 function LightLi(e, Progresses, currentProgress, preProgress, preProgress2) {
     var flag = 0;
     for (var i = 0; i < Progresses.length; i++) {
@@ -1434,6 +1448,7 @@ function ProgressNumToName(progressNum){
     return Progress;
 }
 
+//判断该角色对这一步流程有没有编辑权限
 function checkEdit(str) {
     var session = getSession();
     var role = session.role;
@@ -1494,12 +1509,14 @@ function removeSession() {
     });
 }
 
+//重新加载患者纪录时恢复原来的点击状态
 function Recover() {
     if (currentID != "0" && $("#" + currentID).length > 0) {
         $("#" + currentID).click();
     }
 }
 
+//搜索
 function Search(str, patient, role) {
     var Searchedpatient = new Array();
     var count = 0;
@@ -1637,6 +1654,7 @@ function getTaskWarning(){
     return taskwarning;
 }
 
+//流程预警
 function TaskWarning(patient){
     var TaskWarning = getTaskWarning();
     var WarningTaskContent = $("#TaskWarning-content");
@@ -1769,6 +1787,7 @@ function getChose() {
     });
 }
 
+//获取患者纪录
 function getPatient(userID, role, parameters) {
     var xmlHttp = new XMLHttpRequest();
     var xmlHttp = new XMLHttpRequest();
@@ -1804,6 +1823,7 @@ function getPatient(userID, role, parameters) {
     return patient;
 }
 
+//技师进入页面选择设备
 function chooseEquipment() {
     $("#chooseMachine").modal({ backdrop: 'static' });
     var session = getSession();
@@ -1961,6 +1981,7 @@ function isInArray(arr, value) {
     return false;
 }
 
+//将同一个患者的不同疗程纪录排列到一起
 function patientSort(patient){
     var sortPatient = new Array();
     var count = 0;
