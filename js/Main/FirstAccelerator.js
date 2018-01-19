@@ -47,6 +47,13 @@ function Init(evt) {
     if (iscommon == "0") {
         $("#designinfo").hide();
     }
+
+
+
+
+
+
+
     var fildinfo = getfieldinfo(treatmentID);
     if (fildinfo.length == 0) {
         $("#fieldinfotable").hide();
@@ -61,151 +68,149 @@ function Init(evt) {
         }
 
     }
-    createSplitway(document.getElementById("splitway"));
-    var total = gettotalnumber(treatmentID);
-    var totalnumber = total.split(",")[0];
-    var finshedtimes = total.split(",")[1];
-    if (totalnumber != "") {
-        document.getElementById("totalnumber").value = totalnumber;
-        if (finshedtimes != "") {
-            document.getElementById("finishedtimes").innerHTML = finshedtimes;
-        } else {
-            document.getElementById("finishedtimes").innerHTML = "0";
-        }
+   // createSplitway(document.getElementById("splitway"));
+   // var total = gettotalnumber(treatmentID);
+   // var totalnumber = total.split(",")[0];
+   // var finshedtimes = total.split(",")[1];
+   // if (totalnumber != "") {
+   //     document.getElementById("totalnumber").value = totalnumber;
+   //     if (finshedtimes != "") {
+   //         document.getElementById("finishedtimes").innerHTML = finshedtimes;
+   //     } else {
+   //         document.getElementById("finishedtimes").innerHTML = "0";
+   //     }
 
-    } else {
-        document.getElementById("totalnumber").value = 0;
-        document.getElementById("finishedtimes").innerHTML ="0";
-    }
-    var logjson = getLog(treatmentID);
-
-    var log = logjson.ChangeLog;
-    
-   if (log == "") {
-       document.getElementById("logholder").style.display = "none";
-   } else {
-       var loggroup = log.split(";");
-       var content = '';
-       for (var k = 1; k < loggroup.length; k++) {
-           var loggroupk = loggroup[k].split(",");
-           content = content + '<tr style="text-align:center">';
-           content = content + '<td>' + loggroupk[2] + '</td><td>' + loggroupk[1] + '</td><td>' + loggroupk[0] + '</td>';
-           content = content + '</tr>';
+   // } else {
+   //     document.getElementById("totalnumber").value = 0;
+   //     document.getElementById("finishedtimes").innerHTML ="0";
+   // }
+   // var logjson = getLog(treatmentID);
+   // var log = logjson.ChangeLog;
+   //if (log == "") {
+   //    document.getElementById("logholder").style.display = "none";
+   //} else {
+   //    var loggroup = log.split(";");
+   //    var content = '';
+   //    for (var k = 1; k < loggroup.length; k++) {
+   //        var loggroupk = loggroup[k].split(",");
+   //        content = content + '<tr style="text-align:center">';
+   //        content = content + '<td>' + loggroupk[2] + '</td><td>' + loggroupk[1] + '</td><td>' + loggroupk[0] + '</td>';
+   //        content = content + '</tr>';
           
-       }
-       $("#log").append(content);
-   }
-   if (logjson.SplitWay_ID != "") {
-       document.getElementById("splitway").value = logjson.SplitWay_ID;
-   }
-   document.getElementById("remarks").value = logjson.SpecialEnjoin;
-    if (contains(groupprogress, "14")) {
-        var info = getfirstaccelerateInfomation(treatmentID);
-        if (parseInt(toTime(info.End).split(":")[0]) >= 24) {
-            var hour = toTime(info.Begin).split(":")[0];
-            var minute = toTime(info.Begin).split(":")[1];
-            if (hour >= 24) {
-                var beginhour = parseInt(hour) - 24;
-            } else {
-                var beginhour = hour;
-            }
-            var begin = beginhour + ":" + minute;
-            var endhour = toTime(info.End).split(":")[0];
-            var endminute = toTime(info.End).split(":")[1];
-            var hourend = parseInt(endhour) - 24;
-            var end = hourend + ":" + endminute;
-            document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + begin + "-" + end+"(次日)";
-        } else {
-            document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
-        }
-        document.getElementById("chooseappoint").disabled = "disabled";
-        document.getElementById("operator").innerHTML = info.username;
-        document.getElementById("date").innerHTML = info.ApplyTime;
+   //    }
+   //    $("#log").append(content);
+   //}
+   //if (logjson.SplitWay_ID != "") {
+   //    document.getElementById("splitway").value = logjson.SplitWay_ID;
+   //}
+   //document.getElementById("remarks").value = logjson.SpecialEnjoin;
+   // if (contains(groupprogress, "14")) {
+   //     var info = getfirstaccelerateInfomation(treatmentID);
+   //     if (parseInt(toTime(info.End).split(":")[0]) >= 24) {
+   //         var hour = toTime(info.Begin).split(":")[0];
+   //         var minute = toTime(info.Begin).split(":")[1];
+   //         if (hour >= 24) {
+   //             var beginhour = parseInt(hour) - 24;
+   //         } else {
+   //             var beginhour = hour;
+   //         }
+   //         var begin = beginhour + ":" + minute;
+   //         var endhour = toTime(info.End).split(":")[0];
+   //         var endminute = toTime(info.End).split(":")[1];
+   //         var hourend = parseInt(endhour) - 24;
+   //         var end = hourend + ":" + endminute;
+   //         document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + begin + "-" + end+"(次日)";
+   //     } else {
+   //         document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
+   //     }
+   //     document.getElementById("chooseappoint").disabled = "disabled";
+   //     document.getElementById("operator").innerHTML = info.username;
+   //     document.getElementById("date").innerHTML = info.ApplyTime;
 
-    } else {
-        if (iscommon == "1") {
-            var type = geteuqipmenttype(treatmentID);
-            createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2], type);
-        } else {
-            createfixEquipmachine1(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
+   // } else {
+   //     if (iscommon == "1") {
+   //         var type = geteuqipmenttype(treatmentID);
+   //         createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2], type);
+   //     } else {
+   //         createfixEquipmachine1(document.getElementById("equipmentName"), window.location.search.split("=")[2]);
 
-        }
+   //     }
           
-          var info = getfirstaccelerateInfomation(treatmentID);
-          if ((typeof (info) != "undefined")) {
-              if (parseInt(toTime(info.End).split(":")[0]) >= 24) {
-                  var hour = toTime(info.Begin).split(":")[0];
-                  var minute = toTime(info.Begin).split(":")[1];
-                  if (hour >= 24) {
-                      var beginhour = parseInt(hour) - 24;
-                  } else {
-                      var beginhour = hour;
-                  }
-                  var begin = beginhour + ":" + minute;
-                  var endhour = toTime(info.End).split(":")[0];
-                  var endminute = toTime(info.End).split(":")[1];
-                  var hourend = parseInt(endhour) - 24;
-                  var end = hourend + ":" + endminute;
-                  document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + begin + "-" + end + "(次日)";
-              } else {
-                  document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
-              }
-              document.getElementById("idforappoint").value = info.Date + "," + info.Begin + "," + info.End + "," + info.Equipment_ID;
-          }
-            var date = new Date();
-            document.getElementById("operator").innerHTML = userName;
-            document.getElementById("date").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-            document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-            document.getElementById("chooseappoint").addEventListener("click", function () {
-                CreateNewAppiontTable(event);
-            }, false);
-        //document.getElementById("chooseProject").addEventListener("click", function () {
-        //    CreateNewAppiontTable(event);
-        //}, false);//根据条件创建预约表
-            $("#AppiontDate").unbind("change").change(function () {
-                if ($("#AppiontDate").val() == "") {
-                    var date = new Date();
-                    $("#AppiontDate").val(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
-                }
-                CreateNewAppiontTable(event);
-            });
-            $("#previousday").click(function () {
-                var date = $("#AppiontDate").val();
-                var newdate = dateAdd2(date, -1);
-                $("#AppiontDate").val(newdate);
-                CreateNewAppiontTable(event);
-            });
-            $("#nextday").click(function () {
-                var date = $("#AppiontDate").val();
-                var newdate = dateAdd2(date, 1);
-                $("#AppiontDate").val(newdate);
-                CreateNewAppiontTable(event);
-            });
-            document.getElementById("sure").addEventListener("click", checkAllTable, false);
-            $("#changetotalnumber").bind("click", function () {
-                if ($(this).html() == "更改") {
-                    $(this).text("保存");
-                    document.getElementById("totalnumber").removeAttribute("disabled");
+   //       var info = getfirstaccelerateInfomation(treatmentID);
+   //       if ((typeof (info) != "undefined")) {
+   //           if (parseInt(toTime(info.End).split(":")[0]) >= 24) {
+   //               var hour = toTime(info.Begin).split(":")[0];
+   //               var minute = toTime(info.Begin).split(":")[1];
+   //               if (hour >= 24) {
+   //                   var beginhour = parseInt(hour) - 24;
+   //               } else {
+   //                   var beginhour = hour;
+   //               }
+   //               var begin = beginhour + ":" + minute;
+   //               var endhour = toTime(info.End).split(":")[0];
+   //               var endminute = toTime(info.End).split(":")[1];
+   //               var hourend = parseInt(endhour) - 24;
+   //               var end = hourend + ":" + endminute;
+   //               document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + begin + "-" + end + "(次日)";
+   //           } else {
+   //               document.getElementById("appointtime").value = info.equipname + " " + info.Date.split(" ")[0] + " " + toTime(info.Begin) + "-" + toTime(info.End);
+   //           }
+   //           document.getElementById("idforappoint").value = info.Date + "," + info.Begin + "," + info.End + "," + info.Equipment_ID;
+   //       }
+   //         var date = new Date();
+   //         document.getElementById("operator").innerHTML = userName;
+   //         document.getElementById("date").innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+   //         document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+   //         document.getElementById("chooseappoint").addEventListener("click", function () {
+   //             CreateNewAppiontTable(event);
+   //         }, false);
+   //     //document.getElementById("chooseProject").addEventListener("click", function () {
+   //     //    CreateNewAppiontTable(event);
+   //     //}, false);//根据条件创建预约表
+   //         $("#AppiontDate").unbind("change").change(function () {
+   //             if ($("#AppiontDate").val() == "") {
+   //                 var date = new Date();
+   //                 $("#AppiontDate").val(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+   //             }
+   //             CreateNewAppiontTable(event);
+   //         });
+   //         $("#previousday").click(function () {
+   //             var date = $("#AppiontDate").val();
+   //             var newdate = dateAdd2(date, -1);
+   //             $("#AppiontDate").val(newdate);
+   //             CreateNewAppiontTable(event);
+   //         });
+   //         $("#nextday").click(function () {
+   //             var date = $("#AppiontDate").val();
+   //             var newdate = dateAdd2(date, 1);
+   //             $("#AppiontDate").val(newdate);
+   //             CreateNewAppiontTable(event);
+   //         });
+   //         document.getElementById("sure").addEventListener("click", checkAllTable, false);
+   //         $("#changetotalnumber").bind("click", function () {
+   //             if ($(this).html() == "更改") {
+   //                 $(this).text("保存");
+   //                 document.getElementById("totalnumber").removeAttribute("disabled");
 
-                } else {
-                    $(this).text("更改");
-                    document.getElementById("totalnumber").disabled = "disabled";
-                }
-            });
-            $("#finish").click(function () {
-                if (document.getElementById("finish").innerHTML == "结束治疗") {
-                    document.getElementById("finishthistreat").value = "1";
-                    document.getElementById("finish").innerHTML = "取消";
-                } else {
-                    document.getElementById("finishthistreat").value = "0";
-                    document.getElementById("finish").innerHTML = "结束治疗"
-                }
-            });  
-    }
-    $("#timeselect").bind("change", function () {
-        var dateString = document.getElementById("AppiontDate").value;
-        CreateCurrentEquipmentTbale(dateString);
-    });
+   //             } else {
+   //                 $(this).text("更改");
+   //                 document.getElementById("totalnumber").disabled = "disabled";
+   //             }
+   //         });
+   //         $("#finish").click(function () {
+   //             if (document.getElementById("finish").innerHTML == "结束治疗") {
+   //                 document.getElementById("finishthistreat").value = "1";
+   //                 document.getElementById("finish").innerHTML = "取消";
+   //             } else {
+   //                 document.getElementById("finishthistreat").value = "0";
+   //                 document.getElementById("finish").innerHTML = "结束治疗"
+   //             }
+   //         });  
+   // }
+   // $("#timeselect").bind("change", function () {
+   //     var dateString = document.getElementById("AppiontDate").value;
+   //     CreateCurrentEquipmentTbale(dateString);
+   // });
 
 }
 function dateAdd2(dd, n) {
