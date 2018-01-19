@@ -5,7 +5,7 @@ using System.Web;
 using System.Text;
 
 public class GetEquipmentAppointment : IHttpHandler {
-    
+    static Object locker = new object();
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
         string backString = getInformation(context);
@@ -29,35 +29,41 @@ public class GetEquipmentAppointment : IHttpHandler {
         sqlOperation.AddParameterWithValue("@date", date);
         sqlOperation.AddParameterWithValue("@id", equipmentID);
 
-        int count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
+
         StringBuilder backString = new StringBuilder("[");
         MySql.Data.MySqlClient.MySqlDataReader reader = null;
-        if (count == 0)//没有先生成
+        //保证先查询后操作的原子性
+        lock (locker)
         {
-            sqlCommand = "SELECT * FROM equipment WHERE ID=@id";
-            reader = sqlOperation.ExecuteReader(sqlCommand);
-            string Oncetime, Ambeg, AmEnd, PMBeg, PMEnd, treatmentItem;
-            if (reader.Read())
+            int count = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
+           
+            if (count == 0)//没有先生成
             {
-                if (reader["State"].ToString() == "1")
-                 {
-                    Oncetime = reader["Timelength"].ToString();
-                    Ambeg = reader["BeginTimeAM"].ToString();
-                    AmEnd = reader["EndTimeAM"].ToString();
-                    PMBeg = reader["BegTimePM"].ToString();
-                    PMEnd = reader["EndTimeTPM"].ToString();
-                    treatmentItem = reader["TreatmentItem"].ToString();
-                    CreateAppointment(equipmentID, Oncetime, Ambeg, AmEnd, PMBeg, PMEnd, treatmentItem, date);
-                }
-                else
+                sqlCommand = "SELECT * FROM equipment WHERE ID=@id";
+                reader = sqlOperation.ExecuteReader(sqlCommand);
+                string Oncetime, Ambeg, AmEnd, PMBeg, PMEnd, treatmentItem;
+                if (reader.Read())
                 {
-                    backString.Append("{\"Equipment\":\"false\"}]");
-                    return backString.ToString();//生成不了
+                    if (reader["State"].ToString() == "1")
+                    {
+                        Oncetime = reader["Timelength"].ToString();
+                        Ambeg = reader["BeginTimeAM"].ToString();
+                        AmEnd = reader["EndTimeAM"].ToString();
+                        PMBeg = reader["BegTimePM"].ToString();
+                        PMEnd = reader["EndTimeTPM"].ToString();
+                        treatmentItem = reader["TreatmentItem"].ToString();
+                        CreateAppointment(equipmentID, Oncetime, Ambeg, AmEnd, PMBeg, PMEnd, treatmentItem, date);
+                    }
+                    else
+                    {
+                        backString.Append("{\"Equipment\":\"false\"}]");
+                        return backString.ToString();//生成不了
+                    }
                 }
+                reader.Close();
             }
-            reader.Close();
         }
-
+        
         sqlCommand = "SELECT count(ID) From Appointment WHERE Date=@date AND Equipment_ID=@id";
         int times = int.Parse(sqlOperation.ExecuteScalar(sqlCommand));
         int currentTimes = 1;
