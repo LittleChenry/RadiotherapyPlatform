@@ -341,7 +341,15 @@
                             <div class="active tab-pane" id="appointView" style="overflow:hidden;">
                                 <div id="WeekAreaNormal" class="col-md-12">
                                     <div id="buttonArea" class="col-md-12" style="display:none;" >
-                                        <div class='col-md-9'>&nbsp;</div>
+                                        <div class='col-md-9'>
+                                            <div class="col-sm-2" style="padding-right:0px;">
+                                                 <input class="form-item form-control" id="dates" name="dates" type="text"  placeholder="选择日期" style="height:34px;" AUTOCOMPLETE="OFF"/>
+                                            </div>
+                                            <div class="col-sm-1" style="padding-left:0px;">
+                                                <button id="sureDate" style="height:34px;" class="time-btn selected-btn">确定</button>
+                                            </div>
+                                           
+                                        </div>
                                         <div class='col-md-3' style='margin-bottom: 5px;'>
                                             <button id="lastWeek" class='time-btn selected-btn'>上一周</button>
                                             <button id="lastDay" class='time-btn selected-btn buttonSpace'>上一天</button>
@@ -490,6 +498,8 @@
 <script src="../../plugin/AdminLTE/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
+<!-- bootstrap datepicker -->
+<script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- Main javascript -->
 <script src="../../js/Main/HeaderOperate.js"></script>
 <script src="../../js/Main/AppiontmentViewJS.js"></script>
@@ -497,6 +507,7 @@
 <script>
     $(".nav-tabs-custom").css("minHeight", $(document).height() - 200);
     $("#AppiontDate").datepicker({ autoclose: true });
-</script>
+    $("#dates").datepicker({ autoclose: true, format: 'yyyy-mm-dd' });
+    </script>
 </body>
 </html>

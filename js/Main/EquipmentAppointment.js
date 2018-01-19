@@ -66,6 +66,13 @@ $(document).ready(function () {
 	    changeDate(7);
 	});
 
+	$("#sureDate").bind("click", function () {
+	    var dates = $("#dates").val().split("-");
+	    nowDate = new Date(dates[0],parseInt(dates[1])-1,dates[2]);
+	    appointView(nowDate);
+	    var WeekAreaNormal = $("#WeekAreaNormal");
+	    Appoint2Patient(WeekAreaNormal);
+	});
 });
 
 function changeDate(days) {
