@@ -59,12 +59,12 @@ public class getPatientInfoNew : IHttpHandler {
         MySql.Data.MySqlClient.MySqlDataReader reader1 = null;
         foreach (string element in patientList)
         {
-            string patientinfocommand = "select Name,Gender,Age from patient where ID=@pid";
+            string patientinfocommand = "select ID,Name,Gender,Age,Radiotherapy_ID from patient where ID=@pid";
             sqlOperation.AddParameterWithValue("@pid", element);
             reader1 = sqlOperation.ExecuteReader(patientinfocommand);
             if (reader1.Read())
             {
-                info.Append("{\"name\":\"" + reader1["Name"].ToString() + "\",\"Gender\":\"" + sex(reader1["Gender"].ToString()) + "\",\"Age\":\"" + reader1["Age"].ToString() + "\",\"groupname\":\"");
+                info.Append("{\"name\":\"" + reader1["Name"].ToString() + "\",\"Gender\":\"" + sex(reader1["Gender"].ToString()) + "\",\"Radiotherapy_ID\":\"" + reader1["Radiotherapy_ID"].ToString() + "\",\"patientid\":\"" + reader1["ID"].ToString() + "\",\"Age\":\"" + reader1["Age"].ToString() + "\",\"groupname\":\"");
                 string groupcommand = "select user.Name as doctor,groups.groupName as groupname from groups,treatment,user,groups2user where groups2user.Group_ID=groups.ID and treatment.Group_ID=groups2user.ID and treatment.Patient_ID=@pid and treatment.Belongingdoctor=user.ID";
                 sqlOperation1.AddParameterWithValue("@pid", element);
                 MySql.Data.MySqlClient.MySqlDataReader reader2 = sqlOperation1.ExecuteReader(groupcommand);
