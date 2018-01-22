@@ -140,7 +140,7 @@ public class saveField : IHttpHandler {
                     string delete = "delete from fieldinfomation where childdesign_ID=@childdesign_ID";
                     sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
                     sqlOperation1.ExecuteNonQuery(delete);
-                    string delete1 = "delete from childdesign where childdesign_ID=@childdesign_ID";
+                    string delete1 = "delete from childdesign where ID=@childdesign_ID";
                     sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
                     sqlOperation1.ExecuteNonQuery(delete1);
                 }
@@ -168,8 +168,8 @@ public class saveField : IHttpHandler {
                                             "VALUES(@code,@mu,@equipment,@radiotechnique,@radiotype,@energy,@wavedistance,@angleframe,@noseangle,@bedrotation,@subfieldnumber,@User_ID,@Operate_Time,@treatmentid,@Singledose,@Totaldose,@childdesign_ID)";
                     // sqlOperation.AddParameterWithValue("@ID", Count);
                     sqlOperation.AddParameterWithValue("@code", context.Request.Form["a1" + i+"_"+item]);
-                    sqlOperation.AddParameterWithValue("@mu", context.Request.Form["mu" + item + "_" + i]);
-                    sqlOperation.AddParameterWithValue("@equipment", Convert.ToInt32(context.Request.Form["equipment" + i + "_" + item]));
+                    sqlOperation.AddParameterWithValue("@mu", context.Request.Form["mu" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@equipment", context.Request.Form["equipment" + i + "_" + item]);
                     sqlOperation.AddParameterWithValue("@radiotechnique", context.Request.Form["technology" + i + "_" + item]);
                     sqlOperation.AddParameterWithValue("@radiotype", context.Request.Form["type" + i + "_" + item]);
                     sqlOperation.AddParameterWithValue("@energy", context.Request.Form["energyField" + i + "_" + item]);
@@ -199,7 +199,7 @@ public class saveField : IHttpHandler {
                     string delete = "delete from fieldinfomation where childdesign_ID=@childdesign_ID";
                     sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
                     sqlOperation1.ExecuteNonQuery(delete);
-                    string delete1 = "delete from childdesign where childdesign_ID=@childdesign_ID";
+                    string delete1 = "delete from childdesign where ID=@childdesign_ID";
                     sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
                     sqlOperation1.ExecuteNonQuery(delete1);
                 }
@@ -219,7 +219,7 @@ public class saveField : IHttpHandler {
                                             "VALUES(@code,@mu,@equipment,@radiotechnique,@radiotype,@energy,@wavedistance,@angleframe,@noseangle,@bedrotation,@subfieldnumber,@User_ID,@Operate_Time,@treatmentid,@Singledose,@Totaldose,@childdesign_ID)";
                     // sqlOperation.AddParameterWithValue("@ID", Count);
                     sqlOperation.AddParameterWithValue("@code", context.Request.Form["a1" + i + "_" + item]);
-                    sqlOperation.AddParameterWithValue("@mu", context.Request.Form["mu" + item + "_" + i]);
+                    sqlOperation.AddParameterWithValue("@mu", context.Request.Form["mu" + i + "_" + item]);
                     sqlOperation.AddParameterWithValue("@equipment", Convert.ToInt32(context.Request.Form["equipment" + i + "_" + item]));
                     sqlOperation.AddParameterWithValue("@radiotechnique", context.Request.Form["technology" + i + "_" + item]);
                     sqlOperation.AddParameterWithValue("@radiotype", context.Request.Form["type" + i + "_" + item]);

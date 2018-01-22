@@ -16,7 +16,6 @@ function Init(evt) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
-    //此处为分页代码
     //alert("jy");
     //document.getElementById("username").value = userID; 
     treatID = window.location.search.split("=")[1];
@@ -36,33 +35,16 @@ function Init(evt) {
     document.getElementById("hospitalid").innerHTML = texthos;
     document.getElementById("lightpart").innerHTML = patient.LightPart_ID;
     common = patient.iscommon;
-    if (common == 0) {
-        //plan不用生成
-    } else {
-        //全部生成
-    }
+    // if (common == 0) {
+    //     //plan不用生成
+    // } else {
+    //     //全部生成
+    // }
     var progress = patient.Progress.split(",");
     if (isInArray(progress, '11')) {
         var fildinfo = getfieldinfo();
-        if (common == 1) {
-            document.getElementById("Irradiation").value = fildinfo[0].Irradiation;
-            document.getElementById("ener").value = fildinfo[0].energy2;
-            document.getElementById("IlluminatedNumber").value = fildinfo[0].IlluminatedNumber;
-            ss = fildinfo[0].IlluminatedNumber;
-            table(ss, fildinfo[0].Illuminatedangle);
-            document.getElementById("MachineNumbe").value = fildinfo[0].MachineNumbe;
-            document.getElementById("ControlPoint").value = fildinfo[0].ControlPoint;
-            document.getElementById("Coplanar").value = fildinfo[0].Coplanar;
-        }
-        document.getElementById("pingyin").value = fildinfo[0].pinyin;
-        document.getElementById("id").value = fildinfo[0].radioID;
-        document.getElementById("tps").value = fildinfo[0].tps;
-        document.getElementById("pos").value = fildinfo[0].pos;
-        document.getElementById("Graded").value = fildinfo[0].Singledose;
-        document.getElementById("total").value = fildinfo[0].Totaldose;
-        document.getElementById("applyuser").innerHTML = fildinfo[0].Name;
-        document.getElementById("time").innerHTML = fildinfo[0].time;
-        readField(fildinfo);
+        //填写信息
+        fillData(fildinfo);
         if (fildinfo[0].userID == userID) {
             window.parent.document.getElementById("edit").removeAttribute("disabled");
         }
@@ -71,32 +53,32 @@ function Init(evt) {
         document.getElementById("time").innerHTML = getNowFormatDate();
     }
 
-    $("#IlluminatedNumber").blur(function(){
-        var num = $("#IlluminatedNumber").val();
-        if (num > 0) {
-            var table = $("#Illuminatedangle");
-            table.html("");
-            var tbody = "<tbody>";
-            var count = 1;
-            while(count <= num){
-                var rownum = 0;
-                tbody += "<tr>";
-                while(rownum < 4){
-                    if (count <= num) {
-                        td = '<td style="padding:0px;"><input type="text" id="angle' + count + '" name="angle' + count + '" class="td-input"></td>';
-                    }else{
-                        td = '<td style="text-align:center;">/</td>';
-                    }
-                    tbody += td;
-                    rownum += 1;
-                    count += 1;
-                }
-                tbody += "</tr>";
-            }
-            tbody += "/tbody";
-            table.append(tbody);
-        }
-    });
+    // $("#IlluminatedNumber").blur(function(){
+    //     var num = $("#IlluminatedNumber").val();
+    //     if (num > 0) {
+    //         var table = $("#Illuminatedangle");
+    //         table.html("");
+    //         var tbody = "<tbody>";
+    //         var count = 1;
+    //         while(count <= num){
+    //             var rownum = 0;
+    //             tbody += "<tr>";
+    //             while(rownum < 4){
+    //                 if (count <= num) {
+    //                     td = '<td style="padding:0px;"><input type="text" id="angle' + count + '" name="angle' + count + '" class="td-input"></td>';
+    //                 }else{
+    //                     td = '<td style="text-align:center;">/</td>';
+    //                 }
+    //                 tbody += td;
+    //                 rownum += 1;
+    //                 count += 1;
+    //             }
+    //             tbody += "</tr>";
+    //         }
+    //         tbody += "/tbody";
+    //         table.append(tbody);
+    //     }
+    // });
 
     // $(".file").on("change", "input[type='file']", function () {
     //     var filePath=$(this).val();
@@ -105,33 +87,33 @@ function Init(evt) {
     //     $("#filename").val(fileName);
     // })
 }
-function table(num, str) {
-    var list = new Array();
-    list=str.split(",");
-    if (num > 0) {
-        var table = $("#Illuminatedangle");
-        table.html("");
-        var tbody = "<tbody>";
-        var count = 1;
-        while (count <= num) {
-            var rownum = 0;
-            tbody += "<tr>";
-            while (rownum < 4) {
-                if (count <= num) {
-                    td = '<td style="padding:0px;"><input type="text" id="angle' + count + '" name="angle' + count + '" class="td-input" value="'+list[count-1]+'" disabled="disabled"></td>';
-                } else {
-                    td = '<td style="text-align:center;">/</td>';
-                }
-                tbody += td;
-                rownum += 1;
-                count += 1;
-            }
-            tbody += "</tr>";
-        }
-        tbody += "/tbody";
-        table.append(tbody);
-    }
-}
+// function table(num, str) {
+//     var list = new Array();
+//     list=str.split(",");
+//     if (num > 0) {
+//         var table = $("#Illuminatedangle");
+//         table.html("");
+//         var tbody = "<tbody>";
+//         var count = 1;
+//         while (count <= num) {
+//             var rownum = 0;
+//             tbody += "<tr>";
+//             while (rownum < 4) {
+//                 if (count <= num) {
+//                     td = '<td style="padding:0px;"><input type="text" id="angle' + count + '" name="angle' + count + '" class="td-input" value="'+list[count-1]+'" disabled="disabled"></td>';
+//                 } else {
+//                     td = '<td style="text-align:center;">/</td>';
+//                 }
+//                 tbody += td;
+//                 rownum += 1;
+//                 count += 1;
+//             }
+//             tbody += "</tr>";
+//         }
+//         tbody += "/tbody";
+//         table.append(tbody);
+//     }
+// }
 //生成照射技术下拉框，这名字错的
 function createPlanSystemItem(thiselement) {
     var PartItem = JSON.parse(getPartItem3()).Item;
@@ -408,67 +390,67 @@ function creaetField(data,panelId) {
     document.getElementById("aa"+panelId).value = data.length;
 }
 
-function readField(data) {   
-    var table = document.getElementById("Field");
-    var tbody = document.createElement("tbody");
-    for (var i = table.rows.length - 1; i > 0; i--) {
-        table.deleteRow(i);
-    }
-    aa = data.length;
-    document.getElementById("fieldTimes").value = data.length;
-    for (var i = 0; i < data.length; i++) {
-        var list = new Array();
-        list[0] = data[i].code;
-        list[1] = data[i].mu;
-        list[2] = data[i].equipment;
-        list[3] = data[i].radiotechnique;
-        list[4] = data[i].radiotype;
-        list[5] = data[i].energy;
-        list[6] = data[i].wavedistance;
-        list[7] = data[i].angleframe;
-        list[8] = data[i].noseangle;
-        list[9] = data[i].bedrotation;
-        list[10] = data[i].subfieldnumber;
-        var row = table.insertRow(i + 1);
-        var t1 = row.insertCell(0);
-        var t2 = row.insertCell(1);
-        var t3 = row.insertCell(2);
-        var t4 = row.insertCell(3);
-        var t5 = row.insertCell(4);
-        var t6 = row.insertCell(5);
-        var t7 = row.insertCell(6);
-        var t8 = row.insertCell(7);
-        var t9 = row.insertCell(8);
-        var t10 = row.insertCell(9);
-        var t11 = row.insertCell(10);
-        var t12 = row.insertCell(11);
-        t1.style.padding = "0px";
-        t2.style.padding = "0px";
-        t3.style.padding = "0px";
-        t4.style.padding = "0px";
-        t5.style.padding = "0px";
-        t6.style.padding = "0px";
-        t7.style.padding = "0px";
-        t8.style.padding = "0px";
-        t9.style.padding = "0px";
-        t10.style.padding = "0px";
-        t11.style.padding = "0px";
-        t12.style.padding = "0px";
-        t1.innerHTML = '<input id="a1' + i + '" name="a1' + i + '" value="' + list[0] + '" type="text" disabled="disabled" class="td-input" />';
-        t2.innerHTML = '<input id="mu' + i + '" name="mu' + i + '" type="text" value="' + list[1] + '" class="td-input" disabled="disabled"/>';
-        t3.innerHTML = '<input id="equipment' + i + '" name="equipment' + i + '" type="number" value="' + list[2] + '" class="td-input" disabled="disabled"/>';
-        t4.innerHTML = '<input id="technology' + i + '" name="technology' + i + '" type="text" value="' + list[3] + '" class="td-input" disabled="disabled"/>';
-        t5.innerHTML = '<input id="type' + i + '" name="type' + i + '" type="text" value="' + list[4] + '" class="td-input" disabled="disabled"/>';
-        t6.innerHTML = '<input id="energyField' + i + '" name="energyField' + i + '" type="text" value="' + list[5] + '" class="td-input" disabled="disabled"/>';
-        t7.innerHTML = '<input id="ypj' + i + '" name="ypj' + i + '" type="text" value="' + list[6] + '" class="td-input" disabled="disabled"/>';
-        t8.innerHTML = '<input id="jjj' + i + '" name="jjj' + i + '" type="text" value="' + list[7] + '" class="td-input" disabled="disabled"/>';
-        t9.innerHTML = '<input id="jtj' + i + '" name="jtj' + i + '" type="text" value="' + list[8] + '" class="td-input" disabled="disabled"/>';
-        t10.innerHTML = '<input id="czj' + i + '" name="czj' + i + '" type="text" value="' + list[9] + '" class="td-input" disabled="disabled"/>';
-        t11.innerHTML = '<input id="childs' + i + '" name="childs' + i + '" type="text" value="' + list[10] + '" class="td-input" disabled="disabled"/>';
-        //t12.innerHTML = '<a href="javascript:deleteField(' + i + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
-    }
-    document.getElementById("aa").value = aa;
-}
+// function readField(data) {   
+//     var table = document.getElementById("Field");
+//     var tbody = document.createElement("tbody");
+//     for (var i = table.rows.length - 1; i > 0; i--) {
+//         table.deleteRow(i);
+//     }
+//     aa = data.length;
+//     document.getElementById("fieldTimes").value = data.length;
+//     for (var i = 0; i < data.length; i++) {
+//         var list = new Array();
+//         list[0] = data[i].code;
+//         list[1] = data[i].mu;
+//         list[2] = data[i].equipment;
+//         list[3] = data[i].radiotechnique;
+//         list[4] = data[i].radiotype;
+//         list[5] = data[i].energy;
+//         list[6] = data[i].wavedistance;
+//         list[7] = data[i].angleframe;
+//         list[8] = data[i].noseangle;
+//         list[9] = data[i].bedrotation;
+//         list[10] = data[i].subfieldnumber;
+//         var row = table.insertRow(i + 1);
+//         var t1 = row.insertCell(0);
+//         var t2 = row.insertCell(1);
+//         var t3 = row.insertCell(2);
+//         var t4 = row.insertCell(3);
+//         var t5 = row.insertCell(4);
+//         var t6 = row.insertCell(5);
+//         var t7 = row.insertCell(6);
+//         var t8 = row.insertCell(7);
+//         var t9 = row.insertCell(8);
+//         var t10 = row.insertCell(9);
+//         var t11 = row.insertCell(10);
+//         var t12 = row.insertCell(11);
+//         t1.style.padding = "0px";
+//         t2.style.padding = "0px";
+//         t3.style.padding = "0px";
+//         t4.style.padding = "0px";
+//         t5.style.padding = "0px";
+//         t6.style.padding = "0px";
+//         t7.style.padding = "0px";
+//         t8.style.padding = "0px";
+//         t9.style.padding = "0px";
+//         t10.style.padding = "0px";
+//         t11.style.padding = "0px";
+//         t12.style.padding = "0px";
+//         t1.innerHTML = '<input id="a1' + i + '" name="a1' + i + '" value="' + list[0] + '" type="text" disabled="disabled" class="td-input" />';
+//         t2.innerHTML = '<input id="mu' + i + '" name="mu' + i + '" type="text" value="' + list[1] + '" class="td-input" disabled="disabled"/>';
+//         t3.innerHTML = '<input id="equipment' + i + '" name="equipment' + i + '" type="number" value="' + list[2] + '" class="td-input" disabled="disabled"/>';
+//         t4.innerHTML = '<input id="technology' + i + '" name="technology' + i + '" type="text" value="' + list[3] + '" class="td-input" disabled="disabled"/>';
+//         t5.innerHTML = '<input id="type' + i + '" name="type' + i + '" type="text" value="' + list[4] + '" class="td-input" disabled="disabled"/>';
+//         t6.innerHTML = '<input id="energyField' + i + '" name="energyField' + i + '" type="text" value="' + list[5] + '" class="td-input" disabled="disabled"/>';
+//         t7.innerHTML = '<input id="ypj' + i + '" name="ypj' + i + '" type="text" value="' + list[6] + '" class="td-input" disabled="disabled"/>';
+//         t8.innerHTML = '<input id="jjj' + i + '" name="jjj' + i + '" type="text" value="' + list[7] + '" class="td-input" disabled="disabled"/>';
+//         t9.innerHTML = '<input id="jtj' + i + '" name="jtj' + i + '" type="text" value="' + list[8] + '" class="td-input" disabled="disabled"/>';
+//         t10.innerHTML = '<input id="czj' + i + '" name="czj' + i + '" type="text" value="' + list[9] + '" class="td-input" disabled="disabled"/>';
+//         t11.innerHTML = '<input id="childs' + i + '" name="childs' + i + '" type="text" value="' + list[10] + '" class="td-input" disabled="disabled"/>';
+//         //t12.innerHTML = '<a href="javascript:deleteField(' + i + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
+//     }
+//     document.getElementById("aa").value = aa;
+// }
 function getfieldinfo() {
     var xmlHttp = new XMLHttpRequest();
     var url = "getallfieldinfo.ashx?treatmentID=" + treatID;
@@ -577,46 +559,10 @@ function hosttext(str) {
 //         }
 //     });
 // }
+//消除disabled
 function remove() {
-    // document.getElementById("id").removeAttribute("disabled");
-    // document.getElementById("pingyin").removeAttribute("disabled");
-    // document.getElementById("sure").removeAttribute("disabled");
-    // document.getElementById("tps").removeAttribute("disabled");
-    // document.getElementById("total").removeAttribute("disabled");
-    // document.getElementById("Graded").removeAttribute("disabled");
-    // document.getElementById("fieldTimes").removeAttribute("disabled");
-    // document.getElementById("pos").removeAttribute("disabled");
-    // if (common == 1) {
-    //     document.getElementById("Irradiation").removeAttribute("disabled");
-    //     document.getElementById("ener").removeAttribute("disabled");
-    //     document.getElementById("IlluminatedNumber").removeAttribute("disabled");
-    //     //document.getElementById("Illuminatedangle").readonly="false";
-    //     document.getElementById("MachineNumbe").removeAttribute("disabled");
-    //     document.getElementById("ControlPoint").removeAttribute("disabled");
-    //     document.getElementById("Coplanar").removeAttribute("disabled");
-    //     if (ss > 0) {
-    //         for (var j = 1; j <= ss; j++) {
-    //             document.getElementById("angle" + j).removeAttribute("disabled");
-    //         }
-    //     }
-    // }
-    // $("#add").attr("href", "javascript:addField()");
-    // if (aa > 0) {
-    //     for (var i = 0; i < aa; i++) {
-    //         document.getElementById("a1"+i).removeAttribute("disabled");
-    //         document.getElementById("mu"+i).removeAttribute("disabled");
-    //         document.getElementById("equipment"+i).removeAttribute("disabled");
-    //         document.getElementById("technology"+i).removeAttribute("disabled");
-    //         document.getElementById("type"+i).removeAttribute("disabled");
-    //         document.getElementById("energyField"+i).removeAttribute("disabled");
-    //         document.getElementById("ypj"+i).removeAttribute("disabled");
-    //         document.getElementById("jjj"+i).removeAttribute("disabled");
-    //         document.getElementById("jtj"+i).removeAttribute("disabled");
-    //         document.getElementById("czj"+i).removeAttribute("disabled");
-    //         document.getElementById("childs"+i).removeAttribute("disabled");
-    //     }
-    // }
-    document.getElementById("addSubDesign").removeAttribute("disabled");
+    $("input").attr("disabled",false);
+    $("input[name*='filename']").attr("disabled",true);
 }
 //--------------------------------------------------------------------------------------------
 //子计划
@@ -645,90 +591,151 @@ function createTabPanel(panelId){
     $("#tabpanels").children().removeClass("active");
     var $div_tab = $("<div class='tab-pane active' id='tab"+panelId+"'></div>");
     var $aa = $("<input type='hidden' id='aa" + panelId + "' name='aa" + panelId + "'  value=0></input>");
-    var $ss = $("<input type='hidden' id='ss"+panelId+"' value=0></input>");
-    var $div_plan = $("<div id='plan"+panelId+"'></div>");
-    var $div_papercontent = $("<div class='paper-content'></div>");
-    var $div_0 = $("<div class='content-title'><span>计划信息：</span></div>");
-    var $div_1 = $("<div class='single-row'>"
-                +"<div class='item col-xs-6'>"
-                +"照射技术：<select id='Irradiation"+panelId+"' name='Irradiation"+panelId+"' class='form-item'></select>"
-                +"</div>"
-                +"<div class='item col-xs-6'>"
-                +"能量：<select id='ener"+panelId+"' name='ener"+panelId+"' class='form-item'></select>"
-                +"</div>"
-                +"</div>");
-
-    var $div_2 = $("<div class='single-row'>"
-                +"<div class='item col-xs-6'>"
-                +"射野数量：<input id='IlluminatedNumber"+panelId+"' name='IlluminatedNumber"+panelId+"' class='form-item' type='number' name='IlluminatedNumber'/>"
-                +"</div>"
-                +"<div class='item col-xs-6'>"
-                +"非共面照射：<select id='Coplanar"+panelId+"' name='Coplanar"+panelId+"' class='form-item'><option value='0'>否</option><option value='1'>是</option></select>"
-                +"</div>"
-                +"</div>");
-
-    var $div_3 = $("<div class='single-row'>"
-                +"<div class='item col-xs-6'>"
-                +"机器跳数：<input id='MachineNumbe"+panelId+"' class='form-item' type='number' name='MachineNumbe"+panelId+"'/>"
-                +"</div>"
-                +"<div class='item col-xs-6'>"
-                +"控制点数量：<input id='ControlPoint"+panelId+"' class='form-item' type='number' name='ControlPoint"+panelId+"'/>"
-                +"</div>"
-                +"</div>");
-
-    var $div_4 = $("<div class='single-row'>"
-                +"<div class='item col-xs-6'>"
-                +"射野角度："
-                +"</div>"
-                +"</div>");
-
-    var $div_5 = $("<div class='single-row'>"
-                +"<div class='col-xs-12'>"
-                +"<table id='Illuminatedangle"+panelId+"' class='table table-bordered' name='Illuminatedangle"+panelId+"'></table>"
-                +"</div>"
-                +"</div>");
-
-    $div_0.appendTo($div_papercontent);
-    $div_1.appendTo($div_papercontent);
-    $div_2.appendTo($div_papercontent);
-    $div_3.appendTo($div_papercontent);
-    $div_4.appendTo($div_papercontent);
-    $div_5.appendTo($div_papercontent);
-    $div_papercontent.appendTo($div_plan);
+    var $ss = $("<input type='hidden' id='ss"+panelId+"' name='ss" + panelId + "' value=0></input>");
     $aa.appendTo($div_tab);
     $ss.appendTo($div_tab);
-    $div_plan.appendTo($div_tab);
     $div_tab.appendTo($("#tabpanels"));
+    if(common == 1){
+        var $div_plan = $("<div id='plan"+panelId+"'></div>");
+        var $div_papercontent = $("<div class='paper-content'></div>");
+        var $div_0 = $("<div class='content-title'><span>计划信息：</span></div>");
+        var $div_1 = $("<div class='single-row'>"
+                    +"<div class='item col-xs-6'>"
+                    +"照射技术：<select id='Irradiation"+panelId+"' name='Irradiation"+panelId+"' class='form-item'></select>"
+                    +"</div>"
+                    +"<div class='item col-xs-6'>"
+                    +"能量：<select id='ener"+panelId+"' name='ener"+panelId+"' class='form-item'></select>"
+                    +"</div>"
+                    +"</div>");
 
-    createPlanSystemItem(document.getElementById("Irradiation"+panelId));
-    createenergyItem(document.getElementById("ener"+panelId));
-    $("#IlluminatedNumber"+panelId).blur(function(){
-        var num = $(this).val();
-        if (num > 0) {
-            var table = $("#Illuminatedangle"+panelId);
-            table.html("");
-            var tbody = "<tbody>";
-            var count = 1;
-            while(count <= num){
-                var rownum = 0;
-                tbody += "<tr>";
-                while(rownum < 4){
-                    if (count <= num) {
-                        td = '<td style="padding:0px;"><input type="text" id="angle' + count+"_"+panelId + '" name="angle' + count+"_"+panelId + '" class="td-input"></td>';
-                    }else{
-                        td = '<td style="text-align:center;">/</td>';
+        var $div_2 = $("<div class='single-row'>"
+                    +"<div class='item col-xs-6'>"
+                    +"射野数量：<input id='IlluminatedNumber"+panelId+"' name='IlluminatedNumber"+panelId+"' class='form-item' type='number' name='IlluminatedNumber'/>"
+                    +"</div>"
+                    +"<div class='item col-xs-6'>"
+                    +"非共面照射：<select id='Coplanar"+panelId+"' name='Coplanar"+panelId+"' class='form-item'><option value='0'>否</option><option value='1'>是</option></select>"
+                    +"</div>"
+                    +"</div>");
+
+        var $div_3 = $("<div class='single-row'>"
+                    +"<div class='item col-xs-6'>"
+                    +"机器跳数：<input id='MachineNumbe"+panelId+"' class='form-item' type='number' name='MachineNumbe"+panelId+"'/>"
+                    +"</div>"
+                    +"<div class='item col-xs-6'>"
+                    +"控制点数量：<input id='ControlPoint"+panelId+"' class='form-item' type='number' name='ControlPoint"+panelId+"'/>"
+                    +"</div>"
+                    +"</div>");
+        //移床参数
+        var $div_yc = $("<div class='single-row'>"
+                    +"<div class='col-xs-6'>"
+                    +"<span class='form-text col-xs-4' style='padding-left:0px;'>移床参数：</span>"
+                    +"</div>"
+                    +"</div>");
+
+        var $div_yc_content1 = $("<div class='single-row'>"
+                    +"<div class='col-xs-6'>"
+                    +"<span class='form-text col-xs-4'>左：</span>"
+                    +"<div class='group-item'>"
+                    +"<input id='left"+panelId+"' name='left"+panelId+"' type='number' class='form-group-input' />"
+                    +"<span class='input-group-addon'>cm</span>"
+                    +"</div>"
+                    +"</div>"
+                    +"<div class='col-xs-6'>"
+                    +"<span class='form-text col-xs-4'>右：</span>"
+                    +"<div class='group-item'>"
+                    +"<input id='right"+panelId+"' name='right"+panelId+"' type='number' class='form-group-input' />"
+                    +"<span class='input-group-addon'>cm</span>"
+                    +"</div>"
+                    +"</div>"
+                    +"</div>"); 
+        var $div_yc_content2 = $("<div class='single-row'>"
+                    +"<div class='col-xs-6'>"
+                    +"<span class='form-text col-xs-4'>升：</span>"
+                    +"<div class='group-item'>"
+                    +"<input id='rise"+panelId+"' name='rise"+panelId+"' type='number' class='form-group-input' />"
+                    +"<span class='input-group-addon'>cm</span>"
+                    +"</div>"
+                    +"</div>"
+                    +"<div class='col-xs-6'>"
+                    +"<span class='form-text col-xs-4'>降：</span>"
+                    +"<div class='group-item'>"
+                    +"<input id='drop"+panelId+"' name='drop"+panelId+"' type='number' class='form-group-input' />"
+                    +"<span class='input-group-addon'>cm</span>"
+                    +"</div>"
+                    +"</div>"
+                    +"</div>"); 
+        var $div_yc_content3 = $("<div class='single-row'>"
+                    +"<div class='col-xs-6'>"
+                    +"<span class='form-text col-xs-4'>进：</span>"
+                    +"<div class='group-item'>"
+                    +"<input id='enter"+panelId+"' name='enter"+panelId+"' type='number' class='form-group-input' />"
+                    +"<span class='input-group-addon'>cm</span>"
+                    +"</div>"
+                    +"</div>"
+                    +"<div class='col-xs-6'>"
+                    +"<span class='form-text col-xs-4'>出：</span>"
+                    +"<div class='group-item'>"
+                    +"<input id='out"+panelId+"' name='out"+panelId+"' type='number' class='form-group-input' />"
+                    +"<span class='input-group-addon'>cm</span>"
+                    +"</div>"
+                    +"</div>"
+                    +"</div>"); 
+
+        var $div_4 = $("<div class='single-row'>"
+                    +"<div class='item col-xs-6'>"
+                    +"射野角度："
+                    +"</div>"
+                    +"</div>");
+
+        var $div_5 = $("<div class='single-row'>"
+                    +"<div class='col-xs-12'>"
+                    +"<table id='Illuminatedangle"+panelId+"' class='table table-bordered' name='Illuminatedangle"+panelId+"'></table>"
+                    +"</div>"
+                    +"</div>");
+
+        $div_0.appendTo($div_papercontent);
+        $div_1.appendTo($div_papercontent);
+        $div_2.appendTo($div_papercontent);
+        $div_3.appendTo($div_papercontent);
+        $div_yc.appendTo($div_papercontent);
+        $div_yc_content1.appendTo($div_papercontent);
+        $div_yc_content2.appendTo($div_papercontent);
+        $div_yc_content3.appendTo($div_papercontent);
+        $div_4.appendTo($div_papercontent);
+        $div_5.appendTo($div_papercontent);
+        $div_papercontent.appendTo($div_plan);
+        $div_plan.appendTo($div_tab);
+        $div_tab.appendTo($("#tabpanels"));
+
+        createPlanSystemItem(document.getElementById("Irradiation"+panelId));
+        createenergyItem(document.getElementById("ener"+panelId));
+        $("#IlluminatedNumber"+panelId).blur(function(){
+            var num = $(this).val();
+            if (num > 0) {
+                var table = $("#Illuminatedangle"+panelId);
+                table.html("");
+                var tbody = "<tbody>";
+                var count = 1;
+                while(count <= num){
+                    var rownum = 0;
+                    tbody += "<tr>";
+                    while(rownum < 4){
+                        if (count <= num) {
+                            td = '<td style="padding:0px;"><input type="text" id="angle' + count+"_"+panelId + '" name="angle' + count+"_"+panelId + '" class="td-input"></td>';
+                        }else{
+                            td = '<td style="text-align:center;">/</td>';
+                        }
+                        tbody += td;
+                        rownum += 1;
+                        count += 1;
                     }
-                    tbody += td;
-                    rownum += 1;
-                    count += 1;
+                    tbody += "</tr>";
                 }
-                tbody += "</tr>";
+                tbody += "/tbody";
+                table.append(tbody);
             }
-            tbody += "/tbody";
-            table.append(tbody);
-        }
-    });
-
+        });
+    }
     var $div_papercontent1 = $("<div class=paper-content></div>");
     var $div_6 = $("<div class='content-title'><span>射野信息：</span></div>");
     var $div_7 = $("<div class='single-row'>"
@@ -942,6 +949,7 @@ function save() {
     var whichTab = whichTabStr.substring(3);
     var form = new FormData(document.getElementById("saveField"));
     form.append("item", whichTab);
+    form.append("DesignName"+whichTab,$("#designTab").children("ul .active").find("a").text());
     if (common == 1) {
         if (document.getElementById("Irradiation"+whichTab).value == "allItem") {
             window.alert("照射技术没有选择");
@@ -973,8 +981,7 @@ function save() {
         contentType: false,
         success: function (data) {
             if (data == "success") {
-                alert("保存成功");
-                window.location.reload();
+                alert("子计划："+$("#designTab").children("ul .active").find("a").text()+" 保存成功");
             } else {
                 alert("保存失败");
                 return false;
@@ -988,4 +995,145 @@ function save() {
             window.location.href = "Error.aspx";
         }
     });
+}
+
+function fillData(data) {
+    var tabNum = 0;
+    var dataFinal = new Array();
+    for(var i = 0; i < data.length; i++){
+        if(parseInt(data[i].item) > tabNum){
+            tabNum = parseInt(data[i].item);
+        }
+    }
+    for(var i = 0; i <= tabNum; i++){
+        var temp = new Array();
+        dataFinal.push(temp);
+    }
+
+    for(var i = 0; i < data.length; i++){
+        dataFinal[parseInt(data[i].item)].push(data[i]);
+    }
+
+    //模拟点击事件，生成tab
+    for(var i = 0; i < dataFinal.length; i++){
+        $("#subdesignname").val(dataFinal[i][0].DesignName);
+        $("#addSubDesign").trigger("click");
+        //填写内容
+        if(common == 1){
+            $("#Irradiation"+i).val(dataFinal[i][0].Irradiation);
+            $("#ener"+i).val(dataFinal[i][0].energy2);
+            $("#IlluminatedNumber"+i).val(dataFinal[i][0].IlluminatedNumber);
+            $("#Coplanar"+i).val(dataFinal[i][0].Coplanar);
+            $("#MachineNumbe"+i).val(dataFinal[i][0].MachineNumbe);
+            $("#ControlPoint"+i).val(dataFinal[i][0].ControlPoint);
+            $("#left"+i).val(dataFinal[i][0].left);
+            $("#right"+i).val(dataFinal[i][0].right);
+            $("#rise"+i).val(dataFinal[i][0].rise);
+            $("#out"+i).val(dataFinal[i][0].out);
+            $("#enter"+i).val(dataFinal[i][0].enter);
+            $("#drop"+i).val(dataFinal[i][0].drop);
+            table(dataFinal[i][0].IlluminatedNumber,dataFinal[i][0].Illuminatedangle,dataFinal[i][0].item);
+        }
+        $("#pingyin"+i).val(dataFinal[i][0].pinyin);
+        $("#id"+i).val(dataFinal[i][0].radioID);
+        $("#tps"+i).val(dataFinal[i][0].tps);
+        $("#pos"+i).val(dataFinal[i][0].pos);
+        $("#Graded"+i).val(dataFinal[i][0].Singledose);
+        $("#total"+i).val(dataFinal[i][0].Totaldose);
+        $("#applyuser").html(dataFinal[i][0].Name);
+        $("#time").html(dataFinal[i][0].time);
+        readField(dataFinal[i],dataFinal[i][0].item);
+
+        $("input").attr("disabled",true);
+    }
+}
+//射野角度表格生成
+function table(num, str,panelId) {
+    var list = new Array();
+    list=str.split(",");
+    if (num > 0) {
+        var table = $("#Illuminatedangle"+panelId);
+        table.html("");
+        var tbody = "<tbody>";
+        var count = 1;
+        while (count <= num) {
+            var rownum = 0;
+            tbody += "<tr>";
+            while (rownum < 4) {
+                if (count <= num) {
+                    td = '<td style="padding:0px;"><input type="text" id="angle' + count+"_"+panelId + '" name="angle' + count+"_"+panelId+ '" class="td-input" value="'+list[count-1]+'" disabled="disabled"></td>';
+                } else {
+                    td = '<td style="text-align:center;">/</td>';
+                }
+                tbody += td;
+                rownum += 1;
+                count += 1;
+            }
+            tbody += "</tr>";
+        }
+        tbody += "/tbody";
+        table.append(tbody);
+    }
+}
+
+function readField(data,panelId) {   
+    var table = document.getElementById("Field"+panelId);
+    var tbody = document.createElement("tbody");
+    for (var i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+    aa = data.length;
+    document.getElementById("fieldTimes"+panelId).value = data.length;
+    for (var i = 0; i < data.length; i++) {
+        var list = new Array();
+        list[0] = data[i].code;
+        list[1] = data[i].mu;
+        list[2] = data[i].equipment;
+        list[3] = data[i].radiotechnique;
+        list[4] = data[i].radiotype;
+        list[5] = data[i].energy;
+        list[6] = data[i].wavedistance;
+        list[7] = data[i].angleframe;
+        list[8] = data[i].noseangle;
+        list[9] = data[i].bedrotation;
+        list[10] = data[i].subfieldnumber;
+        var row = table.insertRow(i + 1);
+        var t1 = row.insertCell(0);
+        var t2 = row.insertCell(1);
+        var t3 = row.insertCell(2);
+        var t4 = row.insertCell(3);
+        var t5 = row.insertCell(4);
+        var t6 = row.insertCell(5);
+        var t7 = row.insertCell(6);
+        var t8 = row.insertCell(7);
+        var t9 = row.insertCell(8);
+        var t10 = row.insertCell(9);
+        var t11 = row.insertCell(10);
+        var t12 = row.insertCell(11);
+        t1.style.padding = "0px";
+        t2.style.padding = "0px";
+        t3.style.padding = "0px";
+        t4.style.padding = "0px";
+        t5.style.padding = "0px";
+        t6.style.padding = "0px";
+        t7.style.padding = "0px";
+        t8.style.padding = "0px";
+        t9.style.padding = "0px";
+        t10.style.padding = "0px";
+        t11.style.padding = "0px";
+        t12.style.padding = "0px";
+        t1.innerHTML = '<input id="a1' + i+"_"+panelId + '" name="a1' + i +"_"+panelId+ '" value="' + list[0] + '" type="text" disabled="disabled" class="td-input" />';
+        t2.innerHTML = '<input id="mu' + i+"_"+panelId + '" name="mu' + i +"_"+panelId+ '" type="text" value="' + list[1] + '" class="td-input" disabled="disabled"/>';
+        t3.innerHTML = '<input id="equipment' + i +"_"+panelId+ '" name="equipment' + i +"_"+panelId+ '" type="number" value="' + list[2] + '" class="td-input" disabled="disabled"/>';
+        t4.innerHTML = '<input id="technology' + i +"_"+panelId+ '" name="technology' + i +"_"+panelId+ '" type="text" value="' + list[3] + '" class="td-input" disabled="disabled"/>';
+        t5.innerHTML = '<input id="type' + i +"_"+panelId+ '" name="type' + i +"_"+panelId+ '" type="text" value="' + list[4] + '" class="td-input" disabled="disabled"/>';
+        t6.innerHTML = '<input id="energyField' + i +"_"+panelId+ '" name="energyField' + i +"_"+panelId+ '" type="text" value="' + list[5] + '" class="td-input" disabled="disabled"/>';
+        t7.innerHTML = '<input id="ypj' + i +"_"+panelId+ '" name="ypj' + i +"_"+panelId+ '" type="text" value="' + list[6] + '" class="td-input" disabled="disabled"/>';
+        t8.innerHTML = '<input id="jjj' + i +"_"+panelId+ '" name="jjj' + i +"_"+panelId+ '" type="text" value="' + list[7] + '" class="td-input" disabled="disabled"/>';
+        t9.innerHTML = '<input id="jtj' + i +"_"+panelId+ '" name="jtj' + i +"_"+panelId+ '" type="text" value="' + list[8] + '" class="td-input" disabled="disabled"/>';
+        t10.innerHTML = '<input id="czj' + i +"_"+panelId+ '" name="czj' + i +"_"+panelId+ '" type="text" value="' + list[9] + '" class="td-input" disabled="disabled"/>';
+        t11.innerHTML = '<input id="childs' + i +"_"+panelId+ '" name="childs' + i +"_"+panelId+ '" type="text" value="' + list[10] + '" class="td-input" disabled="disabled"/>';
+        //t12.innerHTML = '<a href="javascript:deleteField(' + i + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
+    }
+    document.getElementById("aa"+panelId).value = data.length;
 }
