@@ -13,7 +13,7 @@ function print() {
         url: "patientforprint.ashx",
         async: false,
         data: {
-            treat: treatmentID
+            chid: childdesigns[allpagenumber].chid
 
         },
         dateType: "json",
@@ -74,7 +74,7 @@ function print() {
     content = content + '<div class="single-row" style="min-height:28px;">'+
                         '<div class="item col-xs-4">治疗部位：<span class="underline">' + patientbasic.partID + '</span></div>'+
                         '<div class="item col-xs-4">治疗目标：<span  class="underline">' + patientbasic.treatmentaim + '</span></div>' +
-                        '<div class="item col-xs-4">疗程：<span  class="underline">' + patientbasic.Treatmentdescribe + '</span></div></div>'+
+                        '<div class="item col-xs-4">疗程计划：<span  class="underline">' + patientbasic.Treatmentdescribe + '</span></div></div>'+
                         '<div class="single-row" style="min-height:28px;">'+
                         '<div class="item col-xs-4">分割方式：<span  class="underline">' + patientbasic.splitway + '</span></div>' +
                         '<div class="item col-xs-4">机器总跳数：<span  class="underline">' + patientbasic.amount + '</span></div>' +
@@ -106,7 +106,8 @@ function print() {
     }
     tbody.style.textAlign = "center";
     table.appendChild(tbody);
-    var fildinfo = getfieldinfo(treatmentID);
+    var number = allpagenumber;
+    var fildinfo = childdesigns[number].fieldinfo;
     if (fildinfo.length == 0) {
         $("#fieldinfoprint").hide();
     } else {
