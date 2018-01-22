@@ -27,6 +27,7 @@
         <div class="paper" id="needPrint">
             <input type="hidden" id="progress" />
             <input type="hidden" id="idforappoint" value="0"/>
+           <input type="hidden" id="processnumber" value="0"/>
             <div class="paper-title">
                 加速器治疗管理
             </div>
@@ -96,150 +97,20 @@
                 </div>
                 <div class="single-row tab-row">
                     <ul id="tabs" class="nav nav-tabs">
-                        <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
+                        <%--<li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>--%>
                     </ul>
                 </div>
                 <div id="tab-content" class="tab-content">
-                <div class="tab-pane active" id="tab">
-                    <div id="fieldinfo" class="single-row">
-                            <div class="col-xs-6" style="padding-left:0px;">
-                            <span class="form-text col-xs-4">射野信息：</span>
-                            </div>
-                        </div>
-                    <div id="fieldinfotable" class="single-row">
-                        <div class="item area-group col-xs-12">
-                            <table id="Field" class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>射野ID</th>
-                                        <th>MU</th>
-                                        <th>放疗设备</th>
-                                        <th>照射技术</th>
-                                        <th>射野类型</th>
-                                        <th>能量</th>
-                                        <th>源皮距</th>
-                                        <th>机架角</th>
-                                        <th>机头角</th>
-                                        <th>床转交</th>
-                                        <th>子野数</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="item col-xs-4">射野数量：<span id="IlluminatedNumber" class="underline"></span></div>
-                        <div class="item col-xs-4">非共面照射：<span id="Coplanar" class="underline"></span></div>
-                        <div class="item col-xs-4">机器跳数：<span id="MachineNumbe" class="underline"></span></div>
-                     </div>
-                     <div class="single-row">
-                        <div class="item col-xs-4">控制点数量：<span id="ControlPoint" class="underline"></span></div>   
-                        <div class="item col-xs-4">射线类型：<span id="raytype" class="underline"></span></div>   
-                      </div>
-                   
-                    <div class="single-row">
-                        <div class="col-xs-10">
-                            <span class="form-text col-xs-3" style="padding-left:0px;">首次加速器预约：<span id="appointtime" class="underline"></span></span>
-                           <%-- <input id="appointtime"  name="appointtime" type="text" class="form-item" readonly="true" />--%>
-                          <%--  <button id="chooseappoint" class="btn btn-default" disabled="disabled" data-toggle="modal" data-target="#appoint">预约</button>--%>
-                        </div>
-                    </div>
-                    <div class="single-row">
-                        <div class="col-xs-8">
-                            <span class="form-text col-xs-3" style="padding-left:0px;">治疗总次数：</span>
-                            <input id="totalnumber" name="totalnumber" disabled="disabled" type="number" class="form-item" style="width:20%;"/>
-                            <button id="changetotalnumber" type="button" class="btn btn-success"  disabled="disabled">更改</button>
-                            <button id="finish" type="button" class="btn btn-warning" disabled="disabled">结束治疗</button>
-                            <input id="finishthistreat" value="0" type="hidden" name="finishthistreat" class="form-item" />
-                        </div>
-                         <div class="col-xs-4">
-                            <span class="form-text" style="padding-left:0px;">已治疗次数：</span>
-                            <span id="finishedtimes" class="underline"></span>
-                        </div>
-                    </div>
-                    <div id="logholder" class="single-row">
-                          <div class="col-xs-8">
-                               <span class="form-text" style="padding-left:0px;">修改日志：</span>
-                               <table  class="table table-bordered">
-                                   <thead>
-                                   <tr>
-                                      <th>修改天数</th>
-                                      <th>修改时间</th>
-                                       <th>修改人</th>
-                                   </tr>
-                                     </thead>
-                                   <tbody id="log">
-                                   </tbody>
-                               </table>
-                              </div>
-                         </div>
-                    <div class="single-row">
-                        <div class="col-xs-8">
-                            <span class="form-text col-xs-3" style="padding-left:0px;">分割方式：</span>
-                               <select  id="splitway" disabled="disabled" class="col-xs-3 form-item" name="splitway">
-                               </select>
-                        </div>
-                   </div>
-                    <div class="single-row">
-                        <div class="item area-group col-xs-12">
-                          <span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span>
-                              <textarea id="remarks" name="remarks" class="form-area col-xs-10" disabled="disabled"></textarea>
-                              </div>                                                                 
-                          </div>
-                </div>
+               
                 </div>
             </div>
             <div class="paper-footer">
                 <div class="single-row">
                     <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
-                    <div class="item col-xs-6">预约时间：<span id="date" class="underline"></span></div>
+                    <div class="item col-xs-6">管理时间：<span id="date" class="underline"></span></div>
                 </div>
             </div>
         </div>
-<%--       <div id="appoint" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document" style="width:700px;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">预约设备与时间窗口</h4>
-                    </div>
-                    <div class="modal-body" style="overflow:hidden;">
-                        <div class="panel-row">
-                            <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
-                            <div class="item col-xs-4">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
-                            <div class="col-xs-3">
-                                <button type="button"  id="previousday" class="btn btn-default btn-sm">上一天</button>
-                                <button type="button" id="nextday" class="btn btn-default btn-sm">下一天</button>
-                                <button id="chooseProject" class="btn btn-default">查询该项</button>
-                            </div>
-                        </div>
-                         <div class="panel-row">
-                            <div class="item col-xs-7">时间筛选：<select id="timeselect" name="timeselect" class="form-item">
-                                                                   <option value="360-720">06:00-12:00</option>
-                                                                    <option value="720-1080">12:00-18:00</option>
-                                                                    <option value="1080-1440">18:00-24:00</option>
-                                                                    <option value="1440-1800">00:00-06:00(次日)</option>
-                                                                  </select>
-
-                            </div>
-                            <div class="item col-xs-5" style="padding-left:20px;display:none">是否占用两格：<select id="isspecial" name="isspecial" class="form-item">
-                                                                      <option value="0">否</option>
-                                                                      <option value="1">是</option>
-                                                                  </select>
-
-                            </div>
-                         </div>
-                        <div class="panel-row">
-                            <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal">取消</button>
-                        <button class="btn btn-primary" id="sure" type="button" data-dismiss="modal">确定</button>
-                    </div>
-                </div>
-                </div>
-            </div>--%>
     </section>
      <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;position:absolute;">
                 
