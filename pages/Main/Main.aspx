@@ -276,11 +276,15 @@
                 <table id="patient-table" class="table table-bordered" style="white-space:nowrap;margin-bottom:0px;"></table>
             </div>
             <div class="row">
-                <div id="legend" class="col-sm-9" style="display:none;padding-top:8px;padding-left:25px;">
-                    <span style="background-color:wheat;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-                    <span>：等待</span>
-                    <span style="color:#00A65A;margin-left:10px;">患者纪录</span>
-                    <span>：增强</span>
+                <div id="legend" class="col-sm-9" style="padding-top:8px;padding-left:25px;">
+                    <span id="legend-waiting" style="display:none;">
+                        <span style="background-color:wheat;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                        <span>：等待中</span>
+                    </span>
+                    <span id="legend-enhance" style="display:none;">
+                        <span style="color:#00A65A;margin-left:10px;">患者纪录</span>
+                        <span>：CT增强</span>
+                    </span>
                 </div>
                 <div class="col-sm-3 pull-right">
                     <div class="dataTables_info" id="patient_info" role="status" aria-live="polite"></div>

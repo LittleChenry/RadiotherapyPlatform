@@ -52,7 +52,7 @@
             </div>
              <div id="designinfo" class="paper-content">
                   <div class="content-title">
-                    <span>计划详细信息：</span>
+                    <span>计划信息：</span>
                 </div>
                 <div class="single-row">
                     <div class="item col-xs-12">
@@ -83,100 +83,111 @@
                         </table>
                     </div>
                 </div>
-                  <div id="fieldinfo" class="single-row">
-                    <div class="col-xs-6" style="padding-left:0px;">
-                        <span class="form-text col-xs-4">射野信息：</span>
-                    </div>
-                </div>
-                <div id="fieldinfotable" class="single-row">
-                    <div class="item area-group col-xs-12">
-                        <table id="Field" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>射野ID</th>
-                                    <th>MU</th>
-                                    <th>放疗设备</th>
-                                    <th>照射技术</th>
-                                    <th>射野类型</th>
-                                    <th>能量</th>
-                                    <th>源皮距</th>
-                                    <th>机架角</th>
-                                    <th>机头角</th>
-                                    <th>床转交</th>
-                                    <th>子野数</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
                 <div class="single-row">
                     <div class="item col-xs-4">治疗技术：<span id="technology" class="underline"></span></div>
                     <div class="item col-xs-4">放疗设备：<span id="equipment" class="underline"></span></div>
                     <div class="item col-xs-4">计划系统：<span id="PlanSystem" class="underline"></span></div>
                 </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">射野数量：<span id="IlluminatedNumber" class="underline"></span></div>
-                    <div class="item col-xs-4">非共面照射：<span id="Coplanar" class="underline"></span></div>
-                    <div class="item col-xs-4">机器跳数：<span id="MachineNumbe" class="underline"></span></div>
-                </div>
-                <div class="single-row">
-                    <div class="item col-xs-4">控制点数量：<span id="ControlPoint" class="underline"></span></div>   
-                     <div class="item col-xs-4">射线类型：<span id="raytype" class="underline"></span></div>   
-                </div>
+               
             </div>
             <div class="paper-content"> 
                 <div class="content-title">
-                    <span>加速器治疗管理：</span>
+                    <span>计划管理：</span>
                 </div>
-                <div class="single-row">
-                    <div class="col-xs-10">
-                        <span class="form-text col-xs-3" style="padding-left:0px;">首次加速器治疗预约：</span>
-                        <input id="appointtime"  name="appointtime" type="text" class="form-item" readonly="true" />
-                        <button id="chooseappoint" class="btn btn-default" disabled="disabled" data-toggle="modal" data-target="#appoint">预约</button>
-                    </div>
+                <div class="single-row tab-row">
+                    <ul id="tabs" class="nav nav-tabs">
+                        <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
+                    </ul>
                 </div>
-                <div class="single-row">
-                    <div class="col-xs-8">
-                        <span class="form-text col-xs-3" style="padding-left:0px;">治疗总次数：</span>
-                        <input id="totalnumber" name="totalnumber" disabled="disabled" type="number" class="form-item" style="width:20%;"/>
-                        <button id="changetotalnumber" type="button" class="btn btn-success"  disabled="disabled">更改</button>
-                        <button id="finish" type="button" class="btn btn-warning" disabled="disabled">结束治疗</button>
-                        <input id="finishthistreat" value="0" type="hidden" name="finishthistreat" class="form-item" />
+                <div id="tab-content" class="tab-content">
+                <div class="tab-pane active" id="tab">
+                    <div id="fieldinfo" class="single-row">
+                            <div class="col-xs-6" style="padding-left:0px;">
+                            <span class="form-text col-xs-4">射野信息：</span>
+                            </div>
+                        </div>
+                    <div id="fieldinfotable" class="single-row">
+                        <div class="item area-group col-xs-12">
+                            <table id="Field" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>射野ID</th>
+                                        <th>MU</th>
+                                        <th>放疗设备</th>
+                                        <th>照射技术</th>
+                                        <th>射野类型</th>
+                                        <th>能量</th>
+                                        <th>源皮距</th>
+                                        <th>机架角</th>
+                                        <th>机头角</th>
+                                        <th>床转交</th>
+                                        <th>子野数</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
-                     <div class="col-xs-4">
-                        <span class="form-text" style="padding-left:0px;">已治疗次数：</span>
-                        <span id="finishedtimes" class="underline"></span>
-                    </div>
-                </div>
-                 <div id="logholder" class="single-row">
-                      <div class="col-xs-8">
-                           <span class="form-text" style="padding-left:0px;">修改日志：</span>
-                           <table  class="table table-bordered">
-                               <thead>
-                               <tr>
-                                  <th>修改天数</th>
-                                  <th>修改时间</th>
-                                   <th>修改人</th>
-                               </tr>
-                                 </thead>
-                               <tbody id="log">
-                               </tbody>
-                           </table>
-                          </div>
+                    <div class="single-row">
+                        <div class="item col-xs-4">射野数量：<span id="IlluminatedNumber" class="underline"></span></div>
+                        <div class="item col-xs-4">非共面照射：<span id="Coplanar" class="underline"></span></div>
+                        <div class="item col-xs-4">机器跳数：<span id="MachineNumbe" class="underline"></span></div>
                      </div>
-               <div class="single-row">
-                    <div class="col-xs-8">
-                        <span class="form-text col-xs-3" style="padding-left:0px;">分割方式：</span>
-                           <select  id="splitway" disabled="disabled" class="col-xs-3 form-item" name="splitway">
-                           </select>
-                    </div>
-               </div>
-              <div class="single-row">
-                    <div class="item area-group col-xs-12">
-                      <span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span>
-                          <textarea id="remarks" name="remarks" class="form-area col-xs-10" disabled="disabled"></textarea>
-                          </div>                                                                 
+                     <div class="single-row">
+                        <div class="item col-xs-4">控制点数量：<span id="ControlPoint" class="underline"></span></div>   
+                        <div class="item col-xs-4">射线类型：<span id="raytype" class="underline"></span></div>   
                       </div>
+                   
+                    <div class="single-row">
+                        <div class="col-xs-10">
+                            <span class="form-text col-xs-3" style="padding-left:0px;">首次加速器预约：<span id="appointtime" class="underline"></span></span>
+                           <%-- <input id="appointtime"  name="appointtime" type="text" class="form-item" readonly="true" />--%>
+                          <%--  <button id="chooseappoint" class="btn btn-default" disabled="disabled" data-toggle="modal" data-target="#appoint">预约</button>--%>
+                        </div>
+                    </div>
+                    <div class="single-row">
+                        <div class="col-xs-8">
+                            <span class="form-text col-xs-3" style="padding-left:0px;">治疗总次数：</span>
+                            <input id="totalnumber" name="totalnumber" disabled="disabled" type="number" class="form-item" style="width:20%;"/>
+                            <button id="changetotalnumber" type="button" class="btn btn-success"  disabled="disabled">更改</button>
+                            <button id="finish" type="button" class="btn btn-warning" disabled="disabled">结束治疗</button>
+                            <input id="finishthistreat" value="0" type="hidden" name="finishthistreat" class="form-item" />
+                        </div>
+                         <div class="col-xs-4">
+                            <span class="form-text" style="padding-left:0px;">已治疗次数：</span>
+                            <span id="finishedtimes" class="underline"></span>
+                        </div>
+                    </div>
+                    <div id="logholder" class="single-row">
+                          <div class="col-xs-8">
+                               <span class="form-text" style="padding-left:0px;">修改日志：</span>
+                               <table  class="table table-bordered">
+                                   <thead>
+                                   <tr>
+                                      <th>修改天数</th>
+                                      <th>修改时间</th>
+                                       <th>修改人</th>
+                                   </tr>
+                                     </thead>
+                                   <tbody id="log">
+                                   </tbody>
+                               </table>
+                              </div>
+                         </div>
+                    <div class="single-row">
+                        <div class="col-xs-8">
+                            <span class="form-text col-xs-3" style="padding-left:0px;">分割方式：</span>
+                               <select  id="splitway" disabled="disabled" class="col-xs-3 form-item" name="splitway">
+                               </select>
+                        </div>
+                   </div>
+                    <div class="single-row">
+                        <div class="item area-group col-xs-12">
+                          <span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span>
+                              <textarea id="remarks" name="remarks" class="form-area col-xs-10" disabled="disabled"></textarea>
+                              </div>                                                                 
+                          </div>
+                </div>
+                </div>
             </div>
             <div class="paper-footer">
                 <div class="single-row">
@@ -185,7 +196,7 @@
                 </div>
             </div>
         </div>
-       <div id="appoint" class="modal fade" tabindex="-1" role="dialog">
+<%--       <div id="appoint" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document" style="width:700px;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -199,7 +210,7 @@
                             <div class="col-xs-3">
                                 <button type="button"  id="previousday" class="btn btn-default btn-sm">上一天</button>
                                 <button type="button" id="nextday" class="btn btn-default btn-sm">下一天</button>
-                               <%-- <button id="chooseProject" class="btn btn-default">查询该项</button>--%>
+                                <button id="chooseProject" class="btn btn-default">查询该项</button>
                             </div>
                         </div>
                          <div class="panel-row">
@@ -213,7 +224,7 @@
                             </div>
                             <div class="item col-xs-5" style="padding-left:20px;display:none">是否占用两格：<select id="isspecial" name="isspecial" class="form-item">
                                                                       <option value="0">否</option>
-                                                                      <%--<option value="1">是</option>--%>
+                                                                      <option value="1">是</option>
                                                                   </select>
 
                             </div>
@@ -228,7 +239,7 @@
                     </div>
                 </div>
                 </div>
-            </div>
+            </div>--%>
     </section>
      <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;position:absolute;">
                 

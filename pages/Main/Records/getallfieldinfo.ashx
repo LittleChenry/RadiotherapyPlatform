@@ -60,7 +60,8 @@ public class getallfieldinfo : IHttpHandler {
             sqlOperation.AddParameterWithValue("@Design_ID", MAX);
             sqlOperation.ExecuteNonQuery(update);
         }
-        string sqlCommand = "SELECT code,mu,equipment,User_ID,radiotechnique,radiotype,fieldinfomation.energy as energy1,design.energy as energy2,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,Operate_Time,Name,design.* from fieldinfomation,user,design,treatment where User_ID=user.ID and design.ID=treatment.Design_ID and treatment.ID=treatmentid and treatmentid=@treatmentid ";
+
+        string sqlCommand = "SELECT fieldinfomation.ChildDesign_ID,code,mu,equipment,User_ID,radiotechnique,radiotype,fieldinfomation.energy as energy1,design.energy as energy2,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,Operate_Time,Name,design.* from fieldinfomation,user,design,treatment where User_ID=user.ID and design.ID=treatment.Design_ID and treatment.ID=treatmentid and treatmentid=@treatmentid ";
         sqlOperation1.AddParameterWithValue("@treatmentid", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation1.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"Item\":[");
@@ -76,7 +77,7 @@ public class getallfieldinfo : IHttpHandler {
                 "\",\"Singledose\":\"" + reader["Singledose"].ToString() + "\",\"Totaldose\":\"" + reader["Totaldose"].ToString() + "\",\"Illuminatedangle\":\"" + reader["Illuminatedangle"].ToString() + "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() +
                 "\",\"Irradiation\":\"" + reader["Irradiation_ID"].ToString() + "\",\"energy2\":\"" + reader["energy2"].ToString() + "\",\"time\":\"" + date1 + "\",\"Name\":\"" + reader["Name"].ToString() +
                 "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() + "\",\"userID\":\"" + reader["User_ID"].ToString() +
-                "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\",\"pinyin\":\"" + pingyin + "\",\"radioID\":\"" + radioID+ "\"}");
+                "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\",\"ChildDesign_ID\":\"" + reader["ChildDesign_ID"].ToString() + "\",\"pinyin\":\"" + pingyin + "\",\"radioID\":\"" + radioID + "\"}");
             if (i < count - 1)
             {
                 backText.Append(",");

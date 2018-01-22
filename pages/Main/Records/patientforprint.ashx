@@ -115,8 +115,11 @@ public class patientforprint : IHttpHandler {
 
                 reader3.Close();
             }
+            string machinenumber = "select sum(mu) from fieldinfomation where treatmentid=@treat";
+            sqlOperation3.AddParameterWithValue("@treat", treatid);
+            string amount = sqlOperation3.ExecuteScalar(machinenumber);
             backText.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Priority\":\"" + Priority + "\",\"refer\":\"" + refer + "\",\"IdentificationNumber\":\"" + reader["IdentificationNumber"] + "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() +
-                 "\",\"Hospital\":\"" + reader["Hospital"].ToString() + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() +
+                 "\",\"Hospital\":\"" + reader["Hospital"].ToString() + "\",\"amount\":\"" + amount + "\",\"RecordNumber\":\"" + reader["RecordNumber"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() +
                  "\",\"Gender\":\"" + reader["Gender"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"RegisterDoctor\":\"" + reader["doctor"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
                  "\",\"Nation\":\"" + reader["Nation"].ToString() + "\",\"Address\":\"" + reader["Address"].ToString() + "\",\"Contact1\":\"" + reader["Contact1"].ToString() + "\",\"diagnosisresult\":\"" + result +
                  "\",\"Contact2\":\"" + reader["Contact2"].ToString() + "\",\"model\":\"" + model + "\",\"fixedeq\":\"" + fixedeq + "\",\"headrest\":\"" + headrest + "\",\"specialrequire\":\"" + specialrequire + "\",\"remarkinfo\":\"" + remarkinfo + "\",\"parameterz\":\"" + parameterz + "\",\"parameterx\":\"" + parameterx + "\",\"parametery\":\"" + parametery + "\",\"total\":\"" + total + "\",\"splitway\":\"" + splitway + "\",\"firsttime\":\"" + firsttime + "\",\"pos\":\"" + reader["pos"].ToString() + "\",\"treatmentaim\":\"" + reader["treatmentaim"].ToString() + "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"Hospital_ID\":\"" + reader["Hospital_ID"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"partID\":\"" + reader["partID"].ToString() + "\",\"LightPart_ID\":\"" + reader["LightPart_ID"].ToString() + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\"}");
