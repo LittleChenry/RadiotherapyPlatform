@@ -644,7 +644,7 @@ $(function(){
 function createTabPanel(panelId){
     $("#tabpanels").children().removeClass("active");
     var $div_tab = $("<div class='tab-pane active' id='tab"+panelId+"'></div>");
-    var $aa = $("<input type='hidden' id='aa"+panelId+"' value=0></input>");
+    var $aa = $("<input type='hidden' id='aa" + panelId + "' name='aa" + panelId + "'  value=0></input>");
     var $ss = $("<input type='hidden' id='ss"+panelId+"' value=0></input>");
     var $div_plan = $("<div id='plan"+panelId+"'></div>");
     var $div_papercontent = $("<div class='paper-content'></div>");
@@ -941,6 +941,7 @@ function save() {
     var whichTabStr = $("#tabpanels").children(".active").attr("id");
     var whichTab = whichTabStr.substring(3);
     var form = new FormData(document.getElementById("saveField"));
+    form.append("item", whichTab);
     if (common == 1) {
         if (document.getElementById("Irradiation"+whichTab).value == "allItem") {
             window.alert("照射技术没有选择");

@@ -807,7 +807,12 @@ function saveTemplate(TemplateName) {
         contentType: false,
         async: false,
         success: function (data) {
-            alert("模板保存成功");         
+            if (data == "success") {
+                alert("保存成功");
+            } else {
+                alert("保存失败");
+                return false;
+            }
         },
         error: function (e) {
             window.location.href = "Error.aspx";

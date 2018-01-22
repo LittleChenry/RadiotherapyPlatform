@@ -50,7 +50,10 @@ public class saveField : IHttpHandler {
             int userid = Convert.ToInt32(userID);
             DateTime datetime = DateTime.Now;
             string date1 = datetime.ToString();
-            string aa = context.Request.Form["aa"];
+            string item = context.Request.Form["item"];//获取子计划序号
+            int item1 = Convert.ToInt32(item);
+            string aa = context.Request.Form["aa"+item1];
+            
             int a=Convert.ToInt32(aa);
             /*
             string maxnumber = "select max(ID) from design";
@@ -70,108 +73,203 @@ public class saveField : IHttpHandler {
             string progress1 = sqlOperation.ExecuteScalar(select1);
             string[] group = progress1.Split(',');
             bool exists = ((IList)group).Contains("11");
-            if (exists)
+            string select = "select Progress from treatment where ID=@treat";
+            sqlOperation.AddParameterWithValue("@treat", treatID);
+            string progress = sqlOperation.ExecuteScalar(select);
+            string common = "select iscommon from treatment where ID=@treat";
+            int iscommon = Convert.ToInt32(sqlOperation.ExecuteScalar(common));
+            int Success = 0;
+            int successs = 0;
+            string childdesigns = "select count(*) from childdesign where treatment_ID=@treat and item=@item";
+            sqlOperation.AddParameterWithValue("@item", item1);
+            int count = int.Parse(sqlOperation.ExecuteScalar(childdesigns));
+            bool existdesign = true;
+            if (count == 0)
             {
-                string delete = "delete from fieldinfomation where treatmentid=@treatmentid";
-                sqlOperation1.AddParameterWithValue("@treatmentid", treatID);
-                sqlOperation1.ExecuteNonQuery(delete);
+                existdesign = false;
             }
-            
-                int intSuccess = 0;
+            int intSuccess = 0;
+            if (iscommon == 1)
+            {
+                string select5 = "select Design_ID from treatment where ID=@treat";
+                sqlOperation.AddParameterWithValue("@treat", treatID);
+                string designid = sqlOperation.ExecuteScalar(select5);
+                
+                string lr = "";
+                string rd = "";
+                string eo = "";
+                if (context.Request.Form["left" + item] == "" || context.Request.Form["left" + item] == null)
+                {
+                    lr = "-" + context.Request.Form["right" + item];
+                }
+                else
+                {
+                    lr = context.Request.Form["left" + item];
+                }
+                if (context.Request.Form["rise" + item] == "" || context.Request.Form["rise" + item] == null)
+                {
+                    rd = "-" + context.Request.Form["drop" + item];
+                }
+                else
+                {
+                    rd = context.Request.Form["rise" + item];
+                }
+                if (context.Request.Form["enter" + item] == "" || context.Request.Form["enter" + item] == null)
+                {
+                    eo = "-" + context.Request.Form["out" + item];
+                }
+                else
+                {
+                    eo = context.Request.Form["enter" + item];
+                }
+                string para = lr + ";" + rd + ";" + eo;
+
+                int number = Convert.ToInt32(context.Request.Form["IlluminatedNumber" + item]);
+                string angle = "";
+                for (int j = 1; j < number; j++)
+                {
+                    angle = angle + context.Request.Form["angle" + j+"_"+item] + ",";
+                }
+                angle = angle + context.Request.Form["angle" + number + "_" + item];
+                if (existdesign)
+                {
+                    string childid = "select ID from childdesign where Treatment_ID=@Treatment_ID and item=@item";
+                    sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
+                    sqlOperation.AddParameterWithValue("@item", item1);
+                    childid = sqlOperation.ExecuteScalar(childid);
+                    string delete = "delete from fieldinfomation where childdesign_ID=@childdesign_ID";
+                    sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
+                    sqlOperation1.ExecuteNonQuery(delete);
+                    string delete1 = "delete from childdesign where childdesign_ID=@childdesign_ID";
+                    sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
+                    sqlOperation1.ExecuteNonQuery(delete1);
+                }
+                string insert = "insert into childdesign (DesignName,Treatment_ID,IlluminatedNumber,Coplanar,MachineNumbe,ControlPoint,parameters,Illuminatedangle,Irradiation_ID,energy,item)values(@DesignName,@Treatment_ID,@IlluminatedNumber,@Coplanar,@MachineNumbe,@ControlPoint,@parameters,@Illuminatedangle,@Irradiation_ID,@energy,@item)";
+
+                sqlOperation1.AddParameterWithValue("@Irradiation_ID", Convert.ToInt32(context.Request.Form["Irradiation" + item]));
+                sqlOperation1.AddParameterWithValue("@IlluminatedNumber", Convert.ToInt32(context.Request.Form["IlluminatedNumber" + item]));
+                sqlOperation1.AddParameterWithValue("@Coplanar", Convert.ToInt32(context.Request.Form["Coplanar" + item]));
+                sqlOperation1.AddParameterWithValue("@energy", Convert.ToInt32(context.Request.Form["ener" + item]));
+                sqlOperation1.AddParameterWithValue("@MachineNumbe", Convert.ToDouble(context.Request.Form["MachineNumbe" + item]));
+                sqlOperation1.AddParameterWithValue("@Illuminatedangle", angle);
+                sqlOperation1.AddParameterWithValue("@parameters", para);
+                sqlOperation1.AddParameterWithValue("@Treatment_ID", treatID);
+                sqlOperation1.AddParameterWithValue("@item", item1);
+                sqlOperation1.AddParameterWithValue("@DesignName", context.Request.Form["DesignName" + item]);
+                sqlOperation1.AddParameterWithValue("@ControlPoint", Convert.ToInt32(context.Request.Form["ControlPoint" + item]));
+                successs = sqlOperation1.ExecuteNonQuery(insert);
+                string childid1 = "select ID from childdesign where Treatment_ID=@Treatment_ID and item=@item";
+                sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
+                sqlOperation.AddParameterWithValue("@item", item1);
+                childid1 = sqlOperation.ExecuteScalar(childid1);
                 for (int i = 0; i < a; i++)
                 {
-                    string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid,Singledose,Totaldose) " +
-                                            "VALUES(@code,@mu,@equipment,@radiotechnique,@radiotype,@energy,@wavedistance,@angleframe,@noseangle,@bedrotation,@subfieldnumber,@User_ID,@Operate_Time,@treatmentid,@Singledose,@Totaldose)";
+                    string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid,Singledose,Totaldose,childdesign_ID) " +
+                                            "VALUES(@code,@mu,@equipment,@radiotechnique,@radiotype,@energy,@wavedistance,@angleframe,@noseangle,@bedrotation,@subfieldnumber,@User_ID,@Operate_Time,@treatmentid,@Singledose,@Totaldose,@childdesign_ID)";
                     // sqlOperation.AddParameterWithValue("@ID", Count);
-                    sqlOperation.AddParameterWithValue("@code", context.Request.Form["a1"+i]);
-                    sqlOperation.AddParameterWithValue("@mu", context.Request.Form["mu"+i]);
-                    sqlOperation.AddParameterWithValue("@equipment", Convert.ToInt32(context.Request.Form["equipment"+i]));
-                    sqlOperation.AddParameterWithValue("@radiotechnique", context.Request.Form["technology"+i]);
-                    sqlOperation.AddParameterWithValue("@radiotype", context.Request.Form["type" + i]);
-                    sqlOperation.AddParameterWithValue("@energy", context.Request.Form["energyField" + i]);
-                    sqlOperation.AddParameterWithValue("@wavedistance", context.Request.Form["ypj" + i]);
-                    sqlOperation.AddParameterWithValue("@angleframe", context.Request.Form["jjj" + i]);
-                    sqlOperation.AddParameterWithValue("@noseangle", context.Request.Form["jtj" + i]);
-                    sqlOperation.AddParameterWithValue("@bedrotation", context.Request.Form["czj" + i]);
-                    sqlOperation.AddParameterWithValue("@subfieldnumber", context.Request.Form["childs" + i]);
-                    sqlOperation.AddParameterWithValue("@Singledose", Convert.ToInt32(context.Request.Form["Graded"]));
-                    sqlOperation.AddParameterWithValue("@Totaldose", Convert.ToInt32(context.Request.Form["total"]));
+                    sqlOperation.AddParameterWithValue("@code", context.Request.Form["a1" + i+"_"+item]);
+                    sqlOperation.AddParameterWithValue("@mu", context.Request.Form["mu" + item + "_" + i]);
+                    sqlOperation.AddParameterWithValue("@equipment", Convert.ToInt32(context.Request.Form["equipment" + i + "_" + item]));
+                    sqlOperation.AddParameterWithValue("@radiotechnique", context.Request.Form["technology" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@radiotype", context.Request.Form["type" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@energy", context.Request.Form["energyField" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@wavedistance", context.Request.Form["ypj" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@angleframe", context.Request.Form["jjj" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@noseangle", context.Request.Form["jtj" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@bedrotation", context.Request.Form["czj" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@subfieldnumber", context.Request.Form["childs" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@Singledose", Convert.ToInt32(context.Request.Form["Graded" + item]));
+                    sqlOperation.AddParameterWithValue("@Totaldose", Convert.ToInt32(context.Request.Form["total" + item]));
                     sqlOperation.AddParameterWithValue("@Operate_Time", date1);
                     sqlOperation.AddParameterWithValue("@treatmentid", treatID);
                     sqlOperation.AddParameterWithValue("@User_ID", userid);
+                    sqlOperation.AddParameterWithValue("@childdesign_ID", childid1);
                     intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
                     if (intSuccess == 0) { break; }
                 }
-                string select = "select Progress from treatment where ID=@treat";
-                sqlOperation.AddParameterWithValue("@treat", treatID);
-                string progress = sqlOperation.ExecuteScalar(select);
-                string common = "select iscommon from treatment where ID=@treat";
-                int iscommon = Convert.ToInt32(sqlOperation.ExecuteScalar(common));
-                int Success = 0;
-                int successs = 0;
+            }
+            else
+            {
+                if (existdesign)
+                {
+                    string childid = "select ID from childdesign where Treatment_ID=@Treatment_ID and item=@item";
+                    sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
+                    sqlOperation.AddParameterWithValue("@item", item1);
+                    childid = sqlOperation.ExecuteScalar(childid);
+                    string delete = "delete from fieldinfomation where childdesign_ID=@childdesign_ID";
+                    sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
+                    sqlOperation1.ExecuteNonQuery(delete);
+                    string delete1 = "delete from childdesign where childdesign_ID=@childdesign_ID";
+                    sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
+                    sqlOperation1.ExecuteNonQuery(delete1);
+                }
+                string insert = "insert into childdesign (DesignName,Treatment_ID,item)values(@DesignName,@Treatment_ID,@item)";      
+                sqlOperation1.AddParameterWithValue("@Treatment_ID", treatID);
+                sqlOperation1.AddParameterWithValue("@item", item1);
+                sqlOperation1.AddParameterWithValue("@DesignName", context.Request.Form["DesignName" + item]);
+                successs = sqlOperation1.ExecuteNonQuery(insert);
+                string childid1 = "select ID from childdesign where Treatment_ID=@Treatment_ID and item=@item";
+                sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
+                sqlOperation.AddParameterWithValue("@item", item1);
+                childid1 = sqlOperation.ExecuteScalar(childid1);
+                
+                for (int i = 0; i < a; i++)
+                {
+                    string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid,Singledose,Totaldose,childdesign_ID) " +
+                                            "VALUES(@code,@mu,@equipment,@radiotechnique,@radiotype,@energy,@wavedistance,@angleframe,@noseangle,@bedrotation,@subfieldnumber,@User_ID,@Operate_Time,@treatmentid,@Singledose,@Totaldose,@childdesign_ID)";
+                    // sqlOperation.AddParameterWithValue("@ID", Count);
+                    sqlOperation.AddParameterWithValue("@code", context.Request.Form["a1" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@mu", context.Request.Form["mu" + item + "_" + i]);
+                    sqlOperation.AddParameterWithValue("@equipment", Convert.ToInt32(context.Request.Form["equipment" + i + "_" + item]));
+                    sqlOperation.AddParameterWithValue("@radiotechnique", context.Request.Form["technology" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@radiotype", context.Request.Form["type" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@energy", context.Request.Form["energyField" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@wavedistance", context.Request.Form["ypj" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@angleframe", context.Request.Form["jjj" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@noseangle", context.Request.Form["jtj" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@bedrotation", context.Request.Form["czj" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@subfieldnumber", context.Request.Form["childs" + i + "_" + item]);
+                    sqlOperation.AddParameterWithValue("@Singledose", Convert.ToInt32(context.Request.Form["Graded" + item]));
+                    sqlOperation.AddParameterWithValue("@Totaldose", Convert.ToInt32(context.Request.Form["total" + item]));
+                    sqlOperation.AddParameterWithValue("@Operate_Time", date1);
+                    sqlOperation.AddParameterWithValue("@treatmentid", treatID);
+                    sqlOperation.AddParameterWithValue("@User_ID", userid);
+                    sqlOperation.AddParameterWithValue("@childdesign_ID", childid1);
+                    intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
+                    if (intSuccess == 0) { break; }
+                }
+                
+            }
+            if (!exists)
+            {
+                string inserttreat = "update treatment set Progress=@progress,TPS=@TPS,positioninfomation=@positioninfomation,pinyin=@pinyin,radioID=@radioid where ID=@treat";
                 if (iscommon == 1)
                 {
-                    string select5 = "select Design_ID from treatment where ID=@treat";
-                    sqlOperation.AddParameterWithValue("@treat", treatID);
-                    string designid = sqlOperation.ExecuteScalar(select5);
-                    int number = Convert.ToInt32(context.Request.Form["IlluminatedNumber"]);
-                    string angle = "";
-                    for (int j = 1; j < number; j++)
-                    {
-                        angle = angle + context.Request.Form["angle" + j] + ",";
-                    }
-                    angle = angle + context.Request.Form["angle" + number];
-                    string update = "update design set IlluminatedNumber=@IlluminatedNumber,Coplanar=@Coplanar,MachineNumbe=@MachineNumbe,ControlPoint=@ControlPoint,Illuminatedangle=@Illuminatedangle,Irradiation_ID=@Irradiation_ID,energy=@energy where ID=@designid";
-                    sqlOperation1.AddParameterWithValue("@Irradiation_ID", Convert.ToInt32(context.Request.Form["Irradiation"]));
-                    sqlOperation1.AddParameterWithValue("@IlluminatedNumber", Convert.ToInt32(context.Request.Form["IlluminatedNumber"]));
-                    sqlOperation1.AddParameterWithValue("@Coplanar", Convert.ToInt32(context.Request.Form["Coplanar"]));
-                    sqlOperation1.AddParameterWithValue("@energy", Convert.ToInt32(context.Request.Form["ener"]));
-                    sqlOperation1.AddParameterWithValue("@MachineNumbe", Convert.ToDouble(context.Request.Form["MachineNumbe"]));
-                    sqlOperation1.AddParameterWithValue("@Illuminatedangle", angle);
-                    sqlOperation1.AddParameterWithValue("@ControlPoint", Convert.ToInt32(context.Request.Form["ControlPoint"]));
-                    sqlOperation1.AddParameterWithValue("@designid", designid);
-                    successs = sqlOperation1.ExecuteNonQuery(update);
+                    sqlOperation2.AddParameterWithValue("@progress", progress + ",11");
                 }
                 else
                 {
-                    successs = 1;
+                    sqlOperation2.AddParameterWithValue("@progress", progress + ",11,12");
                 }
-                if (!exists)
-                {
-                    string inserttreat = "update treatment set Progress=@progress,TPS=@TPS,positioninfomation=@positioninfomation,pinyin=@pinyin,radioID=@radioid where ID=@treat";
-                    if (iscommon == 1)
-                    {
-                        sqlOperation2.AddParameterWithValue("@progress", progress + ",11");
-                    }
-                    else
-                    {
-                        sqlOperation2.AddParameterWithValue("@progress", progress + ",11,12");
-                    }
-                    sqlOperation2.AddParameterWithValue("@TPS", context.Request.Form["tps"]);
-                    sqlOperation2.AddParameterWithValue("@pinyin", context.Request.Form["pingyin"]);
-                    sqlOperation2.AddParameterWithValue("@radioid", context.Request.Form["id"]);
-                    sqlOperation2.AddParameterWithValue("@positioninfomation", context.Request.Form["pos"]);
-                    sqlOperation2.AddParameterWithValue("@treat", treatID);
-                    Success = sqlOperation2.ExecuteNonQuery(inserttreat);
-                }
-                else
-                {
-                    string inserttreat = "update treatment set TPS=@TPS,positioninfomation=@positioninfomation,pinyin=@pinyin,radioID=@radioid where ID=@treat";                   
-                    sqlOperation2.AddParameterWithValue("@TPS", context.Request.Form["tps"]);
-                    sqlOperation2.AddParameterWithValue("@pinyin", context.Request.Form["pingyin"]);
-                    sqlOperation2.AddParameterWithValue("@radioid", context.Request.Form["id"]);
-                    sqlOperation2.AddParameterWithValue("@positioninfomation", context.Request.Form["pos"]);
-                    sqlOperation2.AddParameterWithValue("@treat", treatID);
-                    Success = sqlOperation2.ExecuteNonQuery(inserttreat);
-                }
-                if (intSuccess > 0 && Success > 0 && successs > 0)
-                {
-                    return "success";
-                }
-                else
-                {
-                    return "failure";
-                }
+                sqlOperation2.AddParameterWithValue("@TPS", context.Request.Form["tps" + item]);
+                sqlOperation2.AddParameterWithValue("@pinyin", context.Request.Form["pingyin" + item]);
+                sqlOperation2.AddParameterWithValue("@radioid", context.Request.Form["id" + item]);
+                sqlOperation2.AddParameterWithValue("@positioninfomation", context.Request.Form["pos" + item]);
+                sqlOperation2.AddParameterWithValue("@treat", treatID);
+                Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+            }
+            else
+            {
+                Success = 1;
+            }                
+            if (intSuccess>0&& Success > 0 && successs > 0)
+            {
+                return "success";
+            }
+            else
+            {
+                return "failure";
+            }
            
         }
         catch (System.Exception Ex1)
