@@ -45,7 +45,7 @@ public class getAllappointInfoFromDate : IHttpHandler {
             sqlOperation1.AddParameterWithValue("@pid", reader["Patient_ID"].ToString());
             string pname = sqlOperation1.ExecuteScalar(pnamecommand);
             string begin = reader["Begin"].ToString();
-            backstring.Append("{\"appointid\":\"" + reader["ID"].ToString() + "\",\"Task\":\"" + reader["Task"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString().Split(new char[]{' '})[0] + "\",\"Begin\":\"" + begin + "\",\"End\":\"" + reader["End"].ToString() + "\"");
+            backstring.Append("{\"appointid\":\"" + reader["ID"].ToString() + "\",\"Task\":\"" + reader["Task"].ToString() + "\",\"Patient_ID\":\"" + reader["Patient_ID"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString().Split(new char[] { ' ' })[0] + "\",\"Begin\":\"" + begin + "\",\"End\":\"" + reader["End"].ToString() + "\"");
             backstring.Append(",\"Completed\":\"" + reader["Completed"].ToString() + "\",\"patientname\":\"" + pname + "\",\"IsDouble\":\"" + reader["IsDouble"].ToString() + "\"}");
             if (i < count2)
             {
