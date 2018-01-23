@@ -39,12 +39,12 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
         while (reader.Read())
         {
             info.Append("{\"chid\":\"" + reader["chid"].ToString() + "\",\"DesignName\":\"" + reader["DesignName"].ToString() + "\",\"Totalnumber\":\"" + reader["total"].ToString() + "\",\"childstate\":\"" + reader["childstate"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"treatid\":\"" + reader["treatid"].ToString() + "\"");
-            string splitcommand = "select Ways,Interal,Times from splitway where ID=@split";
+            string splitcommand = "select Ways,Interal,Times,TimeInteral from splitway where ID=@split";
             sqlOperation1.AddParameterWithValue("@split", reader["splitway"].ToString());
             MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(splitcommand);
             if (reader1.Read())
             {
-                info.Append(",\"Ways\":\"" + reader1["Ways"].ToString() + "\",\"Interal\":\"" + reader1["Interal"].ToString() + "\",\"Times\":\"" + reader1["Times"].ToString() + "\"");
+                info.Append(",\"Ways\":\"" + reader1["Ways"].ToString() + "\",\"Interal\":\"" + reader1["Interal"].ToString() + "\",\"TimeInteral\":\"" + reader1["TimeInteral"].ToString() + "\",\"Times\":\"" + reader1["Times"].ToString() + "\"");
                 
             }
             reader1.Close();
