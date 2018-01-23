@@ -28,7 +28,6 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
     private string getpaeinfo(HttpContext context)
     {
         string patientid = context.Request["patientid"];
-        string equipmentid = context.Request["equipid"];
         int temp = 1;
         string countcommand = "select count(*) from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state>1";
         sqlOperation.AddParameterWithValue("@pid", patientid);
@@ -51,6 +50,7 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
             reader1.Close();
             int count = 0;
             int appointid = 0;
+            string maxdate = "无";
             string date = "";
             string begin = "";
             string sqlcommand2 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin)) order by Date desc,Begin desc";
@@ -63,6 +63,10 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
                 if (reader1["Treat_User_ID"].ToString() == "")
                 {
                     appointid = int.Parse(reader1["Appointment_ID"].ToString());
+                    if (maxdate == "无")
+                    {
+                        maxdate = reader1["Date"].ToString();
+                    }
 
                 }
                 count++;
@@ -98,7 +102,7 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
                 }
                 reader1.Close();
             }
-            info.Append(",\"rest\":\""+(int.Parse(reader["total"].ToString())-count)+"\"}");
+            info.Append(",\"rest\":\""+(int.Parse(reader["total"].ToString())-count)+"\",\"maxdate\":\""+maxdate+"\"}");
             if (temp <= number - 1)
             {
                 info.Append(",");
@@ -106,28 +110,6 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
             temp++;
         }
         reader.Close();
-        info.Append("],\"appointinfo\":[");
-        string countcommand2 = "select count(*) from appointment_accelerate where Equipment_ID=@equipid and Date>=@date";
-        sqlOperation.AddParameterWithValue("@date", DateTime.Now.ToShortDateString());
-        sqlOperation.AddParameterWithValue("@equipid", equipmentid);
-        int count2 = int.Parse(sqlOperation.ExecuteScalar(countcommand2));
-        int i = 1;
-        string appointinfocommand = "select ID,Task,Patient_ID,Date,Begin,End,Completed,IsDouble from appointment_accelerate where Equipment_ID=@equipid and Date>=@date order by Begin,Date asc";
-        reader = sqlOperation.ExecuteReader(appointinfocommand);
-        while (reader.Read())
-        {
-            string pnamecommand = "select Name from patient where ID=@pid";
-            sqlOperation1.AddParameterWithValue("@pid", reader["Patient_ID"].ToString());
-            string pname = sqlOperation1.ExecuteScalar(pnamecommand);
-            string begin = reader["Begin"].ToString();
-            info.Append("{\"appointid\":\"" + reader["ID"].ToString() + "\",\"Task\":\"" + reader["Task"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Begin\":\"" + begin + "\",\"End\":\"" + reader["End"].ToString() + "\"");
-            info.Append(",\"Completed\":\"" + reader["Completed"].ToString() + "\",\"patientname\":\"" + pname +"\",\"IsDouble\":\"" + reader["IsDouble"].ToString() + "\"}");
-            if (i < count2)
-            {
-                info.Append(",");
-            }
-            i++;
-        }
         info.Append("]}");
         return info.ToString();
         

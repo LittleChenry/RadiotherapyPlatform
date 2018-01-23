@@ -43,7 +43,7 @@ function print() {
                     '<div class="item col-xs-12">地址：<span class="underline">' + patientbasic.Address + '</span></div></div></div>';
 
     content = content + '<div class="paper-content" style="margin-top:10px;border-bottom:0px;">'+
-                        '<div class="single-row"><div class="item area-group col-xs-12">'+
+                        '<div id="pridiv" class="single-row"><div class="item area-group col-xs-12">' +
                         '<table id="pri" class="table table-bordered" style="margin-bottom:0px;"><thead><tr><th style="padding:5px 8px;">靶区</th><th style="padding:5px 8px;">外放/mm</th><th style="padding:5px 8px;">PTV</th><th style="padding:5px 8px;">单次量cGy</th><th style="padding:5px 8px;">次数</th>' +
                         '<th style="padding:5px 8px;">总剂量cGy</th><th style="padding:5px 8px;">体积/%</th><th style="padding:5px 8px;">优先级</th></tr></thead></table></div></div>';
 
@@ -83,29 +83,33 @@ function print() {
     content = content + '<div class="paper-footer" style="border-top:1px solid black;position:absolute;bottom:0px;"><div class="single-row" style="margin-top:20px;min-height:20px;"><div class="item col-xs-4"><span>医&nbsp&nbsp生：</span><span class="underline" style="padding-left:70%;">&nbsp</span></div><div class="item col-xs-4"><span>物理师：</span><span class="underline" style="padding-left:70%;">&nbsp</span></div><div class="item col-xs-4"><span>技&nbsp&nbsp师：</span><span class="underline" style="padding-left:70%;">&nbsp</span></div></div></div></div>';
     $printArea.append(content);
     DosagePriority = patientbasic.Priority;
-    var table = document.getElementById("pri");
-    var tbody = document.createElement("tbody");
-    for (var i = table.rows.length - 1; i > 0; i--) {
-        table.deleteRow(i);
-    }
-    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
-    var lists = new Array();
-    lists = DosagePriority.split(";");
-    for (var i = 0; i < lists.length; i++) {
-        var list = new Array();
-        list = lists[i].split(",");
-        var tr = document.createElement("tr");
-        for (var j = 0; j < list.length; j++) {
-            var td = document.createElement("td");
-            var textNode = document.createTextNode(list[j]);
-            td.appendChild(textNode);
-            td.style.padding = "5px 8px";
-            tr.appendChild(td);
+    if (patientbasic.iscommon == "1") {
+        var table = document.getElementById("pri");
+        var tbody = document.createElement("tbody");
+        for (var i = table.rows.length - 1; i > 0; i--) {
+            table.deleteRow(i);
         }
-        tbody.appendChild(tr);
+        DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+        var lists = new Array();
+        lists = DosagePriority.split(";");
+        for (var i = 0; i < lists.length; i++) {
+            var list = new Array();
+            list = lists[i].split(",");
+            var tr = document.createElement("tr");
+            for (var j = 0; j < list.length; j++) {
+                var td = document.createElement("td");
+                var textNode = document.createTextNode(list[j]);
+                td.appendChild(textNode);
+                td.style.padding = "5px 8px";
+                tr.appendChild(td);
+            }
+            tbody.appendChild(tr);
+        }
+        tbody.style.textAlign = "center";
+        table.appendChild(tbody);
+    } else {
+        $("#pridiv").hide();
     }
-    tbody.style.textAlign = "center";
-    table.appendChild(tbody);
     var number = allpagenumber;
     var fildinfo = childdesigns[number].fieldinfo;
     if (fildinfo.length == 0) {
@@ -113,7 +117,7 @@ function print() {
     } else {
         var table = $("#Fieldprint");
         for (var k = 0; k < fildinfo.length; k++) {
-            var content = '<tr><td style="padding:5px 8px;">' + fildinfo[k].code + '</td><td style="padding:5px 8px;">' + parseFloat(fildinfo[k].mu).toFixed(2) + '</td><td style="padding:5px 8px;">' + fildinfo[k].equipment + '</td><td style="padding:5px 8px;">' + fildinfo[k].radiotechnique;
+            var content = '<tr><td style="padding:5px 8px;">' + fildinfo[k].code + '</td><td style="padding:5px 8px;">' + fildinfo[k].mu + '</td><td style="padding:5px 8px;">' + fildinfo[k].equipment + '</td><td style="padding:5px 8px;">' + fildinfo[k].radiotechnique;
             content = content + '</td><td style="padding:5px 8px;">' + fildinfo[k].radiotype + '</td><td style="padding:5px 8px;">' + fildinfo[k].energy + '</td><td style="padding:5px 8px;">' + fildinfo[k].wavedistance + '</td><td style="padding:5px 8px;">' + fildinfo[k].angleframe;
             content = content + '</td><td style="padding:5px 8px;">' + fildinfo[k].noseangle + '</td><td style="padding:5px 8px;">' + fildinfo[k].bedrotation + '</td><td style="padding:5px 8px;">' + fildinfo[k].subfieldnumber + '</td></tr>';
             table.append(content);

@@ -35,7 +35,7 @@ function Init(evt) {
     var iscommon = judgecommon(treatmentID);
     if (iscommon == "1") 
     {
-        var designInfo = getDesignInfo(treatmentID);
+            var designInfo = getDesignInfo(treatmentID);
             document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
             readDosagePriority(designInfo[i].DosagePriority);
             document.getElementById("technology").innerHTML = designInfo[i].technology;
@@ -149,7 +149,9 @@ function Init(evt) {
       $("#totalnumber" + i).val(childdesigns[i].Totalnumber);
       sum = 0;
       for (var j = 0; j < childdesigns[i].fieldinfo.length; j++) {
-          sum = sum + parseInt(childdesigns[i].fieldinfo[j].mu);
+          if (childdesigns[i].fieldinfo[j].mu != "") {
+              sum = sum + parseFloat(childdesigns[i].fieldinfo[j].mu);
+          }
       }
       $("#MachineNumbe" + i).html(sum);
       $("#finishedtimes" + i).html(childdesigns[i].treattimes);

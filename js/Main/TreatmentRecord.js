@@ -5,28 +5,29 @@ var require;
 var rowcount = 1;
 var obj = [];
 var interal=1;
-var times=20;
+var times = 20;
+var allpagenumber;
+var childdesigns;
 function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
-    var appoint = window.location.search.split("&")[1];//?后第一个变量信息
-    var appointid = appoint.split("=")[1];
+    //var appoint = window.location.search.split("&")[1];//?后第一个变量信息
+    //var appointid = appoint.split("=")[1];
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
     getUserName();
-    $("#rest").bind("click",{treatid:treatmentID},function(e){
-        var obj = new Object();
-        obj.info = "treatid=" + e.data.treatid;
-        window.showModalDialog("Appointment.aspx", obj);
-    });
+    //$("#rest").bind("click",{treatid:treatmentID},function(e){
+    //    var obj = new Object();
+    //    obj.info = "treatid=" + e.data.treatid;
+    //    window.showModalDialog("Appointment.aspx", obj);
+    //});
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
-    var special= getsplitandyizhu(treatmentID);
-    document.getElementById("enjoin").value = special.SpecialEnjoin;
-    document.getElementById("split").innerHTML = special.SplitWay;
+    //var special= getsplitandyizhu(treatmentID);
+
     var patient = getPatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
@@ -40,32 +41,13 @@ function Init(evt) {
     document.getElementById("hospitalid").innerHTML = texthos;
     document.getElementById("lightpart").innerHTML = patient.LightPart_ID;
     var i = 0;
+    //childdesigns = getAllChildDesign(patient.ID);
+    //document.getElementById("enjoin").value = special.SpecialEnjoin;
+    //document.getElementById("split").innerHTML = special.SplitWay;
     var iscommon = judgecommon(treatmentID);
     if (iscommon == "1") {
-        //var replacerecordinfo = getreplacerecordInfo(treatmentID);
-        //var boxes = document.getElementById("multipic");
-        //var pictures = replacerecordinfo.picture.split(",");
-        //if (replacerecordinfo.picture == "") {
-        //    boxes.innerHTML = "无";
-        //} else {
-        //    for (var k = 1; k < pictures.length; k++) {
-        //        var div = document.createElement("DIV");
-        //        div.className = "boxes";
-        //        var div1 = document.createElement("DIV");
-        //        div1.className = "imgnum";
-        //        var img = document.createElement("IMG");
-        //        img.addEventListener("click", showPicture, false);
-        //        img.className = "img";
-        //        img.src = pictures[k];
-        //        img.style.display = "block";
-        //        div1.appendChild(img);
-        //        div.appendChild(div1);
-        //        boxes.appendChild(div);
-        //    }
-        //}
         var designInfo = getDesignInfo(treatmentID);
         readDosagePriority(designInfo[i].DosagePriority);
-
         var pdfgroup = getpdfgroup(treatmentID);
         var pdf1 = pdfgroup.split(",")[0];
         var pdf2 = pdfgroup.split(",")[1];
@@ -81,223 +63,267 @@ function Init(evt) {
         $("#aimdosagetable").hide();
         $("#aimdosage").hide();
     }
-    var fildinfo = getfieldinfo(treatmentID);
-    if (fildinfo.length == 0) {
-        $("#fieldinfotable").hide();
-        $("#fieldinfo").hide();
-    } else {
-        var table = $("#Field");
-        for (var k = 0; k < fildinfo.length; k++) {
-            var content = '<tr><td>' + fildinfo[k].code + '</td><td>' + fildinfo[k].mu + '</td><td>' + fildinfo[k].equipment + '</td><td>' + fildinfo[k].radiotechnique;
-            content = content + '</td><td>' + fildinfo[k].radiotype + '</td><td>' + fildinfo[k].energy + '</td><td>' + fildinfo[k].wavedistance  + '</td><td>' + fildinfo[k].angleframe;
-            content = content + '</td><td>' + fildinfo[k].noseangle + '</td><td>' + fildinfo[k].bedrotation + '</td><td>' + fildinfo[k].subfieldnumber + '</td></tr>';
-            table.append(content);
-        }
-
-    }
-    var session = getSession();
-    if (session.assistant != "") {
-        $("#operator", window.parent.document).html(session.assistant);
-    }
-    var flag;
-    if (appointid!= "undefined") {
-        flag = judge(appointid, treatmentID);
-    } else {
-        flag = "success";
-    }
-    var progress = patient.Progress.split(",");
-    if (flag == "success" && !contains(progress, "14")) {
-        if (session.assistant == "" && (session.role == "治疗技师" || session.role == "科主任")) {
-            $("#operatorModal").modal({ backdrop: 'static' });
-        }
-    } else {
-        $("#edit", window.parent.document).attr("disabled", true);
-    }
-    refresh(treatmentID);
-    refresh1(treatmentID);
-    $("#validate").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "validateOperator.ashx",
-            async: false,
-            data: {
-                Number: $("#OperatorNumber").val(),
-                Password: $("#OperatorPassword").val()
-            },
-            dateType: "json",
-            success: function (data) {
-                if (data != "fail") {
-                    alert("验证成功！");
-                    document.getElementById("assist").innerHTML = data;
-                    document.getElementById("chief").innerHTML = userName;
-                    $.ajax({
-                        type: "POST",
-                        url: "setAssistant.ashx",
-                        data: { assistant: data },
-                        success: function()
-                        {
-                            $("#operator", window.parent.document).html(data);
-                            
-                        },
-                        error: function () {
-                            alert("error");
-                        }
-                    });
-                } else {
-                    alert("验证失败，请重新验证！");
-                    $("#operatorModal").modal({ backdrop: 'static' });
-                }
-            },
-            error: function () {
-                alert("error");
-            }
-        });
-    });
-    var total = gettotalnumber(treatmentID);
-    var totalnumber = total.split(",")[0];
-    var firstdate = getfirstday(treatmentID).split(" ")[0];
-    var date=new Date();
-    var today=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-    var dis = GetDateDiff(firstdate, today);
-    if (isNaN(dis)) {
-        dis = 1;
-    }
-    if (appointid != "undefined") {
-        var treatconfirm = getconfirminfomation(treatmentID, appointid);
-        document.getElementById("treatdays").innerHTML = dis;
-        document.getElementById("treattimes").innerHTML = parseInt(treatconfirm.finishedtimes) + 1;
-        document.getElementById("treatnumber").innerHTML = treatconfirm.IlluminatedNumber;
-        document.getElementById("machinenumber").value = treatconfirm.MachineNumbe;
-        document.getElementById("singlenumber").value = treatconfirm.DosagePriority;
-        document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.addosage) + parseInt(treatconfirm.DosagePriority);
-        document.getElementById("chief").innerHTML = userName;
-        document.getElementById("assist").innerHTML = session.assistant;
-        $("#singlenumber").bind('input propertychange', function () {
-            document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.addosage) + parseInt(document.getElementById("singlenumber").value);
-        });
-    }
-    if (totalnumber!="") {
-        document.getElementById("totalnumber").value = parseInt(totalnumber);
-    }
-    var allfirstnumber = parseInt(getallfirst(treatmentID));
-    if ((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber=="") {
-        document.getElementById("rest").innerHTML = "剩余加速器预约(剩0次)";
-        $("#ask").css("display", "none");
-        document.getElementById("rest").disabled = "disabled";
-    } else {
-        document.getElementById("rest").innerHTML = "剩余加速器预约(剩" + (parseInt(totalnumber) - allfirstnumber) + "次)";
-        $("#ask").css("display", "block");
-        if (session.roleName == "ZLJS") {
-           document.getElementById("rest").removeAttribute("disabled");
-        }
-   
-    }
-
-    $("#confirm").click(function ()
-    {
-        if (document.getElementById("singlenumber").value == "") {
-            alert("单次剂量不为空");
-            return;
-        }
-        if (document.getElementById("machinenumber").value == "") {
-            alert("机器跳数不为空");
-            return;
-        }
-        var allfirstnumber = parseInt(getallfirst(treatmentID));
-        if (!((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber == "")){
-            alert("请预约完所有加速治疗再进行治疗");
-        }
-            var session = getSession();
-            if (session.assistant != "") {
-                $.ajax({
-                    type: "POST",
-                    url: "TreatmentRecord.ashx",
-                    async: false,
-                    data: {
-                        assistant: session.assistant,
-                        user: userID,
-                        totalnumber: document.getElementById("totalnumber").value,
-                        treatmentID: treatmentID,
-                        appoint: appointid,
-                        treatdays: dis,
-                        patientid: patient.ID,
-                        singlenumber: document.getElementById("singlenumber").value,
-                        machinenumber: document.getElementById("machinenumber").value,
-                        IlluminatedNumber: document.getElementById("treatnumber").innerHTML,
-                        remark: document.getElementById("remarks").value
-                    },
-                    dateType: "json",
-                    success: function (data) {
-                        if (data == "success") {
-                            alert("记录成功！");
-                            document.getElementById("treatmentedit").disabled = "disabled";
-                            refresh(treatmentID);
-
-                        } else {
-                            alert("上传失败！");
-                        }
-                    },
-                    error: function () {
-                        alert("error");
-                    }
-                });
-            } else {
-                alert("没有选择协助操作者");
-            }
-            });
-    $("#recordigrt").click(function()
-    {
-        var session = getSession();
-        if (session.assistant != "") {
-            $.ajax({
-                type: "POST",
-                url: "igrtrecord.ashx",
-                async: false,
-                data: {
-                    assistant: session.assistant,
-                    user: userID,
-                    xvalue: document.getElementById("xvalue").value,
-                    yvalue: document.getElementById("yvalue").value,
-                    zvalue: document.getElementById("zvalue").value,
-                    treatmentID: treatmentID
-                },
-                dateType: "json",
-                success: function (data) {
-                    if (data == "success") {
-                        alert("记录成功！");
-                        refresh1(treatmentID);
-                    } else {
-                        alert("上传失败！");
-                    }
-                },
-                error: function () {
-                    alert("error");
-                }
-            });
+    childdesigns = getAllChildDesign(patient.ID);
+    for (var j = 0; j < childdesigns.length; j++) {
+        if (j == 0) {
+            var tab = '<li class="active" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + childdesigns[j].DesignName + '</a></li>';
+            var content = '<div class="active tab-pane" id="tab' + j + '">' +
+                            '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
+                            '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
+                            '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
+                            '</table></div></div>' +
+                             '<div class="single-row"><div class="item col-xs-4">分割方式：<span id="split' + j + '" class="underline"></span></div><div class="item col-xs-4">总次数：<span id="total' + j + '" class="underline"></span></div><div class="item col-xs-4">已经治疗次数：<span id="treatedtimes' + j + '" class="underline"></span></div></div>' +
+                            '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin'+j+'" disabled="disabled" name="enjoin" class="form-area col-xs-5" ></textarea><div class="item  col-xs-5" style="padding-left:1%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div></div></div>';
+            $("#tabs").append(tab);
+            $("#tab-content").append(content);
         } else {
-            alert("没有选择协助操作者");
+            var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + childdesigns[j].DesignName + '</a></li>';
+            var content = '<div class="tab-pane" id="tab' + j + '">' +
+                            '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
+                            '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
+                            '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
+                            '</table></div></div>' +
+                            '<div class="single-row"><div class="item col-xs-4">分割方式：<span id="split' + j + '" class="underline"></span></div><div class="item col-xs-4">总次数：<span id="total' + j + '" class="underline"></span></div><div class="item col-xs-4">已经治疗次数：<span id="treatedtimes' + j + '" class="underline"></span></div></div>' +
+                            '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin" disabled="disabled" name="enjoin'+j+'" class="form-area col-xs-5" ></textarea><div class="item  col-xs-5" style="padding-left:1%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div></div></div>';
+            $("#tabs").append(tab);
+            $("#tab-content").append(content);
         }
-    });
-    //if (iscommon == "1") {
-    //    var type = geteuqipmenttype(treatmentID);
-    //    createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator", type);
+    }
+    for (var i = 0; i < childdesigns.length; i++) {
+        var fildinfo = childdesigns[i].fieldinfo;
+        if (fildinfo.length == 0) {
+            $("#fieldinfotable" + i).hide();
+            $("#fieldinfo" + i).hide();
+        } else {
+            var table = $("#Field" + i);
+            for (var k = 0; k < fildinfo.length; k++) {
+                var content = '<tr><td>' + fildinfo[k].code + '</td><td>' + fildinfo[k].mu + '</td><td>' + fildinfo[k].equipment + '</td><td>' + fildinfo[k].radiotechnique;
+                content = content + '</td><td>' + fildinfo[k].radiotype + '</td><td>' + fildinfo[k].energy + '</td><td>' + fildinfo[k].wavedistance + '</td><td>' + fildinfo[k].angleframe;
+                content = content + '</td><td>' + fildinfo[k].noseangle + '</td><td>' + fildinfo[k].bedrotation + '</td><td>' + fildinfo[k].subfieldnumber + '</td></tr>';
+                table.append(content);
+            }
+        }
+    }
+
+
+
+    //var fildinfo = getfieldinfo(treatmentID);
+    //if (fildinfo.length == 0) {
+    //    $("#fieldinfotable").hide();
+    //    $("#fieldinfo").hide();
     //} else {
-    //    createfixEquipmachine1(document.getElementById("equipmentName"), "Accelerator");
+    //    var table = $("#Field");
+    //    for (var k = 0; k < fildinfo.length; k++) {
+    //        var content = '<tr><td>' + fildinfo[k].code + '</td><td>' + fildinfo[k].mu + '</td><td>' + fildinfo[k].equipment + '</td><td>' + fildinfo[k].radiotechnique;
+    //        content = content + '</td><td>' + fildinfo[k].radiotype + '</td><td>' + fildinfo[k].energy + '</td><td>' + fildinfo[k].wavedistance  + '</td><td>' + fildinfo[k].angleframe;
+    //        content = content + '</td><td>' + fildinfo[k].noseangle + '</td><td>' + fildinfo[k].bedrotation + '</td><td>' + fildinfo[k].subfieldnumber + '</td></tr>';
+    //        table.append(content);
+    //    }
 
     //}
-    //var date = new Date();
-    //document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    //$("#rest").unbind("click").bind("click", function () {
-    //    CreateNewAppiontTable();
+    //var session = getSession();
+    //if (session.assistant != "") {
+    //    $("#operator", window.parent.document).html(session.assistant);
+    //}
+    //var flag;
+    //if (appointid!= "undefined") {
+    //    flag = judge(appointid, treatmentID);
+    //} else {
+    //    flag = "success";
+    //}
+    //var progress = patient.Progress.split(",");
+    //if (flag == "success" && !contains(progress, "14")) {
+    //    if (session.assistant == "" && (session.role == "治疗技师" || session.role == "科主任")) {
+    //        $("#operatorModal").modal({ backdrop: 'static' });
+    //    }
+    //} else {
+    //    $("#edit", window.parent.document).attr("disabled", true);
+    //}
+    //refresh(treatmentID);
+    //refresh1(treatmentID);
+    //$("#validate").click(function () {
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "validateOperator.ashx",
+    //        async: false,
+    //        data: {
+    //            Number: $("#OperatorNumber").val(),
+    //            Password: $("#OperatorPassword").val()
+    //        },
+    //        dateType: "json",
+    //        success: function (data) {
+    //            if (data != "fail") {
+    //                alert("验证成功！");
+    //                document.getElementById("assist").innerHTML = data;
+    //                document.getElementById("chief").innerHTML = userName;
+    //                $.ajax({
+    //                    type: "POST",
+    //                    url: "setAssistant.ashx",
+    //                    data: { assistant: data },
+    //                    success: function()
+    //                    {
+    //                        $("#operator", window.parent.document).html(data);
+                            
+    //                    },
+    //                    error: function () {
+    //                        alert("error");
+    //                    }
+    //                });
+    //            } else {
+    //                alert("验证失败，请重新验证！");
+    //                $("#operatorModal").modal({ backdrop: 'static' });
+    //            }
+    //        },
+    //        error: function () {
+    //            alert("error");
+    //        }
+    //    });
+    //});
+    //var total = gettotalnumber(treatmentID);
+    //var totalnumber = total.split(",")[0];
+    //var firstdate = getfirstday(treatmentID).split(" ")[0];
+    //var date=new Date();
+    //var today=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+    //var dis = GetDateDiff(firstdate, today);
+    //if (isNaN(dis)) {
+    //    dis = 1;
+    //}
+    //if (appointid != "undefined") {
+    //    var treatconfirm = getconfirminfomation(treatmentID, appointid);
+    //    document.getElementById("treatdays").innerHTML = dis;
+    //    document.getElementById("treattimes").innerHTML = parseInt(treatconfirm.finishedtimes) + 1;
+    //    document.getElementById("treatnumber").innerHTML = treatconfirm.IlluminatedNumber;
+    //    document.getElementById("machinenumber").value = treatconfirm.MachineNumbe;
+    //    document.getElementById("singlenumber").value = treatconfirm.DosagePriority;
+    //    document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.addosage) + parseInt(treatconfirm.DosagePriority);
+    //    document.getElementById("chief").innerHTML = userName;
+    //    document.getElementById("assist").innerHTML = session.assistant;
+    //    $("#singlenumber").bind('input propertychange', function () {
+    //        document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.addosage) + parseInt(document.getElementById("singlenumber").value);
+    //    });
+    //}
+    //if (totalnumber!="") {
+    //    document.getElementById("totalnumber").value = parseInt(totalnumber);
+    //}
+    //var allfirstnumber = parseInt(getallfirst(treatmentID));
+    //if ((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber=="") {
+    //    document.getElementById("rest").innerHTML = "剩余加速器预约(剩0次)";
+    //    $("#ask").css("display", "none");
+    //    document.getElementById("rest").disabled = "disabled";
+    //} else {
+    //    document.getElementById("rest").innerHTML = "剩余加速器预约(剩" + (parseInt(totalnumber) - allfirstnumber) + "次)";
+    //    $("#ask").css("display", "block");
+    //    if (session.roleName == "ZLJS") {
+    //       document.getElementById("rest").removeAttribute("disabled");
+    //    }
+   
+    //}
 
+    //$("#confirm").click(function ()
+    //{
+    //    if (document.getElementById("singlenumber").value == "") {
+    //        alert("单次剂量不为空");
+    //        return;
+    //    }
+    //    if (document.getElementById("machinenumber").value == "") {
+    //        alert("机器跳数不为空");
+    //        return;
+    //    }
+    //    var allfirstnumber = parseInt(getallfirst(treatmentID));
+    //    if (!((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber == "")){
+    //        alert("请预约完所有加速治疗再进行治疗");
+    //    }
+    //        var session = getSession();
+    //        if (session.assistant != "") {
+    //            $.ajax({
+    //                type: "POST",
+    //                url: "TreatmentRecord.ashx",
+    //                async: false,
+    //                data: {
+    //                    assistant: session.assistant,
+    //                    user: userID,
+    //                    totalnumber: document.getElementById("totalnumber").value,
+    //                    treatmentID: treatmentID,
+    //                    appoint: appointid,
+    //                    treatdays: dis,
+    //                    patientid: patient.ID,
+    //                    singlenumber: document.getElementById("singlenumber").value,
+    //                    machinenumber: document.getElementById("machinenumber").value,
+    //                    IlluminatedNumber: document.getElementById("treatnumber").innerHTML,
+    //                    remark: document.getElementById("remarks").value
+    //                },
+    //                dateType: "json",
+    //                success: function (data) {
+    //                    if (data == "success") {
+    //                        alert("记录成功！");
+    //                        document.getElementById("treatmentedit").disabled = "disabled";
+    //                        refresh(treatmentID);
+
+    //                    } else {
+    //                        alert("上传失败！");
+    //                    }
+    //                },
+    //                error: function () {
+    //                    alert("error");
+    //                }
+    //            });
+    //        } else {
+    //            alert("没有选择协助操作者");
+    //        }
+    //        });
+    //$("#recordigrt").click(function()
+    //{
+    //    var session = getSession();
+    //    if (session.assistant != "") {
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "igrtrecord.ashx",
+    //            async: false,
+    //            data: {
+    //                assistant: session.assistant,
+    //                user: userID,
+    //                xvalue: document.getElementById("xvalue").value,
+    //                yvalue: document.getElementById("yvalue").value,
+    //                zvalue: document.getElementById("zvalue").value,
+    //                treatmentID: treatmentID
+    //            },
+    //            dateType: "json",
+    //            success: function (data) {
+    //                if (data == "success") {
+    //                    alert("记录成功！");
+    //                    refresh1(treatmentID);
+    //                } else {
+    //                    alert("上传失败！");
+    //                }
+    //            },
+    //            error: function () {
+    //                alert("error");
+    //            }
+    //        });
+    //    } else {
+    //        alert("没有选择协助操作者");
+    //    }
     //});
-    //$("#chooseProject").unbind("click").bind("click", function () {
-    //    CreateNewAppiontTable();
-    //});
-    //$("#sure").bind("click", function () {
-    //    $(this).unbind("click");
-    //    checkAllTable(treatmentID);
-    //});
+    ////if (iscommon == "1") {
+    ////    var type = geteuqipmenttype(treatmentID);
+    ////    createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator", type);
+    ////} else {
+    ////    createfixEquipmachine1(document.getElementById("equipmentName"), "Accelerator");
+
+    ////}
+    ////var date = new Date();
+    ////document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    ////$("#rest").unbind("click").bind("click", function () {
+    ////    CreateNewAppiontTable();
+
+    ////});
+    ////$("#chooseProject").unbind("click").bind("click", function () {
+    ////    CreateNewAppiontTable();
+    ////});
+    ////$("#sure").bind("click", function () {
+    ////    $(this).unbind("click");
+    ////    checkAllTable(treatmentID);
+    ////});
 }
 
 function doChromeWindowShowModalDialog(obj) {
@@ -1182,4 +1208,17 @@ function judge(appointid,treatmentID) {
 function showPicture() {
     $("#myModal").modal("show");
     $("#pic").attr("src", this.src);
+}
+//获取病人的所有子计划信息
+function getAllChildDesign(patientID) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getAllChildDesignInfo.ashx?patientid=" + patientID;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var json = xmlHttp.responseText;
+    json = json.replace(/\r/g, "");
+    json = json.replace(/\n/g, "\\n");
+    json = json.replace(/\t/g, "");
+    var data = eval("(" + json + ")");
+    return data.patientinfo;
 }
