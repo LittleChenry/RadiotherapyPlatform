@@ -208,7 +208,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="treeview">
+                <li class="active treeview">
                     <a href="#">
                         <i class="fa fa-plus-square"></i> <span>诊断结果管理</span>
                         <span class="pull-right-container">

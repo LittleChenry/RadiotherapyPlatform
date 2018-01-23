@@ -3,37 +3,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>放疗质控系统</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- css -->
-  <link rel="stylesheet" href="../../css/Main/main.css">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css">
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css">
-  <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/iCheck/all.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>放疗质控系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- css -->
+    <link rel="stylesheet" href="../../css/Main/main.css">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/iCheck/all.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
 <div class="wrapper">
@@ -178,10 +169,20 @@
                     </a>
                 </li>
                 <li class="treeview">
-                    <a href="EquipmentAppointment.aspx" target="_blank">
-                        <i class="fa fa-clock-o"></i>
-                        <span>设备预约管理</span>
+                    <a href="#">
+                        <i class="fa fa-clock-o"></i> <span>预约</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a id="A1" href="EquipmentAppointment.aspx" target="_blank"><i class="fa fa-circle-o"></i>设备预约管理</a>
+                        </li>
+                        <li>
+                            <a id="A2" href="Appointment.aspx"><i class="fa fa-circle-o"></i>加速器预约</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="treeview">
                     <a href="AddPatient.aspx">
