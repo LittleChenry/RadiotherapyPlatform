@@ -576,17 +576,32 @@ $(function(){
             alert("请输入子计划名称");
             return false;
         }
-        var howmanyLi = $("#designTab li").length;
-        $("#designTab li").removeClass("active");
+        // var howmanyLi = $("#designTab li").length;
+        // $("#designTab li").removeClass("active");
         
-        var $tab = $('<li class="active"><a href="#tab' + howmanyLi + '" data-toggle="tab" aria-expanded="false">' + $("#subdesignname").val() +'</a></li>');
-        $("#designTab").append($tab);
-        createTabPanel(howmanyLi);
+        // var $tab = $('<li class="active"><a href="#tab' + howmanyLi + '" data-toggle="tab" aria-expanded="false">' + $("#subdesignname").val() +'</a></li>');
+        // $("#designTab").append($tab);
+        // createTabPanel(howmanyLi);
+        var lastLi = $("#designTab li").last().children("a").attr("href");
+        if(lastLi == undefined){
+            var panelId = 0;
+        }else{
+            var panelId = parseInt(lastLi.substring(4))+1;
+        }
         
+        createLi(panelId);
         $("#subdesignname").val("");    
     });
 });
-
+function createLi(panelId) {
+    $("#designTab li").removeClass("active");
+    $("#designTab li").removeClass("active");
+        
+    var $tab = $('<li class="active"><a href="#tab' + panelId + '" data-toggle="tab" aria-expanded="false">' + $("#subdesignname").val() +'</a></li>');
+    $("#designTab").append($tab);
+    createTabPanel(panelId);
+    $("#subdesignname").val(""); 
+}
 function createTabPanel(panelId){
     $("#tabpanels").children().removeClass("active");
     var $div_tab = $("<div class='tab-pane active' id='tab"+panelId+"'></div>");
@@ -733,6 +748,48 @@ function createTabPanel(panelId){
                 }
                 tbody += "/tbody";
                 table.append(tbody);
+            }
+        });
+        $('#left'+panelId).bind('input propertychange', function () {
+            if (document.getElementById("left"+panelId).value == "") {
+                document.getElementById("right"+panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("right"+panelId).disabled = "disabled";
+            }
+        });
+        $('#right'+panelId).bind('input propertychange', function () {
+            if (document.getElementById("right"+panelId).value == "") {
+                document.getElementById("left"+panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("left"+panelId).disabled = "disabled";
+            }
+        });
+        $('#drop'+panelId).bind('input propertychange', function () {
+            if (document.getElementById("drop"+panelId).value == "") {
+                document.getElementById("rise"+panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("rise"+panelId).disabled = "disabled";
+            }
+        });
+        $('#rise'+panelId).bind('input propertychange', function () {
+            if (document.getElementById("rise"+panelId).value == "") {
+                document.getElementById("drop"+panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("drop"+panelId).disabled = "disabled";
+            }
+        });
+        $('#enter'+panelId).bind('input propertychange', function () {
+            if (document.getElementById("enter"+panelId).value == "") {
+                document.getElementById("out"+panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("out"+panelId).disabled = "disabled";
+            }
+        });
+        $('#out'+panelId).bind('input propertychange', function () {
+            if (document.getElementById("out"+panelId).value == "") {
+                document.getElementById("enter"+panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("enter"+panelId).disabled = "disabled";
             }
         });
     }
@@ -945,6 +1002,10 @@ function deleteFieldanother(row,panelId) {
 }
 
 function save() {   
+    
+}
+
+function saveSub(){
     var whichTabStr = $("#tabpanels").children(".active").attr("id");
     var whichTab = whichTabStr.substring(3);
     var form = new FormData(document.getElementById("saveField"));
@@ -982,6 +1043,8 @@ function save() {
         success: function (data) {
             if (data == "success") {
                 alert("子计划："+$("#designTab").children("ul .active").find("a").text()+" 保存成功");
+                //
+                $("#edit",window.parent.document).attr("disabled",false);
             } else {
                 alert("保存失败");
                 return false;
@@ -996,7 +1059,6 @@ function save() {
         }
     });
 }
-
 function fillData(data) {
     var tabNum = 0;
     var dataFinal = new Array();
@@ -1016,8 +1078,11 @@ function fillData(data) {
 
     //模拟点击事件，生成tab
     for(var i = 0; i < dataFinal.length; i++){
+        if(dataFinal[i].length == 0){
+            continue;
+        }
         $("#subdesignname").val(dataFinal[i][0].DesignName);
-        $("#addSubDesign").trigger("click");
+        createLi(i);
         //填写内容
         if(common == 1){
             $("#Irradiation"+i).val(dataFinal[i][0].Irradiation);
@@ -1137,3 +1202,9 @@ function readField(data,panelId) {
     }
     document.getElementById("aa"+panelId).value = data.length;
 }
+
+$(function(){
+    $("#saveSubDesign").off("click").on("click",function(){
+        saveSub();
+    });
+});

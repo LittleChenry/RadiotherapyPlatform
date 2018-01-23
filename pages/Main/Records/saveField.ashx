@@ -260,7 +260,13 @@ public class saveField : IHttpHandler {
             }
             else
             {
-                Success = 1;
+                string inserttreat = "update treatment set TPS=@TPS,positioninfomation=@positioninfomation,pinyin=@pinyin,radioID=@radioid where ID=@treat";                
+                sqlOperation2.AddParameterWithValue("@TPS", context.Request.Form["tps" + item]);
+                sqlOperation2.AddParameterWithValue("@pinyin", context.Request.Form["pingyin" + item]);
+                sqlOperation2.AddParameterWithValue("@radioid", context.Request.Form["id" + item]);
+                sqlOperation2.AddParameterWithValue("@positioninfomation", context.Request.Form["pos" + item]);
+                sqlOperation2.AddParameterWithValue("@treat", treatID);
+                Success = sqlOperation2.ExecuteNonQuery(inserttreat);
             }                
             if (intSuccess>0&& Success > 0 && successs > 0)
             {
