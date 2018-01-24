@@ -908,6 +908,8 @@ function getmovement(ReferenceCenter) {
     document.getElementById("MovementY").value = Reference[1];
     document.getElementById("MovementZ").value = Reference[2];
 }
+function save() {
+}
 function savereview(gg) {
     var i = "";
     if (gg != 0) {
