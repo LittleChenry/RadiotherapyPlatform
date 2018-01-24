@@ -8,6 +8,7 @@ using System.Collections;
 public class getPatientInfoNew : IHttpHandler {
     DataLayer sqlOperation = new DataLayer("sqlStr");
     DataLayer sqlOperation1 = new DataLayer("sqlStr");
+    DataLayer sqlOperation2 = new DataLayer("sqlStr");
     public void ProcessRequest(HttpContext context)
     {
         context.Response.ContentType = "text/plain";
@@ -18,6 +19,9 @@ public class getPatientInfoNew : IHttpHandler {
         sqlOperation1.Close();
         sqlOperation1.Dispose();
         sqlOperation1 = null;
+        sqlOperation2.Close();
+        sqlOperation2.Dispose();
+        sqlOperation2 = null;
         context.Response.Write(backString);
     }
 
@@ -50,21 +54,90 @@ public class getPatientInfoNew : IHttpHandler {
         ArrayList patientList = new ArrayList();
         while (reader.Read())
         {
-            patientList.Add(reader["patientid"].ToString());
+            Boolean flag = false;
+            string designcommand = "select childdesign.ID as chid,DesignName,childdesign.Splitway_ID as splitway,childdesign.Totalnumber as total,childdesign.state as childstate,Treatmentdescribe,childdesign.Treatment_ID as treatid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state=3";
+            sqlOperation1.AddParameterWithValue("@pid", reader["patientid"].ToString());
+            MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(designcommand);
+            while (reader1.Read())
+            {
+                int count = 0;
+                int appointid = 0;
+                string maxdate = "无";
+                string date = "";
+                string begin = "";
+                string sqlcommand2 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin)) order by Date desc,Begin desc";
+                sqlOperation2.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
+                sqlOperation2.AddParameterWithValue("@chid", reader1["chid"].ToString());
+                sqlOperation2.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
+                MySql.Data.MySqlClient.MySqlDataReader reader2 = sqlOperation2.ExecuteReader(sqlcommand2);
+                while (reader2.Read())
+                {
+                    if (reader2["Treat_User_ID"].ToString() == "")
+                    {
+                        appointid = int.Parse(reader2["Appointment_ID"].ToString());
+                        if (maxdate == "无")
+                        {
+                            maxdate = reader2["Date"].ToString();
+                        }
+
+                    }
+                    count++;
+                }
+                reader2.Close();
+                string sqlcommand = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date<@nowdate) or((Date=@nowdate)and Begin<@nowbegin)) order by Date desc,Begin desc";
+                reader2 = sqlOperation2.ExecuteReader(sqlcommand);
+                while (reader2.Read())
+                {
+                    if (reader2["Treat_User_ID"].ToString() != "")
+                    {
+                        appointid = int.Parse(reader2["Appointment_ID"].ToString());
+                        date = reader2["Date"].ToString();
+                        begin = reader2["Begin"].ToString();
+                        break;
+                    }
+                }
+                reader2.Close();
+
+                if (appointid != 0)
+                {
+                    string sqlcommand1 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and (Date<@date or (Date=@date and Begin<=@begin)) order by Date,Begin asc";
+                    sqlOperation2.AddParameterWithValue("@date", date);
+                    sqlOperation2.AddParameterWithValue("@begin", begin);
+                    reader2= sqlOperation2.ExecuteReader(sqlcommand1);
+                    while (reader2.Read())
+                    {
+                        if (reader2["Treat_User_ID"].ToString() != "")
+                        {
+                            count++;
+                        }
+
+                    }
+                    reader2.Close();
+                }
+                int rest=int.Parse(reader1["total"].ToString()) - count;
+                if (rest!= 0)
+                {
+                    flag = true;
+                }
+            }
+            reader1.Close();
+            if (flag == true)
+            {
+                patientList.Add(reader["patientid"].ToString());
+            }
 
         }
         reader.Close();
         int temp = 1;
         StringBuilder info = new StringBuilder("{\"patientinfo\":[");
-        MySql.Data.MySqlClient.MySqlDataReader reader1 = null;
         foreach (string element in patientList)
         {
             string patientinfocommand = "select ID,Name,Gender,Age,Radiotherapy_ID from patient where ID=@pid";
             sqlOperation.AddParameterWithValue("@pid", element);
-            reader1 = sqlOperation.ExecuteReader(patientinfocommand);
-            if (reader1.Read())
+            reader = sqlOperation.ExecuteReader(patientinfocommand);
+            if (reader.Read())
             {
-                info.Append("{\"name\":\"" + reader1["Name"].ToString() + "\",\"Gender\":\"" + sex(reader1["Gender"].ToString()) + "\",\"Radiotherapy_ID\":\"" + reader1["Radiotherapy_ID"].ToString() + "\",\"patientid\":\"" + reader1["ID"].ToString() + "\",\"Age\":\"" + reader1["Age"].ToString() + "\",\"groupname\":\"");
+                info.Append("{\"name\":\"" + reader["Name"].ToString() + "\",\"Gender\":\"" + sex(reader["Gender"].ToString()) + "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"patientid\":\"" + reader["ID"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"groupname\":\"");
                 string groupcommand = "select user.Name as doctor,groups.groupName as groupname from groups,treatment,user,groups2user where groups2user.Group_ID=groups.ID and treatment.Group_ID=groups2user.ID and treatment.Patient_ID=@pid and treatment.Belongingdoctor=user.ID";
                 sqlOperation1.AddParameterWithValue("@pid", element);
                 MySql.Data.MySqlClient.MySqlDataReader reader2 = sqlOperation1.ExecuteReader(groupcommand);
@@ -75,7 +148,7 @@ public class getPatientInfoNew : IHttpHandler {
                 reader2.Close();
             
             }
-            reader1.Close();
+            reader.Close();
             if (temp <= patientList.Count - 1)
             {
                 info.Append(",");
