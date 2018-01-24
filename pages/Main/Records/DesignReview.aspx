@@ -32,6 +32,7 @@
                 <input type="hidden"  id="TechnologyConfirm1" name="TechnologyConfirm1" value="0"/>
                 <input type="hidden"  id="confirmPlanSystem1" name="confirmPlanSystem1" value="0"/>
                 <input type="hidden"  id="EquipmentConfirm1" name="EquipmentConfirm1" value="0"/>
+                <input type="hidden"  id="childdesign" name="childdesign"/>
             
                 <input type="hidden" id="progress" />
                 <div class="paper-title">
@@ -61,11 +62,19 @@
                     <div class="content-title">
                         <span>复核计划信息：</span>
                     </div>
+                    <div class="single-row tab-row">
+                        <ul id="tabs" class="nav nav-tabs">
+                            <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
+                        </ul>
+                    </div>
+                    <div id="tab-content" class="tab-content">
+                    <div class="tab-pane active" id="tab">
                     <div class="single-row">
                         <div class="col-xs-12">
                             <div class="pull-right">
-                                <button id="Forced" type="button" class="btn btn-success" onclick="force()" disabled="disabled">强制通过</button>
-                                <button id="confirm" type="button" class="btn btn-success" onclick="check()" disabled="disabled" style="margin-left:10px;">自动复核</button>
+                                <button id="save" type="button" class="btn btn-success" disabled="disabled" onclick="savereview(0)">保存</button>
+                                <button id="Forced" type="button" class="btn btn-success" onclick="force(0)" disabled="disabled">强制通过</button>
+                                <button id="confirm" type="button" class="btn btn-success" onclick="check(0)" disabled="disabled" style="margin-left:10px;">自动复核</button>
                             </div>
                         </div>
                     </div>
@@ -106,7 +115,9 @@
                                     <tr>
                                         <td>4</td>
                                         <td>分次剂量/总剂量</td>
-                                        <td id="dose1" ></td>
+                                        <td id="dose1" >
+                                            <select id="designdose" disabled="disabled" class="form-item" name="designdose"></select>
+                                        </td>
                                         <td id="dose2"></td>
                                         <td id="check2"></td>
                                     </tr>
@@ -291,10 +302,12 @@
                             <span class="form-text col-xs-2" style="padding-left:0px;">复核PDF上传：</span>
                             <div class="group-item col-xs-3">                        
                                 <input id="fp_upload1" type="file" accept="application/pdf" name="fp_upload1" disabled="disabled"/>
-                            </div>                       
+                            </div>                                             
                         </div>
                     </div>
                 </div>
+                        </div>
+                    </div>
                 <div class="paper-footer">
                     <div class="single-row">
                         <div class="item col-xs-6">医生签字：<span id="applyuser" class="underline"></span></div>

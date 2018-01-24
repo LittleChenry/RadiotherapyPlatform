@@ -48,6 +48,8 @@ public class designReviewRecord : IHttpHandler {
         string savepath1 = "";
         string savePath2 = "";
         string savepath3 = "";
+        string item = context.Request.Form["item"];
+        int itemitem = Convert.ToInt32(item);
         HttpFileCollection files = context.Request.Files;
         savePath = System.Web.HttpContext.Current.Server.MapPath("~/upload/DesignPDF");
         if (!System.IO.Directory.Exists(savePath))
@@ -58,7 +60,7 @@ public class designReviewRecord : IHttpHandler {
         try
         {
 
-            System.Web.HttpPostedFile postedFile = files[0];
+            System.Web.HttpPostedFile postedFile = files[itemitem*2];
             string fileName = postedFile.FileName;//完整的路径
             if (fileName == "")
             {
@@ -69,7 +71,7 @@ public class designReviewRecord : IHttpHandler {
                 fileName = System.IO.Path.GetFileName(postedFile.FileName); //获取到名称
                 string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
                 string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
-                files[0].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
+                files[itemitem * 2].SaveAs(savePath + DateTime.Now.ToString("yyyyMMdd") + fileName);
                 savepath1 = "../../../upload/DesignPDF/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
             }       
         }
@@ -86,7 +88,7 @@ public class designReviewRecord : IHttpHandler {
         try
         {
 
-            System.Web.HttpPostedFile postedFile1 = files[1];
+            System.Web.HttpPostedFile postedFile1 = files[itemitem*2+1];
             string fileName = postedFile1.FileName;//完整的路径
             if (fileName == "")
             {
@@ -97,7 +99,7 @@ public class designReviewRecord : IHttpHandler {
                 fileName = System.IO.Path.GetFileName(postedFile1.FileName); //获取到名称
                 string fileExtension = System.IO.Path.GetExtension(fileName);//文件的扩展名称
                 string type = fileName.Substring(fileName.LastIndexOf(".") + 1);    //类型  
-                files[1].SaveAs(savePath2 + DateTime.Now.ToString("yyyyMMdd") + fileName);
+                files[itemitem * 2 + 1].SaveAs(savePath2 + DateTime.Now.ToString("yyyyMMdd") + fileName);
                 savepath3 = "../../../upload/PDF/" + DateTime.Now.ToString("yyyyMMdd") + fileName;
             }
         }
@@ -110,6 +112,12 @@ public class designReviewRecord : IHttpHandler {
             int treatID = Convert.ToInt32(treatid);
             //string userID = "1";
             string userID = context.Request.Form["userID"];
+            
+            string ggg = "";
+            if (item != "0")
+            {
+                ggg = "_" + item;
+            }
             int userid = Convert.ToInt32(userID);
             DateTime datetime = DateTime.Now;
             DateTime datetime1 = datetime;
@@ -126,38 +134,51 @@ public class designReviewRecord : IHttpHandler {
             {
                 Count = Convert.ToInt32(count) + 1;
             }
-            string strSqlCommand = "INSERT INTO review(ID,PlanQA,_User_ID,ReviewTime,Remark,PDF1,PDF2,SUM,Percent) " +
-                                    "VALUES(@ID,@PlanQA,@User_ID,@ReviewTime,@Remark,@PDF1,@PDF2,@SUM,@Percent)";
-            sqlOperation.AddParameterWithValue("@ID", Count);
-            sqlOperation.AddParameterWithValue("@PlanQA", Convert.ToInt32(context.Request.Form["PlanQA"]));
-            sqlOperation.AddParameterWithValue("@Remark", context.Request.Form["Remark"]);
-            sqlOperation.AddParameterWithValue("@SUM", 1);
-            sqlOperation.AddParameterWithValue("@Percent",context.Request.Form["degree"]);
-            sqlOperation.AddParameterWithValue("@ReviewTime", datetime1);
-            sqlOperation.AddParameterWithValue("@User_ID", userid);
-            sqlOperation.AddParameterWithValue("@PDF1", savepath1);
-            sqlOperation.AddParameterWithValue("@PDF2", savepath3);
-            int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
+         
+            
             string select1 = "select Progress from treatment where ID=@treat";
             sqlOperation.AddParameterWithValue("@treat", treatID);
             string progress = sqlOperation.ExecuteScalar(select1);
             string[] group = progress.Split(',');
             bool exists = ((IList)group).Contains("12");
+            string have = "select count(*) from review where ChildDesign_ID=@ChildDesign_ID and Treatment_ID=@Treatment_ID";
+            sqlOperation.AddParameterWithValue("@ChildDesign_ID", context.Request.Form["childdesign" + ggg]);
+            sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
+            int ishave = int.Parse(sqlOperation.ExecuteScalar(have));
+            if (ishave>0)
+            {
+                string delete = "delete from review where ChildDesign_ID=@ChildDesign_ID and Treatment_ID=@Treatment_ID";
+                sqlOperation2.AddParameterWithValue("@ChildDesign_ID", context.Request.Form["childdesign" + ggg]);
+                sqlOperation2.AddParameterWithValue("@Treatment_ID", treatID);
+                sqlOperation2.ExecuteNonQuery(delete);
+            }
+            string strSqlCommand = "INSERT INTO review(ID,PlanQA,_User_ID,ReviewTime,Remark,PDF1,PDF2,SUM,Percent,ChildDesign_ID,Treatment_ID,SelectDose) " +
+                                       "VALUES(@ID,@PlanQA,@User_ID,@ReviewTime,@Remark,@PDF1,@PDF2,@SUM,@Percent,@ChildDesign_ID,@Treatment_ID,@SelectDose)";
+            sqlOperation.AddParameterWithValue("@ID", Count);
+            sqlOperation.AddParameterWithValue("@PlanQA", Convert.ToInt32(context.Request.Form["PlanQA" + ggg]));
+            sqlOperation.AddParameterWithValue("@Remark", context.Request.Form["Remark" + ggg]);
+            sqlOperation.AddParameterWithValue("@SelectDose", context.Request.Form["selectdose"]);
+            sqlOperation.AddParameterWithValue("@SUM", 1);
+            sqlOperation.AddParameterWithValue("@Percent", context.Request.Form["degree" + ggg]);
+            sqlOperation.AddParameterWithValue("@ChildDesign_ID", context.Request.Form["childdesign" + ggg]);
+            sqlOperation.AddParameterWithValue("@ReviewTime", datetime1);
+            sqlOperation.AddParameterWithValue("@User_ID", userid);
+            sqlOperation.AddParameterWithValue("@PDF1", savepath1);
+            sqlOperation.AddParameterWithValue("@PDF2", savepath3);
+            sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
+            int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
             int Success = 0;
             if (!exists)
             {
-                string inserttreat = "update treatment set Review_ID=@Design_ID,Progress=@progress where ID=@treat";
+                string inserttreat = "update treatment set Progress=@progress where ID=@treat";
                 sqlOperation2.AddParameterWithValue("@progress", progress + ",12");
-                sqlOperation2.AddParameterWithValue("@Design_ID", Count);
+                //sqlOperation2.AddParameterWithValue("@Design_ID", Count);
                 sqlOperation2.AddParameterWithValue("@treat", treatID);
                 Success = sqlOperation2.ExecuteNonQuery(inserttreat);
             }
             else
-            {
-                string inserttreat = "update treatment set Review_ID=@Design_ID where ID=@treat";
-                sqlOperation2.AddParameterWithValue("@Design_ID", Count);
-                sqlOperation2.AddParameterWithValue("@treat", treatID);
-                Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+            {               
+                Success = 1;
             }
             if (intSuccess > 0 && Success > 0)
             {

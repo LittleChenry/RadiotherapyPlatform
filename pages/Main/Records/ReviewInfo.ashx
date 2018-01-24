@@ -36,20 +36,27 @@ public class ReviewInfo : IHttpHandler {
     private string getfixrecordinfo(HttpContext context)
     {
         int treatid = Convert.ToInt32(context.Request.QueryString["treatID"]);
-     
-        string sqlCommand = "select review.*,user.Name as username,review.ID as reviewid,Treatmentname from review,treatment,user where review.ID=treatment.Review_ID and review._User_ID=user.ID and treatment.ID=@treatID";
+        string count1 = "select count(*) from review where treatment_ID=@treatID";
+        sqlOperation.AddParameterWithValue("@treatID", treatid);
+        int count = int.Parse(sqlOperation.ExecuteScalar(count1));
+        string sqlCommand = "select review.*,user.Name as username,review.ID as reviewid from review,user where review._User_ID=user.ID and treatment_ID=@treatID";
         sqlOperation2.AddParameterWithValue("@treatID", treatid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand);
         StringBuilder backText = new StringBuilder("{\"reviewInfo\":[");
+        int i = 1;
         while (reader.Read())
         {
             string date = reader["ReviewTime"].ToString();
             DateTime dt1 = Convert.ToDateTime(date);
             string date1 = dt1.ToString("yyyy-MM-dd HH:mm");
-            backText.Append("{\"ReviewTime\":\"" + date1 + "\",\"name\":\"" + reader["username"] + "\",\"sum\":\"" + reader["SUM"] +
-                "\",\"degree\":\"" + reader["Percent"] + "\",\"PlanQA\":\"" + reader["PlanQA"] + "\",\"userID\":\"" + reader["_User_ID"] +
+            backText.Append("{\"ReviewTime\":\"" + date1 + "\",\"name\":\"" + reader["username"] + "\",\"sum\":\"" + reader["SUM"] + "\",\"childdesign\":\"" + reader["ChildDesign_ID"] +
+                "\",\"degree\":\"" + reader["Percent"] + "\",\"PlanQA\":\"" + reader["PlanQA"] + "\",\"userID\":\"" + reader["_User_ID"] + "\",\"SelectDose\":\"" + reader["SelectDose"] +
                 "\",\"Remark\":\"" + reader["Remark"] + "\",\"PDF1\":\"" + reader["PDF1"] + "\",\"PDF2\":\"" + reader["PDF2"] + "\"}");
-          
+            if (i < count)
+            {
+                backText.Append(",");
+            }
+            i++;
         }
         backText.Append("]}");
         reader.Close();
