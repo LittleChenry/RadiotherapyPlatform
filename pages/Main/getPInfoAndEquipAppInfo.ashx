@@ -29,11 +29,11 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
     {
         string patientid = context.Request["patientid"];
         int temp = 1;
-        string countcommand = "select count(*) from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state>1";
+        string countcommand = "select count(*) from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state=3";
         sqlOperation.AddParameterWithValue("@pid", patientid);
         int number = int.Parse(sqlOperation.ExecuteScalar(countcommand));
         StringBuilder info = new StringBuilder("{\"patientinfo\":[");
-        string designcommand = "select childdesign.ID as chid,DesignName,childdesign.Splitway_ID as splitway,childdesign.Totalnumber as total,childdesign.state as childstate,Treatmentdescribe,childdesign.Treatment_ID as treatid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state>1";
+        string designcommand = "select childdesign.ID as chid,DesignName,childdesign.Splitway_ID as splitway,childdesign.Totalnumber as total,childdesign.state as childstate,Treatmentdescribe,childdesign.Treatment_ID as treatid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state=3";
         sqlOperation.AddParameterWithValue("@pid", patientid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(designcommand);
         while (reader.Read())
@@ -102,7 +102,22 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
                 }
                 reader1.Close();
             }
-            info.Append(",\"rest\":\""+(int.Parse(reader["total"].ToString())-count)+"\",\"maxdate\":\""+maxdate+"\"}");
+            info.Append(",\"rest\":\""+(int.Parse(reader["total"].ToString())-count)+"\",\"maxdate\":\""+maxdate+"\",\"firstday\":\"");
+            string chid = reader["chid"].ToString();
+            string firstdaycommand = "select Date from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin)) and IsFirst=1 order by Date desc,Begin desc";
+            sqlOperation1.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
+            sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+            sqlOperation1.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
+            reader1 = sqlOperation1.ExecuteReader(firstdaycommand);
+            if (reader1.Read())
+            {
+                info.Append(reader1["Date"].ToString() + "\"}");
+            }
+            else
+            {
+                info.Append("\"}");
+            }
+            reader1.Close();
             if (temp <= number - 1)
             {
                 info.Append(",");

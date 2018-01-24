@@ -42,6 +42,7 @@ public class InsertAllappointment : IHttpHandler {
         string patientid = getarray["patientid"].ToString();
         string userid = getarray["userid"].ToString();
         string equipmentid = getarray["equipmentid"].ToString();
+        JArray chidarray= (JArray)JsonConvert.DeserializeObject(getarray["chidgroup"].ToString());
         lock (locker)
         {
             string designcommand = "select childdesign.ID as chid,DesignName,childdesign.Splitway_ID as splitway,childdesign.Totalnumber as total,childdesign.state as childstate,Treatmentdescribe,childdesign.Treatment_ID as treatid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state=3";
@@ -49,6 +50,10 @@ public class InsertAllappointment : IHttpHandler {
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(designcommand);
             while (reader.Read())
             {
+               if(!chidarray.Contains(reader["chid"].ToString()))
+               {
+                   continue;
+               }
                 int Interal = 0, Times = 0, rest = 0;
                 string splitcommand = "select Ways,Interal,Times from splitway where ID=@split";
                 sqlOperation1.AddParameterWithValue("@split", reader["splitway"].ToString());
@@ -450,6 +455,5 @@ public class InsertAllappointment : IHttpHandler {
         
         
     }
-
 
 }
