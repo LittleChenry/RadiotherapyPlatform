@@ -1,32 +1,30 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ConditionResultManage.aspx.cs" Inherits="pages_Main_ConditionResultManage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Appointment.aspx.cs" Inherits="pages_Main_Appointment" %>
 
 <!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!--Tell the brower to be responsive to screen width -->
-    <meta content="Width=device-width, initial-scale=1, maxmum-scale=1, user-scalable=no" name="viewport" />
-    <link rel="stylesheet" href="../../css/Main/Records.css"/>
-    <!--Boostrap -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css" />
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css" />
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>放疗质控系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- css -->
+    <link rel="stylesheet" href="../../css/Main/main.css"/>
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css">
     <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="/RadiotherapyPlatform/plugin/AdminLTE/plugins/datepicker/datepicker3.css"/>
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css" />
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/iCheck/all.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css" />
-    <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css" />
-
-    <!-- Main Css -->
-    <link rel="stylesheet" href="../../css/Main/main.css" />
-    <link rel="stylesheet" href="../../css/Root/rootMain.css" />
-    <link rel="stylesheet" href="../../css/Root/equipmentMain.css" />
-    <title>病情诊断结果管理</title>
+    <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
 <div class="wrapper">
@@ -170,11 +168,21 @@
                         <span>患者汇总</span>
                     </a>
                 </li>
-                <li class="treeview">
-                    <a href="EquipmentAppointment.aspx" target="_blank">
-                        <i class="fa fa-clock-o"></i>
-                        <span>设备预约管理</span>
+                <li class="active treeview">
+                    <a href="#">
+                        <i class="fa fa-clock-o"></i> <span>预约</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a id="A1" href="EquipmentAppointment.aspx" target="_blank"><i class="fa fa-circle-o"></i>设备预约管理</a>
+                        </li>
+                        <li class="active">
+                            <a id="A2" href="Appointment.aspx"><i class="fa fa-circle-o"></i>加速器预约</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="treeview">
                     <a href="AddPatient.aspx">
@@ -207,7 +215,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="active treeview">
+                <li class="treeview">
                     <a href="#">
                         <i class="fa fa-plus-square"></i> <span>诊断结果管理</span>
                         <span class="pull-right-container">
@@ -215,7 +223,7 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="active">
+                        <li>
                             <a id="Menu-ConditionResultManage" href="ConditionResultManage.aspx"><i class="fa fa-circle-o"></i>病情诊断结果管理</a>
                         </li>
                         <li>
@@ -251,112 +259,81 @@
         </section>
     </aside>
     <div class="content-wrapper">
-        <section class="content-header">
-            <h1>病情诊断结果管理</h1>
-        </section>
-        <section class="content">
-            <div class="row" style="margin-bottom:0.98em;">
-                <div class="col-md-12">
-                    <div class="col-md-3 col-xs-offset-3">
-                        <select id="first" class="form-control">
-                            <option value="">无</option>
-                        </select>
+        <section id="main-content" class="col-xs-4" style="padding:0px;">
+            <div class="layout-main-tab">
+                <nav class="tab-nav">
+                    <div class="col-xs-8" style="text-align:center;">
+                        <h4 class="box-title" style="font-weight:600;">预约患者列表</h4>
                     </div>
-                    <div class="col-md-3">
-                        <select id="second" class="form-control">
-                            <option value="">无</option>
-                        </select>
+                    <div class="col-xs-4" style="margin-top:2px;">
+                        <input id="patient-search" type="search" class="form-control" placeholder="搜索">
                     </div>
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-primary btn-success" id="sureit">确定</button>
-                    </div>
-                </div>
+                </nav>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default mintablewidth">
-                        <div class="panel-heading mintablewidth">
-                                <i class="fa fa-bar-chart-o fa-fw"></i>
-                                <span class="panel-title">病情诊断结果管理</span>
-                                <input type="button" class="btn btn-primary btn-sm buttonToLeft floatRight tohidden" id="newCode" data-toggle="modal" data-target="#myModal" value="新增" style="padding: 2.5px 10px;" />
-                                <input type="button" class="btn btn-primary btn-sm floatRight tohidden" id="changeCode" value="编辑" style="padding: 2.5px 10px;" />
-                                <input type="button" class="btn btn-primary btn-sm floatRight" id="closeEdit" value="结束编辑" style="padding: 2.5px 10px;display:none" />
-                                <input type="button" class="tohidden" id="EditGroup" data-toggle="modal" data-target="#editModal" />
-                            </div>
-                        <div id="tableArea" class="panel-body mintablewidth">
-                            <table class="table table-striped table-hover" style="width:100%">
-
-                            </table>
+            <div id="patient-content" class="box" style="border-top:0px;margin-bottom:0px;">
+                <div class="box-body" style="padding:0px;">
+                    <div id="patient-table-content" class="scroll-content">
+                        <table id="patient-table" class="table table-bordered" style="white-space:nowrap;margin-bottom:0px;"></table>
+                    </div>
+                    <div class="row">
+                        <div id="legend" class="col-sm-9" style="padding-top:8px;padding-left:25px;">
+                            <span id="legend-waiting" style="display:none;">
+                                <span style="background-color:wheat;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                                <span>：等待中</span>
+                            </span>
+                            <span id="legend-enhance" style="display:none;">
+                                <span style="color:#00A65A;margin-left:10px;">患者纪录</span>
+                                <span>：CT增强</span>
+                            </span>
+                        </div>
+                        <div class="col-sm-3 pull-right">
+                            <div class="dataTables_info" id="patient_info" role="status" aria-live="polite"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    </div>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">新增病情诊断结果</h4>
+        <section id="appointment-content" class="col-xs-8 apoointment-area" style="padding:0px;">
+            <div class="col-xs-12">
+                <div class="title">
+                    <span>加速器治疗预约</span>
                 </div>
-                    <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
-                        <label id="error" class="tohidden"></label>
-                        <table id="addCode" class="mytable table-bordered table-center">
-                            <tbody style="text-align:center;">
-                                <tr>
-                                    <th>编码</th>
-                                    <td>
-                                        <input id="codeNew" type="text" class="form-control" placeholder="请输入编码" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>名称</th>
-                                    <td>
-                                        <input id="nameNew" type="text" class="form-control"  placeholder="请输入名称" />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="cannelButton" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
-                        <input id="sureAdd" type="submit" class="btn btn-primary" value="确认" />
-                    </div>
+                <div class="patient-info">
+                    <div class="col-xs-4">姓名：姜玉清</div>
+                    <div class="col-xs-4">主治医生：孙新臣</div>
+                    <div class="col-xs-4">医疗组：孙新臣组</div>
+                </div>
             </div>
-        </div>
+            <div class="col-xs-12">
+                <div class="col-xs-12">
+                    <table id="AppointDate" class="table table-bordered"></table>
+                </div>
+                <div class="col-xs-12">
+                    <table id="AppointTime" class="table table-bordered"></table>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div id="chooseMachine" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" data-dismiss="modal" class="close" aria-hidden="true">×</button>
-                    <h4 class="modal-title">修改病情诊断结果</h4>                     
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">选择设备</h4>
                 </div>
-                <div class="modal-body" data-scrollbar="true" data-height="200" data-scrollcolor="#000" >
-                    <label id="editError" class="tohidden"></label>
-                        <table id="EditTable" class="mytable table-bordered table-center">
-                            <tbody style="text-align:center;">
-                                <tr>
-                                <th>编码</th>
-                                <td>
-                                    <input type="hidden" id="idEdit" />
-                                    <input id="codeEdit" type="text" class="form-control" placeholder="请输入编码" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>名称</th>
-                                <td>
-                                    <input id="nameEdit" type="text" class="form-control"  placeholder="请输入名称" />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <span>选择操作项目：</span>
+                        <select id="equipmentType" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <span>选择设备：</span>
+                        <select id="equipment" class="form-control"></select>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="cannelEdit" type="button" data-dismiss="modal" class="btn btn-default">取消</button>
-                    <input id="sureEdit" type="button" class="btn btn-primary" value="确认" />
+                    <button id="getSelectedPatient" type="button" class="btn btn-primary" data-dismiss="modal">查询所有患者</button>
                 </div>
             </div>
         </div>
@@ -365,33 +342,37 @@
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.0
         </div>
-        <strong>Copyright &copy; 2017 <a href="#"> 医院</a> .</strong> 保留所有权利
+    <strong>Copyright &copy; 2017 <a href="#"> 医院</a> .</strong> 保留所有权利
     </footer>
+
     <div class="control-sidebar-bg"></div>
 </div>
+<!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
 <script src="../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="../../plugin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../../plugin/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
-<!-- bootstrap datepicker -->
-<script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- DataTables -->
 <script src="../../plugin/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="../../plugin/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- SlimScroll -->
 <script src="../../plugin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="../../plugin/AdminLTE/plugins/fastclick/fastclick.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="../../plugin/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="../../plugin/AdminLTE/plugins/iCheck/icheck.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../plugin/AdminLTE/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../plugin/AdminLTE/dist/js/demo.js"></script>
-<!-- Main javascript -->
+<!-- js -->
+<script src="../../js/Main/appoint.js"></script>
 <script src="../../js/Main/HeaderOperate.js"></script>
-<script src="../../js/Root/createTable.js"></script>
-<script src="../../js/Root/icodeJS.js"></script>
+
 </body>
 </html>

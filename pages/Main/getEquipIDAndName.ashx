@@ -33,7 +33,7 @@ public class getEquipIDAndName : IHttpHandler {
         while (reader.Read())
         {
             backstring.Append("{\"ID\":\"" + reader["ID"].ToString() + "\",\"Name\":\"" + reader["Name"].ToString() + "\"}");
-            if (i < count-1)
+            if (i < count)
             {
                 backstring.Append(",");
                 

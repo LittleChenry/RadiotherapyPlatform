@@ -142,3 +142,21 @@
 	background-color: #3177BC;
 	color: #FFFFFF;
 }
+
+.apoointment-area {
+	background-color: white;
+	overflow: auto;
+	border-left: 1px solid #C1C1C1;
+	box-sizing: border-box;
+}
+
+.title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px;
+}
+
+.patient-info {
+	
+}
