@@ -104,14 +104,14 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
             }
             info.Append(",\"rest\":\""+(int.Parse(reader["total"].ToString())-count)+"\",\"maxdate\":\""+maxdate+"\",\"firstday\":\"");
             string chid = reader["chid"].ToString();
-            string firstdaycommand = "select Date from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin)) and IsFirst=1 order by Date desc,Begin desc";
+            string firstdaycommand = "select Date from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and IsFirst=1 order by Date desc,Begin desc";
             sqlOperation1.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
             sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
             sqlOperation1.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
             reader1 = sqlOperation1.ExecuteReader(firstdaycommand);
             if (reader1.Read())
             {
-                info.Append(reader1["Date"].ToString() + "\"}");
+                info.Append(reader1["Date"].ToString().Split(new char[]{' '})[0] + "\"}");
             }
             else
             {

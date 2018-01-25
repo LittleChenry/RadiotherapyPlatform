@@ -111,6 +111,61 @@
                 </div>
             </div>
         </div>
+        <div id="appoint" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document" style="width:700px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">预约设备与时间窗口</h4>
+                    </div>
+                <div class="modal-body" style="overflow:hidden;">
+                    <div class="panel-row">
+                        <div class="item col-xs-5">选择设备：<select id="equipmentName" class="form-item"></select></div>
+                        <div class="item col-xs-4">预约时间：<input type="text" id="AppiontDate" class="form-item" /></div>
+                        <div class="col-xs-3">
+                            <button type="button"  id="previousday" class="btn btn-default btn-sm">上一天</button>
+                            <button type="button" id="nextday" class="btn btn-default btn-sm">下一天</button>
+                        </div>
+                    </div>
+                    <div class="panel-row">
+                    <div class="item col-xs-7">时间筛选：
+                        <select id="timeselect" name="timeselect" class="form-item">
+                            <option value="540-690">9:00-10:30</option>
+                            <option value="900-990">15:00-16:30</option>
+                        </select>
+                    </div>
+                    <%--<div class="item col-xs-5" style="padding-left:20px;display:none">是否占用两格：<select id="isspecial" name="isspecial" class="form-item">
+                           <option value="0">否</option>
+                            <option value="1">是</option>
+                          </select>
+
+                    </div>--%>
+                    </div>
+                    <div class="panel-row">
+                        <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" id="cannel" type="button" data-dismiss="modal">取消</button>
+                        <button class="btn btn-primary" id="sure" type="button" data-dismiss="modal">确定</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+             <div id="checkappointmodal" class="modal fade" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document" style="width:700px;">
+                       <div class="modal-content">
+                        <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">查看子计划加速器预约情况</h4>
+                      </div>
+
+
+
+
+                       </div>
+                  </div>
+             </div>
     </section>
      <section id="printArea" class="content" style="display:none;width:756px;height:1086px;border:0px;position:absolute;">
                 
