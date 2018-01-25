@@ -130,7 +130,7 @@
                     <div class="panel-row">
                     <div class="item col-xs-7">时间筛选：
                         <select id="timeselect" name="timeselect" class="form-item">
-                            <option value="540-690">9:00-10:30</option>
+                            <option value="540-630">9:00-10:30</option>
                             <option value="900-990">15:00-16:30</option>
                         </select>
                     </div>

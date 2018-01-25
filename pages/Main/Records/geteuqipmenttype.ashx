@@ -25,10 +25,24 @@ public class geteuqipmenttype : IHttpHandler {
     private string getprinItem(HttpContext context)
     {
         string treatid = context.Request.QueryString["treatmentID"];
-        string sqlCommand = "SELECT Equipment_ID FROM treatment,design where treatment.Design_ID=design.ID and treatment.ID=@treat";
+        string equip = "";
+        string selectequipmentcommand = "select fieldinfomation.equipment as equip from childdesign,fieldinfomation,treatment where fieldinfomation.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID and  treatment.ID=@treat";
         sqlOperation.AddParameterWithValue("@treat", treatid);
-        string equip = sqlOperation.ExecuteScalar(sqlCommand);
-        return equip;
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(selectequipmentcommand);
+        if (reader.Read())
+        {
+            equip = reader["equip"].ToString();
+        }
+        reader.Close();
+        string euipid = "";
+        if (equip != "")
+        {
+            string sqlCommand = "SELECT ID from equipmenttype where Type like @equip";
+            sqlOperation.AddParameterWithValue("@equip", '%'+equip+'%');
+            euipid = sqlOperation.ExecuteScalar(sqlCommand);
+        }
+
+        return euipid;
     }
 
 }
