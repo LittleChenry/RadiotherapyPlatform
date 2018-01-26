@@ -154,7 +154,7 @@
     text-align: center;
     font-size: 18px;
     font-weight: 600;
-    margin: 10px;
+    margin: 14px;
 }
 
 .patient-info {
@@ -176,8 +176,4 @@
 
 .occupied {
 	background-color: #C1C1C1;
-}
-
-.hide {
-	display: none;
 }

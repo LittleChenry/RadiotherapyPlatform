@@ -179,10 +179,10 @@
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a id="A1" href="EquipmentAppointment.aspx" target="_blank"><i class="fa fa-circle-o"></i>设备预约管理</a>
+                            <a id="Menu-EquipmentAppointment" href="EquipmentAppointment.aspx" target="_blank"><i class="fa fa-circle-o"></i>设备预约管理</a>
                         </li>
                         <li class="active">
-                            <a id="A2" href="Appointment.aspx"><i class="fa fa-circle-o"></i>加速器预约</a>
+                            <a id="Menu-Appointment" href="Appointment.aspx"><i class="fa fa-circle-o"></i>加速器预约</a>
                         </li>
                     </ul>
                 </li>
@@ -311,7 +311,8 @@
                 </div>
                 <div class="plan-info">
                     <div class="col-xs-4 info-title">
-                        <span>计划预约信息：</span>
+                        <span class="index-num">①</span>
+                        <span>选择预约计划：</span>
                     </div>
                     <div class="col-xs-12">
                         <table id="PlanInfo" class="table table-bordered">
@@ -333,12 +334,14 @@
             <div class="col-xs-12">
                 <div class="col-xs-12">
                     <div class="info-title">
+                        <span class="index-num">②</span>
                         <span>选择预约起始日期：</span>
                     </div>
                     <table id="AppointDate" class="table table-bordered"></table>
                 </div>
                 <div class="col-xs-12">
                     <div class="info-title">
+                        <span class="index-num">③</span>
                         <span>选择预约时间段：</span>
                     </div>
                     <table id="AppointTime" class="table table-bordered"></table>
