@@ -319,7 +319,8 @@ function RecordAddClick() {
 			    appointrange += ']';
 			    var appointstr = '{"begindate":"'+ begindate +'","patientid":"'+ patientid +'","chidgroup":'+ chidgroup +',"userid":"'+ userid +'","equipmentid":"'+ equipmentid +'","appointrange":'+ appointrange +'}';
 			    var appointdata = {
-			    	data:appointstr
+			    	data:appointstr,
+			    	type:"0"
 			    };
 			    var postURL = '../../pages/Main/InsertAllappointment.ashx';
 			    var returnData = postData(postURL, appointdata, false);
