@@ -72,9 +72,9 @@
                     <div class="single-row">
                         <div class="col-xs-12">
                             <div class="pull-right">
-                                <button id="save" type="button" class="btn btn-success" disabled="disabled" onclick="savereview(0)" style="margin-left:10px;>保存</button>
-                                <button id="Forced" type="button" class="btn btn-success" onclick="force(0)" disabled="disabled" style="margin-left:10px;">强制通过</button>
-                                <button id="confirm" type="button" class="btn btn-success" onclick="check(0)" disabled="disabled" style="margin-left:10px;">自动复核</button>
+                                <button id="Forced" type="button" class="btn btn-success" onclick="force(0)" disabled="disabled" style="margin-left:6px;">强制通过</button>
+                                <button id="confirm" type="button" class="btn btn-success" onclick="check(0)" disabled="disabled" style="margin-left:6px;">自动复核</button>
+                                <button id="save" type="button" class="btn btn-success" disabled="disabled" onclick="savereview(0)" style="margin-left:6px;">保存</button>
                             </div>
                         </div>
                     </div>

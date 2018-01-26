@@ -107,9 +107,9 @@ if (isInArray(progress, '11')) {
             var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row"><input type="hidden"  id="TechnologyConfirm1_' + i + '" name="TechnologyConfirm1_' + i + '" value="0"/>' +
                           '<input type="hidden"  id="confirmPlanSystem1_' + i + '" name="confirmPlanSystem1_' + i + '" value="0"/><input type="hidden"  id="EquipmentConfirm1_' + i + '" name="EquipmentConfirm1_' + i + '" value="0"/>' +
                           '<input type="hidden"  id="childdesign_' + i + '" name="childdesign_' + i + '" value="' + designInfo[i].childDesign_ID + '"/><div class="col-xs-12"><div class="pull-right">' +
-                          '<button id="save_' + i + '" type="button" class="btn btn-success" disabled="disabled" onclick="savereview(' + i + ')" style="margin-left:10px;">保存</button>' +
                           '<button id="Forced_' + i + '" type="button" class="btn btn-success" onclick="force(' + i + ')" disabled="disabled" style="margin-left:10px;">强制通过</button>' +
-                          '<button id="confirm_' + i + '" type="button" class="btn btn-success" onclick="check('+i+')" disabled="disabled" style="margin-left:10px;">自动复核</button></div></div></div>' +
+                          '<button id="confirm_' + i + '" type="button" class="btn btn-success" onclick="check('+i+')" disabled="disabled" style="margin-left:10px;">自动复核</button>' +
+                          '<button id="save_' + i + '" type="button" class="btn btn-success" disabled="disabled" onclick="savereview(' + i + ')" style="margin-left:10px;">保存</button></div></div></div>' +
                           '<div class="single-row"><div class="item area-group col-xs-12"><table class="table table-bordered" style="word-break:break-all;">' +
                           '<thead><tr><th style="width:8%;text-align:center;">序号</th><th style="width:22%;text-align:center;">复核项</th><th style="width:25%;text-align:center;">计划信息</th>' +
                           '<th style="width:25%;text-align:center;">导入信息</th><th style="width:20%;text-align:center;">复核结果</th></tr></thead>';
