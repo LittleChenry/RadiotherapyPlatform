@@ -154,9 +154,26 @@
     text-align: center;
     font-size: 18px;
     font-weight: 600;
-    margin: 10px;
+    margin: 14px;
 }
 
 .patient-info {
-	
+	height: 35px;
+}
+
+.info-title {
+	margin-bottom: 10px;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.chosen {
+	background-color: #3177BC;
+	color: white;
+}
+
+.occupied {
+	background-color: #C1C1C1;
 }

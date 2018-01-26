@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/iCheck/all.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
@@ -177,10 +179,10 @@
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a id="A1" href="EquipmentAppointment.aspx" target="_blank"><i class="fa fa-circle-o"></i>设备预约管理</a>
+                            <a id="Menu-EquipmentAppointment" href="EquipmentAppointment.aspx" target="_blank"><i class="fa fa-circle-o"></i>设备预约管理</a>
                         </li>
                         <li class="active">
-                            <a id="A2" href="Appointment.aspx"><i class="fa fa-circle-o"></i>加速器预约</a>
+                            <a id="Menu-Appointment" href="Appointment.aspx"><i class="fa fa-circle-o"></i>加速器预约</a>
                         </li>
                     </ul>
                 </li>
@@ -259,7 +261,7 @@
         </section>
     </aside>
     <div class="content-wrapper">
-        <section id="main-content" class="col-xs-4" style="padding:0px;">
+        <section id="main-content" class="col-xs-4" style="padding:0px;display:none;">
             <div class="layout-main-tab">
                 <nav class="tab-nav">
                     <div class="col-xs-8" style="text-align:center;">
@@ -293,22 +295,55 @@
                 </div>
             </div>
         </section>
-        <section id="appointment-content" class="col-xs-8 apoointment-area" style="padding:0px;">
+        <section id="appointment-content" class="col-xs-8 apoointment-area" style="padding:0px;display:none;">
             <div class="col-xs-12">
                 <div class="title">
                     <span>加速器治疗预约</span>
                 </div>
                 <div class="patient-info">
-                    <div class="col-xs-4">姓名：姜玉清</div>
-                    <div class="col-xs-4">主治医生：孙新臣</div>
-                    <div class="col-xs-4">医疗组：孙新臣组</div>
+                    <input id="patientid" type="hidden" value="" />
+                    <div class="col-xs-3">患者姓名：<span id="patient-name"></span></div>
+                    <div class="col-xs-3">主治医生：<span id="doctor"></span></div>
+                    <div class="col-xs-3">医疗组：<span id="group"></span></div>
+                    <div class="col-xs-3">
+                        <button id="confirm" type="button" class="btn btn-primary pull-right" disabled>确认预约</button>
+                    </div>
+                </div>
+                <div class="plan-info">
+                    <div class="col-xs-4 info-title">
+                        <span class="index-num">①</span>
+                        <span>选择预约计划：</span>
+                    </div>
+                    <div class="col-xs-12">
+                        <table id="PlanInfo" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>计划</th>
+                                    <th>疗程</th>
+                                    <th>总次数</th>
+                                    <th>剩余次数</th>
+                                    <th>分割方式</th>
+                                    <th>最新首次</th>
+                                    <th>选择预约</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="col-xs-12">
+                    <div class="info-title">
+                        <span class="index-num">②</span>
+                        <span>选择预约起始日期：</span>
+                    </div>
                     <table id="AppointDate" class="table table-bordered"></table>
                 </div>
                 <div class="col-xs-12">
+                    <div class="info-title">
+                        <span class="index-num">③</span>
+                        <span>选择预约时间段：</span>
+                    </div>
                     <table id="AppointTime" class="table table-bordered"></table>
                 </div>
             </div>
@@ -373,6 +408,5 @@
 <!-- js -->
 <script src="../../js/Main/appoint.js"></script>
 <script src="../../js/Main/HeaderOperate.js"></script>
-
 </body>
 </html>

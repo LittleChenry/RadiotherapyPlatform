@@ -175,10 +175,20 @@
                     </a>
                 </li>
                 <li class="treeview">
-                    <a href="EquipmentAppointment.aspx" target="_blank">
-                        <i class="fa fa-clock-o"></i>
-                        <span>设备预约管理</span>
+                    <a href="#">
+                        <i class="fa fa-clock-o"></i> <span>预约</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a id="Menu-EquipmentAppointment" href="EquipmentAppointment.aspx" target="_blank"><i class="fa fa-circle-o"></i>设备预约管理</a>
+                        </li>
+                        <li>
+                            <a id="Menu-Appointment" href="Appointment.aspx"><i class="fa fa-circle-o"></i>加速器预约</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="treeview">
                     <a href="AddPatient.aspx">
