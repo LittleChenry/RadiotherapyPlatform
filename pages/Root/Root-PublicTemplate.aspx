@@ -340,6 +340,12 @@
                   <span class="pull-right-container"></span>
               </a>
           </li>
+          <li>
+              <a href="Root-FirstAccTime.aspx">
+                  <i class="fa fa-clone"></i><span>首次治疗预约时间段</span>
+                  <span class="pull-right-container"></span>
+              </a>
+          </li>
           <li class="active">
               <a href="Root-PublicTemplate.aspx">
                   <i class="fa fa-clone"></i><span>公共模板设置</span>

@@ -278,37 +278,42 @@
             </span>
           </a>
         </li>
-        <li>
-            <a href="Root-parameterSetting.aspx">
-                <i class="fa fa-bars"></i> <span>基本信息管理</span>
-                <span class="pull-right-container">
-                </span>
-            </a>
-        </li>
-          <li class="active">
-              <a href="Root-setWarning.aspx">
-                  <i class="fa fa-warning"></i><span>流程预警设置</span>
-                  <span class="pull-right-container"></span>
-              </a>
-          </li>
+                    <li>
+                        <a href="Root-parameterSetting.aspx">
+                            <i class="fa fa-bars"></i><span>基本信息管理</span>
+                            <span class="pull-right-container"></span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="Root-setWarning.aspx">
+                            <i class="fa fa-warning"></i><span>流程预警设置</span>
+                            <span class="pull-right-container"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Root-FirstAccTime.aspx">
+                            <i class="fa fa-clone"></i><span>首次治疗预约时间段</span>
+                            <span class="pull-right-container"></span>
+                        </a>
+                    </li>
                     <li>
                         <a href="Root-PublicTemplate.aspx">
                             <i class="fa fa-clone"></i><span>公共模版设置</span>
                             <span class="pull-right-container"></span>
                         </a>
-                    </li>          
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-bar-chart"></i>
-            <span>数据统计</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-              <li><a href="EquipmentStatistics.aspx"><i class="fa fa-circle-o"></i> 设备检查统计</a></li>
-          </ul>
-        </li>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-bar-chart"></i>
+                            <span>数据统计</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="EquipmentStatistics.aspx"><i class="fa fa-circle-o"></i>设备检查统计</a></li>
+                        </ul>
+                    </li>
       </ul>
             </section>
             <!-- /.sidebar -->
