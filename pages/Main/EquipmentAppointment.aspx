@@ -169,10 +169,20 @@
                     </a>
                 </li>
                 <li class="active treeview">
-                    <a href="EquipmentAppointment.aspx" target="_blank">
-                        <i class="fa fa-clock-o"></i>
-                        <span>设备预约管理</span>
+                    <a href="#">
+                        <i class="fa fa-clock-o"></i> <span>预约</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li class="active">
+                            <a id="Menu-EquipmentAppointment" href="EquipmentAppointment.aspx" target="_blank"><i class="fa fa-circle-o"></i>设备预约管理</a>
+                        </li>
+                        <li>
+                            <a id="Menu-Appointment" href="Appointment.aspx"><i class="fa fa-circle-o"></i>加速器预约</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="treeview">
                     <a href="AddPatient.aspx">
@@ -341,16 +351,16 @@
                             <div class="active tab-pane" id="appointView" style="overflow:hidden;">
                                 <div id="WeekAreaNormal" class="col-md-12">
                                     <div id="buttonArea" class="col-md-12" style="display:none;" >
-                                        <div class='col-md-9'>
-                                            <div class="col-sm-2" style="padding-right:0px;">
+                                        <div class='col-md-3'>
+                                            <div class="col-sm-8" style="padding-right:0px;">
                                                  <input class="form-item form-control" id="dates" name="dates" type="text"  placeholder="选择日期" style="height:34px;" AUTOCOMPLETE="OFF"/>
                                             </div>
-                                            <div class="col-sm-1" style="padding-left:0px;">
+                                            <div class="col-sm-4" style="padding-left:0px;">
                                                 <button id="sureDate" style="height:34px;" class="time-btn selected-btn">确定</button>
                                             </div>
                                            
                                         </div>
-                                        <div class='col-md-3' style='margin-bottom: 5px;'>
+                                        <div class='col-md-9' style='margin-bottom: 5px;text-align:right;'>
                                             <button id="lastWeek" class='time-btn selected-btn'>上一周</button>
                                             <button id="lastDay" class='time-btn selected-btn buttonSpace'>上一天</button>
                                             <button id="nextDay" class='time-btn selected-btn buttonSpace'>下一天</button>

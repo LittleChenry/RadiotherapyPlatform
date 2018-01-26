@@ -239,9 +239,19 @@ public class DataLayer
         {
             _sqlCommand.Connection = _sqlConnect;
         }
-        string strResult = _sqlCommand.ExecuteScalar().ToString();
-        this.Close();
-        return strResult;
+        try
+        {
+            string strResult = _sqlCommand.ExecuteScalar().ToString();
+            return strResult;
+        }
+        catch (NullReferenceException ex)
+        {
+            return "";
+        }
+        finally
+        {
+            this.Close();
+        }
     }
     #endregion
 

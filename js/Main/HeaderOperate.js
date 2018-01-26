@@ -29,6 +29,12 @@
             alert("权限不够！");
          });
     }
+    if (session.role != "治疗技师") {
+         $("#Menu-Appointment").attr("href", "javascript:;");
+         $("#Menu-Appointment").bind("click", function(){
+            alert("权限不够！");
+         });
+    }
 })
 
 function getSession() {

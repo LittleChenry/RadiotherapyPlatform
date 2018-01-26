@@ -222,7 +222,11 @@ function Init(evt) {
       $("#chooseappoint" + i).unbind("click").click(function () {
           CreateNewAppiontTable(event);
       });
-    }
+  }
+  $("#sure").unbind("click").click(function () {
+      checkAllTable(patient.ID,userID);
+  });
+
   $("#operator").html(userName);
   var date = new Date();
   $("#date").html(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
@@ -599,23 +603,44 @@ function removeUlAllChild(evt) {
     }
 }
 
-function checkAllTable() {
+//提交首次预约
+function checkAllTable(pid,userid) {
     var choseid = ChoseID();
     var appoint = choseid.split("_");
     var equipmentName = document.getElementById("equipmentName");
     var currentIndex = equipmentName.selectedIndex;
     var equipname = equipmentName.options[currentIndex].innerHTML;
     var equipid = equipmentName.options[currentIndex].value;
-    document.getElementById("idforappoint").value = appoint[0].split(" ")[0] + "," + appoint[2] + "," + appoint[3] + "," + equipid;
-    document.getElementById("appointtime").value = equipname + " " + appoint[0].split(" ")[0] + " " + appoint[1];
-
-
+    var chid = $("#childdesinid" + allpagenumber).val();
+    $.ajax({
+        type: "POST",
+        url: "../InsertAllappointment.ashx",
+        async: true,
+        data: {
+            chid: chid,
+            type: 1,
+            date: appoint[0].split(" ")[0],
+            begin: appoint[2],
+            end: appoint[3],
+            pid: pid,
+            equip: equipid,
+            userid: userid
+        },
+        dateType: "json",
+        success: function (data) {
+            if (data == "success") {
+                alert("预约成功");
+            } else {
+                alert("预约失败");
+            }
+        },
+        error: function (data) {
+            alert("error");
+        }
+    });
 }
 
-
-
-
-
+//增加天数
 function dateAdd2(dd, n) {
     var strs = new Array();
     strs = dd.split("-");
