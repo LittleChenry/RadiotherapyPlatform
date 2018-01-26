@@ -62,13 +62,13 @@ function Init(evt) {
                 document.getElementById("equipment").value = designInfo[i].equipmentid;
                 document.getElementById("PlanSystem").value = designInfo[i].PlanSystem;
                 document.getElementById("Raytype").value = designInfo[i].Raytype;
-                document.getElementById("left").value = designInfo[i].left;
+                //document.getElementById("left").value = designInfo[i].left;
                 document.getElementById("technology").value = designInfo[i].technologyid;
-                document.getElementById("right").value = designInfo[i].right;
-                document.getElementById("rise").value = designInfo[i].rise;
-                document.getElementById("drop").value = designInfo[i].drop;
-                document.getElementById("enter").value = designInfo[i].enter;
-                document.getElementById("out").value = designInfo[i].out;
+                //document.getElementById("right").value = designInfo[i].right;
+                //document.getElementById("rise").value = designInfo[i].rise;
+                //document.getElementById("drop").value = designInfo[i].drop;
+                //document.getElementById("enter").value = designInfo[i].enter;
+                //document.getElementById("out").value = designInfo[i].out;
                 document.getElementById("applyuser").innerHTML = designInfo[i].SubmitUser;
                 document.getElementById("time").innerHTML = designInfo[i].SubmitTime;
                 if (designInfo[i].userID == userID) {
@@ -84,10 +84,10 @@ function Init(evt) {
                     + '<div class="item col-xs-6">计划系统：<span class="underline">' + designInfo[i].PlanSystemname + '</span></div>'
                     + '<div class="item col-xs-6">放疗设备：<span class="underline">' + designInfo[i].equipment + '</span></div></div>'
                     + '<div class="single-row"><div class="item col-xs-6">射线类型：<span class="underline">' + designInfo[i].Raytypename + '</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-6">移床参数：</div></div><div class="single-row">'
-                    + '<div class="item col-xs-6">左：<span class="underline">' + designInfo[i].left + 'cm</span></div><div class="item col-xs-6">右：<span class="underline">' + designInfo[i].right + 'cm</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-6">升：<span class="underline">' + designInfo[i].rise + 'cm</span></div><div class="item col-xs-6">降：<span class="underline">' + designInfo[i].drop + 'cm</span></div></div>'
-                    + '<div class="single-row"><div class="item col-xs-6">进：<span class="underline">' + designInfo[i].enter + 'cm</span></div><div class="item col-xs-6">出：<span class="underline">' + designInfo[i].out + 'cm</span></div></div>'                    
+                    //+ '<div class="single-row"><div class="item col-xs-6">移床参数：</div></div><div class="single-row">'
+                    //+ '<div class="item col-xs-6">左：<span class="underline">' + designInfo[i].left + 'cm</span></div><div class="item col-xs-6">右：<span class="underline">' + designInfo[i].right + 'cm</span></div></div>'
+                    //+ '<div class="single-row"><div class="item col-xs-6">升：<span class="underline">' + designInfo[i].rise + 'cm</span></div><div class="item col-xs-6">降：<span class="underline">' + designInfo[i].drop + 'cm</span></div></div>'
+                    //+ '<div class="single-row"><div class="item col-xs-6">进：<span class="underline">' + designInfo[i].enter + 'cm</span></div><div class="item col-xs-6">出：<span class="underline">' + designInfo[i].out + 'cm</span></div></div>'                    
                     + '<div class="single-row"><div class="item col-xs-6"><button class="btn btn-success" type="button" disabled="disabled" id="' + i + '">载入历史信息</button></div></div></div>';
                 $("#tabs").append(tab);
                 $("#tab-content").append(content);
@@ -108,10 +108,10 @@ function Init(evt) {
                         + '<div class="item col-xs-6">计划系统：<span class="underline">' + designInfo[i].PlanSystemname + '</span></div>'
                         + '<div class="item col-xs-6">放疗设备：<span class="underline">' + designInfo[i].equipment + '</span></div></div>'
                         + '<div class="single-row"><div class="item col-xs-6">射线类型：<span class="underline">' + designInfo[i].Raytypename + '</span></div></div>'
-                        + '<div class="single-row"><span>移床参数：</span></div><div class="single-row">'
-                        + '<div class="item col-xs-6">左：<span class="underline">' + designInfo[i].left + '</span></div><div class="item col-xs-6">右：<span class="underline">' + designInfo[i].right + '</span></div></div>'
-                        + '<div class="single-row"><div class="item col-xs-6">升：<span class="underline">' + designInfo[i].rise + '</span></div><div class="item col-xs-6">降：<span class="underline">' + designInfo[i].drop + '</span></div></div>'
-                        + '<div class="single-row"><div class="item col-xs-6">进：<span class="underline">' + designInfo[i].enter + '</span></div><div class="item col-xs-6">出：<span class="underline">' + designInfo[i].out + '</span></div></div>'
+                        //+ '<div class="single-row"><span>移床参数：</span></div><div class="single-row">'
+                        //+ '<div class="item col-xs-6">左：<span class="underline">' + designInfo[i].left + '</span></div><div class="item col-xs-6">右：<span class="underline">' + designInfo[i].right + '</span></div></div>'
+                        //+ '<div class="single-row"><div class="item col-xs-6">升：<span class="underline">' + designInfo[i].rise + '</span></div><div class="item col-xs-6">降：<span class="underline">' + designInfo[i].drop + '</span></div></div>'
+                        //+ '<div class="single-row"><div class="item col-xs-6">进：<span class="underline">' + designInfo[i].enter + '</span></div><div class="item col-xs-6">出：<span class="underline">' + designInfo[i].out + '</span></div></div>'
                         + '<div class="single-row"><div class="item col-xs-6"><button class="btn btn-success" type="button" id="' + i + '">载入历史信息</button></div></div></div>';
                     $("#tabs").append(tab);
                     $("#tab-content").append(content);
@@ -134,57 +134,57 @@ function Init(evt) {
             document.getElementById("equipment").value = designInfo[k].equipmentid;
             document.getElementById("PlanSystem").value = designInfo[k].PlanSystem;
             document.getElementById("Raytype").value = designInfo[k].Raytype;
-            document.getElementById("left").value = designInfo[k].left;
-            document.getElementById("right").value = designInfo[k].right;
-            document.getElementById("rise").value = designInfo[k].rise;
-            document.getElementById("drop").value = designInfo[k].drop;
+            //document.getElementById("left").value = designInfo[k].left;
+            //document.getElementById("right").value = designInfo[k].right;
+            //document.getElementById("rise").value = designInfo[k].rise;
+            //document.getElementById("drop").value = designInfo[k].drop;
             document.getElementById("technology").value = designInfo[i].technologyid;
-            document.getElementById("enter").value = designInfo[k].enter;
-            document.getElementById("out").value = designInfo[k].out;
+            //document.getElementById("enter").value = designInfo[k].enter;
+            //document.getElementById("out").value = designInfo[k].out;
         });
     });
-    $('#left').bind('input propertychange', function () {
-        if (document.getElementById("left").value == "") {
-            document.getElementById("right").removeAttribute("disabled");
-        } else {
-            document.getElementById("right").disabled = "disabled";
-        }
-    });
-    $('#right').bind('input propertychange', function () {
-        if (document.getElementById("right").value == "") {
-            document.getElementById("left").removeAttribute("disabled");
-        } else {
-            document.getElementById("left").disabled = "disabled";
-        }
-    });
-    $('#drop').bind('input propertychange', function () {
-        if (document.getElementById("drop").value == "") {
-            document.getElementById("rise").removeAttribute("disabled");
-        } else {
-            document.getElementById("rise").disabled = "disabled";
-        }
-    });
-    $('#rise').bind('input propertychange', function () {
-        if (document.getElementById("rise").value == "") {
-            document.getElementById("drop").removeAttribute("disabled");
-        } else {
-            document.getElementById("drop").disabled = "disabled";
-        }
-    });
-    $('#enter').bind('input propertychange', function () {
-        if (document.getElementById("enter").value == "") {
-            document.getElementById("out").removeAttribute("disabled");
-        } else {
-            document.getElementById("out").disabled = "disabled";
-        }
-    });
-    $('#out').bind('input propertychange', function () {
-        if (document.getElementById("out").value == "") {
-            document.getElementById("enter").removeAttribute("disabled");
-        } else {
-            document.getElementById("enter").disabled = "disabled";
-        }
-    });
+    //$('#left').bind('input propertychange', function () {
+    //    if (document.getElementById("left").value == "") {
+    //        document.getElementById("right").removeAttribute("disabled");
+    //    } else {
+    //        document.getElementById("right").disabled = "disabled";
+    //    }
+    //});
+    //$('#right').bind('input propertychange', function () {
+    //    if (document.getElementById("right").value == "") {
+    //        document.getElementById("left").removeAttribute("disabled");
+    //    } else {
+    //        document.getElementById("left").disabled = "disabled";
+    //    }
+    //});
+    //$('#drop').bind('input propertychange', function () {
+    //    if (document.getElementById("drop").value == "") {
+    //        document.getElementById("rise").removeAttribute("disabled");
+    //    } else {
+    //        document.getElementById("rise").disabled = "disabled";
+    //    }
+    //});
+    //$('#rise').bind('input propertychange', function () {
+    //    if (document.getElementById("rise").value == "") {
+    //        document.getElementById("drop").removeAttribute("disabled");
+    //    } else {
+    //        document.getElementById("drop").disabled = "disabled";
+    //    }
+    //});
+    //$('#enter').bind('input propertychange', function () {
+    //    if (document.getElementById("enter").value == "") {
+    //        document.getElementById("out").removeAttribute("disabled");
+    //    } else {
+    //        document.getElementById("out").disabled = "disabled";
+    //    }
+    //});
+    //$('#out').bind('input propertychange', function () {
+    //    if (document.getElementById("out").value == "") {
+    //        document.getElementById("enter").removeAttribute("disabled");
+    //    } else {
+    //        document.getElementById("enter").disabled = "disabled";
+    //    }
+    //});
 }
 function isInArray(arr, value) {
     for (var i = 0; i < arr.length; i++) {
@@ -580,18 +580,18 @@ function save() {
         window.alert("射线类型没有选择");
         return false;
     }
-    if (document.getElementById("left").value == "" && document.getElementById("right").value == "") {
-        window.alert("请填写移床参数");
-        return false;
-    }
-    if (document.getElementById("enter").value == "" && document.getElementById("out").value == "") {
-        window.alert("请填写移床参数");
-        return false;
-    }
-    if (document.getElementById("rise").value == "" && document.getElementById("drop").value == "") {
-        window.alert("请填写移床参数");
-        return false;
-    }
+    //if (document.getElementById("left").value == "" && document.getElementById("right").value == "") {
+    //    window.alert("请填写移床参数");
+    //    return false;
+    //}
+    //if (document.getElementById("enter").value == "" && document.getElementById("out").value == "") {
+    //    window.alert("请填写移床参数");
+    //    return false;
+    //}
+    //if (document.getElementById("rise").value == "" && document.getElementById("drop").value == "") {
+    //    window.alert("请填写移床参数");
+    //    return false;
+    //}
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
@@ -627,28 +627,28 @@ function remove() {
     document.getElementById("PlanSystem").removeAttribute("disabled");
     document.getElementById("Raytype").removeAttribute("disabled");
     document.getElementById("technology").removeAttribute("disabled");
-    document.getElementById("left").removeAttribute("disabled");
-    document.getElementById("right").removeAttribute("disabled");
-    document.getElementById("rise").removeAttribute("disabled");
-    document.getElementById("drop").removeAttribute("disabled");
-    document.getElementById("enter").removeAttribute("disabled");
-    document.getElementById("out").removeAttribute("disabled");
-    if (document.getElementById("left").value == "" && document.getElementById("right").value != "") {
-        document.getElementById("left").disabled = "disabled";
-    }
-    if (document.getElementById("right").value == "" && document.getElementById("left").value != "") {
-        document.getElementById("right").disabled = "disabled";
-    }
-    if (document.getElementById("rise").value == "" && document.getElementById("drop").value != "") {
-        document.getElementById("rise").disabled = "disabled";
-    }
-    if (document.getElementById("drop").value == "" && document.getElementById("rise").value != "") {
-        document.getElementById("drop").disabled = "disabled";
-    }
-    if (document.getElementById("enter").value == "" && document.getElementById("out").value != "") {
-        document.getElementById("enter").disabled = "disabled";
-    }
-    if (document.getElementById("out").value == "" && document.getElementById("enter").value != "") {
-        document.getElementById("out").disabled = "disabled";
-    }
+    //document.getElementById("left").removeAttribute("disabled");
+    //document.getElementById("right").removeAttribute("disabled");
+    //document.getElementById("rise").removeAttribute("disabled");
+    //document.getElementById("drop").removeAttribute("disabled");
+    //document.getElementById("enter").removeAttribute("disabled");
+    //document.getElementById("out").removeAttribute("disabled");
+    //if (document.getElementById("left").value == "" && document.getElementById("right").value != "") {
+    //    document.getElementById("left").disabled = "disabled";
+    //}
+    //if (document.getElementById("right").value == "" && document.getElementById("left").value != "") {
+    //    document.getElementById("right").disabled = "disabled";
+    //}
+    //if (document.getElementById("rise").value == "" && document.getElementById("drop").value != "") {
+    //    document.getElementById("rise").disabled = "disabled";
+    //}
+    //if (document.getElementById("drop").value == "" && document.getElementById("rise").value != "") {
+    //    document.getElementById("drop").disabled = "disabled";
+    //}
+    //if (document.getElementById("enter").value == "" && document.getElementById("out").value != "") {
+    //    document.getElementById("enter").disabled = "disabled";
+    //}
+    //if (document.getElementById("out").value == "" && document.getElementById("enter").value != "") {
+    //    document.getElementById("out").disabled = "disabled";
+    //}
 }

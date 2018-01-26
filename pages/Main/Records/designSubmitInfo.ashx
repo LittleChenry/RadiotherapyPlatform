@@ -112,43 +112,43 @@ public class designSubmitInfo : IHttpHandler {
                  sqlOperation2.AddParameterWithValue("@Raytype_ID", reader["Raytype_ID"].ToString());
                  raytypename = sqlOperation2.ExecuteScalar(sql);
              }
-             string left = "";
-             string right = "";
-             string rise = "";
-             string drop = "";
-             string enter = "";
-             string out1 = "";
-             if (!(reader["parameters"] is DBNull))
-             {
-                 string parameters = reader["parameters"].ToString();
-                 string a1 = parameters.Split(new char[1] { ';' })[0];
-                 string a2 = parameters.Split(new char[1] { ';' })[1];
-                 string a3 = parameters.Split(new char[1] { ';' })[2];
-                 if (Convert.ToDouble(a1) >=0 && a1!="-0")
-                 {
-                     left = a1;
-                 }
-                 else
-                 {
-                     right = a1.Substring(1);
-                 }
-                 if (Convert.ToDouble(a2) >= 0 && a2 != "-0")
-                 {
-                     rise = a2;
-                 }
-                 else
-                 {
-                     drop = a2.Substring(1);
-                 }
-                 if (Convert.ToDouble(a3) >= 0 && a3 != "-0")
-                 {
-                     enter = a3;
-                 }
-                 else
-                 {
-                     out1 = a3.Substring(1);
-                 }
-             }
+             //string left = "";
+             //string right = "";
+             //string rise = "";
+             //string drop = "";
+             //string enter = "";
+             //string out1 = "";
+             //if (!(reader["parameters"] is DBNull))
+             //{
+             //    string parameters = reader["parameters"].ToString();
+             //    string a1 = parameters.Split(new char[1] { ';' })[0];
+             //    string a2 = parameters.Split(new char[1] { ';' })[1];
+             //    string a3 = parameters.Split(new char[1] { ';' })[2];
+             //    if (Convert.ToDouble(a1) >=0 && a1!="-0")
+             //    {
+             //        left = a1;
+             //    }
+             //    else
+             //    {
+             //        right = a1.Substring(1);
+             //    }
+             //    if (Convert.ToDouble(a2) >= 0 && a2 != "-0")
+             //    {
+             //        rise = a2;
+             //    }
+             //    else
+             //    {
+             //        drop = a2.Substring(1);
+             //    }
+             //    if (Convert.ToDouble(a3) >= 0 && a3 != "-0")
+             //    {
+             //        enter = a3;
+             //    }
+             //    else
+             //    {
+             //        out1 = a3.Substring(1);
+             //    }
+             //}
             string Do = reader["DosagePriority"].ToString();
             string Priority = Do.Split(new char[1] {'&'})[0];
             string Dosage = Do.Split(new char[1] { '&' })[1];
@@ -157,7 +157,7 @@ public class designSubmitInfo : IHttpHandler {
                   "\",\"technology\":\"" + reader["tname"].ToString() + "\",\"equipment\":\"" + reader["eqname"].ToString() + "\",\"PlanSystem\":\"" + reader["PlanSystem_ID"].ToString() +
                   "\",\"RadiotherapyHistory\":\"" + reader["RadiotherapyHistory"].ToString() + "\",\"DosagePriority\":\"" + Priority + "\",\"Dosage\":\"" + Dosage + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() +
                   "\",\"Raytype\":\"" + reader["Raytype_ID"].ToString() + "\",\"equipmentid\":\"" + reader["Equipment_ID"].ToString() + "\",\"technologyid\":\"" + reader["techid"].ToString() +
-                   "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"Raytypename\":\"" + raytypename + "\",\"left\":\"" + left + "\",\"right\":\"" + right + "\",\"rise\":\"" + rise + "\",\"drop\":\"" + drop + "\",\"enter\":\"" + enter + "\",\"out\":\"" + out1 +
+                   "\",\"Treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"Raytypename\":\"" + raytypename + //"\",\"left\":\"" + left + "\",\"right\":\"" + right + "\",\"rise\":\"" + rise + "\",\"drop\":\"" + drop + "\",\"enter\":\"" + enter + "\",\"out\":\"" + out1 +
                    "\",\"PlanSystemname\":\"" + planname + "\",\"designID\":\"" + reader["designid"].ToString() + "\",\"userID\":\"" + reader["Submit_User_ID"].ToString() + "\"}");
 
             if (i < count)

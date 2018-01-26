@@ -156,7 +156,7 @@
                                 <select id="technology" name="technology" class="form-item" disabled="disabled"></select>
                             </div>                          
                         </div>
-                        <div class="single-row">
+                        <%--<div class="single-row">
                             <div class="col-xs-6">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">移床参数：</span>
                             </div>
@@ -208,7 +208,7 @@
                                     <span class="input-group-addon">cm</span>
                                 </div>
                             </div>
-                        </div>
+                        </div>--%>
                     </div>
                 </div> 
                 
