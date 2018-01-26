@@ -93,41 +93,41 @@ public class designSubmitRecord : IHttpHandler {
                 DosagePriority = DosagePriority + type + "," + dv + ",<," + number + "," + outt + "," + prv + "," + num + ",<," + numbers + "," + pp + ";";
                 j++;
             }
-            string lr = "";
-            string rd = "";
-            string eo = "";
-            if (context.Request.Form["left"]==""||context.Request.Form["left"]==null)
-            {
-                lr = "-"+context.Request.Form["right"];
-            }
-            else
-            {
-                lr = context.Request.Form["left"];
-            }
-            if (context.Request.Form["rise"] == "" || context.Request.Form["rise"] == null)
-            {
-                rd = "-" + context.Request.Form["drop"];
-            }
-            else
-            {
-                rd = context.Request.Form["rise"];
-            }
-            if (context.Request.Form["enter"] == "" || context.Request.Form["enter"] == null)
-            {
-                eo = "-" + context.Request.Form["out"];
-            }
-            else
-            {
-                eo = context.Request.Form["enter"];
-            }            
-            string para = lr+";"+rd+";"+eo;
-            string strSqlCommand = "UPDATE  design  SET Technology_ID=@Technology_ID,PlanSystem_ID=@PlanSystem_ID,DosagePriority=@DosagePriority,Equipment_ID=@Equipment_ID,Raytype_ID=@Raytype_ID,parameters=@parameters,SubmitTime=@datetime,Submit_User_ID=@userid where design.ID=@ctID";
+            //string lr = "";
+            //string rd = "";
+            //string eo = "";
+            //if (context.Request.Form["left"]==""||context.Request.Form["left"]==null)
+            //{
+            //    lr = "-"+context.Request.Form["right"];
+            //}
+            //else
+            //{
+            //    lr = context.Request.Form["left"];
+            //}
+            //if (context.Request.Form["rise"] == "" || context.Request.Form["rise"] == null)
+            //{
+            //    rd = "-" + context.Request.Form["drop"];
+            //}
+            //else
+            //{
+            //    rd = context.Request.Form["rise"];
+            //}
+            //if (context.Request.Form["enter"] == "" || context.Request.Form["enter"] == null)
+            //{
+            //    eo = "-" + context.Request.Form["out"];
+            //}
+            //else
+            //{
+            //    eo = context.Request.Form["enter"];
+            //}            
+            //string para = lr+";"+rd+";"+eo;
+            string strSqlCommand = "UPDATE  design  SET Technology_ID=@Technology_ID,PlanSystem_ID=@PlanSystem_ID,DosagePriority=@DosagePriority,Equipment_ID=@Equipment_ID,Raytype_ID=@Raytype_ID,SubmitTime=@datetime,Submit_User_ID=@userid where design.ID=@ctID";
             //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@PlanSystem_ID", Convert.ToInt32(context.Request.Form["PlanSystem"]));
             sqlOperation.AddParameterWithValue("@Equipment_ID", Convert.ToInt32(context.Request.Form["equipment"]));
             sqlOperation.AddParameterWithValue("@Raytype_ID", Convert.ToInt32(context.Request.Form["Raytype"]));
             sqlOperation.AddParameterWithValue("@Technology_ID", Convert.ToInt32(context.Request.Form["technology"]));
-            sqlOperation.AddParameterWithValue("@parameters", para);
+            //sqlOperation.AddParameterWithValue("@parameters", para);
             sqlOperation.AddParameterWithValue("@datetime", datetime);
             sqlOperation.AddParameterWithValue("@DosagePriority", DosagePriority);
             sqlOperation.AddParameterWithValue("@ctID", designID);
