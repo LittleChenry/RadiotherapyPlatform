@@ -133,6 +133,31 @@ public class InsertAllappointment : IHttpHandler {
 
               }
               reader.Close();
+              StringBuilder backstring = new StringBuilder("{\"backinfo\":[");
+              string str = string.Join(",", (string[])treatmentrecordarray.ToArray(typeof(string)));
+              string selectcomandforback = "select treatment.Treatmentdescribe as treat,childdesign.DesignName as designname,appointment_accelerate.Date as appointdate,appointment_accelerate.Begin as begintime,appointment_accelerate.End as endtime from treatmentrecord,appointment_accelerate,childdesign,treatment where childdesign.Treatment_ID=treatment.ID and treatmentrecord.ChildDesign_ID=childdesign.ID and treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.ID in (" + str + ") ORDER BY Date asc,Begin asc";
+              reader = sqlOperation.ExecuteReader(selectcomandforback);
+              string tempdate="";
+              while (reader.Read())
+              {
+                  tempdate = reader["appointdate"].ToString();
+                  backstring.Append("{"
+              
+                  
+                  
+                  
+                  
+                  
+             }
+              
+              
+              
+              
+              
+              
+              
+              
+              
               return "success";
           }
           if (type == "1")

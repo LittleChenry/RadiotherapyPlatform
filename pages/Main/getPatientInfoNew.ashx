@@ -155,64 +155,23 @@ public class getPatientInfoNew : IHttpHandler {
                 temp++;
             }
         }
-        info.Append("],\"machineinfo\":[");
-        string sqlCommand = "SELECT * FROM equipment WHERE ID=@id";
-        sqlOperation.AddParameterWithValue("@id", equipid);
+        info.Append("],\"doctortime\":[");
+        string countnum = "select count(*) FROM firstacctime";
+        int number=int.Parse(sqlOperation.ExecuteScalar(countnum));
+        int tempcoun=1;
+        string sqlCommand = "SELECT begintime,endtime FROM firstacctime";
         reader = sqlOperation.ExecuteReader(sqlCommand);
-        string Oncetime, Ambeg, AmEnd, PMBeg, PMEnd, treatmentItem;
-        if (reader.Read())
+        while (reader.Read())
         {
-            if (reader["State"].ToString() == "1")
+            info.Append("{\"begin\":\""+reader["begintime"].ToString()+"\",\"end\":\""+reader["endtime"].ToString()+"\"}");
+            if (tempcoun < number)
             {
-                Oncetime = reader["Timelength"].ToString();
-                Ambeg = reader["BeginTimeAM"].ToString();
-                AmEnd = reader["EndTimeAM"].ToString();
-                PMBeg = reader["BegTimePM"].ToString();
-                PMEnd = reader["EndTimeTPM"].ToString();
-                treatmentItem = reader["TreatmentItem"].ToString();
-                int intAMBeg = int.Parse(Ambeg);
-                int intAMEnd = int.Parse(AmEnd);
-                int intPMBeg = int.Parse(PMBeg);
-                int intPMEnd = int.Parse(PMEnd);
-                int AMTime = intAMEnd - intAMBeg;
-                int PMTime = intPMEnd - intPMBeg;
-                int AMFrequency = AMTime / int.Parse(Oncetime);
-                int PMFrequency = PMTime / int.Parse(Oncetime);
-                for (int j = 0; j < AMFrequency; j++)
-                {
-                    int begin = intAMBeg + (j * int.Parse(Oncetime));
-                    int end = begin + int.Parse(Oncetime);
-                    int time = int.Parse(begin.ToString());
-                    int hour = time / 60;
-                    int minute = time - (time / 60) * 60;
-                    info.Append("{\"Begin\":\"" + begin + "\",\"End\":\"" + end + "\"}");
-                    if (j < AMFrequency - 1)
-                    {
-                        info.Append(",");
-                    }
-                    if (j == AMFrequency - 1 && PMFrequency > 0)
-                    {
-                        info.Append(",");
-                    }
-
-                }
-                for (int k = 0; k < PMFrequency; k++)
-                {
-                    int Pbegin = intPMBeg + (k * int.Parse(Oncetime));
-                    int PEnd = Pbegin + int.Parse(Oncetime);
-                    int time = int.Parse(Pbegin.ToString());
-                    int hour = time / 60;
-                    int minute = time - (time / 60) * 60;
-                    info.Append("{\"Begin\":\"" + Pbegin + "\",\"End\":\"" + PEnd + "\"}");
-                    if (k < PMFrequency - 1)
-                    {
-                        info.Append(",");
-                    }
-                }
-
+                info.Append(",");
             }
-            reader.Close();
+            tempcoun++;
+            
         }
+        reader.Close();
         info.Append("],\"basicinfo\":");
         string basic= "SELECT * FROM equipment WHERE ID=@id";
         sqlOperation.AddParameterWithValue("@id", equipid);
@@ -220,6 +179,10 @@ public class getPatientInfoNew : IHttpHandler {
         if (reader.Read())
         {
             info.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"Timelength\":\"" + reader["Timelength"].ToString() + "\",\"BeginTimeAM\":\"" + reader["BeginTimeAM"].ToString() + "\",\"EndTimeAM\":\"" + reader["EndTimeAM"].ToString() + "\",\"BegTimePM\":\"" + reader["BegTimePM"].ToString() + "\",\"EndTimeTPM\":\"" + reader["EndTimeTPM"].ToString() + "\"}");
+        }
+        else
+        {
+            info.Append("\"\"");
         }
         info.Append("}");
         return info.ToString();

@@ -220,6 +220,7 @@ function drawDateTable() {
 
 function drawTimeTable(basicinfo) {
 	var table = $("#AppointTime");
+	table.html("");
 	var tbody = '<tbody>';
 	var TimePoint = new Array(4);
 	TimePoint[0] = parseInt(basicinfo.BeginTimeAM);
@@ -319,7 +320,8 @@ function RecordAddClick() {
 			    appointrange += ']';
 			    var appointstr = '{"begindate":"'+ begindate +'","patientid":"'+ patientid +'","chidgroup":'+ chidgroup +',"userid":"'+ userid +'","equipmentid":"'+ equipmentid +'","appointrange":'+ appointrange +'}';
 			    var appointdata = {
-			    	data:appointstr
+			    	data:appointstr,
+			    	type:"0"
 			    };
 			    var postURL = '../../pages/Main/InsertAllappointment.ashx';
 			    var returnData = postData(postURL, appointdata, false);
@@ -375,6 +377,7 @@ function TimeAddClick(appointments) {
 		}
 	});
 	table.find("td").attr("class", "");
+	table.find("td").unbind("click");
 	for (var i = 0; i < appointments.length; i++) {
 		if (appointments[i].Patient_ID != patientid) {
 			var timetdid = appointments[i].Begin;
