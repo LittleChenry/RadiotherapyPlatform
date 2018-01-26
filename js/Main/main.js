@@ -4,7 +4,7 @@ var functions = new Array();
 $(document).ready(function () {
     adjustPage();
     var session = getSession();
-    var sortPatient = RolesToPatients(session);
+    RolesToPatients(session);
     adjustTable();
     functions = session.progress.split(" ");
 
@@ -16,10 +16,8 @@ $(document).ready(function () {
         $('#save').attr("disabled", "disabled");
         $('#saveTemplate-list').attr("disabled", "disabled");
         var session = getSession();
-        RolesToPatients();
-        if (session.role != "模拟技师" && session.role != "治疗技师") {
-            adjustTable();
-        }
+        RolesToPatients(session);
+        adjustTable();
         Recover();
     });
 

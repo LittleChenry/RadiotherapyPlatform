@@ -220,6 +220,7 @@ function drawDateTable() {
 
 function drawTimeTable(basicinfo) {
 	var table = $("#AppointTime");
+	table.html("");
 	var tbody = '<tbody>';
 	var TimePoint = new Array(4);
 	TimePoint[0] = parseInt(basicinfo.BeginTimeAM);
@@ -376,6 +377,7 @@ function TimeAddClick(appointments) {
 		}
 	});
 	table.find("td").attr("class", "");
+	table.find("td").unbind("click");
 	for (var i = 0; i < appointments.length; i++) {
 		if (appointments[i].Patient_ID != patientid) {
 			var timetdid = appointments[i].Begin;

@@ -353,10 +353,10 @@
                                     <div id="buttonArea" class="col-md-12" style="display:none;" >
                                         <div class='col-md-3'>
                                             <div class="col-sm-8" style="padding-right:0px;">
-                                                 <input class="form-item form-control" id="dates" name="dates" type="text"  placeholder="选择日期" style="height:34px;" AUTOCOMPLETE="OFF"/>
+                                                 <input class="form-item form-control" id="dates" name="dates" type="text"  placeholder="选择日期" style="height:30px;""/>
                                             </div>
                                             <div class="col-sm-4" style="padding-left:0px;">
-                                                <button id="sureDate" style="height:34px;" class="time-btn selected-btn">确定</button>
+                                                <button id="sureDate" class="time-btn selected-btn">确定</button>
                                             </div>
                                            
                                         </div>
