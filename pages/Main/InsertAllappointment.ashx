@@ -42,8 +42,8 @@ public class InsertAllappointment : IHttpHandler {
           string type=context.Request["type"];
           if (type == "0")
           {
-              string getstring = context.Request["data"];
-              //string getstring = "{\"begindate\": \"2018-1-29\",\"patientid\": \"44\",\"chidgroup\": [1,2,3],\"userid\": \"9\",\"equipmentid\": \"24\",\"appointrange\": [{\"begin\": \"360\",\"end\": \"370\"}, {\"begin\": \"1440\",\"end\": \"1450\"}]}";
+              //string getstring = context.Request["data"];
+              string getstring = "{\"begindate\": \"2018-1-29\",\"patientid\": \"44\",\"chidgroup\": [1,2,3],\"userid\": \"9\",\"equipmentid\": \"24\",\"appointrange\": [{\"begin\": \"360\",\"end\": \"370\"}, {\"begin\": \"1440\",\"end\": \"1450\"}]}";
               JObject getarray = JObject.Parse(getstring);
               string begindate = getarray["begindate"].ToString();
               string patientid = getarray["patientid"].ToString();
@@ -138,28 +138,51 @@ public class InsertAllappointment : IHttpHandler {
               string selectcomandforback = "select treatment.Treatmentdescribe as treat,childdesign.DesignName as designname,appointment_accelerate.Date as appointdate,appointment_accelerate.Begin as begintime,appointment_accelerate.End as endtime from treatmentrecord,appointment_accelerate,childdesign,treatment where childdesign.Treatment_ID=treatment.ID and treatmentrecord.ChildDesign_ID=childdesign.ID and treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.ID in (" + str + ") ORDER BY Date asc,Begin asc";
               reader = sqlOperation.ExecuteReader(selectcomandforback);
               string tempdate="";
+              string begintemp="";
+              int kou = 0;
+              int ku = 0;
               while (reader.Read())
               {
+                  if (tempdate != reader["appointdate"].ToString() || begintemp != reader["begintime"].ToString())
+                  {
+                      ku = 0;
+                      if (kou == 0)
+                      {
+                          backstring.Append("{\"date\":\"" + reader["appointdate"].ToString() + "\",\"begin\":\"" + reader["begintime"].ToString() + "\",\"end\":\"" + reader["endtime"].ToString() + "\",\"chidinfogroup\":[");
+                      }
+                      else
+                      {
+                          backstring.Append("]},");
+                          backstring.Append("{\"date\":\"" + reader["appointdate"].ToString() + "\",\"begin\":\"" + reader["begintime"].ToString() + "\",\"end\":\"" + reader["endtime"].ToString() + "\",\"chidinfogroup\":[");
+                      }
+
+                      backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\"}");
+                      ku++;
+                  }
+                  else
+                  {
+                      if (ku == 0)
+                      {
+                          backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\"}");
+                      }
+                      else
+                      {
+                          backstring.Append(",");
+                          backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\"}");
+                          
+                      }
+                      ku++;
+                  }
+                  kou++;
                   tempdate = reader["appointdate"].ToString();
-                  backstring.Append("{"
-              
-                  
-                  
-                  
-                  
-                  
+                  begintemp = reader["begintime"].ToString();
              }
+            
               
-              
-              
-              
-              
-              
-              
-              
-              
-              return "success";
+              backstring.Append("]}]}");
+              return backstring.ToString();
           }
+      
           if (type == "1")
           {
 
