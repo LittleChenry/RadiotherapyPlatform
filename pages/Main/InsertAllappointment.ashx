@@ -42,8 +42,8 @@ public class InsertAllappointment : IHttpHandler {
           string type=context.Request["type"];
           if (type == "0")
           {
-              //string getstring = context.Request["data"];
-              string getstring = "{\"begindate\": \"2018-1-29\",\"patientid\": \"44\",\"chidgroup\": [1,2,3],\"userid\": \"9\",\"equipmentid\": \"24\",\"appointrange\": [{\"begin\": \"360\",\"end\": \"370\"}, {\"begin\": \"1440\",\"end\": \"1450\"}]}";
+              string getstring = context.Request["data"];
+              //string getstring = "{\"begindate\": \"2018-1-29\",\"patientid\": \"44\",\"chidgroup\": [1,2,3],\"userid\": \"9\",\"equipmentid\": \"24\",\"appointrange\": [{\"begin\": \"360\",\"end\": \"370\"}, {\"begin\": \"1440\",\"end\": \"1450\"}]}";
               JObject getarray = JObject.Parse(getstring);
               string begindate = getarray["begindate"].ToString();
               string patientid = getarray["patientid"].ToString();
