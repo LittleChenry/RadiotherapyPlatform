@@ -35,29 +35,35 @@ public class getPatientInfoNew : IHttpHandler {
     private string getpatientinfo(HttpContext context)
     {
         string equipid = context.Request["equipid"];
-        string command = "select Name from equipment where ID=@equipid";
+        string command = "select equipmenttype.Type as equiptype from equipment,equipmenttype where equipment.ID=@equipid and equipment.EquipmentType=equipmenttype.ID";
         sqlOperation.AddParameterWithValue("@equipid", equipid);
-        string name = sqlOperation.ExecuteScalar(command);
-        string equipment = "";
-        if (name == "Precise加速器")
-        {
-            equipment = "2964";
-        }
-        else
-        {
-            equipment = "1650";
-        }
+        string equiptype = sqlOperation.ExecuteScalar(command);
+        string equipment = System.Text.RegularExpressions.Regex.Replace(equiptype, @"[^0-9]+", "");
 
-        string patientcommand = "select Distinct(treatment.Patient_ID) as patientid from fieldinfomation,childdesign,treatment where fieldinfomation.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID and (childdesign.state=2 or childdesign.state=3) and fieldinfomation.equipment=@equip";
-        sqlOperation.AddParameterWithValue("@equip", equipment);
+
+        string patientcommand = "select Distinct(treatment.Patient_ID) as patientid from fieldinfomation,childdesign,treatment where fieldinfomation.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID and childdesign.state=3 and fieldinfomation.equipment like '%" + equipment+"%'";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(patientcommand);
         ArrayList patientList = new ArrayList();
         while (reader.Read())
         {
-            Boolean flag = false;
-            string designcommand = "select childdesign.ID as chid,DesignName,childdesign.Splitway_ID as splitway,childdesign.Totalnumber as total,childdesign.state as childstate,Treatmentdescribe,childdesign.Treatment_ID as treatid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state=3";
+            string selectcommand = "select Distinct(treatment.ID) as treatid from fieldinfomation,childdesign,treatment where fieldinfomation.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID and childdesign.state=3 and fieldinfomation.equipment like'%" + equipment+"%' and treatment.Patient_ID=@pid";
             sqlOperation1.AddParameterWithValue("@pid", reader["patientid"].ToString());
-            MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(designcommand);
+            MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(selectcommand);
+            ArrayList treatmentidlist = new ArrayList();
+            while (reader1.Read())
+            {
+                treatmentidlist.Add(reader1["treatid"].ToString());
+            }
+            reader1.Close();
+            string str = string.Join(",", (string[])treatmentidlist.ToArray(typeof(string)));
+            if (str == "")
+            {
+                continue;
+            }
+            Boolean flag = false;
+            string designcommand = "select childdesign.ID as chid,DesignName,childdesign.Splitway_ID as splitway,childdesign.Totalnumber as total,childdesign.state as childstate,Treatmentdescribe,childdesign.Treatment_ID as treatid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state=3 and treatment.ID in (" + str+")";
+            sqlOperation1.AddParameterWithValue("@pid", reader["patientid"].ToString());
+            reader1 = sqlOperation1.ExecuteReader(designcommand);
             while (reader1.Read())
             {
                 int count = 0;

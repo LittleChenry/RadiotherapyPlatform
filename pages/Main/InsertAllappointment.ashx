@@ -12,12 +12,6 @@ public class InsertAllappointment : IHttpHandler {
     DataLayer sqlOperation1 = new DataLayer("sqlStr");
     ArrayList appointarray = new ArrayList();
     ArrayList treatmentrecordarray = new ArrayList();
-    ArrayList resetappointarray = new ArrayList();
-    ArrayList resetbeginarray = new ArrayList();
-    ArrayList resetendarray = new ArrayList();
-    ArrayList resetpidarray = new ArrayList();
-    ArrayList resettreatmentIDarray = new ArrayList();
-    ArrayList resettreatmentAPParray = new ArrayList();
     static Object locker = new Object();
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
@@ -36,732 +30,537 @@ public class InsertAllappointment : IHttpHandler {
             return false;
         }
     }
+
     private string inesertallapoint(HttpContext context)
-    {     lock (locker)
-        {
-          string type=context.Request["type"];
-          if (type == "0")
-          {
-              string getstring = context.Request["data"];
-              //string getstring = "{\"begindate\": \"2018-1-29\",\"patientid\": \"44\",\"chidgroup\": [1,2,3],\"userid\": \"9\",\"equipmentid\": \"24\",\"appointrange\": [{\"begin\": \"360\",\"end\": \"370\"}, {\"begin\": \"1440\",\"end\": \"1450\"}]}";
-              JObject getarray = JObject.Parse(getstring);
-              string begindate = getarray["begindate"].ToString();
-              string patientid = getarray["patientid"].ToString();
-              string userid = getarray["userid"].ToString();
-              string equipmentid = getarray["equipmentid"].ToString();
-              JArray chidarray = (JArray)JsonConvert.DeserializeObject(getarray["chidgroup"].ToString());
-
-              string designcommand = "select childdesign.ID as chid,DesignName,childdesign.Splitway_ID as splitway,childdesign.Totalnumber as total,childdesign.state as childstate,Treatmentdescribe,childdesign.Treatment_ID as treatid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state=3";
-              sqlOperation.AddParameterWithValue("@pid", patientid);
-              MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(designcommand);
-              while (reader.Read())
-              {
-                  if (!Containschid(chidarray, reader["chid"].ToString()))
-                  {
-                      continue;
-                  }
-                  int Interal = 0, Times = 0, rest = 0;
-                  string splitcommand = "select Ways,Interal,Times from splitway where ID=@split";
-                  sqlOperation1.AddParameterWithValue("@split", reader["splitway"].ToString());
-                  MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(splitcommand);
-                  if (reader1.Read())
-                  {
-                      Interal = int.Parse(reader1["Interal"].ToString());
-                      Times = int.Parse(reader1["Times"].ToString());
-                  }
-                  reader1.Close();
-                  int count = 0;
-                  int appointid = 0;
-                  string maxdate = "无";
-                  string date = "";
-                  string begin = "";
-                  string sqlcommand2 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin)) order by Date desc,Begin desc";
-                  sqlOperation1.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
-                  sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                  sqlOperation1.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
-                  reader1 = sqlOperation1.ExecuteReader(sqlcommand2);
-                  while (reader1.Read())
-                  {
-                      if (reader1["Treat_User_ID"].ToString() == "")
-                      {
-                          appointid = int.Parse(reader1["Appointment_ID"].ToString());
-                          if (maxdate == "无")
-                          {
-                              maxdate = reader1["Date"].ToString();
-                          }
-
-                      }
-                      count++;
-                  }
-                  reader1.Close();
-                  string sqlcommand = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date<@nowdate) or((Date=@nowdate)and Begin<@nowbegin)) order by Date desc,Begin desc";
-                  reader1 = sqlOperation1.ExecuteReader(sqlcommand);
-                  while (reader1.Read())
-                  {
-                      if (reader1["Treat_User_ID"].ToString() != "")
-                      {
-                          appointid = int.Parse(reader1["Appointment_ID"].ToString());
-                          date = reader1["Date"].ToString();
-                          begin = reader1["Begin"].ToString();
-                          break;
-                      }
-                  }
-                  reader1.Close();
-                  if (appointid != 0)
-                  {
-                      string sqlcommand1 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and (Date<@date or (Date=@date and Begin<=@begin)) order by Date,Begin asc";
-                      sqlOperation1.AddParameterWithValue("@date", date);
-                      sqlOperation1.AddParameterWithValue("@begin", begin);
-                      reader1 = sqlOperation1.ExecuteReader(sqlcommand1);
-                      while (reader1.Read())
-                      {
-                          if (reader1["Treat_User_ID"].ToString() != "")
-                          {
-                              count++;
-                          }
-
-                      }
-                      reader1.Close();
-                  }
-                  rest = int.Parse(reader["total"].ToString()) - count;
-                  string result = begininsert(Interal, Times, rest, begindate, patientid, equipmentid, getarray, userid, reader["chid"].ToString());
-                  if (result == "failure")
-                  {
-                      deleteallappoint(appointarray, treatmentrecordarray, resetappointarray, resetbeginarray, resetendarray, resettreatmentIDarray, resettreatmentAPParray);
-                      return "failure";
-                  }
-
-              }
-              reader.Close();
-              StringBuilder backstring = new StringBuilder("{\"backinfo\":[");
-              string str = string.Join(",", (string[])treatmentrecordarray.ToArray(typeof(string)));
-              string selectcomandforback = "select treatment.Treatmentdescribe as treat,childdesign.DesignName as designname,appointment_accelerate.Date as appointdate,appointment_accelerate.Begin as begintime,appointment_accelerate.End as endtime from treatmentrecord,appointment_accelerate,childdesign,treatment where childdesign.Treatment_ID=treatment.ID and treatmentrecord.ChildDesign_ID=childdesign.ID and treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.ID in (" + str + ") ORDER BY Date asc,Begin asc";
-              reader = sqlOperation.ExecuteReader(selectcomandforback);
-              string tempdate="";
-              string begintemp="";
-              int kou = 0;
-              int ku = 0;
-              while (reader.Read())
-              {
-                  if (tempdate != reader["appointdate"].ToString() || begintemp != reader["begintime"].ToString())
-                  {
-                      ku = 0;
-                      if (kou == 0)
-                      {
-                          backstring.Append("{\"date\":\"" + reader["appointdate"].ToString() + "\",\"begin\":\"" + reader["begintime"].ToString() + "\",\"end\":\"" + reader["endtime"].ToString() + "\",\"chidinfogroup\":[");
-                      }
-                      else
-                      {
-                          backstring.Append("]},");
-                          backstring.Append("{\"date\":\"" + reader["appointdate"].ToString() + "\",\"begin\":\"" + reader["begintime"].ToString() + "\",\"end\":\"" + reader["endtime"].ToString() + "\",\"chidinfogroup\":[");
-                      }
-
-                      backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\"}");
-                      ku++;
-                  }
-                  else
-                  {
-                      if (ku == 0)
-                      {
-                          backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\"}");
-                      }
-                      else
-                      {
-                          backstring.Append(",");
-                          backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\"}");
-                          
-                      }
-                      ku++;
-                  }
-                  kou++;
-                  tempdate = reader["appointdate"].ToString();
-                  begintemp = reader["begintime"].ToString();
-             }
-            
-              
-              backstring.Append("]}]}");
-              return backstring.ToString();
-          }
-      
-          if (type == "1")
-          {
-
-              string chid = context.Request["chid"];
-              string date = context.Request["date"];
-              string begin = context.Request["begin"];
-              string end = context.Request["end"];
-              string patientID=context.Request["pid"];
-              string equipid = context.Request["equip"];
-              string userid = context.Request["userid"]; 
-              string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin))";
-              sqlOperation.AddParameterWithValue("@chid", chid);
-              sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
-              sqlOperation.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
-              MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(selectcommand);
-              ArrayList arrayforapp = new ArrayList();
-              ArrayList arrayforapp2 = new ArrayList();
-              ArrayList treatmentarray = new ArrayList();
-              while (reader.Read())
-              {
-                  arrayforapp.Add(reader["appointid"].ToString());
-                  treatmentarray.Add(reader["treatmentrecordid"].ToString());
-              }
-              reader.Close();
-              for (int i = 0; i < arrayforapp.Count; i++)
-              {
-                  string isexists = "select count(*) from treatmentrecord where ChildDesign_ID<>@chid and Appointment_ID=@appoint";
-                  sqlOperation.AddParameterWithValue("@chid", chid);
-                  sqlOperation.AddParameterWithValue("@appoint", arrayforapp[i]);
-                  int count = int.Parse(sqlOperation.ExecuteScalar(isexists));
-                  if (count == 0)
-                  {
-                      arrayforapp2.Add(arrayforapp[i]);
-                  }
-              }
-              for (int i = 0; i < arrayforapp2.Count; i++)
-              {
-                  string deletecommand = "delete from appointment_accelerate where ID=@appoint";
-                  sqlOperation.AddParameterWithValue("@appoint", arrayforapp2[i]);
-                  sqlOperation.ExecuteNonQuery(deletecommand);
-              }
-              for (int i = 0; i < treatmentarray.Count; i++)
-              {
-                  string deletecommand2 = "delete from treatmentrecord where ID=@tretmentid";
-                  sqlOperation.AddParameterWithValue("@tretmentid", treatmentarray[i]);
-                  sqlOperation.ExecuteNonQuery(deletecommand2);
-              }
-              string judgepatientcommand = "select ID from appointment_accelerate where Date=@appdate and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin)) and Equipment_ID=@equipid and Patient_ID=@pid";
-              sqlOperation1.AddParameterWithValue("@appdate", date);
-              sqlOperation1.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
-              sqlOperation1.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
-              sqlOperation1.AddParameterWithValue("@pid", patientID);
-              sqlOperation1.AddParameterWithValue("@equipid", equipid);
-              reader = sqlOperation1.ExecuteReader(judgepatientcommand);
-              if (reader.Read())
-              {
-                  string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,1,@chid);select @@IDENTITY";
-                  sqlOperation1.AddParameterWithValue("@appoint", reader["ID"]);
-                  sqlOperation1.AddParameterWithValue("@applyuser", userid);
-                  sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                  sqlOperation1.AddParameterWithValue("@chid", chid);
-                  string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-              }
-              else
-              {
-                  string emptyconditioncommand = "select count(*) from appointment_accelerate where Date=@appdate and Begin=@begin and End=@end";
-                  sqlOperation.AddParameterWithValue("@appdate", date);
-                  sqlOperation.AddParameterWithValue("@begin", begin);
-                  sqlOperation.AddParameterWithValue("@end", end);
-                  int counttemp = int.Parse(sqlOperation.ExecuteScalar(emptyconditioncommand));
-                  if (counttemp == 0)
-                  {
-
-                      string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
-                      sqlOperation.AddParameterWithValue("@task", "加速器");
-                      sqlOperation.AddParameterWithValue("@pid", patientID);
-                      sqlOperation.AddParameterWithValue("@date", date);
-                      sqlOperation.AddParameterWithValue("@equipid", equipid);
-                      sqlOperation.AddParameterWithValue("@begin", begin);
-                      sqlOperation.AddParameterWithValue("@end", end);
-                      string insertid = sqlOperation.ExecuteScalar(insertappoint);
-
-                      string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,1,@chid);select @@IDENTITY";
-                      sqlOperation.AddParameterWithValue("@appoint", insertid);
-                      sqlOperation.AddParameterWithValue("@applyuser", userid);
-                      sqlOperation.AddParameterWithValue("@applytime", DateTime.Now);
-                      sqlOperation.AddParameterWithValue("@chid", chid);
-                      string treatmentrecordid = sqlOperation.ExecuteScalar(insertcommand);
-
-                  }
-                  else
-                  {
-                      return "failure";
-                  }
-
-              }
-              reader.Close();
-              return "success";
-          }
-          return "success";
-        }
-       
-       
-    }
-    private string begininsert(int Interal, int Times, int rest, string begindate, string patientid, string equipmentid, JObject getarray,string userid,string chid)
     {
-        DateTime datefirst = Convert.ToDateTime(begindate);
+        lock (locker)
+        {
+            string type = context.Request["type"];
+            if (type == "0")
+            {
+                //string getstring = context.Request["data"];
+                string getstring = "{\"begindate\": \"2018-1-29\",\"patientid\": \"44\",\"chidgroup\": [1,2,3],\"userid\": \"9\",\"equipmentid\": \"18\",\"appointrange\": [{\"begin\": \"360\",\"end\": \"370\"}, {\"begin\": \"1440\",\"end\": \"1450\"}]}";
+                JObject getarray = JObject.Parse(getstring);
+                string begindate = getarray["begindate"].ToString();
+                string patientid = getarray["patientid"].ToString();
+                string userid = getarray["userid"].ToString();
+                string equipmentid = getarray["equipmentid"].ToString();
+                JArray chidarray = (JArray)JsonConvert.DeserializeObject(getarray["chidgroup"].ToString());
+
+                string designcommand = "select childdesign.ID as chid,DesignName,childdesign.Splitway_ID as splitway,childdesign.Totalnumber as total,childdesign.state as childstate,Treatmentdescribe,childdesign.Treatment_ID as treatid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state=3";
+                sqlOperation.AddParameterWithValue("@pid", patientid);
+                MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(designcommand);
+                while (reader.Read())
+                {
+                    if (!Containschid(chidarray, reader["chid"].ToString()))
+                    {
+                        continue;
+                    }
+                    int Interal = 0, Times = 0, rest = 0;
+                    string splitcommand = "select Ways,Interal,Times from splitway where ID=@split";
+                    sqlOperation1.AddParameterWithValue("@split", reader["splitway"].ToString());
+                    MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(splitcommand);
+                    if (reader1.Read())
+                    {
+                        Interal = int.Parse(reader1["Interal"].ToString());
+                        Times = int.Parse(reader1["Times"].ToString());
+                    }
+                    reader1.Close();
+                    int count = 0;
+                    int appointid = 0;
+                    string maxdate = "无";
+                    string date = "";
+                    string begin = "";
+                    string sqlcommand2 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin)) order by Date desc,Begin desc";
+                    sqlOperation1.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
+                    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                    sqlOperation1.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
+                    reader1 = sqlOperation1.ExecuteReader(sqlcommand2);
+                    while (reader1.Read())
+                    {
+                        if (reader1["Treat_User_ID"].ToString() == "")
+                        {
+                            appointid = int.Parse(reader1["Appointment_ID"].ToString());
+                            if (maxdate == "无")
+                            {
+                                maxdate = reader1["Date"].ToString();
+                            }
+
+                        }
+                        count++;
+                    }
+                    reader1.Close();
+                    string sqlcommand = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((Date<@nowdate) or((Date=@nowdate)and Begin<@nowbegin)) order by Date desc,Begin desc";
+                    reader1 = sqlOperation1.ExecuteReader(sqlcommand);
+                    while (reader1.Read())
+                    {
+                        if (reader1["Treat_User_ID"].ToString() != "")
+                        {
+                            appointid = int.Parse(reader1["Appointment_ID"].ToString());
+                            date = reader1["Date"].ToString();
+                            begin = reader1["Begin"].ToString();
+                            break;
+                        }
+                    }
+                    reader1.Close();
+                    if (appointid != 0)
+                    {
+                        string sqlcommand1 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and (Date<@date or (Date=@date and Begin<=@begin)) order by Date,Begin asc";
+                        sqlOperation1.AddParameterWithValue("@date", date);
+                        sqlOperation1.AddParameterWithValue("@begin", begin);
+                        reader1 = sqlOperation1.ExecuteReader(sqlcommand1);
+                        while (reader1.Read())
+                        {
+                            if (reader1["Treat_User_ID"].ToString() != "")
+                            {
+                                count++;
+                            }
+
+                        }
+                        reader1.Close();
+                    }
+                    rest = int.Parse(reader["total"].ToString()) - count;
+                    string firstdaycommand = "select Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and IsFirst=1 order by Date desc,Begin desc";
+                    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                    reader1 = sqlOperation1.ExecuteReader(firstdaycommand);
+                    string firstday="";
+                    string firstbegin="";
+                    if (reader1.Read())
+                    {
+                        firstday = reader1["Date"].ToString();
+                        firstbegin = reader1["Begin"].ToString();
+                    }
+                    reader1.Close();
+                    string result = begininsert(firstday,firstbegin,Interal,Times,rest,begindate,patientid,equipmentid,getarray,userid,reader["chid"].ToString());
+                    if (result == "failure")
+                    {
+                        deleteallappoint(appointarray, treatmentrecordarray);
+                        return "failure";
+                    }
+
+                }
+                reader.Close();
+                StringBuilder backstring = new StringBuilder("{\"backinfo\":[");
+                string str = string.Join(",", (string[])treatmentrecordarray.ToArray(typeof(string)));
+                string str2 = string.Join(",", (string[])appointarray.ToArray(typeof(string)));
+                if (str != "")
+                {
+                    string selectcomandforback = "select treatment.Treatmentdescribe as treat,childdesign.DesignName as designname,appointment_accelerate.Date as appointdate,appointment_accelerate.Begin as begintime,appointment_accelerate.End as endtime from treatmentrecord,appointment_accelerate,childdesign,treatment where childdesign.Treatment_ID=treatment.ID and treatmentrecord.ChildDesign_ID=childdesign.ID and treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.ID in (" + str + ") ORDER BY Date asc,Begin asc";
+                    reader = sqlOperation.ExecuteReader(selectcomandforback);
+                    string tempdate = "";
+                    string begintemp = "";
+                    int kou = 0;
+                    int ku = 0;
+                    while (reader.Read())
+                    {
+                        if (tempdate != reader["appointdate"].ToString() || begintemp != reader["begintime"].ToString())
+                        {
+                            ku = 0;
+                            if (kou == 0)
+                            {
+                                backstring.Append("{\"date\":\"" + reader["appointdate"].ToString() + "\",\"begin\":\"" + reader["begintime"].ToString() + "\",\"end\":\"" + reader["endtime"].ToString() + "\",\"chidinfogroup\":[");
+                            }
+                            else
+                            {
+                                backstring.Append("]},");
+                                backstring.Append("{\"date\":\"" + reader["appointdate"].ToString() + "\",\"begin\":\"" + reader["begintime"].ToString() + "\",\"end\":\"" + reader["endtime"].ToString() + "\",\"chidinfogroup\":[");
+                            }
+
+                            backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\"}");
+                            ku++;
+                        }
+                        else
+                        {
+                            if (ku == 0)
+                            {
+                                backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\"}");
+                            }
+                            else
+                            {
+                                backstring.Append(",");
+                                backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\"}");
+
+                            }
+                            ku++;
+                        }
+                        kou++;
+                        tempdate = reader["appointdate"].ToString();
+                        begintemp = reader["begintime"].ToString();
+                    }
+                    backstring.Append("]}],\"appointarray\":\"" + str2 + "\",\"treatmentrecordarray\":\"" + str + "\"}");
+                    return backstring.ToString();
+                }
+                else
+                {
+                    backstring.Append("],\"appointarray\":\"" + str2 + "\",\"treatmentrecordarray\":\"" + str + "\"}");
+                    return backstring.ToString();
+
+                }
+
+            }
+
+            if (type == "1")
+            {
+
+                string chid = context.Request["chid"];
+                string date = context.Request["date"];
+                string begin = context.Request["begin"];
+                string end = context.Request["end"];
+                string patientID = context.Request["pid"];
+                string equipid = context.Request["equip"];
+                string userid = context.Request["userid"];
+                string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and Date>@nowdate";
+                sqlOperation.AddParameterWithValue("@chid", chid);
+                sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
+                MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(selectcommand);
+                ArrayList arrayforapp = new ArrayList();
+                ArrayList arrayforapp2 = new ArrayList();
+                ArrayList treatmentarray = new ArrayList();
+                while (reader.Read())
+                {
+                    arrayforapp.Add(reader["appointid"].ToString());
+                    treatmentarray.Add(reader["treatmentrecordid"].ToString());
+                }
+                reader.Close();
+                for (int i = 0; i < arrayforapp.Count; i++)
+                {
+                    string isexists = "select count(*) from treatmentrecord where ChildDesign_ID<>@chid and Appointment_ID=@appoint";
+                    sqlOperation.AddParameterWithValue("@chid", chid);
+                    sqlOperation.AddParameterWithValue("@appoint", arrayforapp[i]);
+                    int count = int.Parse(sqlOperation.ExecuteScalar(isexists));
+                    if (count == 0)
+                    {
+                        arrayforapp2.Add(arrayforapp[i]);
+                    }
+                }
+                for (int i = 0; i < arrayforapp2.Count; i++)
+                {
+                    string deletecommand = "delete from appointment_accelerate where ID=@appoint";
+                    sqlOperation.AddParameterWithValue("@appoint", arrayforapp2[i]);
+                    sqlOperation.ExecuteNonQuery(deletecommand);
+                }
+                for (int i = 0; i < treatmentarray.Count; i++)
+                {
+                    string deletecommand2 = "delete from treatmentrecord where ID=@tretmentid";
+                    sqlOperation.AddParameterWithValue("@tretmentid", treatmentarray[i]);
+                    sqlOperation.ExecuteNonQuery(deletecommand2);
+                }
+                string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                sqlOperation.AddParameterWithValue("@task", "加速器");
+                sqlOperation.AddParameterWithValue("@pid", patientID);
+                sqlOperation.AddParameterWithValue("@date", date);
+                sqlOperation.AddParameterWithValue("@equipid", equipid);
+                sqlOperation.AddParameterWithValue("@begin", begin);
+                sqlOperation.AddParameterWithValue("@end", end);
+                string insertid = sqlOperation.ExecuteScalar(insertappoint);
+
+                string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,1,@chid);select @@IDENTITY";
+                sqlOperation.AddParameterWithValue("@appoint", insertid);
+                sqlOperation.AddParameterWithValue("@applyuser", userid);
+                sqlOperation.AddParameterWithValue("@applytime", DateTime.Now);
+                sqlOperation.AddParameterWithValue("@chid", chid);
+                string treatmentrecordid = sqlOperation.ExecuteScalar(insertcommand);
+                return "success";
+            }
+            if (type == "3")
+            {
+                string appointarray = context.Request["appointarray"];
+                string treatmentrecordarray = context.Request["treatmentrecordarray"];
+                Array a=appointarray.Split(new char[]{','});
+                Array b = treatmentrecordarray.Split(new char[] { ',' });
+                ArrayList appoint = new ArrayList(a);
+                ArrayList treament = new ArrayList(b);
+                deleteallappoint(appoint, treament);
+            }
+            return "success";
+        }
+
+
+    }
+    private string begininsert(string firstday, string firstbegin,int Interal,int Times,int rest,string begindate,string patientid,string equipmentid,JObject getarray,string userid,string chid)
+    {
+        DateTime datefirst;
+        if (rest == 0)
+        {
+            return "success";
+        }
+        if (firstday != "")
+        {
+            DateTime onedatefirst = Convert.ToDateTime(begindate);
+            DateTime otherfirstday = Convert.ToDateTime(firstday);
+            if (DateTime.Compare(onedatefirst, otherfirstday) == 1)
+            {
+                datefirst = onedatefirst;
+
+            }
+            else
+            {
+                datefirst = otherfirstday;
+            }
+        }
+        else
+        {
+             datefirst = Convert.ToDateTime(begindate); ;
+        }
         JArray appointarrange = (JArray)JsonConvert.DeserializeObject(getarray["appointrange"].ToString());
         if (rest == 0)
         {
             return "success";
         }
-        
-        if (Interal == 1)
+        if (Interal >= 1)
         {
             int tempcount = 0;
             while (true)
             {
                 if (datefirst.DayOfWeek.ToString() != "Sunday" && datefirst.DayOfWeek.ToString() != "Saturday")
                 {
-                     ArrayList templist=new ArrayList();
-                     ArrayList beginlist=new ArrayList();
-
-                    string checkcommand = "select ID,Begin from appointment_accelerate where Date=@date and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin)) and Equipment_ID=@equipid and Patient_ID=@pid";
-                    sqlOperation1.AddParameterWithValue("@date",datefirst);
-                    sqlOperation1.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
-                    sqlOperation1.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
-                    sqlOperation1.AddParameterWithValue("@pid", patientid);
+                    int todaytimes = 0;
+                    string checkcommand = "select count(*) from appointment_accelerate,treatmentrecord where treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.IsFirst=1 and treatmentrecord.ChildDesign_ID=@chid and Date=@date and Equipment_ID=@equipid";
+                    sqlOperation1.AddParameterWithValue("@chid", chid);
+                    sqlOperation1.AddParameterWithValue("@date", datefirst);
                     sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
-                    MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(checkcommand);
-                    while (reader1.Read())
+                    int count = int.Parse(sqlOperation1.ExecuteScalar(checkcommand));
+                    todaytimes = count;
+                    if (todaytimes < Times)
                     {
-                        templist.Add(reader1["ID"].ToString());
-                        beginlist.Add(reader1["Begin"].ToString());
-                    }
-                    reader1.Close();
-                    if (templist.Count >= Times)
-                    {
-                        ArrayList unusechidlist = new ArrayList();
-                        for (int i = 0; i < templist.Count; i++)
+                        if (todaytimes == 0)
                         {
-                            string childdesigncount = "select count(*) from treatmentrecord where Treat_User_ID is NULL and Appointment_ID=@aid and ChildDesign_ID=@chid";
-                            sqlOperation1.AddParameterWithValue("@aid", templist[i]);
-                            sqlOperation1.AddParameterWithValue("@chid", chid);
-                            int has = int.Parse(sqlOperation1.ExecuteScalar(childdesigncount));
-                            if (has == 0)
-                            {
-                                unusechidlist.Add(templist[i]);
-                            }
-                        }
-                        if (templist.Count - unusechidlist.Count >= Times)
-                        {
-                            continue;
-                        }
-                        for (int l = 0; l < Times - templist.Count + unusechidlist.Count;l++)
-                        {
-                            string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                            sqlOperation1.AddParameterWithValue("@appoint", unusechidlist[l]);
-                            sqlOperation1.AddParameterWithValue("@applyuser", userid);
-                            sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                            sqlOperation1.AddParameterWithValue("@chid", chid);
-                            string treatmentrecordid=sqlOperation1.ExecuteScalar(insertcommand);
-                            treatmentrecordarray.Add(treatmentrecordid);
-                            tempcount = tempcount + 1;
-                            if (tempcount >= rest)
-                            {
-                                return "success";
-                            }
-                        }
-                     }
-                    else
-                    {
-                        int countfortimes=0;
-                        ArrayList useappoint = new ArrayList();
-                        for (int i = 0; i < appointarrange.Count; i++)
-                        {
-                            string busycommand = "select count(*) from appointment_accelerate where Date=@date and (Patient_ID<>@pid and Patient_ID is not null) and Begin=@begin and Equipment_ID=@equipid";
+                            ArrayList appointidlist = new ArrayList();
+                            ArrayList beginlist = new ArrayList();
+                            string patientcommand = "select ID,Begin from appointment_accelerate where Date=@date and Equipment_ID=@equipid and Patient_ID=@pid";
                             sqlOperation1.AddParameterWithValue("@date", datefirst);
-                            sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
-                            sqlOperation1.AddParameterWithValue("@pid", patientid);
                             sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
-                            int result = int.Parse(sqlOperation1.ExecuteScalar(busycommand));
-                            if (result == 0)
-                            {
-                                string chiddesigncommand = "select count(*) from appointment_accelerate,treatmentrecord where treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.ChildDesign_ID=@chid and Date=@date and Begin=@begin and Equipment_ID=@equipid";
-                                sqlOperation1.AddParameterWithValue("@date", datefirst);
-                                sqlOperation1.AddParameterWithValue("@chid", chid);
-                                sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
-                                sqlOperation1.AddParameterWithValue("@pid", patientid);
-                                sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
-                                int result2 = int.Parse(sqlOperation1.ExecuteScalar(chiddesigncommand));
-                                if (result2 == 0)
-                                {
-                                    useappoint.Add(appointarrange[i]["begin"].ToString());
-                                }
-                                
-                            }
-                        }
-                        if (useappoint.Count < Times)
-                        {
-                            return "failure";
-                        }
-                        for (int i = 0; i < templist.Count; i++)
-                        {
-                            string selectcommand = "select Begin,End,ID,Patient_ID from appointment_accelerate where ID=@id";
-                            sqlOperation1.AddParameterWithValue("@id", templist[i]);
-                            reader1 = sqlOperation1.ExecuteReader(selectcommand);
+                            sqlOperation1.AddParameterWithValue("@pid", patientid);
+                            MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(patientcommand);
                             while (reader1.Read())
                             {
-                                resetappointarray.Add(reader1["ID"].ToString());
-                                resetbeginarray.Add(reader1["Begin"].ToString());
-                                resetendarray.Add(reader1["End"].ToString());
-                                resetpidarray.Add(reader1["Patient_ID"].ToString());
+                                appointidlist.Add(reader1["ID"].ToString());
+                                beginlist.Add(reader1["Begin"].ToString());
+                                
                             }
                             reader1.Close();
-                            string childdesigncount = "select count(*) from treatmentrecord where treat_user_id is null and appointment_id=@aid and childdesign_id=@chid";
-                            sqlOperation1.AddParameterWithValue("@aid", templist[i]);
-                            sqlOperation1.AddParameterWithValue("@chid", chid);
-                            int has = int.Parse(sqlOperation1.ExecuteScalar(childdesigncount));
-                            if (has != 0)
+                            if (appointidlist.Count == 0)
                             {
-                                string isexist = "select ID from appointment_accelerate where Date=@date and Begin=@begin and Equipment_ID=@equipid";
-                                sqlOperation1.AddParameterWithValue("@date", datefirst);
-                                sqlOperation1.AddParameterWithValue("@begin", useappoint[i].ToString());
-                                sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
-                                string result = sqlOperation1.ExecuteScalar(isexist);
-                                if (result == "")
+                                for (int i = 0; i < Times; i++)
                                 {
-                                    string updatecommand = "update appointment_accelerate set Begin=@begin,End=@end where ID=@id";
-                                    sqlOperation1.AddParameterWithValue("@begin", useappoint[i].ToString());
-                                    sqlOperation1.AddParameterWithValue("@end", int.Parse(useappoint[i].ToString()) + 10);
-                                    sqlOperation1.AddParameterWithValue("@id", templist[i]);
-                                    sqlOperation1.ExecuteNonQuery(updatecommand);
-                                    countfortimes++;
-
-                                }
-                                else
-                                {
-                                    string muchcommand = "select ID,Appointment_ID from treatmentreord where Appointment_ID=@oldappoint";
-                                    sqlOperation1.AddParameterWithValue("@oldappoint", templist[i]);
-                                    reader1 = sqlOperation1.ExecuteReader(muchcommand);
-                                    while (reader1.Read())
-                                    {
-                                        resettreatmentIDarray.Add(reader1["ID"].ToString());
-                                        resettreatmentAPParray.Add(reader1["Appointment_ID"].ToString());
-                                    }
-                                    reader1.Read();
-
-                                    string updatecommand = "update treatmentreord set Appointment_ID=@appoint where Appointment_ID=@oldappoint";
-                                    sqlOperation1.AddParameterWithValue("@oldappoint", templist[i]);
-                                    sqlOperation1.AddParameterWithValue("@appoint", result);
-                                    sqlOperation1.ExecuteNonQuery(updatecommand);
-
-                                    string selectpatientid = "select Patient_ID from appointment_accelerate where ID=@appoint";
-                                    sqlOperation1.AddParameterWithValue("@appoint", result);
-                                    string patientID = sqlOperation1.ExecuteScalar(selectpatientid);
-                                    
-                                    string updatecommand2 = "update appointment_accelerate set Patient_ID=NULL where ID=@oldappoint";
-                                    sqlOperation1.AddParameterWithValue("@oldappoint", templist[i]);
-                                    sqlOperation1.ExecuteNonQuery(updatecommand2);
-                                    
-                       
-                                    string updatecommand3 = "update appointment_accelerate set Patient_ID=@pid where ID=@appoint";
-                                    sqlOperation1.AddParameterWithValue("@appoint", result);
+                                    string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                                    sqlOperation1.AddParameterWithValue("@task", "加速器");
                                     sqlOperation1.AddParameterWithValue("@pid", patientid);
-                                    sqlOperation1.ExecuteNonQuery(updatecommand3);
-                                    resetappointarray.Add(result);
-                                    resetbeginarray.Add(useappoint[i].ToString());
-                                    resetendarray.Add(int.Parse(useappoint[i].ToString())+10);
-                                    if (patientID == "")
+                                    sqlOperation1.AddParameterWithValue("@date", datefirst);
+                                    sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
+                                    sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
+                                    sqlOperation1.AddParameterWithValue("@end", appointarrange[i]["end"].ToString());
+                                    string insertid = sqlOperation1.ExecuteScalar(insertappoint);
+                                    appointarray.Add(insertid);
+
+                                    string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
+                                    sqlOperation1.AddParameterWithValue("@appoint", insertid);
+                                    sqlOperation1.AddParameterWithValue("@applyuser", userid);
+                                    sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                                    sqlOperation1.AddParameterWithValue("@chid", chid);
+                                    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                    treatmentrecordarray.Add(treatmentrecordid);
+                                    tempcount = tempcount + 1;
+                                    if (tempcount >= rest)
                                     {
-                                        resetpidarray.Add(null);
+                                        return "success";
                                     }
-                                    else
-                                    {
-                                        resetpidarray.Add(patientID);
-                                    }
+                                    todaytimes++;
                                    
-                                    countfortimes++;
                                 }
-
-
                             }
                             else
                             {
-                                string isexist = "select ID from appointment_accelerate where Date=@date and Begin=@begin and Equipment_ID=@equipid";
-                                sqlOperation1.AddParameterWithValue("@date", datefirst);
-                                sqlOperation1.AddParameterWithValue("@begin", useappoint[i].ToString());
-                                sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
-                                string result = sqlOperation1.ExecuteScalar(isexist);
-                                if (result == "")
+                                for (int i = 0; i < appointidlist.Count; i++)
                                 {
-                                    string updatecommand = "update appointment_accelerate set Begin=@begin,End=@end where ID=@id";
-                                    sqlOperation1.AddParameterWithValue("@begin", useappoint[i].ToString());
-                                    sqlOperation1.AddParameterWithValue("@end", int.Parse(useappoint[i].ToString()) + 10);
-                                    sqlOperation1.AddParameterWithValue("@id", templist[i]);
-                                    sqlOperation1.ExecuteNonQuery(updatecommand);
 
-                                    string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                                    sqlOperation1.AddParameterWithValue("@appoint", templist[i]);
-                                    sqlOperation1.AddParameterWithValue("@applyuser", userid);
-                                    sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                                    sqlOperation1.AddParameterWithValue("@chid", chid);
-                                    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                                    treatmentrecordarray.Add(treatmentrecordid);
-                                    countfortimes++;
-                                    tempcount = tempcount + 1;
-                                    if (tempcount >= rest)
+                                    string isfirstcommand = "select count(*) from treatmentrecord where Appointment_ID=@appointid and IsFirst=1";
+                                    sqlOperation1.AddParameterWithValue("@appointid", appointidlist[i]);
+                                    int num = int.Parse(sqlOperation1.ExecuteScalar(isfirstcommand));
+                                    if (num == 0)
                                     {
-                                        return "success";
-                                    }
-
-                                }
-                                else
-                                {
-                                    string muchcommand = "select ID,Appointment_ID from treatmentrecord where Appointment_ID=@oldappoint";
-                                    sqlOperation1.AddParameterWithValue("@oldappoint", templist[i]);
-                                    reader1 = sqlOperation1.ExecuteReader(muchcommand);
-                                    while (reader1.Read())
-                                    {
-                                        resettreatmentIDarray.Add(reader1["ID"].ToString());
-                                        resettreatmentAPParray.Add(reader1["Appointment_ID"].ToString());
-                                    }
-                                    reader1.Close();
-
-                                    string updatecommand = "update treatmentrecord set Appointment_ID=@appoint where Appointment_ID=@oldappoint";
-                                    sqlOperation1.AddParameterWithValue("@oldappoint", templist[i]);
-                                    sqlOperation1.AddParameterWithValue("@appoint", result);
-                                    sqlOperation1.ExecuteNonQuery(updatecommand);
-
-                                    string updatecommand2 = "update appointment_accelerate set Patient_ID=NULL where ID=@oldappoint";
-                                    sqlOperation1.AddParameterWithValue("@oldappoint", templist[i]);
-                                    sqlOperation1.ExecuteNonQuery(updatecommand2);
+                                        string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
+                                        sqlOperation1.AddParameterWithValue("@appoint", appointidlist[i]);
+                                        sqlOperation1.AddParameterWithValue("@applyuser", userid);
+                                        sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                                        sqlOperation1.AddParameterWithValue("@chid", chid);
+                                        string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                        treatmentrecordarray.Add(treatmentrecordid);
+                                        tempcount = tempcount + 1;
+                                        if (tempcount >= rest)
+                                        {
+                                            return "success";
+                                        }
+                                        todaytimes++;
+                                        if (todaytimes >= Times)
+                                        {
+                                            break;
+                                        }
                                     
-                                    string selectpatientid = "select Patient_ID from appointment_accelerate where ID=@appoint";
-                                    sqlOperation1.AddParameterWithValue("@appoint", result);
-                                    string patientID = sqlOperation1.ExecuteScalar(selectpatientid);
-                                    string updatecommand3 = "update appointment_accelerate set Patient_ID=@pid where ID=@appoint";
-                                    sqlOperation1.AddParameterWithValue("@appoint", result);
-                                    sqlOperation1.AddParameterWithValue("@pid", patientid);
-                                    sqlOperation1.ExecuteNonQuery(updatecommand3);
-                                    resetappointarray.Add(result);
-                                    resetbeginarray.Add(useappoint[i].ToString());
-                                    resetendarray.Add(int.Parse(useappoint[i].ToString()) + 10);
-                                    if (patientID == "")
-                                    {
-                                        resetpidarray.Add(null);
+
                                     }
                                     else
                                     {
-                                        resetpidarray.Add(patientID);
+                                        string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,2,@chid);select @@IDENTITY";
+                                        sqlOperation1.AddParameterWithValue("@appoint", appointidlist[i]);
+                                        sqlOperation1.AddParameterWithValue("@applyuser", userid);
+                                        sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                                        sqlOperation1.AddParameterWithValue("@chid", chid);
+                                        string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                        treatmentrecordarray.Add(treatmentrecordid);
+                                        todaytimes++;
+                                        if (todaytimes >= Times)
+                                        {
+                                            break;
+                                        }
+                                        tempcount = tempcount + 1;
+                                        if (tempcount >= rest)
+                                        {
+                                            return "success";
+                                        }
                                     }
 
-
-                                    countfortimes++;
-
-                                    string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                                    sqlOperation1.AddParameterWithValue("@appoint", templist[i]);
-                                    sqlOperation1.AddParameterWithValue("@applyuser", userid);
-                                    sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                                    sqlOperation1.AddParameterWithValue("@chid", chid);
-                                    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                                    treatmentrecordarray.Add(treatmentrecordid);
-                                    tempcount = tempcount + 1;
-                                    if (tempcount >= rest)
+                                }
+                                if (appointidlist.Count < Times)
+                                {
+                                    int k = 0;
+                                    for (int j = 0; j < appointarrange.Count; j++)
                                     {
-                                        return "success";
+                                        Boolean flag = false;
+                                        for (int m = 0; m < appointidlist.Count; m++)
+                                        {
+                                            if (beginlist[m].ToString() == appointarrange[j]["begin"].ToString())
+                                            {
+                                                flag = true;
+                                                break;
+                                            }
+                                                
+                                        }
+                                        if (flag == false)
+                                        {
+                                           string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                                            sqlOperation1.AddParameterWithValue("@task", "加速器");
+                                            sqlOperation1.AddParameterWithValue("@pid", patientid);
+                                            sqlOperation1.AddParameterWithValue("@date", datefirst);
+                                            sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
+                                            sqlOperation1.AddParameterWithValue("@begin", appointarrange[j]["begin"].ToString());
+                                            sqlOperation1.AddParameterWithValue("@end", appointarrange[j]["end"].ToString());
+                                            string insertid = sqlOperation1.ExecuteScalar(insertappoint);
+                                            appointarray.Add(insertid);
+
+                                            string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
+                                            sqlOperation1.AddParameterWithValue("@appoint", insertid);
+                                            sqlOperation1.AddParameterWithValue("@applyuser", userid);
+                                            sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                                            sqlOperation1.AddParameterWithValue("@chid", chid);
+                                            string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                            treatmentrecordarray.Add(treatmentrecordid); 
+                                            todaytimes++;
+                                            k++;
+                                            tempcount = tempcount + 1;
+                                            if (tempcount >= rest)
+                                            {
+                                                return "success";
+                                            }    
+                                                
+                                        }
+                                        if (k >= Times - appointidlist.Count)
+                                        {
+                                            break;
+                                        }
+                                            
                                     }
+                     
+                                   }
+                                    
                                     
                                 }
                                 
-                                
-                            }
+                            }else
+                           {
+                               int resttimes = Times - todaytimes;
+                               for (int i = 0; i < resttimes; i++)
+                               {
+                                   string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                                   sqlOperation1.AddParameterWithValue("@task", "加速器");
+                                   sqlOperation1.AddParameterWithValue("@pid", patientid);
+                                   sqlOperation1.AddParameterWithValue("@date", datefirst);
+                                   sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
+                                   sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
+                                   sqlOperation1.AddParameterWithValue("@end", appointarrange[i]["end"].ToString());
+                                   string insertid = sqlOperation1.ExecuteScalar(insertappoint);
+                                   appointarray.Add(insertid);
 
-                        }
-                        for (int i = countfortimes; i < Times; i++)
-                        {
+                                   string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
+                                   sqlOperation1.AddParameterWithValue("@appoint", insertid);
+                                   sqlOperation1.AddParameterWithValue("@applyuser", userid);
+                                   sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                                   sqlOperation1.AddParameterWithValue("@chid", chid);
+                                   string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                   tempcount = tempcount + 1;
+                                   if (tempcount >= rest)
+                                   {
+                                       return "success";
+                                   }    
+                               } 
 
-                            string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
-                            sqlOperation1.AddParameterWithValue("@task", "加速器");
-                            sqlOperation1.AddParameterWithValue("@pid", patientid);
-                            sqlOperation1.AddParameterWithValue("@date", datefirst);
-                            sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
-                            sqlOperation1.AddParameterWithValue("@begin",useappoint[i].ToString());
-                            sqlOperation1.AddParameterWithValue("@end", int.Parse(useappoint[i].ToString())+10);
-                            string insertid = sqlOperation1.ExecuteScalar(insertappoint);
-                            appointarray.Add(insertid);
+                          }
 
-                            string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                            sqlOperation1.AddParameterWithValue("@appoint", insertid);
-                            sqlOperation1.AddParameterWithValue("@applyuser", userid);
-                            sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                            sqlOperation1.AddParameterWithValue("@chid", chid);
-                            string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                            treatmentrecordarray.Add(treatmentrecordid);
-                            countfortimes++;
-                            tempcount = tempcount + 1;
-                            if (tempcount >= rest)
-                            {
-                                return "success";
-                            }
- 
-                        }
-                        if (countfortimes < Times)
-                        {
-                            return "failure";
-                        }  
-                   }
-                    datefirst = datefirst.AddDays(1);
-                 }
-                else
-                {
-                    datefirst = datefirst.AddDays(1);
-                }
-                if (tempcount >= rest)
-                {
-                    break;
-                }
-            }
-            return "success";
-        
-        }
-        if (Interal > 1 && Times == 1)
-        {
-            int tempcount = 0;
-            while (true)
-            {
-                if (datefirst.DayOfWeek.ToString() != "Sunday" && datefirst.DayOfWeek.ToString() != "Saturday")
-                {
-                    ArrayList templist = new ArrayList();
-                    string checkcommand2 = "select count(*) from appointment_accelerate,treatmentrecord where Date>=@date1 and Date<=@date2 and treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.ChildDesign_ID=@chid";
-                    sqlOperation1.AddParameterWithValue("@date1", datefirst.AddDays(1-Interal));
-                    sqlOperation1.AddParameterWithValue("@date2", datefirst.AddDays(Interal-1));
-                    sqlOperation1.AddParameterWithValue("@chid", chid);
-                    int result = int.Parse(sqlOperation1.ExecuteScalar(checkcommand2));
-                    if(result!=0)
+                    }
+                    if(todaytimes<Times)
                     {
                         return "failure";
                     }
-                    
-
-                    string checkcommand = "select ID,Begin from appointment_accelerate where Date=@date and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin)) and Equipment_ID=@equipid and Patient_ID=@pid";
-                    sqlOperation1.AddParameterWithValue("@date", datefirst);
-                    sqlOperation1.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
-                    sqlOperation1.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
-                    sqlOperation1.AddParameterWithValue("@pid", patientid);
-                    sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
-                    MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(checkcommand);
-                    while (reader1.Read())
-                    {
-                        templist.Add(reader1["ID"].ToString());
-                    }
-                    reader1.Close();
-                    if (templist.Count > 0)
-                    {
-                        
-                        string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                        sqlOperation1.AddParameterWithValue("@appoint", templist[0]);
-                        sqlOperation1.AddParameterWithValue("@applyuser", userid);
-                        sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                        sqlOperation1.AddParameterWithValue("@chid", chid);
-                        string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                        treatmentrecordarray.Add(treatmentrecordid);
-                        tempcount = tempcount + 1;
-                        if (tempcount >= rest)
-                        {
-                            return "success";
-                        }
-                         
-
-                    }
-                    else
-                    {
-                        Boolean flag = false;
-                        for (int i = 0; i < appointarrange.Count; i++)
-                        {
-
-                            string busycommand = "select count(*) from appointment_accelerate where Date=@date and Patient_ID<>@pid and Begin=@begin and Equipment_ID=@equipid";
-                            sqlOperation1.AddParameterWithValue("@date", datefirst);
-                            sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
-                            sqlOperation1.AddParameterWithValue("@pid", patientid);
-                            sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
-                            int result1 = int.Parse(sqlOperation1.ExecuteScalar(busycommand));
-                            if (result1 == 1)
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
-                                sqlOperation1.AddParameterWithValue("@task", "加速器");
-                                sqlOperation1.AddParameterWithValue("@pid", patientid);
-                                sqlOperation1.AddParameterWithValue("@date", datefirst);
-                                sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
-                                sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
-                                sqlOperation1.AddParameterWithValue("@end", appointarrange[i]["end"].ToString());
-                                string insertid = sqlOperation1.ExecuteScalar(insertappoint);
-                                appointarray.Add(insertid);
-
-                                string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                                sqlOperation1.AddParameterWithValue("@appoint", insertid);
-                                sqlOperation1.AddParameterWithValue("@applyuser", userid);
-                                sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                                sqlOperation1.AddParameterWithValue("@chid", chid);
-                                string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                                treatmentrecordarray.Add(treatmentrecordid);
-                                tempcount = tempcount + 1;
-                                if (tempcount >= rest)
-                                {
-                                    return "success";
-                                }
-
-                                flag = true;
-                                break;
-                            }
-                        }
-                            if (flag == false)
-                            {
-                                return "failure";
-                            }
-                        
-                    }
-
                     datefirst = datefirst.AddDays(Interal);
+                    
                 }
                 else
                 {
-                    if (datefirst.DayOfWeek.ToString() == "Sunday")
-                    {
+                    if(Interal==1)
+                    { 
                         datefirst = datefirst.AddDays(1);
-                    }
-                    else
+                    }else
                     {
-                        datefirst = datefirst.AddDays(2);
+                         if (datefirst.DayOfWeek.ToString() == "Sunday")
+                        {
+                            datefirst = datefirst.AddDays(1);
+                        }
+                        else
+                        {
+                            datefirst = datefirst.AddDays(2);
+                        }
+                        
                     }
+   
                 }
                 if (tempcount >= rest)
                 {
                     break;
                 }
-            }
-            return "success";
 
+            }
+                   return "success";
         }
+       
         return "failure";
 
     }
-    private void deleteallappoint(ArrayList appointarray, ArrayList treatmentrecordarray, ArrayList resetappointarray, ArrayList resetbeginarray, ArrayList resetendarray, ArrayList resettreatmentIDarray, ArrayList resettreatmentAPParray)
+    private void deleteallappoint(ArrayList appointarray, ArrayList treatmentrecordarray)
     {
-        for (int i = appointarray.Count-1; i>=0; i--)
+        for (int i = appointarray.Count - 1; i >= 0; i--)
         {
             string deleteappoint = "delete from appointment_accelerate where ID=@aid";
             sqlOperation1.AddParameterWithValue("@aid", appointarray[i]);
             sqlOperation1.ExecuteNonQuery(deleteappoint);
         }
-        for (int i = treatmentrecordarray.Count-1; i >= 0; i--)
+        for (int i = treatmentrecordarray.Count - 1; i >= 0; i--)
         {
             string deleteappoint = "delete from treatmentrecord where ID=@tid";
             sqlOperation1.AddParameterWithValue("@tid", treatmentrecordarray[i]);
             sqlOperation1.ExecuteNonQuery(deleteappoint);
         }
-        for (int i = resetappointarray.Count-1; i >= 0; i--)
-        {
-            string updateappoint = "update appointment_accelerate set Begin=@begin,End=@end where ID=@appointid";
-            sqlOperation1.AddParameterWithValue("@appointid", resetappointarray[i]);
-            sqlOperation1.AddParameterWithValue("@begin", resetbeginarray[i]);
-            sqlOperation1.AddParameterWithValue("@end", resetendarray[i]);
-            sqlOperation1.ExecuteNonQuery(updateappoint);
-        }
-
-        for (int i = resettreatmentIDarray.Count - 1; i >= 0; i--)
-        {
-            string updateappoint = "update treatmentrecord set Appointment_ID=@appoint where ID=@treatid ";
-            sqlOperation1.AddParameterWithValue("@treatid", resettreatmentIDarray[i]);
-            sqlOperation1.AddParameterWithValue("@appoint", resettreatmentAPParray[i]);
-            sqlOperation1.ExecuteNonQuery(updateappoint);
-        }
-        
-    }
+      
+    }     
     private Boolean Containschid(JArray chidarray, string chid)
     {
         foreach (int id in chidarray)
@@ -770,7 +569,7 @@ public class InsertAllappointment : IHttpHandler {
             {
                 return true;
             }
-            
+
         }
         return false;
     }
