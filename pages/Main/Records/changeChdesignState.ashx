@@ -30,7 +30,7 @@ public class changeChdesignState : IHttpHandler {
             sqlOperation.AddParameterWithValue("@chid", chid);
             sqlOperation.ExecuteNonQuery(command);
 
-            string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and ((Date>@nowdate) or((Date=@nowdate)and Begin>@nowbegin))";
+            string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and Date>=@nowdate";
             sqlOperation.AddParameterWithValue("@chid", chid);
             sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
             sqlOperation.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);

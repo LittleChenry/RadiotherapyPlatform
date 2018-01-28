@@ -408,16 +408,17 @@ public class InsertAllappointment : IHttpHandler {
                                         sqlOperation1.AddParameterWithValue("@chid", chid);
                                         string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
                                         treatmentrecordarray.Add(treatmentrecordid);
-                                        todaytimes++;
-                                        if (todaytimes >= Times)
-                                        {
-                                            break;
-                                        }
                                         tempcount = tempcount + 1;
                                         if (tempcount >= rest)
                                         {
                                             return "success";
                                         }
+                                        todaytimes++;
+                                        if (todaytimes >= Times)
+                                        {
+                                            break;
+                                        }
+                                       
                                     }
 
                                 }
@@ -454,14 +455,15 @@ public class InsertAllappointment : IHttpHandler {
                                             sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
                                             sqlOperation1.AddParameterWithValue("@chid", chid);
                                             string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                                            treatmentrecordarray.Add(treatmentrecordid); 
-                                            todaytimes++;
-                                            k++;
+                                            treatmentrecordarray.Add(treatmentrecordid);
                                             tempcount = tempcount + 1;
                                             if (tempcount >= rest)
                                             {
                                                 return "success";
                                             }    
+                                            todaytimes++;
+                                            k++;
+                                           
                                                 
                                         }
                                         if (k >= Times - appointidlist.Count)
