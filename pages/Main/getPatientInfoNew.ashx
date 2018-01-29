@@ -151,6 +151,10 @@ public class getPatientInfoNew : IHttpHandler {
                 {
                     info.Append(reader2["groupname"].ToString() + "\",\"doctor\":\"" + reader2["doctor"].ToString() + "\"}");
                 }
+                else
+                {
+                    info.Append("\",\"doctor\":\"" + ""+ "\"}");
+                }
                 reader2.Close();
             
             }

@@ -53,74 +53,82 @@ public class patientInfoForZLJS : IHttpHandler {
         {
             return "{\"PatientInfo\":false}";
         }
-
-        int i = 1;
-        string sqlCommand2 = "select treatment.State as treatstate,Progress,iscommon,treatment.ID as treatid,patient.*,user.Name as doctor,appointment_accelerate.ID as appointid,appointment_accelerate.*,equipment.Name as eqname,treatment.Treatmentdescribe,DiagnosisRecord_ID from appointment_accelerate,treatment,patient,user,equipment where appointment_accelerate.Equipment_ID=equipment.ID and appointment_accelerate.Equipment_ID=@groupid and appointment_accelerate.Date >= @date1 and appointment_accelerate.Date <= @date2  and appointment_accelerate.Treatment_ID=treatment.ID and patient.ID=treatment.Patient_ID and treatment.Belongingdoctor=user.ID order by appointment_accelerate.Date,appointment_accelerate.Begin asc";
-        sqlOperation2.AddParameterWithValue("@groupid", equipmentID);
-        sqlOperation2.AddParameterWithValue("@date1", date1);
-        sqlOperation2.AddParameterWithValue("@date2", date2);
-        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
-        StringBuilder backText = new StringBuilder("{\"PatientInfo\":[");
-
+        StringBuilder info = new StringBuilder("{\"PatientInfo\":[");
+        string achievecommand = "select Patient_ID,ID,Begin,End from appointment_accelerate where Date>=@date1 and Date<=@date2 and Equipment_ID=@equipid";
+        sqlOperation.AddParameterWithValue("@date1", date1);
+        sqlOperation.AddParameterWithValue("@date2", date2);
+        sqlOperation.AddParameterWithValue("@equipid", equipmentID);
+        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(achievecommand);
+        int temp = 1;
         while (reader.Read())
         {
-            int totalnumber = 0;
-            int totaltimes = 0;
-            int temp = 0;
-            string sqlcommand = "select count(*) from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL";
-            sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(reader["treatid"].ToString()));
-            int counttemp = int.Parse(sqlOperation.ExecuteScalar(sqlcommand));
-            if (counttemp == 0)
+            string treatmentID = "";
+            string treatidcommand = "select ID from treatment where Patient_ID=@pid and Progress not LIKE '%14%' and Progress like '%12%' and State=0";
+            sqlOperation1.AddParameterWithValue("@pid", reader["Patient_ID"].ToString());
+            MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(treatidcommand);
+            if (reader1.Read())
             {
-               
-                totalnumber = 0;
+                treatmentID = reader1["ID"].ToString();
             }
-            else
+            reader1.Close();
+            string patientinfocommand = "select ID,Name,Gender,Age,Radiotherapy_ID from patient where ID=@pid";
+            sqlOperation1.AddParameterWithValue("@pid", reader["Patient_ID"].ToString());
+            reader1 = sqlOperation1.ExecuteReader(patientinfocommand);
+            if (reader1.Read())
             {
-                string sqlcommand4 = "select TreatedTimes,Rest,Singlenumber from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL order by ID desc";
-                sqlOperation1.AddParameterWithValue("@treat", Convert.ToInt32(reader["treatid"].ToString()));
-                MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(sqlcommand4);
-                while (reader1.Read())
+                info.Append("{\"name\":\"" + reader1["Name"].ToString() + "\",\"Gender\":\"" + sex(reader1["Gender"].ToString()) + "\",\"Radiotherapy_ID\":\"" + reader1["Radiotherapy_ID"].ToString() + "\",\"patientid\":\"" + reader1["ID"].ToString() + "\",\"Age\":\"" + reader1["Age"].ToString() + "\",\"groupname\":\"");
+                string groupcommand = "select user.Name as doctor,groups.groupName as groupname,treatment.Progress as progress from groups,treatment,user,groups2user where groups2user.Group_ID=groups.ID and treatment.Group_ID=groups2user.ID and treatment.Patient_ID=@pid and treatment.Belongingdoctor=user.ID and treatment.ID=@treat";
+                sqlOperation2.AddParameterWithValue("@pid", reader["Patient_ID"].ToString());
+                sqlOperation2.AddParameterWithValue("@treat", treatmentID);
+                MySql.Data.MySqlClient.MySqlDataReader reader2 = sqlOperation2.ExecuteReader(groupcommand);
+                if (reader2.Read())
                 {
-                    totalnumber = totalnumber + Convert.ToInt32(reader1["Singlenumber"].ToString());
-                    temp++;
+                    info.Append(reader2["groupname"].ToString() + "\",\"doctor\":\"" + reader2["doctor"].ToString() + "\",\"treatmentID\":\"" + treatmentID + "\",\"appoint\":\"" + reader["ID"].ToString() + "\",\"progress\":\"" + reader2["progress"].ToString() + "\"");
                 }
-                reader1.Close();
-    
-            }
-            string sqlcommandtotaltimes = "select TotalNumber from treatment where ID=@treat";
-            string total = sqlOperation.ExecuteScalar(sqlcommandtotaltimes);
-            if (total != "")
-            {
-                totaltimes = int.Parse(total);
-            }            
-            string result = "";
-            if (reader["DiagnosisRecord_ID"] is DBNull)
-            {
-                result = "";
-            }
-            else
-            {
-                string sqlCommand3 = "select Chinese from diagnosisrecord,icdcode where diagnosisrecord.ID=@ID and diagnosisrecord.DiagnosisResult_ID =icdcode.ID";
-                sqlOperation1.AddParameterWithValue("@ID", reader["DiagnosisRecord_ID"].ToString());
-                result = sqlOperation1.ExecuteScalar(sqlCommand3);
-            }
-            string da = reader["Date"].ToString();
-            DateTime dt1 = Convert.ToDateTime(da);
-            string date3 = dt1.ToString("yyyy-MM-dd");
-            backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"date\":\"" + date3 + "\",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"state\":\"" + reader["treatstate"].ToString() +
-                    "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"Completed\":\"" + reader["Completed"].ToString()
-                    + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"finishedtimes\":\"" + counttemp + "\",\"totalnumber\":\"" + totalnumber + "\",\"totaltimes\":\"" + totaltimes + "\",\"appointid\":\"" + reader["appointid"].ToString() + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\"}");
+                else
+                {
+                    info.Append("\",\"doctor\":\"" + "\",\"treatmentID\":\"" + treatmentID + "\",\"appoint\":\"" + reader["ID"].ToString() + "\",\"progress\":\"\"");
+                }
+                reader2.Close();
 
-            if (i < count)
-            {
-                backText.Append(",");
             }
-            i++;
+            reader1.Close();
+            string coutcommand="select count(*) from treatmentrecord where Appointment_ID=@app and Treat_User_ID  is null";
+            sqlOperation1.AddParameterWithValue("@app",reader["ID"].ToString());
+            int countthis=int.Parse(sqlOperation1.ExecuteScalar(coutcommand));
+            string completed="";
+            if(countthis>0)
+            {
+                completed="false";
+            }else
+            {
+                completed="true";
+            }
+            info.Append(",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"completed\":\"" + completed + "\"}");
+            
+            if (temp < count)
+            {
+                info.Append(",");
+            }
+            temp++;
+            
         }
-        reader.Close();               
-        backText.Append("]}");
-        return backText.ToString();
+        info.Append("]}");
+       
+        reader.Close();
+        return info.ToString();
+    }
+    public string sex(string gen)
+    {
+
+        if (gen == "F")
+        {
+            return "女";
+        }
+        else
+        {
+            return "男";
+        }
     }
 
 }
