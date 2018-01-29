@@ -5,6 +5,7 @@ var allpagenumber;
 var obj = [];
 var equipmentfrominfo = "";
 var childdesigns;
+var patientid;
 function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
@@ -47,7 +48,7 @@ function Init(evt) {
     {
         $("#designinfo").hide();
     }
-   
+    patientid = patient.ID;
     var type = geteuqipmenttype(treatmentID);
     createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2], type);
    
@@ -73,6 +74,7 @@ function Init(evt) {
         $("#AppiontDate").val(newdate);
         CreateNewAppiontTable(event);
     });
+    createtimeselect(document.getElementById("timeselect"));
     $("#timeselect").bind("change", function () {
         var dateString = document.getElementById("AppiontDate").value;
         CreateCurrentEquipmentTbale(dateString);
@@ -91,7 +93,7 @@ function Init(evt) {
                     var content = '<div class="active tab-pane" id="tab' + j + '">' +
                                   '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid+'">'+
                                   '<div class="single-row"><div class="item col-xs-12"> <span class="form-text col-xs-2" style="padding-left:0px;width:11%">首次预约：</span>' +
-                                  '<button id="chooseappoint' + j + '" class="btn btn-default"  data-toggle="modal" data-target="#appoint">预约</button><button id="checkappoint' + j + '" style="margin-left:3%" class="btn btn-default"  data-toggle="modal" data-target="#checkappointmodal">查看预约情况</button><button style="margin-left: 17%" onclick="handlebutton(this,' + j + ')" class="btn btn-primary" id="pause' + j + '" type="button">暂停子计划</button></div></div>' +
+                                  '<button id="chooseappoint' + j + '" class="btn btn-default"  data-toggle="modal" data-target="#appoint">预约</button><button id="checkappoint' + j + '" style="margin-left:3%" class="btn btn-default" onclick="chakanapp('+j+')" data-toggle="modal" data-target="#checkappointmodal">查看预约情况</button><button style="margin-left: 17%" onclick="handlebutton(this,' + j + ')" class="btn btn-primary" id="pause' + j + '" type="button">暂停子计划</button></div></div>' +
                                   '<div class="single-row"><div class="item col-xs-12"><span style="margin-left:10%">(预约后将清除此子计划的已有预约)</span></div></div>'+
                                   '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
                                   '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
@@ -113,7 +115,7 @@ function Init(evt) {
                     var content = '<div class="tab-pane" id="tab' + j + '">' +
                                   '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
                                  '<div class="single-row"><div class="item col-xs-12"> <span class="form-text col-xs-2" style="padding-left:0px;width:11%">首次预约：</span>' +
-                                  '<button id="chooseappoint' + j + '" class="btn btn-default"  data-toggle="modal" data-target="#appoint">预约</button><button id="checkappoint' + j + '" style="margin-left:3%" class="btn btn-default"  data-toggle="modal" data-target="#checkappointmodal">查看预约情况</button><button style="margin-left: 17%" onclick="handlebutton(this,' + j + ')" class="btn btn-primary" id="pause' + j + '" type="button">暂停子计划</button></div></div>' +
+                                  '<button id="chooseappoint' + j + '" class="btn btn-default"  data-toggle="modal" data-target="#appoint">预约</button><button id="checkappoint' + j + '" style="margin-left:3%" class="btn btn-default" onclick="chakanapp(' + j + ')"  data-toggle="modal" data-target="#checkappointmodal">查看预约情况</button><button style="margin-left: 17%" onclick="handlebutton(this,' + j + ')" class="btn btn-primary" id="pause' + j + '" type="button">暂停子计划</button></div></div>' +
                                   '<div class="single-row"><div class="item col-xs-12"><span style="margin-left:10%">(预约后将清除此子计划的已有预约)</span></div></div>' +
                                  '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
                                   '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
@@ -145,7 +147,7 @@ function Init(evt) {
             var content = '<div class="tab-pane" id="tab' + j + '">' +
                           '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
                           '<div class="single-row"><div class="item col-xs-12"> <span class="form-text col-xs-2" style="padding-left:0px;width:11%">首次预约：</span>' +
-                          '<button id="chooseappoint' + j + '" class="btn btn-default"  data-toggle="modal" data-target="#appoint">预约</button><button id="checkappoint' + j + '" style="margin-left:3%" class="btn btn-default"  data-toggle="modal" data-target="#checkappointmodal">查看预约情况</button><button style="margin-left: 17%" onclick="handlebutton(this,' + j + ')" class="btn btn-primary" id="pause' + j + '" type="button">暂停子计划</button></div></div>' +
+                          '<button id="chooseappoint' + j + '" class="btn btn-default"  data-toggle="modal" data-target="#appoint">预约</button><button id="checkappoint' + j + '" style="margin-left:3%" class="btn btn-default" onclick="chakanapp(' + j + ')"  data-toggle="modal" data-target="#checkappointmodal">查看预约情况</button><button style="margin-left: 17%" onclick="handlebutton(this,' + j + ')" class="btn btn-primary" id="pause' + j + '" type="button">暂停子计划</button></div></div>' +
                           '<div class="single-row"><div class="item col-xs-12"><span style="margin-left:10%">(预约后将清除此子计划的已有预约)</span></div></div>' +
                           '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
                           '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
@@ -256,6 +258,27 @@ function geteuqipmenttype(treatmentID) {
     return Items;
 
 }
+//获取医师治疗时间段
+function createtimeselect(thiselement) {
+       var timeItem = JSON.parse(gettimeduan()).timeselect;
+        thiselement.options.length = 0;
+        for (var i = 0; i < timeItem.length; i++) {
+            if (timeItem[i] != "") {
+                thiselement.options[i] = new Option(toTime(timeItem[i].begin)+"-"+toTime(timeItem[i].end));
+                thiselement.options[i].value = timeItem[i].begin + "-" + timeItem[i].end;
+            }
+        }
+    
+}
+function gettimeduan(item) {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "gettimeselect.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+
 
 ////获取设备型号对应的所有设备，针对普放病人
 //function createfixEquipmachine1(thiselement, item) {
@@ -889,7 +912,7 @@ function save() {
                 content = content + '</tr>';
                 $("#log" + number).append(content);
             } else {
-                window.alert("修改失败");
+                window.alert(data);
             }
 
         },
@@ -1047,4 +1070,28 @@ function handlebutton(e, number) {
         return;
     }
 
+}
+//点击计划控制按钮触发子计划状态调整
+function chakanapp(number) {
+    $.ajax({
+        type: "POST",
+        url: "achievealldesign.ashx",
+        async: false,
+        data: {
+            patientid: patientid,
+            chid:childdesigns[number].chid
+        },
+        dateType: "json",
+        success: function (data) {
+          
+
+
+
+
+
+        },
+        error: function (data) {
+            alert("error");
+        }
+    });
 }

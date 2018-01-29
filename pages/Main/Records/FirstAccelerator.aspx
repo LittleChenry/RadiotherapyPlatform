@@ -134,12 +134,7 @@
                             <option value="900-990">15:00-16:30</option>
                         </select>
                     </div>
-                    <%--<div class="item col-xs-5" style="padding-left:20px;display:none">是否占用两格：<select id="isspecial" name="isspecial" class="form-item">
-                           <option value="0">否</option>
-                            <option value="1">是</option>
-                          </select>
-
-                    </div>--%>
+                 
                     </div>
                     <div class="panel-row">
                         <table id="apptiontTable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;"></table>
@@ -158,12 +153,56 @@
                         <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">查看子计划加速器预约情况</h4>
-                      </div>
-
-
-
-
+                        </div>
+                       <div class="modal-body" style="overflow:hidden;">
+                            <div class="panel-row">
+                                 <table id="appointtable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;">
+                                   <thead>
+                                       <tr>
+                                         <th>预约日期</th>
+                                         <th>预约时间段</th>
+                                         <th>预约列表</th>
+                                         <th>完成情况</th>
+                                       </tr>
+                                   </thead>
+                                     <tr>
+                                         <td  rowspan="3">
+                                             2018-1-18
+                                         </td>
+                                         <td rowspan="2">
+                                             10:10-15:10
+                                         </td>
+                                         <td>
+                                             计划1
+                                         </td>
+                                         <td>
+                                             首次，未完成
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         
+                                         <td>
+                                             计划2
+                                         </td>
+                                         <td>
+                                             首次，未完成
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td>
+                                             10:10-15:10
+                                         </td>
+                                         <td>
+                                             计划3
+                                         </td>
+                                         <td>
+                                             首次，未完成
+                                         </td>
+                                     </tr>
+                                 </table>
+                            </div>
                        </div>
+                      </div>
                   </div>
              </div>
     </section>
