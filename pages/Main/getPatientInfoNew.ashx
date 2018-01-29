@@ -80,7 +80,7 @@ public class getPatientInfoNew : IHttpHandler {
                 {
                     if (reader2["Treat_User_ID"].ToString() == "")
                     {
-                        appointid = int.Parse(reader2["Appointment_ID"].ToString());
+                        //appointid = int.Parse(reader2["Appointment_ID"].ToString());
                         if (maxdate == "无")
                         {
                             maxdate = reader2["Date"].ToString();

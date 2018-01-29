@@ -84,7 +84,7 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
             {
                 if (reader1["Treat_User_ID"].ToString() == "")
                 {
-                    appointid = int.Parse(reader1["Appointment_ID"].ToString());
+                    //appointid = int.Parse(reader1["Appointment_ID"].ToString());
                     if (maxdate == "无")
                     {
                         maxdate = reader1["Date"].ToString();
