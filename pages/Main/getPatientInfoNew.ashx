@@ -106,7 +106,7 @@ public class getPatientInfoNew : IHttpHandler {
 
                 if (appointid != 0)
                 {
-                    string sqlcommand1 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and Date<@date order by Date,Begin asc";
+                    string sqlcommand1 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and (Date<@date or (Date=@date and Begin<=@begin)) order by Date,Begin asc";
                     sqlOperation2.AddParameterWithValue("@date", date);
                     sqlOperation2.AddParameterWithValue("@begin", begin);
                     reader2= sqlOperation2.ExecuteReader(sqlcommand1);
