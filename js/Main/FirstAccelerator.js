@@ -1011,7 +1011,31 @@ function getAllChildDesign(patientID) {
 
 //点击标签触发子页面标识函数
 function handleli(number) {
-    allpagenumber=number;
+    allpagenumber = number;
+    $.ajax({
+        type: "POST",
+        url: "patientforprint.ashx",
+        async: false,
+        data: {
+            chid: childdesigns[allpagenumber].chid
+
+        },
+        dateType: "json",
+        success: function (data) {
+            data = data.replace(/\r/g, "");
+            data = data.replace(/\n/g, "\\n");
+            data = data.replace(/\t/g, "");
+            patientbasic = eval("(" + data + ")");
+            patientbasic = patientbasic.patient[0];
+            $("#treatID").html(patientbasic.Treatmentdescribe.split(",")[0]);
+            $("#diagnosisresult").html(patientbasic.diagnosisresult);
+            $("#lightpart").html(patientbasic.LightPart_ID);
+
+        },
+        error: function (data) {
+            alert("error");
+        }
+    });
 }
 
 //点击计划控制按钮触发子计划状态调整
@@ -1074,6 +1098,7 @@ function handlebutton(e, number) {
 //点击查看预约信息
 function chakanapp(number) {
     $("#appointcheckbody").empty();
+    $("#appointcheckhead").show();
     $.ajax({
         type: "POST",
         url: "achievealldesign.ashx",
