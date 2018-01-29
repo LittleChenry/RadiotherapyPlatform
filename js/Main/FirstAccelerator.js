@@ -1071,8 +1071,9 @@ function handlebutton(e, number) {
     }
 
 }
-//点击计划控制按钮触发子计划状态调整
+//点击查看预约信息
 function chakanapp(number) {
+    $("#appointcheckbody").empty();
     $.ajax({
         type: "POST",
         url: "achievealldesign.ashx",
@@ -1083,15 +1084,77 @@ function chakanapp(number) {
         },
         dateType: "json",
         success: function (data) {
-          
+            var group = eval("(" + data + ")");
+            var info = group.info;
+            if(info.length==0)
+            {
+                $("#appointcheckhead").hide();
+                $("#appointcheckbody").html("没有预约信息");
+            }
+            var content='';
+            for (var i = 0; i < info.length; i++) {
+                var rowscount = 0;
+                for (var j = 0; j < info[i].timeinfo.length; j++) {
+                    rowscount = rowscount + info[i].timeinfo[j].childgesin.length;
+                }
+                for (var k = 0; k < info[i].timeinfo.length; k++) {
+                    for (var m = 0; m < info[i].timeinfo[k].childgesin.length; m++) {
+                        if (k == 0 && m == 0) {
+                            if (info[i].timeinfo[k].childgesin[m].chid == childdesigns[number].chid) {
+                                content = content + '<tr><td rowspan=' + rowscount + '>' + info[i].appdate.split(" ")[0] + '</td><td rowspan=' + info[i].timeinfo[k].childgesin.length + '>' + transfertime(toTime(info[i].timeinfo[k].begintime)) + "-" + transfertime(toTime(info[i].timeinfo[k].endtime)) + '</td><td  bgcolor="#ffff66">' + info[i].timeinfo[k].childgesin[m].Treatmentdescribe + "," + info[i].timeinfo[k].childgesin[m].designname + '</td><td  bgcolor="#ffff66">' + transferresult(info[i].timeinfo[k].childgesin[m].isfirst, info[i].timeinfo[k].childgesin[m].istreated) + '</td></tr>';
+                            } else {
+                                content = content + '<tr><td rowspan=' + rowscount + '>' + info[i].appdate.split(" ")[0] + '</td><td rowspan=' + info[i].timeinfo[k].childgesin.length + '>' + transfertime(toTime(info[i].timeinfo[k].begintime)) + "-" + transfertime(toTime(info[i].timeinfo[k].endtime)) + '</td><td>' + info[i].timeinfo[k].childgesin[m].Treatmentdescribe + "," + info[i].timeinfo[k].childgesin[m].designname + '</td><td >' + transferresult(info[i].timeinfo[k].childgesin[m].isfirst, info[i].timeinfo[k].childgesin[m].istreated) + '</td></tr>';
+                            }
+                        }
+                        if (k > 0 && m == 0) {
+                            if (info[i].timeinfo[k].childgesin[m].chid == childdesigns[number].chid) {
+                                content = content + '<td rowspan=' + info[i].timeinfo[k].childgesin.length + '>' + transfertime(toTime(info[i].timeinfo[k].begintime)) + "-" + transfertime(toTime(info[i].timeinfo[k].endtime)) + '</td><td bgcolor="#ffff66">' + info[i].timeinfo[k].childgesin[m].Treatmentdescribe + "," + info[i].timeinfo[k].childgesin[m].designname + '</td><td bgcolor="#ffff66">' + transferresult(info[i].timeinfo[k].childgesin[m].isfirst, info[i].timeinfo[k].childgesin[m].istreated) + '</td></tr>';
+                            } else {
+                                content = content + '<td rowspan=' + info[i].timeinfo[k].childgesin.length + '>' + transfertime(toTime(info[i].timeinfo[k].begintime)) + "-" + transfertime(toTime(info[i].timeinfo[k].endtime)) + '</td><td>' + info[i].timeinfo[k].childgesin[m].Treatmentdescribe + "," + info[i].timeinfo[k].childgesin[m].designname + '</td><td>' + transferresult(info[i].timeinfo[k].childgesin[m].isfirst, info[i].timeinfo[k].childgesin[m].istreated) + '</td></tr>';
+                            }
+                       }
+                        if (m > 0) {
+                            if (info[i].timeinfo[k].childgesin[m].chid == childdesigns[number].chid) {
+                                content = content + '<td bgcolor="#ffff66">' + info[i].timeinfo[k].childgesin[m].Treatmentdescribe + "," + info[i].timeinfo[k].childgesin[m].designname + '</td><td bgcolor="#ffff66">' + transferresult(info[i].timeinfo[k].childgesin[m].isfirst, info[i].timeinfo[k].childgesin[m].istreated) + '</td></tr>';
+                            } else {
+                                content = content + '<td>' + info[i].timeinfo[k].childgesin[m].Treatmentdescribe + "," + info[i].timeinfo[k].childgesin[m].designname + '</td><td>' + transferresult(info[i].timeinfo[k].childgesin[m].isfirst, info[i].timeinfo[k].childgesin[m].istreated) + '</td></tr>';
+                            }
+                        }
 
-
-
-
-
+                    }
+                }
+            }
+            $("#appointcheckbody").append(content);
         },
         error: function (data) {
             alert("error");
         }
     });
+}
+
+//转换函数
+function transferresult(args1, args2) {
+    if (args1 == "1") {
+        if (args2 == "") {
+            return "首次预约,未完成";
+        } else {
+            return "首次预约，已经完成";
+        }
+    } else {
+        if (args2 == "") {
+            return "非首次预约,未完成";
+        } else {
+            return "非首次预约，已经完成";
+        }
+    }
+}
+//转换预约时间防止超过24点
+function transfertime(args) {
+    var group = args.split(":");
+    if (parseInt(group[0]) > 24) {
+        return (24 - parseInt(group[0])) + ":" + group[1] + "(次日)";
+    } else {
+        return args;
+    }
+
 }

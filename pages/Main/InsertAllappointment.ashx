@@ -209,7 +209,7 @@ public class InsertAllappointment : IHttpHandler {
                 string patientID = context.Request["pid"];
                 string equipid = context.Request["equip"];
                 string userid = context.Request["userid"];
-                string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and Date>@nowdate";
+                string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and Date>=@nowdate";
                 sqlOperation.AddParameterWithValue("@chid", chid);
                 sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
                 MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(selectcommand);

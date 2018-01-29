@@ -156,8 +156,8 @@
                         </div>
                        <div class="modal-body" style="overflow:hidden;">
                             <div class="panel-row">
-                                 <table id="appointtable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;">
-                                   <thead>
+                                 <table id="appointchecktable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;">
+                                   <thead id="appointcheckhead">
                                        <tr>
                                          <th>预约日期</th>
                                          <th>预约时间段</th>
@@ -165,40 +165,10 @@
                                          <th>完成情况</th>
                                        </tr>
                                    </thead>
-                                     <tr>
-                                         <td  rowspan="3">
-                                             2018-1-18
-                                         </td>
-                                         <td rowspan="2">
-                                             10:10-15:10
-                                         </td>
-                                         <td>
-                                             计划1
-                                         </td>
-                                         <td>
-                                             首次，未完成
-                                         </td>
-                                     </tr>
-                                     <tr>
-                                         
-                                         <td>
-                                             计划2
-                                         </td>
-                                         <td>
-                                             首次，未完成
-                                         </td>
-                                     </tr>
-                                     <tr>
-                                         <td>
-                                             10:10-15:10
-                                         </td>
-                                         <td>
-                                             计划3
-                                         </td>
-                                         <td>
-                                             首次，未完成
-                                         </td>
-                                     </tr>
+                                   <tbody id="appointcheckbody">
+                                        
+                                   </tbody>
+                                    
                                  </table>
                             </div>
                        </div>
