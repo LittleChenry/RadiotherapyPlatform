@@ -54,7 +54,7 @@ public class patientInfoForZLJS : IHttpHandler {
             return "{\"PatientInfo\":false}";
         }
         StringBuilder info = new StringBuilder("{\"PatientInfo\":[");
-        string achievecommand = "select Patient_ID,ID,Begin,End from appointment_accelerate where Date>=@date1 and Date<=@date2 and Equipment_ID=@Equipment order by Date asc,Begin asc";
+        string achievecommand = "select Patient_ID,ID,Begin,End,Date from appointment_accelerate where Date>=@date1 and Date<=@date2 and Equipment_ID=@Equipment order by Date asc,Begin asc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(achievecommand);
         int temp = 1;
         while (reader.Read())
@@ -99,7 +99,7 @@ public class patientInfoForZLJS : IHttpHandler {
                 {
                     completed = "1";
                 }
-                info.Append(",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
+                info.Append(",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
                 if (temp < count)
                 {
                     info.Append(",");
