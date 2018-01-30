@@ -114,7 +114,7 @@ public class recordDiag : IHttpHandler {
                 sqlOperation2.AddParameterWithValue("@treatid", treatID);
                 sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
                 sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
-                sqlOperation2.AddParameterWithValue("@Progress", "0,1,2,3,4,5,6,7,8,9,10");
+                sqlOperation2.AddParameterWithValue("@Progress", "0,1,2,3,4,5,6");
                 int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
                 if (intSuccess > 0 && intSuccess1 > 0)
                 {

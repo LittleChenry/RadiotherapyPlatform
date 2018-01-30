@@ -129,7 +129,7 @@ public class AddTreatment : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@diag", diagid);
                 if (common == 0)
                 {
-                    sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6,7,8,9,10");
+                    sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6");
                     
                 }
                 else {
@@ -154,7 +154,7 @@ public class AddTreatment : IHttpHandler {
                 else
                 {
 
-                    sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6,7,8,9,10");
+                    sqlOperation.AddParameterWithValue("@progress", "0,1,2,3,4,5,6");
                 }
                 sqlOperation.AddParameterWithValue("@diag", diagid);
                 sqlOperation.AddParameterWithValue("@Treatmentdescribe", treatmentdescribe);
