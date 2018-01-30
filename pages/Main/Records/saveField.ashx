@@ -162,6 +162,14 @@ public class saveField : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
                 sqlOperation.AddParameterWithValue("@item", item1);
                 childid1 = sqlOperation.ExecuteScalar(childid1);
+                string selec = "select Splitway_ID from treatment where ID=@treatID";
+                sqlOperation.AddParameterWithValue("@treatID", treatID);
+                string Splitway = sqlOperation.ExecuteScalar(selec);
+                string update1 = "update childdesign set Splitway_ID=@Splitway_ID where ID=@ID";
+                sqlOperation.AddParameterWithValue("@ID", childid1);
+                sqlOperation.AddParameterWithValue("@Splitway_ID", Splitway);
+                sqlOperation1.ExecuteNonQuery(update1);
+               
                 for (int i = 0; i < a; i++)
                 {
                     string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid,Singledose,Totaldose,childdesign_ID) " +
@@ -212,7 +220,13 @@ public class saveField : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
                 sqlOperation.AddParameterWithValue("@item", item1);
                 childid1 = sqlOperation.ExecuteScalar(childid1);
-                
+                string selec = "select Splitway_ID from treatment where ID=@treatID";
+                sqlOperation.AddParameterWithValue("@treatID", treatID);
+                string Splitway = sqlOperation.ExecuteScalar(selec);
+                string update1 = "update childdesign set Splitway_ID=@Splitway_ID where ID=@ID";
+                sqlOperation.AddParameterWithValue("@ID", childid1);
+                sqlOperation.AddParameterWithValue("@Splitway_ID", Splitway);
+                sqlOperation1.ExecuteNonQuery(update1);
                 for (int i = 0; i < a; i++)
                 {
                     string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid,Singledose,Totaldose,childdesign_ID) " +
@@ -220,7 +234,7 @@ public class saveField : IHttpHandler {
                     // sqlOperation.AddParameterWithValue("@ID", Count);
                     sqlOperation.AddParameterWithValue("@code", context.Request.Form["a1" + i + "_" + item]);
                     sqlOperation.AddParameterWithValue("@mu", context.Request.Form["mu" + i + "_" + item]);
-                    sqlOperation.AddParameterWithValue("@equipment", Convert.ToInt32(context.Request.Form["equipment" + i + "_" + item]));
+                    sqlOperation.AddParameterWithValue("@equipment", context.Request.Form["equipment" + i + "_" + item]);
                     sqlOperation.AddParameterWithValue("@radiotechnique", context.Request.Form["technology" + i + "_" + item]);
                     sqlOperation.AddParameterWithValue("@radiotype", context.Request.Form["type" + i + "_" + item]);
                     sqlOperation.AddParameterWithValue("@energy", context.Request.Form["energyField" + i + "_" + item]);
