@@ -129,7 +129,9 @@ function Init(evt) {
                 }
                 document.getElementById("applyuser").innerHTML = info[i].username;
                 document.getElementById("time").innerHTML = info[i].ApplicationTime;
-                if (info[i].userID == userID) {
+                var session = getSession();
+                var role = session.role;
+                if (info[i].userID == userID || role == "科主任") {
                     window.parent.document.getElementById("edit").removeAttribute("disabled");
                     if (info[i].equipname != "") {
                         document.getElementById("idforappoint").value = info[i].appointid;
@@ -410,6 +412,9 @@ function save() {
     var add;
     if (addgroup[0].checked == true) {
         add = addgroup[0].value;
+        if (!confirm("确定需要增强？")) {
+            return false;
+        }
        
     } else {
         add = addgroup[1].value;
@@ -1142,4 +1147,22 @@ function remove() {
         document.getElementById("appointtime").removeAttribute("disabled");
         document.getElementById("chooseappoint").removeAttribute("disabled");
     }
+}
+//获取session
+function getSession() {
+    var Session;
+    $.ajax({
+        type: "GET",
+        url: "getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            //alert(data);
+            Session = $.parseJSON(data);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+    return Session;
 }
