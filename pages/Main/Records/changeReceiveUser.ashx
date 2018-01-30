@@ -49,15 +49,28 @@ public class changeReceiveUser : IHttpHandler {
             string select1 = "select Progress from treatment where ID=@treat";
             sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatID));
             string progress = sqlOperation.ExecuteScalar(select1);
+            string select11 = "select iscommon from treatment where ID=@treat";
+            sqlOperation.AddParameterWithValue("@treat", Convert.ToInt32(treatID));
+            string iscommon = sqlOperation.ExecuteScalar(select11);
             string[] group = progress.Split(',');
             bool exists = ((IList)group).Contains("8");
             int Success1 = 0;
             if (!exists)
             {
-                string change = "update treatment set Progress=@ReceiveTime,isback=0 where ID=@treatID";
-                sqlOperation1.AddParameterWithValue("@treatID", Convert.ToInt32(treatID));
-                sqlOperation1.AddParameterWithValue("@ReceiveTime", progress + ",8");
-                Success1 = sqlOperation1.ExecuteNonQuery(change);
+                if (iscommon == "1")
+                {
+                    string change = "update treatment set Progress=@ReceiveTime,isback=0 where ID=@treatID";
+                    sqlOperation1.AddParameterWithValue("@treatID", Convert.ToInt32(treatID));
+                    sqlOperation1.AddParameterWithValue("@ReceiveTime", progress + ",8");
+                    Success1 = sqlOperation1.ExecuteNonQuery(change);
+                }
+                else
+                {
+                    string change = "update treatment set Progress=@ReceiveTime,isback=0 where ID=@treatID";
+                    sqlOperation1.AddParameterWithValue("@treatID", Convert.ToInt32(treatID));
+                    sqlOperation1.AddParameterWithValue("@ReceiveTime", progress + ",8,9,10");
+                    Success1 = sqlOperation1.ExecuteNonQuery(change);
+                }
             }
             else
             {

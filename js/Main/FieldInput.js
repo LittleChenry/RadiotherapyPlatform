@@ -861,7 +861,10 @@ function createTabPanel(panelId){
                 +"</div>");
 
     $div_6.appendTo($div_papercontent1);
-    $div_7.appendTo($div_papercontent1);
+    if (common == 1) {
+        $div_7.appendTo($div_papercontent1);
+    }
+    
     $div_8.appendTo($div_papercontent1);
     $div_9.appendTo($div_papercontent1);
     $div_10.appendTo($div_papercontent1);
