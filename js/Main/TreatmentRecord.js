@@ -11,6 +11,7 @@ var childdesigns;
 function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
+    var appointid = "";
     //var appoint = window.location.search.split("&")[1];//?后第一个变量信息
     //var appointid = appoint.split("=")[1];
     //调取后台所有等待就诊的疗程号及其对应的病人

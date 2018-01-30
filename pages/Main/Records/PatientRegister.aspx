@@ -380,6 +380,34 @@
             </div>
         </div>
     </div>
+    <div id="checkappointmodal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="width:700px;">
+            <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">查看加速器预约情况</h4>
+            </div>
+            <div class="modal-body" style="overflow:hidden;">
+                <div class="panel-row">
+                        <table id="appointchecktable" class="table table-bordered col-xs-12" style="table-layout:fixed;word-wrap:break-word;">
+                        <thead id="appointcheckhead">
+                            <tr>
+                                <th>预约日期</th>
+                                <th>预约时间段</th>
+                                <th>预约列表</th>
+                                <th>完成情况</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointcheckbody">
+                                        
+                        </tbody>
+                                    
+                        </table>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
     <!-- jQuery 2.2.3 -->
     <script src="../../../plugin/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- jQuery UI 1.11.4 -->

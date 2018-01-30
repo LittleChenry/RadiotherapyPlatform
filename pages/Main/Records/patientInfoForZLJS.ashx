@@ -54,7 +54,7 @@ public class patientInfoForZLJS : IHttpHandler {
             return "{\"PatientInfo\":false}";
         }
         StringBuilder info = new StringBuilder("{\"PatientInfo\":[");
-        string achievecommand = "select Patient_ID,ID,Begin,End from appointment_accelerate where Date>=@date1 and Date<=@date2 and Equipment_ID=@Equipment order by Date asc,Begin asc";
+        string achievecommand = "select Patient_ID,ID,Begin,End,Date from appointment_accelerate where Date>=@date1 and Date<=@date2 and Equipment_ID=@Equipment order by Date asc,Begin asc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(achievecommand);
         int temp = 1;
         while (reader.Read())
@@ -80,11 +80,11 @@ public class patientInfoForZLJS : IHttpHandler {
                 MySql.Data.MySqlClient.MySqlDataReader reader2 = sqlOperation2.ExecuteReader(groupcommand);
                 if (reader2.Read())
                 {
-                    info.Append(reader2["groupname"].ToString() + "\",\"doctor\":\"" + reader2["doctor"].ToString() + "\",\"treatmentID\":\"" + treatmentID + "\",\"appoint\":\"" + reader["ID"].ToString() + "\",\"progress\":\"" + reader2["progress"].ToString() + "\"");
+                    info.Append(reader2["groupname"].ToString() + "\",\"doctor\":\"" + reader2["doctor"].ToString() + "\",\"treatID\":\"" + treatmentID + "\",\"appointid\":\"" + reader["ID"].ToString() + "\",\"Progress\":\"" + reader2["progress"].ToString() + "\"");
                 }
                 else
                 {
-                    info.Append("\",\"doctor\":\"" + "\",\"treatmentID\":\"" + treatmentID + "\",\"appoint\":\"" + reader["ID"].ToString() + "\",\"progress\":\"\"");
+                    info.Append("\",\"doctor\":\"" + "\",\"treatID\":\"" + treatmentID + "\",\"appointid\":\"" + reader["ID"].ToString() + "\",\"Progress\":\"\"");
                 }
                 reader2.Close();
                 string coutcommand = "select count(*) from treatmentrecord where Appointment_ID=@app and Treat_User_ID  is null";
@@ -93,13 +93,13 @@ public class patientInfoForZLJS : IHttpHandler {
                 string completed = "";
                 if (countthis > 0)
                 {
-                    completed = "false";
+                    completed = "0";
                 }
                 else
                 {
-                    completed = "true";
+                    completed = "1";
                 }
-                info.Append(",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"completed\":\"" + completed + "\"}");
+                info.Append(",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
                 if (temp < count)
                 {
                     info.Append(",");

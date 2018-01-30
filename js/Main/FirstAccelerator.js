@@ -1105,7 +1105,8 @@ function chakanapp(number) {
         async: false,
         data: {
             patientid: patientid,
-            chid:childdesigns[number].chid
+            chid: childdesigns[number].chid,
+            treatmentid:""
         },
         dateType: "json",
         success: function (data) {

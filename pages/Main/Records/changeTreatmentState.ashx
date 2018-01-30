@@ -3,13 +3,18 @@
 using System;
 using System.Web;
 using System.Text;
+using System.Collections;
 public class changeTreatmentState : IHttpHandler {
+    private DataLayer sqlOperation = new DataLayer("sqlStr");
     private DataLayer sqlOperation1 = new DataLayer("sqlStr");
     private DataLayer sqlOperation2 = new DataLayer("sqlStr");
     public void ProcessRequest(HttpContext context)
     {
         context.Response.ContentType = "text/plain";
-        string backString = getprinItem(context);      
+        string backString = getprinItem(context);
+        sqlOperation.Close();
+        sqlOperation.Dispose();
+        sqlOperation = null;   
         sqlOperation1.Close();
         sqlOperation1.Dispose();
         sqlOperation1 = null;
@@ -75,18 +80,57 @@ public class changeTreatmentState : IHttpHandler {
                    
                 }
                reader.Close();
-               string selectallaccerappoint = "select ID from appointment_accelerate where Treatment_ID=@treat and Completed=0";
+               string childdesignlistcommand = "select DISTINCT(ID) from childdesign where Treatment_ID=@treat";
                sqlOperation2.AddParameterWithValue("@treat", treatID);
-               reader = sqlOperation2.ExecuteReader(selectallaccerappoint);
-                while (reader.Read())
-                {
-                    string deletecommand = "delete from appointment_accelerate where ID=@appointid";
-                    sqlOperation1.AddParameterWithValue("@appointid", reader["ID"].ToString());
-                    sqlOperation1.ExecuteNonQuery(deletecommand);
-                    string deletecommand2 = "delete from treatmentrecord where Appointment_ID=@appointid";
-                    sqlOperation1.ExecuteNonQuery(deletecommand2);
-                }
-                reader.Close();
+               reader = sqlOperation2.ExecuteReader(childdesignlistcommand);
+               ArrayList childdesignlist = new ArrayList();
+               while (reader.Read())
+               {
+                   childdesignlist.Add(reader["ID"].ToString());
+               }
+               reader.Close();
+               for (int k = 0; k < childdesignlist.Count; k++)
+               {
+                   string chid = childdesignlist[k].ToString();
+                   string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and Date>=@nowdate";
+                   sqlOperation.AddParameterWithValue("@chid", chid);
+                   sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
+                   sqlOperation.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
+                   reader = sqlOperation.ExecuteReader(selectcommand);
+                   ArrayList arrayforapp = new ArrayList();
+                   ArrayList arrayforapp2 = new ArrayList();
+                   ArrayList treatmentarray = new ArrayList();
+                   while (reader.Read())
+                   {
+                       arrayforapp.Add(reader["appointid"].ToString());
+                       treatmentarray.Add(reader["treatmentrecordid"].ToString());
+                   }
+                   reader.Close();
+                   for (int i = 0; i < arrayforapp.Count; i++)
+                   {
+                       string isexists = "select count(*) from treatmentrecord where ChildDesign_ID<>@chid and Appointment_ID=@appoint";
+                       sqlOperation.AddParameterWithValue("@chid", chid);
+                       sqlOperation.AddParameterWithValue("@appoint", arrayforapp[i]);
+                       int count = int.Parse(sqlOperation.ExecuteScalar(isexists));
+                       if (count == 0)
+                       {
+                           arrayforapp2.Add(arrayforapp[i]);
+                       }
+                   }
+                   for (int i = 0; i < arrayforapp2.Count; i++)
+                   {
+                       string deletecommand = "delete from appointment_accelerate where ID=@appoint";
+                       sqlOperation.AddParameterWithValue("@appoint", arrayforapp2[i]);
+                       sqlOperation.ExecuteNonQuery(deletecommand);
+                   }
+                   for (int i = 0; i < treatmentarray.Count; i++)
+                   {
+                       string deletecommand2 = "delete from treatmentrecord where ID=@tretmentid";
+                       sqlOperation.AddParameterWithValue("@tretmentid", treatmentarray[i]);
+                       sqlOperation.ExecuteNonQuery(deletecommand2);
+                   }
+               }
+      
             }
             string change = "update treatment set State=@state where ID=@treatID";
             sqlOperation1.AddParameterWithValue("@treatID", Convert.ToInt32(treatID));
