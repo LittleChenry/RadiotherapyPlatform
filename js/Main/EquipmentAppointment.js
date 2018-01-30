@@ -12,427 +12,81 @@ $(document).ready(function () {
 	chooseEquipment();
 	$("#sureEquipment").unbind("click").click(function () {
 	    nowDate = new Date();
-        var equipmentType = $("#equipmentType").val();
 		var equipmentID = $("#equipment").val();
         $("#currentEquipment").val(equipmentID);
 		if (equipmentID == null) {
 			alert("请选择设备！");
 			return false;
 		}
-		if (equipmentType == "加速器") {
-		    $("#buttonArea").hide();
-            $("#AppointType").attr("href","#appointViewAccelerate");
-            if ($("#appointViewAccelerate").hasClass("active") || $("#appointView").hasClass("active")) {
-                $("#appointView").removeClass("active");
-                $("#appointViewAccelerate").addClass("active");
-            }
-            AccelerateAppointView();
+        showButton();
+		if ($("#equipmentType").val() == "加速器") {
+		    AccelerateAppointView(nowDate);
         }else{
-            $("#AppointType").attr("href","#appointView");
-            if ($("#appointViewAccelerate").hasClass("active") || $("#appointView").hasClass("active")) {
-                $("#appointViewAccelerate").removeClass("active");
-                $("#appointView").addClass("active");
-            }
-            createButton();
             appointView(nowDate);
-            var WeekAreaNormal = $("#WeekAreaNormal");
-            Appoint2Patient(WeekAreaNormal);
+            Appoint2Patient();
         }
 		patientView();
 	});
 
-	//document.getElementById("chooseProject").addEventListener("click", function () {
-	//    CreateNewAppiontTable(event);
-	//}, false);
-
-	$("#timeselect").bind("change", function () {
+	$("#timeselect").unbind("click").bind("change", function () {
 	    var dateString = document.getElementById("AppiontDate").value;
 	    CreateCurrentAccerEquipmentTbale(dateString);
 	});
-    
-	$("#lastWeek").bind("click", function () {
+	$("#lastWeek").unbind("click").bind("click", function () {
 	    changeDate(-7);
 	});
-
-	$("#lastDay").bind("click", function () {
+	$("#lastDay").unbind("click").bind("click", function () {
 	    changeDate(-1);
 	});
-
-	$("#nextDay").bind("click", function () {
+	$("#nextDay").unbind("click").bind("click", function () {
 	    changeDate(1);
 	});
-
-	$("#nextWeek").bind("click", function () {
+	$("#nextWeek").unbind("click").bind("click", function () {
 	    changeDate(7);
 	});
 
-	$("#sureDate").bind("click", function () {
+	$("#sureDate").unbind("click").bind("click", function () {
 	    var dates = $("#dates").val().split("-");
 	    nowDate = new Date(dates[0],parseInt(dates[1])-1,dates[2]);
-	    appointView(nowDate);
-	    var WeekAreaNormal = $("#WeekAreaNormal");
-	    Appoint2Patient(WeekAreaNormal);
+        if ($("#equipmentType").val() == "加速器") {
+            AccelerateAppointView(nowDate);
+        }else{
+            appointView(nowDate);
+            Appoint2Patient();
+        }
 	});
 });
 
 function changeDate(days) {
     nowDate.setDate(nowDate.getDate() + days);
-    appointView(nowDate);
-    var WeekAreaNormal = $("#WeekAreaNormal");
-    Appoint2Patient(WeekAreaNormal);
+    if ($("#equipmentType").val() == "加速器") {
+        AccelerateAppointView(nowDate);
+    }else{
+        appointView(nowDate);
+        Appoint2Patient();
+    }
 }
 
-function createButton() {
+function showButton() {
     $("#buttonArea").show();
 }
 
-function AccelerateAppointView(){
-    var equipmentID = $("#equipment").val();
-    var WeekArea = $("#WeekArea")
-    var appiontview = getAppointRecords(equipmentID);
-    var machineinfo = appiontview.machineinfo;
-    var appointinfo = appiontview.appointinfo;
-    var morningEnd = 720;
-    var afternoonEnd = 1080;
-    var count = 0;
-    var num = appointinfo.length;
-    var DayTimeArea = $("#DayTimeArea");
-    var WeekArea = $("#WeekArea");
-    WeekArea.html("");
-    var chooseWeek = $("#chooseWeek");
-    chooseWeek.html("");
-    var DayRemoveTable = $("#DayRemoveTable");
-    if (appointinfo.length != 0) {
-        var begintime = parseInt(appointinfo[0].Begin);
-    } else {
-        var begintime = 420;
-    }
-    var maxbegin = parseInt(appiontview.maxbegin);
-    var timelength = parseInt(machineinfo.Timelength);
-    var rows = (maxbegin - begintime) / timelength + 1;
-    var endtime = begintime + timelength;
-    var optionWay = $("#optionWay");
-    var chooseWay = $("#chooseWay");
-    $("#startchoose").removeClass("selected-btn");
-    optionWay.hide();
-    chooseWay.hide();
-    while(count < num){
-        var currentdate = appointinfo[count].Date;
-        var datediff = GetDateDiff(new Date().Format("yyyy-MM-dd"),new Date(currentdate).Format("yyyy-MM-dd"));
-        var needtable = Math.floor(datediff / 7) + 1;
-        var tablenum = WeekArea.find("table").length;
-        if(tablenum < needtable){
-            if (WeekArea.find("table").length == 0) {
-                var table = '<table class="table table-bordered table-hover" style="table-layout:fixed;"><thead><tr>';
-                var button = '<button type="button" class="time-btn selected-btn" style="margin-right:5px;margin-bottom:4px;">'+ '第' + needtable + '周' +'</button>';
-            }else{
-                var table = '<table class="table table-bordered table-hover" style="display:none;table-layout:fixed;"><thead><tr>';
-                var button = '<button type="button" class="time-btn" style="margin-right:5px;margin-bottom:4px;">'+ '第' + needtable + '周' +'</button>';
-            }
-            chooseWeek.append(button);
-            table += '<th>时间' + '\\' + '日期</th>';
-            for (var i = 0; i < 7; i++) {
-                var thisDate = new Date(dateAdd(new Date().Format("yyyy-MM-dd"),i + tablenum * 7));
-                var weekday = thisDate.getDay();
-                var th = '<th>'+ thisDate.Format("MM/dd") + '('+ num2week(weekday) +')' +'</th>';
-                table += th;
-            }
-            table += "</tr></thead><tbody style='text-align:center;'>";
-            for (var i = 0; i < rows; i++) {
-                var TempBegin = begintime + i * timelength;
-                var TempEnd = TempBegin + timelength;
-                if (TempEnd <= morningEnd) {
-                    var tr = '<tr class="morning"><td>'+ toTime(TempBegin) + '-'+ toTime(TempEnd) +'</td>';
-                }else if (TempEnd <= afternoonEnd) {
-                    var tr = '<tr class="afternoon"><td>'+ toTime(TempBegin) + '-'+ toTime(TempEnd) +'</td>';
-                }else{
-                    var tr = '<tr class="evening"><td>'+ toTime(TempBegin) + '-'+ toTime(TempEnd) +'</td>';
-                }
-                for (var j = 0; j < 7; j++) {
-                    tr += "<td id='"+ (needtable).toString() + "_" + i + "_" + j +"'></td>";
-                }
-                tr += "</tr>";
-                table += tr;
-            }
-            table += "</tbody></table>";
-            WeekArea.append(table);
-        }
-
-        count ++;
-    }
-
-    count = 0;
-
-    while(count < num){
-        var currentdate = appointinfo[count].Date;
-        var currenttime = parseInt(appointinfo[count].Begin);
-        var datediff = GetDateDiff(new Date().Format("yyyy-MM-dd"),new Date(currentdate).Format("yyyy-MM-dd"));
-        var tablenum = Math.floor(datediff / 7) + 1;
-        var col = datediff - 7 * (tablenum - 1);
-        var row = (currenttime - begintime) / timelength;
-        var tdid = tablenum.toString() + "_" +  row.toString() + "_" +  col.toString();
-        var span = '<span id='+ appointinfo[count].TreatmentID + '_' + appointinfo[count].appointid +'>'+ appointinfo[count].patientname + " " + appointinfo[count].treatdescribe +'</span>'
-        $("#" + tdid).append(span);
-        if (appointinfo[count].Completed == 0) {
-            $("#" + tdid).addClass("waiting");
-        }
-        count ++;
-    }
-
-    $("#chooseWeek").find("button").each(function(index,e){
-        $(this).unbind("click").bind("click",{index:index},function(e){
-            var WeekArea = $("#WeekArea");
-            var btnindex = e.data.index;
-            chooseWeek.find("button").each(function(index,e){
-                if ($(this).hasClass("selected-btn")) {
-                    $(this).removeClass("selected-btn");
-                }
-            });
-            $(this).addClass("selected-btn");
-            WeekArea.find("table").each(function(index,e){
-                if ($(this).css("display") != "none") {
-                    $(this).fadeOut(200,function(){
-                        WeekArea.find("table").each(function(index,e){
-                            if (btnindex == index) {
-                                $(this).fadeIn(200);
-                            }
-                        });
-                    });
-                }
-            });
-        });
-    });
-
-    var chooseTime = $("#chooseTime");
-    chooseTime.find("button").each(function(index,e){
-        $(this).unbind("click").bind("click",{index:index},function(e){
-            switch(e.data.index){
-                case 0:
-                    if ($(this).hasClass("selected-btn")) {
-                        $(".morning").fadeOut(200);
-                        $(this).removeClass("selected-btn");
-                    }else{
-                        $(".morning").fadeIn(200);
-                        $(this).addClass("selected-btn");
-                    }
-                    break;
-                case 1:
-                    if ($(this).hasClass("selected-btn")) {
-                        $(".afternoon").fadeOut(200);
-                        $(this).removeClass("selected-btn");
-                    }else{
-                        $(".afternoon").fadeIn(200);
-                        $(this).addClass("selected-btn");
-                    }
-                    break;
-                case 2:
-                    if ($(this).hasClass("selected-btn")) {
-                        $(".evening").fadeOut(200);
-                        $(this).removeClass("selected-btn");
-                    }else{
-                        $(".evening").fadeIn(200);
-                        $(this).addClass("selected-btn");
-                    }
-                    break;
-            }
-        });
-        
-    });
-
-    $("#chooseWay").find("button").each(function(index,e){
-        $(this).unbind("click").bind("click",{index:index},function(e){
-            if (e.data.index == 0) {
-                CancelClick();
-                UnlimitedChooseTreat();
-                $(this).removeClass("selected-btn").addClass("selected-btn");
-                if ($(this).next().hasClass("selected-btn")) {
-                    $(this).next().removeClass("selected-btn");
-                }
-            }else if (e.data.index == 1) {
-                CancelClick();
-                BatchChooseTreat();
-                $(this).removeClass("selected-btn").addClass("selected-btn");
-                if ($(this).prev().hasClass("selected-btn")) {
-                    $(this).prev().removeClass("selected-btn");
-                }
-            }
-        });
-    });
-
-
-    $("#RemoveByDay").unbind("click").bind("click",function(){
-        DayRemoveTable.html("");
-        $("#chooseWeek").find("button").each(function(index,e){
-            if ($(this).hasClass("selected-btn")) {
-                var tbody = '<tbody>';
-                for (var i = 0; i < 7; i++) {
-                    var thisDate = new Date(dateAdd(new Date().Format("yyyy-MM-dd"),i + index * 7));
-                    var weekday = thisDate.getDay();
-                    var time = thisDate.Format("MM/dd") + '('+ num2week(weekday) +')';
-                    var idtime = thisDate.Format("yyyy-MM-dd");
-                    table += th;
-                    if (i == 0) {
-                        var tr = '<tr><td id='+ idtime +' class="RemoveDay">'+ time + '</td><td rowspan="7"><button id="ExchangeDayAppoint" class="time-btn" type="button" disabled="disabled" data-dismiss="modal"><i class="fa fa-fw fa-exchange"></i></button></td><td id='+ idtime + '_1' +' class="RemoveDay1">'+ time + '</td></tr>';
-                    }else{
-                        var tr = '<tr><td id='+ idtime +' class="RemoveDay">'+ time + '</td><td id='+ idtime + '_1' +' class="RemoveDay1">'+ time + '</td></tr>';
-                    }
-                    tbody += tr;
-                }
-                tbody += '</tbody>';
-                DayRemoveTable.append(tbody);
-            }
-        });
-        DayRemoveTable.find(".RemoveDay").each(function(index,e){
-            $(this).unbind("click").bind("click",function(){
-                $("#ExchangeDayAppoint").attr("disabled","disabled");
-                DayRemoveTable.find(".RemoveDay").each(function(index,e){
-                    if ($(this).hasClass("treat-td")) {
-                        $(this).removeClass("treat-td");
-                    }
-                });
-                $(this).removeClass("treat-td").addClass("treat-td");
-                DayRemoveTable.find(".RemoveDay1").each(function(index,e){
-                    if ($(this).hasClass("treat-td")) {
-                        $(this).removeClass("treat-td");
-                    }else if ($(this).hasClass("selected-td")) {
-                        $(this).removeClass("selected-td");
-                    }
-                    $(this).unbind("click").bind("click",function(){
-                        DayRemoveTable.find(".RemoveDay1").each(function(index,e){
-                            if ($(this).hasClass("treat-td")) {
-                                $(this).removeClass("treat-td");
-                            }
-                        });
-                        $(this).removeClass("treat-td").addClass("treat-td");
-                        $("#ExchangeDayAppoint").removeAttr("disabled");
-                    });
-                });
-                var tdid1 = $(this).attr("id") + "_1";
-                $("#" + tdid1).addClass("selected-td");
-                $("#" + tdid1).unbind("click");
-            });
-        });
-        $("#ExchangeDayAppoint").unbind("click").bind("click",function(){
-            var day1,day2;
-            DayRemoveTable.find(".RemoveDay").each(function(index,e){
-                if ($(this).hasClass("treat-td")) {
-                    day1 = $(this).attr("id");
-                    return day1;
-                }
-            });
-            DayRemoveTable.find(".RemoveDay1").each(function(index,e){
-                if ($(this).hasClass("treat-td")) {
-                    day2 = $(this).attr("id").split("_")[0];
-                    return day2;
-                }
-            });
-            var currentEquipmentID = $("#currentEquipment").val();
-            $.ajax({
-                type: "POST",
-                async: false,
-                data:{
-                    EquipmentID:currentEquipmentID,
-                    day1:day1,
-                    day2:day2
-                },
-                url: "ChangeDiffAppoint.ashx",
-                success:function(){
-                    AccelerateAppointView();
-                    alert("修改成功！");
-                }
-            });
-        });
-    });
-
-    Appoint2Patient(WeekArea);
-    $("#startchoose").unbind("click").bind("click",function(){
-        var optionWay = $("#optionWay");
-        var chooseWay = $("#chooseWay");
-        if ($(this).hasClass("selected-btn")) {
-            $(this).removeClass("selected-btn");
-            optionWay.hide();
-            chooseWay.hide();
-            removeClick();
-            Appoint2Patient(WeekArea);
-        }else{
-            $(this).addClass("selected-btn");
-            optionWay.show();
-            chooseWay.show();
-            removeClick();
-            BatchChooseTreat();
-        }
-        
-    });
-
-    $("#CancelTreatment").unbind("click").bind("click",function(){
-        CancelTreatment();
-    });
-
-    $("#DeleteAppoint").unbind("click").bind("click",function(){
-        DeleteTreatment(timelength,begintime);
-        AccelerateAppointView();
-    });
+function AccelerateAppointView(nowDate){
+    alert(nowDate);
 }
 
-function BatchChooseTreat(){
-    var WeekArea = $("#WeekArea");
-    WeekArea.find("table").each(function(index,e){
-        $(this).find("td").each(function(index,e){
-            if($(this).find("span").length > 0 && !($(this).hasClass("completed"))){
-                $(this).bind("click",function(){
-                    var treatID = $(this).find("span").attr('id').split("_")[0];
-                    if (!($(this).hasClass("treat-td"))) {
-                        findAllTreatIDTd(treatID);
-                    }else{
-                        cancelAllTreatIDTd(treatID)
-                    }
-                });
-            }
-        });
-    });
-}
-
-function UnlimitedChooseTreat(){
-    var WeekArea = $("#WeekArea");
-    WeekArea.find("table").each(function(index,e){
-        $(this).find("td").each(function(index,e){
-            if($(this).find("span").length > 0 && !($(this).hasClass("completed"))){
-                $(this).bind("click",function(){
-                    if ($(this).hasClass("treat-td")) {
-                        $(this).removeClass("treat-td");
-                    }else{
-                        $(this).addClass("treat-td");
-                    }
-                });
-            }
-        });
-    });
-}
-
-function findAllTreatIDTd(treatID){
-    var WeekArea = $("#WeekArea");
-    WeekArea.find("table").each(function(index,e){
-        $(this).find("td").each(function(index,e){
-            if($(this).find("span").length > 0){
-                if ($(this).find("span").attr("id").split("_")[0] == treatID) {
-                    $(this).addClass("treat-td");
-                }else if ($(this).hasClass("treat-td")) {
-                    $(this).removeClass("treat-td");
-                }
-            }
-        });
-    });
-}
-
-function Appoint2Patient(e){
-    var WeekArea = e;
+function Appoint2Patient(){
+    var WeekArea = $("#WeekAreaNormal");
     WeekArea.find("table").each(function(index,e){
         $(this).find("td").each(function(index,e){
             $(this).unbind("click").bind("click",function(){
                 if ($(this).find("span").length > 0) {
                     var treatID = $(this).find("span").attr("id").split("_")[0];
+                    $("#viewAppoints").find("thead").html("");
                     var viewAppointsBody = $("#viewAppoints").find("tbody");
                     viewAppointsBody.html("");
+                    var thead = '<tr><th>预约项目</th><th>预约时间</th><th>是否完成</th><th>操作</th></tr>';
+                    $("#viewAppoints").find("thead").append(thead);
                     temptreatmentID = treatID;
                     var appoints = getAppointments(treatID);
                     var session = getSession();
@@ -504,190 +158,14 @@ function Appoint2Patient(e){
     
 }
 
-function removeClick(){
-    var WeekArea = $("#WeekArea");
-    WeekArea.find("table").each(function(index,e){
-        $(this).find("td").each(function(index,e){
-            $(this).unbind("click");
-            if ($(this).hasClass("treat-td")) {
-                $(this).removeClass("treat-td");
-            }
-        });
-    });
-}
-
-function cancelAllTreatIDTd(treatID){
-    var WeekArea = $("#WeekArea");
-    WeekArea.find("table").each(function(index,e){
-        $(this).find("td").each(function(index,e){
-            if($(this).find("span").length > 0){
-                if ($(this).find("span").attr("id").split("_")[0] == treatID) {
-                    $(this).removeClass("treat-td");
-                }
-            }
-        });
-    });
-}
-
-function CancelTreatment(){
-    var WeekArea = $("#WeekArea");
-    WeekArea.find("table").each(function(index,e){
-        $(this).find("td").each(function(){
-            if ($(this).hasClass("treat-td")) {
-                $(this).removeClass("treat-td");
-            }
-        });
-    });
-}
-
-function DeleteTreatment(timelength,begintime){
-    var data = findAllTreatData(timelength,begintime);
-    $.ajax({
-        type: "POST",
-        async: false,
-        data:{
-            appoint:data
-        },
-        url: "AppointChangeAndDelete.ashx",
-        success:function(){
-            alert("修改成功！");
-        }
-    });
-}
-
-function findAllTreatData(timelength,begintime){
-    var WeekArea = $("#WeekArea");
-    var data = "[";
-    WeekArea.find("table").each(function(index,e){
-        $(this).find("td").each(function(){
-            if ($(this).hasClass("treat-td")) {
-                var tdid = $(this).attr("id").split("_")[0];
-                var appointid = $(this).find("span").attr("id").split("_")[1];
-                var rownum = parseInt(tdid.split("_")[1]);
-                var tablenum = parseInt(tdid.split("_")[0]);
-                var colnum = parseInt(tdid.split("_")[2]);
-                var begindate = new Date();
-                var date = dateAdd(begindate.Format("yyyy-MM-dd"),(tablenum - 1) * 7 + colnum);
-                var begin = begintime + rownum * timelength;
-                var isdouble = 0;
-                var end = begin + (isdouble + 1) * timelength;
-                data += '{"appointid":"'+ appointid +'","Date":"","Begin":"","End":""},';
-            }
-        });
-    });
-    var l = data.length;
-    if (l > 1) {
-        data = data.substring(0,data.length-1);
-    }else{
-        data += "\"\"";
-    }
-    data += ']';
-    return data;
-}
-
-function CancelClick(){
-    var WeekArea = $("#WeekArea");
-    WeekArea.find("table").each(function(index,e){
-        $(this).find("td").each(function(){
-            $(this).unbind("click");
-        });
-    });
-}
-
 function patientView(){
 	var equipmentID = $("#equipment").val();
 	var ViewPatient = getViewPatient(equipmentID);
-	var viewPatientsBody = $("#viewPatients").find("tbody");
-	viewPatientsBody.html("");
-	var viewAppointsBody = $("#viewAppoints").find("tbody");
-	viewAppointsBody.html("");
 	showEquipmentInfo(ViewPatient.equipmentinfo);
-	if (ViewPatient.patientinfo != "") {
-		for (var i = 0; i < ViewPatient.patientinfo.length; i++) {
-			var tr = '<tr id="viewpatient_'+ ViewPatient.patientinfo[i].Treatment_ID +'"><td>'+ ViewPatient.patientinfo[i].Radiotherapy_ID +'</td><td>'
-				+ ViewPatient.patientinfo[i].pname +'</td><td>'+ ViewPatient.patientinfo[i].treatmentscribe
-				+'</td><td>'+ ViewPatient.patientinfo[i].DiagnosisResult +'</td></tr>'
-			viewPatientsBody.append(tr);
-		}
-	}else{
-		var tr = '<tr><td colspan="4">暂无预约</td></tr>';
-		viewPatientsBody.append(tr);
-	}
-	viewPatientsBody.find("tr").each(function(index, element){
-		if ($(this).attr("id") != "") {
-			$(this).unbind("click").click(function(){
-				$(this).parent().find("tr").each(function(){
-					$(this).removeClass("chose");
-				});
-				$(this).addClass("chose");
-				viewAppointsBody.html("");
-				var appoints = getAppointments($(this).attr("id").split("_")[1]);
-				var session = getSession();
-				if ((typeof (session) == "undefined")) {
-				    if (confirm("用户身份已经失效,是否选择重新登录?")) {
-				        parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
-				    }
-				}
-				var flag = 1;
-				for (var i = 0; i < appoints.appoint.length; i++) {
-				    var appointDate = new Date(appoints.appoint[i].Date);
-				    var completed = (appoints.appoint[i].Completed == "1") ? "完成" : "待做";
-				    if (parseInt(toTime(appoints.appoint[i].End).split(":")[0]) >= 24) {
-				        var hour = toTime(appoints.appoint[i].Begin).split(":")[0];
-				        var minute = toTime(appoints.appoint[i].Begin).split(":")[1];
-				        if (hour >= 24) {
-				            var beginhour = parseInt(hour) - 24;
-				        } else {
-				            var beginhour = hour;
-				        }
-				        var begin = beginhour + ":" + minute;
-				        var endhour = toTime(appoints.appoint[i].End).split(":")[0];
-				        var endminute = toTime(appoints.appoint[i].End).split(":")[1];
-				        var hourend = parseInt(endhour) - 24;
-				        var end = hourend + ":" + endminute;
-				        var tr = '<tr id="apoint_' + appoints.appoint[i].appointid + '"><td>' + appoints.appoint[i].Task + '</td>'
-                         + '<td>' + appointDate.Format("yyyy-MM-dd") + ' , ' + begin + ' - ' + end + '(次日)</td>'
-                         + '<td>' + completed + '</td>';
-				    } else {
-				        var tr = '<tr id="apoint_' + appoints.appoint[i].appointid + '"><td>' + appoints.appoint[i].Task + '</td>'
-                        + '<td>' + appointDate.Format("yyyy-MM-dd") + ' , ' + toTime(appoints.appoint[i].Begin) + ' - ' + toTime(appoints.appoint[i].End) + '</td>'
-                        + '<td>' + completed + '</td>';
-				    }
-				    if (appoints.appoint[i].Task != "加速器" && session.roleName == "YS") {
-				        if (appoints.appoint[i].Completed == "1") {
-				            tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
-				        } else {
-				            tr = tr + '<td><button  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
-				        }
-				    } else {
-				        if (appoints.appoint[i].Task == "加速器" && session.roleName == "ZLJS" && flag == 0) {
-				            if (appoints.appoint[i].Completed == "1") {
-				                tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
-				            } else {
-				                tr = tr + '<td><button  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
-				            }
-				        } else {
-				            if (appoints.appoint[i].Task == "加速器" && session.roleName == "YS" && flag == 1) {
-				                if (appoints.appoint[i].Completed == "1") {
-				                    tr = tr + '<td><button disabled="disabled" class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
-				                } else {
-				                    tr = tr + '<td><button  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
-				                }
-				                flag = 0;
-				            } else {
-				                tr = tr + '<td><button disabled="disabled"  class="btn btn-success" type="button" onclick="changeAppoint(this)">更改</button></td></tr>';
-				            }
-				        }
-				    }
-				    if (appoints.appoint[i].Task == "加速器") {
-				        flag = 0;
-				    }
-				    viewAppointsBody.append(tr);
-				}
-			});
-		}
-	});
+    $("#viewAppoints").find("tbody").html("");
+    $("#viewAppoints").find("thead").html("");
 }
+
 function getSession() {
     var Session;
     $.ajax({
@@ -704,6 +182,7 @@ function getSession() {
     });
     return Session;
 }
+
 function changeAppoint(e) {
     var treatID = temptreatmentID;
     var $e = $(e);
@@ -809,9 +288,6 @@ function changeAppoint(e) {
             CreateNewAppiontTable(event);
         });
     }
-    //var date = new Date();
-    //var date = date.Format('yyyy-MM-dd');
-    //document.getElementById("AppiontDate").value = date;
     if (item != "加速器") {
         var datetext = $e.parent().parent().children().eq(1).text();
         var date = datetext.split(",")[0];
@@ -959,6 +435,7 @@ function changeAppoint(e) {
     });
     $("#changeAppoint").modal({ backdrop: 'static' });
 }
+
 function getAppointments(treatmentID){
 	var appoints;
     $.ajax({
@@ -1105,6 +582,7 @@ function toTime(minute) {
     var min = parseInt(minute) - hour * 60;
     return hour.toString() + ":" + (min < 10 ? "0" : "") + min.toString();
 }
+
 //设备下拉菜单
 function getNowFormatDate() {
     var date = new Date();
@@ -1138,6 +616,7 @@ function createfixEquipmachine(thiselement, item) {
         }
     }
 }
+
 function createaccerEquipmachine(thiselement, treatmentid) {
     var machineItem = JSON.parse(getmachineItem1(treatmentid)).Item;
     thiselement.options.length = 0;
@@ -1148,6 +627,7 @@ function createaccerEquipmachine(thiselement, treatmentid) {
         }
     }
 }
+
 function getmachineItem1(treatmentid) {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/getfirstaccermachine.ashx?treatmentid=" + treatmentid;
@@ -1156,6 +636,7 @@ function getmachineItem1(treatmentid) {
     var Items = xmlHttp.responseText;
     return Items;
 }
+
 function getmachineItem(item) {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/getfixmachine.ashx?item=" + item;
@@ -1164,6 +645,7 @@ function getmachineItem(item) {
     var Items = xmlHttp.responseText;
     return Items;
 }
+
 //创建某设备某天的预约表
 function CreateCurrentEquipmentTbale(equiment, dateString) {
     $("#timechoose").hide();
@@ -1343,6 +825,7 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
 
     }
 }
+
 function CreateCurrentAccerEquipmentTbale(dateString) {
     $("#timechoose").show();
     $("#amlabel").hide();
@@ -1466,6 +949,7 @@ function CreateCurrentAccerEquipmentTbale(dateString) {
     }
 
 }
+
 function chooseItem() {
     if (ChoseID() == null) {
         if (this.lastChild.className) {
@@ -1487,6 +971,7 @@ function chooseItem() {
     }
 
 }
+
 function ChoseID() {
     var td_id = null;
     var table = document.getElementById("apptiontTable");
@@ -1534,9 +1019,11 @@ function Clear() {
         }
     }
 }
+
 function hasChosen() {
     alert("该时间段已被预约！");
 }
+
 function dateAdd2(dd, n) {
     var strs = new Array();
     strs = dd.split("-");
@@ -1559,6 +1046,7 @@ function dateAdd2(dd, n) {
     var strdate = strYear + "-" + strMonth + "-" + strDay;
     return strdate;
 }
+
 //清楚所有子节点
 function RemoveAllChild(area) {
     while (area.hasChildNodes()) {
@@ -1567,6 +1055,7 @@ function RemoveAllChild(area) {
             area.removeChild(first);
     }
 }
+
 //根据日期创建新表
 function CreateNewAppiontTable(evt) {
     var equipmentName = document.getElementById("equipmentName");
@@ -1582,6 +1071,7 @@ function CreateNewAppiontTable(evt) {
     thisObj = eval("(" + json + ")");
     CreateCurrentEquipmentTbale(thisObj, date);
 }
+
 function CreateNewAccerAppiontTable(evt) {
     var equipmentName = document.getElementById("equipmentName");
     var currentIndex = equipmentName.selectedIndex;
@@ -1597,7 +1087,6 @@ function CreateNewAccerAppiontTable(evt) {
     CreateCurrentAccerEquipmentTbale(date);
 
 }
-
 
 function checkAllTable() {
     var choseid = ChoseID();
