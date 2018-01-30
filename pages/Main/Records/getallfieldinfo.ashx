@@ -46,22 +46,7 @@ public class getallfieldinfo : IHttpHandler {
             string pos = sqlOperation.ExecuteScalar(countcommand2);
             string countcommand3 = "select iscommon from treatment where ID=@treatmentid ";
             int iscommon = Convert.ToInt32(sqlOperation.ExecuteScalar(countcommand3));
-            if (iscommon == 0)
-            {
-                string max = "select max(ID) from design";
-                int MAX = Convert.ToInt32(sqlOperation.ExecuteScalar(max));
-                if (MAX < 1)
-                {
-                    string insert = "insert into design set(ID) " +
-                                        "VALUES(@ID)";
-                    sqlOperation.AddParameterWithValue("@ID", 1);
-                    sqlOperation.ExecuteNonQuery(insert);
-                    MAX = 1;
-                }
-                string update = "update treatment set Design_ID=@Design_ID where ID=@treatmentid";
-                sqlOperation.AddParameterWithValue("@Design_ID", MAX);
-                sqlOperation.ExecuteNonQuery(update);
-            }
+            
             string sqlCommand = "SELECT code,mu,equipment,User_ID,radiotechnique,radiotype,fieldinfomation.energy as energy1,childdesign.energy as energy2,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,Operate_Time,Name,childdesign.* from fieldinfomation,user,childdesign where User_ID=user.ID and childdesign.treatment_ID=treatmentid and childdesign.ID=childdesign_ID and treatmentid=@treatmentid ";
             sqlOperation1.AddParameterWithValue("@treatmentid", treatid);
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation1.ExecuteReader(sqlCommand);
