@@ -177,3 +177,15 @@
 .occupied {
 	background-color: #C1C1C1;
 }
+
+.doctortime {
+	background-color: #C1C1C1;
+}
+
+.pages {
+	display: none;
+}
+
+.showpage {
+	display: table-row;
+}

@@ -373,6 +373,26 @@
             </div>
         </div>
     </div>
+
+    <div id="appointResult" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">预约成功，请确认</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="AppointRecords" class="table table-bordered"></table>
+                    <div class="row" style="margin-right:0px;margin-top:-10px;">
+                        <ul class="pagination no-margin pull-right"></ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="DeleteAppoint" type="button" class="btn btn-warning" data-dismiss="modal">删除预约</button>
+                    <button id="SureAppoint" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.0
