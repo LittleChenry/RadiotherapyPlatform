@@ -29,7 +29,7 @@ public class GetInfoForEquipAndAppoint : IHttpHandler {
         string equipid = context.Request["equipid"];
         string first = context.Request["firstday"];
         DateTime firstdate = Convert.ToDateTime(first);
-        DateTime last = firstdate.AddDays(6);
+        string last = firstdate.AddDays(6).ToString("yyyy-MM-dd");
         StringBuilder backString = new StringBuilder("{\"machineinfo\":");
         string equipinfocommand = "select Name,State,Timelength,BeginTimeAM from equipment where ID=@equipid";
         sqlOperation.AddParameterWithValue("@equipid", equipid);
