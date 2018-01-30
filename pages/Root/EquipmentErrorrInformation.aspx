@@ -88,7 +88,7 @@
               <li class="dropdown tasks-menu">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <i class="fa fa-flag-o"></i>
-                      <span class="label label-danger">9</span>
+                      <span class="label label-danger">0</span>
                   </a>
                   <ul class="dropdown-menu">
                       <li class="header">设备动态</li>

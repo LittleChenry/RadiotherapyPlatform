@@ -75,10 +75,12 @@ function RolesToPatients(session) {
             parameters[1] = session.beginTime;
             parameters[2] = session.endTime;
             patient = getPatient(session.userID, session.role, parameters);
-            sortPatient = patientSort(patient);
-            Paging(sortPatient, session.role, session.userID);
-            $("#chosenEquipment").html(session.equipmentName);
-            $("#dateRange").html(session.beginTime + "~~" + session.endTime);
+            if (patient) {
+                sortPatient = patientSort(patient);
+                Paging(sortPatient, session.role, session.userID);
+                $("#chosenEquipment").html(session.equipmentName);
+                $("#dateRange").html(session.beginTime + "~~" + session.endTime);
+            }
         }
         $("#getSelectedPatient").unbind("click").click(function () {
             var equipmentID = $("#equipment").val();
@@ -113,23 +115,25 @@ function RolesToPatients(session) {
             parameters[1] = startdate;
             parameters[2] = enddate;
             patient = getPatient(session.userID, session.role, parameters);
-            sortPatient = patientSort(patient);
-            Paging(sortPatient, session.role, session.userID);
-            adjustTable();
-            $.ajax({
-                type: "POST",
-                async: false,
-                url: "../../pages/Main/Records/setEquipment.ashx",
-                data: {
-                    id: $("#equipment").val(),
-                    name: $("#equipment option:selected").html(),
-                    beginTime: $("#startdate").val(),
-                    endTime: $("#enddate").val()
-                },
-                error: function () {
-                    alert("error");
-                }
-            });
+            if (patient) {
+                sortPatient = patientSort(patient);
+                Paging(sortPatient, session.role, session.userID);
+                adjustTable();
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "../../pages/Main/Records/setEquipment.ashx",
+                    data: {
+                        id: $("#equipment").val(),
+                        name: $("#equipment option:selected").html(),
+                        beginTime: $("#startdate").val(),
+                        endTime: $("#enddate").val()
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
         });
         $("#patient-search").bind('input propertychange', function () {
             var session = getSession();
@@ -140,15 +144,17 @@ function RolesToPatients(session) {
     } else {
         var parameters = new Array();
         patient = getPatient(session.userID, session.role, parameters);
-        sortPatient = patientSort(patient);
-        Paging(sortPatient, session.role, session.userID);
-        $("#patient-search").bind('input propertychange', function (e) {
-            var Searchedpatients = Search($("#patient-search").val(), sortPatient, session.role);
-            Paging(Searchedpatients, session.role, session.userID);
-            adjustTable();
-        });
-        if (session.role == "医师" || session.role == "剂量师" || session.role == "物理师") {
-            TaskWarning(sortPatient);
+        if (patient) {
+            sortPatient = patientSort(patient);
+            Paging(sortPatient, session.role, session.userID);
+            $("#patient-search").bind('input propertychange', function (e) {
+                var Searchedpatients = Search($("#patient-search").val(), sortPatient, session.role);
+                Paging(Searchedpatients, session.role, session.userID);
+                adjustTable();
+            });
+            if (session.role == "医师" || session.role == "剂量师" || session.role == "物理师") {
+                TaskWarning(sortPatient);
+            }
         }
     }
     return sortPatient;
@@ -303,7 +309,7 @@ function Paging(patient, role, userID) {
             case "治疗技师":
                 $("#legend-waiting").show();
                 var TreatmentID, Name, Gender, patientid, doctor, begin, end, Age, doctor, groupname;
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>患者姓名</th><th>时间段</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>状态</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
@@ -314,8 +320,10 @@ function Paging(patient, role, userID) {
                     doctor = patient.PatientInfo[i].doctor;
                     begin = patient.PatientInfo[i].begin;
                     end = patient.PatientInfo[i].end;
+                    date = new Date(patient.PatientInfo[i].Date);
                     Age = patient.PatientInfo[i].Age;
                     groupname = patient.PatientInfo[i].groupname;
+                    Completed = (patient.PatientInfo[i].Completed == "1") ? "完成" : "等待";
                     if (patient.PatientInfo[i].Completed == "1") {
                         var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='";
                     }else {
@@ -326,7 +334,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>"+ Name +"</td><td>"+ Num2Time(begin, end) +"</td><td>" + Gender + "</td>" +
+                    trtemp = "'><td><i></i></td><td style='text-align:left'>"+ date.Format("M-d") + " , " + Num2Time(begin, end) +"</td><td>"+ Completed +"</td><td>"+ Name +"</td><td>" + Gender + "</td>" +
                              "<td>" + Age + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -461,9 +469,9 @@ function Paging(patient, role, userID) {
                 table.append(tbody);
                 break;
             case "治疗技师":
-                var thead = '<thead><tr><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>状态</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="5" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "科主任":
@@ -1585,22 +1593,18 @@ function Search(str, patient, role) {
             break;
         case "治疗技师":
             for (var i = 0; i < patient.PatientInfo.length; i++) {
-                TreatmentID = patient.PatientInfo[i].treatID;
-                Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-                Name = patient.PatientInfo[i].Name;
-                treat = patient.PatientInfo[i].treat;
-                diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
-                date = patient.PatientInfo[i].date;
+                Name = patient.PatientInfo[i].name;
+                Gender = patient.PatientInfo[i].Gender;
                 doctor = patient.PatientInfo[i].doctor;
+                begin = patient.PatientInfo[i].begin;
+                end = patient.PatientInfo[i].end;
+                time = Num2Time(begin, end);
+                date = new Date(patient.PatientInfo[i].Date);
+                Age = patient.PatientInfo[i].Age;
+                groupname = patient.PatientInfo[i].groupname;
                 Completed = (patient.PatientInfo[i].Completed == "1") ? "完成" : "等待";
-                begin = toTime(patient.PatientInfo[i].begin);
-                end = toTime(patient.PatientInfo[i].end);
-                finishedtimes = patient.PatientInfo[i].finishedtimes;
-                totalnumber = patient.PatientInfo[i].totalnumber;
-                totaltimes = patient.PatientInfo[i].totaltimes;
-                iscommon = patient.PatientInfo[i].iscommon;
-                if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || doctor.search(str) >= 0 || Completed.search(str) >= 0 || finishedtimes.search(str) >= 0 || totalnumber.search(str) >= 0 || totaltimes.search(str) >= 0) {
-                    var singlepatient = {Progress: patient.PatientInfo[i].Progress,appointid:patient.PatientInfo[i].appointid,finishedtimes:patient.PatientInfo[i].finishedtimes, totaltimes:patient.PatientInfo[i].totaltimes, totalnumber:patient.PatientInfo[i].totalnumber, iscommon:iscommon, treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed};
+                if (Name.search(str) >= 0 || Age.search(str) >= 0 || Gender.search(str) >= 0 || doctor.search(str) >= 0 || time.search(str) >= 0 || date.Format("M-d").search(str) >= 0 || Completed.search(str) >= 0) {
+                    var singlepatient = {Age: patient.PatientInfo[i].Age,Gender:patient.PatientInfo[i].Gender,Radiotherapy_ID:patient.PatientInfo[i].Radiotherapy_ID, appointid:patient.PatientInfo[i].appointid, begin:patient.PatientInfo[i].begin, end:end, Completed: patient.PatientInfo[i].Completed, doctor: patient.PatientInfo[i].doctor, Date: patient.PatientInfo[i].Date, groupname: patient.PatientInfo[i].groupname, name: patient.PatientInfo[i].name, patientid: patient.PatientInfo[i].patientid, Progress: patient.PatientInfo[i].Progress, treatID: patient.PatientInfo[i].treatID};
                     Searchedpatient[count++] = singlepatient;
                 }
             }
