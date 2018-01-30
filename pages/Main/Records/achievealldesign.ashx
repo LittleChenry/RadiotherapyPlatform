@@ -28,16 +28,43 @@ public class achievealldesign : IHttpHandler {
     {
         string patientid = context.Request["patientid"];
         string chid = context.Request["chid"];
-        string equipidcommand = "select DISTINCT(equipment) from fieldinfomation where fieldinfomation.ChildDesign_ID=@chid";
-        sqlOperation.AddParameterWithValue("@chid", chid);
-        string equipid = sqlOperation.ExecuteScalar(equipidcommand);
-
+        string treatid = context.Request["treatmentid"];
+        string equipid = "";
+        MySql.Data.MySqlClient.MySqlDataReader reader = null;
+        if (treatid == "")
+        {
+            string equipidcommand = "select DISTINCT(equipment) from fieldinfomation where fieldinfomation.ChildDesign_ID=@chid";
+            sqlOperation.AddParameterWithValue("@chid", chid);
+            equipid = sqlOperation.ExecuteScalar(equipidcommand);
+           
+        }
+        else
+        {
+            string childcommand = "select DISTINCT(ID) from childdesign where Treatment_ID=@treat";
+            sqlOperation.AddParameterWithValue("@treat", treatid);
+            reader = sqlOperation.ExecuteReader(childcommand);
+            if (reader.Read())
+            {
+                chid = reader["ID"].ToString();
+            }
+            reader.Close();
+            if (chid != "")
+            {
+                string equipidcommand = "select DISTINCT(equipment) from fieldinfomation where fieldinfomation.ChildDesign_ID=@chid";
+                sqlOperation.AddParameterWithValue("@chid", chid);
+                equipid = sqlOperation.ExecuteScalar(equipidcommand);
+            }
+            else
+            {
+                return "{\"info\":[]}";
+            }
+        }
         StringBuilder info = new StringBuilder("{\"info\":[");
         
         string childdesigncommand = "select DISTINCT(ChildDesign_ID) as chiddesign from fieldinfomation,childdesign,treatment where fieldinfomation.equipment=@equip and fieldinfomation.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid";
         sqlOperation.AddParameterWithValue("@equip", equipid);
         sqlOperation.AddParameterWithValue("@pid", patientid);
-        MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(childdesigncommand);
+        reader = sqlOperation.ExecuteReader(childdesigncommand);
         ArrayList chiddesignidlist = new ArrayList();
         while (reader.Read())
         {
@@ -51,7 +78,7 @@ public class achievealldesign : IHttpHandler {
             return info.ToString();
         }
 
-        string alldesignlistcommand = "select appointment_accelerate.Date as appadate,appointment_accelerate.Begin as appbegin,appointment_accelerate.End as append,treatmentrecord.Treat_User_ID as treat,treatmentrecord.IsFirst as isfirst,treatment.Treatmentdescribe as treatname,childdesign.DesignName as childname,childdesign.ID as chid  from appointment_accelerate,treatmentrecord,childdesign,treatment where treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID and childdesign.ID  in (" + str + ") ORDER BY appointment_accelerate.Date asc,appointment_accelerate.Begin asc";
+        string alldesignlistcommand = "select appointment_accelerate.Date as appadate,appointment_accelerate.Begin as appbegin,appointment_accelerate.End as append,treatmentrecord.Treat_User_ID as treat,treatmentrecord.IsFirst as isfirst,treatment.Treatmentdescribe as treatname,treatment.ID as treatid,childdesign.DesignName as childname,childdesign.ID as chid  from appointment_accelerate,treatmentrecord,childdesign,treatment where treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID and childdesign.ID  in (" + str + ") ORDER BY appointment_accelerate.Date asc,appointment_accelerate.Begin asc";
         reader = sqlOperation.ExecuteReader(alldesignlistcommand);
         int flag = 0;
         int begincheck = 0;
@@ -96,11 +123,11 @@ public class achievealldesign : IHttpHandler {
             if (chiddesigncheck != 0)
             {
                 info.Append(",");
-                info.Append("{\"designname\":\"" + reader["childname"].ToString() + "\",\"chid\":\"" + reader["chid"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treatname"].ToString() + "\",\"isfirst\":\"" + reader["isfirst"].ToString() + "\",\"istreated\":\"" + reader["treat"].ToString() + "\"}");
+                info.Append("{\"designname\":\"" + reader["childname"].ToString() + "\",\"chid\":\"" + reader["chid"].ToString() + "\",\"treatid\":\"" + reader["treatid"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treatname"].ToString() + "\",\"isfirst\":\"" + reader["isfirst"].ToString() + "\",\"istreated\":\"" + reader["treat"].ToString() + "\"}");
             }
             else
             {
-                info.Append("{\"designname\":\"" + reader["childname"].ToString() + "\",\"chid\":\"" + reader["chid"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treatname"].ToString() + "\",\"isfirst\":\"" + reader["isfirst"].ToString() + "\",\"istreated\":\"" + reader["treat"].ToString() + "\"}");
+                info.Append("{\"designname\":\"" + reader["childname"].ToString() + "\",\"chid\":\"" + reader["chid"].ToString() + "\",\"treatid\":\"" + reader["treatid"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treatname"].ToString() + "\",\"isfirst\":\"" + reader["isfirst"].ToString() + "\",\"istreated\":\"" + reader["treat"].ToString() + "\"}");
             }
             chiddesigncheck++;
             begincheck++;
