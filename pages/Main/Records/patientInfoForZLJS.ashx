@@ -54,10 +54,7 @@ public class patientInfoForZLJS : IHttpHandler {
             return "{\"PatientInfo\":false}";
         }
         StringBuilder info = new StringBuilder("{\"PatientInfo\":[");
-        string achievecommand = "select Patient_ID,ID,Begin,End from appointment_accelerate where Date>=@date1 and Date<=@date2 and Equipment_ID=@equipid";
-        sqlOperation.AddParameterWithValue("@date1", date1);
-        sqlOperation.AddParameterWithValue("@date2", date2);
-        sqlOperation.AddParameterWithValue("@equipid", equipmentID);
+        string achievecommand = "select Patient_ID,ID,Begin,End from appointment_accelerate where Date>=@date1 and Date<=@date2 and Equipment_ID=@equipid order by Date asc,Begin asc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(achievecommand);
         int temp = 1;
         while (reader.Read())
