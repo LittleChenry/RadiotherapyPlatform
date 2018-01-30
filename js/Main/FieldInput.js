@@ -609,11 +609,12 @@ function createTabPanel(panelId){
     var $ss = $("<input type='hidden' id='ss"+panelId+"' name='ss" + panelId + "' value=0></input>");
     $aa.appendTo($div_tab);
     $ss.appendTo($div_tab);
-    $div_tab.appendTo($("#tabpanels"));
+    //$div_tab.appendTo($("#tabpanels"));
+    var $div_plan = $("<div id='plan"+panelId+"'></div>");
+    var $div_papercontent = $("<div class='paper-content'></div>");
+    var $div_0 = $("<div class='content-title'><span>计划信息：</span></div>");
+    $div_0.appendTo($div_papercontent);
     if(common == 1){
-        var $div_plan = $("<div id='plan"+panelId+"'></div>");
-        var $div_papercontent = $("<div class='paper-content'></div>");
-        var $div_0 = $("<div class='content-title'><span>计划信息：</span></div>");
         var $div_1 = $("<div class='single-row'>"
                     +"<div class='item col-xs-6'>"
                     +"照射技术：<select id='Irradiation"+panelId+"' name='Irradiation"+panelId+"' class='form-item'></select>"
@@ -640,61 +641,7 @@ function createTabPanel(panelId){
                     +"控制点数量：<input id='ControlPoint"+panelId+"' class='form-item' type='number' name='ControlPoint"+panelId+"'/>"
                     +"</div>"
                     +"</div>");
-        //移床参数
-        var $div_yc = $("<div class='single-row'>"
-                    +"<div class='col-xs-6'>"
-                    +"<span class='form-text col-xs-4' style='padding-left:0px;'>移床参数：</span>"
-                    +"</div>"
-                    +"</div>");
-
-        var $div_yc_content1 = $("<div class='single-row'>"
-                    +"<div class='col-xs-6'>"
-                    +"<span class='form-text col-xs-4'>左：</span>"
-                    +"<div class='group-item'>"
-                    +"<input id='left"+panelId+"' name='left"+panelId+"' type='number' class='form-group-input' />"
-                    +"<span class='input-group-addon'>cm</span>"
-                    +"</div>"
-                    +"</div>"
-                    +"<div class='col-xs-6'>"
-                    +"<span class='form-text col-xs-4'>右：</span>"
-                    +"<div class='group-item'>"
-                    +"<input id='right"+panelId+"' name='right"+panelId+"' type='number' class='form-group-input' />"
-                    +"<span class='input-group-addon'>cm</span>"
-                    +"</div>"
-                    +"</div>"
-                    +"</div>"); 
-        var $div_yc_content2 = $("<div class='single-row'>"
-                    +"<div class='col-xs-6'>"
-                    +"<span class='form-text col-xs-4'>升：</span>"
-                    +"<div class='group-item'>"
-                    +"<input id='rise"+panelId+"' name='rise"+panelId+"' type='number' class='form-group-input' />"
-                    +"<span class='input-group-addon'>cm</span>"
-                    +"</div>"
-                    +"</div>"
-                    +"<div class='col-xs-6'>"
-                    +"<span class='form-text col-xs-4'>降：</span>"
-                    +"<div class='group-item'>"
-                    +"<input id='drop"+panelId+"' name='drop"+panelId+"' type='number' class='form-group-input' />"
-                    +"<span class='input-group-addon'>cm</span>"
-                    +"</div>"
-                    +"</div>"
-                    +"</div>"); 
-        var $div_yc_content3 = $("<div class='single-row'>"
-                    +"<div class='col-xs-6'>"
-                    +"<span class='form-text col-xs-4'>进：</span>"
-                    +"<div class='group-item'>"
-                    +"<input id='enter"+panelId+"' name='enter"+panelId+"' type='number' class='form-group-input' />"
-                    +"<span class='input-group-addon'>cm</span>"
-                    +"</div>"
-                    +"</div>"
-                    +"<div class='col-xs-6'>"
-                    +"<span class='form-text col-xs-4'>出：</span>"
-                    +"<div class='group-item'>"
-                    +"<input id='out"+panelId+"' name='out"+panelId+"' type='number' class='form-group-input' />"
-                    +"<span class='input-group-addon'>cm</span>"
-                    +"</div>"
-                    +"</div>"
-                    +"</div>"); 
+        
 
         var $div_4 = $("<div class='single-row'>"
                     +"<div class='item col-xs-6'>"
@@ -708,14 +655,10 @@ function createTabPanel(panelId){
                     +"</div>"
                     +"</div>");
 
-        $div_0.appendTo($div_papercontent);
+       
         $div_1.appendTo($div_papercontent);
         $div_2.appendTo($div_papercontent);
         $div_3.appendTo($div_papercontent);
-        $div_yc.appendTo($div_papercontent);
-        $div_yc_content1.appendTo($div_papercontent);
-        $div_yc_content2.appendTo($div_papercontent);
-        $div_yc_content3.appendTo($div_papercontent);
         $div_4.appendTo($div_papercontent);
         $div_5.appendTo($div_papercontent);
         $div_papercontent.appendTo($div_plan);
@@ -750,49 +693,113 @@ function createTabPanel(panelId){
                 table.append(tbody);
             }
         });
-        $('#left'+panelId).bind('input propertychange', function () {
+        
+    }
+    //移床参数
+    var $div_yc = $("<div class='single-row'>"
+                    +"<div class='col-xs-6'>"
+                    +"<span class='form-text col-xs-4' style='padding-left:0px;'>移床参数：</span>"
+                    +"</div>"
+                    +"</div>");
+    var $div_yc_content1 = $("<div class='single-row'>"
+                +"<div class='col-xs-6'>"
+                +"<span class='form-text col-xs-4'>左：</span>"
+                +"<div class='group-item'>"
+                +"<input id='left"+panelId+"' name='left"+panelId+"' type='number' class='form-group-input' />"
+                +"<span class='input-group-addon'>cm</span>"
+                +"</div>"
+                +"</div>"
+                +"<div class='col-xs-6'>"
+                +"<span class='form-text col-xs-4'>右：</span>"
+                +"<div class='group-item'>"
+                +"<input id='right"+panelId+"' name='right"+panelId+"' type='number' class='form-group-input' />"
+                +"<span class='input-group-addon'>cm</span>"
+                +"</div>"
+                +"</div>"
+                +"</div>"); 
+    var $div_yc_content2 = $("<div class='single-row'>"
+                +"<div class='col-xs-6'>"
+                +"<span class='form-text col-xs-4'>升：</span>"
+                +"<div class='group-item'>"
+                +"<input id='rise"+panelId+"' name='rise"+panelId+"' type='number' class='form-group-input' />"
+                +"<span class='input-group-addon'>cm</span>"
+                +"</div>"
+                +"</div>"
+                +"<div class='col-xs-6'>"
+                +"<span class='form-text col-xs-4'>降：</span>"
+                +"<div class='group-item'>"
+                +"<input id='drop"+panelId+"' name='drop"+panelId+"' type='number' class='form-group-input' />"
+                +"<span class='input-group-addon'>cm</span>"
+                +"</div>"
+                +"</div>"
+                +"</div>"); 
+    var $div_yc_content3 = $("<div class='single-row'>"
+                +"<div class='col-xs-6'>"
+                +"<span class='form-text col-xs-4'>进：</span>"
+                +"<div class='group-item'>"
+                +"<input id='enter"+panelId+"' name='enter"+panelId+"' type='number' class='form-group-input' />"
+                +"<span class='input-group-addon'>cm</span>"
+                +"</div>"
+                +"</div>"
+                +"<div class='col-xs-6'>"
+                +"<span class='form-text col-xs-4'>出：</span>"
+                +"<div class='group-item'>"
+                +"<input id='out"+panelId+"' name='out"+panelId+"' type='number' class='form-group-input' />"
+                +"<span class='input-group-addon'>cm</span>"
+                +"</div>"
+                +"</div>"
+                +"</div>"); 
+    $div_yc.appendTo($div_papercontent);
+    $div_yc_content1.appendTo($div_papercontent);
+    $div_yc_content2.appendTo($div_papercontent);
+    $div_yc_content3.appendTo($div_papercontent);
+    $div_papercontent.appendTo($div_plan);
+    $div_plan.appendTo($div_tab);
+    $div_tab.appendTo($("#tabpanels"));
+
+    $('#left'+panelId).bind('input propertychange', function () {
             if (document.getElementById("left"+panelId).value == "") {
                 document.getElementById("right"+panelId).removeAttribute("disabled");
             } else {
                 document.getElementById("right"+panelId).disabled = "disabled";
             }
         });
-        $('#right'+panelId).bind('input propertychange', function () {
-            if (document.getElementById("right"+panelId).value == "") {
-                document.getElementById("left"+panelId).removeAttribute("disabled");
-            } else {
-                document.getElementById("left"+panelId).disabled = "disabled";
-            }
-        });
-        $('#drop'+panelId).bind('input propertychange', function () {
-            if (document.getElementById("drop"+panelId).value == "") {
-                document.getElementById("rise"+panelId).removeAttribute("disabled");
-            } else {
-                document.getElementById("rise"+panelId).disabled = "disabled";
-            }
-        });
-        $('#rise'+panelId).bind('input propertychange', function () {
-            if (document.getElementById("rise"+panelId).value == "") {
-                document.getElementById("drop"+panelId).removeAttribute("disabled");
-            } else {
-                document.getElementById("drop"+panelId).disabled = "disabled";
-            }
-        });
-        $('#enter'+panelId).bind('input propertychange', function () {
-            if (document.getElementById("enter"+panelId).value == "") {
-                document.getElementById("out"+panelId).removeAttribute("disabled");
-            } else {
-                document.getElementById("out"+panelId).disabled = "disabled";
-            }
-        });
-        $('#out'+panelId).bind('input propertychange', function () {
-            if (document.getElementById("out"+panelId).value == "") {
-                document.getElementById("enter"+panelId).removeAttribute("disabled");
-            } else {
-                document.getElementById("enter"+panelId).disabled = "disabled";
-            }
-        });
-    }
+    $('#right'+panelId).bind('input propertychange', function () {
+        if (document.getElementById("right"+panelId).value == "") {
+            document.getElementById("left"+panelId).removeAttribute("disabled");
+        } else {
+            document.getElementById("left"+panelId).disabled = "disabled";
+        }
+    });
+    $('#drop'+panelId).bind('input propertychange', function () {
+        if (document.getElementById("drop"+panelId).value == "") {
+            document.getElementById("rise"+panelId).removeAttribute("disabled");
+        } else {
+            document.getElementById("rise"+panelId).disabled = "disabled";
+        }
+    });
+    $('#rise'+panelId).bind('input propertychange', function () {
+        if (document.getElementById("rise"+panelId).value == "") {
+            document.getElementById("drop"+panelId).removeAttribute("disabled");
+        } else {
+            document.getElementById("drop"+panelId).disabled = "disabled";
+        }
+    });
+    $('#enter'+panelId).bind('input propertychange', function () {
+        if (document.getElementById("enter"+panelId).value == "") {
+            document.getElementById("out"+panelId).removeAttribute("disabled");
+        } else {
+            document.getElementById("out"+panelId).disabled = "disabled";
+        }
+    });
+    $('#out'+panelId).bind('input propertychange', function () {
+        if (document.getElementById("out"+panelId).value == "") {
+            document.getElementById("enter"+panelId).removeAttribute("disabled");
+        } else {
+            document.getElementById("enter"+panelId).disabled = "disabled";
+        }
+    });
+
     var $div_papercontent1 = $("<div class=paper-content></div>");
     var $div_6 = $("<div class='content-title'><span>射野信息：</span></div>");
     var $div_7 = $("<div class='single-row'>"
@@ -1094,14 +1101,15 @@ function fillData(data) {
             $("#Coplanar"+i).val(dataFinal[i][0].Coplanar);
             $("#MachineNumbe"+i).val(dataFinal[i][0].MachineNumbe);
             $("#ControlPoint"+i).val(dataFinal[i][0].ControlPoint);
-            $("#left"+i).val(dataFinal[i][0].left);
-            $("#right"+i).val(dataFinal[i][0].right);
-            $("#rise"+i).val(dataFinal[i][0].rise);
-            $("#out"+i).val(dataFinal[i][0].out);
-            $("#enter"+i).val(dataFinal[i][0].enter);
-            $("#drop"+i).val(dataFinal[i][0].drop);
+            
             table(dataFinal[i][0].IlluminatedNumber,dataFinal[i][0].Illuminatedangle,dataFinal[i][0].item);
         }
+        $("#left"+i).val(dataFinal[i][0].left);
+        $("#right"+i).val(dataFinal[i][0].right);
+        $("#rise"+i).val(dataFinal[i][0].rise);
+        $("#out"+i).val(dataFinal[i][0].out);
+        $("#enter"+i).val(dataFinal[i][0].enter);
+        $("#drop"+i).val(dataFinal[i][0].drop);
         $("#pingyin"+i).val(dataFinal[i][0].pinyin);
         $("#id"+i).val(dataFinal[i][0].radioID);
         $("#tps"+i).val(dataFinal[i][0].tps);
