@@ -46,24 +46,28 @@ function Init(evt) {
     //document.getElementById("enjoin").value = special.SpecialEnjoin;
     //document.getElementById("split").innerHTML = special.SplitWay;
     var iscommon = judgecommon(treatmentID);
-    if (iscommon == "1") {
-        var designInfo = getDesignInfo(treatmentID);
-        readDosagePriority(designInfo[i].DosagePriority);
-        var pdfgroup = getpdfgroup(treatmentID);
-        var pdf1 = pdfgroup.split(",")[0];
-        var pdf2 = pdfgroup.split(",")[1];
-        if (pdf1 != "") {
-            document.getElementById("viewpdf").href = pdf1;
-        }
-        if (pdf2 != "") {
-            document.getElementById("viewpdf2").href = pdf2;
-        }
-    }
-    if (iscommon == "0") {
-        $("#referinfo").hide();
-        $("#aimdosagetable").hide();
-        $("#aimdosage").hide();
-    }
+
+    var designInfo = getDesignInfo(treatmentID);
+    readDosagePriority(designInfo[i].DosagePriority);
+    //if (iscommon == "1") {
+        //var pdfgroup = getpdfgroup(treatmentID);
+        //var pdf1 = pdfgroup.split(",")[0];
+        //var pdf2 = pdfgroup.split(",")[1];
+        //if (pdf1 != "") {
+        //    document.getElementById("viewpdf").href = pdf1;
+        //}
+        //if (pdf2 != "") {
+        //    document.getElementById("viewpdf2").href = pdf2;
+        //}
+    //} else {
+
+    //}
+
+
+    $("#referinfo").hide();
+    $("#aimdosagetable").hide();
+    $("#aimdosage").hide();
+
     childdesigns = getAllChildDesign(patient.ID);
     for (var j = 0; j < childdesigns.length; j++) {
         if (j == 0) {
@@ -85,11 +89,12 @@ function Init(evt) {
                             '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
                             '</table></div></div>' +
                             '<div class="single-row"><div class="item col-xs-4">分割方式：<span id="split' + j + '" class="underline"></span></div><div class="item col-xs-4">总次数：<span id="total' + j + '" class="underline"></span></div><div class="item col-xs-4">已经治疗次数：<span id="treatedtimes' + j + '" class="underline"></span></div></div>' +
-                            '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin" disabled="disabled" name="enjoin'+j+'" class="form-area col-xs-5" ></textarea><div class="item  col-xs-5" style="padding-left:1%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div></div></div>';
+                            '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin'+j+'" disabled="disabled" name="enjoin'+j+'" class="form-area col-xs-5" ></textarea><div class="item  col-xs-5" style="padding-left:1%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div></div></div>';
             $("#tabs").append(tab);
             $("#tab-content").append(content);
         }
     }
+    var flag = true;
     for (var i = 0; i < childdesigns.length; i++) {
         var fildinfo = childdesigns[i].fieldinfo;
         if (fildinfo.length == 0) {
@@ -104,9 +109,31 @@ function Init(evt) {
                 table.append(content);
             }
         }
+        if (iscommon == "0") {
+            $("#viewpdf" + i).hide();
+            $("#viewpdf2" + i).hide();
+        } else {
+            var pdfgroup = getpdfgroup(childdesigns[i].chid);
+            var pdf1 = pdfgroup.split(",")[0];
+            var pdf2 = pdfgroup.split(",")[1];
+            if (pdf1 != "") {
+                document.getElementById("viewpdf").href = pdf1;
+            }
+            if (pdf2 != "") {
+                document.getElementById("viewpdf2").href = pdf2;
+            }
+
+        }
+        $("#split" + i).html(childdesigns[i].splitname);
+        $("#total" + i).html(childdesigns[i].Totalnumber);
+        $("#enjoin" + i).html(childdesigns[i].specialenjoin);
+        $("#treatedtimes" + i).html(childdesigns[i].treattimes);
+        if (parseInt(childdesigns[i].rest) > 0 && flag==true) {
+            alert("此病人还有计划需要进行加速器预约，请进行预约");
+            flag = false;
+        }
+
     }
-
-
 
     //var fildinfo = getfieldinfo(treatmentID);
     //if (fildinfo.length == 0) {
@@ -422,7 +449,7 @@ function charge(evt) {
 }
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "designConfirmInfo.ashx?treatID=" + treatID;
+    var url = "../designbasicinfo.ashx?treatID=" + treatID;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;

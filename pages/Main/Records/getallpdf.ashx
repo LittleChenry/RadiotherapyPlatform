@@ -33,7 +33,7 @@ public class getallpdf : IHttpHandler {
     {
         String treat = context.Request.QueryString["treatID"];
         int treatID = Convert.ToInt32(treat);
-        string desgin = "select PDF1,PDF2 from treatment,review where treatment.Review_ID=review.ID and treatment.ID=@treatid";
+        string desgin = "select PDF1,PDF2 from childdesign,review where review.ChildDesign_ID=childdesign.ID and childdesign.ID=@treatid";
         sqlOperation.AddParameterWithValue("@treatid", treatID);
         MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation.ExecuteReader(desgin);
         string data = "";

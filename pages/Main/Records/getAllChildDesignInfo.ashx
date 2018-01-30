@@ -38,16 +38,74 @@ public class getAllChildDesignInfo : IHttpHandler {
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(designcommand);
         while (reader.Read())
         {
-            info.Append("{\"chid\":\"" + reader["chid"].ToString() + "\",\"DesignName\":\"" + reader["DesignName"].ToString() + "\",\"Totalnumber\":\"" + reader["total"].ToString() + "\",\"childstate\":\"" + reader["childstate"].ToString() + "\",\"splitway\":\"" + reader["splitway"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"treatid\":\"" + reader["treatid"].ToString() + "\",\"changelog\":\"" + reader["changelog"].ToString() + "\",\"specialenjoin\":\"" + reader["specialenjoin"].ToString() + "\",\"illumnumber\":\"" + reader["illumnumber"].ToString() + "\",\"coplanar\":\"" + reader["coplanar"].ToString() + "\",\"mu\":\"" + reader["mu"].ToString() + "\",\"control\":\"" + reader["control"].ToString() + "\"");
+            string splitname = "select Ways from splitway where ID=@split";
+            sqlOperation1.AddParameterWithValue("@split", reader["splitway"].ToString());
+            string split = sqlOperation1.ExecuteScalar(splitname);
+                
+            int count = 0;
+            int appointid = 0;
+            string maxdate = "无";
+            string date = "";
+            string begin = "";
+            string sqlcommand2 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and Date>=@nowdate order by Date desc,Begin desc";
+            sqlOperation1.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
+            sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+            sqlOperation1.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
+            MySql.Data.MySqlClient.MySqlDataReader  reader1 = sqlOperation1.ExecuteReader(sqlcommand2);
+            while (reader1.Read())
+            {
+                if (reader1["Treat_User_ID"].ToString() == "")
+                {
+                    //appointid = int.Parse(reader1["Appointment_ID"].ToString());
+                    if (maxdate == "无")
+                    {
+                        maxdate = reader1["Date"].ToString();
+                    }
+
+                }
+                count++;
+            }
+            reader1.Close();
+            string sqlcommand = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and Date<@nowdate order by Date desc,Begin desc";
+            reader1 = sqlOperation1.ExecuteReader(sqlcommand);
+            while (reader1.Read())
+            {
+                if (reader1["Treat_User_ID"].ToString() != "")
+                {
+                    appointid = int.Parse(reader1["Appointment_ID"].ToString());
+                    date = reader1["Date"].ToString();
+                    begin = reader1["Begin"].ToString();
+                    break;
+                }
+            }
+            reader1.Close();
+            if (appointid != 0)
+            {
+                string sqlcommand1 = "select Treat_User_ID,Appointment_ID,Date,Begin,End from treatmentrecord,appointment_accelerate where treatmentrecord.ChildDesign_ID=@chid and treatmentrecord.Appointment_ID=appointment_accelerate.ID and (Date<@date or (Date=@date and Begin<=@begin)) order by Date,Begin asc";
+                sqlOperation1.AddParameterWithValue("@date", date);
+                sqlOperation1.AddParameterWithValue("@begin", begin);
+                reader1 = sqlOperation1.ExecuteReader(sqlcommand1);
+                while (reader1.Read())
+                {
+                    if (reader1["Treat_User_ID"].ToString() != "")
+                    {
+                        count++;
+                    }
+
+                }
+                reader1.Close();
+            }
+            int rest = int.Parse(reader["total"].ToString()) - count;
+            info.Append("{\"chid\":\"" + reader["chid"].ToString() + "\",\"DesignName\":\"" + reader["DesignName"].ToString() + "\",\"rest\":\"" + rest + "\",\"splitname\":\"" + split + "\",\"Totalnumber\":\"" + reader["total"].ToString() + "\",\"childstate\":\"" + reader["childstate"].ToString() + "\",\"splitway\":\"" + reader["splitway"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"treatid\":\"" + reader["treatid"].ToString() + "\",\"changelog\":\"" + reader["changelog"].ToString() + "\",\"specialenjoin\":\"" + reader["specialenjoin"].ToString() + "\",\"illumnumber\":\"" + reader["illumnumber"].ToString() + "\",\"coplanar\":\"" + reader["coplanar"].ToString() + "\",\"mu\":\"" + reader["mu"].ToString() + "\",\"control\":\"" + reader["control"].ToString() + "\"");
             string amount = "select count(*) from treatmentrecord where ChildDesign_ID=@chid and Treat_User_ID is not null";
             sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-            int count = int.Parse(sqlOperation1.ExecuteScalar(amount));
+            count = int.Parse(sqlOperation1.ExecuteScalar(amount));
             info.Append(",\"treattimes\":\"" + count + "\",\"fieldinfo\":[");
             string fieldcountcommand = "select count(*) from fieldinfomation where ChildDesign_ID=@ChildDesign_ID";
             sqlOperation1.AddParameterWithValue("@ChildDesign_ID", reader["chid"].ToString());
             int fieldcount = int.Parse(sqlOperation1.ExecuteScalar(fieldcountcommand));
             string sqlCommand = "SELECT fieldinfomation.ChildDesign_ID,code,mu,equipment,radiotechnique,radiotype,fieldinfomation.energy as energy1,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose from fieldinfomation where ChildDesign_ID=@ChildDesign_ID ";
-            MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(sqlCommand);
+            reader1 = sqlOperation1.ExecuteReader(sqlCommand);
             int tempco=1;
             while (reader1.Read())
             {
