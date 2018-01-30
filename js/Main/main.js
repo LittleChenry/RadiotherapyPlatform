@@ -302,15 +302,18 @@ function Paging(patient, role, userID) {
                 break;
             case "治疗技师":
                 $("#legend-waiting").show();
-                var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, date, begin, end, Completed, doctor, finishedtimes, totalnumber, totaltimes;
+                var TreatmentID, Name, Gender, patientid, doctor, begin, end, Age, doctor, groupname;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>患者姓名</th><th>时间段</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
+                    TreatmentID = patient.PatientInfo[i].treatID;
                     Name = patient.PatientInfo[i].name;
                     Gender = patient.PatientInfo[i].Gender;
                     patientid = patient.PatientInfo[i].patientid;
                     doctor = patient.PatientInfo[i].doctor;
+                    begin = patient.PatientInfo[i].begin;
+                    end = patient.PatientInfo[i].end;
                     Age = patient.PatientInfo[i].Age;
                     groupname = patient.PatientInfo[i].groupname;
                     if (patient.PatientInfo[i].Completed == "1") {
@@ -323,7 +326,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>"+ Name +"</td><td>"+ Name +"</td><td>" + Gender + "</td>" +
+                    trtemp = "'><td><i></i></td><td>"+ Name +"</td><td>"+ Num2Time(begin, end) +"</td><td>" + Gender + "</td>" +
                              "<td>" + Age + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -1889,6 +1892,22 @@ function toTime(minute) {
         time = (hour - 24).toString() + ":" + (min < 10 ? "0" : "") + min.toString() + "(次日)";
     }
     return time;
+}
+
+function Num2Time(minute1, minute2) {
+    var hour1 = parseInt(parseInt(minute1) / 60);
+    var min1 = parseInt(minute1) - hour1 * 60;
+    var hour2 = parseInt(parseInt(minute2) / 60);
+    var min2 = parseInt(minute2) - hour2 * 60;
+    h1 = hour1 >= 24 ? (hour1 - 24) : hour1;
+    h2 = hour2 >= 24 ? (hour2 - 24) : hour2;
+    var timestr1 = h1.toString() + ":" + (min1 < 10 ? "0" : "") + min1.toString();
+    var timestr2 = h2.toString() + ":" + (min2 < 10 ? "0" : "") + min2.toString();
+    if (hour1 >= 24) {
+        return "(次日)" + timestr1 + " - " + timestr2;
+    } else {
+        return timestr1 + " - " + timestr2;
+    }
 }
 
 function OperateAttrDisabled() {
