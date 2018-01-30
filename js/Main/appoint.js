@@ -394,20 +394,16 @@ function RecordAddClick() {
 			    			alert("删除成功！");
 			    		}
 			    		Recover("click");
+			    		$("#AppointTime").find("td").unbind("click");
 			    		$("#confirm").attr("disabled","disabled");
 			    	});
 			    	$("#SureAppoint").unbind("click").bind("click", function(){
 			    		Recover("click");
-			    		$("#confirm").attr("disabled","disabled");
 			    	});
-			    	//alert("预约成功！");
-			    	//Recover("click");
-			    	//$("#confirm").attr("disabled","disabled");
 			    }else{
 			    	alert("预约失败！");
 			    }
-			    
-			    
+			    Recover("click");
 			});
 		});
 	});
@@ -591,6 +587,8 @@ function Recover(type) {
 	if (type == "click") {
 		if (currentID != "0" && $("#" + currentID).length > 0) {
 	        $("#" + currentID).click();
+	        $("#AppointTime").find("td").unbind("click");
+    		$("#confirm").attr("disabled","disabled");
 	    }
 	}else{
 		if (currentID != "0" && $("#" + currentID).length > 0) {

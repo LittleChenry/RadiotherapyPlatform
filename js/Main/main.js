@@ -303,25 +303,16 @@ function Paging(patient, role, userID) {
             case "治疗技师":
                 $("#legend-waiting").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, date, begin, end, Completed, doctor, finishedtimes, totalnumber, totaltimes;
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>状态</th><th>完成次数</th><th>累次剂量</th>'
-                    + '<th>总次数</th><th>诊断结果</th><th>疗程</th><th>主治医生</th></tr></thead>';
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>患者姓名</th><th>时间段</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
-                    TreatmentID = patient.PatientInfo[i].treatID;
-                    Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-                    Name = patient.PatientInfo[i].Name;
-                    treat = patient.PatientInfo[i].treat;
-                    diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
-                    date = patient.PatientInfo[i].date;
+                    Name = patient.PatientInfo[i].name;
+                    Gender = patient.PatientInfo[i].Gender;
+                    patientid = patient.PatientInfo[i].patientid;
                     doctor = patient.PatientInfo[i].doctor;
-                    Completed = (patient.PatientInfo[i].Completed == "1") ? "完成" : "等待";
-                    begin = toTime(patient.PatientInfo[i].begin);
-                    end = toTime(patient.PatientInfo[i].end);
-                    finishedtimes = patient.PatientInfo[i].finishedtimes;
-                    totalnumber = patient.PatientInfo[i].totalnumber;
-                    totaltimes = patient.PatientInfo[i].totaltimes;
-                    iscommon = patient.PatientInfo[i].iscommon;
+                    Age = patient.PatientInfo[i].Age;
+                    groupname = patient.PatientInfo[i].groupname;
                     if (patient.PatientInfo[i].Completed == "1") {
                         var tr = "<tr id='" + TreatmentID + "_" + patient.PatientInfo[i].appointid + "'class='";
                     }else {
@@ -332,8 +323,8 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Completed+ "</td><td>" + finishedtimes + "</td><td>" + totalnumber + "</td>"
-                        + "<td>" + totaltimes + "</td><td style='max-width:160px;overflow:hidden;text-overflow:ellipsis;'>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + doctor + "</td></tr>";
+                    trtemp = "'><td><i></i></td><td>"+ Name +"</td><td>"+ Name +"</td><td>" + Gender + "</td>" +
+                             "<td>" + Age + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
                 }
@@ -467,10 +458,9 @@ function Paging(patient, role, userID) {
                 table.append(tbody);
                 break;
             case "治疗技师":
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>状态</th><th>完成次数</th><th>累次剂量</th>'
-                    + '<th>总次数</th><th>诊断结果</th><th>疗程</th><th>主治医生</th></tr></thead>';
+                var thead = '<thead><tr><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="11" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="5" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "科主任":
@@ -596,7 +586,7 @@ function ShowUl(ul, iscommon){
     if (iscommon == 0) {
         ul.each(function (index, element) {
             $(this).show();
-            if (index > 1 && index < 11) {
+            if ((index > 1 && index < 7) || (index >8 && index < 11)) {
                 $(this).hide();
             }
             if (index == 12) {
