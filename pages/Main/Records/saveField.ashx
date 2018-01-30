@@ -211,9 +211,38 @@ public class saveField : IHttpHandler {
                     sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
                     sqlOperation1.ExecuteNonQuery(delete1);
                 }
-                string insert = "insert into childdesign (DesignName,Treatment_ID,item)values(@DesignName,@Treatment_ID,@item)";      
+                string lr = "";
+                string rd = "";
+                string eo = "";
+                if (context.Request.Form["left" + item] == "" || context.Request.Form["left" + item] == null)
+                {
+                    lr = "-" + context.Request.Form["right" + item];
+                }
+                else
+                {
+                    lr = context.Request.Form["left" + item];
+                }
+                if (context.Request.Form["rise" + item] == "" || context.Request.Form["rise" + item] == null)
+                {
+                    rd = "-" + context.Request.Form["drop" + item];
+                }
+                else
+                {
+                    rd = context.Request.Form["rise" + item];
+                }
+                if (context.Request.Form["enter" + item] == "" || context.Request.Form["enter" + item] == null)
+                {
+                    eo = "-" + context.Request.Form["out" + item];
+                }
+                else
+                {
+                    eo = context.Request.Form["enter" + item];
+                }
+                string para = lr + ";" + rd + ";" + eo;
+                string insert = "insert into childdesign (DesignName,Treatment_ID,item,parameters)values(@DesignName,@Treatment_ID,@item,@parameters)";      
                 sqlOperation1.AddParameterWithValue("@Treatment_ID", treatID);
                 sqlOperation1.AddParameterWithValue("@item", item1);
+                sqlOperation1.AddParameterWithValue("@parameters", para);
                 sqlOperation1.AddParameterWithValue("@DesignName", context.Request.Form["DesignName" + item]);
                 successs = sqlOperation1.ExecuteNonQuery(insert);
                 string childid1 = "select ID from childdesign where Treatment_ID=@Treatment_ID and item=@item";
