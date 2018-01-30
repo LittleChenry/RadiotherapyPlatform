@@ -12,6 +12,7 @@ $(document).ready(function () {
     });
 	$("#main-content").show();
 	$("#appointment-content").show();
+	//$("#appointResult").modal({ backdrop: 'static' });
 })
 
 function adjustPage() {
@@ -33,7 +34,7 @@ function patientView(session) {
             var returnData = postData(patientURL, data, false);
             alldate = $.parseJSON(returnData);
             Paging(alldate.patientinfo);
-            drawAppointTable(alldate.basicinfo);
+            drawAppointTable(alldate.basicinfo, alldate.doctortime);
             $("#chosenEquipment").html(session.equipmentName);
         }
 
@@ -52,12 +53,12 @@ function patientView(session) {
             var returnData = postData(patientURL, dataequip, false);
             alldate = $.parseJSON(returnData);
             Paging(alldate.patientinfo);
-            drawAppointTable(alldate.basicinfo);
+            drawAppointTable(alldate.basicinfo, alldate.doctortime);
             var datasession = {
                 id: $("#equipment").val(),
                 name: $("#equipment option:selected").html()
             };
-            var setEquipmentURL = "../../pages/Main/Records/setEquipment.ashx"
+            var setEquipmentURL = "../../pages/Main/Records/setEquipment.ashx";
             postData(setEquipmentURL, datasession, false);
         });
 
@@ -166,12 +167,12 @@ function drawPlanInfoTable(planinfo) {
 		table.find("tbody").html("");
 		var tbody = '<tbody>';
 		for (var i = 0; i < planinfo.length; i++) {
-			var firstday = planinfo[i].firstday == "" ? "无" : planinfo[i].firstday.replace(/\//g, "-");
+			var firstday = planinfo[i].firstday == "" ? "无" : planinfo[i].firstday.replace(/\//g, "-") + " , " + Num2Time(planinfo[i].firstbegin, planinfo[i].firstend);
 			var checked = planinfo[i].rest == "0" ? "disabled" : "checked";
 			var tr = '<tr id="'+ planinfo[i].chid +'"><td class="hide">'+ planinfo[i].Interal +'</td><td class="hide">'+ planinfo[i].Times +
 					 '</td><td>'+ planinfo[i].DesignName +'</td><td>'+ planinfo[i].Treatmentdescribe +
 					 '</td><td>'+ planinfo[i].Totalnumber +'</td><td>'+ planinfo[i].rest + '</td><td>'+
-					 planinfo[i].Ways +'</td><td>'+ firstday +
+					 planinfo[i].Ways +'</td><td data-date="'+ planinfo[i].firstday +'">'+ firstday +
 					 '</td><td class="choose-appoint"><input type="checkbox" class="flat-red" '+ checked +'></td></tr>';
 			tbody += tr;
 		}
@@ -183,14 +184,14 @@ function drawPlanInfoTable(planinfo) {
 	    $(".choose-appoint").find("ins").bind("click", function(){
 	    	$("#confirm").attr("disabled","disabled");
 	    	$(".weekday").removeClass("chosen");
-	    	$("#AppointTime").find("td").attr("class", "");
+	    	$("#AppointTime").find("td").removeClass("occupied chosen");
 	    });
 	}
 }
 
-function drawAppointTable(basicinfo) {
+function drawAppointTable(basicinfo, doctortime) {
 	drawDateTable();
-	drawTimeTable(basicinfo);
+	drawTimeTable(basicinfo, doctortime);
 	
 }
 
@@ -204,7 +205,7 @@ function drawDateTable() {
 	var weekday=new Array("日","一","二","三","四","五","六");
 	for (var i = 0; i < 7; i++) {
 		th = '<th>'+ weekday[beginDate.getDay()] +'</th>';
-		var tdid = beginDate.getFullYear() + "-" + (beginDate.getMonth() + 1) + "-" + beginDate.getDate();
+		var tdid = beginDate.Format("yyyy-MM-dd");
 		var tdclass = (beginDate.getDay() == 0 || beginDate.getDay() == 6) ? "weekend" : "weekday";
 		td = '<td data-date="'+ tdid +'" class="'+ tdclass +'"><span class="appoint-date pointer">'+ (beginDate.getMonth() + 1) + '月' + beginDate.getDate() + '日' +'</span></td>';
 		thead += th;
@@ -218,7 +219,7 @@ function drawDateTable() {
 	table.append(tbody);
 }
 
-function drawTimeTable(basicinfo) {
+function drawTimeTable(basicinfo, doctortime) {
 	var table = $("#AppointTime");
 	table.html("");
 	var tbody = '<tbody>';
@@ -245,7 +246,13 @@ function drawTimeTable(basicinfo) {
 						flag = false;
 					}
 					if (temptime < TimePoint[i + 1]) {
-						var td = '<td id="'+ temptime +'" data-begin="'+ temptime +'" data-end="'+ (temptime + _TimeLength) +'"><span class="pointer">'+ Num2Time(temptime, temptime + _TimeLength) +'</span></td>';
+						var tdclass = "";
+						for (var m = 0; m < doctortime.length; m++) {
+							if (temptime >= doctortime[m].begin && (temptime + _TimeLength) <= doctortime[m].end) {
+								tdclass = "doctortime";
+							}
+						}
+						var td = '<td id="'+ temptime +'" class="'+ tdclass +'" data-begin="'+ temptime +'" data-end="'+ (temptime + _TimeLength) +'"><span class="pointer">'+ Num2Time(temptime, temptime + _TimeLength) +'</span></td>';
 					}else {
 						var td = '<td></td>';
 					}
@@ -282,7 +289,7 @@ function RecordAddClick() {
 			drawPlanInfoTable(planinfo.patientinfo);
 			var datetable = $("#AppointDate");
 			var timetable = $("#AppointTime");
-			timetable.find("td").attr("class", "");
+			timetable.find("td").removeClass("occupied chosen");
 			$(".weekday").removeClass("chosen");
 			DateAddClick(planinfo.patientinfo);
 			$("#confirm").unbind("click").bind("click", function(){
@@ -325,13 +332,82 @@ function RecordAddClick() {
 			    };
 			    var postURL = '../../pages/Main/InsertAllappointment.ashx';
 			    var returnData = postData(postURL, appointdata, false);
-			    if (returnData == "success") {
-			    	alert("预约成功！");
-			    	Recover("click");
-			    	$("#confirm").attr("disabled","disabled");
+			    if (returnData != "failure") {
+			    	$("#appointResult").modal({ backdrop: 'static' });
+			    	var info = $.parseJSON(returnData);
+			    	var appointments = info.backinfo;
+			    	var table = $("#AppointRecords");
+			    	table.html("");
+			    	var thead = '<thead><tr><th>序号</th><th>日期</th><th>时间</th><th>子计划</th></tr></thead>'
+			    	var tbody = '<tbody>';
+			    	for (var i = 0; i < appointments.length; i++) {
+			    		var childplan = "";
+			    		var pagenum = 10;
+			    		var page = parseInt(i/pagenum) + 1;
+			    		for (var j = 0; j < appointments[i].chidinfogroup.length; j++) {
+			    			if (j == 0) {
+			    				childplan += appointments[i].chidinfogroup[j].designname;
+			    			}else {
+			    				childplan = childplan + '、' + appointments[i].chidinfogroup[j].designname;
+			    			}
+			    		}
+			    		var date = new Date(appointments[i].date);
+			    		var trclass = page == 1 ? "showpage " : "";
+			    		var tr = '<tr class="'+ trclass +'page_'+ page +' pages"><td>'+ (i + 1) +'</td><td>'+ date.Format("yyyy-MM-dd") +'</td><td>'+ Num2Time(appointments[i].begin, appointments[i].end) +'</td><td>'+ childplan +'</td></tr>';
+			    		tbody += tr;
+			    	}
+			    	tbody += '</tbody>';
+			    	table.append(thead);
+			    	table.append(tbody);
+			    	if (page > 1) {
+			    		var lis = '';
+				    	for (var i = 1; i <= page; i++) {
+				    		var liclass = i == 1 ? "active page_num" : "page_num";
+				    		var li = '<li class="'+ liclass +'"><a href="javascript:;">'+ i +'</a></li>';
+				    		lis += li;
+				    	}
+				    	table.next().find("ul").append(lis);
+				    	$(".page_num").each(function(){
+				    		$(this).unbind("click").bind("click",function(){
+				    			$(".page_num").removeClass("active");
+				    			$(this).addClass("active");
+				    			var page = $(this).find("a").html();
+					    		$(".pages").each(function(){
+					    			if ($(this).hasClass("page_" + page)) {
+					    				$(this).addClass("showpage");
+					    			}else{
+					    				$(this).removeClass("showpage");
+					    			}
+					    		});
+				    		});
+				    	});
+			    	}
+			    	$("#DeleteAppoint").unbind("click").bind("click", {appointarray:info.appointarray,treatmentrecordarray:info.treatmentrecordarray}, function(e){
+			    		var data = {
+			    			type:"3",
+			    			appointarray:e.data.appointarray,
+			    			treatmentrecordarray:e.data.treatmentrecordarray
+			    		};
+			    		var DeleteURL = '../../pages/Main/InsertAllappointment.ashx';
+			    		var returnData = postData(DeleteURL, data, false);
+			    		if (returnData == "success") {
+			    			alert("删除成功！");
+			    		}
+			    		Recover("click");
+			    		$("#confirm").attr("disabled","disabled");
+			    	});
+			    	$("#SureAppoint").unbind("click").bind("click", function(){
+			    		Recover("click");
+			    		$("#confirm").attr("disabled","disabled");
+			    	});
+			    	//alert("预约成功！");
+			    	//Recover("click");
+			    	//$("#confirm").attr("disabled","disabled");
 			    }else{
 			    	alert("预约失败！");
 			    }
+			    
+			    
 			});
 		});
 	});
@@ -347,6 +423,7 @@ function DateAddClick(planinfo) {
 				$(this).addClass("chosen");
 				var beginDate = $(this).attr("data-date");
 				var endDate = CalculateEndDate(beginDate, planinfo);
+				var currentDay = $(this).attr("data-date");
 				var session = getSession();
 				var equipmentid = session.equipmentID;
 				var data = {
@@ -357,13 +434,13 @@ function DateAddClick(planinfo) {
 				var getAppointsURL = '../../pages/Main/getAllappointInfoFromDate.ashx';
 				var returnData = postData(getAppointsURL, data, false);
 				var B_E_Appointments = $.parseJSON(returnData);
-				TimeAddClick(B_E_Appointments.appointinfo);
+				TimeAddClick(B_E_Appointments.appointinfo, currentDay);
 			}
 		});
 	});
 }
 
-function TimeAddClick(appointments) {
+function TimeAddClick(appointments, currentDay) {
 	var table = $("#AppointTime");
 	var plantable = $("#PlanInfo");
 	var patientid = $("#patientid").val();
@@ -376,8 +453,17 @@ function TimeAddClick(appointments) {
 			return maxTimes;
 		}
 	});
-	table.find("td").attr("class", "");
+	table.find("td").removeClass("occupied chosen");
 	table.find("td").unbind("click");
+	var today = new Date();
+	var time = today.getHours() * 60 + today.getMinutes();
+	if (today.Format("yyyy-MM-dd") == currentDay) {
+		table.find("td").each(function(){
+			if (parseInt($(this).attr("data-begin")) < time) {
+				$(this).addClass("occupied");
+			}
+		});
+	}
 	for (var i = 0; i < appointments.length; i++) {
 		if (appointments[i].Patient_ID != patientid) {
 			var timetdid = appointments[i].Begin;
@@ -387,7 +473,7 @@ function TimeAddClick(appointments) {
 		}
 	}
 	table.find("td").each(function(){
-		if (!($(this).hasClass("occupied"))) {
+		if (!($(this).hasClass("occupied")) && !($(this).hasClass("doctortime"))) {
 			$(this).unbind("click").bind("click", {maxTimes:maxTimes}, function(e){
 				var count = $(this).parent().parent().find(".chosen").length;
 				if ($(this).hasClass("chosen")) {
@@ -420,7 +506,13 @@ function CalculateEndDate(beginDate, planinfo) {
 			var Interal = parseInt($(this).parent().find("td").eq(0).html());
 			var Times = parseInt($(this).parent().find("td").eq(1).html());
 			var rest = parseInt($(this).parent().find("td").eq(5).html());
-			var C_Date = new Date(currentDay);
+			if ($(this).parent().find("td").eq(7).html() != "无") {
+				var date = $(this).prev().attr("data-date");
+				var C_Date = new Date(date);
+				
+			}else{
+				var C_Date = new Date(currentDay);
+			}
 			var count = 0;
 			var temp = rest;
 			while(temp > 0){
@@ -434,9 +526,9 @@ function CalculateEndDate(beginDate, planinfo) {
 				count ++;
 				C_Date = new Date(C_Date.setDate(C_Date.getDate() + 1));
 			}
-			tempDate = new Date(C_Date.setDate(C_Date.getDate() - 1));
-			if (tempDate.getTime() > endDate.getTime()) {
-				endDate = new Date(tempDate);
+			//tempDate = new Date(C_Date.setDate(C_Date.getDate() - 1));
+			if (C_Date.getTime() > endDate.getTime()) {
+				endDate = new Date(C_Date);
 			}
 		}
 		return endDate;
