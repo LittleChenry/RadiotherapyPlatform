@@ -87,28 +87,31 @@ public class patientInfoForZLJS : IHttpHandler {
                     info.Append("\",\"doctor\":\"" + "\",\"treatmentID\":\"" + treatmentID + "\",\"appoint\":\"" + reader["ID"].ToString() + "\",\"progress\":\"\"");
                 }
                 reader2.Close();
-
+                string coutcommand = "select count(*) from treatmentrecord where Appointment_ID=@app and Treat_User_ID  is null";
+                sqlOperation2.AddParameterWithValue("@app", reader["ID"].ToString());
+                int countthis = int.Parse(sqlOperation2.ExecuteScalar(coutcommand));
+                string completed = "";
+                if (countthis > 0)
+                {
+                    completed = "false";
+                }
+                else
+                {
+                    completed = "true";
+                }
+                info.Append(",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"completed\":\"" + completed + "\"}");
+                if (temp < count)
+                {
+                    info.Append(",");
+                }
+                temp++;
+            }
+            else
+            {
+                count--;
             }
             reader1.Close();
-            string coutcommand="select count(*) from treatmentrecord where Appointment_ID=@app and Treat_User_ID  is null";
-            sqlOperation1.AddParameterWithValue("@app",reader["ID"].ToString());
-            int countthis=int.Parse(sqlOperation1.ExecuteScalar(coutcommand));
-            string completed="";
-            if(countthis>0)
-            {
-                completed="false";
-            }else
-            {
-                completed="true";
-            }
-            info.Append(",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"completed\":\"" + completed + "\"}");
-            
-            if (temp < count)
-            {
-                info.Append(",");
-            }
-            temp++;
-            
+
         }
         info.Append("]}");
        
