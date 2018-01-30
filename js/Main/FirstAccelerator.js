@@ -34,20 +34,10 @@ function Init(evt) {
     var groupprogress = patient.Progress.split(",");
     var i = 0;
     var iscommon = judgecommon(treatmentID);
-    if (iscommon == "1") 
-    {
-            var designInfo = getDesignInfo(treatmentID);
-            document.getElementById("Remarks").innerHTML = designInfo[i].RadiotherapyHistory;
-            readDosagePriority(designInfo[i].DosagePriority);
-            document.getElementById("technology").innerHTML = designInfo[i].technology;
-            document.getElementById("equipment").innerHTML = designInfo[i].equipment;
-            document.getElementById("PlanSystem").innerHTML = designInfo[i].PlanSystem;
-
-    }
-    if (iscommon == "0") 
-    {
-        $("#designinfo").hide();
-    }
+    var designInfo = getDesignInfo(treatmentID);
+    document.getElementById("Remarks").innerHTML = designInfo[0].RadiotherapyHistory;
+    readDosagePriority(designInfo[0].DosagePriority);
+   
     patientid = patient.ID;
     var type = geteuqipmenttype(treatmentID);
     createfixEquipmachine(document.getElementById("equipmentName"), window.location.search.split("=")[2], type);
@@ -162,7 +152,11 @@ function Init(evt) {
             $("#tabs").append(tab);
             $("#tab-content").append(content);
         }
-  }
+    }
+
+    document.getElementById("technology").innerHTML = designInfo[0].techname;
+    document.getElementById("equipment").innerHTML = designInfo[0].equipname;
+    document.getElementById("PlanSystem").innerHTML = designInfo[0].tps;
   for (var i = 0; i < childdesigns.length; i++) 
   {
       var fildinfo = childdesigns[i].fieldinfo;
@@ -764,7 +758,7 @@ function charge(evt) {
 }
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "designConfirmInfo.ashx?treatID=" + treatID;
+    var url = "../designbasicinfo.ashx?treatID=" + treatID;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;

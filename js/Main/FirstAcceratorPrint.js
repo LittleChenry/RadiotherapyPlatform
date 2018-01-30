@@ -83,33 +83,29 @@ function print() {
     content = content + '<div class="paper-footer" style="border-top:1px solid black;position:absolute;bottom:0px;"><div class="single-row" style="margin-top:20px;min-height:20px;"><div class="item col-xs-4"><span>医&nbsp&nbsp生：</span><span class="underline" style="padding-left:70%;">&nbsp</span></div><div class="item col-xs-4"><span>物理师：</span><span class="underline" style="padding-left:70%;">&nbsp</span></div><div class="item col-xs-4"><span>技&nbsp&nbsp师：</span><span class="underline" style="padding-left:70%;">&nbsp</span></div></div></div></div>';
     $printArea.append(content);
     DosagePriority = patientbasic.Priority;
-    if (patientbasic.iscommon == "1") {
-        var table = document.getElementById("pri");
-        var tbody = document.createElement("tbody");
-        for (var i = table.rows.length - 1; i > 0; i--) {
-            table.deleteRow(i);
-        }
-        DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
-        var lists = new Array();
-        lists = DosagePriority.split(";");
-        for (var i = 0; i < lists.length; i++) {
-            var list = new Array();
-            list = lists[i].split(",");
-            var tr = document.createElement("tr");
-            for (var j = 0; j < list.length; j++) {
-                var td = document.createElement("td");
-                var textNode = document.createTextNode(list[j]);
-                td.appendChild(textNode);
-                td.style.padding = "5px 8px";
-                tr.appendChild(td);
-            }
-            tbody.appendChild(tr);
-        }
-        tbody.style.textAlign = "center";
-        table.appendChild(tbody);
-    } else {
-        $("#pridiv").hide();
+    var table = document.getElementById("pri");
+    var tbody = document.createElement("tbody");
+    for (var i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
     }
+    DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
+    var lists = new Array();
+    lists = DosagePriority.split(";");
+    for (var i = 0; i < lists.length; i++) {
+        var list = new Array();
+        list = lists[i].split(",");
+        var tr = document.createElement("tr");
+        for (var j = 0; j < list.length; j++) {
+            var td = document.createElement("td");
+            var textNode = document.createTextNode(list[j]);
+            td.appendChild(textNode);
+            td.style.padding = "5px 8px";
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
+    tbody.style.textAlign = "center";
+    table.appendChild(tbody);
     var number = allpagenumber;
     var fildinfo = childdesigns[number].fieldinfo;
     if (fildinfo.length == 0) {
