@@ -6,7 +6,7 @@ var rowcount = 1;
 var obj = [];
 var interal=1;
 var times = 20;
-var allpagenumber;
+var allpagenumber=0;
 var childdesigns;
 var appointchilddesign;
 var appointid;
@@ -14,9 +14,8 @@ function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
     
-    //var appoint = window.location.search.split("&")[1];//?后第一个变量信息
-    //var appointid = appoint.split("=")[1];
-     appointid = "807";
+    var appoint = window.location.search.split("&")[1];//?后第一个变量信息
+     appointid = appoint.split("=")[1];
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
     getUserName();
@@ -153,7 +152,7 @@ function Init(evt) {
             alert("此病人还有计划需要进行加速器预约，请进行预约");
             flag = false;
         }
-        if (contains(appointchilddesign, childdesigns[i].chid)) {
+        if (contains(childdesigns[i].chid,appointchilddesign)) {
             $("#tabs li:eq(" + i + ")").find("a").addClass("appointdesign");
         }
         refresh(i);
@@ -218,10 +217,10 @@ function Init(evt) {
                 data: {
                     assistant: session.assistant,
                     user: userID,
-                    totalnumber: document.getElementById("totalnumber").value,
+                    totalnumber: document.getElementById("total" + allpagenumber).innerHTML,
                     chid: childdesigns[allpagenumber].chid,
                     appoint: appointid,
-                    treatdays: dis,
+                    treatdays: document.getElementById("treatdays").innerHTML,
                     patientid: patient.ID,
                     singlenumber: document.getElementById("singlenumber").value,
                     machinenumber: document.getElementById("machinenumber").value,
@@ -295,6 +294,7 @@ function Init(evt) {
 
 //进行治疗记录
 function record(number) {
+    var session = getSession();
     if (appointid != "undefined") {
         var treatconfirm = getconfirminfomation(childdesigns[number].chid, appointid);
         var first= getfirstday(childdesigns[number].chid);
@@ -464,7 +464,7 @@ function refresh(number) {
     for (var i = 0; i <= data.length - 1; i++) {
         num = num + parseInt(data[i].Singlenumber);
         content = content + '<tr>';
-        content = content + '<td>' + data[i].TreatTime.split(" ")[0] + '</td><td>' + data[i].TreatedDays + '</td><td>' + data[i].TreatedTimes + '</td><td>' + data[i].IlluminatedNumber
+        content = content + '<td>' + data[i].TreatTime.split(" ")[0].split("/")[1] + "-" + data[i].TreatTime.split(" ")[0].split("/")[2] + '</td><td>' + data[i].TreatedDays + '</td><td>' + data[i].TreatedTimes + '</td><td>' + data[i].IlluminatedNumber
                   + '</td><td>' + data[i].MachineNumber + '</td><td>' + data[i].Singlenumber + '</td><td>' + num + '</td><td>' + data[i].treatusername + '</td><td>' + data[i].Assist_User + '</td><td>' + data[i].Remarks + '</td>';
         if (data[i].checkusername != "") {
             content = content + '<td>' + data[i].checkusername + '已审核</td>';
@@ -479,8 +479,8 @@ function refresh(number) {
         }
         content = content + "</tr>";
     }
-    $("#treatment").append(content);
-    $("#treatment").find("button").each(function () {
+    $("#treatment"+number).append(content);
+    $("#treatment"+number).find("button").each(function () {
         $(this).bind("click", function () {
             if ((typeof (userID) == "undefined")) {
                 if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -519,11 +519,11 @@ function refresh1(number) {
     var content = "";
     for (var i = 0; i <= data.length - 1; i++) {
         content = content + '<tr>';
-        content = content + '<td>' + data[i].OperateTime.split(" ")[0] + '</td><td>' + data[i].X_System + '</td><td>' + data[i].Y_System + '</td><td>' + data[i].Z_System
+        content = content + '<td>' + data[i].OperateTime.split(" ")[0].split("/")[1] +"-"+data[i].OperateTime.split(" ")[0].split("/")[2]+ '</td><td>' + data[i].X_System + '</td><td>' + data[i].Y_System + '</td><td>' + data[i].Z_System
                   + '</td><td>' + data[i].treatusername + '</td><td>' + data[i].Assist + '</td>';
          content = content + "</tr>";
     }
-       $("#IGRT").append(content);
+       $("#IGRT"+number).append(content);
 }
 
 function getalligrt(chid) {
@@ -709,16 +709,16 @@ function remove() {
             alert("error");
         }
     });
-    var today = new Date();
+    var today = new Date(new Date().getFullYear() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getDate());
     var appoint = new Date(dataappoint.time[0].Date.split(" ")[0].replace(/-/g, "\/"));
     if (appoint < today) {
         return;
     }
     for (var i = 0; i < childdesigns.length; i++) {
-        if (contains(appointchilddesign, childdesigns[i].chid)) {
+        if (contains(childdesigns[i].chid, appointchilddesign)) {
             document.getElementById("treatmentedit"+i).removeAttribute("disabled");
-            document.getElementById("finishigrt"+i).removeAttribute("disabled");
         }
+        document.getElementById("finishigrt" + i).removeAttribute("disabled");
     }
 }
 
