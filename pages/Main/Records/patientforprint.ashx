@@ -44,12 +44,11 @@ public class patientforprint : IHttpHandler {
             string Do = "";
             string Priority = "";
             string Dosage = "";
-            if (reader["iscommon"].ToString()== "1")
-            {
-                Do = reader["DosagePriority"].ToString();
-                Priority = Do.Split(new char[1] { '&' })[0];
-                Dosage = Do.Split(new char[1] { '&' })[1];
-            }
+
+            Do = reader["DosagePriority"].ToString();
+            Priority = Do.Split(new char[1] { '&' })[0];
+            Dosage = Do.Split(new char[1] { '&' })[1];
+
             string sqlCommand3 = "select Chinese from icdcode where ID=@icdID";
             sqlOperation.AddParameterWithValue("@icdID", Convert.ToInt32(reader["diag"].ToString()));
             string result = sqlOperation.ExecuteScalar(sqlCommand3);

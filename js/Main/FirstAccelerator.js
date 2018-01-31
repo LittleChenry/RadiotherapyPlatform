@@ -886,7 +886,7 @@ function save() {
     $.ajax({
         type: "POST",
         url: "saveChildDesign.ashx",
-        async: true,
+        async: false,
         data: {
             chid: childdesigns[number].chid,
             totalnumber: totalnumber,
@@ -914,6 +914,7 @@ function save() {
             alert("error");
         }
     });
+    return false;
    
 }
 //获取session

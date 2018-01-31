@@ -110,7 +110,14 @@ public class getAllAppointInfoChildesign : IHttpHandler {
                 begintemp = reader["begintime"].ToString();
             }
             reader.Close();
-            backstring.Append("]}]}");
+            if (kou == 0)
+            {
+                backstring.Append("]}");
+            }
+            else
+            {
+                backstring.Append("]}]}");
+            }
             return backstring.ToString();
   
         }

@@ -38,7 +38,12 @@ public class saveChildDesign : IHttpHandler {
         string totalnumbercommand = "select Totalnumber from childdesign where ID=@chid";
         sqlOperation.AddParameterWithValue("@chid", chid);
         string total = sqlOperation.ExecuteScalar(totalnumbercommand);
-        if (int.Parse(total) != int.Parse(totalnumber))
+        int newtotal = 0;
+        if (total != "")
+        {
+            newtotal=Convert.ToInt16(total);
+        }
+        if (newtotal != int.Parse(totalnumber))
         {
             string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and Date>=@nowdate";
             sqlOperation.AddParameterWithValue("@chid", chid);
