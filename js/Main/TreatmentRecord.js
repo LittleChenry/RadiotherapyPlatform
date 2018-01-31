@@ -75,7 +75,7 @@ function Init(evt) {
     childdesigns = getAllChildDesign(patient.ID);
     for (var j = 0; j < childdesigns.length; j++) {
         if (j == 0) {
-            var tab = '<li class="active" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + childdesigns[j].DesignName + '</a></li>';
+            var tab = '<li class="active" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe +","+ childdesigns[j].DesignName + '</a></li>';
             var content = '<div class="active tab-pane" id="tab' + j + '">' +
                             '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
                             '<div class="single-row"> <div class="col-xs-12"> <button style="margin-left:41%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record('+j+')"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
@@ -94,7 +94,7 @@ function Init(evt) {
             $("#tabs").append(tab);
             $("#tab-content").append(content);
         } else {
-            var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + childdesigns[j].DesignName + '</a></li>';
+            var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe +","+ childdesigns[j].DesignName + '</a></li>';
             var content = '<div class="tab-pane" id="tab' + j + '">' +
                             '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
                             '<div class="single-row"> <div class="col-xs-12"> <button style="margin-left:41%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record(' + j + ')"    data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +

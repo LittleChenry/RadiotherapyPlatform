@@ -168,7 +168,7 @@ public class saveField : IHttpHandler {
                 string update1 = "update childdesign set Splitway_ID=@Splitway_ID where ID=@ID";
                 sqlOperation.AddParameterWithValue("@ID", childid1);
                 sqlOperation.AddParameterWithValue("@Splitway_ID", Splitway);
-                sqlOperation1.ExecuteNonQuery(update1);
+                sqlOperation.ExecuteNonQuery(update1);
                
                 for (int i = 0; i < a; i++)
                 {
@@ -255,7 +255,7 @@ public class saveField : IHttpHandler {
                 string update1 = "update childdesign set Splitway_ID=@Splitway_ID where ID=@ID";
                 sqlOperation.AddParameterWithValue("@ID", childid1);
                 sqlOperation.AddParameterWithValue("@Splitway_ID", Splitway);
-                sqlOperation1.ExecuteNonQuery(update1);
+                sqlOperation.ExecuteNonQuery(update1);
                 for (int i = 0; i < a; i++)
                 {
                     string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid,Singledose,Totaldose,childdesign_ID) " +
@@ -303,10 +303,16 @@ public class saveField : IHttpHandler {
             }
             else
             {
-                string inserttreat = "update treatment set TPS=@TPS,positioninfomation=@positioninfomation,pinyin=@pinyin,radioID=@radioid where ID=@treat";                
+                string inserttreat = "update treatment set TPS=@TPS,positioninfomation=@positioninfomation,pinyin=@pinyin,radioID=@radioid where ID=@treat";
+                string ppp = context.Request.Form["id" + item];
+                if (ppp == "")
+                {
+                    ppp = "0";
+                }
+                       
                 sqlOperation2.AddParameterWithValue("@TPS", context.Request.Form["tps" + item]);
                 sqlOperation2.AddParameterWithValue("@pinyin", context.Request.Form["pingyin" + item]);
-                sqlOperation2.AddParameterWithValue("@radioid", context.Request.Form["id" + item]);
+                sqlOperation2.AddParameterWithValue("@radioid", ppp);
                 sqlOperation2.AddParameterWithValue("@positioninfomation", context.Request.Form["pos" + item]);
                 sqlOperation2.AddParameterWithValue("@treat", treatID);
                 Success = sqlOperation2.ExecuteNonQuery(inserttreat);

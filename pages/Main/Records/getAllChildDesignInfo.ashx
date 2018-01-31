@@ -95,7 +95,11 @@ public class getAllChildDesignInfo : IHttpHandler {
                 }
                 reader1.Close();
             }
-            int rest = int.Parse(reader["total"].ToString()) - count;
+            int rest = 0;
+            if (reader["total"].ToString() != "")
+            {
+                rest = int.Parse(reader["total"].ToString()) - count;
+            }
             info.Append("{\"chid\":\"" + reader["chid"].ToString() + "\",\"DesignName\":\"" + reader["DesignName"].ToString() + "\",\"rest\":\"" + rest + "\",\"splitname\":\"" + split + "\",\"Totalnumber\":\"" + reader["total"].ToString() + "\",\"childstate\":\"" + reader["childstate"].ToString() + "\",\"splitway\":\"" + reader["splitway"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"treatid\":\"" + reader["treatid"].ToString() + "\",\"changelog\":\"" + reader["changelog"].ToString() + "\",\"specialenjoin\":\"" + reader["specialenjoin"].ToString() + "\",\"illumnumber\":\"" + reader["illumnumber"].ToString() + "\",\"coplanar\":\"" + reader["coplanar"].ToString() + "\",\"mu\":\"" + reader["mu"].ToString() + "\",\"control\":\"" + reader["control"].ToString() + "\"");
             string amount = "select count(*) from treatmentrecord where ChildDesign_ID=@chid and Treat_User_ID is not null";
             sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());

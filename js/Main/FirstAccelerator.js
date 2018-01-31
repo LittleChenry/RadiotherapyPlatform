@@ -79,7 +79,7 @@ function Init(evt) {
             {
                 if (j == k) 
                 {
-                    var tab = '<li class="active" onclick="handleli('+j+')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + childdesigns[j].DesignName + '</a></li>';
+                    var tab = '<li class="active" onclick="handleli('+j+')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe +","+ childdesigns[j].DesignName + '</a></li>';
                     var content = '<div class="active tab-pane" id="tab' + j + '">' +
                                   '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid+'">'+
                                   '<div class="single-row"><div class="item col-xs-12"> <span class="form-text col-xs-2" style="padding-left:0px;width:11%">首次预约：</span>' +
@@ -101,7 +101,7 @@ function Init(evt) {
 
                 } else 
                 {
-                    var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + childdesigns[j].DesignName + '</a></li>';
+                    var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe +","+childdesigns[j].DesignName + '</a></li>';
                     var content = '<div class="tab-pane" id="tab' + j + '">' +
                                   '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
                                  '<div class="single-row"><div class="item col-xs-12"> <span class="form-text col-xs-2" style="padding-left:0px;width:11%">首次预约：</span>' +
@@ -133,7 +133,7 @@ function Init(evt) {
     {
         if (childdesigns[j].treatid != treatmentID) 
         {
-            var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + childdesigns[j].DesignName + '</a></li>';
+            var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe +","+childdesigns[j].DesignName + '</a></li>';
             var content = '<div class="tab-pane" id="tab' + j + '">' +
                           '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
                           '<div class="single-row"><div class="item col-xs-12"> <span class="form-text col-xs-2" style="padding-left:0px;width:11%">首次预约：</span>' +

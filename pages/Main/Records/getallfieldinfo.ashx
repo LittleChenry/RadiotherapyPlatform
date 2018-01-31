@@ -47,7 +47,7 @@ public class getallfieldinfo : IHttpHandler {
             string countcommand3 = "select iscommon from treatment where ID=@treatmentid ";
             int iscommon = Convert.ToInt32(sqlOperation.ExecuteScalar(countcommand3));
             
-            string sqlCommand = "SELECT code,mu,equipment,User_ID,radiotechnique,radiotype,fieldinfomation.energy as energy1,childdesign.energy as energy2,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,Operate_Time,Name,childdesign.* from fieldinfomation,user,childdesign where User_ID=user.ID and childdesign.treatment_ID=treatmentid and childdesign.ID=childdesign_ID and treatmentid=@treatmentid ";
+            string sqlCommand = "SELECT code,mu,equipment,User_ID,radiotechnique,radiotype,fieldinfomation.energy as energy1,childdesign.energy as energy2,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,Operate_Time,Name,childdesign.* from fieldinfomation,user,childdesign where User_ID=user.ID and childdesign.treatment_ID=@treatmentid and childdesign.ID=childdesign_ID and treatmentid=@treatmentid ";
             sqlOperation1.AddParameterWithValue("@treatmentid", treatid);
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation1.ExecuteReader(sqlCommand);
             StringBuilder backText = new StringBuilder("{\"Item\":[");
