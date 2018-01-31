@@ -9,13 +9,14 @@ var times = 20;
 var allpagenumber;
 var childdesigns;
 var appointchilddesign;
+var appointid;
 function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
     
     //var appoint = window.location.search.split("&")[1];//?后第一个变量信息
     //var appointid = appoint.split("=")[1];
-    var appointid = "807";
+     appointid = "807";
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
     getUserName();
@@ -37,20 +38,8 @@ function Init(evt) {
     //} else {
     //    flag = "success";
     //}
-    //var progress = patient.Progress.split(",");
-    //if (flag == "success" && !contains(progress, "14")) {
-    //    if (session.assistant == "" && (session.role == "治疗技师" || session.role == "科主任")) {
-    //        $("#operatorModal").modal({ backdrop: 'static' });
-    //    }
-    //} else {
-    //    $("#edit", window.parent.document).attr("disabled", true);
-    //}
-    //var session = getSession();
-    //if (session.assistant != "") {
-    //    $("#operator", window.parent.document).html(session.assistant);
-    //}
 
-    //refresh(treatmentID);
+    //refresh();
     //refresh1(treatmentID);
 
     var patient = getPatientInfo(treatmentID);
@@ -67,6 +56,19 @@ function Init(evt) {
     document.getElementById("lightpart").innerHTML = patient.LightPart_ID;
     var i = 0;
     var iscommon = judgecommon(treatmentID);
+    var progress = patient.Progress.split(",");
+    var session = getSession();
+    if (!contains(progress, "14")) {
+        if (session.assistant == "" && (session.role == "治疗技师" || session.role == "科主任")) {
+            $("#operatorModal").modal({ backdrop: 'static' });
+        }
+    } else {
+        $("#edit", window.parent.document).attr("disabled", true);
+    }
+
+    if (session.assistant != "") {
+        $("#operator", window.parent.document).html(session.assistant);
+    }
 
     var designInfo = getDesignInfo(treatmentID);
     readDosagePriority(designInfo[i].DosagePriority);
@@ -77,8 +79,8 @@ function Init(evt) {
             var tab = '<li class="active" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + childdesigns[j].DesignName + '</a></li>';
             var content = '<div class="active tab-pane" id="tab' + j + '">' +
                             '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
-                            '<div class="single-row"> <div class="col-xs-12"> <button style="margin-left:41%" id="treatmentedit' + j + '" disabled="disabled" type="button"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
-                            '<button style="margin-left:5%"  id="finishigrt' + j + '"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
+                            '<div class="single-row"> <div class="col-xs-12"> <button style="margin-left:41%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record('+j+')"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
+                            '<button style="margin-left:5%"  id="finishigrt' + j + '"  onclick="igrtrecord(' + j + ')" disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
                            '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
                             '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
                             '</table></div></div>' +
@@ -96,8 +98,8 @@ function Init(evt) {
             var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + childdesigns[j].DesignName + '</a></li>';
             var content = '<div class="tab-pane" id="tab' + j + '">' +
                             '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
-                            '<div class="single-row"> <div class="col-xs-12"> <button style="margin-left:41%" id="treatmentedit' + j + '" disabled="disabled" type="button"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
-                            '<button style="margin-left:5%" id="finishigrt' + j + '"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
+                            '<div class="single-row"> <div class="col-xs-12"> <button style="margin-left:41%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record(' + j + ')"    data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
+                            '<button style="margin-left:5%" id="finishigrt' + j + '" onclick="igrtrecord(' + j + ')"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
                             '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
                             '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
                             '</table></div></div>' +
@@ -154,6 +156,8 @@ function Init(evt) {
         if (contains(appointchilddesign, childdesigns[i].chid)) {
             $("#tabs li:eq(" + i + ")").find("a").addClass("appointdesign");
         }
+        refresh(i);
+        refresh1(i);
 
     }
     $("#validate").click(function () {
@@ -194,108 +198,89 @@ function Init(evt) {
             }
         });
     });
-
-    //if (appointid != "undefined") {
-    //    var treatconfirm = getconfirminfomation(treatmentID, appointid);
-    //    document.getElementById("treatdays").innerHTML = dis;
-    //    document.getElementById("treattimes").innerHTML = parseInt(treatconfirm.finishedtimes) + 1;
-    //    document.getElementById("treatnumber").innerHTML = treatconfirm.IlluminatedNumber;
-    //    document.getElementById("machinenumber").value = treatconfirm.MachineNumbe;
-    //    document.getElementById("singlenumber").value = treatconfirm.DosagePriority;
-    //    document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.addosage) + parseInt(treatconfirm.DosagePriority);
-    //    document.getElementById("chief").innerHTML = userName;
-    //    document.getElementById("assist").innerHTML = session.assistant;
-    //    $("#singlenumber").bind('input propertychange', function () {
-    //        document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.addosage) + parseInt(document.getElementById("singlenumber").value);
-    //    });
-    //}
-
     
-    //$("#confirm").click(function ()
-    //{
-    //    if (document.getElementById("singlenumber").value == "") {
-    //        alert("单次剂量不为空");
-    //        return;
-    //    }
-    //    if (document.getElementById("machinenumber").value == "") {
-    //        alert("机器跳数不为空");
-    //        return;
-    //    }
-    //    var allfirstnumber = parseInt(getallfirst(treatmentID));
-    //    if (!((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber == "")){
-    //        alert("请预约完所有加速治疗再进行治疗");
-    //    }
-    //        var session = getSession();
-    //        if (session.assistant != "") {
-    //            $.ajax({
-    //                type: "POST",
-    //                url: "TreatmentRecord.ashx",
-    //                async: false,
-    //                data: {
-    //                    assistant: session.assistant,
-    //                    user: userID,
-    //                    totalnumber: document.getElementById("totalnumber").value,
-    //                    treatmentID: treatmentID,
-    //                    appoint: appointid,
-    //                    treatdays: dis,
-    //                    patientid: patient.ID,
-    //                    singlenumber: document.getElementById("singlenumber").value,
-    //                    machinenumber: document.getElementById("machinenumber").value,
-    //                    IlluminatedNumber: document.getElementById("treatnumber").innerHTML,
-    //                    remark: document.getElementById("remarks").value
-    //                },
-    //                dateType: "json",
-    //                success: function (data) {
-    //                    if (data == "success") {
-    //                        alert("记录成功！");
-    //                        document.getElementById("treatmentedit").disabled = "disabled";
-    //                        refresh(treatmentID);
+    $("#confirm").click(function ()
+    {
+        if (document.getElementById("singlenumber").value == "") {
+            alert("单次剂量不为空");
+            return;
+        }
+        if (document.getElementById("machinenumber").value == "") {
+            alert("机器跳数不为空");
+            return;
+        }
+        var session = getSession();
+        if (session.assistant != "") {
+            $.ajax({
+                type: "POST",
+                url: "TreatmentRecord.ashx",
+                async: false,
+                data: {
+                    assistant: session.assistant,
+                    user: userID,
+                    totalnumber: document.getElementById("totalnumber").value,
+                    chid: childdesigns[allpagenumber].chid,
+                    appoint: appointid,
+                    treatdays: dis,
+                    patientid: patient.ID,
+                    singlenumber: document.getElementById("singlenumber").value,
+                    machinenumber: document.getElementById("machinenumber").value,
+                    IlluminatedNumber: document.getElementById("treatnumber").innerHTML,
+                    remark: document.getElementById("remarks").value
+                },
+                dateType: "json",
+                success: function (data) {
+                    if (data == "success") {
+                        alert("记录成功！");
+                        document.getElementById("treatmentedit" + allpagenumber).disabled = "disabled";
+                        $("#tabs li:eq(" + allpagenumber + ")").find("a").removeClass("appointdesign");
+                        refresh(allpagenumber);
 
-    //                    } else {
-    //                        alert("上传失败！");
-    //                    }
-    //                },
-    //                error: function () {
-    //                    alert("error");
-    //                }
-    //            });
-    //        } else {
-    //            alert("没有选择协助操作者");
-    //        }
-    //        });
-    //$("#recordigrt").click(function()
-    //{
-    //    var session = getSession();
-    //    if (session.assistant != "") {
-    //        $.ajax({
-    //            type: "POST",
-    //            url: "igrtrecord.ashx",
-    //            async: false,
-    //            data: {
-    //                assistant: session.assistant,
-    //                user: userID,
-    //                xvalue: document.getElementById("xvalue").value,
-    //                yvalue: document.getElementById("yvalue").value,
-    //                zvalue: document.getElementById("zvalue").value,
-    //                treatmentID: treatmentID
-    //            },
-    //            dateType: "json",
-    //            success: function (data) {
-    //                if (data == "success") {
-    //                    alert("记录成功！");
-    //                    refresh1(treatmentID);
-    //                } else {
-    //                    alert("上传失败！");
-    //                }
-    //            },
-    //            error: function () {
-    //                alert("error");
-    //            }
-    //        });
-    //    } else {
-    //        alert("没有选择协助操作者");
-    //    }
-    //});
+                    } else {
+                        alert("上传失败！");
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        } else {
+            alert("没有选择协助操作者");
+        }
+       });
+    $("#recordigrt").click(function()
+    {
+        var session = getSession();
+        if (session.assistant != "") {
+            $.ajax({
+                type: "POST",
+                url: "igrtrecord.ashx",
+                async: false,
+                data: {
+                    assistant: session.assistant,
+                    user: userID,
+                    xvalue: document.getElementById("xvalue").value,
+                    yvalue: document.getElementById("yvalue").value,
+                    zvalue: document.getElementById("zvalue").value,
+                    chid: childdesigns[allpagenumber].chid,
+                },
+                dateType: "json",
+                success: function (data) {
+                    if (data == "success") {
+                        alert("记录成功！");
+                        refresh1(allpagenumber);
+                    } else {
+                        alert("上传失败！");
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        } else {
+            alert("没有选择协助操作者");
+        }
+    });
     
 }
 
@@ -307,6 +292,44 @@ function Init(evt) {
 //        $("#rest").text("剩余加速器预约(剩0次)");
 //    }
 //}
+
+//进行治疗记录
+function record(number) {
+    if (appointid != "undefined") {
+        var treatconfirm = getconfirminfomation(childdesigns[number].chid, appointid);
+        var first= getfirstday(childdesigns[number].chid);
+        var firstdate = first==""?"":first.split(" ")[0];
+        var date = new Date();
+        var today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        var dis;
+        if (firstdate != "") {
+            dis = GetDateDiff(firstdate, today);
+            if (isNaN(dis)) {
+                dis = 1;
+            }
+        } else {
+              dis = 1;
+        }
+        document.getElementById("treatdays").innerHTML = dis;
+        document.getElementById("treattimes").innerHTML = parseInt(treatconfirm.finishedtimes) + 1;
+        document.getElementById("treatnumber").innerHTML = treatconfirm.IlluminatedNumber;
+        document.getElementById("machinenumber").value = treatconfirm.MachineNumbe;
+        document.getElementById("singlenumber").value = treatconfirm.DosagePriority;
+        document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.addosage) + parseInt(treatconfirm.DosagePriority);
+        document.getElementById("chief").innerHTML = userName;
+        document.getElementById("assist").innerHTML = session.assistant;
+        $("#singlenumber").bind('input propertychange', function () {
+            document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.addosage) + parseInt(document.getElementById("singlenumber").value);
+        });
+    }
+
+
+}
+
+//进行igrt治疗
+function igrtrecord(number) {
+}
+
 
 //获取appointid对应的所有应做计划
 function getappointgroupdesign(appointid) {
@@ -356,9 +379,9 @@ function getpdfgroup(treatmentID)
     var json = xmlHttp.responseText;
     return json;
 }
-function getconfirminfomation(treatmentID, appointid) {
+function getconfirminfomation(chid, appointid) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getconfirminfomation.ashx?treatID=" + treatmentID + "&appoint=" + appointid;
+    var url = "getconfirminfomation.ashx?chid=" + chid + "&appoint=" + appointid;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -433,9 +456,9 @@ function getotheraccer(treatmentID) {
     return json;
 }
 
-function refresh(treatmentID) {
-    var data = getalltreatmentrecord(treatmentID);
-    RemoveAllChild(document.getElementById("treatment"));
+function refresh(number) {
+    var data = getalltreatmentrecord(childdesigns[number].chid);
+    RemoveAllChild(document.getElementById("treatment" + number));
     var content = "";
     var num = 0;
     for (var i = 0; i <= data.length - 1; i++) {
@@ -480,9 +503,9 @@ function refresh(treatmentID) {
     }); 
 }
 
-function getalltreatmentrecord(treatmentID) {
+function getalltreatmentrecord(chid) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getalltreatmentrecord.ashx?treatmentID=" + treatmentID;
+    var url = "getalltreatmentrecord.ashx?chid=" + chid;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -490,9 +513,9 @@ function getalltreatmentrecord(treatmentID) {
     return obj1.Item;
 }
 
-function refresh1(treatmentID) {
-    var data = getalligrt(treatmentID);
-    RemoveAllChild(document.getElementById("IGRT"));
+function refresh1(number) {
+    var data = getalligrt(childdesigns[number].chid);
+    RemoveAllChild(document.getElementById("IGRT"+number));
     var content = "";
     for (var i = 0; i <= data.length - 1; i++) {
         content = content + '<tr>';
@@ -503,9 +526,9 @@ function refresh1(treatmentID) {
        $("#IGRT").append(content);
 }
 
-function getalligrt(treatmentID) {
+function getalligrt(chid) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getalligrt.ashx?treatmentID=" + treatmentID;
+    var url = "getalligrt.ashx?chid=" + chid;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -513,9 +536,9 @@ function getalligrt(treatmentID) {
     return obj1.Item;
 }
 
-function getfirstday(treatmentID){
+function getfirstday(chid){
     var xmlHttp = new XMLHttpRequest();
-    var url = "getfirstday.ashx?treatmentID=" +treatmentID;
+    var url = "getfirstday.ashx?chid=" +chid;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
@@ -672,7 +695,6 @@ function getmachineItem(item, type) {
 function remove() {
     //var appoint = window.location.search.split("&")[1];//?后第一个变量信息
     //var appointid = appoint.split("=")[1];
-    var appointid = "807";
     var dataappoint;
     $.ajax({
         type: "GET",

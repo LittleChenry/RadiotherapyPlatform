@@ -34,20 +34,20 @@ public class igrtrecord : IHttpHandler {
     private string igrt(HttpContext context)
     {
 
-        int treatID = Convert.ToInt32(context.Request["treatmentID"]);
+        int chid = Convert.ToInt32(context.Request["chid"]);
         string assistant = context.Request["assistant"];
         double xvalue = Convert.ToDouble(context.Request["xvalue"]);
         double yvalue = Convert.ToDouble(context.Request["yvalue"]);
         double zvalue = Convert.ToDouble(context.Request["zvalue"]);
         int user = Convert.ToInt32(context.Request["user"]);
-        string insert = "insert into igrt(Operate_User_ID,OperateTime,X_System,Y_System,Z_System,TreatmentID,Assist) values(@Operate_User_ID,@OperateTime,@X_System,@Y_System,@Z_System,@TreatmentID,@Assist)";
+        string insert = "insert into igrt(Operate_User_ID,OperateTime,X_System,Y_System,Z_System,ChildDesign_ID,Assist) values(@Operate_User_ID,@OperateTime,@X_System,@Y_System,@Z_System,@ChildDesign_ID,@Assist)";
         sqlOperation.AddParameterWithValue("@OperateTime", DateTime.Now);
         sqlOperation.AddParameterWithValue("@X_System", xvalue);
         sqlOperation.AddParameterWithValue("@Y_System", yvalue);
         sqlOperation.AddParameterWithValue("@Z_System", zvalue);
         sqlOperation.AddParameterWithValue("@Operate_User_ID", user);
         sqlOperation.AddParameterWithValue("@Assist", assistant);
-        sqlOperation.AddParameterWithValue("@TreatmentID", treatID);
+        sqlOperation.AddParameterWithValue("@ChildDesign_ID", chid);
         int success = sqlOperation.ExecuteNonQuery(insert);
         if (success > 0)
         {
