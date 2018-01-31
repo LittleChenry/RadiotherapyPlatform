@@ -8,12 +8,14 @@ var interal=1;
 var times = 20;
 var allpagenumber;
 var childdesigns;
+var appointchilddesign;
 function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentID = treatmentgroup.split("=")[1];
-    var appointid = "";
+    
     //var appoint = window.location.search.split("&")[1];//?后第一个变量信息
     //var appointid = appoint.split("=")[1];
+    var appointid = "807";
     //调取后台所有等待就诊的疗程号及其对应的病人
     getUserID();
     getUserName();
@@ -28,6 +30,28 @@ function Init(evt) {
         }
     }
     //var special= getsplitandyizhu(treatmentID);
+   appointchilddesign = getappointgroupdesign(appointid);
+    //var flag;
+    //if (appointid!= "undefined") {
+    //    flag = judge(appointid, treatmentID);
+    //} else {
+    //    flag = "success";
+    //}
+    //var progress = patient.Progress.split(",");
+    //if (flag == "success" && !contains(progress, "14")) {
+    //    if (session.assistant == "" && (session.role == "治疗技师" || session.role == "科主任")) {
+    //        $("#operatorModal").modal({ backdrop: 'static' });
+    //    }
+    //} else {
+    //    $("#edit", window.parent.document).attr("disabled", true);
+    //}
+    //var session = getSession();
+    //if (session.assistant != "") {
+    //    $("#operator", window.parent.document).html(session.assistant);
+    //}
+
+    //refresh(treatmentID);
+    //refresh1(treatmentID);
 
     var patient = getPatientInfo(treatmentID);
     document.getElementById("username").innerHTML = patient.Name;
@@ -42,31 +66,10 @@ function Init(evt) {
     document.getElementById("hospitalid").innerHTML = texthos;
     document.getElementById("lightpart").innerHTML = patient.LightPart_ID;
     var i = 0;
-    //childdesigns = getAllChildDesign(patient.ID);
-    //document.getElementById("enjoin").value = special.SpecialEnjoin;
-    //document.getElementById("split").innerHTML = special.SplitWay;
     var iscommon = judgecommon(treatmentID);
 
     var designInfo = getDesignInfo(treatmentID);
     readDosagePriority(designInfo[i].DosagePriority);
-    //if (iscommon == "1") {
-        //var pdfgroup = getpdfgroup(treatmentID);
-        //var pdf1 = pdfgroup.split(",")[0];
-        //var pdf2 = pdfgroup.split(",")[1];
-        //if (pdf1 != "") {
-        //    document.getElementById("viewpdf").href = pdf1;
-        //}
-        //if (pdf2 != "") {
-        //    document.getElementById("viewpdf2").href = pdf2;
-        //}
-    //} else {
-
-    //}
-
-
-    $("#referinfo").hide();
-    $("#aimdosagetable").hide();
-    $("#aimdosage").hide();
 
     childdesigns = getAllChildDesign(patient.ID);
     for (var j = 0; j < childdesigns.length; j++) {
@@ -74,7 +77,9 @@ function Init(evt) {
             var tab = '<li class="active" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + childdesigns[j].DesignName + '</a></li>';
             var content = '<div class="active tab-pane" id="tab' + j + '">' +
                             '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
-                            '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
+                            '<div class="single-row"> <div class="col-xs-12"> <button style="margin-left:41%" id="treatmentedit'+j+'" disabled="disabled" type="button"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>'+
+                            '<button style="margin-left:5%"  id="finishigrt' + j + '"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
+                           '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
                             '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
                             '</table></div></div>' +
                              '<div class="single-row"><div class="item col-xs-4">分割方式：<span id="split' + j + '" class="underline"></span></div><div class="item col-xs-4">总次数：<span id="total' + j + '" class="underline"></span></div><div class="item col-xs-4">已经治疗次数：<span id="treatedtimes' + j + '" class="underline"></span></div></div>' +
@@ -85,6 +90,8 @@ function Init(evt) {
             var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + childdesigns[j].DesignName + '</a></li>';
             var content = '<div class="tab-pane" id="tab' + j + '">' +
                             '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
+                            '<div class="single-row"> <div class="col-xs-12"> <button style="margin-left:41%" id="treatmentedit' + j + '" disabled="disabled" type="button"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
+                            '<button style="margin-left:5%" id="finishigrt' + j + '"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
                             '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
                             '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
                             '</table></div></div>' +
@@ -117,10 +124,10 @@ function Init(evt) {
             var pdf1 = pdfgroup.split(",")[0];
             var pdf2 = pdfgroup.split(",")[1];
             if (pdf1 != "") {
-                document.getElementById("viewpdf").href = pdf1;
+                document.getElementById("viewpdf"+i).href = pdf1;
             }
             if (pdf2 != "") {
-                document.getElementById("viewpdf2").href = pdf2;
+                document.getElementById("viewpdf2"+i).href = pdf2;
             }
 
         }
@@ -132,43 +139,11 @@ function Init(evt) {
             alert("此病人还有计划需要进行加速器预约，请进行预约");
             flag = false;
         }
+        if (contains(appointchilddesign, childdesigns[i].chid)) {
+            $("#tabs li:eq(" + i + ")").find("a").addClass("appointdesign");
+        }
 
     }
-
-    //var fildinfo = getfieldinfo(treatmentID);
-    //if (fildinfo.length == 0) {
-    //    $("#fieldinfotable").hide();
-    //    $("#fieldinfo").hide();
-    //} else {
-    //    var table = $("#Field");
-    //    for (var k = 0; k < fildinfo.length; k++) {
-    //        var content = '<tr><td>' + fildinfo[k].code + '</td><td>' + fildinfo[k].mu + '</td><td>' + fildinfo[k].equipment + '</td><td>' + fildinfo[k].radiotechnique;
-    //        content = content + '</td><td>' + fildinfo[k].radiotype + '</td><td>' + fildinfo[k].energy + '</td><td>' + fildinfo[k].wavedistance  + '</td><td>' + fildinfo[k].angleframe;
-    //        content = content + '</td><td>' + fildinfo[k].noseangle + '</td><td>' + fildinfo[k].bedrotation + '</td><td>' + fildinfo[k].subfieldnumber + '</td></tr>';
-    //        table.append(content);
-    //    }
-
-    //}
-    //var session = getSession();
-    //if (session.assistant != "") {
-    //    $("#operator", window.parent.document).html(session.assistant);
-    //}
-    //var flag;
-    //if (appointid!= "undefined") {
-    //    flag = judge(appointid, treatmentID);
-    //} else {
-    //    flag = "success";
-    //}
-    //var progress = patient.Progress.split(",");
-    //if (flag == "success" && !contains(progress, "14")) {
-    //    if (session.assistant == "" && (session.role == "治疗技师" || session.role == "科主任")) {
-    //        $("#operatorModal").modal({ backdrop: 'static' });
-    //    }
-    //} else {
-    //    $("#edit", window.parent.document).attr("disabled", true);
-    //}
-    //refresh(treatmentID);
-    //refresh1(treatmentID);
     //$("#validate").click(function () {
     //    $.ajax({
     //        type: "POST",
@@ -207,15 +182,7 @@ function Init(evt) {
     //        }
     //    });
     //});
-    //var total = gettotalnumber(treatmentID);
-    //var totalnumber = total.split(",")[0];
-    //var firstdate = getfirstday(treatmentID).split(" ")[0];
-    //var date=new Date();
-    //var today=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-    //var dis = GetDateDiff(firstdate, today);
-    //if (isNaN(dis)) {
-    //    dis = 1;
-    //}
+
     //if (appointid != "undefined") {
     //    var treatconfirm = getconfirminfomation(treatmentID, appointid);
     //    document.getElementById("treatdays").innerHTML = dis;
@@ -230,23 +197,8 @@ function Init(evt) {
     //        document.getElementById("sumnumber").innerHTML = parseInt(treatconfirm.addosage) + parseInt(document.getElementById("singlenumber").value);
     //    });
     //}
-    //if (totalnumber!="") {
-    //    document.getElementById("totalnumber").value = parseInt(totalnumber);
-    //}
-    //var allfirstnumber = parseInt(getallfirst(treatmentID));
-    //if ((parseInt(totalnumber) - allfirstnumber <= 0) || totalnumber=="") {
-    //    document.getElementById("rest").innerHTML = "剩余加速器预约(剩0次)";
-    //    $("#ask").css("display", "none");
-    //    document.getElementById("rest").disabled = "disabled";
-    //} else {
-    //    document.getElementById("rest").innerHTML = "剩余加速器预约(剩" + (parseInt(totalnumber) - allfirstnumber) + "次)";
-    //    $("#ask").css("display", "block");
-    //    if (session.roleName == "ZLJS") {
-    //       document.getElementById("rest").removeAttribute("disabled");
-    //    }
-   
-    //}
 
+    
     //$("#confirm").click(function ()
     //{
     //    if (document.getElementById("singlenumber").value == "") {
@@ -332,46 +284,31 @@ function Init(evt) {
     //        alert("没有选择协助操作者");
     //    }
     //});
-    ////if (iscommon == "1") {
-    ////    var type = geteuqipmenttype(treatmentID);
-    ////    createfixEquipmachine(document.getElementById("equipmentName"), "Accelerator", type);
-    ////} else {
-    ////    createfixEquipmachine1(document.getElementById("equipmentName"), "Accelerator");
-
-    ////}
-    ////var date = new Date();
-    ////document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    ////$("#rest").unbind("click").bind("click", function () {
-    ////    CreateNewAppiontTable();
-
-    ////});
-    ////$("#chooseProject").unbind("click").bind("click", function () {
-    ////    CreateNewAppiontTable();
-    ////});
-    ////$("#sure").bind("click", function () {
-    ////    $(this).unbind("click");
-    ////    checkAllTable(treatmentID);
-    ////});
+    
 }
 
-function doChromeWindowShowModalDialog(obj) {
-    if (obj != null) {
-        alert(obj);
-        var text = $("#rest").text();
-        $("#rest").text("剩余加速器预约(剩0次)");
-    }
-}
+//弹出剩余次数
+//function doChromeWindowShowModalDialog(obj) {
+//    if (obj != null) {
+//        alert(obj);
+//        var text = $("#rest").text();
+//        $("#rest").text("剩余加速器预约(剩0次)");
+//    }
+//}
 
-function getfieldinfo(treatmentID) {
+//获取appointid对应的所有应做计划
+function getappointgroupdesign(appointid) {
     var xmlHttp = new XMLHttpRequest();
-    var url = "getallfieldinfo.ashx?treatmentID=" + treatmentID;
+    var url = "getappointgroupdesign.ashx?appointid=" + appointid;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;
     var json = json.replace(/\n/g, "\\n");
     var obj1 = eval("(" + json + ")");
-    return obj1.Item;
+    return obj1;
 }
+
+
 function judgecommon(treatid) {
     var xmlHttp = new XMLHttpRequest();
     var url = "judgecommon.ashx?treatmentID=" + treatid;
@@ -380,25 +317,8 @@ function judgecommon(treatid) {
     var Items = xmlHttp.responseText;
     return Items;
 }
-function geteuqipmenttype(treatmentID) {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "geteuqipmenttype.ashx?treatmentID=" + treatmentID;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-    var Items = xmlHttp.responseText;
-    return Items;
 
-}
-function getsplitandyizhu(treatmentID) {
-    var xmlHttp = new XMLHttpRequest();
-    var url = "getalllog.ashx?treatmentID=" + treatmentID;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-    var json = xmlHttp.responseText;
-    var json = json.replace(/\n/g, "\\n");
-    var obj1 = eval("(" + json + ")");
-    return obj1.Item[0];
-}
+
 function hosttext(str) {
     if (str == "") {
         return "未住院";
@@ -740,6 +660,7 @@ function getmachineItem(item, type) {
 function remove() {
     var appoint = window.location.search.split("&")[1];//?后第一个变量信息
     var appointid = appoint.split("=")[1];
+    var dataappoint;
     $.ajax({
         type: "GET",
         url: "getappointtime.ashx",
@@ -747,24 +668,23 @@ function remove() {
         data:{appoint:appointid},
         dateType: "json",
         success: function (data) {
-            var dataappoint = $.parseJSON(data);
-            dataappoint = dataappoint.time[0];
-            var end_time = new Date();
-            var t = end_time.getTime();
-            var appoint = new Date(dataappoint.Date.split(" ")[0] + " " + toTime(dataappoint.Begin) + ":" + "00");
-            var t2 = appoint.getTime();
-           if(parseInt(t)<parseInt(t2))
-           {
-            document.getElementById("treatmentedit").removeAttribute("disabled");
-            document.getElementById("finishigrt").removeAttribute("disabled");
-           }
-
+            dataappoint = $.parseJSON(data);
         },
         error: function () {
             alert("error");
         }
     });
-   
+    var today = new Date();
+    var appoint = new Date(dataappoint.Date.split(" ")[0].replace(/-/g,"\/"));
+    if (appoint < today) {
+        return;
+    }
+    for (var i = 0; i < childdesigns.length; i++) {
+        if (contains(appointchilddesign, childdesigns[i].chid)) {
+            document.getElementById("treatmentedit"+i).removeAttribute("disabled");
+            document.getElementById("finishigrt"+i).removeAttribute("disabled");
+        }
+    }
 }
 
 function save() {
@@ -1249,4 +1169,32 @@ function getAllChildDesign(patientID) {
     json = json.replace(/\t/g, "");
     var data = eval("(" + json + ")");
     return data.patientinfo;
+}
+//点击标签触发子页面标识函数
+function handleli(number) {
+    allpagenumber = number;
+    $.ajax({
+    type: "POST",
+            url: "patientforprint.ashx",
+                async: false,
+            data: {
+            chid: childdesigns[allpagenumber].chid
+
+            },
+                dateType: "json",
+                success: function (data) {
+                    data = data.replace(/\r/g, "");
+                    data = data.replace(/\n/g, "\\n");
+                    data = data.replace(/\t/g, "");
+                    patientbasic = eval("(" + data + ")");
+                    patientbasic = patientbasic.patient[0];
+                    $("#treatID").html(patientbasic.Treatmentdescribe.split(",")[0]);
+                    $("#diagnosisresult").html(patientbasic.diagnosisresult);
+                    $("#lightpart").html(patientbasic.LightPart_ID);
+
+                    },
+                        error: function (data) {
+            alert("error");
+            }
+            });
 }

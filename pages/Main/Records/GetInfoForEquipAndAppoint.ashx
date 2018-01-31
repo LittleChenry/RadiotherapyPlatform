@@ -81,7 +81,7 @@ public class GetInfoForEquipAndAppoint : IHttpHandler {
                 completed = "true";
             }
             backString.Append("{\"appointid\":\"" + reader["ID"].ToString() + "\",\"Task\":\"" + reader["Task"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Begin\":\"" + begin + "\",\"End\":\"" + reader["End"].ToString() + "\"");
-            backString.Append(",\"Completed\":\"" + completed + "\",\"patientname\":\"" + pname + "\"}");
+            backString.Append(",\"Completed\":\"" + completed + "\",\"patientid\":\"" + reader["Patient_ID"].ToString() + "\",\"patientname\":\"" + pname + "\"}");
             if (i < count - 1)
             {
                 backString.Append(",");
