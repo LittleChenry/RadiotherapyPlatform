@@ -297,6 +297,9 @@
                             <hr>
                             <strong><i class="fa fa-fw fa-clock-o"></i> 工作时间</strong>
                             <div>
+                                <input id="timelength" type="hidden" value="" />
+                                <input id="begin" type="hidden" value="" />
+                                <input id="end" type="hidden" value="" />
                                 <p id="EquipmentTime" class="text-muted" style="padding-left:20px;margin-top:10px;"></p>
                             </div>
                         </div>
@@ -311,7 +314,8 @@
                         <div class="tab-content">
                             <div class="tab-pane" id="patientView" style="overflow:hidden;">
                                 <div class="col-md-10 col-md-offset-1">
-                                    <table id="viewAppoints" class="table" style="text-align:center;">
+                                    <input id="patientid" type="hidden" value="" />
+                                    <table id="viewAppoints" class="table table-bordered" style="text-align:center;">
                                         <thead></thead>
                                         <tbody></tbody>
                                     </table>
@@ -330,10 +334,10 @@
                                            
                                         </div>
                                         <div class='col-md-9' style='margin-bottom:5px;text-align:right;'>
-                                            <button id="lastWeek" class='time-btn selected-btn'>上一周</button>
-                                            <button id="lastDay" class='time-btn selected-btn buttonSpace'>上一天</button>
-                                            <button id="nextDay" class='time-btn selected-btn buttonSpace'>下一天</button>
-                                            <button id="nextWeek" class='time-btn selected-btn buttonSpace'>下一周</button>
+                                            <button id="lastWeek" class='time-btn selected-btn' type="button">上一周</button>
+                                            <button id="lastDay" class='time-btn selected-btn buttonSpace' type="button">上一天</button>
+                                            <button id="nextDay" class='time-btn selected-btn buttonSpace' type="button">下一天</button>
+                                            <button id="nextWeek" class='time-btn selected-btn buttonSpace' type="button">下一周</button>
                                         </div>
                                     </div>
                                     <table id="appointTable" class="table table-bordered table-hover dataTable">

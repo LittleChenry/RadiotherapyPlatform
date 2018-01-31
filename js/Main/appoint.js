@@ -338,7 +338,7 @@ function RecordAddClick() {
 			    	var appointments = info.backinfo;
 			    	var table = $("#AppointRecords");
 			    	table.html("");
-			    	var thead = '<thead><tr><th>序号</th><th>日期</th><th>时间</th><th>子计划</th></tr></thead>'
+			    	var thead = '<thead><tr><th>序号</th><th>日期</th><th>时间</th><th>计划</th></tr></thead>';
 			    	var tbody = '<tbody>';
 			    	for (var i = 0; i < appointments.length; i++) {
 			    		var childplan = "";
