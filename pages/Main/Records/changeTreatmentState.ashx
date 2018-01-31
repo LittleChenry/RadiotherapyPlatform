@@ -92,6 +92,9 @@ public class changeTreatmentState : IHttpHandler {
                for (int k = 0; k < childdesignlist.Count; k++)
                {
                    string chid = childdesignlist[k].ToString();
+                   string updatecommand = "update childdesign set State=0 where ID=@chid";
+                   sqlOperation.AddParameterWithValue("@chid", chid);
+                   sqlOperation.ExecuteNonQuery(updatecommand);
                    string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and Date>=@nowdate";
                    sqlOperation.AddParameterWithValue("@chid", chid);
                    sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
@@ -130,7 +133,39 @@ public class changeTreatmentState : IHttpHandler {
                        sqlOperation.ExecuteNonQuery(deletecommand2);
                    }
                }
-      
+            }
+            string childdesignlistcommand1 = "select DISTINCT(ID) from childdesign where Treatment_ID=@treat";
+            sqlOperation2.AddParameterWithValue("@treat", treatID);
+            MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation2.ExecuteReader(childdesignlistcommand1);
+            ArrayList childdesignlist1 = new ArrayList();
+            while (reader1.Read())
+            {
+                childdesignlist1.Add(reader1["ID"].ToString());
+            }
+            if (state == "0")
+            {
+                for (int k = 0; k < childdesignlist1.Count; k++)
+                {
+                    string chid = childdesignlist1[k].ToString();
+                    string updatecommand = "update childdesign set State=2 WHERE ID=@chid and Totalnumber is null";
+                    sqlOperation.AddParameterWithValue("@chid", chid);
+                    sqlOperation.ExecuteNonQuery(updatecommand);
+                    string updatecommand1 = "update childdesign set State=3 WHERE ID=@chid and Totalnumber is not null";
+                    sqlOperation.AddParameterWithValue("@chid", chid);
+                    sqlOperation.ExecuteNonQuery(updatecommand1);
+
+                }
+            }
+            else
+            {
+                for (int k = 0; k < childdesignlist1.Count; k++)
+                {
+                    string chid = childdesignlist1[k].ToString();
+                    string updatecommand = "update childdesign set State=0 WHERE ID=@chid";
+                    sqlOperation.AddParameterWithValue("@chid", chid);
+                    sqlOperation.ExecuteNonQuery(updatecommand);
+
+                }
             }
             string change = "update treatment set State=@state where ID=@treatID";
             sqlOperation1.AddParameterWithValue("@treatID", Convert.ToInt32(treatID));
