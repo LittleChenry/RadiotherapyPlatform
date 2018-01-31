@@ -28,12 +28,12 @@ public class getalligrt : IHttpHandler {
     }
     private string getallrecord(HttpContext context)
     {
-        string treatid = context.Request.QueryString["treatmentID"];
-        int treat = int.Parse(treatid);
-        string sqlcommand1 = "select count(*) from igrt where TreatmentID=@treat";
-        sqlOperation.AddParameterWithValue("treat", treatid);
+        string chid = context.Request.QueryString["chid"];
+        int treat = int.Parse(chid);
+        string sqlcommand1 = "select count(*) from igrt where ChildDesign_ID=@chid";
+        sqlOperation.AddParameterWithValue("@chid", chid);
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlcommand1));
-        string sqlcommand = "select Operate_User_ID,OperateTime,X_System,Y_System,Z_System,Assist from igrt where TreatmentID=@treat";
+        string sqlcommand = "select Operate_User_ID,OperateTime,X_System,Y_System,Z_System,Assist from igrt where ChildDesign_ID=@chid";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand);
         int temp = 0;
         StringBuilder backText = new StringBuilder("{\"Item\":[");

@@ -32,7 +32,7 @@ public class TreatmentRecord : IHttpHandler {
     private string treatrecord(HttpContext context)
     {
 
-        int treatid = Convert.ToInt32(context.Request["treatmentID"]);
+        int chid = Convert.ToInt32(context.Request["chid"]);
         int appointid = Convert.ToInt32(context.Request["appoint"]);
         int totalnumber = Convert.ToInt32(context.Request["totalnumber"]);
         int user = Convert.ToInt32(context.Request["user"]);
@@ -43,39 +43,11 @@ public class TreatmentRecord : IHttpHandler {
         double machinenumber = Convert.ToDouble(context.Request["machinenumber"]);
         int Illuminated = Convert.ToInt32(context.Request["IlluminatedNumber"]);
         string remark = context.Request["remark"];
-        string design = "select iscommon from treatment where ID=@treat";
-        sqlOperation.AddParameterWithValue("@treat", treatid);
-        string des = sqlOperation.ExecuteScalar(design);
-     
-        if (design == "1")
-        {
-            string sqlcommand1 = "select IlluminatedNumber,MachineNumbe,DosagePriority from design,treatment where design.ID=treatment.Design_ID and treatment.ID=@treat";
-            sqlOperation.AddParameterWithValue("treat", treatid);
-            MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand1);
-            if (reader.Read())
-            {
-                string Do = reader["DosagePriority"].ToString();
-                string Priority = Do.Split(new char[1] { '&' })[0];
-                string[] dosage = Priority.Split(new char[1] { ';' });
-                int k = 0;
-                int finaldos = 0;
-                for (k = 0; k <= dosage.Length - 2; k++)
-                {
-                    if (Convert.ToInt32(dosage[k].Split(new char[1] { ',' })[3]) >= finaldos)
-                    {
-                        finaldos = Convert.ToInt32(dosage[k].Split(new char[1] { ',' })[3]);
-                    }
-                }
-                Illuminated = int.Parse(reader["IlluminatedNumber"].ToString());
-                machinenumber = double.Parse(reader["MachineNumbe"].ToString());
-                singlenumber = finaldos;
-            }
-            reader.Close();
-        }
-       
-        string sqlcommand2 = "select count(*) from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL";
+
+        string sqlcommand2 = "select count(*) from treatmentrecord where ChildDesign_ID=@chid and Treat_User_ID is not NULL";
+        sqlOperation.AddParameterWithValue("@chid", chid);
         int finishedtimes = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand2));
-        string insert = "update treatmentrecord set TreatTime=@time,TreatedDays=@treatdays,TreatedTimes=@treattimes,Rest=@rest,Treat_User_ID=@user,IlluminatedNumber=@number1,MachineNumber=@number2,Assist_User=@assist,Singlenumber=@single,Remarks=@remarks where Appointment_ID=@appoint and Treatment_ID=@treat";
+        string insert = "update treatmentrecord set TreatTime=@time,TreatedDays=@treatdays,TreatedTimes=@treattimes,Rest=@rest,Treat_User_ID=@user,IlluminatedNumber=@number1,MachineNumber=@number2,Assist_User=@assist,Singlenumber=@single,Remarks=@remarks where Appointment_ID=@appoint and ChildDesign_ID=@chid";
         sqlOperation.AddParameterWithValue("@time", DateTime.Now);
         sqlOperation.AddParameterWithValue("@treatdays", treatdays);
         sqlOperation.AddParameterWithValue("@treattimes", finishedtimes + 1);
@@ -91,17 +63,7 @@ public class TreatmentRecord : IHttpHandler {
         if (success > 0)
         {
 
-            string sqlcommand3 = "update appointment_accelerate set Patient_ID=@patient,Treatment_ID=@treat,Completed=1 where ID=@appoint";
-            sqlOperation.AddParameterWithValue("@patient", patient);
-            int success1 = sqlOperation.ExecuteNonQuery(sqlcommand3);
-            if (success1 == 0)
-            {
-                return "fail";
-            }
-            else
-            {
-                return "success";
-            }
+            return "success";
 
         }
         return "fail";

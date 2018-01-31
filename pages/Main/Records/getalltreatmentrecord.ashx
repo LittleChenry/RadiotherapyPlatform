@@ -28,12 +28,12 @@ public class getalltreatmentrecord : IHttpHandler {
     }
     private string getallrecord(HttpContext context)
     {
-        string treatid = context.Request.QueryString["treatmentID"];
-        int treat = int.Parse(treatid);
-        string sqlcommand1 = "select count(*) from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL";
-        sqlOperation.AddParameterWithValue("treat", treatid);
+        string chid = context.Request.QueryString["chid"];
+        int treat = int.Parse(chid);
+        string sqlcommand1 = "select count(*) from treatmentrecord where ChildDesign_ID=@chid and Treat_User_ID is not NULL";
+        sqlOperation.AddParameterWithValue("@chid", chid);
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlcommand1));
-        string sqlcommand = "select ID,TreatTime,TreatedDays,TreatedTimes,Treat_User_ID,Check_User_ID,IlluminatedNumber,MachineNumber,Assist_User,Singlenumber,Remarks from treatmentrecord where Treatment_ID=@treat and Treat_User_ID is not NULL order by ID asc";
+        string sqlcommand = "select ID,TreatTime,TreatedDays,TreatedTimes,Treat_User_ID,Check_User_ID,IlluminatedNumber,MachineNumber,Assist_User,Singlenumber,Remarks from treatmentrecord where ChildDesign_ID=@chid and Treat_User_ID is not NULL order by treatmentrecord.TreatTime asc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand);
         int temp = 0;
        StringBuilder backText = new StringBuilder("{\"Item\":[");
