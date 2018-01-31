@@ -33,6 +33,7 @@ public class getAllAppointInfoChildesign : IHttpHandler {
     }
     private string getallchilddeigninfo(HttpContext context)
     {
+        
         string patientid = context.Request["patientid"];
         string equipid = context.Request["equipid"];
         string command = "select equipmenttype.Type as equiptype from equipment,equipmenttype where equipment.ID=@equipid and equipment.EquipmentType=equipmenttype.ID";

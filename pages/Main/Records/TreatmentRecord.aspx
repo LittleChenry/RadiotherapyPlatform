@@ -94,77 +94,7 @@
                
                 </div>
             </div>
-           <%-- <div id="operate" class ="paper-content">
-                <div class="content-title">
-                    <span>填写放射治疗记录与IGRT记录：</span>
-                </div>
-                <div class="single-row">
-                    <div class="col-xs-7">
-                        <span class="form-text col-xs-6" style="padding-left:0px;">放疗总次数：
-                            <input id="totalnumber" type="number" name="totalnumber" class="form-item" disabled="disabled"/>
-                        </span>
-                        <span class="form-text col-xs-5" style="padding-left:0px;">
-                            <button id="rest" disabled="disabled" type="button" class="btn btn-warning" >剩余加速器预约</button> 
-                        </span>
-                    </div>
-                    <div class="col-xs-5" >
-                        <button id="treatmentedit" disabled="disabled" type="button"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>
-                        <button id="finishigrt"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button>
-                   </div>
-                </div>
-            </div>
-            <div class="paper-content">
-                <div class="content-title">
-                    <span>放射治疗记录：</span>
-                </div>
-                <div class="single-row">
-                    <div class="item area-group col-xs-12">
-                        <table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
-                            <thead>
-                                <tr>
-                                    <th>日期</th>
-                                    <th>放疗天数</th>
-                                    <th>放疗次数</th>
-                                    <th>射野数(V)</th>
-                                    <th>机器跳数</th>
-                                    <th>单次剂量(cGy)</th>
-                                    <th>累计剂量(cGy)</th>
-                                    <th>主操作</th>
-                                    <th>副操作</th>
-                                    <th>备注</th>
-                                    <th>周剂量核对</th>
-                                </tr>
-                            </thead>
-                            <tbody id="treatment" style="text-align:center;"> 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="paper-content">
-                <div class="content-title">
-                    <span>IGRT记录：</span>
-                </div>
-                <div class="single-row">
-                    <div class="item area-group col-xs-12">
-                        <table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">
-                            <thead>
-                                <tr>
-                                    <th>日期</th>
-                                    <th>X(cm)</th>
-                                    <th>Y(cm)</th>
-                                    <th>Z(cm)</th>
-                                    <th>主操作</th>
-                                    <th>副操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="IGRT" style="text-align:center;"> 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>--%>
+          
         <div id="operatorModal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document" style="width:700px;">
                 <div class="modal-content">
