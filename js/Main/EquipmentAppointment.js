@@ -19,13 +19,13 @@ $(document).ready(function () {
 			return false;
 		}
         showButton();
+        patientView();
 		if ($("#equipmentType").val() == "加速器") {
 		    AccelerateAppointView(nowDate);
         }else{
             appointView(nowDate);
             Appoint2Patient();
         }
-		patientView();
 	});
 
 	$("#timeselect").unbind("click").bind("change", function () {
@@ -69,10 +69,130 @@ function changeDate(days) {
 
 function showButton() {
     $("#buttonArea").show();
+    $("#deleteAllAppoints").remove();
 }
 
 function AccelerateAppointView(nowDate){
-    alert(nowDate);
+    createHead(nowDate);
+    createAccelerateTable(nowDate);
+    
+}
+
+function createAccelerateTable(nowDate) {
+    var timelength = parseInt($("#timelength").val());
+    var begin = parseInt($("#begin").val());
+    var end = parseInt($("#end").val());
+    var table = $("#appointTable");
+    table.find("tbody").html("");
+    var firstDate = new Date(nowDate);
+    var DateArray = new Array(7);
+    //var DateDetailArray = new Array(7);
+    for (var i = 0; i < 7; i++) {
+        DateArray[i] = firstDate.Format("yyyyMMdd");
+        //DateDetailArray[i] = firstDate.Format("M-d") + num2week(firstDate.getDay());
+        firstDate = new Date(firstDate.setDate(firstDate.getDate() + 1));
+    }
+    var temptime = begin;
+    while(temptime < end){
+        var tr = '<tr><td>'+ Num2Time(temptime, temptime + timelength) +'</td>';
+        for (var i = 0; i < DateArray.length; i++) {
+            var td = '<td><span id="'+ DateArray[i] + temptime +'" class="pointer"></span></td>';
+            tr += td;
+        }
+        tr += '</tr>';
+        table.find("tbody").append(tr);
+        temptime += timelength;
+    }
+    var AppointmentsURL = "Records/GetInfoForEquipAndAppoint.ashx";
+    firstDate = new Date(nowDate);
+    var data = {
+        equipid:$("#equipment").val(),
+        firstday:firstDate.Format("yyyy-MM-dd")
+    };
+    var returnData = postData(AppointmentsURL, data, false);
+    var alldate = $.parseJSON(returnData);
+    var appointments = alldate.appointinfo;
+    if (appointments == "") {
+        return false;
+    }
+    for (var i = 0; i < appointments.length; i++) {
+        var date = new Date(appointments[i].Date);
+        var begin = appointments[i].Begin;
+        var tdid = date.Format("yyyyMMdd") + begin;
+        $("#" + tdid).html(appointments[i].patientname);
+        $("#" + tdid).parent().attr("id", appointments[i].patientid + "_" + i);
+        var DateDetail = date.Format("M月d日") + " " + num2week(date.getDay());
+        $("#" + tdid).parent().attr("title", DateDetail);
+    }
+    table.find("td").each(function(){
+        if ($(this).find("span").html() != "") {
+            $(this).unbind("click").bind("click", function(){
+                var tdid = $(this).attr("id").split("_")[0];
+                var equipid = $("#equipment").val();
+                var patientAppointURL = "getAllAppointInfoChildesign.ashx";
+                var data = {
+                    patientid:tdid,
+                    equipid:equipid
+                };
+                var returnData = postData(patientAppointURL, data, false);
+                var alldate = $.parseJSON(returnData);
+                var patientAppointments = alldate.backinfo;
+                $("#patientid").val(tdid);
+                var table = $("#viewAppoints");
+                table.find("thead").html("");
+                table.find("tbody").html("");
+                table.prev().remove();
+                var thead = '<tr><th>姓名</th><th>日期</th><th>时间</th><th>计划</th></tr>';
+                var btn = '<button id="deleteAllAppoints" class="btn btn-warning btn-flat pull-right" type="button" style="margin-bottom:20px;">删除预约</button>';
+                table.find("thead").append(thead);
+                table.before(btn);
+                for (var i = 0; i < patientAppointments.length; i++) {
+                    var childplan = '';
+                    for (var j = 0; j < patientAppointments[i].chidinfogroup.length; j++) {
+                        if (j == 0) {
+                            if (patientAppointments[i].chidinfogroup[j].Completed == "0") {
+                                childplan = childplan + '<span class="waiting">' + patientAppointments[i].chidinfogroup[j].designname + '</span>';
+                            }else{
+                                childplan = childplan + '<span>' + patientAppointments[i].chidinfogroup[j].designname + '</span>';
+                            }
+                        }else{
+                            if (patientAppointments[i].chidinfogroup[j].Completed == "0") {
+                                childplan = childplan + "、" + '<span class="waiting">' + patientAppointments[i].chidinfogroup[j].designname + '</span>';
+                            }else{
+                                childplan = childplan + "、" + '<span>' + patientAppointments[i].chidinfogroup[j].designname + '</span>';
+                            }
+                        }
+                    }
+                    var apoint_date = new Date(patientAppointments[i].date);
+                    var time = Num2Time(parseInt(patientAppointments[i].begin), parseInt(patientAppointments[i].end));
+                    var name = "";
+                    if (i == 0) {
+                        name = '<td rowspan="'+ patientAppointments.length +'">'+ $(this).find("span").html() +'</td>';
+                    }
+                    var tr = '<tr>'+ name +'<td>'+ apoint_date.Format("M月d日") +'</td><td>'+ time +'</td><td>'+ childplan +'</td></tr>';
+                    table.find("tbody").append(tr);
+                }
+                $(this).parents(".tab-content").prev().find("li").each(function(index,e){
+                    if (index == 1) {
+                        $(this).find("a").click();
+                    }
+                });
+                $("#deleteAllAppoints").unbind("click").bind("click", {info:data}, function(e){
+                    var deleteAllURL = "deleteAllAccerAppoint.ashx";
+                    var deleteinfo = e.data.info;
+                    var returnData = postData(deleteAllURL, deleteinfo, false);
+                    if (returnData == "success") {
+                        if ($("#dates").val() == "") {
+                            $("#sureEquipment").click();
+                        }else{
+                            $("#sureDate").click();
+                        }
+                        alert("删除成功！");
+                    }
+                });
+            });
+        }
+    });
 }
 
 function Appoint2Patient(){
@@ -85,7 +205,7 @@ function Appoint2Patient(){
                     $("#viewAppoints").find("thead").html("");
                     var viewAppointsBody = $("#viewAppoints").find("tbody");
                     viewAppointsBody.html("");
-                    var thead = '<tr><th>预约项目</th><th>预约时间</th><th>是否完成</th><th>操作</th></tr>';
+                    var thead = '<tr><th>姓名</th><th>预约项目</th><th>预约时间</th><th>是否完成</th><th>操作</th></tr>';
                     $("#viewAppoints").find("thead").append(thead);
                     temptreatmentID = treatID;
                     var appoints = getAppointments(treatID);
@@ -94,6 +214,10 @@ function Appoint2Patient(){
                     for (var i = 0; i < appoints.appoint.length; i++) {
                         var appointDate = new Date(appoints.appoint[i].Date);
                         var completed = (appoints.appoint[i].Completed == "1") ? "完成" : "待做";
+                        var name = "";
+                        if (i == 0) {
+                            name = '<td rowspan="'+ appoints.appoint.length +'">'+ $(this).find("span").html() +'</td>';
+                        }
                         if (parseInt(toTime(appoints.appoint[i].End).split(":")[0]) >= 24) {
                             var hour = toTime(appoints.appoint[i].Begin).split(":")[0];
                             var minute = toTime(appoints.appoint[i].Begin).split(":")[1];
@@ -107,11 +231,11 @@ function Appoint2Patient(){
                             var endminute = toTime(appoints.appoint[i].End).split(":")[1];
                             var hourend = parseInt(endhour) - 24;
                             var end = hourend + ":" + endminute;
-                            var tr = '<tr id="apoint_' + appoints.appoint[i].appointid + '"><td>' + appoints.appoint[i].Task + '</td>'
+                            var tr = '<tr id="apoint_' + appoints.appoint[i].appointid + '">'+ name +'<td>' + appoints.appoint[i].Task + '</td>'
                              + '<td>' + appointDate.Format("yyyy-MM-dd") + ' , ' + begin + ' - ' + end + '(次日)</td>'
                              + '<td>' + completed + '</td>';
                         } else {
-                            var tr = '<tr id="apoint_' + appoints.appoint[i].appointid + '"><td>' + appoints.appoint[i].Task + '</td>'
+                            var tr = '<tr id="apoint_' + appoints.appoint[i].appointid + '">'+ name +'<td>' + appoints.appoint[i].Task + '</td>'
                             + '<td>' + appointDate.Format("yyyy-MM-dd") + ' , ' + toTime(appoints.appoint[i].Begin) + ' - ' + toTime(appoints.appoint[i].End) + '</td>'
                             + '<td>' + completed + '</td>';
                         }
@@ -478,6 +602,9 @@ function showEquipmentInfo(equipmentinfo){
 	var EquipmentInfo = $("#EquipmentInfo");
 	var EquipmentState = $("#EquipmentState");
 	var EquipmentTime = $("#EquipmentTime");
+    $("#timelength").val(equipmentinfo.Timelength);
+    $("#begin").val(equipmentinfo.BeginTimeAM);
+    $("#end").val(equipmentinfo.EndTimePM);
 	EquipmentInfo.nextAll().each(function(){
 		$(this).remove();
 	});
@@ -1134,6 +1261,22 @@ function toTime2(minute) {
     }
 }
 
+function Num2Time(minute1, minute2) {
+    var hour1 = parseInt(parseInt(minute1) / 60);
+    var min1 = parseInt(minute1) - hour1 * 60;
+    var hour2 = parseInt(parseInt(minute2) / 60);
+    var min2 = parseInt(minute2) - hour2 * 60;
+    h1 = hour1 >= 24 ? (hour1 - 24) : hour1;
+    h2 = hour2 >= 24 ? (hour2 - 24) : hour2;
+    var timestr1 = h1.toString() + ":" + (min1 < 10 ? "0" : "") + min1.toString();
+    var timestr2 = h2.toString() + ":" + (min2 < 10 ? "0" : "") + min2.toString();
+    if (hour1 >= 24) {
+        return "(次日)" + timestr1 + " - " + timestr2;
+    } else {
+        return timestr1 + " - " + timestr2;
+    }
+}
+
 Date.prototype.Format = function (fmt) {
     var o = {
         "M+": this.getMonth() + 1,
@@ -1207,4 +1350,22 @@ function dateAdd(dd, n) {
     }
     var strdate = strYear+"-"+strMonth + "-" + strDay;
     return strdate;
+}
+
+function postData(url, data, async) {
+    var returnData;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        async: async,
+        dateType: "json",
+        success: function (data) {
+            returnData = data;
+        },
+        error: function() {
+            returnData = false;
+        }
+    });
+    return returnData;
 }
