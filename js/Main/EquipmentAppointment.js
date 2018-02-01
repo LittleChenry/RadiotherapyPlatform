@@ -70,6 +70,7 @@ function changeDate(days) {
 function showButton() {
     $("#buttonArea").show();
     $("#deleteAllAppoints").remove();
+    $("#dates").val("");
 }
 
 function AccelerateAppointView(nowDate){

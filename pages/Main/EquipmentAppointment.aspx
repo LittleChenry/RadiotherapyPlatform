@@ -180,7 +180,7 @@
                             <a id="Menu-EquipmentAppointment" href="EquipmentAppointment.aspx" target="_blank"><i class="fa fa-circle-o"></i>设备预约管理</a>
                         </li>
                         <li>
-                            <a id="Menu-Appointment" href="Appointment.aspx"><i class="fa fa-circle-o"></i>加速器预约</a>
+                            <a id="Menu-Appointment" href="Appointment.aspx" target="_blank"><i class="fa fa-circle-o"></i>加速器预约</a>
                         </li>
                     </ul>
                 </li>
@@ -326,7 +326,7 @@
                                     <div id="buttonArea" class="col-md-12" style="display:none;">
                                         <div class='col-md-3'>
                                             <div class="col-sm-8" style="padding-right:0px;">
-                                                 <input class="form-item form-control" id="dates" name="dates" type="text"  placeholder="选择日期" style="height:30px;""/>
+                                                 <input class="form-item form-control" id="dates" name="dates" type="text" readonly="readonly" placeholder="选择日期" style="height:30px;""/>
                                             </div>
                                             <div class="col-sm-4" style="padding-left:0px;">
                                                 <button id="sureDate" class="time-btn selected-btn">确定</button>

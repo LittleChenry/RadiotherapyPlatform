@@ -191,7 +191,7 @@
                             <a id="Menu-EquipmentAppointment" href="EquipmentAppointment.aspx" target="_blank"><i class="fa fa-circle-o"></i>设备预约管理</a>
                         </li>
                         <li>
-                            <a id="Menu-Appointment" href="Appointment.aspx"><i class="fa fa-circle-o"></i>加速器预约</a>
+                            <a id="Menu-Appointment" href="Appointment.aspx" target="_blank"><i class="fa fa-circle-o"></i>加速器预约</a>
                         </li>
                     </ul>
                 </li>

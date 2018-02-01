@@ -27,9 +27,9 @@ function createHead(begin) {
     month = date.getMonth() + 1;
     year = date.getFullYear();
     var $thead = $("#thead");
-    var str = "<tr><th style=width:12.5%>时间\\日期</th>";
+    var str = "<tr><th style=width:16%>时间\\日期</th>";
     for (var i = 0; i < 7; ++i) {
-        str += "<th style=width:12.5%>" + (date.getMonth() + 1) + "月" + date.getDate() + "日</th>";
+        str += "<th style=width:12%>" + (date.getMonth() + 1) + "-" + date.getDate() + " (" + num2week(date.getDay()) + ")" + "</th>";
         date.setDate(date.getDate() + 1);
     }
     str += "</tr>";
