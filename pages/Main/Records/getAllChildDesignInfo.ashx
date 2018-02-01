@@ -29,11 +29,11 @@ public class getAllChildDesignInfo : IHttpHandler {
     {
         string patientid = context.Request["patientid"];
         int temp = 1;
-        string countcommand = "select count(*) from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid";
+        string countcommand = "select count(*) from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.State>=2";
         sqlOperation.AddParameterWithValue("@pid", patientid);
         int number = int.Parse(sqlOperation.ExecuteScalar(countcommand));
         StringBuilder info = new StringBuilder("{\"patientinfo\":[");
-        string designcommand = "select childdesign.Changelog as changelog,childdesign.SpecialEnjoin as specialenjoin,childdesign.ID as chid,DesignName,childdesign.Splitway_ID as splitway,childdesign.Totalnumber as total,childdesign.state as childstate,Treatmentdescribe,childdesign.Treatment_ID as treatid,childdesign.IlluminatedNumber as illumnumber,childdesign.Coplanar as coplanar,childdesign.MachineNumbe as mu,childdesign.ControlPoint as control from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid order by treatid asc,chid asc";
+        string designcommand = "select childdesign.Changelog as changelog,childdesign.SpecialEnjoin as specialenjoin,childdesign.ID as chid,DesignName,childdesign.Splitway_ID as splitway,childdesign.Totalnumber as total,childdesign.state as childstate,Treatmentdescribe,childdesign.Treatment_ID as treatid,childdesign.IlluminatedNumber as illumnumber,childdesign.Coplanar as coplanar,childdesign.MachineNumbe as mu,childdesign.ControlPoint as control from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.State>=2 order by treatid asc,chid asc";
         sqlOperation.AddParameterWithValue("@pid", patientid);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(designcommand);
         while (reader.Read())
