@@ -168,13 +168,17 @@ public class designReviewRecord : IHttpHandler {
             sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
             int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
             int Success = 0;
+            string update111 = "update childdesign set state=2 where ID=@childdesign_ID";
+            //sqlOperation2.AddParameterWithValue("@Design_ID", Count);
+            sqlOperation2.AddParameterWithValue("@treat", context.Request.Form["childdesign" + ggg]);
+            sqlOperation2.ExecuteNonQuery(update111);         
             if (!exists)
             {
                 string inserttreat = "update treatment set Progress=@progress where ID=@treat";
                 sqlOperation2.AddParameterWithValue("@progress", progress + ",12");
                 //sqlOperation2.AddParameterWithValue("@Design_ID", Count);
                 sqlOperation2.AddParameterWithValue("@treat", treatID);
-                Success = sqlOperation2.ExecuteNonQuery(inserttreat);
+                Success = sqlOperation2.ExecuteNonQuery(inserttreat);              
             }
             else
             {               
