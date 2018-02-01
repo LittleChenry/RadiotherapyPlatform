@@ -58,7 +58,7 @@ public class getAllAppointInfoChildesign : IHttpHandler {
         }
         else
         {
-            string selectcomandforback = "select treatment.Treatmentdescribe as treat,childdesign.DesignName as designname,appointment_accelerate.Date as appointdate,appointment_accelerate.Begin as begintime,appointment_accelerate.End as endtime,treatmentrecord.IsFirst as isFirst,treatmentrecord.Isban as isban,treatmentrecord.Treat_User_ID as treatuser from treatmentrecord,appointment_accelerate,childdesign,treatment where childdesign.Treatment_ID=treatment.ID and treatmentrecord.ChildDesign_ID=childdesign.ID and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID in ("+str+") ORDER BY Date asc,Begin asc";
+            string selectcomandforback = "select treatment.Treatmentdescribe as treat,childdesign.DesignName as designname,appointment_accelerate.Date as appointdate,appointment_accelerate.Begin as begintime,appointment_accelerate.End as endtime,treatmentrecord.IsFirst as isFirst,treatmentrecord.Treat_User_ID as treatuser from treatmentrecord,appointment_accelerate,childdesign,treatment where childdesign.Treatment_ID=treatment.ID and treatmentrecord.ChildDesign_ID=childdesign.ID and treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID in ("+str+") ORDER BY Date asc,Begin asc";
             reader = sqlOperation.ExecuteReader(selectcomandforback);
             string tempdate = "";
             string begintemp = "";
@@ -88,19 +88,19 @@ public class getAllAppointInfoChildesign : IHttpHandler {
                         backstring.Append("{\"date\":\"" + reader["appointdate"].ToString() + "\",\"begin\":\"" + reader["begintime"].ToString() + "\",\"end\":\"" + reader["endtime"].ToString() + "\",\"chidinfogroup\":[");
                     }
 
-                    backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\",\"isFirst\":\"" + reader["isFirst"].ToString() + "\",\"isban\":\"" + reader["isban"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
+                    backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\",\"isFirst\":\"" + reader["isFirst"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
                     ku++;
                 }
                 else
                 {
                     if (ku == 0)
                     {
-                        backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\",\"isFirst\":\"" + reader["isFirst"].ToString() + "\",\"isban\":\"" + reader["isban"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
+                        backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\",\"isFirst\":\"" + reader["isFirst"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
                     }
                     else
                     {
                         backstring.Append(",");
-                        backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\",\"isFirst\":\"" + reader["isFirst"].ToString() + "\",\"isban\":\"" + reader["isban"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
+                        backstring.Append("{\"designname\":\"" + reader["designname"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["treat"].ToString() + "\",\"isFirst\":\"" + reader["isFirst"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
 
                     }
                     ku++;

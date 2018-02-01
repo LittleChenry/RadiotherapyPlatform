@@ -590,7 +590,7 @@ $(function(){
         }
         
         createLi(panelId);
-        $("#subdesignname").val("默认子计划" + (panelId + 2));
+        $("#subdesignname").val("子计划" + (panelId + 2));
     });
 });
 function createLi(panelId) {
@@ -600,7 +600,7 @@ function createLi(panelId) {
     var $tab = $('<li class="active"><a href="#tab' + panelId + '" data-toggle="tab" aria-expanded="false">' + $("#subdesignname").val() +'</a></li>');
     $("#designTab").append($tab);
     createTabPanel(panelId);
-    $("#subdesignname").val("默认子计划"+(panelId+2));
+    $("#subdesignname").val("子计划"+(panelId+2));
 }
 
 function createTabPanel(panelId) {
@@ -1266,12 +1266,25 @@ function deleteFieldanother(row,panelId) {
 }
 
 function save() {   
-    
+    return false;
 }
 
-function saveSub(){
+function saveSub() {
+    
     var whichTabStr = $("#tabpanels").children(".active").attr("id");
     var whichTab = whichTabStr.substring(3);
+    if ($("#left" + whichTab).val() == "" && $("#right" + whichTab).val() == "") {
+        alert("移床参数未填写完整");
+        return false;
+    }
+    if ($("#rise" + whichTab).val() == "" && $("#drop" + whichTab).val() == "") {
+        alert("移床参数未填写完整");
+        return false;
+    }
+    if ($("#enter" + whichTab).val() == "" && $("#out" + whichTab).val() == "") {
+        alert("移床参数未填写完整");
+        return false;
+    }
     var form = new FormData(document.getElementById("saveField"));
     form.append("item", whichTab);
     form.append("DesignName"+whichTab,$("#designTab").children("ul .active").find("a").text());

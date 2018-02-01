@@ -909,6 +909,7 @@ function getmovement(ReferenceCenter) {
     document.getElementById("MovementZ").value = Reference[2];
 }
 function save() {
+    return false;
 }
 function savereview(gg) {
     var i = "";
@@ -919,7 +920,11 @@ function savereview(gg) {
         window.alert("请核对正确");
         return false;
     }
-    if (document.getElementById("TechnologyConfirm1"+i).value == 0) {
+    if (document.getElementById("designdose" + i).value == "allItem") {
+        window.alert("请选择剂量");
+        return false;
+    }
+    if (document.getElementById("TechnologyConfirm1" + i).value == 0) {
         window.alert("请核对正确");
         return false;
     }
@@ -955,7 +960,7 @@ function savereview(gg) {
                 alert("保存失败");
                 return false;
             }
-            window.location.reload();
+            $("#edit", window.parent.document).attr("disabled", false);
         },
         error: function (e) {
             window.location.href = "Error.aspx";

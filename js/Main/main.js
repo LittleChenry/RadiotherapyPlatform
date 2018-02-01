@@ -334,7 +334,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td style='text-align:left'>"+ date.Format("M-d") + " , " + Num2Time(begin, end) +"</td><td>"+ Completed +"</td><td>"+ Name +"</td><td>" + Gender + "</td>" +
+                    trtemp = "'><td><i></i></td><td>" + Num2Time(begin, end) +"</td><td>"+ Completed +"</td><td>"+ Name +"</td><td>" + Gender + "</td>" +
                              "<td>" + Age + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;

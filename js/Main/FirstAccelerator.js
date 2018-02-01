@@ -83,7 +83,7 @@ function Init(evt) {
                     var content = '<div class="active tab-pane" id="tab' + j + '">' +
                                   '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid+'">'+
                                   '<div class="single-row"><div class="item col-xs-12"> <span class="form-text col-xs-2" style="padding-left:0px;width:11%">首次预约：</span>' +
-                                  '<button disabled="disabled" id="chooseappoint' + j + '" class="btn btn-default"  data-toggle="modal" data-target="#appoint">预约</button><button id="checkappoint' + j + '" disabled="disabled" style="margin-left:3%" class="btn btn-default" onclick="chakanapp(' + j + ')" data-toggle="modal" data-target="#checkappointmodal">查看预约情况</button><button disabled="disabled" style="margin-left: 17%"  onclick="handlebutton(this,' + j + ')" class="btn btn-primary" id="pause' + j + '" type="button">暂停子计划</button></div></div>' +
+                                  '<button onclick="checktotalnum('+j+')" disabled="disabled" id="chooseappoint' + j + '" class="btn btn-default"  data-toggle="modal" data-target="#appoint">预约</button><button id="checkappoint' + j + '" disabled="disabled" style="margin-left:3%" class="btn btn-default" onclick="chakanapp(' + j + ')" data-toggle="modal" data-target="#checkappointmodal">查看预约情况</button><button disabled="disabled" style="margin-left: 17%"  onclick="handlebutton(this,' + j + ')" class="btn btn-primary" id="pause' + j + '" type="button">暂停子计划</button></div></div>' +
                                   '<div class="single-row"><div class="item col-xs-12"><span style="margin-left:10%">(预约后将清除此子计划的已有预约)</span></div></div>'+
                                   '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
                                   '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
@@ -105,7 +105,7 @@ function Init(evt) {
                     var content = '<div class="tab-pane" id="tab' + j + '">' +
                                   '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
                                  '<div class="single-row"><div class="item col-xs-12"> <span class="form-text col-xs-2" style="padding-left:0px;width:11%">首次预约：</span>' +
-                                  '<button id="chooseappoint' + j + '" disabled="disabled" class="btn btn-default"  data-toggle="modal" data-target="#appoint">预约</button><button id="checkappoint' + j + '" disabled="disabled" style="margin-left:3%" class="btn btn-default" onclick="chakanapp(' + j + ')"  data-toggle="modal" data-target="#checkappointmodal">查看预约情况</button><button style="margin-left: 17%" disabled="disabled" onclick="handlebutton(this,' + j + ')" class="btn btn-primary" id="pause' + j + '" type="button">暂停子计划</button></div></div>' +
+                                  '<button  onclick="checktotalnum(' + j + ')"   id="chooseappoint' + j + '" disabled="disabled" class="btn btn-default"  data-toggle="modal" data-target="#appoint">预约</button><button id="checkappoint' + j + '" disabled="disabled" style="margin-left:3%" class="btn btn-default" onclick="chakanapp(' + j + ')"  data-toggle="modal" data-target="#checkappointmodal">查看预约情况</button><button style="margin-left: 17%" disabled="disabled" onclick="handlebutton(this,' + j + ')" class="btn btn-primary" id="pause' + j + '" type="button">暂停子计划</button></div></div>' +
                                   '<div class="single-row"><div class="item col-xs-12"><span style="margin-left:10%">(预约后将清除此子计划的已有预约)</span></div></div>' +
                                  '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
                                   '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
@@ -137,7 +137,7 @@ function Init(evt) {
             var content = '<div class="tab-pane" id="tab' + j + '">' +
                           '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
                           '<div class="single-row"><div class="item col-xs-12"> <span class="form-text col-xs-2" style="padding-left:0px;width:11%">首次预约：</span>' +
-                          '<button id="chooseappoint' + j + '" class="btn btn-default" disabled="disabled"  data-toggle="modal" data-target="#appoint">预约</button><button id="checkappoint' + j + '" disabled="disabled" style="margin-left:3%" class="btn btn-default" onclick="chakanapp(' + j + ')"  data-toggle="modal" data-target="#checkappointmodal">查看预约情况</button><button style="margin-left: 17%" onclick="handlebutton(this,' + j + ')" disabled="disabled" class="btn btn-primary" id="pause' + j + '" type="button">暂停子计划</button></div></div>' +
+                          '<button onclick="checktotalnum(' + j + ')" id="chooseappoint' + j + '" class="btn btn-default" disabled="disabled"  data-toggle="modal" data-target="#appoint">预约</button><button id="checkappoint' + j + '" disabled="disabled" style="margin-left:3%" class="btn btn-default" onclick="chakanapp(' + j + ')"  data-toggle="modal" data-target="#checkappointmodal">查看预约情况</button><button style="margin-left: 17%" onclick="handlebutton(this,' + j + ')" disabled="disabled" class="btn btn-primary" id="pause' + j + '" type="button">暂停子计划</button></div></div>' +
                           '<div class="single-row"><div class="item col-xs-12"><span style="margin-left:10%">(预约后将清除此子计划的已有预约)</span></div></div>' +
                           '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
                           '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
@@ -188,7 +188,7 @@ function Init(evt) {
               sum = sum + parseFloat(childdesigns[i].fieldinfo[j].mu);
           }
       }
-      $("#MachineNumbe" + i).html(sum);
+      $("#MachineNumbe" + i).html(parseFloat(sum).toFixed(2));
       $("#finishedtimes" + i).html(childdesigns[i].treattimes);
   
       createSplitway(document.getElementById("splitway" + i));
@@ -905,6 +905,7 @@ function save() {
                 content = content + '<td>' + totalnumber + '</td><td>' + getNowFormatDate() + '</td><td>' + userName + '</td>';
                 content = content + '</tr>';
                 $("#log" + number).append(content);
+                $("#chooseappoint" + number).removeAttr("disabled");
             } else {
                 window.alert(data);
             }
@@ -986,9 +987,12 @@ function remove() {
             $("#totalnumber" + i).removeAttr("disabled");
             $("#splitway" + i).removeAttr("disabled");
             $("#remarks" + i).removeAttr("disabled");
-            $("#chooseappoint" + i).removeAttr("disabled");
+            if (childdesigns[i].Totalnumber != "") {
+                $("#chooseappoint" + i).removeAttr("disabled");
+            }
             $("#checkappoint" + i).removeAttr("disabled");
             $("#pause" + i).removeAttr("disabled");
+
         }
     }
 }
@@ -1181,4 +1185,11 @@ function transfertime(args) {
         return args;
     }
 
+}
+//检查总次数
+function checktotalnum(number) {
+    //if (childdesigns[number].Totalnumber == "") {
+    //    alert("请先确定总次数");
+    //    return false;
+    //}
 }
