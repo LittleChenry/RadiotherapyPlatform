@@ -590,7 +590,7 @@ $(function(){
         }
         
         createLi(panelId);
-        $("#subdesignname").val("");    
+        $("#subdesignname").val("默认子计划" + (panelId + 2));
     });
 });
 function createLi(panelId) {
@@ -600,87 +600,141 @@ function createLi(panelId) {
     var $tab = $('<li class="active"><a href="#tab' + panelId + '" data-toggle="tab" aria-expanded="false">' + $("#subdesignname").val() +'</a></li>');
     $("#designTab").append($tab);
     createTabPanel(panelId);
-    $("#subdesignname").val(""); 
+    $("#subdesignname").val("默认子计划"+(panelId+2));
 }
-function createTabPanel(panelId){
-    $("#tabpanels").children().removeClass("active");
-    var $div_tab = $("<div class='tab-pane active' id='tab"+panelId+"'></div>");
-    var $aa = $("<input type='hidden' id='aa" + panelId + "' name='aa" + panelId + "'  value=0></input>");
-    var $ss = $("<input type='hidden' id='ss"+panelId+"' name='ss" + panelId + "' value=0></input>");
-    $aa.appendTo($div_tab);
-    $ss.appendTo($div_tab);
-    //$div_tab.appendTo($("#tabpanels"));
-    var $div_plan = $("<div id='plan"+panelId+"'></div>");
-    var $div_papercontent = $("<div class='paper-content'></div>");
-    var $div_0 = $("<div class='content-title'><span>计划信息：</span></div>");
-    $div_0.appendTo($div_papercontent);
-    if(common == 1){
-        var $div_1 = $("<div class='single-row'>"
-                    +"<div class='item col-xs-6'>"
-                    +"照射技术：<select id='Irradiation"+panelId+"' name='Irradiation"+panelId+"' class='form-item'></select>"
-                    +"</div>"
-                    +"<div class='item col-xs-6'>"
-                    +"能量：<select id='ener"+panelId+"' name='ener"+panelId+"' class='form-item'></select>"
-                    +"</div>"
-                    +"</div>");
 
+function createTabPanel(panelId) {
+    $("#tabpanels").children().removeClass("active");
+    if (common == 1) {
+        var $div_tab = $("<div class='tab-pane active' id='tab" + panelId + "'></div>");
+        var $aa = $("<input type='hidden' id='aa" + panelId + "' name='aa" + panelId + "'  value=0></input>");
+        var $ss = $("<input type='hidden' id='ss" + panelId + "' name='ss" + panelId + "' value=0></input>");
+        $aa.appendTo($div_tab);
+        $ss.appendTo($div_tab);
+        var $div_plan = $("<div id='plan" + panelId + "'></div>");
+        var $div_papercontent = $("<div class='paper-content'></div>");
+
+        var $div_0 = $("<div class='content-title'><span>计划信息：</span></div>");
+        var $div_1 = $("<div class='single-row'>"
+                    + "<div class='item col-xs-6'>"
+                    + "照射技术：<select id='Irradiation" + panelId + "' name='Irradiation" + panelId + "' class='form-item'></select>"
+                    + "</div>"
+                    + "<div class='item col-xs-6'>"
+                    + "能量：<select id='ener" + panelId + "' name='ener" + panelId + "' class='form-item'></select>"
+                    + "</div>"
+                    + "</div>");
         var $div_2 = $("<div class='single-row'>"
-                    +"<div class='item col-xs-6'>"
-                    +"射野数量：<input id='IlluminatedNumber"+panelId+"' name='IlluminatedNumber"+panelId+"' class='form-item' type='number' name='IlluminatedNumber'/>"
-                    +"</div>"
-                    +"<div class='item col-xs-6'>"
-                    +"非共面照射：<select id='Coplanar"+panelId+"' name='Coplanar"+panelId+"' class='form-item'><option value='0'>否</option><option value='1'>是</option></select>"
-                    +"</div>"
-                    +"</div>");
+                    + "<div class='item col-xs-6'>"
+                    + "射野数量：<input id='IlluminatedNumber" + panelId + "' name='IlluminatedNumber" + panelId + "' class='form-item' type='number' name='IlluminatedNumber'/>"
+                    + "</div>"
+                    + "<div class='item col-xs-6'>"
+                    + "非共面照射：<select id='Coplanar" + panelId + "' name='Coplanar" + panelId + "' class='form-item'><option value='0'>否</option><option value='1'>是</option></select>"
+                    + "</div>"
+                    + "</div>");
 
         var $div_3 = $("<div class='single-row'>"
-                    +"<div class='item col-xs-6'>"
-                    +"机器跳数：<input id='MachineNumbe"+panelId+"' class='form-item' type='number' name='MachineNumbe"+panelId+"'/>"
-                    +"</div>"
-                    +"<div class='item col-xs-6'>"
-                    +"控制点数量：<input id='ControlPoint"+panelId+"' class='form-item' type='number' name='ControlPoint"+panelId+"'/>"
-                    +"</div>"
-                    +"</div>");
-        
-
+                    + "<div class='item col-xs-6'>"
+                    + "机器跳数：<input id='MachineNumbe" + panelId + "' class='form-item' type='number' name='MachineNumbe" + panelId + "'/>"
+                    + "</div>"
+                    + "<div class='item col-xs-6'>"
+                    + "控制点数量：<input id='ControlPoint" + panelId + "' class='form-item' type='number' name='ControlPoint" + panelId + "'/>"
+                    + "</div>"
+                    + "</div>");
         var $div_4 = $("<div class='single-row'>"
-                    +"<div class='item col-xs-6'>"
-                    +"射野角度："
-                    +"</div>"
-                    +"</div>");
+                    + "<div class='item col-xs-6'>"
+                    + "射野角度："
+                    + "</div>"
+                    + "</div>");
 
         var $div_5 = $("<div class='single-row'>"
-                    +"<div class='col-xs-12'>"
-                    +"<table id='Illuminatedangle"+panelId+"' class='table table-bordered' name='Illuminatedangle"+panelId+"'></table>"
-                    +"</div>"
-                    +"</div>");
+                    + "<div class='col-xs-12'>"
+                    + "<table id='Illuminatedangle" + panelId + "' class='table table-bordered' name='Illuminatedangle" + panelId + "'></table>"
+                    + "</div>"
+                    + "</div>");
+        var $div_yc = $("<div class='single-row'>"
+                    + "<div class='col-xs-6'>"
+                    + "<span class='form-text col-xs-4' style='padding-left:0px;'>移床参数：</span>"
+                    + "</div>"
+                    + "</div>");
+        var $div_yc_content1 = $("<div class='single-row'>"
+	                + "<div class='col-xs-6'>"
+	                + "<span class='form-text col-xs-4'>左：</span>"
+	                + "<div class='group-item'>"
+	                + "<input id='left" + panelId + "' name='left" + panelId + "' type='number' class='form-group-input' />"
+	                + "<span class='input-group-addon'>cm</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "<div class='col-xs-6'>"
+	                + "<span class='form-text col-xs-4'>右：</span>"
+	                + "<div class='group-item'>"
+	                + "<input id='right" + panelId + "' name='right" + panelId + "' type='number' class='form-group-input' />"
+	                + "<span class='input-group-addon'>cm</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "</div>");
+        var $div_yc_content2 = $("<div class='single-row'>"
+	                + "<div class='col-xs-6'>"
+	                + "<span class='form-text col-xs-4'>升：</span>"
+	                + "<div class='group-item'>"
+	                + "<input id='rise" + panelId + "' name='rise" + panelId + "' type='number' class='form-group-input' />"
+	                + "<span class='input-group-addon'>cm</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "<div class='col-xs-6'>"
+	                + "<span class='form-text col-xs-4'>降：</span>"
+	                + "<div class='group-item'>"
+	                + "<input id='drop" + panelId + "' name='drop" + panelId + "' type='number' class='form-group-input' />"
+	                + "<span class='input-group-addon'>cm</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "</div>");
+        var $div_yc_content3 = $("<div class='single-row'>"
+	                + "<div class='col-xs-6'>"
+	                + "<span class='form-text col-xs-4'>进：</span>"
+	                + "<div class='group-item'>"
+	                + "<input id='enter" + panelId + "' name='enter" + panelId + "' type='number' class='form-group-input' />"
+	                + "<span class='input-group-addon'>cm</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "<div class='col-xs-6'>"
+	                + "<span class='form-text col-xs-4'>出：</span>"
+	                + "<div class='group-item'>"
+	                + "<input id='out" + panelId + "' name='out" + panelId + "' type='number' class='form-group-input' />"
+	                + "<span class='input-group-addon'>cm</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "</div>");
 
-       
+        $div_0.appendTo($div_papercontent);
         $div_1.appendTo($div_papercontent);
         $div_2.appendTo($div_papercontent);
         $div_3.appendTo($div_papercontent);
         $div_4.appendTo($div_papercontent);
         $div_5.appendTo($div_papercontent);
+        $div_yc.appendTo($div_papercontent);
+        $div_yc_content1.appendTo($div_papercontent);
+        $div_yc_content2.appendTo($div_papercontent);
+        $div_yc_content3.appendTo($div_papercontent);
         $div_papercontent.appendTo($div_plan);
         $div_plan.appendTo($div_tab);
         $div_tab.appendTo($("#tabpanels"));
 
-        createPlanSystemItem(document.getElementById("Irradiation"+panelId));
-        createenergyItem(document.getElementById("ener"+panelId));
-        $("#IlluminatedNumber"+panelId).blur(function(){
+        createPlanSystemItem(document.getElementById("Irradiation" + panelId));
+        createenergyItem(document.getElementById("ener" + panelId));
+        $("#IlluminatedNumber" + panelId).blur(function () {
             var num = $(this).val();
             if (num > 0) {
-                var table = $("#Illuminatedangle"+panelId);
+                var table = $("#Illuminatedangle" + panelId);
                 table.html("");
                 var tbody = "<tbody>";
                 var count = 1;
-                while(count <= num){
+                while (count <= num) {
                     var rownum = 0;
                     tbody += "<tr>";
-                    while(rownum < 4){
+                    while (rownum < 4) {
                         if (count <= num) {
-                            td = '<td style="padding:0px;"><input type="text" id="angle' + count+"_"+panelId + '" name="angle' + count+"_"+panelId + '" class="td-input"></td>';
-                        }else{
+                            td = '<td style="padding:0px;"><input type="text" id="angle' + count + "_" + panelId + '" name="angle' + count + "_" + panelId + '" class="td-input"></td>';
+                        } else {
                             td = '<td style="text-align:center;">/</td>';
                         }
                         tbody += td;
@@ -693,233 +747,433 @@ function createTabPanel(panelId){
                 table.append(tbody);
             }
         });
-        
-    }
-    //移床参数
-    var $div_yc = $("<div class='single-row'>"
-                    +"<div class='col-xs-6'>"
-                    +"<span class='form-text col-xs-4' style='padding-left:0px;'>移床参数：</span>"
-                    +"</div>"
-                    +"</div>");
-    var $div_yc_content1 = $("<div class='single-row'>"
-                +"<div class='col-xs-6'>"
-                +"<span class='form-text col-xs-4'>左：</span>"
-                +"<div class='group-item'>"
-                +"<input id='left"+panelId+"' name='left"+panelId+"' type='number' class='form-group-input' />"
-                +"<span class='input-group-addon'>cm</span>"
-                +"</div>"
-                +"</div>"
-                +"<div class='col-xs-6'>"
-                +"<span class='form-text col-xs-4'>右：</span>"
-                +"<div class='group-item'>"
-                +"<input id='right"+panelId+"' name='right"+panelId+"' type='number' class='form-group-input' />"
-                +"<span class='input-group-addon'>cm</span>"
-                +"</div>"
-                +"</div>"
-                +"</div>"); 
-    var $div_yc_content2 = $("<div class='single-row'>"
-                +"<div class='col-xs-6'>"
-                +"<span class='form-text col-xs-4'>升：</span>"
-                +"<div class='group-item'>"
-                +"<input id='rise"+panelId+"' name='rise"+panelId+"' type='number' class='form-group-input' />"
-                +"<span class='input-group-addon'>cm</span>"
-                +"</div>"
-                +"</div>"
-                +"<div class='col-xs-6'>"
-                +"<span class='form-text col-xs-4'>降：</span>"
-                +"<div class='group-item'>"
-                +"<input id='drop"+panelId+"' name='drop"+panelId+"' type='number' class='form-group-input' />"
-                +"<span class='input-group-addon'>cm</span>"
-                +"</div>"
-                +"</div>"
-                +"</div>"); 
-    var $div_yc_content3 = $("<div class='single-row'>"
-                +"<div class='col-xs-6'>"
-                +"<span class='form-text col-xs-4'>进：</span>"
-                +"<div class='group-item'>"
-                +"<input id='enter"+panelId+"' name='enter"+panelId+"' type='number' class='form-group-input' />"
-                +"<span class='input-group-addon'>cm</span>"
-                +"</div>"
-                +"</div>"
-                +"<div class='col-xs-6'>"
-                +"<span class='form-text col-xs-4'>出：</span>"
-                +"<div class='group-item'>"
-                +"<input id='out"+panelId+"' name='out"+panelId+"' type='number' class='form-group-input' />"
-                +"<span class='input-group-addon'>cm</span>"
-                +"</div>"
-                +"</div>"
-                +"</div>"); 
-    $div_yc.appendTo($div_papercontent);
-    $div_yc_content1.appendTo($div_papercontent);
-    $div_yc_content2.appendTo($div_papercontent);
-    $div_yc_content3.appendTo($div_papercontent);
-    $div_papercontent.appendTo($div_plan);
-    $div_plan.appendTo($div_tab);
-    $div_tab.appendTo($("#tabpanels"));
-
-    $('#left'+panelId).bind('input propertychange', function () {
-            if (document.getElementById("left"+panelId).value == "") {
-                document.getElementById("right"+panelId).removeAttribute("disabled");
+        $('#left' + panelId).bind('input propertychange', function () {
+            if (document.getElementById("left" + panelId).value == "") {
+                document.getElementById("right" + panelId).removeAttribute("disabled");
             } else {
-                document.getElementById("right"+panelId).disabled = "disabled";
+                document.getElementById("right" + panelId).disabled = "disabled";
             }
         });
-    $('#right'+panelId).bind('input propertychange', function () {
-        if (document.getElementById("right"+panelId).value == "") {
-            document.getElementById("left"+panelId).removeAttribute("disabled");
-        } else {
-            document.getElementById("left"+panelId).disabled = "disabled";
-        }
-    });
-    $('#drop'+panelId).bind('input propertychange', function () {
-        if (document.getElementById("drop"+panelId).value == "") {
-            document.getElementById("rise"+panelId).removeAttribute("disabled");
-        } else {
-            document.getElementById("rise"+panelId).disabled = "disabled";
-        }
-    });
-    $('#rise'+panelId).bind('input propertychange', function () {
-        if (document.getElementById("rise"+panelId).value == "") {
-            document.getElementById("drop"+panelId).removeAttribute("disabled");
-        } else {
-            document.getElementById("drop"+panelId).disabled = "disabled";
-        }
-    });
-    $('#enter'+panelId).bind('input propertychange', function () {
-        if (document.getElementById("enter"+panelId).value == "") {
-            document.getElementById("out"+panelId).removeAttribute("disabled");
-        } else {
-            document.getElementById("out"+panelId).disabled = "disabled";
-        }
-    });
-    $('#out'+panelId).bind('input propertychange', function () {
-        if (document.getElementById("out"+panelId).value == "") {
-            document.getElementById("enter"+panelId).removeAttribute("disabled");
-        } else {
-            document.getElementById("enter"+panelId).disabled = "disabled";
-        }
-    });
+        $('#right' + panelId).bind('input propertychange', function () {
+            if (document.getElementById("right" + panelId).value == "") {
+                document.getElementById("left" + panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("left" + panelId).disabled = "disabled";
+            }
+        });
+        $('#drop' + panelId).bind('input propertychange', function () {
+            if (document.getElementById("drop" + panelId).value == "") {
+                document.getElementById("rise" + panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("rise" + panelId).disabled = "disabled";
+            }
+        });
+        $('#rise' + panelId).bind('input propertychange', function () {
+            if (document.getElementById("rise" + panelId).value == "") {
+                document.getElementById("drop" + panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("drop" + panelId).disabled = "disabled";
+            }
+        });
+        $('#enter' + panelId).bind('input propertychange', function () {
+            if (document.getElementById("enter" + panelId).value == "") {
+                document.getElementById("out" + panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("out" + panelId).disabled = "disabled";
+            }
+        });
+        $('#out' + panelId).bind('input propertychange', function () {
+            if (document.getElementById("out" + panelId).value == "") {
+                document.getElementById("enter" + panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("enter" + panelId).disabled = "disabled";
+            }
+        });
 
-    var $div_papercontent1 = $("<div class=paper-content></div>");
-    var $div_6 = $("<div class='content-title'><span>射野信息：</span></div>");
-    var $div_7 = $("<div class='single-row'>"
-                    +"<div class='col-xs-6'>"
-                    +"<div class='group-item' style='width: 80%;'>"
-                    +"<input id='filename"+panelId+"' class='form-control' type='text' name='filename"+panelId+"' style='border-radius: 4px 0px 0px 4px;' disabled='disabled'/>"
-                    +"<span class='input-group-btn'><a href='javascript:;' class='btn btn-info file'>选择文件<input type='file' id='file"+panelId+"'/></a></span>"
-                    +"</div>"
-                    +"</div>"
-                    +"<div class=col-xs-6>"
-                    +"<button class='btn btn-success' id='sure"+panelId+"' type='button'><i class='fa fa-fw fa-reply-all'></i>导入</button>"
-                    +"</div>"
-                    +"</div>");
 
-    var $div_8 = $("<div class='single-row'>"
-                +"<div class='item col-xs-4'>"
-                +"放疗号：<input id='id"+panelId+"' class='form-item' name='id"+panelId+"'/>"
-                +"</div>"
-                +"<div class='item col-xs-4'>"
-                +"姓名拼音：<input id='pingyin"+panelId+"' class='form-item' name='pingyin"+panelId+"'/>"
-                +"</div>"
-                +"<div class='item col-xs-4'>"
-                +"TPS：<input id='tps"+panelId+"' class='form-item' name='tps"+panelId+"'/>"
-                +"</div>"
-                +"</div>");
+        var $div_papercontent1 = $("<div class=paper-content></div>");
+        var $div_6 = $("<div class='content-title'><span>射野信息：</span></div>");
+        var $div_7 = $("<div class='single-row'>"
+	                    + "<div class='col-xs-6'>"
+	                    + "<div class='group-item' style='width: 80%;'>"
+	                    + "<input id='filename" + panelId + "' class='form-control' type='text' name='filename" + panelId + "' style='border-radius: 4px 0px 0px 4px;' disabled='disabled'/>"
+	                    + "<span class='input-group-btn'><a href='javascript:;' class='btn btn-info file'>选择文件<input type='file' id='file" + panelId + "'/></a></span>"
+	                    + "</div>"
+	                    + "</div>"
+	                    + "<div class=col-xs-6>"
+	                    + "<button class='btn btn-success' id='sure" + panelId + "' type='button'><i class='fa fa-fw fa-reply-all'></i>导入</button>"
+	                    + "</div>"
+	                    + "</div>");
 
-    var $div_9 = $("<div class='single-row'>"
-                +"<div class='item col-xs-4'>"
-                +"总剂量：<div class='group-item'>"
-                +"<input id='total"+panelId+"' class='form-group-input' name='total"+panelId+"'/>"
-                +"<span class='input-group-addon'>cGy</span>"
-                +"</div>"
-                +"</div>"
-                +"<div class='item col-xs-4'>"
-                +"分次剂量：<div class='group-item'>"
-                +"<input id='Graded"+panelId+"' class='form-group-input' name='Graded"+panelId+"'/>"
-                +"<span class='input-group-addon'>cGy</span>"
-                +"</div>"
-                +"</div>"
-                +"<div class='item col-xs-4'>"
-                +"射野总数：<input id='fieldTimes"+panelId+"' class='form-item' name='fieldTimes"+panelId+"'/>"
-                +"</div>"
-                +"</div>");
+        var $div_8 = $("<div class='single-row'>"
+	                + "<div class='item col-xs-4'>"
+	                + "放疗号：<input id='id" + panelId + "' class='form-item' name='id" + panelId + "'/>"
+	                + "</div>"
+	                + "<div class='item col-xs-4'>"
+	                + "姓名拼音：<input id='pingyin" + panelId + "' class='form-item' name='pingyin" + panelId + "'/>"
+	                + "</div>"
+	                + "<div class='item col-xs-4'>"
+	                + "TPS：<input id='tps" + panelId + "' class='form-item' name='tps" + panelId + "'/>"
+	                + "</div>"
+	                + "</div>");
 
-    var $div_10 = $("<div class='single-row'>"
-                +"<div class='item col-xs-4'>"
-                +"摆位信息：<input id='pos"+panelId+"' class='form-item' name='pos"+panelId+"'/>"
-                +"</div>"
-                +"</div>");
+        var $div_9 = $("<div class='single-row'>"
+	                + "<div class='item col-xs-4'>"
+	                + "总剂量：<div class='group-item'>"
+	                + "<input id='total" + panelId + "' class='form-group-input' name='total" + panelId + "'/>"
+	                + "<span class='input-group-addon'>cGy</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "<div class='item col-xs-4'>"
+	                + "分次剂量：<div class='group-item'>"
+	                + "<input id='Graded" + panelId + "' class='form-group-input' name='Graded" + panelId + "'/>"
+	                + "<span class='input-group-addon'>cGy</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "<div class='item col-xs-4'>"
+	                + "射野总数：<input id='fieldTimes" + panelId + "' class='form-item' name='fieldTimes" + panelId + "'/>"
+	                + "</div>"
+	                + "</div>");
 
-    var $div_11 = $("<div class='single-row'>"
-                +"<div class='col-xs-6' style='padding-left: 0px;'>"
-                +"<span class='form-text col-xs-5'>射野信息：</span>"
-                +"</div>"
-                +"</div>");
+        var $div_10 = $("<div class='single-row'>"
+	                + "<div class='item col-xs-4'>"
+	                + "摆位信息：<input id='pos" + panelId + "' class='form-item' name='pos" + panelId + "'/>"
+	                + "</div>"
+	                + "</div>");
 
-    var $div_12 = $("<div class='single-row'>"
-                +"<div class='item area-group col-xs-12'>"
-                +"<table id='Field"+panelId+"' class='table table-bordered'>"
-                +"<thead><tr>"
-                +"<th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th><th>机头角</th><th>床转交</th><th>子野数</th>"
-                +"<th style='text-align: center;'><a id='add"+panelId+"' href='javascript:;'><i class='fa fa-fw fa-plus-circle' style='font-size: 18px;'></i></a></th>"
-                +"</tr></thead>"
-                +"</table>"
-                +"</div>"
-                +"</div>");
+        var $div_11 = $("<div class='single-row'>"
+	                + "<div class='col-xs-6' style='padding-left: 0px;'>"
+	                + "<span class='form-text col-xs-5'>射野信息：</span>"
+	                + "</div>"
+	                + "</div>");
 
-    $div_6.appendTo($div_papercontent1);
-    if (common == 1) {
+        var $div_12 = $("<div class='single-row'>"
+	                + "<div class='item area-group col-xs-12'>"
+	                + "<table id='Field" + panelId + "' class='table table-bordered'>"
+	                + "<thead><tr>"
+	                + "<th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th><th>机头角</th><th>床转交</th><th>子野数</th>"
+	                + "<th style='text-align: center;'><a id='add" + panelId + "' href='javascript:;'><i class='fa fa-fw fa-plus-circle' style='font-size: 18px;'></i></a></th>"
+	                + "</tr></thead>"
+	                + "</table>"
+	                + "</div>"
+	                + "</div>");
+
+        $div_6.appendTo($div_papercontent1);
         $div_7.appendTo($div_papercontent1);
-    }
-    
-    $div_8.appendTo($div_papercontent1);
-    $div_9.appendTo($div_papercontent1);
-    $div_10.appendTo($div_papercontent1);
-    $div_11.appendTo($div_papercontent1);
-    $div_12.appendTo($div_papercontent1);
+        $div_8.appendTo($div_papercontent1);
+        $div_9.appendTo($div_papercontent1);
+        $div_10.appendTo($div_papercontent1);
+        $div_11.appendTo($div_papercontent1);
+        $div_12.appendTo($div_papercontent1);
 
-    $div_papercontent1.appendTo($div_tab);
-    $div_tab.appendTo($("#tabpanels"));
+        $div_papercontent1.appendTo($div_tab);
+        $div_tab.appendTo($("#tabpanels"));
 
-    $("#add"+panelId).off("click").on("click",function(){
-        addFieldanother(panelId);
-    });
-    $(".file").on("change", "input[type='file']", function () {
-        var filePath=$(this).val();
-        var arr=filePath.split('\\');
-        fileName=arr[arr.length-1];
-        $("#filename"+panelId).val(fileName);
-    })
-    $("#sure"+panelId).off("click").on("click",function(){
-        if (fileName == "") {
-            return false;
-        }
-        var formDate = new FormData();
-        if ($("#file"+panelId)[0].files[0] == null) {
-            formDate.append("exist", "false");
-        } else {
-            formDate.append("file", $("#file"+panelId)[0].files[0]);
-            formDate.append("exist", "true");
-        }
-        $.ajax({
-            type: "post",
-            url: "../../Root/test.ashx",
-            data: formDate,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                var data = $.parseJSON(data);               
-                //if (document.getElementById("radiotherapy").innerHTML != data.information[0].id) {
-                //    alert("文件选择错误");
-                //    return false;
-                //}
-                createInformation(data.information,panelId);
-                creaetField(data.details,panelId);
+        $("#add" + panelId).off("click").on("click", function () {
+            addFieldanother(panelId);
+        });
+        $(".file").on("change", "input[type='file']", function () {
+            var filePath = $(this).val();
+            var arr = filePath.split('\\');
+            fileName = arr[arr.length - 1];
+            $("#filename" + panelId).val(fileName);
+        })
+        $("#sure" + panelId).off("click").on("click", function () {
+            if (fileName == "") {
+                return false;
+            }
+            var formDate = new FormData();
+            if ($("#file" + panelId)[0].files[0] == null) {
+                formDate.append("exist", "false");
+            } else {
+                formDate.append("file", $("#file" + panelId)[0].files[0]);
+                formDate.append("exist", "true");
+            }
+            $.ajax({
+                type: "post",
+                url: "../../Root/test.ashx",
+                data: formDate,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    var data = $.parseJSON(data);
+                    //if (document.getElementById("radiotherapy").innerHTML != data.information[0].id) {
+                    //    alert("文件选择错误");
+                    //    return false;
+                    //}
+                    createInformation(data.information, panelId);
+                    creaetField(data.details, panelId);
+                }
+            });
+        });
+    } else {
+        var $div_tab = $("<div class='tab-pane active' id='tab" + panelId + "'></div>");
+        var $aa = $("<input type='hidden' id='aa" + panelId + "' name='aa" + panelId + "'  value=0></input>");
+        var $ss = $("<input type='hidden' id='ss" + panelId + "' name='ss" + panelId + "' value=0></input>");
+        $aa.appendTo($div_tab);
+        $ss.appendTo($div_tab);
+        var $div_plan = $("<div id='plan" + panelId + "'></div>");
+        var $div_papercontent = $("<div class='paper-content'></div>");
+
+        var $div_0 = $("<div class='content-title'><span>计划信息：</span></div>");
+        var $div_yc = $("<div class='single-row'>"
+                    + "<div class='col-xs-6'>"
+                    + "<span class='form-text col-xs-4' style='padding-left:0px;'>移床参数：</span>"
+                    + "</div>"
+                    + "</div>");
+        var $div_yc_content1 = $("<div class='single-row'>"
+	                + "<div class='col-xs-6'>"
+	                + "<span class='form-text col-xs-4'>左：</span>"
+	                + "<div class='group-item'>"
+	                + "<input id='left" + panelId + "' name='left" + panelId + "' type='number' class='form-group-input' value='0'/>"
+	                + "<span class='input-group-addon'>cm</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "<div class='col-xs-6'>"
+	                + "<span class='form-text col-xs-4'>右：</span>"
+	                + "<div class='group-item'>"
+	                + "<input id='right" + panelId + "' name='right" + panelId + "' type='number' class='form-group-input' />"
+	                + "<span class='input-group-addon'>cm</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "</div>");
+        var $div_yc_content2 = $("<div class='single-row'>"
+	                + "<div class='col-xs-6'>"
+	                + "<span class='form-text col-xs-4'>升：</span>"
+	                + "<div class='group-item'>"
+	                + "<input id='rise" + panelId + "' name='rise" + panelId + "' type='number' class='form-group-input' value='0'/>"
+	                + "<span class='input-group-addon'>cm</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "<div class='col-xs-6'>"
+	                + "<span class='form-text col-xs-4'>降：</span>"
+	                + "<div class='group-item'>"
+	                + "<input id='drop" + panelId + "' name='drop" + panelId + "' type='number' class='form-group-input' />"
+	                + "<span class='input-group-addon'>cm</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "</div>");
+        var $div_yc_content3 = $("<div class='single-row'>"
+                + "<div class='col-xs-6'>"
+                + "<span class='form-text col-xs-4'>进：</span>"
+                + "<div class='group-item'>"
+                + "<input id='enter" + panelId + "' name='enter" + panelId + "' type='number' class='form-group-input' value='0'/>"
+                + "<span class='input-group-addon'>cm</span>"
+                + "</div>"
+                + "</div>"
+                + "<div class='col-xs-6'>"
+                + "<span class='form-text col-xs-4'>出：</span>"
+                + "<div class='group-item'>"
+                + "<input id='out" + panelId + "' name='out" + panelId + "' type='number' class='form-group-input' />"
+                + "<span class='input-group-addon'>cm</span>"
+                + "</div>"
+                + "</div>"
+                + "</div>");
+
+        $div_0.appendTo($div_papercontent);
+        $div_yc.appendTo($div_papercontent);
+        $div_yc_content1.appendTo($div_papercontent);
+        $div_yc_content2.appendTo($div_papercontent);
+        $div_yc_content3.appendTo($div_papercontent);
+        $div_papercontent.appendTo($div_plan);
+        $div_plan.appendTo($div_tab);
+        $div_tab.appendTo($("#tabpanels"));
+        $('#left' + panelId).bind('input propertychange', function () {
+            if (document.getElementById("left" + panelId).value == "") {
+                document.getElementById("right" + panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("right" + panelId).disabled = "disabled";
             }
         });
+        $('#right' + panelId).bind('input propertychange', function () {
+            if (document.getElementById("right" + panelId).value == "") {
+                document.getElementById("left" + panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("left" + panelId).disabled = "disabled";
+            }
+        });
+        $('#drop' + panelId).bind('input propertychange', function () {
+            if (document.getElementById("drop" + panelId).value == "") {
+                document.getElementById("rise" + panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("rise" + panelId).disabled = "disabled";
+            }
+        });
+        $('#rise' + panelId).bind('input propertychange', function () {
+            if (document.getElementById("rise" + panelId).value == "") {
+                document.getElementById("drop" + panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("drop" + panelId).disabled = "disabled";
+            }
+        });
+        $('#enter' + panelId).bind('input propertychange', function () {
+            if (document.getElementById("enter" + panelId).value == "") {
+                document.getElementById("out" + panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("out" + panelId).disabled = "disabled";
+            }
+        });
+        $('#out' + panelId).bind('input propertychange', function () {
+            if (document.getElementById("out" + panelId).value == "") {
+                document.getElementById("enter" + panelId).removeAttribute("disabled");
+            } else {
+                document.getElementById("enter" + panelId).disabled = "disabled";
+            }
+        });
+
+
+        var $div_papercontent1 = $("<div class=paper-content></div>");
+        var $div_6 = $("<div class='content-title'><span>射野信息：</span></div>");
+        var $div_7 = $("<div class='single-row'>"
+	                + "<div class='item col-xs-4'>"
+	                + "射野总数：<input id='fieldTimes" + panelId + "' class='form-item' name='fieldTimes" + panelId + "'/>"
+	                + "</div>"
+	                + "<div class='item col-xs-4'>"
+	                + "TPS：<input id='tps" + panelId + "' class='form-item' name='tps" + panelId + "' value='Monaco'/>"
+	                + "</div>"
+	                + "<div class='item col-xs-4'>"
+	                + "摆位信息：<input id='pos" + panelId + "' class='form-item' name='pos" + panelId + "'/>"
+	                + "</div>"
+	                + "</div>");
+
+        var $div_10 = $("<div class='single-row'>"
+	                + "<div class='item col-xs-4'>"
+	                + "总剂量：<div class='group-item'>"
+	                + "<input id='total" + panelId + "' class='form-group-input' name='total" + panelId + "'/>"
+	                + "<span class='input-group-addon'>cGy</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "<div class='item col-xs-4'>"
+	                + "分次剂量：<div class='group-item'>"
+	                + "<input id='Graded" + panelId + "' class='form-group-input' name='Graded" + panelId + "'/>"
+	                + "<span class='input-group-addon'>cGy</span>"
+	                + "</div>"
+	                + "</div>"
+	                + "</div>");
+
+        var $div_8 = $("<div class='single-row'>"
+	                + "<div class='col-xs-6' style='padding-left: 0px;'>"
+	                + "<span class='form-text col-xs-5'>射野信息：</span>"
+	                + "</div>"
+	                + "</div>");
+
+        var $div_9 = $("<div class='single-row'>"
+	                + "<div class='item area-group col-xs-12'>"
+	                + "<table id='Field" + panelId + "' class='table table-bordered'>"
+	                + "<thead><tr>"
+	                + "<th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th><th>机头角</th><th>床转交</th><th>子野数</th>"
+	                + "<th style='text-align: center;'><a id='add" + panelId + "' href='javascript:;'><i class='fa fa-fw fa-plus-circle' style='font-size: 18px;'></i></a></th>"
+	                + "</tr></thead>"
+	                + "</table>"
+	                + "</div>"
+	                + "</div>");
+
+        $div_6.appendTo($div_papercontent1);
+        $div_7.appendTo($div_papercontent1);
+        $div_10.appendTo($div_papercontent1);
+        $div_8.appendTo($div_papercontent1);
+        $div_9.appendTo($div_papercontent1);
+
+        $div_papercontent1.appendTo($div_tab);
+        $div_tab.appendTo($("#tabpanels"));
+
+        $("#add" + panelId).off("click").on("click", function () {
+            addFieldanother(panelId);
+        });
+        dosageData(panelId);
+        //createTPS(document.getElementById("tps"+panelId));
+        //createPOS(document.getElementById("pos"+panelId));
+    }
+}
+function dosageData(panelId) {
+    var id = window.location.search.split("=")[1];
+    $.ajax({
+        url: "getDosage.ashx",
+        type: "post",
+        async:false,
+        data: {
+            treatID: id
+        },
+        success: function (data) {
+            var lists = new Array();
+            var dose = new Array();
+            lists = data.split(";");
+            var a = 0;
+            for (var i = 0; i < lists.length-1; i++) {
+                var list = new Array();
+                list = lists[i].split(",");
+                dose[a] = list[5];
+                a++;
+            }
+            var max = 0;
+            var len = dose.length;
+            if (len = 1) {
+                $("#total"+panelId).val(lists[0].split(",")[3]);
+                $("#Graded" + panelId).val(lists[0].split(",")[5]);
+            } else {
+                for (var i = 1; i < len; i++) {
+                    if (dose[i] > max) {
+                        max = i;
+                    }
+                }
+                $("#total" + panelId).val(lists[0].split(",")[3]);
+                $("#Graded" + panelId).val(lists[0].split(",")[5]);
+            }
+        }
     });
+
 }
 
+function createTPS(thiselement) {
+    var PartItem = JSON.parse(getTPS()).Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--TPS选择--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+        }
+    }
+    if (PartItem[0].defaultItem != "") {
+        thiselement.value = PartItem[0].defaultItem;
+    }
+}
+
+function getTPS() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "PlanSystem.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
+
+function createPOS(thiselement) {
+    var data = JSON.parse(getPOS());
+    var PartItem = data.Item;
+    thiselement.options.length = 0;
+    thiselement.options[0] = new Option("--摆位信息--");
+    thiselement.options[0].value = "allItem";
+    for (var i = 0; i < PartItem.length; i++) {
+        if (PartItem[i] != "") {
+            thiselement.options[i + 1] = new Option(PartItem[i].Name);
+            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
+        }
+    }
+    if (data.defaultItem != "") {
+        thiselement.value = data.defaultItem.ID;
+    }
+}
+
+function getPOS() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = "getbodypost.ashx";
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send();
+    var Items = xmlHttp.responseText;
+    return Items;
+}
 function addFieldanother(panelId) {
     var table = document.getElementById("Field"+panelId);
     var rows = table.rows.length;

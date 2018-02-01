@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div class="single-row">
-                    <div class="item col-xs-4"><input type="text" id="subdesignname" placeholder="请输入子计划名称" class="form-item"></div>
+                    <div class="item col-xs-4"><input type="text" id="subdesignname" value="默认子计划1" class="form-item"></div>
                     <div class="item col-xs-4">
                         <input type="button" value="新增子计划" id="addSubDesign" class="btn btn-primary" disabled="disabled">
                         <input type="button" value="保存子计划" id="saveSubDesign" class="btn btn-success" disabled="disabled">
