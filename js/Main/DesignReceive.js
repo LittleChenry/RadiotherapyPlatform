@@ -76,8 +76,9 @@ function receiveDesign(treatID) {
     xmlHttp.send();
     var result = xmlHttp.responseText;
     if (result == "success") {
-        window.alert("领取成功");       
-        parent.window.RolesToPatients();
+        window.alert("领取成功");
+        var session = getSession();
+        parent.window.RolesToPatients(session);
         parent.window.adjustTable();
         parent.window.Recover();
     }
@@ -221,4 +222,22 @@ function sex(evt) {
 function remove() {
     document.getElementById("receive").removeAttribute("disabled");
 
+}
+
+function getSession() {
+    var Session;
+    $.ajax({
+        type: "GET",
+        url: "../../../pages/Main/Records/getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            //alert(data);
+            Session = $.parseJSON(data);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+    return Session;
 }
