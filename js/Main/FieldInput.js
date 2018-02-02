@@ -1266,7 +1266,6 @@ function deleteFieldanother(row,panelId) {
 }
 
 function save() {   
-    return false;
 }
 
 function saveSub() {

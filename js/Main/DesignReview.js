@@ -909,7 +909,6 @@ function getmovement(ReferenceCenter) {
     document.getElementById("MovementZ").value = Reference[2];
 }
 function save() {
-    return false;
 }
 function savereview(gg) {
     var i = "";
