@@ -983,6 +983,7 @@ function remove() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentid = treatmentgroup.split("=")[1];
     for (var i = 0; i < childdesigns.length; i++) {
+        $("#pause" + i).removeAttr("disabled");
         if (childdesigns[i].childstate != "0") {
             $("#totalnumber" + i).removeAttr("disabled");
             $("#splitway" + i).removeAttr("disabled");
@@ -991,8 +992,6 @@ function remove() {
                 $("#chooseappoint" + i).removeAttr("disabled");
             }
             $("#checkappoint" + i).removeAttr("disabled");
-            $("#pause" + i).removeAttr("disabled");
-
         }
     }
 }

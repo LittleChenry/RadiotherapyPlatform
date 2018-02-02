@@ -41,7 +41,7 @@ public class getPatientInfoNew : IHttpHandler {
         string equipment = System.Text.RegularExpressions.Regex.Replace(equiptype, @"[^0-9]+", "");
 
 
-        string patientcommand = "select Distinct(treatment.Patient_ID) as patientid from fieldinfomation,childdesign,treatment where fieldinfomation.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID and childdesign.state=3 and fieldinfomation.equipment like '%" + equipment+"%'";
+        string patientcommand = "select Distinct(treatment.Patient_ID) as patientid from fieldinfomation,childdesign,treatment where fieldinfomation.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID and treatment.State=0 and childdesign.state=3 and fieldinfomation.equipment like '%" + equipment + "%'";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(patientcommand);
         ArrayList patientList = new ArrayList();
         while (reader.Read())
