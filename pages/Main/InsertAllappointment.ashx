@@ -480,31 +480,47 @@ public class InsertAllappointment : IHttpHandler {
                                 
                             }else
                            {
-                               int resttimes = Times - todaytimes;
-                               for (int i = 0; i < resttimes; i++)
+                                int resttimes = Times - todaytimes;
+                                string firsbegincommand = "select Begin from appointment_accelerate,treatmentrecord where treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.IsFirst=1 and treatmentrecord.ChildDesign_ID=@chid and Date=@date and Equipment_ID=@equipid";
+                                sqlOperation1.AddParameterWithValue("@chid", chid);
+                                sqlOperation1.AddParameterWithValue("@date", datefirst);
+                                sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
+                                string firstbegintime = sqlOperation1.ExecuteScalar(firsbegincommand);
+                                for (int i = 0; i < appointarrange.Count; i++)
                                {
-                                   string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
-                                   sqlOperation1.AddParameterWithValue("@task", "加速器");
-                                   sqlOperation1.AddParameterWithValue("@pid", patientid);
-                                   sqlOperation1.AddParameterWithValue("@date", datefirst);
-                                   sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
-                                   sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
-                                   sqlOperation1.AddParameterWithValue("@end", appointarrange[i]["end"].ToString());
-                                   string insertid = sqlOperation1.ExecuteScalar(insertappoint);
-                                   appointarray.Add(insertid);
 
-                                   string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                                   sqlOperation1.AddParameterWithValue("@appoint", insertid);
-                                   sqlOperation1.AddParameterWithValue("@applyuser", userid);
-                                   sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                                   sqlOperation1.AddParameterWithValue("@chid", chid);
-                                   string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                                   tempcount = tempcount + 1;
-                                   if (tempcount >= rest)
+                                   if (int.Parse(appointarrange[i]["begin"].ToString()) > int.Parse(firstbegintime))
                                    {
-                                       return "success";
-                                   }    
-                               } 
+                                       string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                                       sqlOperation1.AddParameterWithValue("@task", "加速器");
+                                       sqlOperation1.AddParameterWithValue("@pid", patientid);
+                                       sqlOperation1.AddParameterWithValue("@date", datefirst);
+                                       sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
+                                       sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
+                                       sqlOperation1.AddParameterWithValue("@end", appointarrange[i]["end"].ToString());
+                                       string insertid = sqlOperation1.ExecuteScalar(insertappoint);
+                                       appointarray.Add(insertid);
+
+                                       string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
+                                       sqlOperation1.AddParameterWithValue("@appoint", insertid);
+                                       sqlOperation1.AddParameterWithValue("@applyuser", userid);
+                                       sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                                       sqlOperation1.AddParameterWithValue("@chid", chid);
+                                       string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                       treatmentrecordarray.Add(treatmentrecordid);
+                                       tempcount = tempcount + 1;
+                                       if (tempcount >= rest)
+                                       {
+                                           return "success";
+                                       }
+                                       todaytimes++;
+                                       if (todaytimes >= Times)
+                                       {
+                                           break;
+                                       }
+                                   }
+                               }
+                               todaytimes = Times; 
 
                           }
 
