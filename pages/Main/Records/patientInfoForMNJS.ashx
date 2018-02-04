@@ -54,7 +54,7 @@ public class patientInfoForMNJS : IHttpHandler {
             return "{\"PatientInfo\":false}";
         }
         
-        int i = 1;
+        int i = 0;
         string sqlCommand2 = "select treatment.State as treatstate,Progress,iscommon,treatment.ID as treatid,patient.*,user.Name as doctor,appointment.ID as appointid,appointment.*,equipment.Name as eqname,treatment.Treatmentdescribe,DiagnosisRecord_ID,Completed from appointment,treatment,patient,user,equipment where appointment.Equipment_ID=equipment.ID and appointment.Equipment_ID=@groupid and appointment.Date >= @date1 and appointment.Date <= @date2 and appointment.State=1 and appointment.Treatment_ID=treatment.ID and patient.ID=treatment.Patient_ID and treatment.Belongingdoctor=user.ID order by appointment.Date,appointment.Begin";
         sqlOperation2.AddParameterWithValue("@groupid", equipmentID);
         sqlOperation2.AddParameterWithValue("@date1", date1);
@@ -67,6 +67,11 @@ public class patientInfoForMNJS : IHttpHandler {
             string progress = reader["Progress"].ToString();
             string[] strArray = progress.Split(',');
             string Enhance="0";
+            i++;
+            if (reader["treatstate"].ToString() != "0")
+            {
+                continue;
+            }
             if (Array.LastIndexOf(strArray, "3") > 0)
             {
                 string sel = "select Enhance from location,treatment where treatment.ID=@treatid and treatment.location_ID=location.ID";
@@ -98,8 +103,7 @@ public class patientInfoForMNJS : IHttpHandler {
             if (i < count)
             {
                 backText.Append(",");
-            }
-            i++;
+            }           
         }
         reader.Close();       
         // backText.Remove(backText.Length - 1, 1);                
