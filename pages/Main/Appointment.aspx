@@ -313,6 +313,7 @@
                     <div class="col-xs-4 info-title">
                         <span class="index-num">①</span>
                         <span>选择预约计划：</span>
+                        <span id="timeduan"></span>
                     </div>
                     <div class="col-xs-12">
                         <table id="PlanInfo" class="table table-bordered">

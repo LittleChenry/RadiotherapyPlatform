@@ -161,8 +161,24 @@ function Search(str, patients) {
     return Searchedpatient;
 }
 
-function drawPlanInfoTable(planinfo) {
+function drawPlanInfoTable(planinfo, timeduan) {
 	if (planinfo) {
+		var time = "默认时间段（";
+		if (timeduan == "") {
+			time = time + "无";
+		}else{
+			for (var i = 0; i < timeduan.length; i++) {
+				var B = timeduan[i].begin;
+				var E = timeduan[i].end;
+				if (i == 0) {
+					time = time + Num2Time(B, E);
+				}else {
+					time = time + " , " + Num2Time(B, E);
+				}
+			}
+		}
+		time += "）";
+		$("#timeduan").html(time);
 		var table = $("#PlanInfo");
 		table.find("tbody").html("");
 		var tbody = '<tbody>';
@@ -286,7 +302,7 @@ function RecordAddClick() {
 			var getPlanURL = '../../pages/Main/getPInfoAndEquipAppInfo.ashx';
 			var returnData = postData(getPlanURL, data, false);
 			var planinfo = $.parseJSON(returnData);
-			drawPlanInfoTable(planinfo.patientinfo);
+			drawPlanInfoTable(planinfo.patientinfo, planinfo.timeduan);
 			var datetable = $("#AppointDate");
 			var timetable = $("#AppointTime");
 			timetable.find("td").removeClass("occupied chosen");

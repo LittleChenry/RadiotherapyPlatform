@@ -1333,7 +1333,8 @@ function changeState(e){
         dateType: "text",
         success: function (data) {
             alert("修改成功！");
-            window.parent.RolesToPatients();
+            var session = getSession();
+            window.parent.RolesToPatients(session);
             window.parent.adjustTable();
             window.parent.Recover();
         },

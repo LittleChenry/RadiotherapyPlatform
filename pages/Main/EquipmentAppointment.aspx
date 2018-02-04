@@ -340,7 +340,7 @@
                                             <button id="nextWeek" class='time-btn selected-btn buttonSpace' type="button">下一周</button>
                                         </div>
                                     </div>
-                                    <table id="appointTable" class="table table-bordered table-hover dataTable">
+                                    <table id="appointTable" class="table table-bordered dataTable">
                                         <thead id="thead"></thead>
                                         <tbody id="tbody"></tbody>
                                     </table>

@@ -87,7 +87,10 @@ function createAccelerateTable(nowDate) {
     table.find("tbody").html("");
     var firstDate = new Date(nowDate);
     var DateArray = new Array(7);
-    //var DateDetailArray = new Array(7);
+    var firsttimeURL = "Records/gettimeselect.ashx";
+    var returnData = getData(firsttimeURL, false);
+    var alldate = $.parseJSON(returnData);
+    var firsttime = alldate.timeselect;
     for (var i = 0; i < 7; i++) {
         DateArray[i] = firstDate.Format("yyyyMMdd");
         //DateDetailArray[i] = firstDate.Format("M-d") + num2week(firstDate.getDay());
@@ -95,7 +98,16 @@ function createAccelerateTable(nowDate) {
     }
     var temptime = begin;
     while(temptime < end){
-        var tr = '<tr><td>'+ Num2Time(temptime, temptime + timelength) +'</td>';
+        var trclass = "";
+        for (var i = 0; i < firsttime.length; i++) {
+            var B = firsttime[i].begin;
+            var E = firsttime[i].end;
+            if (B <= temptime && (temptime + timelength) <= E) {
+                trclass = "occupied";
+                break;
+            }
+        }
+        var tr = '<tr class="'+ trclass +'"><td>'+ Num2Time(temptime, temptime + timelength) +'</td>';
         for (var i = 0; i < DateArray.length; i++) {
             var td = '<td><span id="'+ DateArray[i] + temptime +'" class="pointer"></span></td>';
             tr += td;
@@ -1359,6 +1371,23 @@ function postData(url, data, async) {
         type: "POST",
         url: url,
         data: data,
+        async: async,
+        dateType: "json",
+        success: function (data) {
+            returnData = data;
+        },
+        error: function() {
+            returnData = false;
+        }
+    });
+    return returnData;
+}
+
+function getData(url, async) {
+    var returnData;
+    $.ajax({
+        type: "GET",
+        url: url,
         async: async,
         dateType: "json",
         success: function (data) {
