@@ -167,6 +167,12 @@ public class changeTreatmentState : IHttpHandler {
 
                 }
             }
+            if (state == "2")
+            {
+                string changecommand = "update treatment set Progress='0,1,2,3,4,5,6,7,8,9,10,11,12,13,14' where ID=@treatID";
+                sqlOperation1.AddParameterWithValue("@treatID", Convert.ToInt32(treatID));
+                sqlOperation1.ExecuteNonQuery(changecommand);
+            }
             string change = "update treatment set State=@state where ID=@treatID";
             sqlOperation1.AddParameterWithValue("@treatID", Convert.ToInt32(treatID));
             sqlOperation1.AddParameterWithValue("@state", Convert.ToInt32(state));
