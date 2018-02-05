@@ -909,7 +909,7 @@ function getmovement(ReferenceCenter) {
     document.getElementById("MovementZ").value = Reference[2];
 }
 function save() {
-    var whichTabStr = $("#tabs").children(".active").attr("id");
+    var whichTabStr = $("#tab-content").children(".active").attr("id");
     var whichTab = 0;
     if (typeof(whichTabStr) != "undefined") {
         whichTab = whichTabStr.substring(3);
