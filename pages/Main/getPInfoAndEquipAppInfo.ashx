@@ -154,7 +154,7 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
        info.Append("],\"timeduan\":[");
        while (reader.Read())
        {
-           string timeduancommand = "select Begin,End FROM appointment_accelerate where Date in (select Date from (select count(*) as number,treatmentrecord.ChildDesign_ID,Date from appointment_accelerate,treatmentrecord where treatmentrecord.Appointment_ID=appointment_accelerate.ID and Date in (select Date  from (select Date,count(*) as count from appointment_accelerate where Patient_ID=@pid and Equipment_ID=@equipid and Date>=@todaydate GROUP BY Date) as a where count=@count) and IsFirst!=1 GROUP BY treatmentrecord.ChildDesign_ID,Date) as b where number=@count) GROUP BY Begin";
+           string timeduancommand = "select Begin,End FROM appointment_accelerate where Date in (select Date from (select count(*) as number,treatmentrecord.ChildDesign_ID,Date from appointment_accelerate,treatmentrecord where treatmentrecord.Appointment_ID=appointment_accelerate.ID and Date in (select Date  from (select Date,count(*) as count from appointment_accelerate where Patient_ID=@pid and Equipment_ID=@equipid and Date>=@todaydate GROUP BY Date) as a where count=@count) and IsFirst!=1 and appointment_accelerate.Patient_ID=@pid and appointment_accelerate.Equipment_ID=@equipid GROUP BY treatmentrecord.ChildDesign_ID,Date) as b where number=@count) and appointment_accelerate.Patient_ID=@pid and appointment_accelerate.Equipment_ID=@equipid GROUP BY Begin";
            sqlOperation1.AddParameterWithValue("@pid", patientid);
            sqlOperation1.AddParameterWithValue("@equipid", equipid);
            sqlOperation1.AddParameterWithValue("@todaydate", DateTime.Now.ToString("yyyy-MM-dd"));
