@@ -286,6 +286,7 @@ function drawTimeTable(basicinfo, doctortime) {
 function RecordAddClick() {
 	var table = $("#patient-table");
 	var tbody = table.find("tbody");
+	var session = getSession();
 	tbody.find("tr").each(function(){
 		$(this).unbind("click").bind("click", function(){
 			$(this).parent().find("tr").removeClass("chosen");
@@ -297,7 +298,8 @@ function RecordAddClick() {
 			$("#group").html($(this).find("td").eq(4).html());
 			$("#patientid").val($(this).attr("id"));
 			var data = {
-				patientid:patientid
+			    patientid:patientid,
+			    equipid:session.equipmentID
 			};
 			var getPlanURL = '../../pages/Main/getPInfoAndEquipAppInfo.ashx';
 			var returnData = postData(getPlanURL, data, false);

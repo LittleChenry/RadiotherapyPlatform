@@ -198,7 +198,7 @@ public class getallcompletedtreat : IHttpHandler {
                 }
             }
 
-            backText.Append("{\"diagnose\":\"" + reader["DiagnosisRecord_ID"].ToString() + "\",\"fixed\":\"" + fix + "\",\"fixed\":\"" + fix + "\",\"location\":\"" + location + "\",\"design\":\"" + design + "\",\"replace\":\"" + replace + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"review\":\"" + reader["Review_ID"].ToString() + "\",\"group\":\"" + reader["Group_ID"].ToString() + "\",\"diagnosecomplete\":\"" + diagnosecomplete + "\",\"fixcomplete\":\"" + fixcomplete + "\",\"locationcomplete\":\"" + locationcomplete + "\",\"designcomplete\":\"" + designcomplete + "\",\"replacecomplete\":\"" + replacecomplete + "\",\"rigester\":\"" + rigester + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() + "\"}");
+            backText.Append("{\"diagnose\":\"" + reader["DiagnosisRecord_ID"].ToString() + "\",\"fixed\":\"" + fix + "\",\"fixed\":\"" + fix + "\",\"location\":\"" + location + "\",\"design\":\"" + "" + "\",\"replace\":\"" + replace + "\",\"treatmentname\":\"" + reader["Treatmentname"].ToString() + "\",\"review\":\"" + "" + "\",\"group\":\"" + reader["Group_ID"].ToString() + "\",\"diagnosecomplete\":\"" + diagnosecomplete + "\",\"fixcomplete\":\"" + fixcomplete + "\",\"locationcomplete\":\"" + locationcomplete + "\",\"designcomplete\":\"" + designcomplete + "\",\"replacecomplete\":\"" + replacecomplete + "\",\"rigester\":\"" + rigester + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() + "\"}");
             if (i < count)
             {
                 backText.Append(",");
