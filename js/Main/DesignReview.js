@@ -909,6 +909,15 @@ function getmovement(ReferenceCenter) {
     document.getElementById("MovementZ").value = Reference[2];
 }
 function save() {
+    var whichTabStr = $("#tabs").children(".active").attr("id");
+    var whichTab = 0;
+    if (typeof(whichTabStr) != "undefined") {
+        whichTab = whichTabStr.substring(3);
+    }
+    var flag = savereview(whichTab);
+    if (flag == false) {
+        return false;
+    }
 }
 function savereview(gg) {
     var i = "";

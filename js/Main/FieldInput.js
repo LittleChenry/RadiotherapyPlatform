@@ -1265,7 +1265,11 @@ function deleteFieldanother(row,panelId) {
     $("#aa"+panelId).val(parseInt($("#aa"+panelId).val())-1);
 }
 
-function save() {   
+function save() {
+    var flag = saveSub();
+    if (flag == false) {
+        return false;
+    }
 }
 
 function saveSub() {
