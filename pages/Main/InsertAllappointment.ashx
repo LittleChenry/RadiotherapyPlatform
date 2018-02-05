@@ -315,7 +315,7 @@ public class InsertAllappointment : IHttpHandler {
                 if (datefirst.DayOfWeek.ToString() != "Sunday" && datefirst.DayOfWeek.ToString() != "Saturday")
                 {
                     int todaytimes = 0;
-                    string checkcommand = "select count(*) from appointment_accelerate,treatmentrecord where treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.IsFirst=1 and treatmentrecord.ChildDesign_ID=@chid and Date=@date and Equipment_ID=@equipid";
+                    string checkcommand = "select count(*) from appointment_accelerate,treatmentrecord where treatmentrecord.Appointment_ID=appointment_accelerate.ID and treatmentrecord.ChildDesign_ID=@chid and Date=@date and Equipment_ID=@equipid";
                     sqlOperation1.AddParameterWithValue("@chid", chid);
                     sqlOperation1.AddParameterWithValue("@date", datefirst);
                     sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
