@@ -145,28 +145,48 @@ public class designReviewRecord : IHttpHandler {
             sqlOperation.AddParameterWithValue("@ChildDesign_ID", context.Request.Form["childdesign" + ggg]);
             sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
             int ishave = int.Parse(sqlOperation.ExecuteScalar(have));
-            if (ishave>0)
+            int intSuccess = 0;
+            if (ishave > 0)
             {
-                string delete = "delete from review where ChildDesign_ID=@ChildDesign_ID and Treatment_ID=@Treatment_ID";
+                string delete = "update review set PlanQA=@PlanQA,Remark=@Remark,Percent=@Percent,SelectDose=@SelectDose where ChildDesign_ID=@ChildDesign_ID and Treatment_ID=@Treatment_ID";
                 sqlOperation2.AddParameterWithValue("@ChildDesign_ID", context.Request.Form["childdesign" + ggg]);
                 sqlOperation2.AddParameterWithValue("@Treatment_ID", treatID);
-                sqlOperation2.ExecuteNonQuery(delete);
+                sqlOperation2.AddParameterWithValue("@PlanQA", Convert.ToInt32(context.Request.Form["PlanQA" + ggg]));
+                sqlOperation2.AddParameterWithValue("@Remark", context.Request.Form["Remark" + ggg]);
+                sqlOperation2.AddParameterWithValue("@SelectDose", context.Request.Form["selectdose"]);
+                sqlOperation2.AddParameterWithValue("@Percent", context.Request.Form["degree" + ggg]);
+                intSuccess = sqlOperation2.ExecuteNonQuery(delete);
+                if (savepath1 != "")
+                {
+                    string save1 = "update review set PDF1=@PDF1 where ChildDesign_ID=@ChildDesign_ID and Treatment_ID=@Treatment_ID";
+                    sqlOperation2.AddParameterWithValue("@PDF1", savepath1);
+                    sqlOperation2.ExecuteNonQuery(save1);
+                }
+                if (savepath3 != "")
+                {
+                    string save2 = "update review set PDF2=@PDF2 where ChildDesign_ID=@ChildDesign_ID and Treatment_ID=@Treatment_ID";
+                    sqlOperation2.AddParameterWithValue("@PDF2", savepath3);
+                    sqlOperation2.ExecuteNonQuery(save2);
+                }
             }
-            string strSqlCommand = "INSERT INTO review(ID,PlanQA,_User_ID,ReviewTime,Remark,PDF1,PDF2,SUM,Percent,ChildDesign_ID,Treatment_ID,SelectDose) " +
-                                       "VALUES(@ID,@PlanQA,@User_ID,@ReviewTime,@Remark,@PDF1,@PDF2,@SUM,@Percent,@ChildDesign_ID,@Treatment_ID,@SelectDose)";
-            sqlOperation.AddParameterWithValue("@ID", Count);
-            sqlOperation.AddParameterWithValue("@PlanQA", Convert.ToInt32(context.Request.Form["PlanQA" + ggg]));
-            sqlOperation.AddParameterWithValue("@Remark", context.Request.Form["Remark" + ggg]);
-            sqlOperation.AddParameterWithValue("@SelectDose", context.Request.Form["selectdose"]);
-            sqlOperation.AddParameterWithValue("@SUM", 1);
-            sqlOperation.AddParameterWithValue("@Percent", context.Request.Form["degree" + ggg]);
-            sqlOperation.AddParameterWithValue("@ChildDesign_ID", context.Request.Form["childdesign" + ggg]);
-            sqlOperation.AddParameterWithValue("@ReviewTime", datetime1);
-            sqlOperation.AddParameterWithValue("@User_ID", userid);
-            sqlOperation.AddParameterWithValue("@PDF1", savepath1);
-            sqlOperation.AddParameterWithValue("@PDF2", savepath3);
-            sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
-            int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
+            else
+            {
+                string strSqlCommand = "INSERT INTO review(ID,PlanQA,_User_ID,ReviewTime,Remark,PDF1,PDF2,SUM,Percent,ChildDesign_ID,Treatment_ID,SelectDose) " +
+                                           "VALUES(@ID,@PlanQA,@User_ID,@ReviewTime,@Remark,@PDF1,@PDF2,@SUM,@Percent,@ChildDesign_ID,@Treatment_ID,@SelectDose)";
+                sqlOperation.AddParameterWithValue("@ID", Count);
+                sqlOperation.AddParameterWithValue("@PlanQA", Convert.ToInt32(context.Request.Form["PlanQA" + ggg]));
+                sqlOperation.AddParameterWithValue("@Remark", context.Request.Form["Remark" + ggg]);
+                sqlOperation.AddParameterWithValue("@SelectDose", context.Request.Form["selectdose"]);
+                sqlOperation.AddParameterWithValue("@SUM", 1);
+                sqlOperation.AddParameterWithValue("@Percent", context.Request.Form["degree" + ggg]);
+                sqlOperation.AddParameterWithValue("@ChildDesign_ID", context.Request.Form["childdesign" + ggg]);
+                sqlOperation.AddParameterWithValue("@ReviewTime", datetime1);
+                sqlOperation.AddParameterWithValue("@User_ID", userid);
+                sqlOperation.AddParameterWithValue("@PDF1", savepath1);
+                sqlOperation.AddParameterWithValue("@PDF2", savepath3);
+                sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
+                intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
+            }
             int Success = 0;
             string update111 = "update childdesign set state=2 where ID=@childdesign_ID";
             //sqlOperation2.AddParameterWithValue("@Design_ID", Count);

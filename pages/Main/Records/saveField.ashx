@@ -140,35 +140,54 @@ public class saveField : IHttpHandler {
                     string delete = "delete from fieldinfomation where childdesign_ID=@childdesign_ID";
                     sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
                     sqlOperation1.ExecuteNonQuery(delete);
-                    string delete1 = "delete from childdesign where ID=@childdesign_ID";
+                    string delete1 = "update childdesign set DesignName=@DesignName,Treatment_ID=@Treatment_ID,IlluminatedNumber=@IlluminatedNumber, Coplanar=@Coplanar,MachineNumbe=@MachineNumbe,ControlPoint=@ControlPoint,parameters=@parameters,Illuminatedangle=@Illuminatedangle,Irradiation_ID=@Irradiation_ID,energy=@energy,item=@item where ID=@childdesign_ID";
                     sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
-                    sqlOperation1.ExecuteNonQuery(delete1);
+                    sqlOperation1.AddParameterWithValue("@Irradiation_ID", Convert.ToInt32(context.Request.Form["Irradiation" + item]));
+                    sqlOperation1.AddParameterWithValue("@IlluminatedNumber", Convert.ToInt32(context.Request.Form["IlluminatedNumber" + item]));
+                    sqlOperation1.AddParameterWithValue("@Coplanar", Convert.ToInt32(context.Request.Form["Coplanar" + item]));
+                    sqlOperation1.AddParameterWithValue("@energy", Convert.ToInt32(context.Request.Form["ener" + item]));
+                    sqlOperation1.AddParameterWithValue("@MachineNumbe", Convert.ToDouble(context.Request.Form["MachineNumbe" + item]));
+                    sqlOperation1.AddParameterWithValue("@Illuminatedangle", angle);
+                    sqlOperation1.AddParameterWithValue("@parameters", para);
+                    sqlOperation1.AddParameterWithValue("@Treatment_ID", treatID);
+                    sqlOperation1.AddParameterWithValue("@item", item1);
+                    sqlOperation1.AddParameterWithValue("@DesignName", context.Request.Form["DesignName" + item]);
+                    sqlOperation1.AddParameterWithValue("@ControlPoint", Convert.ToInt32(context.Request.Form["ControlPoint" + item]));
+                    successs = sqlOperation1.ExecuteNonQuery(delete1);
                 }
-                string insert = "insert into childdesign (DesignName,Treatment_ID,IlluminatedNumber,Coplanar,MachineNumbe,ControlPoint,parameters,Illuminatedangle,Irradiation_ID,energy,item)values(@DesignName,@Treatment_ID,@IlluminatedNumber,@Coplanar,@MachineNumbe,@ControlPoint,@parameters,@Illuminatedangle,@Irradiation_ID,@energy,@item)";
+                else
+                {
+                    string insert = "insert into childdesign (DesignName,Treatment_ID,IlluminatedNumber,Coplanar,MachineNumbe,ControlPoint,parameters,Illuminatedangle,Irradiation_ID,energy,item)values(@DesignName,@Treatment_ID,@IlluminatedNumber,@Coplanar,@MachineNumbe,@ControlPoint,@parameters,@Illuminatedangle,@Irradiation_ID,@energy,@item)";
 
-                sqlOperation1.AddParameterWithValue("@Irradiation_ID", Convert.ToInt32(context.Request.Form["Irradiation" + item]));
-                sqlOperation1.AddParameterWithValue("@IlluminatedNumber", Convert.ToInt32(context.Request.Form["IlluminatedNumber" + item]));
-                sqlOperation1.AddParameterWithValue("@Coplanar", Convert.ToInt32(context.Request.Form["Coplanar" + item]));
-                sqlOperation1.AddParameterWithValue("@energy", Convert.ToInt32(context.Request.Form["ener" + item]));
-                sqlOperation1.AddParameterWithValue("@MachineNumbe", Convert.ToDouble(context.Request.Form["MachineNumbe" + item]));
-                sqlOperation1.AddParameterWithValue("@Illuminatedangle", angle);
-                sqlOperation1.AddParameterWithValue("@parameters", para);
-                sqlOperation1.AddParameterWithValue("@Treatment_ID", treatID);
-                sqlOperation1.AddParameterWithValue("@item", item1);
-                sqlOperation1.AddParameterWithValue("@DesignName", context.Request.Form["DesignName" + item]);
-                sqlOperation1.AddParameterWithValue("@ControlPoint", Convert.ToInt32(context.Request.Form["ControlPoint" + item]));
-                successs = sqlOperation1.ExecuteNonQuery(insert);
+                    sqlOperation1.AddParameterWithValue("@Irradiation_ID", Convert.ToInt32(context.Request.Form["Irradiation" + item]));
+                    sqlOperation1.AddParameterWithValue("@IlluminatedNumber", Convert.ToInt32(context.Request.Form["IlluminatedNumber" + item]));
+                    sqlOperation1.AddParameterWithValue("@Coplanar", Convert.ToInt32(context.Request.Form["Coplanar" + item]));
+                    sqlOperation1.AddParameterWithValue("@energy", Convert.ToInt32(context.Request.Form["ener" + item]));
+                    sqlOperation1.AddParameterWithValue("@MachineNumbe", Convert.ToDouble(context.Request.Form["MachineNumbe" + item]));
+                    sqlOperation1.AddParameterWithValue("@Illuminatedangle", angle);
+                    sqlOperation1.AddParameterWithValue("@parameters", para);
+                    sqlOperation1.AddParameterWithValue("@Treatment_ID", treatID);
+                    sqlOperation1.AddParameterWithValue("@item", item1);
+                    sqlOperation1.AddParameterWithValue("@DesignName", context.Request.Form["DesignName" + item]);
+                    sqlOperation1.AddParameterWithValue("@ControlPoint", Convert.ToInt32(context.Request.Form["ControlPoint" + item]));
+                    successs = sqlOperation1.ExecuteNonQuery(insert);
+                    string childid2 = "select ID from childdesign where Treatment_ID=@Treatment_ID and item=@item";
+                    sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
+                    sqlOperation.AddParameterWithValue("@item", item1);
+                    childid2 = sqlOperation.ExecuteScalar(childid2);
+                    string selec = "select Splitway_ID from treatment where ID=@treatID";
+                    sqlOperation.AddParameterWithValue("@treatID", treatID);
+                    string Splitway = sqlOperation.ExecuteScalar(selec);
+                    string update1 = "update childdesign set Splitway_ID=@Splitway_ID where ID=@ID";
+                    sqlOperation.AddParameterWithValue("@ID", childid2);
+                    sqlOperation.AddParameterWithValue("@Splitway_ID", Splitway);
+                    sqlOperation.ExecuteNonQuery(update1);
+                }
                 string childid1 = "select ID from childdesign where Treatment_ID=@Treatment_ID and item=@item";
                 sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
                 sqlOperation.AddParameterWithValue("@item", item1);
                 childid1 = sqlOperation.ExecuteScalar(childid1);
-                string selec = "select Splitway_ID from treatment where ID=@treatID";
-                sqlOperation.AddParameterWithValue("@treatID", treatID);
-                string Splitway = sqlOperation.ExecuteScalar(selec);
-                string update1 = "update childdesign set Splitway_ID=@Splitway_ID where ID=@ID";
-                sqlOperation.AddParameterWithValue("@ID", childid1);
-                sqlOperation.AddParameterWithValue("@Splitway_ID", Splitway);
-                sqlOperation.ExecuteNonQuery(update1);
+                
                
                 for (int i = 0; i < a; i++)
                 {
@@ -198,19 +217,6 @@ public class saveField : IHttpHandler {
             }
             else
             {
-                if (existdesign)
-                {
-                    string childid = "select ID from childdesign where Treatment_ID=@Treatment_ID and item=@item";
-                    sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
-                    sqlOperation.AddParameterWithValue("@item", item1);
-                    childid = sqlOperation.ExecuteScalar(childid);
-                    string delete = "delete from fieldinfomation where childdesign_ID=@childdesign_ID";
-                    sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
-                    sqlOperation1.ExecuteNonQuery(delete);
-                    string delete1 = "delete from childdesign where ID=@childdesign_ID";
-                    sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
-                    sqlOperation1.ExecuteNonQuery(delete1);
-                }
                 string lr = "";
                 string rd = "";
                 string eo = "";
@@ -239,23 +245,47 @@ public class saveField : IHttpHandler {
                     eo = context.Request.Form["enter" + item];
                 }
                 string para = lr + ";" + rd + ";" + eo;
-                string insert = "insert into childdesign (DesignName,Treatment_ID,item,parameters)values(@DesignName,@Treatment_ID,@item,@parameters)";      
-                sqlOperation1.AddParameterWithValue("@Treatment_ID", treatID);
-                sqlOperation1.AddParameterWithValue("@item", item1);
-                sqlOperation1.AddParameterWithValue("@parameters", para);
-                sqlOperation1.AddParameterWithValue("@DesignName", context.Request.Form["DesignName" + item]);
-                successs = sqlOperation1.ExecuteNonQuery(insert);
+                if (existdesign)
+                {
+                    string childid = "select ID from childdesign where Treatment_ID=@Treatment_ID and item=@item";
+                    sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
+                    sqlOperation.AddParameterWithValue("@item", item1);
+                    childid = sqlOperation.ExecuteScalar(childid);
+                    string delete = "delete from fieldinfomation where childdesign_ID=@childdesign_ID";
+                    sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
+                    sqlOperation1.ExecuteNonQuery(delete);
+                    string delete1 = "update childdesign set DesignName=@DesignName,Treatment_ID=@Treatment_ID,parameters=@parameters,item=@item where ID=@childdesign_ID";
+                    sqlOperation1.AddParameterWithValue("@childdesign_ID", childid);
+                    sqlOperation1.AddParameterWithValue("@Treatment_ID", treatID);
+                    sqlOperation1.AddParameterWithValue("@item", item1);
+                    sqlOperation1.AddParameterWithValue("@parameters", para);
+                    sqlOperation1.AddParameterWithValue("@DesignName", context.Request.Form["DesignName" + item]);
+                    successs = sqlOperation1.ExecuteNonQuery(delete1);
+                }
+                else
+                {
+                    string insert = "insert into childdesign (DesignName,Treatment_ID,item,parameters)values(@DesignName,@Treatment_ID,@item,@parameters)";
+                    sqlOperation1.AddParameterWithValue("@Treatment_ID", treatID);
+                    sqlOperation1.AddParameterWithValue("@item", item1);
+                    sqlOperation1.AddParameterWithValue("@parameters", para);
+                    sqlOperation1.AddParameterWithValue("@DesignName", context.Request.Form["DesignName" + item]);
+                    successs = sqlOperation1.ExecuteNonQuery(insert);
+                    string childid2 = "select ID from childdesign where Treatment_ID=@Treatment_ID and item=@item";
+                    sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
+                    sqlOperation.AddParameterWithValue("@item", item1);
+                    childid2 = sqlOperation.ExecuteScalar(childid2);
+                    string selec = "select Splitway_ID from treatment where ID=@treatID";
+                    sqlOperation.AddParameterWithValue("@treatID", treatID);
+                    string Splitway = sqlOperation.ExecuteScalar(selec);
+                    string update1 = "update childdesign set Splitway_ID=@Splitway_ID where ID=@ID";
+                    sqlOperation.AddParameterWithValue("@ID", childid2);
+                    sqlOperation.AddParameterWithValue("@Splitway_ID", Splitway);
+                    sqlOperation.ExecuteNonQuery(update1);
+                }
                 string childid1 = "select ID from childdesign where Treatment_ID=@Treatment_ID and item=@item";
                 sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
                 sqlOperation.AddParameterWithValue("@item", item1);
                 childid1 = sqlOperation.ExecuteScalar(childid1);
-                string selec = "select Splitway_ID from treatment where ID=@treatID";
-                sqlOperation.AddParameterWithValue("@treatID", treatID);
-                string Splitway = sqlOperation.ExecuteScalar(selec);
-                string update1 = "update childdesign set Splitway_ID=@Splitway_ID where ID=@ID";
-                sqlOperation.AddParameterWithValue("@ID", childid1);
-                sqlOperation.AddParameterWithValue("@Splitway_ID", Splitway);
-                sqlOperation.ExecuteNonQuery(update1);
                 for (int i = 0; i < a; i++)
                 {
                     string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid,Singledose,Totaldose,childdesign_ID) " +
