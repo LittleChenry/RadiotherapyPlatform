@@ -911,8 +911,9 @@ function getmovement(ReferenceCenter) {
 function save() {
     var whichTabStr = $("#tab-content").children(".active").attr("id");
     var whichTab = 0;
-    if (typeof(whichTabStr) != "undefined") {
-        whichTab = whichTabStr.substring(3);
+    whichTab = whichTabStr.substring(3);
+    if (whichTab == "") {
+        whichTab = 0;
     }
     var flag = savereview(whichTab);
     if (flag == false) {
