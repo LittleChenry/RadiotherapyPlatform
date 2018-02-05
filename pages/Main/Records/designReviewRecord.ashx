@@ -186,12 +186,13 @@ public class designReviewRecord : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@PDF2", savepath3);
                 sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
                 intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
+                string update111 = "update childdesign set state=2 where ID=@childdesign_ID";
+                //sqlOperation2.AddParameterWithValue("@Design_ID", Count);
+                sqlOperation2.AddParameterWithValue("@treat", context.Request.Form["childdesign" + ggg]);
+                sqlOperation2.ExecuteNonQuery(update111);   
             }
             int Success = 0;
-            string update111 = "update childdesign set state=2 where ID=@childdesign_ID";
-            //sqlOperation2.AddParameterWithValue("@Design_ID", Count);
-            sqlOperation2.AddParameterWithValue("@treat", context.Request.Form["childdesign" + ggg]);
-            sqlOperation2.ExecuteNonQuery(update111);         
+                  
             if (!exists)
             {
                 string inserttreat = "update treatment set Progress=@progress where ID=@treat";
