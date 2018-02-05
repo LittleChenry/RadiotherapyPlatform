@@ -264,9 +264,10 @@ public class saveField : IHttpHandler {
                 }
                 else
                 {
-                    string insert = "insert into childdesign (DesignName,Treatment_ID,item,parameters)values(@DesignName,@Treatment_ID,@item,@parameters)";
+                    string insert = "insert into childdesign (state,DesignName,Treatment_ID,item,parameters)values(@state,@DesignName,@Treatment_ID,@item,@parameters)";
                     sqlOperation1.AddParameterWithValue("@Treatment_ID", treatID);
                     sqlOperation1.AddParameterWithValue("@item", item1);
+                    sqlOperation1.AddParameterWithValue("@state", 2);
                     sqlOperation1.AddParameterWithValue("@parameters", para);
                     sqlOperation1.AddParameterWithValue("@DesignName", context.Request.Form["DesignName" + item]);
                     successs = sqlOperation1.ExecuteNonQuery(insert);

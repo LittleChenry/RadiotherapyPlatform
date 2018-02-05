@@ -188,7 +188,7 @@ public class designReviewRecord : IHttpHandler {
                 intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
                 string update111 = "update childdesign set state=2 where ID=@childdesign_ID";
                 //sqlOperation2.AddParameterWithValue("@Design_ID", Count);
-                sqlOperation2.AddParameterWithValue("@treat", context.Request.Form["childdesign" + ggg]);
+                sqlOperation2.AddParameterWithValue("@childdesign_ID", context.Request.Form["childdesign" + ggg]);
                 sqlOperation2.ExecuteNonQuery(update111);   
             }
             int Success = 0;
