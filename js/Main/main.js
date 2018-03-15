@@ -312,11 +312,12 @@ function Paging(patient, role, userID) {
             case "治疗技师":
                 $("#legend-waiting").show();
                 var TreatmentID, Name, Gender, patientid, doctor, begin, end, Age, doctor, groupname;
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>状态</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>状态</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
                     TreatmentID = patient.PatientInfo[i].treatID;
+                    Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
                     Name = patient.PatientInfo[i].name;
                     Gender = patient.PatientInfo[i].Gender;
                     patientid = patient.PatientInfo[i].patientid;
@@ -337,7 +338,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Num2Time(begin, end) +"</td><td>"+ Completed +"</td><td>"+ Name +"</td><td>" + Gender + "</td>" +
+                    trtemp = "'><td><i></i></td><td>" + Num2Time(begin, end) +"</td><td>"+ Completed +"</td><td>" + Radiotherapy_ID + "</td><td>"+ Name +"</td><td>" + Gender + "</td>" +
                              "<td>" + Age + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -478,7 +479,7 @@ function Paging(patient, role, userID) {
                 table.append(tbody);
                 break;
             case "治疗技师":
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>状态</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>状态</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
@@ -1528,6 +1529,7 @@ function Recover() {
 function SearchTable(str){
     var table = $("#patient-table");
     table.find("tbody tr").hide().filter(":contains('"+ str +"')").show();
+    $("#patient_info").html("一共"+ table.find("tbody tr").filter(":contains('"+ str +"')").length +"条记录");
 }
 
 function getTaskWarning(){
@@ -1896,20 +1898,31 @@ function patientSort(patient){
     var sortPatient = new Array();
     var count = 0;
     for (var j = 0; j < patient.PatientInfo.length; j++) {
-        var flag = 0;
-        for (var k = 0; k < sortPatient.length; k++) {
-            if (sortPatient[k].Radiotherapy_ID == patient.PatientInfo[j].Radiotherapy_ID) {
-                flag = 1;
-            }
-        }
-        if (flag == 0) {
-            sortPatient[count++] = patient.PatientInfo[j];
-            for (var i = j + 1; i < patient.PatientInfo.length; i++) {
-                
-                if (flag == 0 && sortPatient[count - 1].Radiotherapy_ID == patient.PatientInfo[i].Radiotherapy_ID) {
-                    sortPatient[count++] = patient.PatientInfo[i];
+        if (patient.PatientInfo[j].state == "0") {
+            var flag = 0;
+            for (var k = 0; k < sortPatient.length; k++) {
+                if (sortPatient[k].Radiotherapy_ID == patient.PatientInfo[j].Radiotherapy_ID) {
+                    flag = 1;
                 }
             }
+            if (flag == 0) {
+                sortPatient[count++] = patient.PatientInfo[j];
+                for (var i = j + 1; i < patient.PatientInfo.length; i++) {
+                    if (patient.PatientInfo[i].state == "0" && flag == 0 && sortPatient[count - 1].Radiotherapy_ID == patient.PatientInfo[i].Radiotherapy_ID) {
+                        sortPatient[count++] = patient.PatientInfo[i];
+                    }
+                }
+            }
+        }
+    }
+    for (var j = 0; j < patient.PatientInfo.length; j++) {
+        if (patient.PatientInfo[j].state == "1") {
+            sortPatient[count++] = patient.PatientInfo[j];
+        }
+    }
+    for (var j = 0; j < patient.PatientInfo.length; j++) {
+        if (patient.PatientInfo[j].state == "2") {
+            sortPatient[count++] = patient.PatientInfo[j];
         }
     }
     var patientGroup = { PatientInfo: sortPatient };

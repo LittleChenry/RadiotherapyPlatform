@@ -1356,7 +1356,7 @@ function saveTreatment() {
     var Radiotherapy_ID = $("#Radiotherapy_ID").val();
     var Treatmentdescribe = $("#newname").val();
     $("#diagnose").find("td").each(function () {
-        if ($(this).find("i")[0].className != "") {
+        if ($(this).find("i").hasClass("fa-check-square-o")) {
             var temp = $(this).attr("id").split("_");
             diagnose = temp[1];
             group = temp[2];
@@ -1368,26 +1368,26 @@ function saveTreatment() {
         }
     });
     $("#fixed").find("td").each(function () {
-        if ($(this).find("i")[0].className != "") {
+        if ($(this).find("i").hasClass("fa-check-square-o")) {
             var temp = $(this).attr("id").split("_");
             fixed = temp[1];
         }
     });
     $("#location").find("td").each(function () {
-        if ($(this).find("i")[0].className != "") {
+        if ($(this).find("i").hasClass("fa-check-square-o")) {
             var temp = $(this).attr("id").split("_");
             location = temp[1];
         }
     });
     $("#design").find("td").each(function () {
-        if ($(this).find("i")[0].className != "") {
+        if ($(this).find("i").hasClass("fa-check-square-o")) {
             var temp = $(this).attr("id").split("_");
             design = temp[1];
             review = temp[2];
         }
     });
     $("#replace").find("td").each(function () {
-        if ($(this).find("i")[0].className != "") {
+        if ($(this).find("i").hasClass("fa-check-square-o")) {
             var temp = $(this).attr("id").split("_");
             replace = temp[1];
         }
@@ -1454,10 +1454,10 @@ function checkAddTreatment(Radiotherapy_ID) {
                         var table = $("#addTreatmentRecord");
                         table.html("");
                         var thead = '<thead><tr id="progress"><th>流程</th></tr></thead>';
-                        var tbody = '<tbody><tr id="register"><td>患者登记<i></i></td></tr>' +
-                            '<tr id="diagnose"><td>病情诊断<i></i></td></tr>' +
-                            '<tr id="fixed"><td>体位固定<i></i></td></tr><tr id="location"><td>CT模拟<i></i></td></tr>' +
-                            '<tr id="design"><td>计划设计<i></i></td></tr><tr id="replace"><td>复位验证<i></i></td></tr></tbody>';
+                        var tbody = '<tbody><tr id="register"><td>患者登记</td></tr>' +
+                            '<tr id="diagnose"><td>病情诊断</td></tr>' +
+                            '<tr id="fixed"><td>体位固定</td></tr><tr id="location"><td>CT模拟</td></tr>' +
+                            '<tr id="design"><td>计划设计</td></tr><tr id="replace"><td>复位验证</td></tr></tbody>';
                         table.append(thead);
                         table.append(tbody);
                         data = data.replace(/\r/g, "");
@@ -1469,14 +1469,14 @@ function checkAddTreatment(Radiotherapy_ID) {
                         for (var i = 0; i < obj.treatinfo.length; i++) {
                             var th = '<th>' + obj.treatinfo[i].Treatmentdescribe + '</th>';
                             table.find("thead").find("tr").append(th);
-                            var td0 = '<td id="register_' + i + '"><i></i></td>';
+                            var td0 = '<td id="register_' + i + '"><i class="fa fa-fw fa-square-o"></i></td>';
                             $("#register").append(td0);
                             $("#register_" + i).click({ i: i }, function (e) {
-                                if ($(this).find("i")[0].className != "") {
-                                    $(this).find("i").removeClass();
+                                if ($(this).find("i").hasClass("fa-check-square-o")) {
+                                    $(this).find("i").removeClass("fa-check-square-o").addClass("fa-square-o");
                                     $(this).parent().nextAll().each(function () {
                                         $(this).find("td").each(function () {
-                                            $(this).find("i").removeClass();
+                                            $(this).find("i").removeClass("fa-check-square-o").addClass("fa-square-o");
                                         });
                                     });
                                     $("#registerDetail").html("未选择");
@@ -1488,12 +1488,12 @@ function checkAddTreatment(Radiotherapy_ID) {
                                 } else {
                                     var currentrowselected = 0;
                                     $(this).parent().find("td").each(function () {
-                                        if ($(this).find("i")[0].className != "") {
+                                        if ($(this).find("i").hasClass("fa-check-square-o")) {
                                             currentrowselected = 1;
                                         }
                                     });
                                     if (currentrowselected == 0) {
-                                        $(this).find("i").addClass("fa fa-fw fa-check");
+                                        $(this).find("i").removeClass("fa-square-o").addClass("fa-check-square-o");
                                         $("#registerDetail").html("");
                                         var details = obj.treatinfo[e.data.i].rigester.split("。");
                                         for (var i = 0; i < details.length; i++) {
@@ -1507,14 +1507,14 @@ function checkAddTreatment(Radiotherapy_ID) {
                             });
 
                             if (obj.treatinfo[i].diagnose != "") {
-                                var td1 = '<td id="diagnose_' + obj.treatinfo[i].diagnose + '_' + obj.treatinfo[i].group + '_' + i + '"><i></i></td>';
+                                var td1 = '<td id="diagnose_' + obj.treatinfo[i].diagnose + '_' + obj.treatinfo[i].group + '_' + i + '"><i class="fa fa-fw fa-square-o"></i></td>';
                                 $("#diagnose").append(td1);
                                 $("#diagnose_" + obj.treatinfo[i].diagnose + "_" + obj.treatinfo[i].group + "_" + i).click({ i: i }, function (e) {
-                                    if ($(this).find("i")[0].className != "") {
-                                        $(this).find("i").removeClass();
+                                    if ($(this).find("i").hasClass("fa-check-square-o")) {
+                                        $(this).find("i").removeClass("fa-check-square-o").addClass("fa-square-o");
                                         $(this).parent().nextAll().each(function () {
                                             $(this).find("td").each(function () {
-                                                $(this).find("i").removeClass();
+                                                $(this).find("i").removeClass("fa-check-square-o").addClass("fa-square-o");
                                             });
                                         });
                                         $("#diagnoseDetail").html("未选择");
@@ -1526,18 +1526,18 @@ function checkAddTreatment(Radiotherapy_ID) {
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
                                         $(this).parent().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
+                                            if ($(this).find("i").hasClass("fa-check-square-o")) {
                                                 currentrowselected = 1;
                                             }
                                         });
                                         $(this).parent().prev().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
+                                            if ($(this).find("i").hasClass("fa-check-square-o")) {
                                                 prerowselected = 1;
                                             }
                                         });
                                         if (currentrowselected == 0) {
                                             if (prerowselected == 1) {
-                                                $(this).find("i").addClass("fa fa-fw fa-check");
+                                                $(this).find("i").removeClass("fa-square-o").addClass("fa-check-square-o");
                                                 $("#diagnoseDetail").html("");
                                                 var details = obj.treatinfo[e.data.i].diagnosecomplete.split("。");
                                                 for (var i = 0; i < details.length; i++) {
@@ -1553,19 +1553,19 @@ function checkAddTreatment(Radiotherapy_ID) {
                                     }
                                 });
                             } else {
-                                var td1 = '<td style="background-color:#E1E4E6"><i></i></td>';
+                                var td1 = '<td style="background-color:#E1E4E6"></td>';
                                 $("#diagnose").append(td1);
                             }
 
                             if (obj.treatinfo[i].fixed != "") {
-                                var td2 = '<td id="fixed_' + obj.treatinfo[i].fixed + '_' + i + '"><i></i></td>';
+                                var td2 = '<td id="fixed_' + obj.treatinfo[i].fixed + '_' + i + '"><i class="fa fa-fw fa-square-o"></i></td>';
                                 $("#fixed").append(td2);
                                 $("#fixed_" + obj.treatinfo[i].fixed + "_" + i).click({ i: i }, function (e) {
-                                    if ($(this).find("i")[0].className != "") {
-                                        $(this).find("i").removeClass();
+                                    if ($(this).find("i").hasClass("fa-check-square-o")) {
+                                        $(this).find("i").removeClass("fa-check-square-o").addClass("fa-square-o");
                                         $(this).parent().nextAll().each(function () {
                                             $(this).find("td").each(function () {
-                                                $(this).find("i").removeClass();
+                                                $(this).find("i").removeClass("fa-check-square-o").addClass("fa-square-o");
                                             });
                                         });
                                         $("#fixedDetail").html("未选择");
@@ -1576,18 +1576,18 @@ function checkAddTreatment(Radiotherapy_ID) {
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
                                         $(this).parent().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
+                                            if ($(this).find("i").hasClass("fa-check-square-o")) {
                                                 currentrowselected = 1;
                                             }
                                         });
                                         $(this).parent().prev().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
+                                            if ($(this).find("i").hasClass("fa-check-square-o")) {
                                                 prerowselected = 1;
                                             }
                                         });
                                         if (currentrowselected == 0) {
                                             if (prerowselected == 1) {
-                                                $(this).find("i").addClass("fa fa-fw fa-check");
+                                                $(this).find("i").removeClass("fa-square-o").addClass("fa-check-square-o");
                                                 $("#fixedDetail").html("");
                                                 var details = obj.treatinfo[e.data.i].fixcomplete.split("。");
                                                 for (var i = 0; i < details.length; i++) {
@@ -1603,19 +1603,19 @@ function checkAddTreatment(Radiotherapy_ID) {
                                     }
                                 });
                             } else {
-                                var td2 = '<td style="background-color:#E1E4E6"><i></i></td>';
+                                var td2 = '<td style="background-color:#E1E4E6"></td>';
                                 $("#fixed").append(td2);
                             }
 
                             if (obj.treatinfo[i].location != "") {
-                                var td3 = '<td id="location_' + obj.treatinfo[i].location + '_' + i + '"><i></i></td>';
+                                var td3 = '<td id="location_' + obj.treatinfo[i].location + '_' + i + '"><i class="fa fa-fw fa-square-o"></i></td>';
                                 $("#location").append(td3);
                                 $("#location_" + obj.treatinfo[i].location + "_" + i).click({ i: i }, function (e) {
-                                    if ($(this).find("i")[0].className != "") {
-                                        $(this).find("i").removeClass();
+                                    if ($(this).find("i").hasClass("fa-check-square-o")) {
+                                        $(this).find("i").removeClass("fa-check-square-o").addClass("fa-square-o");
                                         $(this).parent().nextAll().each(function () {
                                             $(this).find("td").each(function () {
-                                                $(this).find("i").removeClass();
+                                                $(this).find("i").removeClass("fa-check-square-o").addClass("fa-square-o");
                                             });
                                         });
                                         $("#locationDetail").html("未选择");
@@ -1625,18 +1625,18 @@ function checkAddTreatment(Radiotherapy_ID) {
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
                                         $(this).parent().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
+                                            if ($(this).find("i").hasClass("fa-check-square-o")) {
                                                 currentrowselected = 1;
                                             }
                                         });
                                         $(this).parent().prev().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
+                                            if ($(this).find("i").hasClass("fa-check-square-o")) {
                                                 prerowselected = 1;
                                             }
                                         });
                                         if (currentrowselected == 0) {
                                             if (prerowselected == 1) {
-                                                $(this).find("i").addClass("fa fa-fw fa-check");
+                                                $(this).find("i").removeClass("fa-square-o").addClass("fa-check-square-o");
                                                 $("#locationDetail").html("");
                                                 var details = obj.treatinfo[e.data.i].locationcomplete.split("。");
                                                 for (var i = 0; i < details.length; i++) {
@@ -1652,19 +1652,19 @@ function checkAddTreatment(Radiotherapy_ID) {
                                     }
                                 });
                             } else {
-                                var td3 = '<td style="background-color:#E1E4E6"><i></i></td>';
+                                var td3 = '<td style="background-color:#E1E4E6"></td>';
                                 $("#location").append(td3);
                             }
 
                             if (obj.treatinfo[i].design != "") {
-                                var td4 = '<td id="design_' + obj.treatinfo[i].design + '_' + obj.treatinfo[i].review + '_' + i + '"><i></i></td>';
+                                var td4 = '<td id="design_' + obj.treatinfo[i].design + '_' + obj.treatinfo[i].review + '_' + i + '"><i class="fa fa-fw fa-square-o"></i></td>';
                                 $("#design").append(td4);
                                 $("#design_" + obj.treatinfo[i].design + "_" + obj.treatinfo[i].review + "_" + i).click({ i: i }, function (e) {
-                                    if ($(this).find("i")[0].className != "") {
-                                        $(this).find("i").removeClass();
+                                    if ($(this).find("i").hasClass("fa-check-square-o")) {
+                                        $(this).find("i").removeClass("fa-check-square-o").addClass("fa-square-o");
                                         $(this).parent().nextAll().each(function () {
                                             $(this).find("td").each(function () {
-                                                $(this).find("i").removeClass();
+                                                $(this).find("i").removeClass("fa-check-square-o").addClass("fa-square-o");
                                             });
                                         });
                                         $("#designDetail").html("未选择");
@@ -1673,18 +1673,18 @@ function checkAddTreatment(Radiotherapy_ID) {
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
                                         $(this).parent().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
+                                            if ($(this).find("i").hasClass("fa-check-square-o")) {
                                                 currentrowselected = 1;
                                             }
                                         });
                                         $(this).parent().prev().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
+                                            if ($(this).find("i").hasClass("fa-check-square-o")) {
                                                 prerowselected = 1;
                                             }
                                         });
                                         if (currentrowselected == 0) {
                                             if (prerowselected == 1) {
-                                                $(this).find("i").addClass("fa fa-fw fa-check");
+                                                $(this).find("i").removeClass("fa-square-o").addClass("fa-check-square-o");
                                                 $("#designDetail").html("");
                                                 var details = obj.treatinfo[e.data.i].designcomplete.split("。");
                                                 for (var i = 0; i < details.length; i++) {
@@ -1700,33 +1700,33 @@ function checkAddTreatment(Radiotherapy_ID) {
                                     }
                                 });
                             } else {
-                                var td4 = '<td style="background-color:#E1E4E6"><i></i></td>';
+                                var td4 = '<td style="background-color:#E1E4E6"></td>';
                                 $("#design").append(td4);
                             }
 
                             if (obj.treatinfo[i].replace != "") {
-                                var td5 = '<td id="replace_' + obj.treatinfo[i].replace + '_' + i + '"><i></i></td>';
+                                var td5 = '<td id="replace_' + obj.treatinfo[i].replace + '_' + i + '"><i class="fa fa-fw fa-square-o"></i></td>';
                                 $("#replace").append(td5);
                                 $("#replace_" + obj.treatinfo[i].replace + "_" + i).click({ i: i }, function (e) {
-                                    if ($(this).find("i")[0].className != "") {
-                                        $(this).find("i").removeClass();
+                                    if ($(this).find("i").hasClass("fa-check-square-o")) {
+                                        $(this).find("i").removeClass("fa-check-square-o").addClass("fa-square-o");
                                         $("#replaceDetail").html("未选择");
                                     } else {
                                         var currentrowselected = 0;
                                         var prerowselected = 0;
                                         $(this).parent().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
+                                            if ($(this).find("i").hasClass("fa-check-square-o")) {
                                                 currentrowselected = 1;
                                             }
                                         });
                                         $(this).parent().prev().find("td").each(function () {
-                                            if ($(this).find("i")[0].className != "") {
+                                            if ($(this).find("i").hasClass("fa-check-square-o")) {
                                                 prerowselected = 1;
                                             }
                                         });
                                         if (currentrowselected == 0) {
                                             if (prerowselected == 1) {
-                                                $(this).find("i").addClass("fa fa-fw fa-check");
+                                                $(this).find("i").removeClass("fa-square-o").addClass("fa-check-square-o");
                                                 $("#replaceDetail").html("");
                                                 var details = obj.treatinfo[e.data.i].replacecomplete.split("。");
                                                 for (var i = 0; i < details.length; i++) {
@@ -1742,7 +1742,7 @@ function checkAddTreatment(Radiotherapy_ID) {
                                     }
                                 });
                             } else {
-                                var td5 = '<td style="background-color:#E1E4E6"><i></i></td>';
+                                var td5 = '<td style="background-color:#E1E4E6"></td>';
                                 $("#replace").append(td5);
                             }
                         }
