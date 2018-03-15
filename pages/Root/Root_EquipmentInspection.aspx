@@ -296,6 +296,12 @@
               </a>
           </li>
           <li>
+              <a href="Root-WorkTimeTable.aspx">
+                  <i class="fa fa-calendar-times-o"></i><span>预约日期配置</span>
+                  <span class="pull-right-container"></span>
+              </a>
+          </li>
+          <li>
               <a href="Root-PublicTemplate.aspx">
                   <i class="fa fa-clone"></i><span>公共模版设置</span>
                   <span class="pull-right-container"></span>
