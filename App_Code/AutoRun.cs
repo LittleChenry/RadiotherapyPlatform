@@ -29,6 +29,7 @@ public class AutoRun
         //sqlOperation3.Close();
         //sqlOperation3.Dispose();
         //sqlOperation3 = null;
+
         if (int.Parse(DateTime.Now.Hour.ToString()) >= 5 && int.Parse(DateTime.Now.Hour.ToString()) <= 6)
         {
             //如果上一次执行时间为昨天，就设置IsOpen为false,说明今天还没有执行

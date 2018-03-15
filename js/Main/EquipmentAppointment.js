@@ -323,11 +323,11 @@ function getSession() {
 function changeAppoint(e) {
     var treatID = temptreatmentID;
     var $e = $(e);
-    var item = $e.parent().parent().children().first().text();
+    var item = $e.parent().parent().children().eq(1).text();
     var oldappoint = $e.parent().parent().attr("ID").split("_")[1];
     if (item == "体位固定") {
         createfixEquipmachine(document.getElementById("equipmentName"), "Fixed");
-        var datetext = $e.parent().parent().children().eq(1).text();
+        var datetext = $e.parent().parent().children().eq(2).text();
         var date = datetext.split(",")[0];
         $("#AppiontDate").val(date);
         $("#AppiontDate").unbind("change").change(function () {
@@ -352,7 +352,7 @@ function changeAppoint(e) {
     }
     if (item == "模拟定位" || item == "CT复查") {
         createfixEquipmachine(document.getElementById("equipmentName"), "Location")
-        var datetext = $e.parent().parent().children().eq(1).text();
+        var datetext = $e.parent().parent().children().eq(2).text();
         var date = datetext.split(",")[0];
         $("#AppiontDate").val(date);
         $("#AppiontDate").unbind("change").change(function () {
@@ -377,7 +377,7 @@ function changeAppoint(e) {
     }
     if (item == "加速器") {
         createaccerEquipmachine(document.getElementById("equipmentName"), treatID)
-        var datetext = $e.parent().parent().children().eq(1).text();
+        var datetext = $e.parent().parent().children().eq(2).text();
         var date = datetext.split(",")[0];
         $("#AppiontDate").val(date);
         $("#AppiontDate").unbind("change").change(function () {
@@ -402,7 +402,7 @@ function changeAppoint(e) {
     }
     if (item == "复位模拟") {
         createfixEquipmachine(document.getElementById("equipmentName"), "Replacement")
-        var datetext = $e.parent().parent().children().eq(1).text();
+        var datetext = $e.parent().parent().children().eq(2).text();
         var date = datetext.split(",")[0];
         $("#AppiontDate").val(date);
         $("#AppiontDate").unbind("change").change(function () {
@@ -426,12 +426,12 @@ function changeAppoint(e) {
         });
     }
     if (item != "加速器") {
-        var datetext = $e.parent().parent().children().eq(1).text();
+        var datetext = $e.parent().parent().children().eq(2).text();
         var date = datetext.split(",")[0];
         $("#AppiontDate").val(date);
         CreateNewAppiontTable(e);
     } else {
-        var datetext = $e.parent().parent().children().eq(1).text();
+        var datetext = $e.parent().parent().children().eq(2).text();
         var date = datetext.split(",")[0];
         $("#AppiontDate").val(date);
         CreateNewAccerAppiontTable(e);
@@ -455,7 +455,7 @@ function changeAppoint(e) {
                     success: function (data) {
                         if (data == "success") {
                             window.alert("修改成功");
-                            $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
+                            $e.parent().parent().children().eq(2).text(appoint[1] + "," + appoint[2]);
                             $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
                         }
                         if (data == "busy") {
@@ -485,7 +485,7 @@ function changeAppoint(e) {
                     success: function (data) {
                         if (data == "success") {
                             window.alert("修改成功");
-                            $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
+                            $e.parent().parent().children().eq(2).text(appoint[1] + "," + appoint[2]);
                             $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
                         }
                         if (data == "busy") {
@@ -515,7 +515,7 @@ function changeAppoint(e) {
                     success: function (data) {
                         if (data == "success") {
                             window.alert("修改成功");
-                            $e.parent().parent().children().first().next().text(appoint[1] + "," + appoint[2]);
+                            $e.parent().parent().children().eq(2).text(appoint[1] + "," + appoint[2]);
                             $e.parent().parent().attr("ID", "apoint" + "_" + newappoint)
                         }
                         if (data == "busy") {
@@ -552,7 +552,7 @@ function changeAppoint(e) {
                     success: function (data) {
                         if (data == "success") {
                             window.alert("修改成功");
-                            $e.parent().parent().children().first().next().text(newdate + "," + appoint[1]);
+                            $e.parent().parent().children().eq(2).text(newdate + "," + appoint[1]);
                         }
                         if (data == "busy") {
                             window.alert("预约时间被占,需要重新预约");
