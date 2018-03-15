@@ -234,6 +234,13 @@ function Init(evt) {
                         document.getElementById("treatmentedit" + allpagenumber).disabled = "disabled";
                         $("#tabs li:eq(" + allpagenumber + ")").find("a").removeClass("appointdesign");
                         refresh(allpagenumber);
+                        appointchilddesign = getappointgroupdesign(appointid);
+                        if (parseInt($("#total" + allpagenumber).html()) - parseInt($("#treatedtimes" + allpagenumber).html())+1 <= 3) {
+                            alert("剩余治疗次数不足3次，如需增加治疗次数请通知主治医师！");
+                        }
+                        if (appointchilddesign.length == 0) {
+                            top.location.reload();
+                        }
 
                     } else {
                         alert("上传失败！");
@@ -473,7 +480,7 @@ function refresh(number) {
                 content = content + '<td>待审核</td>';
             } else {
                 var id=data[i].ID+"-"+data[i-1].ID+"-"+data[i-2].ID+"-"+data[i-3].ID+"-"+data[i-4].ID;
-                content = content + '<td><button class="btn btn-success btn-xs" type="button" id="' + id+'">周计量核对</button></td>';
+                content = content + '<td><button class="btn btn-success btn-xs" style="margin-left:-10%" type="button" id="' + id+'">周计量核对</button></td>';
             }
 
         }
@@ -493,7 +500,7 @@ function refresh(number) {
         xmlHttp.send(null);
         var json = xmlHttp.responseText;
         if (json == "success") {
-            refresh(treatmentID);
+            refresh(number);
             alert("成功核对!");
         } else {
             alert("核对失败!");
@@ -538,7 +545,7 @@ function getalligrt(chid) {
 
 function getfirstday(chid){
     var xmlHttp = new XMLHttpRequest();
-    var url = "getfirstday.ashx?chid=" +chid;
+    var url = "getFirstCompletedDay.ashx?chid=" + chid;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
     var json = xmlHttp.responseText;

@@ -80,7 +80,7 @@ function print() {
                         '<div class="item col-xs-4">机器总跳数：<span  class="underline">' + patientbasic.amount + '</span></div>' +
                         '<div class="item col-xs-4">首次执行时间：<span  class="underline">' + patientbasic.firsttime + '</span></div></div>'+
                         '<div class="single-row" style="min-height:60px;"><div class="item col-xs-12">特殊医嘱：</div></div></div>';
-    content = content + '<div class="paper-footer" style="border-top:1px solid black;position:absolute;bottom:0px;"><div class="single-row" style="margin-top:20px;min-height:20px;"><div class="item col-xs-4"><span>医&nbsp&nbsp生：</span><span class="underline" style="padding-left:70%;">&nbsp</span></div><div class="item col-xs-4"><span>物理师：</span><span class="underline" style="padding-left:70%;">&nbsp</span></div><div class="item col-xs-4"><span>技&nbsp&nbsp师：</span><span class="underline" style="padding-left:70%;">&nbsp</span></div></div></div></div>';
+    content = content + '<div class="paper-footer" style="border-top:1px solid black;position:absolute;bottom:0px;"><div class="single-row" style="margin-top:20px;min-height:20px;"><div class="item col-xs-4"><span>医&nbsp&nbsp生：</span><span class="underline" style="padding-left:70%;">&nbsp</span></div><div class="item col-xs-4"><span>物理师：</span><span class="underline" style="padding-left:70%;">&nbsp</span></div><div class="item col-xs-4"><span>剂量师：</span><span class="underline" style="padding-left:70%;">&nbsp</span></div></div></div></div>';
     $printArea.append(content);
     DosagePriority = patientbasic.Priority;
     var table = document.getElementById("pri");
