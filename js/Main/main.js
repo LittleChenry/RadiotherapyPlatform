@@ -136,9 +136,7 @@ function RolesToPatients(session) {
             }
         });
         $("#patient-search").bind('input propertychange', function () {
-            var session = getSession();
-            var Searchedpatients = Search($("#patient-search").val(), sortPatient, session.role);
-            Paging(Searchedpatients, session.role, session.userID);
+            var Searchedpatients = SearchTable($("#patient-search").val());
             adjustTable();
         });
     } else {
@@ -148,8 +146,7 @@ function RolesToPatients(session) {
             sortPatient = patientSort(patient);
             Paging(sortPatient, session.role, session.userID);
             $("#patient-search").bind('input propertychange', function (e) {
-                var Searchedpatients = Search($("#patient-search").val(), sortPatient, session.role);
-                Paging(Searchedpatients, session.role, session.userID);
+                var Searchedpatients = SearchTable($("#patient-search").val());
                 adjustTable();
             });
             if (session.role == "医师" || session.role == "剂量师" || session.role == "物理师") {
@@ -1528,127 +1525,9 @@ function Recover() {
 }
 
 //搜索
-function Search(str, patient, role) {
-    var Searchedpatient = new Array();
-    var count = 0;
-    switch (role) {
-        case "医师":
-            for (var i = 0; i < patient.PatientInfo.length; i++) {
-                TreatmentID = patient.PatientInfo[i].treatID;
-                Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-                Name = patient.PatientInfo[i].Name;
-                treat = patient.PatientInfo[i].treat;
-                diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
-                Progress = (patient.PatientInfo[i].state == 2) ? "" : ProgressToString(patient.PatientInfo[i].Progress.split(","));
-                doctor = patient.PatientInfo[i].doctor;
-                groupname = patient.PatientInfo[i].groupname;
-                iscommon = patient.PatientInfo[i].iscommon;
-                var stateStr = new Array("","(暂停中)","已结束");
-                state = stateStr[parseInt(patient.PatientInfo[i].state)];
-                if (state.search(str) >= 0 || Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0 || groupname.search(str) >= 0) {
-                    var singlepatient = {state:patient.PatientInfo[i].state, iscommon:iscommon, treat: treat, treatID: TreatmentID, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, groupname: groupname, diagnosisresult: patient.PatientInfo[i].diagnosisresult };
-                    Searchedpatient[count++] = singlepatient;
-                }
-            }
-            break;
-        case "剂量师":
-            for (var i = 0; i < patient.PatientInfo.length; i++) {
-                TreatmentID = patient.PatientInfo[i].treatID;
-                Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-                Name = patient.PatientInfo[i].Name;
-                treat = patient.PatientInfo[i].treat;
-                diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
-                Progress = (patient.PatientInfo[i].state == 2) ? "" : ProgressToString(patient.PatientInfo[i].Progress.split(","));
-                doctor = patient.PatientInfo[i].doctor;
-                iscommon = patient.PatientInfo[i].iscommon;
-                var stateStr = new Array("","(暂停中)","已结束");
-                state = stateStr[parseInt(patient.PatientInfo[i].state)];
-                if (state.search(str) >= 0 || Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0) {
-                    var singlepatient = {state:patient.PatientInfo[i].state, iscommon:iscommon, treat: treat, treatID: TreatmentID, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, diagnosisresult: patient.PatientInfo[i].diagnosisresult };
-                    Searchedpatient[count++] = singlepatient;
-                }
-            }
-            break;
-        case "物理师":
-            for (var i = 0; i < patient.PatientInfo.length; i++) {
-                TreatmentID = patient.PatientInfo[i].treatID;
-                Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-                Name = patient.PatientInfo[i].Name;
-                treat = patient.PatientInfo[i].treat;
-                diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
-                Progress = (patient.PatientInfo[i].state == 2) ? "" : ProgressToString(patient.PatientInfo[i].Progress.split(","));
-                doctor = patient.PatientInfo[i].doctor;
-                iscommon = patient.PatientInfo[i].iscommon;
-                var stateStr = new Array("","(暂停中)","已结束");
-                state = stateStr[parseInt(patient.PatientInfo[i].state)];
-                if (state.search(str) >= 0 || Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0) {
-                    var singlepatient = {state:patient.PatientInfo[i].state, iscommon:iscommon, treat: treat, treatID: TreatmentID, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, diagnosisresult: patient.PatientInfo[i].diagnosisresult };
-                    Searchedpatient[count++] = singlepatient;
-                }
-            }
-            break;
-        case "模拟技师":
-            for (var i = 0; i < patient.PatientInfo.length; i++) {
-                TreatmentID = patient.PatientInfo[i].treatID;
-                Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-                Name = patient.PatientInfo[i].Name;
-                treat = patient.PatientInfo[i].treat;
-                diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
-                date = patient.PatientInfo[i].date;
-                Progress = ProgressToString(patient.PatientInfo[i].Progress.split(","));
-                Task = patient.PatientInfo[i].Task;
-                doctor = patient.PatientInfo[i].doctor;
-                Completed = (patient.PatientInfo[i].Completed == "1") ? "完成" : "等待";
-                begin = toTime(patient.PatientInfo[i].begin);
-                end = toTime(patient.PatientInfo[i].end);
-                iscommon = patient.PatientInfo[i].iscommon;
-                Enhance = patient.PatientInfo[i].Enhance;
-                if (Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || doctor.search(str) >= 0 || Completed.search(str) >= 0) {
-                    var singlepatient = {Enhance:Enhance, iscommon:iscommon, treat: patient.PatientInfo[i].treat, treatID: patient.PatientInfo[i].treatID, date: patient.PatientInfo[i].date, Name: patient.PatientInfo[i].Name, Radiotherapy_ID: patient.PatientInfo[i].Radiotherapy_ID, doctor: patient.PatientInfo[i].doctor, Progress: patient.PatientInfo[i].Progress, begin: patient.PatientInfo[i].begin, end: patient.PatientInfo[i].end, diagnosisresult: patient.PatientInfo[i].diagnosisresult, Completed: patient.PatientInfo[i].Completed, Task:patient.PatientInfo[i].Task };
-                    Searchedpatient[count++] = singlepatient;
-                }
-            }
-            break;
-        case "治疗技师":
-            for (var i = 0; i < patient.PatientInfo.length; i++) {
-                Name = patient.PatientInfo[i].name;
-                Gender = patient.PatientInfo[i].Gender;
-                doctor = patient.PatientInfo[i].doctor;
-                begin = patient.PatientInfo[i].begin;
-                end = patient.PatientInfo[i].end;
-                time = Num2Time(begin, end);
-                date = new Date(patient.PatientInfo[i].Date);
-                Age = patient.PatientInfo[i].Age;
-                groupname = patient.PatientInfo[i].groupname;
-                Completed = (patient.PatientInfo[i].Completed == "1") ? "完成" : "等待";
-                if (Name.search(str) >= 0 || Age.search(str) >= 0 || Gender.search(str) >= 0 || doctor.search(str) >= 0 || time.search(str) >= 0 || date.Format("M-d").search(str) >= 0 || Completed.search(str) >= 0) {
-                    var singlepatient = {Age: patient.PatientInfo[i].Age,Gender:patient.PatientInfo[i].Gender,Radiotherapy_ID:patient.PatientInfo[i].Radiotherapy_ID, appointid:patient.PatientInfo[i].appointid, begin:patient.PatientInfo[i].begin, end:end, Completed: patient.PatientInfo[i].Completed, doctor: patient.PatientInfo[i].doctor, Date: patient.PatientInfo[i].Date, groupname: patient.PatientInfo[i].groupname, name: patient.PatientInfo[i].name, patientid: patient.PatientInfo[i].patientid, Progress: patient.PatientInfo[i].Progress, treatID: patient.PatientInfo[i].treatID};
-                    Searchedpatient[count++] = singlepatient;
-                }
-            }
-            break;
-        case "科主任":
-            for (var i = 0; i < patient.PatientInfo.length; i++) {
-                TreatmentID = patient.PatientInfo[i].treatID;
-                Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
-                Name = patient.PatientInfo[i].Name;
-                treat = patient.PatientInfo[i].treat;
-                diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
-                Progress = (patient.PatientInfo[i].state == 2) ? "" : ProgressToString(patient.PatientInfo[i].Progress.split(","));
-                doctor = patient.PatientInfo[i].doctor;
-                groupname = patient.PatientInfo[i].groupname;
-                iscommon = patient.PatientInfo[i].iscommon;
-                var stateStr = new Array("","(暂停中)","已结束");
-                state = stateStr[parseInt(patient.PatientInfo[i].state)];
-                if (state.search(str) >= 0 || Radiotherapy_ID.search(str) >= 0 || Name.search(str) >= 0 || treat.search(str) >= 0 || diagnosisresult.search(str) >= 0 || Progress.search(str) >= 0 || doctor.search(str) >= 0 || groupname.search(str) >= 0) {
-                    var singlepatient = {state:patient.PatientInfo[i].state, iscommon:iscommon, treat: treat, treatID: TreatmentID, Name: Name, Radiotherapy_ID: Radiotherapy_ID, doctor: doctor, Progress: patient.PatientInfo[i].Progress, groupname: groupname, diagnosisresult: patient.PatientInfo[i].diagnosisresult };
-                    Searchedpatient[count++] = singlepatient;
-                }
-            }
-            break;
-    }
-    var patientGroup = { PatientInfo: Searchedpatient };
-    return patientGroup;
+function SearchTable(str){
+    var table = $("#patient-table");
+    table.find("tbody tr").hide().filter(":contains('"+ str +"')").show();
 }
 
 function getTaskWarning(){
