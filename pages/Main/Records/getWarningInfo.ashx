@@ -38,7 +38,7 @@ public class getWarningInfo : IHttpHandler {
         int treatID = Convert.ToInt32(designID);
         int state=Convert.ToInt32(context.Request.QueryString["state"]);
         int progress = Convert.ToInt32(context.Request.QueryString["progress"]);
-        string sqlCommand = "select warningcase.* from warningcase where TrestID=@treatID and progress=@progress and (Type=0 or Type=2)";
+        string sqlCommand = "select warningcase.* from warningcase where TreatID=@treatID and progress=@progress and (Type=0 or Type=2)";
         sqlOperation.AddParameterWithValue("@treatID", treatID);
         sqlOperation.AddParameterWithValue("@progress", progress);
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
