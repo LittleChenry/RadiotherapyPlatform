@@ -96,6 +96,7 @@ public class designConfirmRecord : IHttpHandler {
                 state1 = false;
                 string strSqlCommand = "UPDATE  design  SET State=@state,Checkadvice=@advice,ConfirmTime=@datetime,Confirm_User_ID=@userid where design.ID=@ctID";
                 //各参数赋予实际值
+                DateTime time = DateTime.Now;
                 sqlOperation.AddParameterWithValue("@state", state1);
                 sqlOperation.AddParameterWithValue("@advice", context.Request.Form["advice"]);
                 //sqlOperation.AddParameterWithValue("@Remarks", context.Request.Form["Remarks"]);        
@@ -103,7 +104,16 @@ public class designConfirmRecord : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@ctID", designID);
                 sqlOperation.AddParameterWithValue("@userid", userid);
                 int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-              
+                string submittime = "select submitTime from design where ID=@ID";
+                sqlOperation.AddParameterWithValue("@ID", designID);
+                submittime = sqlOperation.ExecuteScalar(submittime);
+                string warning = "insert into warningcase (TreatID,progress,Stoptime,Type,RestartTime)values(@TreatID,@progress,@Stoptime,@Type,@RestartTime)";
+                sqlOperation.AddParameterWithValue("@TreatID", CTID);
+                sqlOperation.AddParameterWithValue("@progress", 7);
+                sqlOperation.AddParameterWithValue("@Stoptime", submittime);
+                sqlOperation.AddParameterWithValue("@RestartTime", time);
+                sqlOperation.AddParameterWithValue("@Type", 2);
+                sqlOperation.ExecuteNonQuery(warning);
                 string inserttreat = "update treatment set Progress=@progress,isback=1 where ID=@treat";
                 sqlOperation2.AddParameterWithValue("@progress", "0,1,2,3,4,5,6,7");
                 sqlOperation2.AddParameterWithValue("@treat", CTID);

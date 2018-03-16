@@ -271,7 +271,7 @@ function save() {
                 alert("已回退到计划领取");
                 window.location.reload();
             }
-            if (data == "failure") {
+            if (data == "failure" || data == "error") {
                 alert("操作失败");
                 window.location.reload();
             }
