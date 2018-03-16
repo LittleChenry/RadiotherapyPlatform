@@ -312,7 +312,7 @@ function Paging(patient, role, userID) {
             case "治疗技师":
                 $("#legend-waiting").show();
                 var TreatmentID, Name, Gender, patientid, doctor, begin, end, Age, doctor, groupname;
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>状态</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>状态</th><th>放疗号</th><th>类型</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
@@ -320,6 +320,7 @@ function Paging(patient, role, userID) {
                     Radiotherapy_ID = patient.PatientInfo[i].Radiotherapy_ID;
                     Name = patient.PatientInfo[i].name;
                     Gender = patient.PatientInfo[i].Gender;
+                    Ishospital = patient.PatientInfo[i].Ishospital == "0" ? "门诊" : "住院";
                     patientid = patient.PatientInfo[i].patientid;
                     doctor = patient.PatientInfo[i].doctor;
                     begin = patient.PatientInfo[i].begin;
@@ -338,8 +339,8 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Num2Time(begin, end) +"</td><td>"+ Completed +"</td><td>" + Radiotherapy_ID + "</td><td>"+ Name +"</td><td>" + Gender + "</td>" +
-                             "<td>" + Age + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
+                    trtemp = "'><td><i></i></td><td>" + Num2Time(begin, end) +"</td><td>"+ Completed +"</td><td>" + Radiotherapy_ID + "</td><td>"+ Ishospital +"</td><td>"+ Name +"</td><td>" + Gender + "</td>" +
+                             "<td>" + Age + "</td><td>" + doctor + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
                 }
@@ -479,9 +480,9 @@ function Paging(patient, role, userID) {
                 table.append(tbody);
                 break;
             case "治疗技师":
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>状态</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th></tr></thead>';
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>状态</th><th>放疗号</th><th>类型</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th></tr></thead>';
                 table.append(thead);
-                var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
+                var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "科主任":
