@@ -34,10 +34,10 @@ public class getWarningInfo : IHttpHandler {
     }
     private string getfixrecordinfo(HttpContext context)
     {
-        String designID = context.Request.QueryString["treatID"];
+        String designID = context.Request["treatID"];
         int treatID = Convert.ToInt32(designID);
-        int state=Convert.ToInt32(context.Request.QueryString["state"]);
-        int progress = Convert.ToInt32(context.Request.QueryString["progress"]);
+        int state=Convert.ToInt32(context.Request["state"]);
+        int progress = Convert.ToInt32(context.Request["progress"]);
         string sqlCommand = "select warningcase.* from warningcase where TreatID=@treatID and progress=@progress and (Type=0 or Type=2)";
         sqlOperation.AddParameterWithValue("@treatID", treatID);
         sqlOperation.AddParameterWithValue("@progress", progress);
