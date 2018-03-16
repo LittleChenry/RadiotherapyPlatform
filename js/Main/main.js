@@ -1578,43 +1578,70 @@ function TaskWarning(patient){
 }
 
 function SingleTask(light, serious, singlepatient, currentProgress){
-    var WarningTaskContent = $("#TaskWarning-content");
-    var singletask;
-    var currentTime = new Date();
-    var completedTime;
-    switch(currentProgress){
-        case 5:
-            completedTime = new Date(singlepatient.locationTime);
-            break;
-        case 6:
-            completedTime = new Date(singlepatient.LoadCTTime);
-            break;
-        case 7:
-            completedTime = new Date(singlepatient.designApplyTime);
-            break;
-        case 8:
-            completedTime = new Date(singlepatient.receiveTime);
-            break;
-        case 9:
-            completedTime = new Date(singlepatient.designSubmitTime);
-            break;
-        case 10:
-            completedTime = new Date(singlepatient.confirmTime);
-            break;
-    }
-    var TimeDifference = CalculateWeekDay(completedTime,currentTime);
-    if (TimeDifference > light) {
-        if (TimeDifference < serious) {
-            singletask = '<li><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
-                + singlepatient.Name + '，' + singlepatient.treat + '，' + ProgressNumToName(currentProgress + 1) + '，已搁置' + TimeDifference.toFixed(1) + '小时'
-                + '</a></li>';
-        }else{
-            singletask = '<li><a href="javascript:;"><i class="fa fa-warning text-red"></i>'
-                + singlepatient.Name + '，' + singlepatient.treat + '，' + ProgressNumToName(currentProgress + 1) + '，已搁置' + TimeDifference.toFixed(1) + '小时'
-                + '</a></li>';
+    if (singlepatient.state == "0") {
+        var WarningTaskContent = $("#TaskWarning-content");
+        var singletask;
+        var currentTime = new Date();
+        var completedTime;
+        switch(currentProgress){
+            case 5:
+                completedTime = new Date(singlepatient.locationTime);
+                break;
+            case 6:
+                completedTime = new Date(singlepatient.LoadCTTime);
+                break;
+            case 7:
+                completedTime = new Date(singlepatient.designApplyTime);
+                break;
+            case 8:
+                completedTime = new Date(singlepatient.receiveTime);
+                break;
+            case 9:
+                completedTime = new Date(singlepatient.designSubmitTime);
+                break;
+            case 10:
+                completedTime = new Date(singlepatient.confirmTime);
+                break;
+        }
+        var TimeDifference = CalculateWeekDay(completedTime,currentTime);
+        if (TimeDifference > light) {
+            $.ajax({
+                type: "POST",
+                url: "../../pages/Main/Records/getWarningInfo.ashx",
+                async: false,
+                data:{
+                    treatID:singlepatient.treatID,
+                    state:singlepatient.state,
+                    progress:currentProgress
+                },
+                dateType: "json",
+                success: function (data) {
+                    var stoprecord = $.parseJSON(data).warningInfo;
+                    var stoplength = 0;
+                    for (var i = 0; i < stoprecord.length; i++) {
+                        if (stoprecord[i].RestartTime != "") {
+                            var stoptime = new Date(stoprecord[i].StopTime);
+                            var restarttime = new Date(stoprecord[i].RestartTime);
+                            stoplength += CalculateWeekDay(stoptime,restarttime);
+                        }
+                    }
+                    TimeDifference = TimeDifference - stoplength;
+                }
+            });
+            if (TimeDifference > light) {
+                if (TimeDifference < serious) {
+                    singletask = '<li><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
+                        + singlepatient.Name + '，' + singlepatient.treat + '，' + ProgressNumToName(currentProgress + 1) + '，已搁置' + TimeDifference.toFixed(1) + '小时'
+                        + '</a></li>';
+                }else{
+                    singletask = '<li><a href="javascript:;"><i class="fa fa-warning text-red"></i>'
+                        + singlepatient.Name + '，' + singlepatient.treat + '，' + ProgressNumToName(currentProgress + 1) + '，已搁置' + TimeDifference.toFixed(1) + '小时'
+                        + '</a></li>';
+                }
+                WarningTaskContent.append(singletask);
+            }
         }
     }
-    WarningTaskContent.append(singletask);
 }
 
 function CalculateWeekDay(beginDate,endDate){
@@ -1623,10 +1650,14 @@ function CalculateWeekDay(beginDate,endDate){
     var prevtime = 0;
     var nexttime = 0;
     temp.setDate(temp.getDate() + 1);
-    while(temp.getDate() < endDate.getDate()){
+    while((temp.getDate() < endDate.getDate() && temp.getMonth() == endDate.getMonth()) || temp.getMonth() < endDate.getMonth()){
         if (temp.getDay() != 0 && temp.getDay() != 6) {
             countdays ++;
         }
+        /*if (temp≠后台配置日期) {
+            countdays++;
+            //该函数增加参数：后台配置日期数组
+        }*/
         temp.setDate(temp.getDate() + 1);
     }
     if (beginDate.getDay() != 0 && beginDate.getDay() != 6) {
