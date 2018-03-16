@@ -196,7 +196,7 @@ public class changeTreatmentState : IHttpHandler {
                 sqlOperation1.ExecuteNonQuery(stop);
             }
             else
-            {
+            {//
                 DateTime datetime = DateTime.Now;
                 string restart = "update warningcase set RestartTime=@RestartTime where TreatID=@TreatID and type=0 and RestartTime is null";
                 sqlOperation1.AddParameterWithValue("@TreatID", Convert.ToInt32(treatID));
