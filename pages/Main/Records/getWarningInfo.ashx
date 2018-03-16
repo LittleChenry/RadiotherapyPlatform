@@ -51,7 +51,7 @@ public class getWarningInfo : IHttpHandler {
 
             backText.Append("{\"StopTime\":\"" + reader["stoptime"].ToString() + "\",\"RestartTime\":\"" + reader["RestartTime"].ToString() + "\"}");
            
-        }//
+        }
 
         backText.Append("]}");
         reader.Close();
