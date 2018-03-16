@@ -173,6 +173,36 @@ public class changeTreatmentState : IHttpHandler {
                 sqlOperation1.AddParameterWithValue("@treatID", Convert.ToInt32(treatID));
                 sqlOperation1.ExecuteNonQuery(changecommand);
             }
+            if (state != "0")
+            {
+                string select1 = "select Progress from treatment where ID=@treatid";
+                sqlOperation.AddParameterWithValue("@treatid", Convert.ToInt32(treatID));
+                string progress = sqlOperation.ExecuteScalar(select1);
+                string[] group = progress.Split(',');
+                int max = 0;
+                for (int i = 0; i < group.Length; i++)
+                {
+                    if (Convert.ToInt32(group[i]) > max)
+                    {
+                        max = Convert.ToInt32(group[i]);
+                    }
+                }
+                DateTime datetime = DateTime.Now;
+                string stop = "insert into warningcase (TreatID,Progress,StopTime,Type)values(@TreatID,@Progress,@StopTime,@Type)";
+                sqlOperation1.AddParameterWithValue("@Progress", max);
+                sqlOperation1.AddParameterWithValue("@StopTime", datetime);
+                sqlOperation1.AddParameterWithValue("@Type", Convert.ToInt32(state) - 1);
+                sqlOperation1.AddParameterWithValue("@TreatID", Convert.ToInt32(treatID));
+                sqlOperation1.ExecuteNonQuery(stop);
+            }
+            else
+            {
+                DateTime datetime = DateTime.Now;
+                string restart = "update warningcase set RestartTime=@RestartTime where TreatID=@TreatID and type=0 and RestartTime is null";
+                sqlOperation1.AddParameterWithValue("@TreatID", Convert.ToInt32(treatID));
+                sqlOperation1.AddParameterWithValue("@StopTime", datetime);
+                sqlOperation1.ExecuteNonQuery(restart);
+            }
             string change = "update treatment set State=@state where ID=@treatID";
             sqlOperation1.AddParameterWithValue("@treatID", Convert.ToInt32(treatID));
             sqlOperation1.AddParameterWithValue("@state", Convert.ToInt32(state));
