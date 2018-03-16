@@ -414,11 +414,11 @@ function addDosagePriority() {
     t1.innerHTML = '<input id="Prioritytype' + rows + '" name="Prioritytype' + rows + '" type="text" class="td-input" />';
     t2.innerHTML = '<input id="Priorityout' + rows + '" name="Priorityout' + rows + '" type="text" class="td-input" />';
     t3.innerHTML = '<input id="Prioritptv' + rows + '" name="Prioritptv' + rows + '" type="text" class="td-input" />';
-    t4.innerHTML = '<input id="Prioritcgy' + rows + '" name="Prioritcgy' + rows + '" type="number" class="td-input" />';
-    t5.innerHTML = '<input id="Priorittime' + rows + '" name="Priorittime' + rows + '" type="number" class="td-input" />';
-    t6.innerHTML = '<input id="Prioritsum' + rows + '" name="Prioritsum' + rows + '" type="number" class="td-input" />';
+    t4.innerHTML = '<input id="Prioritcgy' + rows + '" name="Prioritcgy' + rows + '" type="number" onmousewheel="return false;" class="td-input" />';
+    t5.innerHTML = '<input id="Priorittime' + rows + '" name="Priorittime' + rows + '" type="number" onmousewheel="return false;" class="td-input" />';
+    t6.innerHTML = '<input id="Prioritsum' + rows + '" name="Prioritsum' + rows + '" type="number" onmousewheel="return false;" class="td-input" />';
     t7.innerHTML = '<input id="Prioritremark' + rows + '" name="Prioritremark' + rows + '" type="text" class="td-input" />';
-    t8.innerHTML = '<input id="Priorit' + rows + '" name="Priorit' + rows + '" type="number" class="td-input" />';
+    t8.innerHTML = '<input id="Priorit' + rows + '" name="Priorit' + rows + '" type="number" onmousewheel="return false;" class="td-input" />';
     t9.innerHTML = '<a href="javascript:deleteDosagePriority(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>'; 
     var i = rows;
     $('#Prioritcgy' + i).bind('input propertychange', { i: i }, function (e) {
@@ -473,11 +473,11 @@ function addDosagePriority1(DosagePriority) {
         t1.innerHTML = '<input id="Prioritytype' + i + '" name="Prioritytype' + i + '" value="'+list[0]+'" type="text" class="td-input" />';
         t2.innerHTML = '<input id="Priorityout' + i + '" name="Priorityout' + i + '" value="' + list[1] + '" type="text" class="td-input" />';
         t3.innerHTML = '<input id="Prioritptv' + i + '" name="Prioritptv' + i + '" value="' + list[2] + '" type="text" class="td-input" />';
-        t4.innerHTML = '<input id="Prioritcgy' + i + '" name="Prioritcgy' + i + '" value="' + list[3] + '" type="number" class="td-input" />';
-        t5.innerHTML = '<input id="Priorittime' + i + '" name="Priorittime' + i + '" value="' + list[4] + '" type="number" class="td-input" />';
-        t6.innerHTML = '<input id="Prioritsum' + i + '" name="Prioritsum' + i + '" value="' + list[5] + '" type="number" class="td-input" />';
+        t4.innerHTML = '<input id="Prioritcgy' + i + '" name="Prioritcgy' + i + '" value="' + list[3] + '" type="number" onmousewheel="return false;" class="td-input" />';
+        t5.innerHTML = '<input id="Priorittime' + i + '" name="Priorittime' + i + '" value="' + list[4] + '" type="number" onmousewheel="return false;" class="td-input" />';
+        t6.innerHTML = '<input id="Prioritsum' + i + '" name="Prioritsum' + i + '" value="' + list[5] + '" type="number" onmousewheel="return false;" class="td-input" />';
         t7.innerHTML = '<input id="Prioritremark' + i + '" name="Prioritremark' + i + '" value="' + list[6] + '" type="text" class="td-input" />';
-        t8.innerHTML = '<input id="Priorit' + i + '" name="Priorit' + i + '" type="number" value="' + list[7] + '" class="td-input" />';
+        t8.innerHTML = '<input id="Priorit' + i + '" name="Priorit' + i + '" type="number" onmousewheel="return false;" value="' + list[7] + '" class="td-input" />';
         t9.innerHTML = '<a href="javascript:deleteDosagePriority(' + i + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
         $('#Prioritcgy' + i).bind('input propertychange', { i: i }, function (e) {
             if (document.getElementById("Prioritcgy" + e.data.i).value == "") {
@@ -536,13 +536,13 @@ function addDosage1(DosagePriority) {
         t1.innerHTML = '<input id="type' + i + '" name="type' + i + '" value="' + list[0] + '"type="text" class="td-input" />';
         t2.innerHTML = '<input id="dv' + i + '" name="dv' + i + '" type="text" value="' + list[1] + '" class="td-input" />';
         t3.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
-        t4.innerHTML = '<input id="number' + i + '" name="number' + i + '" type="number" value="' + list[3] + '" class="td-input" />';
+        t4.innerHTML = '<input id="number' + i + '" name="number' + i + '" type="number" onmousewheel="return false;" value="' + list[3] + '" class="td-input" />';
         t5.innerHTML = '<input id="out' + i + '" name="out' + i + '" type="text" value="' + list[4] + '" class="td-input" />';
         t6.innerHTML = '<input id="prv' + i + '" name="prv' + i + '" type="text" value="' + list[5] + '" class="td-input" />';
-        t7.innerHTML = '<input id="num' + i + '" name="num' + i + '" type="number" value="' + list[6] + '" class="td-input" />';
+        t7.innerHTML = '<input id="num' + i + '" name="num' + i + '" type="number" onmousewheel="return false;" value="' + list[6] + '" class="td-input" />';
         t8.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
         t9.innerHTML = '<input id="numbers' + i + '" name="numbers' + i + '" type="text" value="' + list[8] + '" class="td-input" />';
-        t10.innerHTML = '<input id="pp' + i + '" name="pp' + i + '" type="number" value="' + list[9] + '" class="td-input" />';
+        t10.innerHTML = '<input id="pp' + i + '" name="pp' + i + '" type="number" onmousewheel="return false;" value="' + list[9] + '" class="td-input" />';
         t11.innerHTML = '<a href="javascript:deleteDosage(' + i + ');"><i class="fa fa-fw fa-minus-circle" value="' + list[10] + '" style="font-size:18px;"></i></a>';
     }
     bb = lists.length-1;
@@ -579,13 +579,13 @@ function addDosage() {
     t1.innerHTML = '<input id="type' + rows + '" name="type' + rows + '" type="text" class="td-input" />';
     t2.innerHTML = '<input id="dv' + rows + '" name="dv' + rows + '" type="text" class="td-input" />';
     t3.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
-    t4.innerHTML = '<input id="number' + rows + '" name="number' + rows + '" type="number" class="td-input" />';
+    t4.innerHTML = '<input id="number' + rows + '" name="number' + rows + '" type="number" onmousewheel="return false;" class="td-input" />';
     t5.innerHTML = '<input id="out' + rows + '" name="out' + rows + '" type="text" class="td-input" />';
     t6.innerHTML = '<input id="prv' + rows + '" name="prv' + rows + '" type="text" class="td-input" />';
-    t7.innerHTML = '<input id="num' + rows + '" name="num' + rows + '" type="number" class="td-input" />';
+    t7.innerHTML = '<input id="num' + rows + '" name="num' + rows + '" type="number" onmousewheel="return false;" class="td-input" />';
     t8.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
     t9.innerHTML = '<input id="numbers' + rows + '" name="numbers' + rows + '" type="text" class="td-input" />';
-    t10.innerHTML = '<input id="pp' + rows + '" name="pp' + rows + '" type="number" class="td-input" />';
+    t10.innerHTML = '<input id="pp' + rows + '" name="pp' + rows + '" type="number" onmousewheel="return false;" class="td-input" />';
     t11.innerHTML = '<a href="javascript:deleteDosage(' + rows + ');"><i class="fa fa-fw fa-minus-circle" style="font-size:18px;"></i></a>';
     bb = rows;
     document.getElementById("bb").value =bb;

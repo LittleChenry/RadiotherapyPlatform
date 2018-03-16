@@ -361,14 +361,14 @@
                             <div class="col-xs-5">
                                 <span class="form-text col-xs-4" style="padding-left:0px;">身高：</span>
                                 <div class="group-item" style="padding:0px;">
-                                    <input type="number" id="height" name="height" class="form-group-input" />
+                                    <input type="number" onmousewheel="return false;" id="height" name="height" class="form-group-input" />
                                     <span class="input-group-addon">cm</span>
                                 </div>
                             </div>
                             <div class="col-xs-5">
                                 <span class="form-text col-xs-4">体重：</span>
                                 <div class="group-item" style="padding:0px;">
-                                    <input type="number" id="weight" name="weight" class="form-group-input" />
+                                    <input type="number" onmousewheel="return false;" id="weight" name="weight" class="form-group-input" />
                                     <span class="input-group-addon">kg</span>
                                 </div>
                             </div>

@@ -381,13 +381,13 @@
                                     <span>开始时间</span>
                                   </div>
                                   <div class="col-md-4">
-                                    <input type="number" id="addBeginHour" class="form-control" />
+                                    <input type="number" onmousewheel="return false;" id="addBeginHour" class="form-control" />
                                   </div>
                                   <div class="col-md-1">
                                     <span>:</span>
                                   </div>
                                   <div class="col-md-4">
-                                    <input type="number" id="addBeginMinute" class="form-control" />
+                                    <input type="number" onmousewheel="return false;" id="addBeginMinute" class="form-control" />
                                   </div>
                                 </div>
                                 <div class="row">
@@ -395,13 +395,13 @@
                                     <span>结束时间</span>
                                   </div>
                                   <div class="col-md-4">
-                                    <input type="number" id="addEndHour" class="form-control" />
+                                    <input type="number" onmousewheel="return false;" id="addEndHour" class="form-control" />
                                   </div>
                                   <div class="col-md-1">
                                     <span>:</span>
                                   </div>
                                   <div class="col-md-4">
-                                    <input type="number" id="addEndMinute" class="form-control" />
+                                    <input type="number" onmousewheel="return false;" id="addEndMinute" class="form-control" />
                                   </div>
                                 </div>
                             </div>
@@ -436,13 +436,13 @@
                                     <span>开始时间</span>
                                   </div>
                                   <div class="col-md-4">
-                                    <input type="number" id="editBeginHour" class="form-control" />
+                                    <input type="number" onmousewheel="return false;" id="editBeginHour" class="form-control" />
                                   </div>
                                   <div class="col-md-1">
                                     <span>:</span>
                                   </div>
                                   <div class="col-md-4">
-                                    <input type="number" id="editBeginMinute" class="form-control" />
+                                    <input type="number" onmousewheel="return false;" id="editBeginMinute" class="form-control" />
                                   </div>
                                 </div>
                                 <div class="row">
@@ -450,13 +450,13 @@
                                     <span>结束时间</span>
                                   </div>
                                   <div class="col-md-4">
-                                    <input type="number" id="editEndHour" class="form-control" />
+                                    <input type="number" onmousewheel="return false;" id="editEndHour" class="form-control" />
                                   </div>
                                   <div class="col-md-1">
                                     <span>:</span>
                                   </div>
                                   <div class="col-md-4">
-                                    <input type="number" id="editEndMinute" class="form-control" />
+                                    <input type="number" onmousewheel="return false;" id="editEndMinute" class="form-control" />
                                   </div>
                                 </div>
                             </div>

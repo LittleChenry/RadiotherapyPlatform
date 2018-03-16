@@ -86,7 +86,7 @@
                                 <div class="single-row">
                                     <div class="item col-xs-6">
                                         射野数量：
-                                <input id="IlluminatedNumber" class="form-item" type="number" name="IlluminatedNumber" disabled="disabled" />
+                                <input id="IlluminatedNumber" class="form-item" type="number" onmousewheel="return false;" name="IlluminatedNumber" disabled="disabled" />
                                     </div>
                                     <div class="item col-xs-6">
                                         非共面照射：
@@ -99,11 +99,11 @@
                                 <div class="single-row">
                                     <div class="item col-xs-6">
                                         机器跳数：
-                                <input id="MachineNumbe" class="form-item" type="number" name="MachineNumbe" disabled="disabled" />
+                                <input id="MachineNumbe" class="form-item" type="number" onmousewheel="return false;" name="MachineNumbe" disabled="disabled" />
                                     </div>
                                     <div class="item col-xs-6">
                                         控制点数量：
-                                <input id="ControlPoint" class="form-item" type="number" name="ControlPoint" disabled="disabled" />
+                                <input id="ControlPoint" class="form-item" type="number" onmousewheel="return false;" name="ControlPoint" disabled="disabled" />
                                     </div>
                                 </div>
                                 <div class="single-row">

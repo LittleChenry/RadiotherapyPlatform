@@ -103,55 +103,55 @@
                                     <tr>
                                         <td>x</td>
                                         <td style="padding:0px;">
-                                            <input id="OriginCenter1" class="td-input" disabled="disabled" type="number" name="OriginCenter1"/>
+                                            <input id="OriginCenter1" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="OriginCenter1"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="PlanCenter1" class="td-input" disabled="disabled" type="number" name="PlanCenter1"/>
+                                            <input id="PlanCenter1" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="PlanCenter1"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="Movement1" class="td-input" disabled="disabled" type="number" name="Movement1"/>
+                                            <input id="Movement1" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="Movement1"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="Result1" class="td-input" disabled="disabled" type="number" name="Result1"/>
+                                            <input id="Result1" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="Result1"/>
                                         </td>
                                          <td style="padding:0px;">
-                                            <input id="distance1" class="td-input" disabled="disabled" type="number" name="distance1"/>
+                                            <input id="distance1" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="distance1"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>y</td>
                                         <td style="padding:0px;">
-                                            <input id="OriginCenter2" class="td-input" disabled="disabled" type="number" name="OriginCenter2"/>
+                                            <input id="OriginCenter2" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="OriginCenter2"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="PlanCenter2" class="td-input" disabled="disabled" type="number" name="PlanCenter2"/>
+                                            <input id="PlanCenter2" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="PlanCenter2"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="Movement2" class="td-input" disabled="disabled" type="number" name="Movement2"/>
+                                            <input id="Movement2" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="Movement2"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="Result2" class="td-input" disabled="disabled" type="number" name="Result2"/>
+                                            <input id="Result2" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="Result2"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="distance2" class="td-input" disabled="disabled" type="number" name="distance2"/>
+                                            <input id="distance2" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="distance2"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>z</td>
                                         <td style="padding:0px;">
-                                            <input id="OriginCenter3" class="td-input" disabled="disabled" type="number" name="OriginCenter3"/>
+                                            <input id="OriginCenter3" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="OriginCenter3"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="PlanCenter3" class="td-input" disabled="disabled" type="number" name="PlanCenter3"/>
+                                            <input id="PlanCenter3" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="PlanCenter3"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="Movement3" class="td-input" disabled="disabled" type="number" name="Movement3"/>
+                                            <input id="Movement3" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="Movement3"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="Result3" class="td-input" disabled="disabled" type="number" name="Result3"/>
+                                            <input id="Result3" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="Result3"/>
                                         </td>
                                         <td style="padding:0px;">
-                                            <input id="distance3" class="td-input" disabled="disabled" type="number" name="distance3"/>
+                                            <input id="distance3" class="td-input" disabled="disabled" type="number" onmousewheel="return false;" name="distance3"/>
                                         </td>
                                     </tr>
                                 </tbody>

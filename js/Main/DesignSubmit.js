@@ -430,13 +430,13 @@ function addDosage1(DosagePriority) {
         t1.innerHTML = '<input id="type' + i + '" name="type' + i + '" value="' + list[0] + '"type="text" readonly="true" class="td-input" />';
         t2.innerHTML = '<input id="dv' + i + '" name="dv' + i + '" type="text" value="' + list[1] + '" readonly="true" class="td-input" />';
         t3.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
-        t4.innerHTML = '<input id="number' + i + '" name="number' + i + '" type="number" value="' + list[3] + '" class="td-input" />';
+        t4.innerHTML = '<input id="number' + i + '" name="number' + i + '" type="number" onmousewheel="return false;" value="' + list[3] + '" class="td-input" />';
         t5.innerHTML = '<input id="out' + i + '" name="out' + i + '" type="text" value="' + list[4] + '" readonly="true" class="td-input" />';
         t6.innerHTML = '<input id="prv' + i + '" name="prv' + i + '" type="text" value="' + list[5] + '" readonly="true" class="td-input" />';
-        t7.innerHTML = '<input id="num' + i + '" name="num' + i + '" type="number" value="' + list[6] + '" readonly="true" class="td-input" />';
+        t7.innerHTML = '<input id="num' + i + '" name="num' + i + '" type="number" onmousewheel="return false;" value="' + list[6] + '" readonly="true" class="td-input" />';
         t8.innerHTML = '<input type="text" class="td-input" value="<" readonly="true" />';
         t9.innerHTML = '<input id="numbers' + i + '" name="numbers' + i + '" type="text" value="' + list[8] + '" class="td-input" />';
-        t10.innerHTML = '<input id="pp' + i + '" name="pp' + i + '" type="number" value="' + list[9] + '" readonly="true" class="td-input" />';
+        t10.innerHTML = '<input id="pp' + i + '" name="pp' + i + '" type="number" onmousewheel="return false;" value="' + list[9] + '" readonly="true" class="td-input" />';
       
     }
     var bb = lists.length - 1;
@@ -477,11 +477,11 @@ function addDosagePriority1(DosagePriority) {
         t1.innerHTML = '<input id="Prioritytype' + i + '" name="Prioritytype' + i + '" value="' + list[0] + '" readonly="true" type="text" class="td-input" />';
         t2.innerHTML = '<input id="Priorityout' + i + '" name="Priorityout' + i + '" value="' + list[1] + '" readonly="true" type="text" class="td-input" />';
         t3.innerHTML = '<input id="Prioritptv' + i + '" name="Prioritptv' + i + '" value="' + list[2] + '" readonly="true" type="text" class="td-input" />';
-        t4.innerHTML = '<input id="Prioritcgy' + i + '" name="Prioritcgy' + i + '" value="' + list[3] + '" readonly="true" type="number" class="td-input" />';
-        t5.innerHTML = '<input id="Priorittime' + i + '" name="Priorittime' + i + '" value="' + list[4] + '" readonly="true" type="number" class="td-input" />';
-        t6.innerHTML = '<input id="Prioritsum' + i + '" name="Prioritsum' + i + '" value="' + list[5] + '" readonly="true" type="number" class="td-input" />';
+        t4.innerHTML = '<input id="Prioritcgy' + i + '" name="Prioritcgy' + i + '" value="' + list[3] + '" readonly="true" type="number" onmousewheel="return false;" class="td-input" />';
+        t5.innerHTML = '<input id="Priorittime' + i + '" name="Priorittime' + i + '" value="' + list[4] + '" readonly="true" type="number" onmousewheel="return false;" class="td-input" />';
+        t6.innerHTML = '<input id="Prioritsum' + i + '" name="Prioritsum' + i + '" value="' + list[5] + '" readonly="true" type="number" onmousewheel="return false;" class="td-input" />';
         t7.innerHTML = '<input id="Prioritremark' + i + '" name="Prioritremark' + i + '" value="' + list[6] + '" type="text" class="td-input" />';
-        t8.innerHTML = '<input id="Priorit' + i + '" name="Priorit' + i + '" type="number" value="' + list[7] + '" readonly="true" class="td-input" />';
+        t8.innerHTML = '<input id="Priorit' + i + '" name="Priorit' + i + '" type="number" onmousewheel="return false;" value="' + list[7] + '" readonly="true" class="td-input" />';
        
         $('#Prioritcgy' + i).bind('input propertychange', { i: i }, function (e) {
             if (document.getElementById("Prioritcgy" + e.data.i).value == "") {

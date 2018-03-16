@@ -109,14 +109,14 @@
                         <div class="item col-xs-5">
                             身高：
                             <div class="group-item">
-                                <input type="number" id="height" name="height" class="form-group-input" disabled="disabled"/>
+                                <input type="number" onmousewheel="return false;" id="height" name="height" class="form-group-input" disabled="disabled"/>
                                 <span class="input-group-addon">cm</span>
                             </div>
                         </div>
                         <div class="item col-xs-5">
                             体重：
                             <div class="group-item">
-                                <input type="number" id="weight" name="weight" class="form-group-input" disabled="disabled"/>
+                                <input type="number" onmousewheel="return false;" id="weight" name="weight" class="form-group-input" disabled="disabled"/>
                                 <span class="input-group-addon">kg</span>
                             </div>
                         </div>

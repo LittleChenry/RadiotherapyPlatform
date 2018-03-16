@@ -721,19 +721,19 @@
                                                        <input id="Prioritptv0" name="Prioritptv0" type="text" class="td-input"/>
                                                    </td>
                                                    <td style="padding: 0px;">
-                                                       <input id="Prioritcgy0" name="Prioritcgy0" type="number" class="td-input"/>
+                                                       <input id="Prioritcgy0" name="Prioritcgy0" type="number" onmousewheel="return false;" class="td-input"/>
                                                    </td>
                                                    <td style="padding: 0px;">
-                                                       <input id="Priorittime0" name="Priorittime0" type="number" class="td-input"/>
+                                                       <input id="Priorittime0" name="Priorittime0" type="number" onmousewheel="return false;" class="td-input"/>
                                                    </td>
                                                    <td style="padding: 0px;">
-                                                       <input id="Prioritsum0" name="Prioritsum0" type="number" class="td-input"/>
+                                                       <input id="Prioritsum0" name="Prioritsum0" type="number" onmousewheel="return false;" class="td-input"/>
                                                    </td>
                                                    <td style="padding: 0px;">
                                                        <input id="Prioritremark0" name="Prioritremark0" type="text" class="td-input"/>
                                                    </td>
                                                    <td style="padding: 0px;">
-                                                       <input id="Priorit0" name="Priorit0" type="number" class="td-input"/>
+                                                       <input id="Priorit0" name="Priorit0" type="number" onmousewheel="return false;" class="td-input"/>
                                                    </td>
                                                    <td id="delete0" style="text-align: center; padding: 0px; vertical-align: middle;">
                                                        <a href="javascript:deleteDosagePriority(0);"><i class="fa fa-fw fa-minus-circle" style="font-size: 18px;"></i></a>
@@ -776,7 +776,7 @@
                                                        <input type="text" class="td-input" value="<" readonly="true" />
                                                    </td>
                                                    <td style="padding: 0px;">
-                                                       <input id="number0" name="number0" type="number" class="td-input" />
+                                                       <input id="number0" name="number0" type="number" onmousewheel="return false;" class="td-input" />
                                                    </td>
                                                    <td style="padding: 0px;">
                                                        <input id="out0" name="out0" type="text" class="td-input" />
@@ -791,10 +791,10 @@
                                                        <input type="text" class="td-input" value="<" readonly="true" />
                                                    </td>
                                                    <td style="padding: 0px;">
-                                                       <input id="numbers0" name="numbers0" type="number" class="td-input" />
+                                                       <input id="numbers0" name="numbers0" type="number" onmousewheel="return false;" class="td-input" />
                                                    </td>
                                                    <td style="padding: 0px;">
-                                                       <input id="pp0" name="pp0" type="number" class="td-input" />
+                                                       <input id="pp0" name="pp0" type="number" onmousewheel="return false;" class="td-input" />
                                                    </td>
                                                    <td id="deletes0" style="text-align: center; padding: 0px; vertical-align: middle;">
                                                        <a href="javascript:deleteDosage(0);"><i class="fa fa-fw fa-minus-circle" style="font-size: 18px;"></i></a>

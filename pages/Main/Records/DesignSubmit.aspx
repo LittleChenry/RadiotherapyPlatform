@@ -165,14 +165,14 @@
                             <div class="col-xs-6">
                                 <span class="form-text col-xs-4">左：</span>
                                 <div class="group-item">
-                                    <input id="left" name="left" type="number" class="form-group-input" disabled="disabled"/>
+                                    <input id="left" name="left" type="number" onmousewheel="return false;" class="form-group-input" disabled="disabled"/>
                                     <span class="input-group-addon">cm</span>
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <span class="form-text col-xs-4">右：</span>
                                 <div class="group-item">
-                                    <input id="right" name="right" type="number" class="form-group-input" disabled="disabled"/>
+                                    <input id="right" name="right" type="number" onmousewheel="return false;" class="form-group-input" disabled="disabled"/>
                                     <span class="input-group-addon">cm</span>
                                 </div>
                             </div>
@@ -181,14 +181,14 @@
                             <div class="col-xs-6">
                                 <span class="form-text col-xs-4">升：</span>
                                 <div class="group-item">
-                                    <input id="rise" name="rise" type="number" class="form-group-input" disabled="disabled"/>
+                                    <input id="rise" name="rise" type="number" onmousewheel="return false;" class="form-group-input" disabled="disabled"/>
                                     <span class="input-group-addon">cm</span>
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <span class="form-text col-xs-4">降：</span>
                                 <div class="group-item">
-                                    <input id="drop" name="drop" type="number" class="form-group-input" disabled="disabled"/>
+                                    <input id="drop" name="drop" type="number" onmousewheel="return false;" class="form-group-input" disabled="disabled"/>
                                     <span class="input-group-addon">cm</span>
                                 </div>
                             </div>
@@ -197,14 +197,14 @@
                             <div class="col-xs-6">
                                 <span class="form-text col-xs-4">进：</span>
                                 <div class="group-item">
-                                    <input id="enter" name="enter" type="number" class="form-group-input" disabled="disabled"/>
+                                    <input id="enter" name="enter" type="number" onmousewheel="return false;" class="form-group-input" disabled="disabled"/>
                                     <span class="input-group-addon">cm</span>
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <span class="form-text col-xs-4">出：</span>
                                 <div class="group-item">
-                                    <input id="out" name="out" type="number" class="form-group-input" disabled="disabled"/>
+                                    <input id="out" name="out" type="number" onmousewheel="return false;" class="form-group-input" disabled="disabled"/>
                                     <span class="input-group-addon">cm</span>
                                 </div>
                             </div>

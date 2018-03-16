@@ -81,17 +81,17 @@
                 <tr>
                     <td>层厚</td>
                     <td colspan="2">
-                        <input id="Thickness" class="form-control" type="number" name="Thickness"/>
+                        <input id="Thickness" class="form-control" type="number" onmousewheel="return false;" name="Thickness"/>
                     </td>
                     <td>层数</td>
                     <td colspan="2">
-                        <input id="Number" class="form-control" type="number" name="Number"/>
+                        <input id="Number" class="form-control" type="number" onmousewheel="return false;" name="Number"/>
                     </td>
                 </tr>
                 <tr>
                     <td>参考中心层面</td>
                     <td colspan="2">
-                        <input id="ReferenceScale" class="form-control" type="number" name="ReferenceScale"/>
+                        <input id="ReferenceScale" class="form-control" type="number" onmousewheel="return false;" name="ReferenceScale"/>
                     </td>
                     <td>多模态图像</td>
                     <td colspan="2">

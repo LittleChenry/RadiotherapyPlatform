@@ -167,20 +167,20 @@
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">层厚：</span>
                             <div class="group-item">
-                                <input id="Thickness" step="0.00001" class="form-group-input" type="number" name="Thickness1" disabled="disabled"/>
+                                <input id="Thickness" step="0.00001" class="form-group-input" type="number" onmousewheel="return false;" name="Thickness1" disabled="disabled"/>
                                 <span class="input-group-addon">mm</span>
                             </div>
                         </div>
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">层数：</span>
-                            <input id="Number" step="0.00001" class="form-item col-xs-6" type="number" name="Number1" disabled="disabled" style="padding-left:5px;"/>
+                            <input id="Number" step="0.00001" class="form-item col-xs-6" type="number" onmousewheel="return false;" name="Number1" disabled="disabled" style="padding-left:5px;"/>
                         </div>
                     </div>
                     <div class="single-row">
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4" style="padding-left:0px;">参考中心层面：</span>
                             <div class="group-item">
-                                <input id="ReferenceNumber" step="0.00001" class="form-group-input" type="number" name="ReferenceNumber1" disabled="disabled"/>
+                                <input id="ReferenceNumber" step="0.00001" class="form-group-input" type="number" onmousewheel="return false;" name="ReferenceNumber1" disabled="disabled"/>
                                 <span class="input-group-addon">mm</span>
                             </div>
                             
@@ -188,7 +188,7 @@
                         <div class="col-xs-6">
                             <span class="form-text col-xs-4">体表参考刻度：</span>
                             <div class="group-item">
-                                <input id="ReferenceScale" step="0.00001" class="form-group-input" type="number" name="ReferenceScale1" disabled="disabled"/>
+                                <input id="ReferenceScale" step="0.00001" class="form-group-input" type="number" onmousewheel="return false;" name="ReferenceScale1" disabled="disabled"/>
                                 <span class="input-group-addon">mm</span>
                             </div>
                         </div>

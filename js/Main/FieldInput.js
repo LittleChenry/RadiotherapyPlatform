@@ -225,7 +225,7 @@ function isInArray(arr, value) {
 //     t12.id="delete" + rows;
 //     t1.innerHTML = '<input id="a1' + rows + '" name="a1' + rows + '" type="text" class="td-input" />';
 //     t2.innerHTML = '<input id="mu' + rows + '" name="mu' + rows + '" type="text" class="td-input" />';
-//     t3.innerHTML = '<input id="equipment' + rows + '" name="equipment' + rows + '" type="number" class="td-input" />';
+//     t3.innerHTML = '<input id="equipment' + rows + '" name="equipment' + rows + '" type="number" onmousewheel="return false;" class="td-input" />';
 //     t4.innerHTML = '<input id="technology' + rows + '" name="technology' + rows + '" type="text" class="td-input" />';
 //     t5.innerHTML = '<input id="type' + rows + '" name="type' + rows + '" type="text" class="td-input" />';
 //     t6.innerHTML = '<input id="energyField' + rows + '" name="energyField' + rows + '" type="text" class="td-input" />';
@@ -374,7 +374,7 @@ function creaetField(data,panelId) {
         t12.style.padding = "0px";
         t1.innerHTML = '<input id="a1' + i+"_"+panelId + '" name="a1' + i+"_"+panelId + '" value="' + list[0]+ '" type="text" class="td-input" />';
         t2.innerHTML = '<input id="mu' + i+"_"+panelId + '" name="mu' + i +"_"+panelId+ '" type="text" value="' + list[1] + '" class="td-input" />';
-        t3.innerHTML = '<input id="equipment' + i +"_"+panelId+ '" name="equipment' + i +"_"+panelId+ '" type="number" value="' + list[2] + '" class="td-input" />';
+        t3.innerHTML = '<input id="equipment' + i +"_"+panelId+ '" name="equipment' + i +"_"+panelId+ '" type="number" onmousewheel="return false;" value="' + list[2] + '" class="td-input" />';
         t4.innerHTML = '<input id="technology' + i+"_"+panelId + '" name="technology' + i+"_"+panelId + '" type="text" value="' + list[3] + '" class="td-input" />';
         t5.innerHTML = '<input id="type' + i +"_"+panelId+ '" name="type' + i+"_"+panelId + '" type="text" value="' + list[4] + '" class="td-input" />';
         t6.innerHTML = '<input id="energyField' + i+"_"+panelId + '" name="energyField' + i+"_"+panelId + '" type="text" value="' + list[5] + '" class="td-input" />';
@@ -438,7 +438,7 @@ function creaetField(data,panelId) {
 //         t12.style.padding = "0px";
 //         t1.innerHTML = '<input id="a1' + i + '" name="a1' + i + '" value="' + list[0] + '" type="text" disabled="disabled" class="td-input" />';
 //         t2.innerHTML = '<input id="mu' + i + '" name="mu' + i + '" type="text" value="' + list[1] + '" class="td-input" disabled="disabled"/>';
-//         t3.innerHTML = '<input id="equipment' + i + '" name="equipment' + i + '" type="number" value="' + list[2] + '" class="td-input" disabled="disabled"/>';
+//         t3.innerHTML = '<input id="equipment' + i + '" name="equipment' + i + '" type="number" onmousewheel="return false;" value="' + list[2] + '" class="td-input" disabled="disabled"/>';
 //         t4.innerHTML = '<input id="technology' + i + '" name="technology' + i + '" type="text" value="' + list[3] + '" class="td-input" disabled="disabled"/>';
 //         t5.innerHTML = '<input id="type' + i + '" name="type' + i + '" type="text" value="' + list[4] + '" class="td-input" disabled="disabled"/>';
 //         t6.innerHTML = '<input id="energyField' + i + '" name="energyField' + i + '" type="text" value="' + list[5] + '" class="td-input" disabled="disabled"/>';
@@ -625,7 +625,7 @@ function createTabPanel(panelId) {
                     + "</div>");
         var $div_2 = $("<div class='single-row'>"
                     + "<div class='item col-xs-6'>"
-                    + "射野数量：<input id='IlluminatedNumber" + panelId + "' name='IlluminatedNumber" + panelId + "' class='form-item' type='number' name='IlluminatedNumber'/>"
+                    + "射野数量：<input id='IlluminatedNumber" + panelId + "' name='IlluminatedNumber" + panelId + "' class='form-item' type='number' onmousewheel='return false;' name='IlluminatedNumber'/>"
                     + "</div>"
                     + "<div class='item col-xs-6'>"
                     + "非共面照射：<select id='Coplanar" + panelId + "' name='Coplanar" + panelId + "' class='form-item'><option value='0'>否</option><option value='1'>是</option></select>"
@@ -634,10 +634,10 @@ function createTabPanel(panelId) {
 
         var $div_3 = $("<div class='single-row'>"
                     + "<div class='item col-xs-6'>"
-                    + "机器跳数：<input id='MachineNumbe" + panelId + "' class='form-item' type='number' name='MachineNumbe" + panelId + "'/>"
+                    + "机器跳数：<input id='MachineNumbe" + panelId + "' class='form-item' type='number' onmousewheel='return false;' name='MachineNumbe" + panelId + "'/>"
                     + "</div>"
                     + "<div class='item col-xs-6'>"
-                    + "控制点数量：<input id='ControlPoint" + panelId + "' class='form-item' type='number' name='ControlPoint" + panelId + "'/>"
+                    + "控制点数量：<input id='ControlPoint" + panelId + "' class='form-item' type='number' onmousewheel='return false;' name='ControlPoint" + panelId + "'/>"
                     + "</div>"
                     + "</div>");
         var $div_4 = $("<div class='single-row'>"
@@ -660,14 +660,14 @@ function createTabPanel(panelId) {
 	                + "<div class='col-xs-6'>"
 	                + "<span class='form-text col-xs-4'>左：</span>"
 	                + "<div class='group-item'>"
-	                + "<input id='left" + panelId + "' name='left" + panelId + "' type='number' class='form-group-input' />"
+	                + "<input id='left" + panelId + "' name='left" + panelId + "' type='number' onmousewheel='return false;' class='form-group-input' />"
 	                + "<span class='input-group-addon'>cm</span>"
 	                + "</div>"
 	                + "</div>"
 	                + "<div class='col-xs-6'>"
 	                + "<span class='form-text col-xs-4'>右：</span>"
 	                + "<div class='group-item'>"
-	                + "<input id='right" + panelId + "' name='right" + panelId + "' type='number' class='form-group-input' />"
+	                + "<input id='right" + panelId + "' name='right" + panelId + "' type='number' onmousewheel='return false;' class='form-group-input' />"
 	                + "<span class='input-group-addon'>cm</span>"
 	                + "</div>"
 	                + "</div>"
@@ -676,14 +676,14 @@ function createTabPanel(panelId) {
 	                + "<div class='col-xs-6'>"
 	                + "<span class='form-text col-xs-4'>升：</span>"
 	                + "<div class='group-item'>"
-	                + "<input id='rise" + panelId + "' name='rise" + panelId + "' type='number' class='form-group-input' />"
+	                + "<input id='rise" + panelId + "' name='rise" + panelId + "' type='number' onmousewheel='return false;' class='form-group-input' />"
 	                + "<span class='input-group-addon'>cm</span>"
 	                + "</div>"
 	                + "</div>"
 	                + "<div class='col-xs-6'>"
 	                + "<span class='form-text col-xs-4'>降：</span>"
 	                + "<div class='group-item'>"
-	                + "<input id='drop" + panelId + "' name='drop" + panelId + "' type='number' class='form-group-input' />"
+	                + "<input id='drop" + panelId + "' name='drop" + panelId + "' type='number' onmousewheel='return false;' class='form-group-input' />"
 	                + "<span class='input-group-addon'>cm</span>"
 	                + "</div>"
 	                + "</div>"
@@ -692,14 +692,14 @@ function createTabPanel(panelId) {
 	                + "<div class='col-xs-6'>"
 	                + "<span class='form-text col-xs-4'>进：</span>"
 	                + "<div class='group-item'>"
-	                + "<input id='enter" + panelId + "' name='enter" + panelId + "' type='number' class='form-group-input' />"
+	                + "<input id='enter" + panelId + "' name='enter" + panelId + "' type='number' onmousewheel='return false;' class='form-group-input' />"
 	                + "<span class='input-group-addon'>cm</span>"
 	                + "</div>"
 	                + "</div>"
 	                + "<div class='col-xs-6'>"
 	                + "<span class='form-text col-xs-4'>出：</span>"
 	                + "<div class='group-item'>"
-	                + "<input id='out" + panelId + "' name='out" + panelId + "' type='number' class='form-group-input' />"
+	                + "<input id='out" + panelId + "' name='out" + panelId + "' type='number' onmousewheel='return false;' class='form-group-input' />"
 	                + "<span class='input-group-addon'>cm</span>"
 	                + "</div>"
 	                + "</div>"
@@ -925,14 +925,14 @@ function createTabPanel(panelId) {
 	                + "<div class='col-xs-6'>"
 	                + "<span class='form-text col-xs-4'>左：</span>"
 	                + "<div class='group-item'>"
-	                + "<input id='left" + panelId + "' name='left" + panelId + "' type='number' class='form-group-input' value='0'/>"
+	                + "<input id='left" + panelId + "' name='left" + panelId + "' type='number' onmousewheel='return false;' class='form-group-input' value='0'/>"
 	                + "<span class='input-group-addon'>cm</span>"
 	                + "</div>"
 	                + "</div>"
 	                + "<div class='col-xs-6'>"
 	                + "<span class='form-text col-xs-4'>右：</span>"
 	                + "<div class='group-item'>"
-	                + "<input id='right" + panelId + "' name='right" + panelId + "' type='number' class='form-group-input' />"
+	                + "<input id='right" + panelId + "' name='right" + panelId + "' type='number' onmousewheel='return false;' class='form-group-input' />"
 	                + "<span class='input-group-addon'>cm</span>"
 	                + "</div>"
 	                + "</div>"
@@ -941,14 +941,14 @@ function createTabPanel(panelId) {
 	                + "<div class='col-xs-6'>"
 	                + "<span class='form-text col-xs-4'>升：</span>"
 	                + "<div class='group-item'>"
-	                + "<input id='rise" + panelId + "' name='rise" + panelId + "' type='number' class='form-group-input' value='0'/>"
+	                + "<input id='rise" + panelId + "' name='rise" + panelId + "' type='number' onmousewheel='return false;' class='form-group-input' value='0'/>"
 	                + "<span class='input-group-addon'>cm</span>"
 	                + "</div>"
 	                + "</div>"
 	                + "<div class='col-xs-6'>"
 	                + "<span class='form-text col-xs-4'>降：</span>"
 	                + "<div class='group-item'>"
-	                + "<input id='drop" + panelId + "' name='drop" + panelId + "' type='number' class='form-group-input' />"
+	                + "<input id='drop" + panelId + "' name='drop" + panelId + "' type='number' onmousewheel='return false;' class='form-group-input' />"
 	                + "<span class='input-group-addon'>cm</span>"
 	                + "</div>"
 	                + "</div>"
@@ -957,14 +957,14 @@ function createTabPanel(panelId) {
                 + "<div class='col-xs-6'>"
                 + "<span class='form-text col-xs-4'>进：</span>"
                 + "<div class='group-item'>"
-                + "<input id='enter" + panelId + "' name='enter" + panelId + "' type='number' class='form-group-input' value='0'/>"
+                + "<input id='enter" + panelId + "' name='enter" + panelId + "' type='number' onmousewheel='return false;' class='form-group-input' value='0'/>"
                 + "<span class='input-group-addon'>cm</span>"
                 + "</div>"
                 + "</div>"
                 + "<div class='col-xs-6'>"
                 + "<span class='form-text col-xs-4'>出：</span>"
                 + "<div class='group-item'>"
-                + "<input id='out" + panelId + "' name='out" + panelId + "' type='number' class='form-group-input' />"
+                + "<input id='out" + panelId + "' name='out" + panelId + "' type='number' onmousewheel='return false;' class='form-group-input' />"
                 + "<span class='input-group-addon'>cm</span>"
                 + "</div>"
                 + "</div>"
@@ -1206,7 +1206,7 @@ function addFieldanother(panelId) {
     t12.id="delete" + rows+"_"+panelId;
     t1.innerHTML = '<input id="a1' + rows+"_"+panelId + '" name="a1' + rows+"_"+panelId + '" type="text" class="td-input" />';
     t2.innerHTML = '<input id="mu' + rows+"_"+panelId + '" name="mu' + rows+"_"+panelId + '" type="text" class="td-input" />';
-    t3.innerHTML = '<input id="equipment' + rows+"_"+panelId + '" name="equipment' + rows+"_"+panelId + '" type="number" class="td-input" />';
+    t3.innerHTML = '<input id="equipment' + rows+"_"+panelId + '" name="equipment' + rows+"_"+panelId + '" type="number" onmousewheel="return false;" class="td-input" />';
     t4.innerHTML = '<input id="technology' + rows+"_"+panelId + '" name="technology' + rows+"_"+panelId + '" type="text" class="td-input" />';
     t5.innerHTML = '<input id="type' + rows+"_"+panelId + '" name="type' + rows+"_"+panelId + '" type="text" class="td-input" />';
     t6.innerHTML = '<input id="energyField' + rows+"_"+panelId + '" name="energyField' + rows+"_"+panelId + '" type="text" class="td-input" />';
@@ -1470,7 +1470,7 @@ function readField(data,panelId) {
         t12.style.padding = "0px";
         t1.innerHTML = '<input id="a1' + i+"_"+panelId + '" name="a1' + i +"_"+panelId+ '" value="' + list[0] + '" type="text" disabled="disabled" class="td-input" />';
         t2.innerHTML = '<input id="mu' + i+"_"+panelId + '" name="mu' + i +"_"+panelId+ '" type="text" value="' + list[1] + '" class="td-input" disabled="disabled"/>';
-        t3.innerHTML = '<input id="equipment' + i +"_"+panelId+ '" name="equipment' + i +"_"+panelId+ '" type="number" value="' + list[2] + '" class="td-input" disabled="disabled"/>';
+        t3.innerHTML = '<input id="equipment' + i +"_"+panelId+ '" name="equipment' + i +"_"+panelId+ '" type="number" onmousewheel="return false;" value="' + list[2] + '" class="td-input" disabled="disabled"/>';
         t4.innerHTML = '<input id="technology' + i +"_"+panelId+ '" name="technology' + i +"_"+panelId+ '" type="text" value="' + list[3] + '" class="td-input" disabled="disabled"/>';
         t5.innerHTML = '<input id="type' + i +"_"+panelId+ '" name="type' + i +"_"+panelId+ '" type="text" value="' + list[4] + '" class="td-input" disabled="disabled"/>';
         t6.innerHTML = '<input id="energyField' + i +"_"+panelId+ '" name="energyField' + i +"_"+panelId+ '" type="text" value="' + list[5] + '" class="td-input" disabled="disabled"/>';
