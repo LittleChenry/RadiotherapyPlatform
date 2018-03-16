@@ -132,8 +132,8 @@
                             <div class="item col-xs-4">射野数(V)：<span id="treatnumber" class="underline"></span></div>
                         </div>
                         <div class="single-row">
-                            <div class="item col-xs-4">机器跳数：<input id="machinenumber" type="number" class="form-item" /></div>
-                            <div class="item col-xs-4">单次剂量(cGy)：<input id="singlenumber" type="number" class="form-item" /></div>
+                            <div class="item col-xs-4">机器跳数：<input id="machinenumber" type="number" onmousewheel="scrollFunc()" onDOMMouseScroll="scrollFunc()" class="form-item" /></div>
+                            <div class="item col-xs-4">单次剂量(cGy)：<input id="singlenumber" type="number" onmousewheel="scrollFunc()" onDOMMouseScroll="scrollFunc()"  class="form-item" /></div>
                             <div class="item col-xs-4">累计剂量(cGy)：<span id="sumnumber" class="underline"></span></div>
                         </div>
                         <div class="single-row">

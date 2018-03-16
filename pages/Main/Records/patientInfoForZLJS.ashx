@@ -68,26 +68,29 @@ public class patientInfoForZLJS : IHttpHandler {
                 treatmentID = reader1["ID"].ToString();
             }
             reader1.Close();
-            string patientinfocommand = "select ID,Name,Gender,Age,Radiotherapy_ID from patient where ID=@pid";
+            string patientinfocommand = "select ID,Name,Gender,Age,Radiotherapy_ID,Ishospital from patient where ID=@pid";
             sqlOperation1.AddParameterWithValue("@pid", reader["Patient_ID"].ToString());
             reader1 = sqlOperation1.ExecuteReader(patientinfocommand);
             if (reader1.Read())
             {
-                info.Append("{\"name\":\"" + reader1["Name"].ToString() + "\",\"Gender\":\"" + sex(reader1["Gender"].ToString()) + "\",\"Radiotherapy_ID\":\"" + reader1["Radiotherapy_ID"].ToString() + "\",\"patientid\":\"" + reader1["ID"].ToString() + "\",\"Age\":\"" + reader1["Age"].ToString() + "\",\"groupname\":\"");
+                info.Append("{\"name\":\"" + reader1["Name"].ToString() + "\",\"Gender\":\"" + sex(reader1["Gender"].ToString()) + "\",\"Radiotherapy_ID\":\"" + reader1["Radiotherapy_ID"].ToString() + "\",\"patientid\":\"" + reader1["ID"].ToString() + "\",\"Ishospital\":\"" + reader1["Ishospital"].ToString() + "\",\"Age\":\"" + reader1["Age"].ToString() + "\",\"groupname\":\"");
                 string progresscommand = "select Progress from treatment where ID=@treat";
                 sqlOperation2.AddParameterWithValue("@treat", treatmentID);
                 string progress = sqlOperation2.ExecuteScalar(progresscommand);
+                string statecommand = "select State from treatment where ID=@treat";
+                sqlOperation2.AddParameterWithValue("@treat", treatmentID);
+                string state = sqlOperation2.ExecuteScalar(statecommand);
                 string groupcommand = "select user.Name as doctor,groups.groupName as groupname from groups,treatment,user,groups2user where groups2user.Group_ID=groups.ID and treatment.Group_ID=groups2user.ID and treatment.Patient_ID=@pid and treatment.Belongingdoctor=user.ID and treatment.ID=@treat";
                 sqlOperation2.AddParameterWithValue("@pid", reader["Patient_ID"].ToString());
                 sqlOperation2.AddParameterWithValue("@treat", treatmentID);
                 MySql.Data.MySqlClient.MySqlDataReader reader2 = sqlOperation2.ExecuteReader(groupcommand);
                 if (reader2.Read())
                 {
-                    info.Append(reader2["groupname"].ToString() + "\",\"doctor\":\"" + reader2["doctor"].ToString() + "\",\"treatID\":\"" + treatmentID + "\",\"appointid\":\"" + reader["ID"].ToString() + "\",\"Progress\":\"" + progress + "\"");
+                    info.Append(reader2["groupname"].ToString() + "\",\"doctor\":\"" + reader2["doctor"].ToString() + "\",\"treatID\":\"" + treatmentID + "\",\"appointid\":\"" + reader["ID"].ToString() + "\",\"Progress\":\"" + progress + "\",\"state\":\"" + state + "\"");
                 }
                 else
                 {
-                    info.Append("\",\"doctor\":\"" + "\",\"treatID\":\"" + treatmentID + "\",\"appointid\":\"" + reader["ID"].ToString() + "\",\"Progress\":\""+progress+"\"");
+                    info.Append("\",\"doctor\":\"" + "\",\"treatID\":\"" + treatmentID + "\",\"appointid\":\"" + reader["ID"].ToString() + "\",\"Progress\":\"" + progress + "\",\"state\":\"" + state + "\"");
                 }
                 reader2.Close();
                 string coutcommand = "select count(*) from treatmentrecord where Appointment_ID=@app and Treat_User_ID  is null";

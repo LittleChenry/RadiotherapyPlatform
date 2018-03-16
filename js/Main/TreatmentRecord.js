@@ -1240,3 +1240,16 @@ function handleli(number) {
             }
             });
 }
+function scrollFunc(evt) {
+    evt = evt || window.event;
+    if (evt.preventDefault) {
+        // Firefox    
+        evt.preventDefault();
+        evt.stopPropagation();
+    } else {
+        // IE    
+        evt.cancelBubble = true;
+        evt.returnValue = false;
+    }
+    return false;
+}
