@@ -9,11 +9,10 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- css -->
+    <link rel="stylesheet" href="../../css/Main/Records.css"/>
     <link rel="stylesheet" href="../../css/Main/main.css"/>
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="../../plugin/AdminLTE/bootstrap/css/bootstrap.min.css">
-    <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datepicker/datepicker3.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
     <!-- iCheck for checkboxes and radio inputs -->
@@ -22,8 +21,6 @@
     <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/ionicons/css/ionicons.min.css">
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="../../plugin/AdminLTE/plugins/iCheck/all.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="../../plugin/AdminLTE/dist/css/skins/_all-skins.min.css">
