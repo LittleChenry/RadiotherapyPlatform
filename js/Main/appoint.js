@@ -33,8 +33,8 @@ function patientView(session) {
             var patientURL = "../../pages/Main/getPatientInfoNew.ashx";
             var returnData = postData(patientURL, data, false);
             alldate = $.parseJSON(returnData);
-            Paging(alldate.patientinfo);
-            drawAppointTable(alldate.basicinfo, alldate.doctortime);
+            Paging(alldate.patientinfo, alldate.worktime);
+            drawAppointTable(alldate.basicinfo, alldate.doctortime, alldate.worktime);
             $("#chosenEquipment").html(session.equipmentName);
         }
 
@@ -52,8 +52,8 @@ function patientView(session) {
             var patientURL = "../../pages/Main/getPatientInfoNew.ashx";
             var returnData = postData(patientURL, dataequip, false);
             alldate = $.parseJSON(returnData);
-            Paging(alldate.patientinfo);
-            drawAppointTable(alldate.basicinfo, alldate.doctortime);
+            Paging(alldate.patientinfo, alldate.worktime);
+            drawAppointTable(alldate.basicinfo, alldate.doctortime, alldate.worktime);
             var datasession = {
                 id: $("#equipment").val(),
                 name: $("#equipment option:selected").html()
@@ -64,7 +64,7 @@ function patientView(session) {
 
         $("#patient-search").bind('input propertychange', function (e) {
             var Searchedpatients = Search($("#patient-search").val(), alldate.patientinfo);
-            Paging(Searchedpatients);
+            Paging(Searchedpatients, alldate.worktime);
         });
     }
 }
@@ -75,7 +75,7 @@ function getSession() {
     return Session;
 }
 
-function Paging(patients) {
+function Paging(patients, worktime) {
     if (patients != "") {
         tableheight = $("#patient-content").height() - 160;
         var table = $("#patient-table");
@@ -98,7 +98,7 @@ function Paging(patients) {
         }
         tbody += '</tbody>';
         table.append(tbody);
-        RecordAddClick();
+        RecordAddClick(worktime);
     } else {
         var table = $("#patient-table");
         table.html("");
@@ -205,13 +205,13 @@ function drawPlanInfoTable(planinfo, timeduan) {
 	}
 }
 
-function drawAppointTable(basicinfo, doctortime) {
-	drawDateTable();
+function drawAppointTable(basicinfo, doctortime, worktime) {
+	drawDateTable(worktime);
 	drawTimeTable(basicinfo, doctortime);
 	
 }
 
-function drawDateTable() {
+function drawDateTable(worktime) {
 	var table = $("#AppointDate");
 	table.html("");
 	var thead = '<thead><tr>';
@@ -222,8 +222,18 @@ function drawDateTable() {
 	for (var i = 0; i < 7; i++) {
 		th = '<th>'+ weekday[beginDate.getDay()] +'</th>';
 		var tdid = beginDate.Format("yyyy-MM-dd");
-		var tdclass = (beginDate.getDay() == 0 || beginDate.getDay() == 6) ? "weekend" : "weekday";
-		td = '<td data-date="'+ tdid +'" class="'+ tdclass +'"><span class="appoint-date pointer">'+ (beginDate.getMonth() + 1) + '月' + beginDate.getDate() + '日' +'</span></td>';
+		//var tdclass = (beginDate.getDay() == 0 || beginDate.getDay() == 6) ? "weekend" : "weekday";
+		var tdclass = "weekday";
+		var isworkday = "";
+		for (var j = 0; j < worktime.length; j++) {
+			var tempdate = new Date(worktime[j]);
+			if (tempdate.getFullYear() == beginDate.getFullYear() && tempdate.getMonth() == beginDate.getMonth() && tempdate.getDate() == beginDate.getDate()) {
+				isworkday ="(假)";
+				tdclass = "weekend";
+				break;
+			}
+		}
+		td = '<td data-date="'+ tdid +'" class="'+ tdclass +'"><span class="appoint-date pointer">'+ (beginDate.getMonth() + 1) + '月' + beginDate.getDate() + '日' + isworkday +'</span></td>';
 		thead += th;
 		tbody += td;
 		var nextDate = beginDate.setDate(beginDate.getDate() + 1);
@@ -283,12 +293,12 @@ function drawTimeTable(basicinfo, doctortime) {
 	table.append(tbody);
 }
 
-function RecordAddClick() {
+function RecordAddClick(worktime) {
 	var table = $("#patient-table");
 	var tbody = table.find("tbody");
 	var session = getSession();
 	tbody.find("tr").each(function(){
-		$(this).unbind("click").bind("click", function(){
+		$(this).unbind("click").bind("click",{worktime:worktime}, function(e){
 			$(this).parent().find("tr").removeClass("chosen");
 			$(this).addClass("chosen");
 			var patientid = $(this).attr("id");
@@ -309,7 +319,7 @@ function RecordAddClick() {
 			var timetable = $("#AppointTime");
 			timetable.find("td").removeClass("occupied chosen");
 			$(".weekday").removeClass("chosen");
-			DateAddClick(planinfo.patientinfo);
+			DateAddClick(planinfo.patientinfo,e.data.worktime);
 			$("#confirm").unbind("click").bind("click", function(){
 				var session = getSession();
 				var userid = session.userID;
@@ -428,16 +438,16 @@ function RecordAddClick() {
 	});
 }
 
-function DateAddClick(planinfo) {
+function DateAddClick(planinfo, worktime) {
 	var dateTable = $("#AppointDate");
 	var tbody = dateTable.find("tbody");
 	tbody.find("td").each(function(){
-		$(this).unbind("click").bind("click", {planinfo:planinfo}, function(){
+		$(this).unbind("click").bind("click", {planinfo:planinfo,worktime:worktime}, function(e){
 			if (!($(this).hasClass("weekend"))) {
 				$(this).parent().find("td").removeClass("chosen");
 				$(this).addClass("chosen");
 				var beginDate = $(this).attr("data-date");
-				var endDate = CalculateEndDate(beginDate, planinfo);
+				var endDate = CalculateEndDate(beginDate, e.data.planinfo, e.data.worktime);
 				var currentDay = $(this).attr("data-date");
 				var session = getSession();
 				var equipmentid = session.equipmentID;
@@ -509,7 +519,7 @@ function TimeAddClick(appointments, currentDay) {
 	});
 }
 
-function CalculateEndDate(beginDate, planinfo) {
+function CalculateEndDate(beginDate, planinfo, worktime) {
 	var dateStr = beginDate.split("-");
 	var year = parseInt(dateStr[0]);
 	var month = parseInt(dateStr[1]) - 1;
@@ -531,7 +541,15 @@ function CalculateEndDate(beginDate, planinfo) {
 			var count = 0;
 			var temp = rest;
 			while(temp > 0){
-				if (C_Date.getDay() == 0 && C_Date.getDay() == 6) {
+				var flag = 0;
+				for (var i = 0; i < worktime.length; i++) {
+					var tempdate = new Date(worktime[i]);
+					if (tempdate.getFullYear() == C_Date.getFullYear() && tempdate.getMonth() == C_Date.getMonth() && tempdate.getDate() == C_Date.getDate()) {
+						flag = 1;
+						break;
+					}
+				}
+				if (flag == 1) {
 					count = 0;
 				}else{
 					if (count % Interal == 0) {

@@ -194,6 +194,25 @@ public class getPatientInfoNew : IHttpHandler {
         {
             info.Append("\"\"");
         }
+        reader.Close();
+        info.Append(",\"worktime\":[");
+        string worktimeSelect = "select Date from worktimetable where Date>=@today and IsUsed=1 order by Date";
+        sqlOperation.AddParameterWithValue("@today", DateTime.Now.ToString("yyyy-MM-dd"));
+        reader = sqlOperation.ExecuteReader(worktimeSelect);
+        int counttemp = 0;
+        while (reader.Read())
+        {
+            if (counttemp == 0)
+            {
+                info.Append("\""+reader["Date"].ToString()+"\"");
+            }
+            else
+            {
+                info.Append(",\"" + reader["Date"].ToString()+"\"");
+            }
+            counttemp++;
+        }
+        info.Append("]");
         info.Append("}");
         return info.ToString();
         
