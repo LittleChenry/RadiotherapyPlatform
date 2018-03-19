@@ -1618,6 +1618,7 @@ function SingleTask(light, serious, singlepatient, currentProgress){
                 dateType: "json",
                 success: function (data) {
                     var stoprecord = $.parseJSON(data).warningInfo;
+                    var holidayrecord = $.parseJSON(data).holidayDate;
                     var stoplength = 0;
                     for (var i = 0; i < stoprecord.length; i++) {
                         if (stoprecord[i].RestartTime != "") {

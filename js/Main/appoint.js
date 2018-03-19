@@ -534,7 +534,6 @@ function CalculateEndDate(beginDate, planinfo, worktime) {
 			if ($(this).parent().find("td").eq(7).html() != "无") {
 				var date = $(this).prev().attr("data-date");
 				var C_Date = new Date(date);
-				
 			}else{
 				var C_Date = new Date(currentDay);
 			}
