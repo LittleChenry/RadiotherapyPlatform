@@ -7,7 +7,6 @@ $(document).ready(function () {
     RolesToPatients(session);
     adjustTable();
     functions = session.progress.split(" ");
-    showContent();
     $("#save").unbind("click").click(function () {
         var result = $("#record-iframe")[0].contentWindow.save();
         if (result == false) {
