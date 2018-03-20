@@ -7,7 +7,7 @@ $(document).ready(function () {
     RolesToPatients(session);
     adjustTable();
     functions = session.progress.split(" ");
-
+    showContent();
     $("#save").unbind("click").click(function () {
         var result = $("#record-iframe")[0].contentWindow.save();
         if (result == false) {
@@ -1533,49 +1533,39 @@ function SearchTable(str){
     $("#patient_info").html("一共"+ table.find("tbody tr").filter(":contains('"+ str +"')").length +"条记录");
 }
 
-function getTaskWarning(){
-    var taskwarning;
+//流程预警
+function TaskWarning(patient){
     $.ajax({
         type: "GET",
         url: "../../pages/Main/Records/getallwarning.ashx",
-        async: false,
+        async: true,
         dateType: "text",
         success: function (data) {
-            //alert(data);
-            taskwarning = $.parseJSON(data);
-        },
-        error: function () {
-            alert("error");
-        }
-    });
-    return taskwarning;
-}
-
-//流程预警
-function TaskWarning(patient){
-    var TaskWarning = getTaskWarning();
-    var WarningTaskContent = $("#TaskWarning-content");
-    var WarningTask = $("#WarningTask");
-    var WarningNum = $("#WarningNum");
-    WarningTaskContent.html("");
-    if (patient.PatientInfo != "") {
-        for (var i = 0; i < patient.PatientInfo.length; i++) {
-            var progress = patient.PatientInfo[i].Progress.split(",");
-            for (var j = 0; j < progress.length; j++) {
-                progress[j] = parseInt(progress[j]);
-            }
-            var progressInt = BubbleSort(progress)
-            var currentProgress = progressInt[progressInt.length - 1];
-            for (var k = 0; k < TaskWarning.Item.length; k++) {
-                if (currentProgress == TaskWarning.Item[k].Progress) {
-                    SingleTask(TaskWarning.Item[k].light, TaskWarning.Item[k].serious, patient.PatientInfo[i], currentProgress);
+            TaskWarning = $.parseJSON(data);
+            var WarningTaskContent = $("#TaskWarning-content");
+            var WarningTask = $("#WarningTask");
+            var WarningNum = $("#WarningNum");
+            WarningTaskContent.html("");
+            if (patient.PatientInfo != "") {
+                for (var i = 0; i < patient.PatientInfo.length; i++) {
+                    var progress = patient.PatientInfo[i].Progress.split(",");
+                    for (var j = 0; j < progress.length; j++) {
+                        progress[j] = parseInt(progress[j]);
+                    }
+                    var progressInt = BubbleSort(progress)
+                    var currentProgress = progressInt[progressInt.length - 1];
+                    for (var k = 0; k < TaskWarning.Item.length; k++) {
+                        if (currentProgress == TaskWarning.Item[k].Progress) {
+                            SingleTask(TaskWarning.Item[k].light, TaskWarning.Item[k].serious, patient.PatientInfo[i], currentProgress);
+                        }
+                    }
                 }
             }
+            var TaskWarningNum = WarningTaskContent.find("li").length;
+            WarningTask.html("你有"+ TaskWarningNum +"条工作任务预警");
+            WarningNum.html(TaskWarningNum);
         }
-    }
-    var TaskWarningNum = WarningTaskContent.find("li").length;
-    WarningTask.html("你有"+ TaskWarningNum +"条工作任务预警");
-    WarningNum.html(TaskWarningNum);
+    });
 }
 
 function SingleTask(light, serious, singlepatient, currentProgress){
