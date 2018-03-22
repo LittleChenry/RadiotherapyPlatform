@@ -30,8 +30,9 @@ public class addWorkTimeTable : IHttpHandler {
     public string delete(HttpContext context)
     {
         string id = context.Request.Form["ID"];
-        string updateSQL = "update worktimetable set isused = 0 where id = @ID";
+        string updateSQL = "update worktimetable set isused = 0,modifytime=@modifytime where id = @ID";
         sqlOperation.AddParameterWithValue("@ID", id);
+        sqlOperation.AddParameterWithValue("@modifytime", DateTime.Now.ToString("yyyy-MM-dd"));
         int success = sqlOperation.ExecuteNonQuery(updateSQL);
         sqlOperation.Close();
         sqlOperation.Dispose();
@@ -83,8 +84,9 @@ public class addWorkTimeTable : IHttpHandler {
         int result = Convert.ToInt32(sqlOperation.ExecuteScalar(selectSQL));
         if (result > 0)
         {
-            string updateSQL = "update WorkTimeTable set isused = 1 where date = @date";
+            string updateSQL = "update WorkTimeTable set isused = 1,modifytime=@modifytime where date = @date";
             sqlOperation.AddParameterWithValue("@date", date);
+            sqlOperation.AddParameterWithValue("@modifytime", DateTime.Now.ToString("yyyy-MM-dd"));
             int success = sqlOperation.ExecuteNonQuery(updateSQL);
             sqlOperation.Close();
             sqlOperation.Dispose();
