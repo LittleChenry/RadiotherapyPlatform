@@ -175,6 +175,7 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
                k++;
                
            }
+           reader1.Close();
            if (k != 0)
            {
                 break;

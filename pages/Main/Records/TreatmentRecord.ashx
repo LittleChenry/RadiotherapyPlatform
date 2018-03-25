@@ -60,6 +60,24 @@ public class TreatmentRecord : IHttpHandler {
         sqlOperation.AddParameterWithValue("@appoint", appointid);
         sqlOperation.AddParameterWithValue("@remarks", remark);
         int success = sqlOperation.ExecuteNonQuery(insert);
+
+        //计算此病人是否结束治疗
+        string sqlcommand3 = "select max(treatmentrecord.Rest) from treatmentrecord,childdesign,treatment where treatmentrecord.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID  and treatment.ID=(select Treatment_ID from childdesign where ID=@chid) and treatmentrecord.Treat_User_ID is not NULL";
+        sqlOperation.AddParameterWithValue("@chid",chid);
+        string restres = sqlOperation.ExecuteScalar(sqlcommand3);
+        int res=0;
+        if(restres!="")
+        {
+            res=int.Parse(restres);
+        }
+        //如果结束跳到总结随访
+        if (res == 0)
+        {
+            string updatecomm = "UPDATE treatment set Progress='0,1,2,3,4,5,6,7,8,9,10,11,12,13,14' where ID=(select Treatment_ID from childdesign where ID=@chid)";
+            sqlOperation.AddParameterWithValue("@chid", chid);
+            sqlOperation.ExecuteNonQuery(updatecomm);
+        }
+        
         if (success > 0)
         {
 
