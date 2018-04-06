@@ -1,5 +1,13 @@
 ﻿<%@ WebHandler Language="C#" Class="Addpatient" %>
-
+/* ***********************************************************
+ * FileName: Addpatient.ashx
+ * Writer: xubixiao
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 病人信息注册的后台
+ * **********************************************************/
 using System;
 using System.Web;
  using System.Text;
@@ -39,6 +47,8 @@ public class Addpatient : IHttpHandler {
     {
         //string savePath = "";
         //string savepath1 = "";
+        
+        //获取基本信息
         int hospitalnumber = 0;
         if (context.Request.Form["hospitalnumber"] != "")
         {
@@ -79,9 +89,11 @@ public class Addpatient : IHttpHandler {
             DateTime datetime = DateTime.Now;
 
 
+            //插入数据
             string strSqlCommand = "INSERT INTO patient(IdentificationNumber,Hospital,RecordNumber,Picture,Name,Gender,Age,Birthday,Nation,Address,Contact1,Contact2,Height,RegisterDoctor,Weight,Register_User_ID,RegisterTime,SubCenterPrincipal_ID,Radiotherapy_ID,Principal_User_ID,Hospital_ID,Ishospital,Nameping) VALUES("
              + "@IdentificationNumber,@Hospital,@RecordNumber,@Picture,@Name,@Gender,@Age,@Birthday,@Nation,@Address,@Contact1,@Contact2,@Height,@doctorid,@Weight,@Register_User_ID,@RegisterTime,@SubCenterPrincipal_ID,@Radiotherapy_ID,@Principal_User_ID,@hospitalnumber,@Ishospital,@Nameping)";
-            //各参数赋予实际值
+            
+           //各参数赋予实际值
             sqlOperation.AddParameterWithValue("@IdentificationNumber", context.Request.Form["IDcardNumber"]);
             sqlOperation.AddParameterWithValue("@Hospital", context.Request.Form["Hospital"]);
             sqlOperation.AddParameterWithValue("@RecordNumber", context.Request.Form["RecordNumber"]);
@@ -113,7 +125,10 @@ public class Addpatient : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@hospitalnumber", null);
             }
             int intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-            string patientID = "select ID  from patient where Name=@Name and IdentificationNumber=@IdentificationNumber order by ID desc";
+           
+        
+           //每个病人注册成功后会先注册一条疗程信息
+           string patientID = "select ID  from patient where Name=@Name and IdentificationNumber=@IdentificationNumber order by ID desc";
             sqlOperation1.AddParameterWithValue("@IdentificationNumber", context.Request.Form["IDcardNumber"]);
             sqlOperation1.AddParameterWithValue("@Name", context.Request.Form["userName"]);
             int patient = Convert.ToInt32(sqlOperation1.ExecuteScalar(patientID));
@@ -122,6 +137,7 @@ public class Addpatient : IHttpHandler {
             {
                 if (context.Request.Form["group"] == "allItem")
                 {
+                    //没有分组信息
                     string treatinsert = "insert into treatment(TreatmentName,Patient_ID,Progress,State,Belongingdoctor,Treatmentdescribe) values(@ID,@PID,@progress,0,@doc,@Treatmentdescribe)";
                     sqlOperation2.AddParameterWithValue("@progress", "0");
                     sqlOperation2.AddParameterWithValue("@ID", 1);
@@ -132,6 +148,7 @@ public class Addpatient : IHttpHandler {
                 }
                 else
                 {
+                    //有分组信息
                     string treatinsert = "insert into treatment(TreatmentName,Patient_ID,Progress,State,Group_ID,Belongingdoctor,Treatmentdescribe) values(@ID,@PID,@progress,0,@group,@doc,@Treatmentdescribe)";
                     sqlOperation2.AddParameterWithValue("@progress", "0");
                     sqlOperation2.AddParameterWithValue("@group", Convert.ToInt32(context.Request.Form["group"]));

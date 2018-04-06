@@ -173,6 +173,7 @@ function checkDouble(id, name) {
     });
 }
 
+//选择地址
 function SelectAddress() {
     var position = $("#Address").offset();
     var pickerTop = position.top + 29;
@@ -209,6 +210,7 @@ function SelectAddress() {
     loadProvince('');
 }
 
+//卡号His同步记录
 function Sync() {
     var CardID = $("#CardID").val();
     if (CardID == "") {
@@ -243,6 +245,8 @@ function Sync() {
         });
     }
 }
+
+//获取当前会话session
 function getSession() {
     var Session;
     $.ajax({
@@ -260,6 +264,9 @@ function getSession() {
     });
     return Session;
 }
+
+
+//根据输入身份证号导出出生日期
 function getBirthdate() {
     var IDcardNumber = $("#IDcardNumber").val();
     if (IDcardNumber.length > 13) { //320623 1993 10 24 4039
@@ -271,6 +278,7 @@ function getBirthdate() {
     }
 }
 
+//判断输入的放疗号是否合法，8位，不重复即可
 function isradio() {
     var radio = document.getElementById("radionumber").value;
     var reg = /^(\d{8})$/;
@@ -301,6 +309,7 @@ function isradio() {
     }
 }
 
+//获取当前日期，格式如“xxxx-xx-xx xx:xx”
 function getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
@@ -323,7 +332,8 @@ function getNowFormatDate() {
     return currentdate;
 }
 
-//第二步诊断单中的分中心负责人选择项建立
+
+//医师与分组下拉菜单的构建
 function createdoctorItem(thiselement) {
     var doctorItem = docandgroup;
     thiselement.options.length = 0;
@@ -338,6 +348,7 @@ function createdoctorItem(thiselement) {
     }
 }
 
+//分组下拉菜单构建
 function createselect2(index) {
     var thiselement = document.getElementById("group");
     var groups = docandgroup;
@@ -362,6 +373,7 @@ function createselect2(index) {
     }
 }
 
+//后台读取所有医师及其分组
 function getdoctorandgroup() {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/getdoctorandgroup.ashx";
@@ -370,6 +382,8 @@ function getdoctorandgroup() {
     var Items = xmlHttp.responseText;
     docandgroup =JSON.parse(Items).Item;
 }
+
+//获取根据当前放疗号制定规则，本次注册的病人的放疗号
 function gettreatid() {
     var xmlHttp = new XMLHttpRequest();
     var url = "SelectTreatID.ashx";
@@ -378,6 +392,7 @@ function gettreatid() {
     var Items = xmlHttp.responseText;
     return Items;
 }
+
 
 //表单reset函数
 function resetForm(evt) {
@@ -392,7 +407,7 @@ function resetForm(evt) {
     }
 }
 
-//第二步部位下拉项建立
+
 //检查各个输入项内容
 function CheckEmpty() {
     if (document.getElementById("radionumber").value == "") {
@@ -482,7 +497,7 @@ function CheckEmpty() {
     });
 }
 
-//根据classname做对应的各项检查
+
 //电话号码验证
 function checkPhone() {
     var strPhoneNumber = document.getElementById("Number1").value;
@@ -536,6 +551,7 @@ function recoverClassName(thisElement) {
     thisElement.className = returnClassName;
 }
 
+//获取当前操作用户ID
 function getUserID() {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/GetUserID.ashx";
@@ -551,6 +567,7 @@ function getUserID() {
     xmlHttp.send();
 }
 
+//获取当前用户的姓名
 function getUserName() {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/GetUserName.ashx";
@@ -565,6 +582,7 @@ function getUserName() {
     xmlHttp.send();
 }
 
+//身份证号校验
 function isCardNo() {
     // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X  
     var card = document.getElementById("IDcardNumber").value;
@@ -575,6 +593,7 @@ function isCardNo() {
     return false;
 }
 
+//加载地址选择的下拉菜单
 function loadProvince(regionId) {
     $("#tab_province").html("");
     $("#tab_city").html("");
@@ -664,6 +683,7 @@ function loadAddress(area) {
     $("#Address").focus();
 }
 
+//或取当前会话
 function getSession() {
     var Session;
     $.ajax({
@@ -681,7 +701,8 @@ function getSession() {
     });
     return Session;
 }
-//身份证读卡
+
+//身份证读卡部分，插件
 var socket;
 var sendFlag = 0;
 var zpFormat;
@@ -692,6 +713,7 @@ $(function () {
         readIDCard();
     });
 });
+
 
 function openReader() {
     var host = "ws://127.0.0.1:6688";
@@ -816,6 +838,7 @@ function closeSocket() {
     }
 }
 
+//清除上次填写内容
 function clearText() {      
     document.getElementById("Gender").value = "M";
     document.all("self-photo").src = "../../img/avatar.jpg";
@@ -831,6 +854,7 @@ function clearText() {
     $("#Nation").val("汉族");
 }
 
+//处理照片，以base64编码传输，由于是硬件解码与文件上传公用，所以采取编码上传而不是路径上传
 function handleFiles(e) {
     var groupfiles = e.target.files;
     var reader = new FileReader();
