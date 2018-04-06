@@ -1,4 +1,15 @@
-﻿var isAllGood;//所有检查是否通过
+﻿/* ***********************************************************
+ * FileName: AddPatient.js
+ * Writer: xubixiao
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 病人注册JS界面
+ * **********************************************************/
+
+
+var isAllGood;//所有检查是否通过
 
 var userName;
 var userID;
@@ -8,14 +19,17 @@ window.addEventListener("load", Init, false);//添加页面加载处理函数
 
 //初始化
 function Init() {
+    //获取Session会话，包括角色身份，角色ID，姓名等。
     var session = getSession();
     var role = session.role;
     getUserID();
+    //如果当前session失效，则跳到登录界面
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
+    //你们权限不够，此界面的权限给物理师、技师
     var session = getSession();
     if (session.role != "物理师" && session.role != "模拟技师" && session.role != "治疗技师") {
          $("#Menu-EquipmentView").attr("href", "javascript:;");
@@ -23,8 +37,13 @@ function Init() {
             alert("权限不够！");
          });
     }
+
     getUserName();
+    
+    //提交表单时触发CheckEmpty函数
     document.getElementById("save").addEventListener("click", CheckEmpty, false);
+
+    //界面的医师与分组的下拉菜单的建造
     getdoctorandgroup();
     var select4 = document.getElementById("doctor");
     createdoctorItem(select4);
@@ -32,13 +51,18 @@ function Init() {
         createselect2(select4.selectedIndex);
     }, false);
     
+    //填写登记人与登记时间
     document.getElementById("userID").value = userID;
     document.getElementById("operate").innerHTML = userName;
     document.getElementById("date").innerHTML = getNowFormatDate();
+    
+    //如果登记人是一名医师，那么病人自动属于这个医师负责
     if (role == "医师") {
         document.getElementById("doctor").value = userID;
         createselect2(select4.selectedIndex);
     }
+    
+    //是否住院单选框构造，住院需要填住院号
     var $radio1 = $('input[name="RecordNumber"]:eq(0)');
     var $radio2 = $('input[name="RecordNumber"]:eq(1)');
     $radio2.bind('click', function () {
@@ -47,6 +71,8 @@ function Init() {
     $radio1.bind('click', function () {
         $('#ishospital').css("display", "block");
     });
+
+    //身份证号的校验
     $("#IDcardNumber").bind("blur", function () {
         if (isCardNo()) {
             $(this).css("background", "yellow");
@@ -56,7 +82,19 @@ function Init() {
         if ($(this).prop("value") == "") {
             $(this).css("background", "white");
         }
+        
+        //判断库中是否存在重复病人录入的情况
+        checkDouble($("#IDcardNumber").val(), $("#userName").val());
     });
+
+    //姓名的重复校验，库中不能出现不同的病人
+    $("#userName").bind("blur", function () {
+        //判断库中是否存在重复病人录入的情况
+        checkDouble($("#IDcardNumber").val(), $("#userName").val());
+    });
+
+
+    //放疗号的校验
     $("#radionumber").blur(function () {
         var isradio1 = isradio();
         if (isradio1==0) {
@@ -73,22 +111,65 @@ function Init() {
             $(this).css("background", "white");
         }
     });
+
+    //His信息同步
     $("#sync").bind("click", Sync);
     $("#CardID").keydown(function () {
         if (event.keyCode == "13") {
             Sync();
         }
     });
+
+    //自动读取库里放疗号生产新的放疗号，基本规则8位，自增1，跨年清0
     var tre=gettreatid();
     $("#radionumber").attr("value", tre);
 
-    $("#selectAddress").bind("click",SelectAddress);
+    //选择地址
+    $("#selectAddress").bind("click", SelectAddress);
+    
+    //身份证读取设备
     $("#IDcardNumber").bind("input propertychange", getBirthdate);
+
+    //更新照片
     $("#self-photo").unbind("click").click(function (e) {
         $("#mypic").click();
     });
+
+    //导入照片
     $("#importPhoto").bind("click",function(){
         $("#cutphoto").modal({ backdrop: 'static' });
+    });
+
+}
+
+//检验库中是否存在相同姓名或者身份证号的病人
+function checkDouble(id, name) {
+    $.ajax({
+        url: "judegeDoublePatient.ashx",
+        type: "post",
+        data: {
+            id: id,
+            name: name
+        },
+        dateType: "json",
+        async: false,
+        success: function (data) {
+            if (data == "IDdouble") {
+                $("#warningcheck").html("身份证号码在数据库中已经存在！");
+                $("#warningcheck").show();
+            }
+            if (data == "NameDouble") {
+                $("#warningcheck").html("此人可能已经在数据中，请注意！");
+                $("#warningcheck").show();
+            }
+            if (data == "noDouble") {
+                $("#warningcheck").hide();
+            }
+     
+        },
+        error: function (e) { 
+            alert("error");
+        }
     });
 }
 

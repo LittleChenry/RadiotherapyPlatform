@@ -302,6 +302,9 @@
                                 <input id="CardID" name="CardID" class="form-item" type="text" AUTOCOMPLETE="OFF" style="width:37%;"/>
                                 <button id="sync" type="button" class="btn btn-info btn-sm btn-flat" style="margin-left:-1px;margin-top:-3px;">HIS同步</button>
                             </div>
+                             <div class="col-xs-5">
+                                <span class="form-text col-xs-12" style="padding-left:0px;"><i id="warningcheck" style="color:red;margin-left: 20%;display:none" class="fa fa-exclamation-circle"></i></span>
+                            </div>
                         </div>
                          <div class="single-row">
                              <div class="col-xs-5">
