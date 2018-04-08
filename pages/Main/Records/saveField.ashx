@@ -191,8 +191,8 @@ public class saveField : IHttpHandler {
                
                 for (int i = 0; i < a; i++)
                 {
-                    string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid,Singledose,Totaldose,childdesign_ID) " +
-                                            "VALUES(@code,@mu,@equipment,@radiotechnique,@radiotype,@energy,@wavedistance,@angleframe,@noseangle,@bedrotation,@subfieldnumber,@User_ID,@Operate_Time,@treatmentid,@Singledose,@Totaldose,@childdesign_ID)";
+                    string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid,Singledose,Totaldose,guangxianLeft,guangxianRight,childdesign_ID) " +
+                                            "VALUES(@code,@mu,@equipment,@radiotechnique,@radiotype,@energy,@wavedistance,@angleframe,@noseangle,@bedrotation,@subfieldnumber,@User_ID,@Operate_Time,@treatmentid,@Singledose,@Totaldose,@guangxianLeft,@guangxianRight,@childdesign_ID)";
                     // sqlOperation.AddParameterWithValue("@ID", Count);
                     sqlOperation.AddParameterWithValue("@code", context.Request.Form["a1" + i+"_"+item]);
                     sqlOperation.AddParameterWithValue("@mu", context.Request.Form["mu" + i + "_" + item]);
@@ -207,6 +207,8 @@ public class saveField : IHttpHandler {
                     sqlOperation.AddParameterWithValue("@subfieldnumber", context.Request.Form["childs" + i + "_" + item]);
                     sqlOperation.AddParameterWithValue("@Singledose", Convert.ToInt32(context.Request.Form["Graded" + item]));
                     sqlOperation.AddParameterWithValue("@Totaldose", Convert.ToInt32(context.Request.Form["total" + item]));
+                    sqlOperation.AddParameterWithValue("@guangxianLeft", context.Request.Form["xianLeft" + item]);
+                    sqlOperation.AddParameterWithValue("@guangxianRight", context.Request.Form["xianRight" + item]);
                     sqlOperation.AddParameterWithValue("@Operate_Time", date1);
                     sqlOperation.AddParameterWithValue("@treatmentid", treatID);
                     sqlOperation.AddParameterWithValue("@User_ID", userid);
@@ -289,8 +291,8 @@ public class saveField : IHttpHandler {
                 childid1 = sqlOperation.ExecuteScalar(childid1);
                 for (int i = 0; i < a; i++)
                 {
-                    string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid,Singledose,Totaldose,childdesign_ID) " +
-                                            "VALUES(@code,@mu,@equipment,@radiotechnique,@radiotype,@energy,@wavedistance,@angleframe,@noseangle,@bedrotation,@subfieldnumber,@User_ID,@Operate_Time,@treatmentid,@Singledose,@Totaldose,@childdesign_ID)";
+                    string strSqlCommand = "INSERT INTO fieldinfomation(code,mu,equipment,radiotechnique,radiotype,energy,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,User_ID,Operate_Time,treatmentid,Singledose,Totaldose,guangxianLeft,guangxianRight,childdesign_ID) " +
+                                            "VALUES(@code,@mu,@equipment,@radiotechnique,@radiotype,@energy,@wavedistance,@angleframe,@noseangle,@bedrotation,@subfieldnumber,@User_ID,@Operate_Time,@treatmentid,@Singledose,@Totaldose,@guangxianLeft,@guangxianRight,@childdesign_ID)";
                     // sqlOperation.AddParameterWithValue("@ID", Count);
                     sqlOperation.AddParameterWithValue("@code", context.Request.Form["a1" + i + "_" + item]);
                     sqlOperation.AddParameterWithValue("@mu", context.Request.Form["mu" + i + "_" + item]);
@@ -305,6 +307,8 @@ public class saveField : IHttpHandler {
                     sqlOperation.AddParameterWithValue("@subfieldnumber", context.Request.Form["childs" + i + "_" + item]);
                     sqlOperation.AddParameterWithValue("@Singledose", Convert.ToInt32(context.Request.Form["Graded" + item]));
                     sqlOperation.AddParameterWithValue("@Totaldose", Convert.ToInt32(context.Request.Form["total" + item]));
+                    sqlOperation.AddParameterWithValue("@guangxianLeft", context.Request.Form["xianLeft" + item]);
+                    sqlOperation.AddParameterWithValue("@guangxianRight", context.Request.Form["xianRight" + item]);
                     sqlOperation.AddParameterWithValue("@Operate_Time", date1);
                     sqlOperation.AddParameterWithValue("@treatmentid", treatID);
                     sqlOperation.AddParameterWithValue("@User_ID", userid);

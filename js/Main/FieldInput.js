@@ -839,6 +839,10 @@ function createTabPanel(panelId) {
 	                + "<div class='item col-xs-4'>"
 	                + "摆位信息：<input id='pos" + panelId + "' class='form-item' name='pos" + panelId + "'/>"
 	                + "</div>"
+                    + "<div class='item col-xs-8'>"
+	                + "限光筒：<input id='xianLeft" + panelId + "' style='width:12%' class='form-item' name='xianLeft" + panelId + "'/>"
+                    + "&nbsp&nbspx&nbsp&nbsp <input id='xianRight" + panelId + "' style='width:12%' class='form-item' name='xianRight" + panelId + "'/>"
+	                + "</div>"
 	                + "</div>");
 
         var $div_11 = $("<div class='single-row'>"
@@ -1048,6 +1052,10 @@ function createTabPanel(panelId) {
 	                + "<input id='Graded" + panelId + "' class='form-group-input' name='Graded" + panelId + "'/>"
 	                + "<span class='input-group-addon'>cGy</span>"
 	                + "</div>"
+	                + "</div>"
+                    + "<div class='item col-xs-4'>"
+	                + "限光筒：<input id='xianLeft" + panelId + "' style='width:20%' class='form-item' name='xianLeft" + panelId + "'/>"
+                    + "&nbsp&nbspx&nbsp&nbsp <input id='xianRight" + panelId + "' style='width:20%' class='form-item' name='xianRight" + panelId + "'/>"
 	                + "</div>"
 	                + "</div>");
 
@@ -1384,7 +1392,9 @@ function fillData(data) {
         $("#id"+i).val(dataFinal[i][0].radioID);
         $("#tps"+i).val(dataFinal[i][0].tps);
         $("#pos"+i).val(dataFinal[i][0].pos);
-        $("#Graded"+i).val(dataFinal[i][0].Singledose);
+        $("#Graded" + i).val(dataFinal[i][0].Singledose);
+        $("#xianLeft" + i).val(dataFinal[i][0].xianleft);
+        $("#xianRight" + i).val(dataFinal[i][0].xianright);
         $("#total"+i).val(dataFinal[i][0].Totaldose);
         $("#applyuser").html(dataFinal[i][0].Name);
         $("#time").html(dataFinal[i][0].time);

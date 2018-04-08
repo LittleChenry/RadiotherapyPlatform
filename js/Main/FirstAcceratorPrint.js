@@ -58,7 +58,10 @@ function print() {
     var refer = patientbasic.refer;
     content = content + '<div class="single-row" style="min-height:28px;">' +
                         '<div class="item col-xs-12">摆位信息：<span class="underline">' + patientbasic.pos + fixedeq + model + headrest + specialrequire + remarkinfo + '</span></div></div>';
-   
+    if (patientbasic.iscommon == "0") {
+        content = content + '<div class="single-row" style="min-height:28px;">' +
+                       '<div class="item col-xs-5">限光筒：<span class="underline">' + childdesigns[allpagenumber].fieldinfo[0].guangxianLeft + '</span>X<span class="underline">' + childdesigns[allpagenumber].fieldinfo[0].guangxianRight + '</span></div></div>';
+    }
     if (patientbasic.parameterx != "") {
         content = content + '<div class="single-row" style="min-height:28px;"><div class="item col-xs-8">移床参数：X:<span  class="underline">' + zhengfu(patientbasic.parameterx) + '</span>(cm) , Y:<span  class="underline">' + zhengfuy(patientbasic.parameterz) + '</span>(cm) , Z:<span  class="underline">' + zhengfuz(patientbasic.parametery) + '</span>(cm)</div>';
     }

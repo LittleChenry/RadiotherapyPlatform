@@ -105,134 +105,134 @@ public class AutoRun
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(checkcommmand);
         while (reader.Read())
         {
-            //如果那条预约是首次预约
+            //如果那条预约是首次预约，什么都不做
             if (reader["isfirst"].ToString() == "1")
             {
-                //看看今天同时间段可以不可以用
-                string checkisfirstcommand = "SELECT count(*) from appointment_accelerate where Equipment_ID=@equip and Begin=@begin and Date=@date";
-                sqlOperation1.AddParameterWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd"));
-                sqlOperation1.AddParameterWithValue("@begin", reader["appbegin"].ToString());
-                sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
-                int count = int.Parse(sqlOperation1.ExecuteScalar(checkisfirstcommand));
-                //已经被别人占用了
-                if (count > 0)
-                {
-                    DateTime temp = DateTime.Now;
+                ////看看今天同时间段可以不可以用
+                //string checkisfirstcommand = "SELECT count(*) from appointment_accelerate where Equipment_ID=@equip and Begin=@begin and Date=@date";
+                //sqlOperation1.AddParameterWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd"));
+                //sqlOperation1.AddParameterWithValue("@begin", reader["appbegin"].ToString());
+                //sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
+                //int count = int.Parse(sqlOperation1.ExecuteScalar(checkisfirstcommand));
+                ////已经被别人占用了
+                //if (count > 0)
+                //{
+                //    DateTime temp = DateTime.Now;
                    
-                    //取库中看看首次预约的合法时间段
-                    string firsttimecommand = "select begintime,endtime from firstacctime";
-                    MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(firsttimecommand);
-                    ArrayList beginarray = new ArrayList();
-                    ArrayList endarray = new ArrayList();
-                    while (reader1.Read())
-                    {
-                        beginarray.Add(reader1["begintime"].ToString());
-                        endarray.Add(reader1["endtime"].ToString());
-                    }
-                    reader1.Close();
-                    int BeginFinal = 0;
+                //    //取库中看看首次预约的合法时间段
+                //    string firsttimecommand = "select begintime,endtime from firstacctime";
+                //    MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(firsttimecommand);
+                //    ArrayList beginarray = new ArrayList();
+                //    ArrayList endarray = new ArrayList();
+                //    while (reader1.Read())
+                //    {
+                //        beginarray.Add(reader1["begintime"].ToString());
+                //        endarray.Add(reader1["endtime"].ToString());
+                //    }
+                //    reader1.Close();
+                //    int BeginFinal = 0;
 
-                    //从库中取得此设备的划片时间
-                    string equipLong = "select Timelength from equipment where ID=@equip";
-                    sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
-                    int equiplen = int.Parse(sqlOperation1.ExecuteScalar(equipLong));
+                //    //从库中取得此设备的划片时间
+                //    string equipLong = "select Timelength from equipment where ID=@equip";
+                //    sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
+                //    int equiplen = int.Parse(sqlOperation1.ExecuteScalar(equipLong));
 
-                    //开始从今天这个时段开始往下依次查合适的时间约上去
-                    while (true)
-                    {
-                        //判断这一天是否是节假日
-                        string dayIsOkCom = "select count(*) from worktimetable where Date=@date and IsUsed=1";
-                        sqlOperation1.AddParameterWithValue("@date", temp.ToString("yyyy-MM-dd"));
-                        int dayIsOk = int.Parse(sqlOperation1.ExecuteScalar(dayIsOkCom));
+                //    //开始从今天这个时段开始往下依次查合适的时间约上去
+                //    while (true)
+                //    {
+                //        //判断这一天是否是节假日
+                //        string dayIsOkCom = "select count(*) from worktimetable where Date=@date and IsUsed=1";
+                //        sqlOperation1.AddParameterWithValue("@date", temp.ToString("yyyy-MM-dd"));
+                //        int dayIsOk = int.Parse(sqlOperation1.ExecuteScalar(dayIsOkCom));
 
-                        if (dayIsOk == 0)
-                        {
-                            for (int i = 0; i < beginarray.Count; i++)
-                            {
-                                int begintime = int.Parse(beginarray[i].ToString());
-                                int endtime = int.Parse(endarray[i].ToString());
-                                while (begintime < endtime)
-                                {
-                                    string checkisfirstcommandtemp = "SELECT count(*) from appointment_accelerate where Equipment_ID=@equip and Begin=@begin and Date=@date";
-                                    sqlOperation1.AddParameterWithValue("@date", temp.ToString("yyyy-MM-dd"));
-                                    sqlOperation1.AddParameterWithValue("@begin", begintime);
-                                    sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
-                                    int counttemp = int.Parse(sqlOperation1.ExecuteScalar(checkisfirstcommandtemp));
-                                    //依次向下逐步查询，直到合适的时间段
-                                    if (counttemp > 0)
-                                    {
-                                        begintime = begintime + equiplen;
-                                    }
-                                    else
-                                    {
-                                        BeginFinal = begintime;
-                                        break;
-                                    }
+                //        if (dayIsOk == 0)
+                //        {
+                //            for (int i = 0; i < beginarray.Count; i++)
+                //            {
+                //                int begintime = int.Parse(beginarray[i].ToString());
+                //                int endtime = int.Parse(endarray[i].ToString());
+                //                while (begintime < endtime)
+                //                {
+                //                    string checkisfirstcommandtemp = "SELECT count(*) from appointment_accelerate where Equipment_ID=@equip and Begin=@begin and Date=@date";
+                //                    sqlOperation1.AddParameterWithValue("@date", temp.ToString("yyyy-MM-dd"));
+                //                    sqlOperation1.AddParameterWithValue("@begin", begintime);
+                //                    sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
+                //                    int counttemp = int.Parse(sqlOperation1.ExecuteScalar(checkisfirstcommandtemp));
+                //                    //依次向下逐步查询，直到合适的时间段
+                //                    if (counttemp > 0)
+                //                    {
+                //                        begintime = begintime + equiplen;
+                //                    }
+                //                    else
+                //                    {
+                //                        BeginFinal = begintime;
+                //                        break;
+                //                    }
 
-                                }
-                                if (BeginFinal != 0)
-                                {
-                                    break;
-                                }
+                //                }
+                //                if (BeginFinal != 0)
+                //                {
+                //                    break;
+                //                }
 
-                            }
-                        }
+                //            }
+                //        }
 
-                        //如果今天不行就到明天呗
-                        if (BeginFinal != 0)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            temp = temp.AddDays(1);
-                        }
-                    }
+                //        //如果今天不行就到明天呗
+                //        if (BeginFinal != 0)
+                //        {
+                //            break;
+                //        }
+                //        else
+                //        {
+                //            temp = temp.AddDays(1);
+                //        }
+                //    }
 
-                    //找到了就可以插进去了
-                    string pidcommand = "select treatment.Patient_ID as pid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
-                    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                    string pid = sqlOperation1.ExecuteScalar(pidcommand);
+                //    //找到了就可以插进去了
+                //    string pidcommand = "select treatment.Patient_ID as pid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
+                //    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                //    string pid = sqlOperation1.ExecuteScalar(pidcommand);
 
-                    string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
-                    sqlOperation1.AddParameterWithValue("@task", "加速器");
-                    sqlOperation1.AddParameterWithValue("@pid", pid);
-                    sqlOperation1.AddParameterWithValue("@date", temp.ToString("yyyy-MM-dd"));
-                    sqlOperation1.AddParameterWithValue("@equipid", reader["equipid"].ToString());
-                    sqlOperation1.AddParameterWithValue("@begin", BeginFinal);
-                    sqlOperation1.AddParameterWithValue("@end", BeginFinal + equiplen);
-                    string insertid = sqlOperation1.ExecuteScalar(insertappoint);
+                //    string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                //    sqlOperation1.AddParameterWithValue("@task", "加速器");
+                //    sqlOperation1.AddParameterWithValue("@pid", pid);
+                //    sqlOperation1.AddParameterWithValue("@date", temp.ToString("yyyy-MM-dd"));
+                //    sqlOperation1.AddParameterWithValue("@equipid", reader["equipid"].ToString());
+                //    sqlOperation1.AddParameterWithValue("@begin", BeginFinal);
+                //    sqlOperation1.AddParameterWithValue("@end", BeginFinal + equiplen);
+                //    string insertid = sqlOperation1.ExecuteScalar(insertappoint);
 
-                    string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,1,@chid);select @@IDENTITY";
-                    sqlOperation1.AddParameterWithValue("@appoint", insertid);
-                    sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
-                    sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                }
-                else
-                {
-                    //如果这个时间段可以用那就可以用
-                    string pidcommand = "select treatment.Patient_ID as pid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
-                    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                    string pid = sqlOperation1.ExecuteScalar(pidcommand);
+                //    string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,1,@chid);select @@IDENTITY";
+                //    sqlOperation1.AddParameterWithValue("@appoint", insertid);
+                //    sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
+                //    sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                //    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                //    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                //}
+                //else
+                //{
+                //    //如果这个时间段可以用那就可以用
+                //    string pidcommand = "select treatment.Patient_ID as pid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
+                //    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                //    string pid = sqlOperation1.ExecuteScalar(pidcommand);
 
-                    string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
-                    sqlOperation1.AddParameterWithValue("@task", "加速器");
-                    sqlOperation1.AddParameterWithValue("@pid", pid);
-                    sqlOperation1.AddParameterWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd"));
-                    sqlOperation1.AddParameterWithValue("@equipid", reader["equipid"].ToString());
-                    sqlOperation1.AddParameterWithValue("@begin", reader["appbegin"].ToString());
-                    sqlOperation1.AddParameterWithValue("@end", reader["append"].ToString());
-                    string insertid = sqlOperation1.ExecuteScalar(insertappoint);
+                //    string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                //    sqlOperation1.AddParameterWithValue("@task", "加速器");
+                //    sqlOperation1.AddParameterWithValue("@pid", pid);
+                //    sqlOperation1.AddParameterWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd"));
+                //    sqlOperation1.AddParameterWithValue("@equipid", reader["equipid"].ToString());
+                //    sqlOperation1.AddParameterWithValue("@begin", reader["appbegin"].ToString());
+                //    sqlOperation1.AddParameterWithValue("@end", reader["append"].ToString());
+                //    string insertid = sqlOperation1.ExecuteScalar(insertappoint);
 
-                    string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,1,@chid);select @@IDENTITY";
-                    sqlOperation1.AddParameterWithValue("@appoint", insertid);
-                    sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
-                    sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                }
+                //    string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,1,@chid);select @@IDENTITY";
+                //    sqlOperation1.AddParameterWithValue("@appoint", insertid);
+                //    sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
+                //    sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                //    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                //    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                //}
             }
             else
             {
@@ -849,189 +849,189 @@ public class AutoRun
                 {
                     continue;
                 }
-                //如果这是一条友善的首次预约，那就这样处理
+                //如果这是一条友善的首次预约，那就不处理
                 if (reader["isfirst"].ToString() == "1")
                 {
-                    //从那天开始往后查到一个非节假日
-                    Boolean BigFlag = true;
-                    DateTime suitTime = tempDateTime;
-                    while (BigFlag)
-                    {
-                        string checkHoliday = "select count(*) from worktimetable where Date=@date and IsUsed=1";
-                        sqlOperation1.AddParameterWithValue("@date", maxdatetime);
-                        int result = int.Parse(sqlOperation1.ExecuteScalar(checkHoliday));
-                        if (result == 0)
-                        {
-                            BigFlag = false;
-                            break;
-                        }
-                        suitTime = suitTime.AddDays(1);
-                    }
+                    ////从那天开始往后查到一个非节假日
+                    //Boolean BigFlag = true;
+                    //DateTime suitTime = tempDateTime;
+                    //while (BigFlag)
+                    //{
+                    //    string checkHoliday = "select count(*) from worktimetable where Date=@date and IsUsed=1";
+                    //    sqlOperation1.AddParameterWithValue("@date", maxdatetime);
+                    //    int result = int.Parse(sqlOperation1.ExecuteScalar(checkHoliday));
+                    //    if (result == 0)
+                    //    {
+                    //        BigFlag = false;
+                    //        break;
+                    //    }
+                    //    suitTime = suitTime.AddDays(1);
+                    //}
 
-                    //看看今天同时间段可以不可以用
-                    string checkisfirstcommand = "SELECT count(*) from appointment_accelerate where Equipment_ID=@equip and Begin=@begin and Date=@date";
-                    sqlOperation1.AddParameterWithValue("@date", suitTime.ToString("yyyy-MM-dd"));
-                    sqlOperation1.AddParameterWithValue("@begin", reader["begin"].ToString());
-                    sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
-                    int count = int.Parse(sqlOperation1.ExecuteScalar(checkisfirstcommand));
+                    ////看看今天同时间段可以不可以用
+                    //string checkisfirstcommand = "SELECT count(*) from appointment_accelerate where Equipment_ID=@equip and Begin=@begin and Date=@date";
+                    //sqlOperation1.AddParameterWithValue("@date", suitTime.ToString("yyyy-MM-dd"));
+                    //sqlOperation1.AddParameterWithValue("@begin", reader["begin"].ToString());
+                    //sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
+                    //int count = int.Parse(sqlOperation1.ExecuteScalar(checkisfirstcommand));
 
-                    //已经被别人占用了
-                    if (count > 0)
-                    {
-                        DateTime temp = suitTime;
+                    ////已经被别人占用了
+                    //if (count > 0)
+                    //{
+                    //    DateTime temp = suitTime;
 
-                        //取库中看看首次预约的合法时间段
-                        string firsttimecommand = "select begintime,endtime from firstacctime";
-                        MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(firsttimecommand);
-                        ArrayList beginarray = new ArrayList();
-                        ArrayList endarray = new ArrayList();
-                        while (reader1.Read())
-                        {
-                            beginarray.Add(reader1["begintime"].ToString());
-                            endarray.Add(reader1["endtime"].ToString());
-                        }
-                        reader1.Close();
-                        int BeginFinal = 0;
+                    //    //取库中看看首次预约的合法时间段
+                    //    string firsttimecommand = "select begintime,endtime from firstacctime";
+                    //    MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(firsttimecommand);
+                    //    ArrayList beginarray = new ArrayList();
+                    //    ArrayList endarray = new ArrayList();
+                    //    while (reader1.Read())
+                    //    {
+                    //        beginarray.Add(reader1["begintime"].ToString());
+                    //        endarray.Add(reader1["endtime"].ToString());
+                    //    }
+                    //    reader1.Close();
+                    //    int BeginFinal = 0;
 
-                        //从库中取得此设备的划片时间
-                        string equipLong = "select Timelength from equipment where ID=@equip";
-                        sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
-                        int equiplen = int.Parse(sqlOperation1.ExecuteScalar(equipLong));
+                    //    //从库中取得此设备的划片时间
+                    //    string equipLong = "select Timelength from equipment where ID=@equip";
+                    //    sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
+                    //    int equiplen = int.Parse(sqlOperation1.ExecuteScalar(equipLong));
 
-                        //开始从今天这个时段开始往下依次查合适的时间约上去
-                        while (true)
-                        {
-                            //判断这一天是否是节假日
-                            string dayIsOkCom = "select count(*) from worktimetable where Date=@date and IsUsed=1";
-                            sqlOperation1.AddParameterWithValue("@date", temp.ToString("yyyy-MM-dd"));
-                            int dayIsOk = int.Parse(sqlOperation1.ExecuteScalar(dayIsOkCom));
+                    //    //开始从今天这个时段开始往下依次查合适的时间约上去
+                    //    while (true)
+                    //    {
+                    //        //判断这一天是否是节假日
+                    //        string dayIsOkCom = "select count(*) from worktimetable where Date=@date and IsUsed=1";
+                    //        sqlOperation1.AddParameterWithValue("@date", temp.ToString("yyyy-MM-dd"));
+                    //        int dayIsOk = int.Parse(sqlOperation1.ExecuteScalar(dayIsOkCom));
 
-                            if (dayIsOk == 0)
-                            {
-                                for (int i = 0; i < beginarray.Count; i++)
-                                {
-                                    int begintime = int.Parse(beginarray[i].ToString());
-                                    int endtime = int.Parse(endarray[i].ToString());
-                                    while (begintime < endtime)
-                                    {
-                                        string checkisfirstcommandtemp = "SELECT count(*) from appointment_accelerate where Equipment_ID=@equip and Begin=@begin and Date=@date";
-                                        sqlOperation1.AddParameterWithValue("@date", temp.ToString("yyyy-MM-dd"));
-                                        sqlOperation1.AddParameterWithValue("@begin", begintime);
-                                        sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
-                                        int counttemp = int.Parse(sqlOperation1.ExecuteScalar(checkisfirstcommandtemp));
-                                        //依次向下逐步查询，直到合适的时间段
-                                        if (counttemp > 0)
-                                        {
-                                            begintime = begintime + equiplen;
-                                        }
-                                        else
-                                        {
-                                            BeginFinal = begintime;
-                                            break;
-                                        }
+                    //        if (dayIsOk == 0)
+                    //        {
+                    //            for (int i = 0; i < beginarray.Count; i++)
+                    //            {
+                    //                int begintime = int.Parse(beginarray[i].ToString());
+                    //                int endtime = int.Parse(endarray[i].ToString());
+                    //                while (begintime < endtime)
+                    //                {
+                    //                    string checkisfirstcommandtemp = "SELECT count(*) from appointment_accelerate where Equipment_ID=@equip and Begin=@begin and Date=@date";
+                    //                    sqlOperation1.AddParameterWithValue("@date", temp.ToString("yyyy-MM-dd"));
+                    //                    sqlOperation1.AddParameterWithValue("@begin", begintime);
+                    //                    sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
+                    //                    int counttemp = int.Parse(sqlOperation1.ExecuteScalar(checkisfirstcommandtemp));
+                    //                    //依次向下逐步查询，直到合适的时间段
+                    //                    if (counttemp > 0)
+                    //                    {
+                    //                        begintime = begintime + equiplen;
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        BeginFinal = begintime;
+                    //                        break;
+                    //                    }
 
-                                    }
-                                    if (BeginFinal != 0)
-                                    {
-                                        break;
-                                    }
+                    //                }
+                    //                if (BeginFinal != 0)
+                    //                {
+                    //                    break;
+                    //                }
 
-                                }
-                            }
+                    //            }
+                    //        }
 
-                            //如果今天不行就到明天呗
-                            if (BeginFinal != 0)
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                temp = temp.AddDays(1);
-                            }
-                        }
+                    //        //如果今天不行就到明天呗
+                    //        if (BeginFinal != 0)
+                    //        {
+                    //            break;
+                    //        }
+                    //        else
+                    //        {
+                    //            temp = temp.AddDays(1);
+                    //        }
+                    //    }
 
-                        //找到了就可以插进去了
-                        string pidcommand = "select treatment.Patient_ID as pid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
-                        sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                        string pid = sqlOperation1.ExecuteScalar(pidcommand);
+                    //    //找到了就可以插进去了
+                    //    string pidcommand = "select treatment.Patient_ID as pid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
+                    //    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                    //    string pid = sqlOperation1.ExecuteScalar(pidcommand);
 
-                        string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
-                        sqlOperation1.AddParameterWithValue("@task", "加速器");
-                        sqlOperation1.AddParameterWithValue("@pid", pid);
-                        sqlOperation1.AddParameterWithValue("@date", temp.ToString("yyyy-MM-dd"));
-                        sqlOperation1.AddParameterWithValue("@equipid", reader["equipid"].ToString());
-                        sqlOperation1.AddParameterWithValue("@begin", BeginFinal);
-                        sqlOperation1.AddParameterWithValue("@end", BeginFinal + equiplen);
-                        string insertid = sqlOperation1.ExecuteScalar(insertappoint);
+                    //    string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                    //    sqlOperation1.AddParameterWithValue("@task", "加速器");
+                    //    sqlOperation1.AddParameterWithValue("@pid", pid);
+                    //    sqlOperation1.AddParameterWithValue("@date", temp.ToString("yyyy-MM-dd"));
+                    //    sqlOperation1.AddParameterWithValue("@equipid", reader["equipid"].ToString());
+                    //    sqlOperation1.AddParameterWithValue("@begin", BeginFinal);
+                    //    sqlOperation1.AddParameterWithValue("@end", BeginFinal + equiplen);
+                    //    string insertid = sqlOperation1.ExecuteScalar(insertappoint);
 
-                        string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,1,@chid);select @@IDENTITY";
-                        sqlOperation1.AddParameterWithValue("@appoint", insertid);
-                        sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
-                        sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                        sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                        string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                    }
-                    else
-                    {
-                        //如果这个时间段可以用那就可以用
-                        string pidcommand = "select treatment.Patient_ID as pid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
-                        sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                        string pid = sqlOperation1.ExecuteScalar(pidcommand);
+                    //    string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,1,@chid);select @@IDENTITY";
+                    //    sqlOperation1.AddParameterWithValue("@appoint", insertid);
+                    //    sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
+                    //    sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                    //    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                    //    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                    //}
+                    //else
+                    //{
+                    //    //如果这个时间段可以用那就可以用
+                    //    string pidcommand = "select treatment.Patient_ID as pid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
+                    //    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                    //    string pid = sqlOperation1.ExecuteScalar(pidcommand);
 
-                        string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
-                        sqlOperation1.AddParameterWithValue("@task", "加速器");
-                        sqlOperation1.AddParameterWithValue("@pid", pid);
-                        sqlOperation1.AddParameterWithValue("@date", suitTime.ToString("yyyy-MM-dd"));
-                        sqlOperation1.AddParameterWithValue("@equipid", reader["equipid"].ToString());
-                        sqlOperation1.AddParameterWithValue("@begin", reader["begin"].ToString());
-                        sqlOperation1.AddParameterWithValue("@end", reader["end"].ToString());
-                        string insertid = sqlOperation1.ExecuteScalar(insertappoint);
+                    //    string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                    //    sqlOperation1.AddParameterWithValue("@task", "加速器");
+                    //    sqlOperation1.AddParameterWithValue("@pid", pid);
+                    //    sqlOperation1.AddParameterWithValue("@date", suitTime.ToString("yyyy-MM-dd"));
+                    //    sqlOperation1.AddParameterWithValue("@equipid", reader["equipid"].ToString());
+                    //    sqlOperation1.AddParameterWithValue("@begin", reader["begin"].ToString());
+                    //    sqlOperation1.AddParameterWithValue("@end", reader["end"].ToString());
+                    //    string insertid = sqlOperation1.ExecuteScalar(insertappoint);
 
-                        string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,1,@chid);select @@IDENTITY";
-                        sqlOperation1.AddParameterWithValue("@appoint", insertid);
-                        sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
-                        sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                        sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                        string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                    }
+                    //    string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,1,@chid);select @@IDENTITY";
+                    //    sqlOperation1.AddParameterWithValue("@appoint", insertid);
+                    //    sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
+                    //    sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                    //    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                    //    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                    //}
 
-                    //医师预约之前需要清除当前子计划的所有已有预约信息
-                    string selectcommand = "select treatmentrecord_copy.Appointment_ID as appointid,treatmentrecord_copy.ID as treatmentrecordid from treatmentrecord_copy,appointment_accelerate_copy where treatmentrecord_copy.Appointment_ID=appointment_accelerate_copy.ID and treatmentrecord_copy.ChildDesign_ID=@chid and appointment_accelerate_copy.Date>=@nowdate";
-                    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                    sqlOperation1.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
-                    MySql.Data.MySqlClient.MySqlDataReader reader2 = sqlOperation1.ExecuteReader(selectcommand);
-                    ArrayList arrayforapp = new ArrayList();
-                    ArrayList arrayforapp2 = new ArrayList();
-                    ArrayList treatmentarray = new ArrayList();
-                    while (reader2.Read())
-                    {
-                        arrayforapp.Add(reader2["appointid"].ToString());
-                        treatmentarray.Add(reader2["treatmentrecordid"].ToString());
-                    }
-                    reader2.Close();
-                    for (int i = 0; i < arrayforapp.Count; i++)
-                    {
-                        string isexists = "select count(*) from treatmentrecord_copy where ChildDesign_ID<>@chid and Appointment_ID=@appoint";
-                        sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                        sqlOperation1.AddParameterWithValue("@appoint", arrayforapp[i]);
-                        int counttemp = int.Parse(sqlOperation1.ExecuteScalar(isexists));
-                        if (counttemp == 0)
-                        {
-                            arrayforapp2.Add(arrayforapp[i]);
-                        }
-                    }
-                    for (int i = 0; i < arrayforapp2.Count; i++)
-                    {
-                        string deletecommand = "delete from appointment_accelerate_copy where ID=@appoint";
-                        sqlOperation1.AddParameterWithValue("@appoint", arrayforapp2[i]);
-                        sqlOperation1.ExecuteNonQuery(deletecommand);
-                    }
-                    for (int i = 0; i < treatmentarray.Count; i++)
-                    {
-                        string deletecommand2 = "delete from treatmentrecord_copy where ID=@tretmentid";
-                        sqlOperation1.AddParameterWithValue("@tretmentid", treatmentarray[i]);
-                        sqlOperation1.ExecuteNonQuery(deletecommand2);
-                    }
+                    ////医师预约之前需要清除当前子计划的所有已有预约信息
+                    //string selectcommand = "select treatmentrecord_copy.Appointment_ID as appointid,treatmentrecord_copy.ID as treatmentrecordid from treatmentrecord_copy,appointment_accelerate_copy where treatmentrecord_copy.Appointment_ID=appointment_accelerate_copy.ID and treatmentrecord_copy.ChildDesign_ID=@chid and appointment_accelerate_copy.Date>=@nowdate";
+                    //sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                    //sqlOperation1.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
+                    //MySql.Data.MySqlClient.MySqlDataReader reader2 = sqlOperation1.ExecuteReader(selectcommand);
+                    //ArrayList arrayforapp = new ArrayList();
+                    //ArrayList arrayforapp2 = new ArrayList();
+                    //ArrayList treatmentarray = new ArrayList();
+                    //while (reader2.Read())
+                    //{
+                    //    arrayforapp.Add(reader2["appointid"].ToString());
+                    //    treatmentarray.Add(reader2["treatmentrecordid"].ToString());
+                    //}
+                    //reader2.Close();
+                    //for (int i = 0; i < arrayforapp.Count; i++)
+                    //{
+                    //    string isexists = "select count(*) from treatmentrecord_copy where ChildDesign_ID<>@chid and Appointment_ID=@appoint";
+                    //    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                    //    sqlOperation1.AddParameterWithValue("@appoint", arrayforapp[i]);
+                    //    int counttemp = int.Parse(sqlOperation1.ExecuteScalar(isexists));
+                    //    if (counttemp == 0)
+                    //    {
+                    //        arrayforapp2.Add(arrayforapp[i]);
+                    //    }
+                    //}
+                    //for (int i = 0; i < arrayforapp2.Count; i++)
+                    //{
+                    //    string deletecommand = "delete from appointment_accelerate_copy where ID=@appoint";
+                    //    sqlOperation1.AddParameterWithValue("@appoint", arrayforapp2[i]);
+                    //    sqlOperation1.ExecuteNonQuery(deletecommand);
+                    //}
+                    //for (int i = 0; i < treatmentarray.Count; i++)
+                    //{
+                    //    string deletecommand2 = "delete from treatmentrecord_copy where ID=@tretmentid";
+                    //    sqlOperation1.AddParameterWithValue("@tretmentid", treatmentarray[i]);
+                    //    sqlOperation1.ExecuteNonQuery(deletecommand2);
+                    //}
                 }
                 else
                 {

@@ -108,14 +108,14 @@ public class getAllChildDesignInfo : IHttpHandler {
             string fieldcountcommand = "select count(*) from fieldinfomation where ChildDesign_ID=@ChildDesign_ID";
             sqlOperation1.AddParameterWithValue("@ChildDesign_ID", reader["chid"].ToString());
             int fieldcount = int.Parse(sqlOperation1.ExecuteScalar(fieldcountcommand));
-            string sqlCommand = "SELECT fieldinfomation.ChildDesign_ID,code,mu,equipment,radiotechnique,radiotype,fieldinfomation.energy as energy1,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose from fieldinfomation where ChildDesign_ID=@ChildDesign_ID ";
+            string sqlCommand = "SELECT fieldinfomation.ChildDesign_ID,code,mu,equipment,radiotechnique,radiotype,fieldinfomation.energy as energy1,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,guangxianLeft,guangxianRight from fieldinfomation where ChildDesign_ID=@ChildDesign_ID ";
             reader1 = sqlOperation1.ExecuteReader(sqlCommand);
             int tempco=1;
             while (reader1.Read())
             {
                 info.Append("{\"code\":\"" + reader1["code"].ToString() + "\",\"mu\":\"" + reader1["mu"].ToString() + "\",\"equipment\":\"" + reader1["equipment"].ToString() + "\",");
                 info.Append("\"radiotechnique\":\"" + reader1["radiotechnique"].ToString() + "\",\"radiotype\":\"" + reader1["radiotype"].ToString() + "\",\"energy\":\"" + reader1["energy1"].ToString() + "\",\"wavedistance\":\"" + reader1["wavedistance"].ToString() + "\",");
-                info.Append("\"angleframe\":\"" + reader1["angleframe"].ToString() + "\",\"noseangle\":\"" + reader1["noseangle"].ToString() + "\",\"bedrotation\":\"" + reader1["bedrotation"].ToString() + "\",\"subfieldnumber\":\"" + reader1["subfieldnumber"].ToString() + "\",");
+                info.Append("\"angleframe\":\"" + reader1["angleframe"].ToString() + "\",\"noseangle\":\"" + reader1["noseangle"].ToString() + "\",\"guangxianLeft\":\"" + reader1["guangxianLeft"].ToString() + "\",\"guangxianRight\":\"" + reader1["guangxianRight"].ToString() + "\",\"bedrotation\":\"" + reader1["bedrotation"].ToString() + "\",\"subfieldnumber\":\"" + reader1["subfieldnumber"].ToString() + "\",");
                 info.Append("\"Singledose\":\"" + reader1["Singledose"].ToString() + "\",\"Totaldose\":\"" + reader1["Totaldose"].ToString() + "\"}");
                 if (tempco < fieldcount)
                 {

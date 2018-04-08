@@ -46,8 +46,8 @@ public class getallfieldinfo : IHttpHandler {
             string pos = sqlOperation.ExecuteScalar(countcommand2);
             string countcommand3 = "select iscommon from treatment where ID=@treatmentid ";
             int iscommon = Convert.ToInt32(sqlOperation.ExecuteScalar(countcommand3));
-            
-            string sqlCommand = "SELECT code,mu,equipment,User_ID,radiotechnique,radiotype,fieldinfomation.energy as energy1,childdesign.energy as energy2,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,Operate_Time,Name,childdesign.* from fieldinfomation,user,childdesign where User_ID=user.ID and childdesign.treatment_ID=@treatmentid and childdesign.ID=childdesign_ID and treatmentid=@treatmentid ";
+
+            string sqlCommand = "SELECT code,mu,equipment,User_ID,radiotechnique,radiotype,fieldinfomation.energy as energy1,fieldinfomation.guangxianLeft as xianleft,fieldinfomation.guangxianRight as xianright,childdesign.energy as energy2,wavedistance,angleframe,noseangle,bedrotation,subfieldnumber,Singledose,Totaldose,Operate_Time,Name,childdesign.* from fieldinfomation,user,childdesign where User_ID=user.ID and childdesign.treatment_ID=@treatmentid and childdesign.ID=childdesign_ID and treatmentid=@treatmentid ";
             sqlOperation1.AddParameterWithValue("@treatmentid", treatid);
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation1.ExecuteReader(sqlCommand);
             StringBuilder backText = new StringBuilder("{\"Item\":[");
@@ -98,7 +98,7 @@ public class getallfieldinfo : IHttpHandler {
                     "\",\"angleframe\":\"" + reader["angleframe"].ToString() + "\",\"noseangle\":\"" + reader["noseangle"].ToString() + "\",\"bedrotation\":\"" + reader["bedrotation"].ToString() + "\",\"subfieldnumber\":\"" + reader["subfieldnumber"].ToString() + "\",\"tps\":\"" + tps + "\",\"pos\":\"" + pos +
                     "\",\"Singledose\":\"" + reader["Singledose"].ToString() + "\",\"Totaldose\":\"" + reader["Totaldose"].ToString() + "\",\"Illuminatedangle\":\"" + reader["Illuminatedangle"].ToString() + "\",\"IlluminatedNumber\":\"" + reader["IlluminatedNumber"].ToString() +
                     "\",\"Irradiation\":\"" + reader["Irradiation_ID"].ToString() + "\",\"energy2\":\"" + reader["energy2"].ToString() + "\",\"time\":\"" + date1 + "\",\"Name\":\"" + reader["Name"].ToString() + "\",\"item\":\"" + reader["item"].ToString() + "\",\"DesignName\":\"" + reader["DesignName"].ToString() +
-                    "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() + "\",\"userID\":\"" + reader["User_ID"].ToString() + "\",\"left\":\"" + left + "\",\"right\":\"" + right + "\",\"rise\":\"" + rise + "\",\"drop\":\"" + drop + "\",\"enter\":\"" + enter + "\",\"out\":\"" + out1 +
+                    "\",\"Coplanar\":\"" + reader["Coplanar"].ToString() + "\",\"xianleft\":\"" + reader["xianleft"].ToString() + "\",\"xianright\":\"" + reader["xianright"].ToString() + "\",\"MachineNumbe\":\"" + reader["MachineNumbe"].ToString() + "\",\"userID\":\"" + reader["User_ID"].ToString() + "\",\"left\":\"" + left + "\",\"right\":\"" + right + "\",\"rise\":\"" + rise + "\",\"drop\":\"" + drop + "\",\"enter\":\"" + enter + "\",\"out\":\"" + out1 +
                     "\",\"ControlPoint\":\"" + reader["ControlPoint"].ToString() + "\",\"pinyin\":\"" + pingyin + "\",\"radioID\":\"" + radioID + "\"}");
                 if (i < count - 1)
                 {
