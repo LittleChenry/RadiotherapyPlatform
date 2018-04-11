@@ -386,32 +386,43 @@ public class InsertAllappointment : IHttpHandler {
                                 //全部采用提供的参考时间段进行预约
                                 for (int i = 0; i < Times; i++)
                                 {
-                                    string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
-                                    sqlOperation1.AddParameterWithValue("@task", "加速器");
-                                    sqlOperation1.AddParameterWithValue("@pid", patientid);
+                                    //查看此字段是否在库中可用，是否存在已经被他人占有
+                                    string judgePanduan = "select count(*) from appointment_accelerate where Date=@date and Equipment_ID=@equipid and  Begin=@begin and  End=@end";
                                     sqlOperation1.AddParameterWithValue("@date", datefirst);
                                     sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
                                     sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
                                     sqlOperation1.AddParameterWithValue("@end", appointarrange[i]["end"].ToString());
-                                    string insertid = sqlOperation1.ExecuteScalar(insertappoint);
-                                    appointarray.Add(insertid);
+                                    int countZhan = int.Parse(sqlOperation1.ExecuteScalar(judgePanduan));
 
-                                    string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                                    sqlOperation1.AddParameterWithValue("@appoint", insertid);
-                                    sqlOperation1.AddParameterWithValue("@applyuser", userid);
-                                    sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                                    sqlOperation1.AddParameterWithValue("@chid", chid);
-                                    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                                    treatmentrecordarray.Add(treatmentrecordid);
-                                    tempcount = tempcount + 1;
-                                    
-                                    //如果这一次预约成功后，总次数已经满足，则可以返回成功
-                                    if (tempcount >= rest)
+                                    if (countZhan == 0)
                                     {
-                                        return "success";
-                                    }
-                                    todaytimes++;
-                                   
+                                        string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                                        sqlOperation1.AddParameterWithValue("@task", "加速器");
+                                        sqlOperation1.AddParameterWithValue("@pid", patientid);
+                                        sqlOperation1.AddParameterWithValue("@date", datefirst);
+                                        sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
+                                        sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
+                                        sqlOperation1.AddParameterWithValue("@end", appointarrange[i]["end"].ToString());
+                                        string insertid = sqlOperation1.ExecuteScalar(insertappoint);
+                                        appointarray.Add(insertid);
+
+                                        string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
+                                        sqlOperation1.AddParameterWithValue("@appoint", insertid);
+                                        sqlOperation1.AddParameterWithValue("@applyuser", userid);
+                                        sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                                        sqlOperation1.AddParameterWithValue("@chid", chid);
+                                        string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                        treatmentrecordarray.Add(treatmentrecordid);
+                                        tempcount = tempcount + 1;
+
+                                        //如果这一次预约成功后，总次数已经满足，则可以返回成功
+                                        if (tempcount >= rest)
+                                        {
+                                            return "success";
+                                        }
+                                        todaytimes++;
+                                        
+                                    } 
                                 }
                             }
                             else
@@ -502,31 +513,43 @@ public class InsertAllappointment : IHttpHandler {
                                         //如果选到一个与所有其他预约时间不重叠的好时间则开始预约
                                         if (flag == false)
                                         {
-                                           string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
-                                            sqlOperation1.AddParameterWithValue("@task", "加速器");
-                                            sqlOperation1.AddParameterWithValue("@pid", patientid);
+                                           
+                                             //查看此字段是否在库中可用，是否存在已经被他人占有
+                                            string judgePanduan = "select count(*) from appointment_accelerate where Date=@date and Equipment_ID=@equipid and  Begin=@begin and  End=@end";
                                             sqlOperation1.AddParameterWithValue("@date", datefirst);
                                             sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
                                             sqlOperation1.AddParameterWithValue("@begin", appointarrange[j]["begin"].ToString());
                                             sqlOperation1.AddParameterWithValue("@end", appointarrange[j]["end"].ToString());
-                                            string insertid = sqlOperation1.ExecuteScalar(insertappoint);
-                                            appointarray.Add(insertid);
+                                            int countZhan = int.Parse(sqlOperation1.ExecuteScalar(judgePanduan));
 
-                                            string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                                            sqlOperation1.AddParameterWithValue("@appoint", insertid);
-                                            sqlOperation1.AddParameterWithValue("@applyuser", userid);
-                                            sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                                            sqlOperation1.AddParameterWithValue("@chid", chid);
-                                            string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                                            treatmentrecordarray.Add(treatmentrecordid);
-                                            tempcount = tempcount + 1;
-                                            //如果这一次预约成功后，总次数已经满足，则可以返回成功
-                                            if (tempcount >= rest)
+                                            if (countZhan == 0)
                                             {
-                                                return "success";
-                                            }    
-                                            todaytimes++;
-                                            k++;
+                                                string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                                                sqlOperation1.AddParameterWithValue("@task", "加速器");
+                                                sqlOperation1.AddParameterWithValue("@pid", patientid);
+                                                sqlOperation1.AddParameterWithValue("@date", datefirst);
+                                                sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
+                                                sqlOperation1.AddParameterWithValue("@begin", appointarrange[j]["begin"].ToString());
+                                                sqlOperation1.AddParameterWithValue("@end", appointarrange[j]["end"].ToString());
+                                                string insertid = sqlOperation1.ExecuteScalar(insertappoint);
+                                                appointarray.Add(insertid);
+
+                                                string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
+                                                sqlOperation1.AddParameterWithValue("@appoint", insertid);
+                                                sqlOperation1.AddParameterWithValue("@applyuser", userid);
+                                                sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                                                sqlOperation1.AddParameterWithValue("@chid", chid);
+                                                string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                                treatmentrecordarray.Add(treatmentrecordid);
+                                                tempcount = tempcount + 1;
+                                                //如果这一次预约成功后，总次数已经满足，则可以返回成功
+                                                if (tempcount >= rest)
+                                                {
+                                                    return "success";
+                                                }
+                                                todaytimes++;
+                                                k++;
+                                            }
                                            
                                                 
                                         }
@@ -557,42 +580,54 @@ public class InsertAllappointment : IHttpHandler {
                             
                                 //预约剩余的当前天次数
                                 for (int i = 0; i < appointarrange.Count; i++)
-                               {
+                                {
+                                    //查看此字段是否在库中可用，是否存在已经被他人占有
+                                    string judgePanduan = "select count(*) from appointment_accelerate where Date=@date and Equipment_ID=@equipid and  Begin=@begin and  End=@end";
+                                    sqlOperation1.AddParameterWithValue("@date", datefirst);
+                                    sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
+                                    sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
+                                    sqlOperation1.AddParameterWithValue("@end", appointarrange[i]["end"].ToString());
+                                    int countZhan = int.Parse(sqlOperation1.ExecuteScalar(judgePanduan));
 
-                                   if (int.Parse(appointarrange[i]["begin"].ToString()) > int.Parse(firstbegintime))
-                                   {
-                                       string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
-                                       sqlOperation1.AddParameterWithValue("@task", "加速器");
-                                       sqlOperation1.AddParameterWithValue("@pid", patientid);
-                                       sqlOperation1.AddParameterWithValue("@date", datefirst);
-                                       sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
-                                       sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
-                                       sqlOperation1.AddParameterWithValue("@end", appointarrange[i]["end"].ToString());
-                                       string insertid = sqlOperation1.ExecuteScalar(insertappoint);
-                                       appointarray.Add(insertid);
+                                    if (countZhan == 0)
+                                    {
 
-                                       string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                                       sqlOperation1.AddParameterWithValue("@appoint", insertid);
-                                       sqlOperation1.AddParameterWithValue("@applyuser", userid);
-                                       sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                                       sqlOperation1.AddParameterWithValue("@chid", chid);
-                                       string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
-                                       treatmentrecordarray.Add(treatmentrecordid);
-                                       tempcount = tempcount + 1;
-                                       
-                                       //如果这一次预约成功后，总次数已经满足，则可以返回成功
-                                       if (tempcount >= rest)
-                                       {
-                                           return "success";
-                                       }
-                                       todaytimes++;
-                                       //如果今天的次数已经到达上限则可以结束预约
-                                       if (todaytimes >= Times)
-                                       {
-                                           break;
-                                       }
-                                   }
-                               }
+                                        if (int.Parse(appointarrange[i]["begin"].ToString()) > int.Parse(firstbegintime))
+                                        {
+
+                                            string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                                            sqlOperation1.AddParameterWithValue("@task", "加速器");
+                                            sqlOperation1.AddParameterWithValue("@pid", patientid);
+                                            sqlOperation1.AddParameterWithValue("@date", datefirst);
+                                            sqlOperation1.AddParameterWithValue("@equipid", equipmentid);
+                                            sqlOperation1.AddParameterWithValue("@begin", appointarrange[i]["begin"].ToString());
+                                            sqlOperation1.AddParameterWithValue("@end", appointarrange[i]["end"].ToString());
+                                            string insertid = sqlOperation1.ExecuteScalar(insertappoint);
+                                            appointarray.Add(insertid);
+
+                                            string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
+                                            sqlOperation1.AddParameterWithValue("@appoint", insertid);
+                                            sqlOperation1.AddParameterWithValue("@applyuser", userid);
+                                            sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
+                                            sqlOperation1.AddParameterWithValue("@chid", chid);
+                                            string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                            treatmentrecordarray.Add(treatmentrecordid);
+                                            tempcount = tempcount + 1;
+
+                                            //如果这一次预约成功后，总次数已经满足，则可以返回成功
+                                            if (tempcount >= rest)
+                                            {
+                                                return "success";
+                                            }
+                                            todaytimes++;
+                                            //如果今天的次数已经到达上限则可以结束预约
+                                            if (todaytimes >= Times)
+                                            {
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
                                todaytimes = Times; 
 
                           }
