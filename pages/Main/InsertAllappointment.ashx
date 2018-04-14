@@ -144,7 +144,21 @@ public class InsertAllappointment : IHttpHandler {
                     if (result == "failure")
                     {
                         deleteallappoint(appointarray, treatmentrecordarray);
+                        string insertlog = "insert into appointlog(logInfo,time,issuccess) values(@log,@date,@succ)";
+                        sqlOperation1.AddParameterWithValue("@log", "计划" + reader["chid"].ToString() + "因为时间不匹配插入失败");
+                        sqlOperation1.AddParameterWithValue("@date", DateTime.Now);
+                        sqlOperation1.AddParameterWithValue("@succ",1);
+                        sqlOperation1.ExecuteNonQuery(insertlog);
                         return "failure";
+                    }
+                    else
+                    {
+                        string insertlog = "insert into appointlog(logInfo,time,issuccess) values(@log,@date,@succ)";
+                        sqlOperation1.AddParameterWithValue("@log", "计划" + reader["chid"].ToString() + "插入成功");
+                        sqlOperation1.AddParameterWithValue("@date", DateTime.Now);
+                        sqlOperation1.AddParameterWithValue("@succ", 0);
+                        sqlOperation1.ExecuteNonQuery(insertlog);
+                        
                     }
 
                 }
@@ -289,6 +303,12 @@ public class InsertAllappointment : IHttpHandler {
                 ArrayList appoint = new ArrayList(a);
                 ArrayList treament = new ArrayList(b);
                 deleteallappoint(appoint, treament);
+                string insertlog = "insert into appointlog(logInfo,time,issuccess) values(@log,@date,@succ)";
+                sqlOperation1.AddParameterWithValue("@log", "删除刚刚预约的所有计划");
+                sqlOperation1.AddParameterWithValue("@date", DateTime.Now);
+                sqlOperation1.AddParameterWithValue("@succ", 1);
+                sqlOperation1.ExecuteNonQuery(insertlog);
+                return "failure";
             }
             return "success";
         }
