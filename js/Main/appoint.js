@@ -278,7 +278,7 @@ function drawTimeTable(basicinfo, doctortime) {
 								tdclass = "doctortime";
 							}
 						}
-						var td = '<td id="'+ temptime +'" class="'+ tdclass +'" data-begin="'+ temptime +'" data-end="'+ (temptime + _TimeLength) +'"><span class="pointer">'+ Num2Time(temptime, temptime + _TimeLength) +'</span></td>';
+						var td = '<td id="Time_'+ temptime +'" class="'+ tdclass +'" data-begin="'+ temptime +'" data-end="'+ (temptime + _TimeLength) +'"><span class="pointer">'+ Num2Time(temptime, temptime + _TimeLength) +'</span></td>';
 					}else {
 						var td = '<td></td>';
 					}
@@ -492,8 +492,8 @@ function TimeAddClick(appointments, currentDay) {
 	for (var i = 0; i < appointments.length; i++) {
 		if (appointments[i].Patient_ID != patientid) {
 			var timetdid = appointments[i].Begin;
-			if (!($("#" + timetdid).addClass("occupied"))) {
-				$("#" + timetdid).addClass("occupied");
+			if (!($("#Time_" + timetdid).hasClass("occupied"))) {
+				$("#Time_" + timetdid).addClass("occupied");
 			}
 		}
 	}
