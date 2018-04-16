@@ -1,9 +1,23 @@
 var currentID = 0;
 var functions = new Array();
-
+var username;
+var rolename;
+var flag = true;
+window.onfocus = function () {
+    var session = getSession();
+    if (session.userName != username || session.roleName != rolename) {
+        if (flag == true) {
+            alert("此计算机被其他账号登入，请关闭此网页重新登录");
+            flag = false;
+        }
+        window.location.href = "/RadiotherapyPlatform/pages/Main/Records/Error.aspx";
+    }
+};
 $(document).ready(function () {
     adjustPage();
     var session = getSession();
+    username = session.userName;
+    rolename = session.roleName;
     RolesToPatients(session);
     adjustTable();
     functions = session.progress.split(" ");
@@ -19,7 +33,6 @@ $(document).ready(function () {
         adjustTable();
         Recover();
     });
-
     $('#edit').unbind("click").click(function () {
         $("#record-iframe")[0].contentWindow.remove();
         $("#save").removeAttr("disabled");
