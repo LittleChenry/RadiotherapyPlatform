@@ -4,7 +4,7 @@ var username;
 var rolename;
 var flag = true;
 window.onfocus = function () {
-    var session = getSession();
+    var session = getSession2();
     if (session.userName != username || session.roleName != rolename) {
         if (flag == true) {
             alert("此计算机被其他账号登入，请关闭此网页重新登录");
@@ -1519,6 +1519,23 @@ function getSession() {
         },
         error: function () {
             alert("error");
+        }
+    });
+    return Session;
+}
+function getSession2() {
+    var Session;
+    $.ajax({
+        type: "GET",
+        url: "../../pages/Main/Records/getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            //alert(data);
+            Session = $.parseJSON(data);
+        },
+        error: function () {
+
         }
     });
     return Session;

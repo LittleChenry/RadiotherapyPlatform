@@ -31,67 +31,72 @@ public class AutoRun
     //查看当前时间是否满足进行个别续约与整体续约
     public static void objTimer_Elapsed(object sender, ElapsedEventArgs e)
     {
-        //DataLayer sqlOperation4 = new DataLayer("sqlStr");
-        //string testinsert = "insert into test(content) values(@date)";
-        //sqlOperation4.AddParameterWithValue("@date", DateTime.Now.Hour + ":" + DateTime.Now.Minute);
-        //sqlOperation4.ExecuteNonQuery(testinsert);
-        //sqlOperation4.Close();
-        //sqlOperation4.Dispose();
-        //sqlOperation4 = null;
-        ////如果现在时间是凌晨4点半到5点，则判断是否可以执行个体体续
-        //if (int.Parse(DateTime.Now.Hour.ToString()) >= 4 && int.Parse(DateTime.Now.Hour.ToString()) <= 5)
-        //{
-        //    if (int.Parse(DateTime.Now.Minute.ToString()) >= 30)
-        //    {
-        //        //如果上一次执行时间为昨天，就设置IsOpen为false,说明今天还没有执行
-        //        if (DateTime.Today.AddDays(-1) == LastOpenTime.Date)
-        //        {
-        //            IsOpen = false;
-        //        }
-        //        //如果今天还没执行，并且当前时间大于指定执行时间，就执行，
-        //        //执行完后，设置IsOpen为true,说明今天已执行过了。
-        //        if (!IsOpen)
-        //        {
-        //            transferappoint();
-        //            IsOpen = true;
-        //            LastOpenTime = DateTime.Today;
-        //        }
-        //    }
-        //}
+        DataLayer sqlOperation4 = new DataLayer("sqlStr");
+        string testinsert = "insert into test(content) values(@date)";
+        sqlOperation4.AddParameterWithValue("@date", DateTime.Now.Hour + ":" + DateTime.Now.Minute);
+        sqlOperation4.ExecuteNonQuery(testinsert);
+        sqlOperation4.Close();
+        sqlOperation4.Dispose();
+        sqlOperation4 = null;
+        //如果现在时间是凌晨4点半到5点，则判断是否可以执行个体体续
+        if (int.Parse(DateTime.Now.Hour.ToString()) >= 4 && int.Parse(DateTime.Now.Hour.ToString()) <= 5)
+        {
+            if (int.Parse(DateTime.Now.Minute.ToString()) >= 30)
+            {
+                //如果上一次执行时间为昨天，就设置IsOpen为false,说明今天还没有执行
+                if (DateTime.Today.AddDays(-1) == LastOpenTime.Date)
+                {
+                    IsOpen = false;
+                }
+                //如果今天还没执行，并且当前时间大于指定执行时间，就执行，
+                //执行完后，设置IsOpen为true,说明今天已执行过了。
+                if (!IsOpen)
+                {
+                    IsOpen = true;
+                    LastOpenTime = DateTime.Today;
+                    transferappoint();
+                  
+                }
+            }
+        }
 
-        ////如果现在时间是凌晨5点到6点，则判断是否可以执行群体续约
-        //if (int.Parse(DateTime.Now.Hour.ToString()) >= 5 && int.Parse(DateTime.Now.Hour.ToString()) <= 6)
-        //{
-        //    //如果昨天工作时间表被人改变了，系统开始自动删除所有已有预约，并按新工作时间重新预约
-        //    DataLayer sqlOperation3 = new DataLayer("sqlStr");
-        //    string workchange = "select count(*) from worktimetable where ModifyTime=@modifytime";
-        //    sqlOperation3.AddParameterWithValue("@modifytime", DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd"));
-        //    int isChanged = int.Parse(sqlOperation3.ExecuteScalar(workchange));
-        //    if (isChanged == 0)
-        //    {
-        //        IsOpen1 = true;
-        //        LastOpenTime1 = DateTime.Today;
-        //    }
-        //    else
-        //    {
-        //        //如果上一次执行时间为昨天，就设置IsOpen为false,说明今天还没有执行
-        //        if (DateTime.Today.AddDays(-1) == LastOpenTime1.Date)
-        //        {
-        //            IsOpen1 = false;
-        //        }
-        //        //如果今天还没执行，并且当前时间大于指定执行时间，就执行，
-        //        //执行完后，设置IsOpen为true,说明今天已执行过了。
-        //        if (!IsOpen1)
-        //        {
-        //            transferappointForAll();
-        //            IsOpen1 = true;
-        //            LastOpenTime1 = DateTime.Today;
-        //        }
-        //    }
-        //    sqlOperation3.Close();
-        //    sqlOperation3.Dispose();
-        //    sqlOperation3 = null;
-        //}
+        //如果现在时间是凌晨5点到6点，则判断是否可以执行群体续约
+        if (int.Parse(DateTime.Now.Hour.ToString()) >= 4 && int.Parse(DateTime.Now.Hour.ToString()) <= 5)
+        {
+            if (int.Parse(DateTime.Now.Minute.ToString()) >= 45)
+            {
+                //如果昨天工作时间表被人改变了，系统开始自动删除所有已有预约，并按新工作时间重新预约
+                DataLayer sqlOperation3 = new DataLayer("sqlStr");
+                string workchange = "select count(*) from worktimetable where ModifyTime=@modifytime";
+                sqlOperation3.AddParameterWithValue("@modifytime", DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd"));
+                int isChanged = int.Parse(sqlOperation3.ExecuteScalar(workchange));
+                if (isChanged == 0)
+                {
+                    IsOpen1 = true;
+                    LastOpenTime1 = DateTime.Today;
+                }
+                else
+                {
+                    //如果上一次执行时间为昨天，就设置IsOpen为false,说明今天还没有执行
+                    if (DateTime.Today.AddDays(-1) == LastOpenTime1.Date)
+                    {
+                        IsOpen1 = false;
+                    }
+                    //如果今天还没执行，并且当前时间大于指定执行时间，就执行，
+                    //执行完后，设置IsOpen为true,说明今天已执行过了。
+                    if (!IsOpen1)
+                    {
+                        IsOpen1 = true;
+                        LastOpenTime1 = DateTime.Today;
+                        transferappointForAll();
+                        
+                    }
+                }
+                sqlOperation3.Close();
+                sqlOperation3.Dispose();
+                sqlOperation3 = null;
+            }
+        }
     }
 
     public static void transferappoint()
@@ -314,19 +319,19 @@ public class AutoRun
                                 if(isfirstCount==0)
                                 {
                                     string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                                    sqlOperation1.AddParameterWithValue("@appoint", reader1["appointid"].ToString());
-                                    sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
-                                    sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                                    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                                    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                    sqlOperation2.AddParameterWithValue("@appoint", reader1["appointid"].ToString());
+                                    sqlOperation2.AddParameterWithValue("@applyuser", reader["userid"].ToString());
+                                    sqlOperation2.AddParameterWithValue("@applytime", DateTime.Now);
+                                    sqlOperation2.AddParameterWithValue("@chid", reader["chid"].ToString());
+                                    string treatmentrecordid = sqlOperation2.ExecuteScalar(insertcommand);
                                 }else
                                 {
                                     string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,2,@chid);select @@IDENTITY";
-                                    sqlOperation1.AddParameterWithValue("@appoint", reader1["appointid"].ToString());
-                                    sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
-                                    sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                                    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                                    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                    sqlOperation2.AddParameterWithValue("@appoint", reader1["appointid"].ToString());
+                                    sqlOperation2.AddParameterWithValue("@applyuser", reader["userid"].ToString());
+                                    sqlOperation2.AddParameterWithValue("@applytime", DateTime.Now);
+                                    sqlOperation2.AddParameterWithValue("@chid", reader["chid"].ToString());
+                                    string treatmentrecordid = sqlOperation2.ExecuteScalar(insertcommand);
                                 }
                                 flagsucc = true;
                                 BeginFinal = 1;
@@ -378,7 +383,7 @@ public class AutoRun
                                     int todayMax = int.Parse(sqlOperation1.ExecuteScalar(maxdateEveryDay));
 
                                     //查找每天最小预约时间
-                                    string mindateEveryDay = "select EndTimeTPM from equipment where ID=@equip";
+                                    string mindateEveryDay = "select BeginTimeAM from equipment where ID=@equip";
                                     sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
                                     int todayMin = int.Parse(sqlOperation1.ExecuteScalar(mindateEveryDay));
 
@@ -485,19 +490,19 @@ public class AutoRun
                         if(isfirstCount==0)
                         {
                             string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                            sqlOperation1.AddParameterWithValue("@appoint", reader1["appointid"].ToString());
-                            sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
-                            sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                            sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                            string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                            sqlOperation2.AddParameterWithValue("@appoint", reader1["appointid"].ToString());
+                            sqlOperation2.AddParameterWithValue("@applyuser", reader["userid"].ToString());
+                            sqlOperation2.AddParameterWithValue("@applytime", DateTime.Now);
+                            sqlOperation2.AddParameterWithValue("@chid", reader["chid"].ToString());
+                            string treatmentrecordid = sqlOperation2.ExecuteScalar(insertcommand);
                         }else
                         {
                             string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,2,@chid);select @@IDENTITY";
-                            sqlOperation1.AddParameterWithValue("@appoint", reader1["appointid"].ToString());
-                            sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
-                            sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                            sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                            string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                            sqlOperation2.AddParameterWithValue("@appoint", reader1["appointid"].ToString());
+                            sqlOperation2.AddParameterWithValue("@applyuser", reader["userid"].ToString());
+                            sqlOperation2.AddParameterWithValue("@applytime", DateTime.Now);
+                            sqlOperation2.AddParameterWithValue("@chid", reader["chid"].ToString());
+                            string treatmentrecordid = sqlOperation2.ExecuteScalar(insertcommand);
                         }
                         flagsucc2 = true;
                         break;
@@ -559,7 +564,7 @@ public class AutoRun
                         int todayMax = int.Parse(sqlOperation1.ExecuteScalar(maxdateEveryDay));
 
                         //查找每天最小预约时间
-                        string mindateEveryDay = "select EndTimeTPM from equipment where ID=@equip";
+                        string mindateEveryDay = "select BeginTimeAM from equipment where ID=@equip";
                         sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
                         int todayMin = int.Parse(sqlOperation1.ExecuteScalar(mindateEveryDay));
 
@@ -655,19 +660,19 @@ public class AutoRun
                                     if(isfirstCount==0)
                                     {
                                         string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,0,@chid);select @@IDENTITY";
-                                        sqlOperation1.AddParameterWithValue("@appoint", reader1["appointid"].ToString());
-                                        sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
-                                        sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                                        sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                                        string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                        sqlOperation2.AddParameterWithValue("@appoint", reader1["appointid"].ToString());
+                                        sqlOperation2.AddParameterWithValue("@applyuser", reader["userid"].ToString());
+                                        sqlOperation2.AddParameterWithValue("@applytime", DateTime.Now);
+                                        sqlOperation2.AddParameterWithValue("@chid", reader["chid"].ToString());
+                                        string treatmentrecordid = sqlOperation2.ExecuteScalar(insertcommand);
                                     }else
                                     {
                                         string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,2,@chid);select @@IDENTITY";
-                                        sqlOperation1.AddParameterWithValue("@appoint", reader1["appointid"].ToString());
-                                        sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
-                                        sqlOperation1.AddParameterWithValue("@applytime", DateTime.Now);
-                                        sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
-                                        string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+                                        sqlOperation2.AddParameterWithValue("@appoint", reader1["appointid"].ToString());
+                                        sqlOperation2.AddParameterWithValue("@applyuser", reader["userid"].ToString());
+                                        sqlOperation2.AddParameterWithValue("@applytime", DateTime.Now);
+                                        sqlOperation2.AddParameterWithValue("@chid", reader["chid"].ToString());
+                                        string treatmentrecordid = sqlOperation2.ExecuteScalar(insertcommand);
                                     }
                                     flagsucc = true;
                                     flag=true;
@@ -1207,7 +1212,7 @@ public class AutoRun
                             int todayMax = int.Parse(sqlOperation1.ExecuteScalar(maxdateEveryDay));
 
                             //查找每天最小预约时间
-                            string mindateEveryDay = "select EndTimeTPM from equipment where ID=@equip";
+                            string mindateEveryDay = "select BeginTimeAM from equipment where ID=@equip";
                             sqlOperation1.AddParameterWithValue("@equip", reader["equipid"].ToString());
                             int todayMin = int.Parse(sqlOperation1.ExecuteScalar(mindateEveryDay));
 

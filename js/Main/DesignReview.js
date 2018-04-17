@@ -304,7 +304,7 @@ function check(gg) {
     }
     var objSelect = document.getElementById("designdose" + i);
     var currSelectText = objSelect.options[objSelect.selectedIndex].text;
-    if (currSelectText == document.getElementById("dose2" + i).innerHTML) {
+    if (parseInt(currSelectText.split("/")[0]) == parseInt(document.getElementById("dose2" + i).innerHTML.split("/")[0]) && parseInt(currSelectText.split("/")[1]) == parseInt(document.getElementById("dose2" + i).innerHTML.split("/")[1])) {
         document.getElementById("check2"+i).innerHTML = "通过";
         document.getElementById("check2"+i).style.color = "#0000ff";
     }
