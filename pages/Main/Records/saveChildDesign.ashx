@@ -24,13 +24,14 @@ public class saveChildDesign : IHttpHandler {
     {
         string chid = context.Request["chid"];
         string totalnumber = context.Request["totalnumber"];
+        string tianchongnumber = context.Request["tianchongnumber"];
         string username = context.Request["username"];
         string splitway = context.Request["splitway"];
         string remarks=context.Request["remarks"];
         string checktreatedtotalnumber = "select count(*) from treatmentrecord where Treat_User_ID is not null  and ChildDesign_ID=@chid";
         sqlOperation.AddParameterWithValue("@chid", chid);
         int treatedtimes=int.Parse(sqlOperation.ExecuteScalar(checktreatedtotalnumber));
-        int totalnum = int.Parse(totalnumber);
+        int totalnum = int.Parse(totalnumber) - int.Parse(tianchongnumber);
         if (treatedtimes > totalnum)
         {
             return "不能缩减次数";
@@ -87,8 +88,9 @@ public class saveChildDesign : IHttpHandler {
         string select = "select ChangeLog from childdesign where ID=@chid";
         sqlOperation.AddParameterWithValue("@chid", chid);
         string log = sqlOperation.ExecuteScalar(select);
-        string command = "update childdesign set State=3,Changelog=@log,Totalnumber=@totalnumber,SpecialEnjoin=@special,Splitway_ID=@splitway where ID=@chid";
-        sqlOperation.AddParameterWithValue("@totalnumber", totalnumber);
+        string command = "update childdesign set State=3,Changelog=@log,Totalnumber=@totalnumber,SpecialEnjoin=@special,Splitway_ID=@splitway,fillNumber=@fillnum where ID=@chid";
+        sqlOperation.AddParameterWithValue("@totalnumber", totalnum);
+        sqlOperation.AddParameterWithValue("@fillnum", tianchongnumber);
         sqlOperation.AddParameterWithValue("@special", remarks);
         sqlOperation.AddParameterWithValue("@splitway", splitway);
         sqlOperation.AddParameterWithValue("@log", log + ";" + username + "," + DateTime.Now + "," + totalnumber);

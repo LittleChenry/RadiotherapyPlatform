@@ -18,8 +18,9 @@ $(document).ready(function () {
     var session = getSession();
     username = session.userName;
     rolename = session.roleName;
-    RolesToPatients(session);
+    RolesToPatients(session,0);
     adjustTable();
+
     functions = session.progress.split(" ");
     $("#save").unbind("click").click(function () {
         var result = $("#record-iframe")[0].contentWindow.save();
@@ -29,9 +30,42 @@ $(document).ready(function () {
         $('#save').attr("disabled", "disabled");
         $('#saveTemplate-list').attr("disabled", "disabled");
         var session = getSession();
-        RolesToPatients(session);
+        RolesToPatients(session,0);
         adjustTable();
         Recover();
+    });
+    $('#first_but').unbind("click").click(function () {
+        var session = getSession();
+        RolesToPatients(session, 0);
+        adjustTable();
+        $('#first_but').removeClass();
+        $("#sec_but").removeClass();
+        $("#third_but").removeClass();
+        $('#first_but').addClass("btn btn-info");
+        $('#sec_but').addClass("btn btn-success");
+        $('#third_but').addClass("btn btn-success");
+    });
+    $('#sec_but').unbind("click").click(function () {
+        var session = getSession();
+        RolesToPatients(session, 1);
+        adjustTable();
+        $('#first_but').removeClass();
+        $("#sec_but").removeClass();
+        $("#third_but").removeClass();
+        $('#first_but').addClass("btn btn-success");
+        $('#sec_but').addClass("btn btn-info");
+        $('#third_but').addClass("btn btn-success");
+    });
+    $('#third_but').unbind("click").click(function () {
+        var session = getSession();
+        RolesToPatients(session, 2);
+        adjustTable();
+        $('#first_but').removeClass();
+        $("#sec_but").removeClass();
+        $("#third_but").removeClass();
+        $('#first_but').addClass("btn btn-success");
+        $('#sec_but').addClass("btn btn-success");
+        $('#third_but').addClass("btn btn-info");
     });
     $('#edit').unbind("click").click(function () {
         $("#record-iframe")[0].contentWindow.remove();
@@ -75,7 +109,7 @@ function adjustPage(){
 }
 
 //根据角色获取病患纪录
-function RolesToPatients(session) {
+function RolesToPatients(session,type) {
     var patient;
     var sortPatient;
     if (session.role == "模拟技师" || session.role == "治疗技师") {
@@ -153,6 +187,7 @@ function RolesToPatients(session) {
         });
     } else {
         var parameters = new Array();
+        parameters[0] = type;
         patient = getPatient(session.userID, session.role, parameters);
         if (patient) {
             sortPatient = patientSort(patient);
@@ -361,6 +396,7 @@ function Paging(patient, role, userID) {
                 trAddClickforJS(patient, userID);
                 break;
             case "登记处人员":
+                $("#legend-patientselect").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
@@ -394,6 +430,7 @@ function Paging(patient, role, userID) {
                 trAddClick(patient, userID);
                 break;
             case "科主任":
+                $("#legend-patientselect").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
@@ -427,6 +464,7 @@ function Paging(patient, role, userID) {
                 trAddClick(patient, userID);
                 break;
             default:
+                $("#legend-patientselect").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
@@ -1741,7 +1779,7 @@ function getPatient(userID, role, parameters) {
     var xmlHttp = new XMLHttpRequest();
     switch (role) {
         case "医师":
-            var url = "Records/patientInfoForDoctor.ashx?userID=" + userID;
+            var url = "Records/patientInfoForDoctor.ashx?userID=" + userID + "&type=" + parameters[0];
             break;
         case "剂量师":
             var url = "Records/patientInfoForJLS.ashx?userID=" + userID;
@@ -1756,13 +1794,13 @@ function getPatient(userID, role, parameters) {
             var url = "Records/patientInfoForZLJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
             break;
         case "登记处人员":
-            var url = "Records/GetPatientInfo.ashx?";
+            var url = "Records/GetPatientInfo.ashx?type="+ parameters[0];
             break;
         case "科主任":
-            var url = "Records/GetPatientInfo.ashx?";
+            var url = "Records/GetPatientInfo.ashx?type=" + parameters[0];
             break;
         default:
-            var url = "Records/GetPatientInfo.ashx?";
+            var url = "Records/GetPatientInfo.ashx?type=" + parameters[0];
     }
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);

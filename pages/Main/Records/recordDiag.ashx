@@ -86,9 +86,15 @@ public class recordDiag : IHttpHandler {
         string select1 = "select Progress from treatment where ID=@treatid";
         sqlOperation.AddParameterWithValue("@treatid", treatID);
         string progress = sqlOperation.ExecuteScalar(select1);
+
+        string iscommoncommand = "select iscommon from treatment where ID=@treatid";
+        sqlOperation.AddParameterWithValue("@treatid", treatID);
+        string iscommon = sqlOperation.ExecuteScalar(iscommoncommand);
+        
         string[] group = progress.Split(',');
         bool exists = ((IList)group).Contains("1");
         bool exists1 = ((IList)group).Contains("2");
+        bool exists2 = ((IList)group).Contains("7");
         if ( !exists || !exists1)
         {
             if (patientjudge == "1")
@@ -130,20 +136,81 @@ public class recordDiag : IHttpHandler {
         }
         else
         {
-           
-                string strSqlCommand1 = "update treatment set DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe,iscommon=1 where ID=@treatid";
-                sqlOperation2.AddParameterWithValue("@treatid", treatID);
-                sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
-                sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
-                int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
-                if (intSuccess > 0 && intSuccess1 > 0)
+
+            if (patientjudge == "1")
+            {
+                if (iscommon == "1")
                 {
-                    return "success";
+                    string strSqlCommand1 = "update treatment set DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe,iscommon=1 where ID=@treatid";
+                    sqlOperation2.AddParameterWithValue("@treatid", treatID);
+                    sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
+                    sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
+                    int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
+                    if (intSuccess > 0 && intSuccess1 > 0)
+                    {
+                        return "success";
+                    }
+                    else
+                    {
+                        return "failure";
+                    }
                 }
                 else
                 {
-                    return "failure";
+                    if (!exists2)
+                    {
+                        string strSqlCommand1 = "update treatment set Progress=@Progress,DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe,iscommon=1 where ID=@treatid";
+                        sqlOperation2.AddParameterWithValue("@treatid", treatID);
+                        sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
+                        sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
+                        sqlOperation2.AddParameterWithValue("@Progress", "0,1");
+                        int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
+                        if (intSuccess > 0 && intSuccess1 > 0)
+                        {
+                            return "success";
+                        }
+                        else
+                        {
+                            return "failure";
+                        }
+                    }
+                    else
+                    {
+                        string strSqlCommand1 = "update treatment set DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe where ID=@treatid";
+                        sqlOperation2.AddParameterWithValue("@treatid", treatID);
+                        sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
+                        sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
+                        int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
+                        if (intSuccess > 0 && intSuccess1 > 0)
+                        {
+                            return "success";
+                        }
+                        else
+                        {
+                            return "failure";
+                        }
+                    }
+        
                 }
+               
+            }
+            else
+            {
+              
+                    string strSqlCommand1 = "update treatment set DiagnosisRecord_ID=@DiagnosisRecord_ID,Treatmentdescribe=@Treatmentdescribe where ID=@treatid";
+                    sqlOperation2.AddParameterWithValue("@treatid", treatID);
+                    sqlOperation2.AddParameterWithValue("@Treatmentdescribe", treatname);
+                    sqlOperation2.AddParameterWithValue("@DiagnosisRecord_ID", diagno);
+                    int intSuccess1 = sqlOperation2.ExecuteNonQuery(strSqlCommand1);
+                    if (intSuccess > 0 && intSuccess1 > 0)
+                    {
+                        return "success";
+                    }
+                    else
+                    {
+                        return "failure";
+                    }
+            }
          
             }
             

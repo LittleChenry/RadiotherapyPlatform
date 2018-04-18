@@ -90,7 +90,7 @@ function Init(evt) {
                                   '</table></div></div><div class="single-row"><div class="item col-xs-4">射野数量：<span id="IlluminatedNumber' + j + '" class="underline"></span></div><div class="item col-xs-4">非共面照射：<span id="Coplanar' + j + '" class="underline"></span></div><div class="item col-xs-4">机器跳数：<span id="MachineNumbe' + j + '" class="underline"></span></div></div>' +
                                   '<div class="single-row"><div class="item col-xs-4">控制点数量：<span id="ControlPoint' + j + '" class="underline"></span></div><div class="item col-xs-4">射线类型：<span id="raytype' + j + '" class="underline"></span></div></div>' +
                                   '<div class="single-row"><div class="col-xs-4"><span class="form-text col-xs-5" style="padding-left:0px;">治疗总次数：</span><input id="totalnumber' + j + '"  onchange="checktotal(' + j + ')" name="totalnumber' + j + '" disabled="disabled" type="number" onmousewheel="return false;" onmousewheel="scrollFunc()" onDOMMouseScroll="scrollFunc()" class="form-item" style="width:40%;"/></div>' +
-                                  '<div class="col-xs-4"><span class="form-text" style="padding-left:0px;">已治疗次数：</span><span id="finishedtimes' + j + '" class="underline"></span></div></div>' +
+                                  '<div class="col-xs-4"><span class="form-text" style="padding-left:0px;">已治疗次数：</span><span id="finishedtimes' + j + '" class="underline"></span></div><div class="col-xs-4"><span class="form-text col-xs-5" style="padding-left:0px;">填充次数：</span><input id="hasnumber' + j + '"  name="hasnumber' + j + '" disabled="disabled" type="number" onmousewheel="return false;" onmousewheel="scrollFunc()" onDOMMouseScroll="scrollFunc()" class="form-item" style="width:40%;"/></div></div>' +
                                   '<div class="single-row"><div class="item col-xs-12"><span style="margin-left:0">(修改次数后将清除此子计划的已有预约)</span></div></div>' +
                                  '<div class="single-row"><div class="col-xs-4"> <span class="form-text col-xs-5" style="padding-left:0px;">分割方式：</span><select  id="splitway' + j + '" disabled="disabled" class="col-xs-7 form-item" name="splitway' + j + '"></select></div></div>' +
                                   '<div class="single-row"> <div class="item area-group col-xs-9"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="remarks' + j + '" name="remarks' + j + '" class="form-area col-xs-10" disabled="disabled"></textarea></div></div>' +
@@ -112,7 +112,7 @@ function Init(evt) {
                                   '</table></div></div><div class="single-row"><div class="item col-xs-4">射野数量：<span id="IlluminatedNumber' + j + '" class="underline"></span></div><div class="item col-xs-4">非共面照射：<span id="Coplanar' + j + '" class="underline"></span></div><div class="item col-xs-4">机器跳数：<span id="MachineNumbe' + j + '" class="underline"></span></div></div>' +
                                   '<div class="single-row"><div class="item col-xs-4">控制点数量：<span id="ControlPoint' + j + '" class="underline"></span></div><div class="item col-xs-4">射线类型：<span id="raytype' + j + '" class="underline"></span></div></div>' +
                                   '<div class="single-row"><div class="col-xs-4"><span class="form-text col-xs-5" style="padding-left:0px;">治疗总次数：</span><input id="totalnumber' + j + '" onchange="checktotal(' + j + ')" name="totalnumber' + j + '" disabled="disabled" onmousewheel="scrollFunc()" onDOMMouseScroll="scrollFunc()" type="number" onmousewheel="return false;" class="form-item" style="width:40%;"/></div>' +
-                                  '<div class="col-xs-4"><span class="form-text" style="padding-left:0px;">已治疗次数：</span><span id="finishedtimes' + j + '" class="underline"></span></div></div>' +
+                                  '<div class="col-xs-4"><span class="form-text" style="padding-left:0px;">已治疗次数：</span><span id="finishedtimes' + j + '" class="underline"></span></div><div class="col-xs-4"><span class="form-text col-xs-5" style="padding-left:0px;">填充次数：</span><input id="hasnumber' + j + '"  name="hasnumber' + j + '" disabled="disabled" type="number" onmousewheel="return false;" onmousewheel="scrollFunc()" onDOMMouseScroll="scrollFunc()" class="form-item" style="width:40%;"/></div></div>' +
                                    '<div class="single-row"><div class="item col-xs-12"><span style="margin-left:0">(修改次数后将清除此子计划的已有预约)</span></div></div>' +
                                   '<div class="single-row"><div class="col-xs-4"> <span class="form-text col-xs-5" style="padding-left:0px;">分割方式：</span><select  id="splitway' + j + '" disabled="disabled" class="col-xs-7 form-item" name="splitway' + j + '"></select></div></div>' +
                                   '<div class="single-row"> <div class="item area-group col-xs-9"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="remarks' + j + '" name="remarks' + j + '" class="form-area col-xs-10" disabled="disabled"></textarea></div></div>' +
@@ -144,8 +144,8 @@ function Init(evt) {
                           '</table></div></div><div class="single-row"><div class="item col-xs-4">射野数量：<span id="IlluminatedNumber' + j + '" class="underline"></span></div><div class="item col-xs-4">非共面照射：<span id="Coplanar' + j + '" class="underline"></span></div><div class="item col-xs-4">机器跳数：<span id="MachineNumbe' + j + '" class="underline"></span></div></div>' +
                           '<div class="single-row"><div class="item col-xs-4">控制点数量：<span id="ControlPoint' + j + '" class="underline"></span></div><div class="item col-xs-4">射线类型：<span id="raytype' + j + '" class="underline"></span></div></div>' +
                           '<div class="single-row"><div class="col-xs-4"><span class="form-text col-xs-5" style="padding-left:0px;">治疗总次数：</span><input id="totalnumber' + j + '"  onchange="checktotal(' + j + ')"  name="totalnumber' + j + '" disabled="disabled" onmousewheel="scrollFunc()" onDOMMouseScroll="scrollFunc()" type="number" onmousewheel="return false;" class="form-item" style="width:40%;"/></div>' +
-                           '<div class="single-row"><div class="item col-xs-12"><span style="margin-left:0">(修改次数后将清除此子计划的已有预约)</span></div></div>' +
-                         '<div class="col-xs-4"><span class="form-text" style="padding-left:0px;">已治疗次数：</span><span id="finishedtimes' + j + '" class="underline"></span></div></div>' +
+                          '<div class="col-xs-4"><span class="form-text" style="padding-left:0px;">已治疗次数：</span><span id="finishedtimes' + j + '" class="underline"></span></div><div class="col-xs-4"><span class="form-text col-xs-5" style="padding-left:0px;">填充次数：</span><input id="hasnumber' + j + '"  name="hasnumber' + j + '" disabled="disabled" type="number" onmousewheel="return false;" onmousewheel="scrollFunc()" onDOMMouseScroll="scrollFunc()" class="form-item" style="width:40%;"/></div></div>' +
+                          '<div class="single-row"><div class="item col-xs-12"><span style="margin-left:0">(修改次数后将清除此子计划的已有预约)</span></div></div>' +
                           '<div class="single-row"><div class="col-xs-4"> <span class="form-text col-xs-5" style="padding-left:0px;">分割方式：</span><select  id="splitway' + j + '" disabled="disabled" class="col-xs-7 form-item" name="splitway' + j + '"></select></div></div>' +
                           '<div class="single-row"> <div class="item area-group col-xs-9"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="remarks' + j + '" name="remarks' + j + '" class="form-area col-xs-10" disabled="disabled"></textarea></div></div>' +
                           '<div id="logholder'+j+'" class="single-row"><div class="col-xs-8"><span class="form-text" style="padding-left:0px;">修改日志：</span><table  class="table table-bordered"><thead><tr><th>修改天数</th><th>修改时间</th><th>修改人</th></tr></thead><tbody id="log' + j + '"></tbody></table></div></div>';
@@ -181,7 +181,8 @@ function Init(evt) {
           sum = sum + parseInt(childdesigns[i].fieldinfo[j].subfieldnumber);
       }
       $("#ControlPoint" + i).html(sum);
-      $("#totalnumber" + i).val(childdesigns[i].Totalnumber);
+      $("#totalnumber" + i).val(parseInt(childdesigns[i].Totalnumber) + parseInt(childdesigns[i].fillnum));
+      $("#hasnumber" + i).val(parseInt(childdesigns[i].fillnum));
       sum = 0;
       for (var j = 0; j < childdesigns[i].fieldinfo.length; j++) {
           if (childdesigns[i].fieldinfo[j].mu != "") {
@@ -865,7 +866,8 @@ function getfirstaccelerateInfomation(treatmentID) {
 
 function save() {
     var number = allpagenumber;
-    var totalnumber = document.getElementById("totalnumber"+number).value;
+    var totalnumber = document.getElementById("totalnumber" + number).value;
+    var tianchongnumber = document.getElementById("hasnumber" + number).value;
     if (document.getElementById("splitway" + number).value == "allItem") {
         window.alert("请选择分割方式");
         return false;
@@ -876,6 +878,10 @@ function save() {
     }
     if (document.getElementById("totalnumber" + number).value == "") {
         window.alert("总次数没有填写");
+        return false;
+    }
+    if (document.getElementById("hasnumber" + number).value == "") {
+        window.alert("填充次数没有填写");
         return false;
     }
     if ((typeof (userID) == "undefined")) {
@@ -890,6 +896,7 @@ function save() {
         data: {
             chid: childdesigns[number].chid,
             totalnumber: totalnumber,
+            tianchongnumber: tianchongnumber,
             user: userID,
             username:userName,
             splitway: document.getElementById("splitway"+number).value,
@@ -992,6 +999,7 @@ function remove() {
                 $("#chooseappoint" + i).removeAttr("disabled");
             }
             $("#checkappoint" + i).removeAttr("disabled");
+            $("#hasnumber" + i).removeAttr("disabled");
         }
     }
 }

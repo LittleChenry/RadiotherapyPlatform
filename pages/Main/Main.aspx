@@ -277,7 +277,7 @@
                 <table id="patient-table" class="table table-bordered" style="white-space:nowrap;margin-bottom:0px;"></table>
             </div>
             <div class="row">
-                <div id="legend" class="col-sm-9" style="padding-top:8px;padding-left:25px;">
+                <div id="legend" class="col-sm-9" style="padding-top:2px;padding-left:25px;">
                     <span id="legend-waiting" style="display:none;">
                         <span style="background-color:wheat;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                         <span>：等待中</span>
@@ -285,6 +285,17 @@
                     <span id="legend-enhance" style="display:none;">
                         <span style="color:#00A65A;margin-left:10px;">患者纪录</span>
                         <span>：CT增强</span>
+                    </span>
+                    <span id="legend-patientselect" style="display:none;margin-left:30%;">
+                        <button id="first_but" type="button" class="btn btn-info">
+                               治疗准备
+                        </button>
+                        <button id="sec_but" type="button" class="btn btn-success">
+                               治疗实施
+                        </button>
+                        <button id="third_but" type="button" class="btn btn-success">
+                               治疗结束
+                        </button>
                     </span>
                 </div>
                 <div class="col-sm-3 pull-right">
