@@ -44,7 +44,7 @@ public class saveChildDesign : IHttpHandler {
         {
             newtotal=Convert.ToInt16(total);
         }
-        if (newtotal != int.Parse(totalnumber))
+        if (newtotal != totalnum)
         {
             string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and Date>=@nowdate";
             sqlOperation.AddParameterWithValue("@chid", chid);
