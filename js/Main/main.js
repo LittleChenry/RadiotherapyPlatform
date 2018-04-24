@@ -182,7 +182,7 @@ function RolesToPatients(session,type) {
             }
         });
         $("#patient-search").bind('input propertychange', function () {
-            var Searchedpatients = SearchTable($("#patient-search").val());
+            var Searchedpatients = SearchTable($("#patient-search").val(), sortPatient, session);
             adjustTable();
         });
     } else {
@@ -193,7 +193,7 @@ function RolesToPatients(session,type) {
             sortPatient = patientSort(patient);
             Paging(sortPatient, session.role, session.userID);
             $("#patient-search").bind('input propertychange', function (e) {
-                var Searchedpatients = SearchTable($("#patient-search").val());
+                var Searchedpatients = SearchTable($("#patient-search").val(), sortPatient, session);
                 adjustTable();
             });
             if (session.role == "医师" || session.role == "剂量师" || session.role == "物理师") {
@@ -1594,10 +1594,29 @@ function Recover() {
 }
 
 //搜索
-function SearchTable(str){
+function SearchTable(str, sortPatient, session) {
     var table = $("#patient-table");
-    table.find("tbody tr").hide().filter(":contains('"+ str +"')").show();
-    $("#patient_info").html("一共"+ table.find("tbody tr").filter(":contains('"+ str +"')").length +"条记录");
+    var filtered = sortPatient.PatientInfo.filter(filterFunction, str);
+    var patientGroup = { PatientInfo: filtered };
+    Paging(patientGroup, session.role, session.userID);
+    //table.find("tbody tr").hide().filter(":contains('"+ str +"')").show();
+    //$("#patient_info").html("一共"+ table.find("tbody tr").filter(":contains('"+ str +"')").length +"条记录");
+}
+
+//json过滤函数
+function filterFunction(element,index,array) {
+    var group = Object.values(element);
+    var str;
+    for (var k = 0; k < group.length; k++) {
+        if (group[k].indexOf(this) >= 0) {
+            return true;
+        }
+        if (ProgressToString(element.Progress.split(",")).indexOf(this) >= 0) {
+            return true;
+        }
+    }
+    return false;
+
 }
 
 //流程预警
@@ -1984,6 +2003,40 @@ function isInArray(arr, value) {
 }
 
 //将同一个患者的不同疗程纪录排列到一起
+//function patientSort(patient){
+//    var sortPatient = new Array();
+//    var count = 0;
+//    for (var j = 0; j < patient.PatientInfo.length; j++) {
+//        if (patient.PatientInfo[j].state == "0") {
+//            var flag = 0;
+//            for (var k = 0; k < sortPatient.length; k++) {
+//                if (sortPatient[k].Radiotherapy_ID == patient.PatientInfo[j].Radiotherapy_ID) {
+//                    flag = 1;
+//                }
+//            }
+//            if (flag == 0) {
+//                sortPatient[count++] = patient.PatientInfo[j];
+//                for (var i = j + 1; i < patient.PatientInfo.length; i++) {
+//                    if (patient.PatientInfo[i].state == "0" && flag == 0 && sortPatient[count - 1].Radiotherapy_ID == patient.PatientInfo[i].Radiotherapy_ID) {
+//                        sortPatient[count++] = patient.PatientInfo[i];
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    for (var j = 0; j < patient.PatientInfo.length; j++) {
+//        if (patient.PatientInfo[j].state == "1") {
+//            sortPatient[count++] = patient.PatientInfo[j];
+//        }
+//    }
+//    for (var j = 0; j < patient.PatientInfo.length; j++) {
+//        if (patient.PatientInfo[j].state == "2") {
+//            sortPatient[count++] = patient.PatientInfo[j];
+//        }
+//    }
+//    var patientGroup = { PatientInfo: sortPatient };
+//    return patientGroup;
+//}
 function patientSort(patient){
     var sortPatient = new Array();
     var count = 0;
@@ -1996,11 +2049,15 @@ function patientSort(patient){
                 }
             }
             if (flag == 0) {
-                sortPatient[count++] = patient.PatientInfo[j];
+                var num = [];
+                num.push(j);
                 for (var i = j + 1; i < patient.PatientInfo.length; i++) {
-                    if (patient.PatientInfo[i].state == "0" && flag == 0 && sortPatient[count - 1].Radiotherapy_ID == patient.PatientInfo[i].Radiotherapy_ID) {
-                        sortPatient[count++] = patient.PatientInfo[i];
+                    if (patient.PatientInfo[i].state == "0" && flag == 0 && patient.PatientInfo[j].Radiotherapy_ID == patient.PatientInfo[i].Radiotherapy_ID) {
+                        num.push(i);
                     }
+                }
+                for (var m = num.length - 1; m >= 0; m--) {
+                    sortPatient[count++] = patient.PatientInfo[num[m]];
                 }
             }
         }
@@ -2018,6 +2075,8 @@ function patientSort(patient){
     var patientGroup = { PatientInfo: sortPatient };
     return patientGroup;
 }
+
+
 
 function stopBubble(e) {
     if (e && e.stopPropagation) {//非IE浏览器
