@@ -252,7 +252,7 @@ if (isInArray(progress, '11')) {
             }
         }
                 
-        if (reviewInfo.userID == userID) {
+        if (reviewInfo[0].userID == userID) {
             window.parent.document.getElementById("edit").removeAttribute("disabled");
         }
 

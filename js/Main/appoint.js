@@ -81,8 +81,8 @@ function Paging(patients, worktime) {
         var table = $("#patient-table");
         table.html("");
         $("#patient_info").text("一共" + patients.length + "条记录");
-        var Name, Gender, patientid, Age, doctor, groupname;
-        var thead = '<thead><tr><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
+        var Name, Gender, patientid, Age, doctor, groupname,Radiotherapy_ID;
+        var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
         table.append(thead);
         var tbody = '<tbody>';
         for (var i = 0; i < patients.length; i++) {
@@ -92,7 +92,8 @@ function Paging(patients, worktime) {
             doctor = patients[i].doctor;
             Age = patients[i].Age;
             groupname = patients[i].groupname;
-            var tr = '<tr id="'+ patientid +'" class="pointer"><td>'+ Name +'</td><td>'+ Gender +'</td>'+
+            Radiotherapy_ID = patients[i].Radiotherapy_ID;
+            var tr = '<tr id="'+ patientid +'" class="pointer"><td>'+Radiotherapy_ID+'</td><td>'+ Name +'</td><td>'+ Gender +'</td>'+
             		 '<td>'+ Age +'</td><td>'+ doctor +'</td><td>'+ groupname +'</td></tr>';
             tbody += tr;
         }
@@ -102,7 +103,7 @@ function Paging(patients, worktime) {
     } else {
         var table = $("#patient-table");
         table.html("");
-        var thead = '<thead><tr><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
+        var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
         table.append(thead);
         var tbody = '<tbody><tr><td colspan="5" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
         table.append(tbody);
@@ -153,8 +154,9 @@ function Search(str, patients) {
         doctor = patients[i].doctor;
         Age = patients[i].Age;
         groupname = patients[i].groupname;
-        if (Name.search(str) >= 0 || Gender.search(str) >= 0 || doctor.search(str) >= 0 || Age.search(str) >= 0 || groupname.search(str) >= 0) {
-            var singlepatient = {name: patients[i].name,Gender:patients[i].Gender,patientid:patients[i].patientid, doctor:patients[i].doctor, Age:patients[i].Age, groupname:patients[i].groupname, Radiotherapy_ID: patients[i].Radiotherapy_ID};
+        Radiotherapy_ID=patients[i].Radiotherapy_ID;
+        if (Radiotherapy_ID.search(str)>=0||Name.search(str) >= 0 || Gender.search(str) >= 0 || doctor.search(str) >= 0 || Age.search(str) >= 0 || groupname.search(str) >= 0) {
+            var singlepatient = {Radiotherapy_ID:patients[i].Radiotherapy_ID,name: patients[i].name,Gender:patients[i].Gender,patientid:patients[i].patientid, doctor:patients[i].doctor, Age:patients[i].Age, groupname:patients[i].groupname, Radiotherapy_ID: patients[i].Radiotherapy_ID};
             Searchedpatient[count++] = singlepatient;
         }
     }
@@ -303,9 +305,9 @@ function RecordAddClick(worktime) {
 			$(this).addClass("chosen");
 			var patientid = $(this).attr("id");
 			currentID = patientid;
-			$("#patient-name").html($(this).find("td").eq(0).html());
-			$("#doctor").html($(this).find("td").eq(3).html());
-			$("#group").html($(this).find("td").eq(4).html());
+			$("#patient-name").html($(this).find("td").eq(1).html());
+			$("#doctor").html($(this).find("td").eq(4).html());
+			$("#group").html($(this).find("td").eq(5).html());
 			$("#patientid").val($(this).attr("id"));
 			var data = {
 			    patientid:patientid,
