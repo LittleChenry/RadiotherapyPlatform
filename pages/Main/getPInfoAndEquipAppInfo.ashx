@@ -50,11 +50,11 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
             info.Append("],\"timeduan\":[]}");
             return info.ToString();
         }
-        string countcommand = "select count(*) from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state=3 and treatment.ID in ("+str+")";
+        string countcommand = "select count(*) from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and treatment.Progress not LIKE '%14%' and treatment.Progress like '%12%' and childdesign.state=3 and treatment.ID in (" + str + ")";
         sqlOperation.AddParameterWithValue("@pid", patientid);
         int number = int.Parse(sqlOperation.ExecuteScalar(countcommand));
 
-        string designcommand = "select childdesign.ID as chid,DesignName,childdesign.Splitway_ID as splitway,childdesign.Totalnumber as total,childdesign.state as childstate,Treatmentdescribe,childdesign.Treatment_ID as treatid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and childdesign.state=3  and treatment.ID in (" + str + ")";
+        string designcommand = "select childdesign.ID as chid,DesignName,childdesign.Splitway_ID as splitway,childdesign.Totalnumber as total,childdesign.state as childstate,Treatmentdescribe,childdesign.Treatment_ID as treatid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and treatment.Patient_ID=@pid and treatment.Progress not LIKE '%14%' and treatment.Progress like '%12%' and childdesign.state=3  and treatment.ID in (" + str + ")";
         sqlOperation.AddParameterWithValue("@pid", patientid);
         reader = sqlOperation.ExecuteReader(designcommand);
         while (reader.Read())

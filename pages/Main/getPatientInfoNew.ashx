@@ -46,7 +46,7 @@ public class getPatientInfoNew : IHttpHandler {
         ArrayList patientList = new ArrayList();
         while (reader.Read())
         {
-            string selectcommand = "select Distinct(treatment.ID) as treatid from fieldinfomation,childdesign,treatment where fieldinfomation.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID and childdesign.state=3 and fieldinfomation.equipment like'%" + equipment+"%' and treatment.Patient_ID=@pid";
+            string selectcommand = "select Distinct(treatment.ID) as treatid from fieldinfomation,childdesign,treatment where fieldinfomation.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID and childdesign.state=3 and treatment.Progress not LIKE '%14%' and treatment.Progress like '%12%' and  fieldinfomation.equipment like'%" + equipment + "%' and treatment.Patient_ID=@pid";
             sqlOperation1.AddParameterWithValue("@pid", reader["patientid"].ToString());
             MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(selectcommand);
             ArrayList treatmentidlist = new ArrayList();

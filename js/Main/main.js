@@ -1596,28 +1596,210 @@ function Recover() {
 //搜索
 function SearchTable(str, sortPatient, session) {
     var table = $("#patient-table");
-    var filtered = sortPatient.PatientInfo.filter(filterFunction, str);
+    var filtered;
+    switch(session.role)
+    {
+        case "科主任":
+            filtered = sortPatient.PatientInfo.filter(filterFunctionForKZR, str);
+            break;
+        case "治疗技师":
+            filtered = sortPatient.PatientInfo.filter(filterFunctionForZLJS, str);
+            break;
+        case "模拟技师":
+            filtered = sortPatient.PatientInfo.filter(filterFunctionForMNJS, str);
+            break;
+        case "物理师":
+            filtered = sortPatient.PatientInfo.filter(filterFunctionForWLS, str);
+            break;
+        case "剂量师":
+            filtered = sortPatient.PatientInfo.filter(filterFunctionForJLS, str);
+            break;
+        case "医师":
+            filtered = sortPatient.PatientInfo.filter(filterFunctionForYS, str);
+            break;
+        case "登记处人员":
+            filtered = sortPatient.PatientInfo.filter(filterFunctionForDJC, str);
+            break;
+        default:
+            filtered = sortPatient.PatientInfo.filter(filterFunctionForKZR, str);
+            break;
+
+    }
+
     var patientGroup = { PatientInfo: filtered };
     Paging(patientGroup, session.role, session.userID);
     //table.find("tbody tr").hide().filter(":contains('"+ str +"')").show();
     //$("#patient_info").html("一共"+ table.find("tbody tr").filter(":contains('"+ str +"')").length +"条记录");
 }
 
-//json过滤函数
-function filterFunction(element,index,array) {
-    var group = Object.values(element);
-    var str;
-    for (var k = 0; k < group.length; k++) {
-        if (group[k].indexOf(this) >= 0) {
-            return true;
-        }
-        if (ProgressToString(element.Progress.split(",")).indexOf(this) >= 0) {
-            return true;
-        }
+
+//科主任json过滤函数
+function filterFunctionForKZR(element, index, array) {
+    var text1 = element.Radiotherapy_ID;
+    var text2 = element.Name;
+    var text3 = (element.diagnosisresult == "") ? "无" : element.diagnosisresult;
+    var text4 = element.treat;
+    var text5 = element.doctor;
+    var text6 = (element.groupname == "") ? "未分组" : element.groupname;
+    var stateStr = new Array("", "(暂停中)", "已结束");
+    var state = stateStr[parseInt(element.state)];
+    var progress = (element.state == 2) ? "" : ProgressToString(element.Progress.split(","));
+    var finalProgress = progress + state;
+    if (text1.indexOf(this) >= 0 || text2.indexOf(this) >= 0 || text3.indexOf(this) >= 0) {
+        return true;
+    }
+    if (text4.indexOf(this) >= 0 || text5.indexOf(this) >= 0 || text6.indexOf(this) >= 0) {
+        return true;
+    }
+    if (finalProgress.indexOf(this) >= 0) {
+        return true;
     }
     return false;
-
 }
+
+//治疗技师json过滤
+function filterFunctionForZLJS(element, index, array) {
+    var text1 = Num2Time(element.begin, element.end);
+    var text2 = element.Radiotherapy_ID;
+    var text3 = element.name;
+    var text4 = element.Gender;
+    var text5 = element.Age;
+    var text6 = element.doctor;
+    var text7 = (element.Completed == "1") ? "完成" : "等待";
+    var text8 = (element.Ishospital == "0") ? "门诊" : "住院";
+    if (text1.indexOf(this) >= 0 || text2.indexOf(this) >= 0 || text3.indexOf(this) >= 0 || text8.indexOf(this) >= 0) {
+        return true;
+    }
+    if (text4.indexOf(this) >= 0 || text5.indexOf(this) >= 0 || text6.indexOf(this) >= 0 || text7.indexOf(this) >= 0) {
+        return true;
+    }
+ 
+    return false;
+}
+
+//模拟技师json过滤
+function filterFunctionForMNJS(element, index, array) {
+    var text1 = element.Radiotherapy_ID;
+    var text2 = element.Name;
+    var text3 = (element.Completed == "1") ? "完成" : "等待";
+    var text4 = (element.diagnosisresult == "") ? "无" : element.diagnosisresult;
+    var text5 = element.treat;
+    var text6 = element.doctor;
+
+    if (text1.indexOf(this) >= 0 || text2.indexOf(this) >= 0 || text3.indexOf(this) >= 0) {
+        return true;
+    }
+    if (text4.indexOf(this) >= 0 || text5.indexOf(this) >= 0 || text6.indexOf(this) >= 0) {
+        return true;
+    }
+
+    return false;
+}
+
+//物理师json过滤
+function filterFunctionForWLS(element, index, array) {
+    var text1 = element.Radiotherapy_ID;
+    var text2 = element.Name;
+    var text3 = (element.diagnosisresult == "") ? "无" : element.diagnosisresult;
+    var text4 = element.treat;
+    var text5 = element.doctor;
+    var stateStr = new Array("", "(暂停中)", "已结束");
+    var state = stateStr[parseInt(element.state)];
+    var progress = (element.state == 2) ? "" : ProgressToString(element.Progress.split(","));
+    var finalProgress = progress + state;
+
+    if (text1.indexOf(this) >= 0 || text2.indexOf(this) >= 0 || text3.indexOf(this) >= 0) {
+        return true;
+    }
+    if (text4.indexOf(this) >= 0 || text5.indexOf(this) >= 0) {
+        return true;
+    }
+    if (finalProgress.indexOf(this) >= 0) {
+        return true;
+    }
+
+    return false;
+}
+
+//剂量师json过滤
+function filterFunctionForJLS(element, index, array) {
+    var text1 = element.Radiotherapy_ID;
+    var text2 = element.Name;
+    var text3 = (element.diagnosisresult == "") ? "无" : element.diagnosisresult;
+    var text4 = element.treat;
+    var text5 = element.doctor;
+    var stateStr = new Array("", "(暂停中)", "已结束");
+    var state = stateStr[parseInt(element.state)];
+    var progress = (element.state == 2) ? "" : ProgressToString(element.Progress.split(","));
+    var finalProgress = progress + state;
+
+    if (text1.indexOf(this) >= 0 || text2.indexOf(this) >= 0 || text3.indexOf(this) >= 0) {
+        return true;
+    }
+    if (text4.indexOf(this) >= 0 || text5.indexOf(this) >= 0) {
+        return true;
+    }
+    if (finalProgress.indexOf(this) >= 0) {
+        return true;
+    }
+
+    return false;
+}
+
+
+//医师json过滤
+function filterFunctionForYS(element, index, array) {
+    var text1 = element.Radiotherapy_ID;
+    var text2 = element.Name;
+    var text3 = (element.diagnosisresult == "") ? "无" : element.diagnosisresult;
+    var text4 = element.treat;
+    var text5 = element.doctor;
+    var text6 = (element.groupname == "") ? "未分组" : element.groupname;
+    var stateStr = new Array("", "(暂停中)", "已结束");
+    var state = stateStr[parseInt(element.state)];
+    var progress = (element.state == 2) ? "" : ProgressToString(element.Progress.split(","));
+    var finalProgress = progress + state;
+
+    if (text1.indexOf(this) >= 0 || text2.indexOf(this) >= 0 || text3.indexOf(this) >= 0) {
+        return true;
+    }
+    if (text4.indexOf(this) >= 0 || text5.indexOf(this) >= 0 || text6.indexOf(this) >= 0) {
+        return true;
+    }
+    if (finalProgress.indexOf(this) >= 0) {
+        return true;
+    }
+
+    return false;
+}
+
+
+//登记处人员
+function filterFunctionForDJC(element, index, array) {
+    var text1 = element.Radiotherapy_ID;
+    var text2 = element.Name;
+    var text3 = (element.diagnosisresult == "") ? "无" : element.diagnosisresult;
+    var text4 = element.treat;
+    var text5 = element.doctor;
+    var text6 = (element.groupname == "") ? "未分组" : element.groupname;
+    var stateStr = new Array("", "(暂停中)", "已结束");
+    var state = stateStr[parseInt(element.state)];
+    var progress = (element.state == 2) ? "" : ProgressToString(element.Progress.split(","));
+    var finalProgress = progress + state;
+
+    if (text1.indexOf(this) >= 0 || text2.indexOf(this) >= 0 || text3.indexOf(this) >= 0) {
+        return true;
+    }
+    if (text4.indexOf(this) >= 0 || text5.indexOf(this) >= 0 || text6.indexOf(this) >= 0) {
+        return true;
+    }
+    if (finalProgress.indexOf(this) >= 0) {
+        return true;
+    }
+
+    return false;
+}
+
 
 //流程预警
 function TaskWarning(patient){
