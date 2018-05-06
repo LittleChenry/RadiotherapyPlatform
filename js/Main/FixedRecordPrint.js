@@ -1,6 +1,12 @@
-﻿ /**
- *
- */
+﻿/* ***********************************************************
+ * FileName: FixedRecordPrint.js
+ * Writer: JY
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 体位固定记录打印
+ * **********************************************************/
 
 function print() {
     var $printArea = $("#printArea");

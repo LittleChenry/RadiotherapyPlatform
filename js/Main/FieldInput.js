@@ -1,4 +1,12 @@
-﻿
+﻿/* ***********************************************************
+ * FileName: FieldInput.js
+ * Writer: JY
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 放疗计划导入子界面
+ * **********************************************************/
 window.addEventListener("load", Init, false);
 var userName;
 var userID;

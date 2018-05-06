@@ -1,4 +1,13 @@
-﻿var isAllGood;//所有检查是否通过
+﻿/* ***********************************************************
+ * FileName: PatientRegister.js
+ * Writer: xubixiao
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 病人信息登记js
+ * **********************************************************/
+var isAllGood;//所有检查是否通过
 var docandgroup;
 window.addEventListener("load", Init, false);
 //初始化 
@@ -114,14 +123,16 @@ function Init(evt) {
     var dateString = document.getElementById("AppiontDate").value;
     CreateCurrentAccerEquipmentTbale(dateString);
     });
+    //查看照片
     $("#self-photo").unbind("click").click(function (e) {
         $("#mypic").click();
     });
-
+    //导入个人照片
     $("#importPhoto").bind("click",function(){
         $("#cutphoto").modal({ backdrop: 'static' });
     });
 }
+
 function isradio() {
     var radio = document.getElementById("radionumber").value;
     var reg = /^(\d{8})$/;
@@ -170,6 +181,7 @@ function getSession() {
     });
     return Session;
 }
+//获取预约
 function getAppointments(treatmentID) {
     var appoints;
     $.ajax({
@@ -187,6 +199,7 @@ function getAppointments(treatmentID) {
     });
     return appoints;
 }
+//修改预约
 function changeAppoint(e) {
      var treatID = window.location.search.split("&")[0].split("=")[1];
     var $e = $(e);
@@ -459,6 +472,7 @@ Date.prototype.Format = function (fmt) {
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
+//获取设备
 function geteuqipmenttype(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "geteuqipmenttype.ashx?treatmentID=" + treatmentID;
@@ -473,6 +487,8 @@ function toTime(minute) {
     var min = parseInt(minute) - hour * 60;
     return hour.toString() + ":" + (min < 10 ? "0" : "") + min.toString();
 }
+
+//获取病人信息
 function getPatientInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "patientInfo.ashx?treatID=" + treatID;
@@ -487,6 +503,8 @@ function getPatientInfo(treatID) {
     xmlHttp.send();
     writePatientInfo(patientInfo);
 }
+
+//填写病人信息
 function writePatientInfo(PatientInfo) {
     document.getElementById("userName").value = PatientInfo.patientInfo[0].Name;
     $('input[name="RecordNumber"]:eq(1)').bind("click", function () {
@@ -558,6 +576,7 @@ function createdoctorItem(thiselement) {
         i++;
     }
 }
+//选择分组下拉菜单
 function createselect2(index) {
     var thiselement = document.getElementById("group");
     var groups = docandgroup;
@@ -581,6 +600,7 @@ function createselect2(index) {
     }
 
 }
+//获取医师与其组名称
 function getdoctorandgroup() {
     var xmlHttp = new XMLHttpRequest();
     var url = "getdoctorandgroup.ashx";
@@ -764,6 +784,8 @@ function recoverClassName(thisElement) {
 }
 function remove() {
 }
+
+//机器选择下拉菜单
 function createfixEquipmachine(thiselement, item) {
     var machineItem = JSON.parse(getmachineItem(item)).Item;
     thiselement.options.length = 0;
@@ -784,6 +806,8 @@ function createaccerEquipmachine(thiselement, treatmentid) {
         }
     }
 }
+
+//获取设备
 function getmachineItem1(treatmentid) {
         var xmlHttp = new XMLHttpRequest();
         var url = "getfirstaccermachine.ashx?treatmentid=" + treatmentid;
@@ -808,6 +832,8 @@ function getmachineItem(item) {
     var Items = xmlHttp.responseText;
     return Items;
 }
+
+//构建预约表
 function CreateCurrentEquipmentTbale(equiment, dateString) {
     $("#timechoose").hide();
     $("#commonapp1").hide();
@@ -1241,7 +1267,7 @@ function CreateNewAccerAppiontTable(evt) {
 
 }
 
-
+//与今天比较
 function compareWithToday(time) {
     var year = time.split("-")[0];
     var month = time.split("-")[1];
@@ -1270,6 +1296,7 @@ function compareWithToday(time) {
     }
 }
 
+//根据数据显示疗程状态
 function StateNumToString(str){
     var state;
     switch(str){
@@ -1288,6 +1315,7 @@ function StateNumToString(str){
     return state;
 }
 
+//展示状态按钮
 function showTreatmentManageButton(State){
     var addTreatmentButton = $("#addTreatment");
     switch(State){
@@ -1304,11 +1332,13 @@ function showTreatmentManageButton(State){
             addTreatmentButton.after(startTreatmentButton);
             break;
         default:
-            var restartTreatmentButton = '<button id="restartTreatment" class="btn btn-success" type="button" onclick="changeState(this)" style="margin-left:4px;">恢复疗程</button>';
-            addTreatmentButton.after(restartTreatmentButton);
+            //var restartTreatmentButton = '<button  id="restartTreatment" class="btn btn-default" type="button" style="margin-left:5px;">疗程已经结束</button>';
+            //addTreatmentButton.after(restartTreatmentButton);
+      
     }
+   
 }
-
+//改变按钮触发事件
 function changeState(e){
     var changestate = $(e).html();
     var state;
@@ -1322,9 +1352,9 @@ function changeState(e){
         case "结束疗程":
             state = 2;
             break;
-        case "恢复疗程":
-            state = 0;
-            break;
+        //case "恢复疗程":
+        //    state = 0;
+        //    break;
     }
     $.ajax({
         type: "GET",
@@ -1344,6 +1374,7 @@ function changeState(e){
     });
 }
 
+//新增疗程
 function saveTreatment() {
     var diagnose = "";
     var fixed = "";
@@ -1422,7 +1453,7 @@ function saveTreatment() {
         }
     });
 }
-
+//新增疗程弹框
 function checkAddTreatment(Radiotherapy_ID) {
     $("#addTreatment").attr("disabled", "disabled");
     $("#addTreatment").nextAll().each(function(){
@@ -1757,6 +1788,7 @@ function checkAddTreatment(Radiotherapy_ID) {
     }
     return false;
 }
+//编辑按钮事件
 function remove() {
     document.getElementById("userName").removeAttribute("disabled");
     document.getElementById("usernamepingyin").removeAttribute("disabled");
@@ -1781,6 +1813,8 @@ function remove() {
     document.getElementById("Hospital").removeAttribute("disabled");
     document.getElementById("radionumber").removeAttribute("disabled");
 }
+
+//图片上交事件
 function handleFiles(e) {
     var groupfiles = e.target.files;
     var reader = new FileReader();
@@ -1876,7 +1910,7 @@ function transferresult(args1, args2) {
 function transfertime(args) {
     var group = args.split(":");
     if (parseInt(group[0]) > 24) {
-        return (24 - parseInt(group[0])) + ":" + group[1] + "(次日)";
+        return (parseInt(group[0])-24) + ":" + group[1] + "(次日)";
     } else {
         return args;
     }

@@ -1,4 +1,13 @@
-﻿window.addEventListener("load", Init, false);
+﻿/* ***********************************************************
+ * FileName: FirstAccerator.js
+ * Writer: xubixiao
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 放疗计划管理界面
+ * **********************************************************/
+window.addEventListener("load", Init, false);
 var userName;
 var userID;
 var allpagenumber;
@@ -20,6 +29,7 @@ function Init(evt) {
     getUserName();
     var session = getSession();
     var patient = getFAPatientInfo(treatmentID);
+    //基本信息
     document.getElementById("username").innerHTML = patient.Name;
     document.getElementById("sex").innerHTML = sex(patient.Gender);
     document.getElementById("age").innerHTML = patient.Age;
@@ -44,7 +54,8 @@ function Init(evt) {
    
     var date = new Date();
     document.getElementById("AppiontDate").value = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-   
+     
+    //首次预约的预约表格构建
     $("#AppiontDate").unbind("change").change(function () {
         if ($("#AppiontDate").val() == "") {
             var date = new Date();
@@ -69,6 +80,8 @@ function Init(evt) {
         var dateString = document.getElementById("AppiontDate").value;
         CreateCurrentEquipmentTbale(dateString);
     });
+
+    //获取所有治疗的子计划，建立切换板
    childdesigns = getAllChildDesign(patient.ID);
     for (var k = 0; k < childdesigns.length; k++) 
     {
@@ -157,6 +170,8 @@ function Init(evt) {
     document.getElementById("technology").innerHTML = designInfo[0].techname;
     document.getElementById("equipment").innerHTML = designInfo[0].equipname;
     document.getElementById("PlanSystem").innerHTML = designInfo[0].tps;
+
+  //不同子计划的内容填写
   for (var i = 0; i < childdesigns.length; i++) 
   {
       var fildinfo = childdesigns[i].fieldinfo;
@@ -216,6 +231,7 @@ function Init(evt) {
           }
           $("#log"+i).append(content);
       }
+      //子计划状态判断
       if (childdesigns[i].childstate == "0")
       {
           $("#pause" + i).removeClass("btn-primary");
@@ -223,14 +239,18 @@ function Init(evt) {
           $("#pause" + i).html("恢复子计划");
           $("#chooseappoint" + i).attr("disabled", "disabled");
       }
+      //进行预约
       $("#chooseappoint" + i).unbind("click").click(function () {
           CreateNewAppiontTable(event);
       });
   }
+
+  //确认预约
   $("#sure").unbind("click").click(function () {
       checkAllTable(patient.ID,userID);
   });
 
+  //操作人填写
   $("#operator").html(userName);
   var date = new Date();
   $("#date").html(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
@@ -265,6 +285,8 @@ function createtimeselect(thiselement) {
         }
     
 }
+
+//获取时间段预约
 function gettimeduan(item) {
     var xmlHttp = new XMLHttpRequest();
     var url = "gettimeselect.ashx";
@@ -308,6 +330,7 @@ function createfixEquipmachine(thiselement, item, type) {
     }
 }
 
+//获取预约设备
 function getmachineItem(item, type) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getaccermachine.ashx?item=" + item + "&type=" + type;
@@ -538,7 +561,7 @@ function compareWithToday(time) {
         }
     }
 }
-
+//以下是预约逻辑
 function chooseItem() {
     if (ChoseID() == null) {
         if (this.lastChild.className) {
@@ -695,6 +718,8 @@ function dateAdd2(dd, n) {
     var strdate = strYear + "-" + strMonth + "-" + strDay;
     return strdate;
 }
+
+//判断病人是否是普放
 function judgecommon(treatid) {
     var xmlHttp = new XMLHttpRequest();
     var url = "judgecommon.ashx?treatmentID=" + treatid;
@@ -704,6 +729,7 @@ function judgecommon(treatid) {
     return Items;
 }
 
+//构建分割方式下拉菜单
 function createSplitway(thiselement) {
     var getsplitwayItem = JSON.parse(getsplitway()).Item;
     thiselement.options.length = 0;
@@ -719,6 +745,8 @@ function createSplitway(thiselement) {
         thiselement.value = getsplitwayItem[0].defaultItem;
     }
 }
+
+//获取所有分割方式配置
 function getsplitway() {
     var xmlHttp = new XMLHttpRequest();
     var url = "getsplitwayItem.ashx";
@@ -736,7 +764,7 @@ function hosttext(str) {
     }
 }
 
-
+//数组是否包含某个字符串
 function contains(group, s) {
     for (var k = 0; k <= group.length - 1; k++) {
         if (group[k] == s) {
@@ -757,6 +785,8 @@ function charge(evt) {
     else
         return "可行";
 }
+
+//获取诊断历史记录
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "../designbasicinfo.ashx?treatID=" + treatID;
@@ -768,6 +798,8 @@ function getDesignInfo(treatID) {
     var obj1 = eval("(" + json + ")");
     return obj1.designInfo;
 }
+
+//获取靶区勾画剂量配对等内容
 function readDosagePriority(DosagePriority) {
     var table = document.getElementById("Priority");
     var tbody = document.createElement("tbody");
@@ -792,6 +824,8 @@ function readDosagePriority(DosagePriority) {
     tbody.style.textAlign = "center";
     table.appendChild(tbody);
 }
+
+//获取剂量配置信息
 function readDosage(DosagePriority) {
     var table = document.getElementById("Dosage");
     var tbody = document.createElement("tbody");
@@ -864,6 +898,7 @@ function getfirstaccelerateInfomation(treatmentID) {
     return obj1.info[obj1.info.length-1];
 }
 
+//保存提交
 function save() {
     var number = allpagenumber;
     var totalnumber = document.getElementById("totalnumber" + number).value;
@@ -990,7 +1025,9 @@ function remove() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentid = treatmentgroup.split("=")[1];
     for (var i = 0; i < childdesigns.length; i++) {
-        $("#pause" + i).removeAttr("disabled");
+        if (childdesigns[i].treatstate == "0") {
+               $("#pause" + i).removeAttr("disabled");
+        }
         if (childdesigns[i].childstate != "0") {
             $("#totalnumber" + i).removeAttr("disabled");
             $("#splitway" + i).removeAttr("disabled");
@@ -1187,7 +1224,7 @@ function transferresult(args1, args2) {
 function transfertime(args) {
     var group = args.split(":");
     if (parseInt(group[0]) > 24) {
-        return (24 - parseInt(group[0])) + ":" + group[1] + "(次日)";
+        return (parseInt(group[0])-24) + ":" + group[1] + "(次日)";
     } else {
         return args;
     }

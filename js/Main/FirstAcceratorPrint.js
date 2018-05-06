@@ -1,4 +1,13 @@
-﻿var patientbasic;
+﻿/* ***********************************************************
+ * FileName: FirstAcceratorPrint.js
+ * Writer: xubixiao
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 放疗计划打印
+ * **********************************************************/
+var patientbasic;
 function print() {
     var $printArea = $("#printArea");
     $printArea.empty();

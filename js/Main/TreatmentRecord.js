@@ -1,4 +1,13 @@
-﻿window.addEventListener("load", Init, false);
+﻿/* ***********************************************************
+ * FileName: TreatmentRecord.js
+ * Writer: xubixiao
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 病人重新治疗js
+ * **********************************************************/
+window.addEventListener("load", Init, false);
 var userName;
 var userID;
 var require;
@@ -72,6 +81,7 @@ function Init(evt) {
     var designInfo = getDesignInfo(treatmentID);
     readDosagePriority(designInfo[i].DosagePriority);
 
+    //不同疗程的信息获取并建立标签栏
     childdesigns = getAllChildDesign(patient.ID);
     for (var j = 0; j < childdesigns.length; j++) {
         if (j == 0) {
@@ -115,6 +125,8 @@ function Init(evt) {
         }
     }
     var flag = true;
+
+    //对每一个子计划进行填写信息
     for (var i = 0; i < childdesigns.length; i++) {
         var fildinfo = childdesigns[i].fieldinfo;
         if (fildinfo.length == 0) {
@@ -148,17 +160,22 @@ function Init(evt) {
         $("#total" + i).html(childdesigns[i].Totalnumber);
         $("#enjoin" + i).html(childdesigns[i].specialenjoin);
         $("#treatedtimes" + i).html(childdesigns[i].treattimes);
-        if (parseInt(childdesigns[i].rest) > 0 && flag==true) {
+
+        //如果这个病人有子计划还差剩余次数就需要提醒技师这个病人可以预约(如果疗程计划已经结束不要提醒)
+        if (childdesigns[i].childstate=="3" && parseInt(childdesigns[i].rest) > 0 && flag == true) {
             alert("此病人还有计划需要进行加速器预约，请进行预约");
             flag = false;
         }
+
         if (contains(childdesigns[i].chid,appointchilddesign)) {
             $("#tabs li:eq(" + i + ")").find("a").addClass("appointdesign");
         }
+        //显示治疗历史
         refresh(i);
         refresh1(i);
 
     }
+    //验证协助人
     $("#validate").click(function () {
         $.ajax({
             type: "POST",
@@ -198,6 +215,7 @@ function Init(evt) {
         });
     });
     
+    //确认提交
     $("#confirm").click(function ()
     {
         if (document.getElementById("singlenumber").value == "") {
@@ -253,7 +271,9 @@ function Init(evt) {
         } else {
             alert("没有选择协助操作者");
         }
-       });
+    });
+
+    //igrt记录
     $("#recordigrt").click(function()
     {
         var session = getSession();
@@ -350,7 +370,7 @@ function getappointgroupdesign(appointid) {
     return obj1;
 }
 
-
+//判断疗程是否普放
 function judgecommon(treatid) {
     var xmlHttp = new XMLHttpRequest();
     var url = "judgecommon.ashx?treatmentID=" + treatid;
@@ -377,6 +397,7 @@ function getreplacerecordInfo(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.replace[0];
 }
+//获取pdf
 function getpdfgroup(treatmentID)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -386,6 +407,8 @@ function getpdfgroup(treatmentID)
     var json = xmlHttp.responseText;
     return json;
 }
+
+//获取治疗确认信息
 function getconfirminfomation(chid, appointid) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getconfirminfomation.ashx?chid=" + chid + "&appoint=" + appointid;
@@ -409,6 +432,8 @@ function charge(evt) {
     else
         return "可行";
 }
+
+//获取计划设计信息
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "../designbasicinfo.ashx?treatID=" + treatID;
@@ -420,6 +445,8 @@ function getDesignInfo(treatID) {
     var obj1 = eval("(" + json + ")");
     return obj1.designInfo;
 }
+
+//获取剂量信息
 function readDosagePriority(DosagePriority) {
     var table = document.getElementById("Priority");
     var tbody = document.createElement("tbody");
@@ -445,6 +472,7 @@ function readDosagePriority(DosagePriority) {
     table.appendChild(tbody);
 }
 
+//获取首次预约信息
 function getallfirst(treatmentID){
     var xmlHttp = new XMLHttpRequest();
     var url = "getallfirstappoint.ashx?treatmentID=" + treatmentID;
@@ -454,6 +482,7 @@ function getallfirst(treatmentID){
     return json;
 }
 
+//获取其他加速器预约
 function getotheraccer(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getotheraccer.ashx?treatmentID=" + treatmentID;
@@ -463,6 +492,7 @@ function getotheraccer(treatmentID) {
     return json;
 }
 
+//填写治疗历史
 function refresh(number) {
     var data = getalltreatmentrecord(childdesigns[number].chid);
     RemoveAllChild(document.getElementById("treatment" + number));
@@ -510,6 +540,7 @@ function refresh(number) {
     }); 
 }
 
+//获取治疗历史信息
 function getalltreatmentrecord(chid) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getalltreatmentrecord.ashx?chid=" + chid;
@@ -520,6 +551,7 @@ function getalltreatmentrecord(chid) {
     return obj1.Item;
 }
 
+//igrt历史信息
 function refresh1(number) {
     var data = getalligrt(childdesigns[number].chid);
     RemoveAllChild(document.getElementById("IGRT"+number));
@@ -533,6 +565,9 @@ function refresh1(number) {
        $("#IGRT"+number).append(content);
 }
 
+
+
+//获取所有igrt
 function getalligrt(chid) {
     var xmlHttp = new XMLHttpRequest();
     var url = "getalligrt.ashx?chid=" + chid;
@@ -552,6 +587,7 @@ function getfirstday(chid){
     return json;
 }
 
+//判断日期差
 function GetDateDiff(startDate, endDate) {
     var startTime = new Date(Date.parse(startDate.replace(/-/g, "/"))).getTime();
     var endTime = new Date(Date.parse(endDate.replace(/-/g, "/"))).getTime();
@@ -599,6 +635,7 @@ function getPatientInfo(treatmentID) {
     return obj1.patient[0];
 }
 
+//获取疗程总次数（废弃)
 function gettotalnumber(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "gettreatmentnumber.ashx?treatmentID=" +treatmentID;

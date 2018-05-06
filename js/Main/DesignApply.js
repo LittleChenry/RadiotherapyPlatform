@@ -1,4 +1,13 @@
-﻿window.addEventListener("load", Init, false);
+﻿/* ***********************************************************
+ * FileName: DesignApply.js
+ * Writer: JY
+ * create Date: --
+ * ReWriter:JY
+ * Rewrite Date:--
+ * impact :
+ * 计划申请
+ * **********************************************************/
+window.addEventListener("load", Init, false);
 
 var treatID;
 

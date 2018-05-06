@@ -1,4 +1,13 @@
-﻿window.addEventListener("load", Init, false);
+﻿/* ***********************************************************
+ * FileName: fixApply.js
+ * Writer: xubixiao
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 体位固定预约
+ * **********************************************************/
+window.addEventListener("load", Init, false);
 var userName;
 var userID;
 var number = 0;
@@ -39,6 +48,7 @@ function Init(evt) {
     createbodyposItem(document.getElementById("bodyPost"));
     createfixEquipItem(document.getElementById("fixEquip"));
     var info = getfixInfomation(treatmentID);
+    //切换板构建
     $("#current-tab").text(patient.Treatmentdescribe + "体位固定申请");
     var groupprogress = patient.Progress.split(",");
     if (contains(groupprogress, "2")) {
@@ -225,6 +235,7 @@ function Init(evt) {
         }
 
     }
+    //历史记录按钮绑定事件
     $("#tab-content").find("button").each(function () {
         $(this).bind("click", function () {
             var k = this.id;
@@ -268,6 +279,7 @@ function getNowFormatDate() {
 
     return currentdate;
 }
+//体位下拉菜单
 function createbodyposItem(thiselement)
 {
     var PartItem = JSON.parse(getbodyposItem()).Item;
@@ -282,6 +294,7 @@ function createbodyposItem(thiselement)
         thiselement.value = defaultItem.ID;
     }
 }
+//获取体位配置
 function getbodyposItem() {
     var xmlHttp = new XMLHttpRequest();
     var url = "getbodypost.ashx";
@@ -290,6 +303,8 @@ function getbodyposItem() {
     var Items = xmlHttp.responseText;
     return Items;
 }
+
+//体位固定设备预约表格配置
 function createfixEquipmachine(thiselement,item) {
     var machineItem = JSON.parse(getmachineItem(item)).Item;
     thiselement.options.length = 0;
@@ -319,6 +334,7 @@ function getfixInfomation(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 }
+//选择体位固定申请模板
 function chooseTempalte(templateID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "GetTemplateFixApply.ashx?templateID=" + templateID;
@@ -333,6 +349,7 @@ function chooseTempalte(templateID) {
     document.getElementById("bodyPost").value = obj1.templateInfo[0].BodyPosition;
     document.getElementById("Remarks").value = obj1.templateInfo[0].RemarksApply;
 }
+//保存提交
 function save() {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
     var treatmentid = treatmentgroup.split("=")[1];
@@ -404,6 +421,7 @@ function save() {
 
     
 }
+//保存模板
 function saveTemplate(TemplateName) {
     var model = document.getElementById("modelselect").value;
     var special = document.getElementById("specialrequest").value;  
@@ -879,6 +897,7 @@ function dateAdd2(dd, n) {
     var strdate = strYear + "-" + strMonth + "-" + strDay;
     return strdate;
 }
+//编辑按钮事件
 function remove() {
     document.getElementById("modelselect").removeAttribute("disabled");
     document.getElementById("specialrequest").removeAttribute("disabled");

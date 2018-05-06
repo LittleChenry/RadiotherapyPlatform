@@ -1,8 +1,18 @@
+/* ***********************************************************
+ * FileName: main.js
+ * Writer: Chenrry
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 主页面JS
+ * **********************************************************/
 var currentID = 0;
 var functions = new Array();
 var username;
 var rolename;
 var flag = true;
+//如果其他账号登录只承认一个session
 window.onfocus = function () {
     var session = getSession2();
     if (session.userName != username || session.roleName != rolename) {
@@ -22,6 +32,8 @@ $(document).ready(function () {
     adjustTable();
 
     functions = session.progress.split(" ");
+
+    //保存键
     $("#save").unbind("click").click(function () {
         var result = $("#record-iframe")[0].contentWindow.save();
         if (result == false) {
@@ -34,6 +46,8 @@ $(document).ready(function () {
         adjustTable();
         Recover();
     });
+
+    //三个病人筛选按钮
     $('#first_but').unbind("click").click(function () {
         var session = getSession();
         RolesToPatients(session, 0);
@@ -67,6 +81,8 @@ $(document).ready(function () {
         $('#sec_but').addClass("btn btn-success");
         $('#third_but').addClass("btn btn-info");
     });
+
+    //编辑键
     $('#edit').unbind("click").click(function () {
         $("#record-iframe")[0].contentWindow.remove();
         $("#save").removeAttr("disabled");
@@ -196,9 +212,15 @@ function RolesToPatients(session,type) {
                 var Searchedpatients = SearchTable($("#patient-search").val(), sortPatient, session);
                 adjustTable();
             });
+            //工作预警
             if (session.role == "医师" || session.role == "剂量师" || session.role == "物理师") {
-                TaskWarning(sortPatient);
+                Taskwarning(sortPatient);
             }
+            //病人治疗完成情况预警
+            if (session.role == "医师" || session.role == "科主任") {
+                completeWarning(sortPatient);
+            }
+
         }
     }
     return sortPatient;
@@ -213,6 +235,7 @@ function Paging(patient, role, userID) {
         $("#patient_info").text("一共" + patient.PatientInfo.length + "条记录");
         switch (role) {
             case "医师":
+                $("#legend-patientselect").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
@@ -1800,9 +1823,59 @@ function filterFunctionForDJC(element, index, array) {
     return false;
 }
 
+//病人疗程完成情况预警
+function completeWarning(patient) {
+    var patientidlist = "";
+    var boolfirst = true;
+
+    for (var i = 0; i < patient.PatientInfo.length; i++) {
+        if (patient.PatientInfo[i].state != "2") {
+            if (boolfirst == true) {
+                patientidlist = patientidlist + patient.PatientInfo[i].treatID;
+                boolfirst = false;
+            } else {
+                patientidlist = patientidlist +","+patient.PatientInfo[i].treatID;
+            }
+        }
+
+    }
+
+    $.ajax({
+        type: "GET",
+        url: "../../pages/Main/Records/getCompleteWarning.ashx",
+        data: {patientidlist: patientidlist},
+        async: true,
+        dateType: "json",
+        success: function (data) {
+            completewarn = $.parseJSON(data);
+            var CompleteList = $("#CompleteList");
+            var CompleteTask = $("#CompleteTask");
+            var patientCompleteInfo = $("#patientCompleteInfo");
+            CompleteList.html("");
+            var content = "";
+            for (var i = 0; i < completewarn.length; i++) {
+                if (completewarn[i].childname == "all") {
+                    content =content+'<li><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
+                       + completewarn[i].pname + '，' + completewarn[i].treatname + '，' + completewarn[i].info
+                       + '</a></li>';
+                } else {
+                      content=content+'<li><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
+                       + completewarn[i].pname + '，' + completewarn[i].treatname + '，' + completewarn[i].childname + '，' + completewarn[i].info;
+                       + '</a></li>';
+                }
+               
+            }
+            CompleteList.append(content);
+            var TaskWarningNum = CompleteList.find("li").length;
+            patientCompleteInfo.html(TaskWarningNum);
+        }
+    });
+}
+
+
 
 //流程预警
-function TaskWarning(patient){
+function Taskwarning(patient) {
     $.ajax({
         type: "GET",
         url: "../../pages/Main/Records/getallwarning.ashx",

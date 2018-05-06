@@ -1,4 +1,13 @@
-﻿window.addEventListener("load", Init, false);
+﻿/* ***********************************************************
+ * FileName: LocationApply.js
+ * Writer: xubixiao
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 模拟定位申请记录
+ * **********************************************************/
+window.addEventListener("load", Init, false);
 var userName;
 var userID;
 var ti = 0;
@@ -372,6 +381,7 @@ function getLocationInfomation(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.info;
 }
+//选择模板
 function chooseTempalte(templateID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "GetTemplateLocationApply.ashx?templateID=" + templateID;
@@ -397,6 +407,7 @@ function chooseTempalte(templateID) {
         document.getElementById("enhancemethod").style.display = "none";
     }
 }
+//保存提交
 function save() {
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -493,6 +504,7 @@ function save() {
 
    
 }
+//保存模板
 function saveTemplate(TemplateName) {  
     var scanpart = document.getElementById("scanpart").value;
     var scanmethod = document.getElementById("scanmethod").value;

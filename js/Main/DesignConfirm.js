@@ -1,4 +1,12 @@
-﻿
+﻿/* ***********************************************************
+ * FileName: DesignConfirm.js
+ * Writer: JY
+ * create Date: --
+ * ReWriter:JY
+ * Rewrite Date:--
+ * impact :
+ * 计划确认
+ * **********************************************************/
 window.addEventListener("load", Init, false);
 
 var userName;

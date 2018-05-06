@@ -1,15 +1,27 @@
-﻿var equipmentfrominfo = "";
+﻿/* ***********************************************************
+ * FileName: EquipmentAppointment.js
+ * Writer: Chenrry
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 预约管理js
+ * **********************************************************/
+var equipmentfrominfo = "";
 var temptreatmentID = "";
 var nowDate = new Date();
 $(document).ready(function () {
     var session = getSession();
+    //这个界面只给物理师、模拟技师、治疗技师查看
     if (session.role != "物理师" && session.role != "模拟技师" && session.role != "治疗技师") {
          $("#Menu-EquipmentView").attr("href", "javascript:;");
          $("#Menu-EquipmentView").bind("click", function(){
             alert("权限不够！");
          });
     }
-	chooseEquipment();
+    //选择设备
+    chooseEquipment();
+    //确定查看
 	$("#sureEquipment").unbind("click").click(function () {
 	    nowDate = new Date();
 		var equipmentID = $("#equipment").val();
@@ -28,23 +40,28 @@ $(document).ready(function () {
         }
 	});
 
+    //选择时间
 	$("#timeselect").unbind("click").bind("change", function () {
 	    var dateString = document.getElementById("AppiontDate").value;
 	    CreateCurrentAccerEquipmentTbale(dateString);
 	});
+    //上一周
 	$("#lastWeek").unbind("click").bind("click", function () {
 	    changeDate(-7);
 	});
+    //上一天
 	$("#lastDay").unbind("click").bind("click", function () {
 	    changeDate(-1);
 	});
+    //下一天
 	$("#nextDay").unbind("click").bind("click", function () {
 	    changeDate(1);
 	});
+    //下一周
 	$("#nextWeek").unbind("click").bind("click", function () {
 	    changeDate(7);
 	});
-
+    //确定日期
 	$("#sureDate").unbind("click").bind("click", function () {
 	    var dates = $("#dates").val().split("-");
 	    nowDate = new Date(dates[0],parseInt(dates[1])-1,dates[2]);
@@ -57,6 +74,7 @@ $(document).ready(function () {
 	});
 });
 
+//修改日期
 function changeDate(days) {
     nowDate.setDate(nowDate.getDate() + days);
     if ($("#equipmentType").val() == "加速器") {
@@ -67,18 +85,21 @@ function changeDate(days) {
     }
 }
 
+//确定查看按钮
 function showButton() {
     $("#buttonArea").show();
     $("#deleteAllAppoints").remove();
     $("#dates").val("");
 }
 
+//加速器设备显示
 function AccelerateAppointView(nowDate){
     createHead(nowDate);
     createAccelerateTable(nowDate);
     
 }
 
+//显示整个预约
 function createAccelerateTable(nowDate) {
     var timelength = parseInt($("#timelength").val());
     var begin = parseInt($("#begin").val());
@@ -208,6 +229,7 @@ function createAccelerateTable(nowDate) {
     });
 }
 
+//点击病人跳转病人的预约记录
 function Appoint2Patient(){
     var WeekArea = $("#WeekAreaNormal");
     WeekArea.find("table").each(function(index,e){
@@ -295,6 +317,7 @@ function Appoint2Patient(){
     
 }
 
+
 function patientView(){
 	var equipmentID = $("#equipment").val();
 	var ViewPatient = getViewPatient(equipmentID);
@@ -320,6 +343,7 @@ function getSession() {
     return Session;
 }
 
+//修改体位固定、模拟定位时间(只要关注体位固定与模拟定位即可)
 function changeAppoint(e) {
     var treatID = temptreatmentID;
     var $e = $(e);
@@ -573,6 +597,7 @@ function changeAppoint(e) {
     $("#changeAppoint").modal({ backdrop: 'static' });
 }
 
+//获取后台预约信息
 function getAppointments(treatmentID){
 	var appoints;
     $.ajax({
@@ -591,6 +616,7 @@ function getAppointments(treatmentID){
     return appoints;
 }
 
+//获取后台预约记录
 function getAppointRecords(equipmentID){
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/GetInfoForEquipAndAppoint.ashx?equipid=" + equipmentID;
@@ -602,6 +628,8 @@ function getAppointRecords(equipmentID){
     return data;
 }
 
+
+//获取设备
 function geteuqipmenttype(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/geteuqipmenttype.ashx?treatmentID=" + treatmentID;
@@ -611,6 +639,8 @@ function geteuqipmenttype(treatmentID) {
     return Items;
 
 }
+
+//展示设备基本信息
 function showEquipmentInfo(equipmentinfo){
 	var EquipmentInfo = $("#EquipmentInfo");
 	var EquipmentState = $("#EquipmentState");
@@ -647,6 +677,7 @@ function showEquipmentInfo(equipmentinfo){
 	EquipmentTime.after(TimeRangeAM);
 }
 
+//获取所有病人预约
 function getViewPatient(equipmentID){
     var ViewPatient;
     $.ajax({
@@ -664,6 +695,7 @@ function getViewPatient(equipmentID){
     return ViewPatient;
 }
 
+//选择设备的下拉菜单
 function chooseEquipment() {
     var session = getSession();
     $("#equipmentType").html("");
@@ -746,6 +778,7 @@ function getNowFormatDate() {
     return currentdate;
 }
 
+//体位固定设备构建
 function createfixEquipmachine(thiselement, item) {
     var machineItem = JSON.parse(getmachineItem(item)).Item;
     thiselement.options.length = 0;
@@ -757,6 +790,7 @@ function createfixEquipmachine(thiselement, item) {
     }
 }
 
+//加速器设备构建
 function createaccerEquipmachine(thiselement, treatmentid) {
     var machineItem = JSON.parse(getmachineItem1(treatmentid)).Item;
     thiselement.options.length = 0;
@@ -768,6 +802,7 @@ function createaccerEquipmachine(thiselement, treatmentid) {
     }
 }
 
+//获取加速器设备
 function getmachineItem1(treatmentid) {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/getfirstaccermachine.ashx?treatmentid=" + treatmentid;
@@ -777,6 +812,7 @@ function getmachineItem1(treatmentid) {
     return Items;
 }
 
+//获取体位固定设备
 function getmachineItem(item) {
     var xmlHttp = new XMLHttpRequest();
     var url = "Records/getfixmachine.ashx?item=" + item;
@@ -966,6 +1002,7 @@ function CreateCurrentEquipmentTbale(equiment, dateString) {
     }
 }
 
+//构建加速器预约表格
 function CreateCurrentAccerEquipmentTbale(dateString) {
     $("#timechoose").show();
     $("#amlabel").hide();
@@ -1090,6 +1127,7 @@ function CreateCurrentAccerEquipmentTbale(dateString) {
 
 }
 
+//下面是预约表格的点击事件
 function chooseItem() {
     if (ChoseID() == null) {
         if (this.lastChild.className) {
@@ -1164,6 +1202,7 @@ function hasChosen() {
     alert("该时间段已被预约！");
 }
 
+//日期增加
 function dateAdd2(dd, n) {
     var strs = new Array();
     strs = dd.split("-");
@@ -1212,6 +1251,7 @@ function CreateNewAppiontTable(evt) {
     CreateCurrentEquipmentTbale(thisObj, date);
 }
 
+//构建加速器预约表格
 function CreateNewAccerAppiontTable(evt) {
     var equipmentName = document.getElementById("equipmentName");
     var currentIndex = equipmentName.selectedIndex;
@@ -1227,7 +1267,7 @@ function CreateNewAccerAppiontTable(evt) {
     CreateCurrentAccerEquipmentTbale(date);
 
 }
-
+//查看所有预约表格看看哪个被选中
 function checkAllTable() {
     var choseid = ChoseID();
     var appoint = choseid.split("_");
@@ -1235,6 +1275,7 @@ function checkAllTable() {
     document.getElementById("appointtime").value = appoint[3] + " " + appoint[1] + " " + appoint[2];
 }
 
+//与今天进行比较日期
 function compareWithToday(time) {
     var year = time.split("-")[0];
     var month = time.split("-")[1];

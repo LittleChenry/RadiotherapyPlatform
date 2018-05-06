@@ -1,4 +1,13 @@
-﻿window.addEventListener("load", Init, false);
+﻿/* ***********************************************************
+ * FileName: importCt.js
+ * Writer: xubixiao
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * CT导入
+ * **********************************************************/
+window.addEventListener("load", Init, false);
 var userName;
 var userID;
 var number = 0;
@@ -226,6 +235,7 @@ function dateformat(format) {
     var time = year + "年" + month + "月" + day + "日 " + hour + "：" + minute;
     return time;
 }
+//保存提交
 function save() {
     if (document.getElementById("DensityConversion").value == "allItem") {
         alert("请选择CT电子密度转换方式");

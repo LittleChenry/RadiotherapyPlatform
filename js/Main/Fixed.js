@@ -1,4 +1,13 @@
-﻿window.addEventListener("load", Init, false);
+﻿/* ***********************************************************
+ * FileName: fixed.js
+ * Writer: JY
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 体位固定记录
+ * **********************************************************/
+window.addEventListener("load", Init, false);
 
 
 

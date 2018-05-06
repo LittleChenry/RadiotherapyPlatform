@@ -1,4 +1,13 @@
-﻿window.addEventListener("load", Init, false);
+﻿/* ***********************************************************
+ * FileName: DesignReceive.js
+ * Writer: JY
+ * create Date: --
+ * ReWriter:JY
+ * Rewrite Date:--
+ * impact :
+ * 计划领取
+ * **********************************************************/
+window.addEventListener("load", Init, false);
 var userName;
 var userID;
 

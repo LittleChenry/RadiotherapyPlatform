@@ -1,4 +1,13 @@
-﻿window.addEventListener("load", Init, false);
+﻿/* ***********************************************************
+ * FileName: Location.js
+ * Writer: JY
+ * create Date: --
+ * ReWriter:xubixiao
+ * Rewrite Date:--
+ * impact :
+ * 模拟定位记录
+ * **********************************************************/
+window.addEventListener("load", Init, false);
 var userName;
 var userID;
 

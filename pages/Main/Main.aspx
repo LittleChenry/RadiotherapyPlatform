@@ -82,29 +82,21 @@
                     <li class="dropdown tasks-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-flag-o"></i>
-                            <span class="label label-danger">0</span>
+                            <span id="patientCompleteInfo" class="label label-danger">0</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">设备动态</li>
+                            <li  id="CompleteTask" class="header">完成情况</li>
                             <li>
-                                <ul class="menu">
+                                <ul id="CompleteList" class="menu">
                                     <li>
-                                        <a href="javascript:;">
-                                            <h3>
-                                                Design some buttons
-                                                <small class="pull-right">20%</small>
-                                            </h3>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                    <span class="sr-only">20% Complete</span>
-                                                </div>
-                                            </div>
+                                       <a href="javascript:;">
+                                            无
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="footer">
-                                <a href="javascript:;">查看详情</a>
+                                <a href="javascript:;">请及时查看</a>
                             </li>
                         </ul>
                     </li>

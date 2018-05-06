@@ -71,12 +71,12 @@ public class TreatmentRecord : IHttpHandler {
             res=int.Parse(restres);
         }
         //如果结束跳到总结随访
-        if (res == 0)
-        {
-            string updatecomm = "UPDATE treatment set Progress='0,1,2,3,4,5,6,7,8,9,10,11,12,13,14' where ID=(select Treatment_ID from childdesign where ID=@chid)";
-            sqlOperation.AddParameterWithValue("@chid", chid);
-            sqlOperation.ExecuteNonQuery(updatecomm);
-        }
+        //if (res == 0)
+        //{
+        //    string updatecomm = "UPDATE treatment set Progress='0,1,2,3,4,5,6,7,8,9,10,11,12,13,14' where ID=(select Treatment_ID from childdesign where ID=@chid)";
+        //    sqlOperation.AddParameterWithValue("@chid", chid);
+        //    sqlOperation.ExecuteNonQuery(updatecomm);
+        //}
         
         if (success > 0)
         {

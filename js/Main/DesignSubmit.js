@@ -1,4 +1,12 @@
-﻿
+﻿/* ***********************************************************
+ * FileName: DesignSubmit.js
+ * Writer: JY
+ * create Date: --
+ * ReWriter:JY
+ * Rewrite Date:--
+ * impact :
+ * 计划提交
+ * **********************************************************/
 window.addEventListener("load", Init, false);
 
 var userName;

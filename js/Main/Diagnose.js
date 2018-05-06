@@ -1,4 +1,13 @@
-﻿window.addEventListener("load", createPatient, false)
+﻿/* ***********************************************************
+ * FileName: Diagnose.js
+ * Writer: JY
+ * create Date: --
+ * ReWriter:JY
+ * Rewrite Date:--
+ * impact :
+ * 诊断病情
+ * **********************************************************/
+window.addEventListener("load", createPatient, false)
 
 var userID;
 var treatID;
@@ -36,6 +45,7 @@ function createPatient(evt) {
     createbingqingItem(bingqing1);
     var bingli1 = document.getElementById("bingli1");
     createbingliItem(bingli1);
+    //不同疗程的切换版
     $("#treatname").attr("value", patient.Treatmentdescribe);
     var diagnosisInfo = getDignoseInfo(treatID);
     $("#current-tab").text(patient.Treatmentdescribe + "诊断");
@@ -101,7 +111,8 @@ function createPatient(evt) {
             $("#tabs").append(tab);
             $("#tab-content").append(content);
             }
-        }
+    }
+    //重载历史记录按钮的事件绑定
     $("#tab-content").find("button").each(function () {
         $(this).bind("click", function () {
             var k = this.id;
@@ -122,6 +133,8 @@ function createPatient(evt) {
         });
     });
 }
+
+//判断数组中是否包含某元素
 function contains(group, s) {
     for (var k = 0; k <= group.length - 1; k++) {
         if (group[k] == s) {
@@ -129,7 +142,9 @@ function contains(group, s) {
         }
     }
     return false;
-    }
+}
+
+//判断病人属于哪一组，没有分组则显示无分组
 function transfer(res) {
     if (res == "") {
         return "暂无分组";
@@ -138,6 +153,7 @@ function transfer(res) {
     }
 }
 
+//获取当前日期
 function getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
@@ -159,6 +175,8 @@ function getNowFormatDate() {
 
     return currentdate;
 }
+
+//获取诊断历史信息
 function getDignoseInfo(treatid) {
 
     var xmlHttp = new XMLHttpRequest();
@@ -207,6 +225,7 @@ function createPartItem(thiselement) {
 
 }
 
+//多选下拉菜单
 function autoList(e, data){
     if ($(e).next().length == 0) {
         var position = $(e).offset();
@@ -270,6 +289,8 @@ function getPartItem() {
     var Items = xmlHttp.responseText;
     return Items;
 }
+
+//构建部位选择下拉菜单
 function createNewpartItem(thiselement) {
     var PartItem = JSON.parse(getNewpartItem()).Item;
     var defaultItem = JSON.parse(getNewpartItem()).defaultItem;
@@ -293,6 +314,8 @@ function getNewpartItem() {
     var Items = xmlHttp.responseText;
     return Items;
 }
+
+//构建治疗目标下拉菜单
 function createAimItem(thiselement) {
     var PartItem = JSON.parse(getAimItem()).Item;
     var defaultItem = JSON.parse(getAimItem()).defaultItem;
@@ -316,6 +339,8 @@ function getAimItem() {
     var Items = xmlHttp.responseText;
     return Items;
 }
+
+//构建病情诊断下拉菜单
 function createbingqingItem(thiselement) {
     var bingqingItem = JSON.parse(getbingqingItem()).Item;
     thiselement.options.length = 0;
@@ -339,6 +364,8 @@ function getbingqingItem() {
     var Items = xmlHttp.responseText;
     return Items;
 }
+
+//构建病理诊断下拉菜单
 function createbingliItem(thiselement) {
     var bingliItem = JSON.parse(getbingliItem()).Item;
     thiselement.options.length = 0;
@@ -362,6 +389,8 @@ function getbingliItem() {
     var Items = xmlHttp.responseText;
     return Items;
 }
+
+//下面都是建立病理诊断与病情诊断下拉菜单子菜单之间的关系
 function loadone() {
     var text1 = $("#bingqing1 option:selected").text();
     var text2 = $("#bingqing2 option:selected").text();
@@ -411,6 +440,8 @@ function createbingqing2(thiselement, text)
     }
 
 }
+
+
 //第二步部位项数据库调取
 function getbingqing2Item(text) {
     var xmlHttp = new XMLHttpRequest();
@@ -434,6 +465,8 @@ function createbingqing3(thiselement, text1, text2)
     }
 
 }
+
+
 //第二步部位项数据库调取
 function getbingqing3Item(text1, text2) {
     var xmlHttp = new XMLHttpRequest();
@@ -465,6 +498,7 @@ function getbingli2Item(text) {
     return Items;
 }
 
+//保存提交函数
 function save() {
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -558,6 +592,8 @@ function save() {
     });
 
 }
+
+//选择模板
 function chooseTempalte(templateID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "GetTemplateDiag.ashx?templateID=" + templateID;
@@ -582,6 +618,8 @@ function chooseTempalte(templateID) {
     document.getElementById("remark").value = diagnosisInfo.diagnosisInfo[0].Remarks;
    
 }
+
+//保存模板
 function saveTemplate(TemplateName) {
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
@@ -665,6 +703,8 @@ function saveTemplate(TemplateName) {
     });
 
 }
+
+//获取用户id 
 function getUserID() {
     var xmlHttp = new XMLHttpRequest();
     var url = "GetUserID.ashx";
@@ -679,6 +719,7 @@ function getUserID() {
     xmlHttp.send();
 }
 
+//获取用户姓名
 function getUserName() {
     var xmlHttp = new XMLHttpRequest();
     var url = "GetUserName.ashx";
@@ -696,6 +737,8 @@ function askForBack() {
     document.location.reload();
 
 }
+
+//编辑按钮触发事件
 function remove() {
     document.getElementById("remark").removeAttribute("disabled");
     document.getElementById("part").removeAttribute("disabled");

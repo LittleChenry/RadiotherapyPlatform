@@ -1,4 +1,14 @@
-﻿window.addEventListener("load", Init, false);
+﻿/* ***********************************************************
+ * FileName: DesignReview.js
+ * Writer: JY
+ * create Date: --
+ * ReWriter:JY
+ * Rewrite Date:--
+ * impact :
+ * 计划复核
+ * **********************************************************/
+
+window.addEventListener("load", Init, false);
 
 var userName;
 var userID;

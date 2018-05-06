@@ -1,6 +1,12 @@
-﻿/**
-*
-*/
+﻿/* ***********************************************************
+ * FileName: Designprint.js
+ * Writer: xubixiao
+ * create Date: --
+ * ReWriter:JY
+ * Rewrite Date:--
+ * impact :
+ * 诊断单打印
+ * **********************************************************/
 
 function print() {
     var $printArea = $("#printArea");
