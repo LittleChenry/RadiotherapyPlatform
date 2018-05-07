@@ -21,9 +21,7 @@ function Init(evt) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
-    //此处为分页代码
-    //alert("jy");
-    //document.getElementById("username").value = userID; 
+    
     var treatID = window.location.search.split("=")[1];
    
 
@@ -97,6 +95,7 @@ function hosttext(str) {
         return ("住院,住院号:" + str);
     }
 }
+//获取计划信息
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "designConfirmInfo.ashx?treatID=" + treatID;
@@ -108,6 +107,7 @@ function getDesignInfo(treatID) {
     var obj1 = eval("(" + json + ")");
     return obj1.designInfo;
 }
+//获取病人基本信息
 function getPatientInfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "patientInfoForFix.ashx?treatmentID=" + treatmentID;
@@ -117,7 +117,7 @@ function getPatientInfo(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.patient[0];
 }
-
+//设置时间格式
 function getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
@@ -139,6 +139,7 @@ function getNowFormatDate() {
 
     return currentdate;
 }
+//读取计划剂量
 function readDosagePriority(DosagePriority) {
     var table = document.getElementById("Priority");
     var tbody = document.createElement("tbody");
@@ -171,7 +172,7 @@ function RemoveAllChild(area) {
             area.removeChild(first);
     }
 }
-
+//读取危机器官
 function readDosage(DosagePriority) {
     var table = document.getElementById("Dosage");
     var tbody = document.createElement("tbody");
@@ -252,6 +253,7 @@ function charge2(evt) {
     else
         return "审核通过";
 }
+//保存计划确认信息
 function save() {
     if (document.getElementById("state").value == "未审核") {
         window.alert("请审核计划");
@@ -292,6 +294,7 @@ function save() {
         }
     });
 }
+//编辑取消disabled
 function remove() {    
     document.getElementById("unconfirm").removeAttribute("disabled");
     document.getElementById("confirm").removeAttribute("disabled");

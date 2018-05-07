@@ -23,9 +23,7 @@ function Init(evt) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
-    //此处为分页代码
-    //alert("jy");
-    //document.getElementById("username").value = userID; 
+    
     treatID = window.location.search.split("=")[1];
 
     var patient = getPatientInfo(treatID);
@@ -87,6 +85,7 @@ function Init(evt) {
                 if (designInfo[i].SubmitUser == "") {
                     continue;
                 }
+                //其他疗程提交信息
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].Treatmentdescribe + '计划提交信息</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row">'
                     + '<div class="item col-xs-6">计划系统：<span class="underline">' + designInfo[i].PlanSystemname + '</span></div>'
@@ -151,48 +150,7 @@ function Init(evt) {
             //document.getElementById("out").value = designInfo[k].out;
         });
     });
-    //$('#left').bind('input propertychange', function () {
-    //    if (document.getElementById("left").value == "") {
-    //        document.getElementById("right").removeAttribute("disabled");
-    //    } else {
-    //        document.getElementById("right").disabled = "disabled";
-    //    }
-    //});
-    //$('#right').bind('input propertychange', function () {
-    //    if (document.getElementById("right").value == "") {
-    //        document.getElementById("left").removeAttribute("disabled");
-    //    } else {
-    //        document.getElementById("left").disabled = "disabled";
-    //    }
-    //});
-    //$('#drop').bind('input propertychange', function () {
-    //    if (document.getElementById("drop").value == "") {
-    //        document.getElementById("rise").removeAttribute("disabled");
-    //    } else {
-    //        document.getElementById("rise").disabled = "disabled";
-    //    }
-    //});
-    //$('#rise').bind('input propertychange', function () {
-    //    if (document.getElementById("rise").value == "") {
-    //        document.getElementById("drop").removeAttribute("disabled");
-    //    } else {
-    //        document.getElementById("drop").disabled = "disabled";
-    //    }
-    //});
-    //$('#enter').bind('input propertychange', function () {
-    //    if (document.getElementById("enter").value == "") {
-    //        document.getElementById("out").removeAttribute("disabled");
-    //    } else {
-    //        document.getElementById("out").disabled = "disabled";
-    //    }
-    //});
-    //$('#out').bind('input propertychange', function () {
-    //    if (document.getElementById("out").value == "") {
-    //        document.getElementById("enter").removeAttribute("disabled");
-    //    } else {
-    //        document.getElementById("enter").disabled = "disabled";
-    //    }
-    //});
+    
 }
 function isInArray(arr, value) {
     for (var i = 0; i < arr.length; i++) {
@@ -227,6 +185,7 @@ function transfer(number) {
     }
 
 }
+//治疗技术选择
 function createTechnologyItem(thiselement) {
     var PartItem = JSON.parse(getPartIte()).Item;
     thiselement.options.length = 0;
@@ -252,6 +211,7 @@ function getPartIte() {
     var Items = xmlHttp.responseText;
     return Items;
 }
+//放了设备选择
 function createEquipmentItem(thiselement) {
     var PartItem = JSON.parse(getPartItem2()).item;
     thiselement.options.length = 0;
@@ -273,7 +233,7 @@ function getPartItem2() {
     var Items = xmlHttp.responseText;
     return Items;
 }
-
+//计划系统选择
 function createPlanSystemItem(thiselement) {
     var PartItem = JSON.parse(getPartItem3()).Item;
     thiselement.options.length = 0;
@@ -367,6 +327,7 @@ function getNowFormatDate() {
 
     return currentdate;
 }
+//读取计划剂量
 function readDosagePriority(DosagePriority) {
     var table = document.getElementById("Priority");
     var tbody = document.createElement("tbody");
@@ -571,6 +532,7 @@ function sex(evt) {
     else
         return "男";
 }
+//保存
 function save() {
     if (document.getElementById("PlanSystem").value == "allItem") {
         window.alert("计划系统没有选择");
@@ -630,6 +592,7 @@ function save() {
         }
     });
 }
+//移除disabled 
 function remove() {   
     document.getElementById("equipment").removeAttribute("disabled");
     document.getElementById("PlanSystem").removeAttribute("disabled");

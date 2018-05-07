@@ -28,9 +28,7 @@ if ((typeof (userID) == "undefined")) {
         parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
     }
 }
-//此处为分页代码
-//alert("jy");
-//document.getElementById("username").value = userID; 
+
 var treatID = window.location.search.split("=")[1];
 
 
@@ -113,6 +111,7 @@ if (isInArray(progress, '11')) {
     }
     if (designInfo.length > 1) {
         for (var i = 1; i < designInfo.length; i++) {
+            //分计划复核
             var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].DesignName + '</a></li>';
             var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row"><input type="hidden"  id="TechnologyConfirm1_' + i + '" name="TechnologyConfirm1_' + i + '" value="0"/>' +
                           '<input type="hidden"  id="confirmPlanSystem1_' + i + '" name="confirmPlanSystem1_' + i + '" value="0"/><input type="hidden"  id="EquipmentConfirm1_' + i + '" name="EquipmentConfirm1_' + i + '" value="0"/>' +
@@ -189,6 +188,7 @@ if (isInArray(progress, '11')) {
             }
         });
     }
+    //已复核计划读取
     if (isInArray(progress, '12')) {
         var reviewInfo = getReviewInfo(treatID);
         for (var i = 0; i < reviewInfo.length; i++) {
@@ -286,6 +286,7 @@ function numSub(num1, num2) {
     var precision = (baseNum1 >= baseNum2) ? baseNum1 : baseNum2;
     return ((num1 * baseNum - num2 * baseNum) / baseNum).toFixed(precision);
 }
+//剂量选择
 function jsSelectItemByValue(objSelect, objItemText) {
     //判断是否存在 
     var isExit = false;
@@ -297,6 +298,7 @@ function jsSelectItemByValue(objSelect, objItemText) {
         }
     }
 }
+//自动复核判断
 function check(gg) {
     var item = 1;
     signal[gg] = 1;
@@ -439,11 +441,13 @@ function check(gg) {
         signal[gg] = 0;
     }
 }
+//复核拼音
 function pinyinequal(i) {
     var text = document.getElementById("pinyin1"+i).innerHTML;
     var value = text.replace(/[^a-zA-Z]/ig, "");
     return value.toLowerCase() == document.getElementById("pinyin2"+i).innerHTML.toLowerCase()
 }
+//复核机器跳数
 function isequal1(gg) {
     var str1 = document.getElementById("MU1"+gg).innerHTML;
     var str2 = document.getElementById("MU2"+gg).innerHTML;
@@ -455,6 +459,7 @@ function isequal1(gg) {
         return false;
     }
 }
+//强制通过
 function force(gg) {
     signal[gg] = 1;
     var i = "";
@@ -490,6 +495,7 @@ function force(gg) {
     document.getElementById("check13"+i).style.color = "#0000ff";
     document.getElementById("check14"+i).style.color = "#0000ff";
 }
+//复核射野角度
 function isequal(gg) {
     var str2 = document.getElementById("Illuminatedangle2"+gg).innerHTML;
     var str1 = document.getElementById("Illuminatedangle1"+gg).innerHTML;
@@ -518,6 +524,7 @@ function isequal(gg) {
     }
     return true;
 }
+//角度计算比较
 function qq(a1, a2) {
     if (isInArray(a1, "/")) {
         if (!isInArray(a2, "/")) {
@@ -538,6 +545,7 @@ function qq(a1, a2) {
     }
    
 }
+//计划系统比较
 function charge4(arr) {
     var count = 1;
     var array = new Array();
@@ -561,6 +569,7 @@ function charge4(arr) {
     }
     return yuansu[0];
 }
+//通过按钮
 function confirm1(input, Button, cancelButton,confirm) {
     var content = input.innerHTML;
     if (content == "通过") {
@@ -578,6 +587,7 @@ function cancelconfirm(input, Button, cancelButton,confirm) {
     Button.style.display = "block";
     cancelButton.style.display = "none";
 }
+//射野角度格式
 function ruler(arr) {
     var array = new Array();
     var str = "";
@@ -591,6 +601,7 @@ function ruler(arr) {
     str = str + array[array.length - 1];
     return str;
 }
+//机器跳数格式
 function cale2(arr) {
     var array = new Array();
     for (var item in arr) {
@@ -604,6 +615,7 @@ function cale2(arr) {
     sum = parseInt(sum * Math.pow(10, 6) + 0.5, 10) / Math.pow(10, 6);
     return sum;
 }
+//控制点数格式
 function cale3(arr) {
     var array = new Array();
     for (var item in arr) {
@@ -617,98 +629,7 @@ function cale3(arr) {
 
     return sum;
 }
-//function createdegreeItem(thiselement) {
-//    var PartItem = JSON.parse(getdegreeItem()).Item;
-//    thiselement.options.length = 0;
-//    thiselement.options[0] = new Option("--优化程度选择--");
-//    thiselement.options[0].value = "allItem";
-//    for (var i = 0; i < PartItem.length; i++) {
-//        if (PartItem[i] != "") {
-//            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-//            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
-//        }
-//    }
 
-
-//}
-////第二步部位项数据库调取
-//function getdegreeItem() {
-//    var xmlHttp = new XMLHttpRequest();
-//    var url = "getdegree.ashx";
-//    xmlHttp.open("GET", url, false);
-//    xmlHttp.send();
-//    var Items = xmlHttp.responseText;
-//    return Items;
-//}
-//function createplaceinfoItem(thiselement) {
-//    var PartItem = JSON.parse(getplaceinfoItem()).Item;
-//    thiselement.options.length = 0;
-//    thiselement.options[0] = new Option("--信息选择--");
-//    thiselement.options[0].value = "allItem";
-//    for (var i = 0; i < PartItem.length; i++) {
-//        if (PartItem[i] != "") {
-//            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-//            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
-//        }
-//    }
-
-
-//}
-////第二步部位项数据库调取
-//function getplaceinfoItem() {
-//    var xmlHttp = new XMLHttpRequest();
-//    var url = "getplaceinfo.ashx";
-//    xmlHttp.open("GET", url, false);
-//    xmlHttp.send();
-//    var Items = xmlHttp.responseText;
-//    return Items;
-//}
-//function createdrrItem(thiselement) {
-//    var PartItem = JSON.parse(getdrrItem()).Item;
-//    thiselement.options.length = 0;
-//    thiselement.options[0] = new Option("--drr选择--");
-//    thiselement.options[0].value = "allItem";
-//    for (var i = 0; i < PartItem.length; i++) {
-//        if (PartItem[i] != "") {
-//            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-//            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
-//        }
-//    }
-
-
-//}
-////第二步部位项数据库调取
-//function getdrrItem() {
-//    var xmlHttp = new XMLHttpRequest();
-//    var url = "getdrr.ashx";
-//    xmlHttp.open("GET", url, false);
-//    xmlHttp.send();
-//    var Items = xmlHttp.responseText;
-//    return Items;
-//}
-//function createimportItem(thiselement) {
-//    var PartItem = JSON.parse(getimportItem()).Item;
-//    thiselement.options.length = 0;
-//    thiselement.options[0] = new Option("--导出选择--");
-//    thiselement.options[0].value = "allItem";
-//    for (var i = 0; i < PartItem.length; i++) {
-//        if (PartItem[i] != "") {
-//            thiselement.options[i + 1] = new Option(PartItem[i].Name);
-//            thiselement.options[i + 1].value = parseInt(PartItem[i].ID);
-//        }
-//    }
-
-
-//}
-////第二步部位项数据库调取
-//function getimportItem() {
-//    var xmlHttp = new XMLHttpRequest();
-//    var url = "getimport.ashx";
-//    xmlHttp.open("GET", url, false);
-//    xmlHttp.send();
-//    var Items = xmlHttp.responseText;
-//    return Items;
-//}
 function isInArray(arr, value) {
     for (var i = 0; i < arr.length; i++) {
         if (value === arr[i]) {
@@ -724,6 +645,7 @@ function hosttext(str) {
         return ("住院,住院号:" + str);
     }
 }
+//剂量选择
 function cale(str) {
     var lists = new Array();
     var dose = new Array();
@@ -761,6 +683,7 @@ function cale(str) {
     //    return lists[max].split(",")[3] + "/" + lists[max].split(",")[5];
     //}
 }
+//复核信息
 function getReviewInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "ReviewInfo.ashx?treatID=" + treatID;
@@ -772,6 +695,7 @@ function getReviewInfo(treatID) {
     var obj1 = eval("(" + json + ")");
     return obj1.reviewInfo;
 }
+//计划信息
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "designReviewInfo.ashx?treatID=" + treatID;
@@ -783,6 +707,7 @@ function getDesignInfo(treatID) {
     var obj1 = eval("(" + json + ")");
     return obj1.designInfo;
 }
+//射野信息
 function getFieldInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "FieldConfirmInfo.ashx?treatID=" + treatID;
@@ -795,6 +720,7 @@ function getFieldInfo(treatID) {
     var obj1 = eval("(" + json + ")");
     return obj1.designInfo;
 }
+//
 function getSession() {
     var Session;
     $.ajax({
@@ -812,6 +738,7 @@ function getSession() {
     });
     return Session;
 }
+//病人基本信息
 function getPatientInfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "patientInfoForFix.ashx?treatmentID=" + treatmentID;
@@ -900,6 +827,7 @@ function charge2(evt) {
     else
         return "通过";
 }
+//读取移床参数
 function getreference(ReferenceCenter) {
     var Reference = ReferenceCenter.split(",");
     document.getElementById("ReferenceCenterX").value = Reference[0];
@@ -930,6 +858,7 @@ function save() {
         return false;
     }
 }
+//保存复核信息
 function savereview(gg) {
     var i = "";
     if (gg != 0) {
@@ -989,6 +918,7 @@ function savereview(gg) {
         }
     });
 }
+//编辑移除disabled
 function remove() {
     for (var i = 0; i < howmany; i++) {
         var gg = "";
