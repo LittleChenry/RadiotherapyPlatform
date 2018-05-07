@@ -592,7 +592,7 @@ function save() {
         }
     });
 }
-//移除disabled
+//移除disabled 
 function remove() {   
     document.getElementById("equipment").removeAttribute("disabled");
     document.getElementById("PlanSystem").removeAttribute("disabled");
