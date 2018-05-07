@@ -124,7 +124,7 @@ public class patientInfoForDoctor : IHttpHandler {
                     }
                     backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"state\":\"" + reader["treatstate"].ToString() +
                          "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + groupname
-                         + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\"}");
+                         + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\",\"hasfirst\":\"" + "" + "\"}");
 
                     if (i < Count)
                     {
@@ -172,7 +172,7 @@ public class patientInfoForDoctor : IHttpHandler {
                 }
                 backText.Append("{\"Name\":\"" + reader3["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"state\":\"" + reader3["treatstate"].ToString() +
                      "\",\"Radiotherapy_ID\":\"" + reader3["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader3["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + ""
-                     + "\",\"Progress\":\"" + reader3["Progress"].ToString() + "\",\"doctor\":\"" + reader3["doctor"].ToString() + "\",\"treatID\":\"" + reader3["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader3["iscommon"].ToString() + "\"}");
+                     + "\",\"Progress\":\"" + reader3["Progress"].ToString() + "\",\"doctor\":\"" + reader3["doctor"].ToString() + "\",\"treatID\":\"" + reader3["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader3["iscommon"].ToString() + "\",\"hasfirst\":\"" + "" + "\"}");
 
                 if (temp < count2 - 1)
                 {
@@ -233,11 +233,17 @@ public class patientInfoForDoctor : IHttpHandler {
                 MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
                 while (reader.Read())
                 {
+                   
+                    
+                    
+                    
+                    
                     string progress = reader["Progress"].ToString();
                     string[] strArray = progress.Split(',');
                     string LoadCTTime = "";
                     string designSubmitTime = "";
                     string result = "";
+                    
                     if (reader["DiagnosisRecord_ID"] is DBNull)
                     {
                         result = "";

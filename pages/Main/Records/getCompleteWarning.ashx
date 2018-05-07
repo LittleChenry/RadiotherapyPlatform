@@ -50,13 +50,15 @@ public class getCompleteWarning : IHttpHandler {
             int treatid = int.Parse(treatarray[temp]);
             string patientname="";
             string treatmentname="";
-            string treatmentcommand = "select patient.Name as pname,treatment.Treatmentdescribe as treatname from patient,treatment where treatment.Patient_ID=patient.ID and treatment.ID=@treat";
+            string radio = "";
+            string treatmentcommand = "select patient.Radiotherapy_ID as radio,patient.Name as pname,treatment.Treatmentdescribe as treatname from patient,treatment where treatment.Patient_ID=patient.ID and treatment.ID=@treat";
             sqlOperation.AddParameterWithValue("@treat", treatid);
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(treatmentcommand);
             if (reader.Read())
             {
                 patientname = reader["pname"].ToString();
                 treatmentname = reader["treatname"].ToString();
+                radio = reader["radio"].ToString();
             }
             reader.Close();
             Boolean treatbool=false;
@@ -88,12 +90,12 @@ public class getCompleteWarning : IHttpHandler {
                 {
                     if (firstbool == false)
                     {
-                        str.Append("{\"pname\":\"" + patientname + "\",\"treatname\":\"" + treatmentname + "\",\"childname\":\"" + reader["designname"].ToString() + "\",\"info\":\"" + "还剩" + restnumber + "次" + "\"}");
+                        str.Append("{\"pname\":\"" + patientname + "\",\"treatname\":\"" + treatmentname + "\",\"radio\":\"" + radio + "\",\"childname\":\"" + reader["designname"].ToString() + "\",\"info\":\"" + "还剩" + restnumber + "次" + "\"}");
                         firstbool =true;
                     }
                     else
                     {
-                        str.Append(",{\"pname\":\"" + patientname + "\",\"treatname\":\"" + treatmentname + "\",\"childname\":\"" + reader["designname"].ToString() + "\",\"info\":\"" + "还剩" + restnumber + "次" + "\"}");
+                        str.Append(",{\"pname\":\"" + patientname + "\",\"treatname\":\"" + treatmentname + "\",\"radio\":\"" + radio + "\",\"childname\":\"" + reader["designname"].ToString() + "\",\"info\":\"" + "还剩" + restnumber + "次" + "\"}");
                     }
 
                 }
@@ -106,12 +108,12 @@ public class getCompleteWarning : IHttpHandler {
                 {
                     if (firstbool == false)
                     {
-                        str.Append("{\"pname\":\"" + patientname + "\",\"treatname\":\"" + treatmentname + "\",\"childname\":\"" + "all" + "\",\"info\":\"" + "可以结束" + "\"}");
+                        str.Append("{\"pname\":\"" + patientname + "\",\"treatname\":\"" + treatmentname + "\",\"radio\":\"" + radio + "\",\"childname\":\"" + "all" + "\",\"info\":\"" + "可以结束" + "\"}");
                         firstbool = true;
                     }
                     else
                     {
-                        str.Append(",{\"pname\":\"" + patientname + "\",\"treatname\":\"" + treatmentname + "\",\"childname\":\"" + "all" + "\",\"info\":\"" + "可以结束" + "\"}");
+                        str.Append(",{\"pname\":\"" + patientname + "\",\"treatname\":\"" + treatmentname + "\",\"radio\":\"" + radio + "\",\"childname\":\"" + "all" + "\",\"info\":\"" + "可以结束" + "\"}");
                     }
                 }
             }

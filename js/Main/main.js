@@ -12,6 +12,7 @@ var functions = new Array();
 var username;
 var rolename;
 var flag = true;
+var patientALL;
 //如果其他账号登录只承认一个session
 window.onfocus = function () {
     var session = getSession2();
@@ -1827,7 +1828,7 @@ function filterFunctionForDJC(element, index, array) {
 function completeWarning(patient) {
     var patientidlist = "";
     var boolfirst = true;
-
+    patientALL = patient;
     for (var i = 0; i < patient.PatientInfo.length; i++) {
         if (patient.PatientInfo[i].state != "2") {
             if (boolfirst == true) {
@@ -1855,12 +1856,12 @@ function completeWarning(patient) {
             var content = "";
             for (var i = 0; i < completewarn.length; i++) {
                 if (completewarn[i].childname == "all") {
-                    content =content+'<li><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
-                       + completewarn[i].pname + '，' + completewarn[i].treatname + '，' + completewarn[i].info
+                    content = content + '<li onclick="searPatient('+completewarn[i].radio+')"><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
+                    +completewarn[i].radio + '，' + completewarn[i].pname + '，' + completewarn[i].treatname + '，' + completewarn[i].info
                        + '</a></li>';
                 } else {
-                      content=content+'<li><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
-                       + completewarn[i].pname + '，' + completewarn[i].treatname + '，' + completewarn[i].childname + '，' + completewarn[i].info;
+                    content = content + '<li  onclick="searPatient('+completewarn[i].radio+')"><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
+                     +completewarn[i].radio + '，' + completewarn[i].pname + '，' + completewarn[i].treatname + '，' + completewarn[i].childname + '，' + completewarn[i].info;
                        + '</a></li>';
                 }
                
@@ -1872,6 +1873,14 @@ function completeWarning(patient) {
     });
 }
 
+//搜索预警病人
+function searPatient(str) {
+    $("#patient-search").val(str);
+    var session = getSession();
+    var Searchedpatients = SearchTable($("#patient-search").val(), patientALL, session);
+    adjustTable();
+
+}
 
 
 //流程预警
