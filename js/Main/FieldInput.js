@@ -24,8 +24,7 @@ function Init(evt) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
-    //alert("jy");
-    //document.getElementById("username").value = userID; 
+   
     treatID = window.location.search.split("=")[1];
 
     var patient = getPatientInfo(treatID);
@@ -610,7 +609,7 @@ function createLi(panelId) {
     createTabPanel(panelId);
     $("#subdesignname").val("子计划"+(panelId+2));
 }
-
+//子计划创建
 function createTabPanel(panelId) {
     $("#tabpanels").children().removeClass("active");
     if (common == 1) {

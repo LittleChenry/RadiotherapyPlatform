@@ -27,9 +27,7 @@ function Init(evt) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
         }
     }
-    //此处为分页代码
-    //alert("jy");
-    //document.getElementById("username").value = userID; 
+    
     treatID = window.location.search.split("=")[1];
     var patient = getPatientInfo(treatID);
     document.getElementById("userID").value = userID;
@@ -71,6 +69,7 @@ function Init(evt) {
                     window.parent.document.getElementById("edit").removeAttribute("disabled");
                 }
             } else {
+                //疗程历史
                 var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].Treatmentdescribe + '计划申请</a></li>';
                 var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row"><div class="item col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊情况(放疗史)：</span>' +
                         '<span class="col-xs-10">' + designInfo[i].RadiotherapyHistory + '</span></div></div>' +
@@ -129,7 +128,8 @@ function Init(evt) {
         });
     });
     
-   var i = 0
+    var i = 0
+    //自动计算总剂量
     $('#Prioritcgy' + i).bind('input propertychange', {i:i} ,function (e) {
         if (document.getElementById("Prioritcgy"+e.data.i).value == "") {
             document.getElementById("Prioritsum" + e.data.i).value = "";
@@ -161,6 +161,7 @@ function isInArray(arr, value) {
     }
     return false;
 }
+//读取计量并建表格
 function readDosagePriority1(DosagePriority,ii) {
     var table = document.getElementById("Priority"+ii);
     var tbody = document.createElement("tbody");
@@ -185,6 +186,7 @@ function readDosagePriority1(DosagePriority,ii) {
     tbody.style.textAlign = "center";
     table.appendChild(tbody);
 }
+//读取危机器官信息
 function readDosage1(DosagePriority,ii) {
     var table = document.getElementById("Dosage"+ii);
     var tbody = document.createElement("tbody");
@@ -215,6 +217,7 @@ function readDosage1(DosagePriority,ii) {
     tbody.style.textAlign = "center";
     table.appendChild(tbody);
 }
+//获取计划信息
 function getDesignInfo(treatID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "designApplyInfo.ashx?treatID=" + treatID;
@@ -226,7 +229,7 @@ function getDesignInfo(treatID) {
     var obj1 = eval("(" + json + ")");
     return obj1.designInfo;
 }
-
+//获取病人基本信息
 function getPatientInfo(treatmentID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "patientInfoForFix.ashx?treatmentID=" + treatmentID;
@@ -236,7 +239,7 @@ function getPatientInfo(treatmentID) {
     var obj1 = eval("(" + json + ")");
     return obj1.patient[0];
 }
-
+//设置时间格式
 function getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
@@ -295,6 +298,7 @@ function RemoveAllChild(area) {
             area.removeChild(first);
     }
 }
+//选择模板
 function chooseTempalte(templateID) {
     var xmlHttp = new XMLHttpRequest();
     var url = "GetTemplateDesignApply.ashx?templateID=" + templateID;
@@ -344,7 +348,7 @@ function readDosage(DosagePriority) {
     tbody.style.textAlign = "center";
     table.appendChild(tbody);
 }
-
+//治疗技术选择框
 function createTechnologyItem(thiselement) {
     var PartItem = JSON.parse(getPartItem1()).Item;
     thiselement.options.length = 0;
@@ -370,7 +374,7 @@ function getPartItem1() {
     var Items = xmlHttp.responseText;
     return Items;
 }
-
+//放疗设备选择框
 function createEquipmentItem(thiselement) {
     var PartItem = JSON.parse(getPartItem2()).item;
     thiselement.options.length = 0;
@@ -396,6 +400,7 @@ function getPartItem2() {
     var Items = xmlHttp.responseText;
     return Items;
 }
+//计划行添加
 function addDosagePriority() {
     var table = document.getElementById("Priority");
     var rows = table.rows.length;
@@ -506,6 +511,7 @@ function addDosagePriority1(DosagePriority) {
     aa = lists.length - 1;
     document.getElementById("aa").value = aa;
 }
+//危机器官行添加
 function addDosage1(DosagePriority) {
     var table = document.getElementById("Dosage");
     DosagePriority = DosagePriority.substring(0, DosagePriority.length - 1);
@@ -599,7 +605,7 @@ function addDosage() {
     bb = rows;
     document.getElementById("bb").value =bb;
 }
-
+//计划行删除
 function deleteDosagePriority(row) {
     var table = document.getElementById("Priority");
     var maxrow = table.rows.length;
@@ -644,7 +650,7 @@ function toTime(minute) {
     var min = parseInt(minute) - hour * 60;
     return hour.toString() + ":" + (min < 10 ? "0" : "") + min.toString();
 }
-
+//危机器官行删除
 function deleteDosage(row) {
     var table = document.getElementById("Dosage");
     var maxrow = table.rows.length;
@@ -699,10 +705,7 @@ function RemoveAllChild(area) {
     }
 }
 
-//获取所有待等待模拟定位申请疗程号以及所属患者ID与其他信息
 
-
-//首页判断
 
 //删除某节点的所有子节点
 function removeUlAllChild(evt) {
@@ -710,7 +713,7 @@ function removeUlAllChild(evt) {
         evt.removeChild(evt.firstChild);
     }
 }
-//搜索患者姓名
+
 
 function getUserName() {
     var xmlHttp = new XMLHttpRequest();
@@ -742,9 +745,9 @@ function getUserID() {
     xmlHttp.send();
 }
 
-//建立入口病患表
 
 
+//保存计划
 function save() {
     if (document.getElementById("technology").value == "allItem") {
         window.alert("治疗技术没有选择");
@@ -788,6 +791,7 @@ function save() {
         }
     });
 }
+//保存模板
 function saveTemplate(TemplateName) {
     if (document.getElementById("technology").value == "allItem") {
         window.alert("治疗技术没有选择");
@@ -855,6 +859,7 @@ function dateformat(format) {
     var time = year + "年" + month + "月" + day + "日 " + hour + "：" + minute;
     return time;
 }
+//编辑取消disabled
 function remove() {
     document.getElementById("Remarks").removeAttribute("disabled");
     document.getElementById("splitway").removeAttribute("disabled");
@@ -879,6 +884,7 @@ function remove() {
         }
     }
 }
+//分割方式选择
 function createSplitway(thiselement) {
     var getsplitwayItem = JSON.parse(getsplitway()).Item;
     thiselement.options.length = 0;
