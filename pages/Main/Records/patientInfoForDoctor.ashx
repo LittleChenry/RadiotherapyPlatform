@@ -11,9 +11,7 @@ public class patientInfoForDoctor : IHttpHandler {
     private DataLayer sqlOperation1 = new DataLayer("sqlStr");
     public void ProcessRequest(HttpContext context)
     {
-        context.Response.ContentType = "text/plain";
-        try
-        {
+            context.Response.ContentType = "text/plain";
             string json = getfixrecordinfo(context);
             sqlOperation.Close();
             sqlOperation.Dispose();
@@ -25,11 +23,7 @@ public class patientInfoForDoctor : IHttpHandler {
             sqlOperation2.Dispose();
             sqlOperation2 = null;
             context.Response.Write(json);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Message(ex.Message);
-        }
+       
     }
 
     public bool IsReusable
@@ -94,6 +88,31 @@ public class patientInfoForDoctor : IHttpHandler {
                 MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
                 while (reader.Read())
                 {
+                    Boolean hastreat = false;
+                    string alldesigncommand = "select ID from childdesign where Treatment_ID=@treat";
+                    sqlOperation1.AddParameterWithValue("@treat", reader["treatid"].ToString());
+                    reader1 = sqlOperation1.ExecuteReader(alldesigncommand);
+                    while (reader1.Read())
+                    {
+                        string haschildcommand = "SELECT count(*) from treatmentrecord where ChildDesign_ID=@chid and Treat_User_ID is not null";
+                        sqlOperation.AddParameterWithValue("@chid", reader1["ID"].ToString());
+                        int numbertemp = int.Parse(sqlOperation.ExecuteScalar(haschildcommand));
+                        if (numbertemp == 0)
+                        {
+                            hastreat = true;
+                            break;
+                        }
+                    }
+                    reader1.Close();
+                    string hasfirst;
+                    if (hastreat == true)
+                    {
+                        hasfirst = "1";
+                    }
+                    else
+                    {
+                        hasfirst = "0";
+                    }
                     string progress = reader["Progress"].ToString();
                     string[] strArray = progress.Split(',');
                     string LoadCTTime = "";
@@ -124,7 +143,7 @@ public class patientInfoForDoctor : IHttpHandler {
                     }
                     backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"state\":\"" + reader["treatstate"].ToString() +
                          "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + groupname
-                         + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\",\"hasfirst\":\"" + "" + "\"}");
+                         + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\",\"hasfirst\":\"" + hasfirst + "\"}");
 
                     if (i < Count)
                     {
@@ -143,6 +162,31 @@ public class patientInfoForDoctor : IHttpHandler {
             int temp = 0;
             while (reader3.Read())
             {
+                Boolean hastreat = false;
+                string alldesigncommand = "select ID from childdesign where Treatment_ID=@treat";
+                sqlOperation1.AddParameterWithValue("@treat", reader3["treatid"].ToString());
+                reader1 = sqlOperation1.ExecuteReader(alldesigncommand);
+                while (reader1.Read())
+                {
+                    string haschildcommand = "SELECT count(*) from treatmentrecord where ChildDesign_ID=@chid and Treat_User_ID is not null";
+                    sqlOperation.AddParameterWithValue("@chid", reader1["ID"].ToString());
+                    int numbertemp = int.Parse(sqlOperation.ExecuteScalar(haschildcommand));
+                    if (numbertemp == 0)
+                    {
+                        hastreat = true;
+                        break;
+                    }
+                }
+                reader1.Close();
+                string hasfirst;
+                if (hastreat == true)
+                {
+                    hasfirst = "1";
+                }
+                else
+                {
+                    hasfirst = "0";
+                }
                 string progress = reader3["Progress"].ToString();
                 string[] strArray = progress.Split(',');
                 string LoadCTTime = "";
@@ -172,7 +216,7 @@ public class patientInfoForDoctor : IHttpHandler {
                 }
                 backText.Append("{\"Name\":\"" + reader3["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"state\":\"" + reader3["treatstate"].ToString() +
                      "\",\"Radiotherapy_ID\":\"" + reader3["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader3["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + ""
-                     + "\",\"Progress\":\"" + reader3["Progress"].ToString() + "\",\"doctor\":\"" + reader3["doctor"].ToString() + "\",\"treatID\":\"" + reader3["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader3["iscommon"].ToString() + "\",\"hasfirst\":\"" + "" + "\"}");
+                     + "\",\"Progress\":\"" + reader3["Progress"].ToString() + "\",\"doctor\":\"" + reader3["doctor"].ToString() + "\",\"treatID\":\"" + reader3["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader3["iscommon"].ToString() + "\",\"hasfirst\":\"" + hasfirst + "\"}");
 
                 if (temp < count2 - 1)
                 {
@@ -233,11 +277,8 @@ public class patientInfoForDoctor : IHttpHandler {
                 MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation2.ExecuteReader(sqlCommand2);
                 while (reader.Read())
                 {
+
                    
-                    
-                    
-                    
-                    
                     string progress = reader["Progress"].ToString();
                     string[] strArray = progress.Split(',');
                     string LoadCTTime = "";
@@ -269,7 +310,7 @@ public class patientInfoForDoctor : IHttpHandler {
                     }
                     backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"state\":\"" + reader["treatstate"].ToString() +
                          "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + groupname
-                         + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\"}");
+                         + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\",\"hasfirst\":\"" + "" + "\"}");
 
                     if (i < Count)
                     {
@@ -288,6 +329,7 @@ public class patientInfoForDoctor : IHttpHandler {
             int temp = 0;
             while (reader3.Read())
             {
+                
                 string progress = reader3["Progress"].ToString();
                 string[] strArray = progress.Split(',');
                 string LoadCTTime = "";
@@ -317,7 +359,7 @@ public class patientInfoForDoctor : IHttpHandler {
                 }
                 backText.Append("{\"Name\":\"" + reader3["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"state\":\"" + reader3["treatstate"].ToString() +
                      "\",\"Radiotherapy_ID\":\"" + reader3["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader3["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + ""
-                     + "\",\"Progress\":\"" + reader3["Progress"].ToString() + "\",\"doctor\":\"" + reader3["doctor"].ToString() + "\",\"treatID\":\"" + reader3["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader3["iscommon"].ToString() + "\"}");
+                     + "\",\"Progress\":\"" + reader3["Progress"].ToString() + "\",\"doctor\":\"" + reader3["doctor"].ToString() + "\",\"treatID\":\"" + reader3["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader3["iscommon"].ToString() + "\",\"hasfirst\":\"" + "" + "\"}");
 
                 if (temp < count2 - 1)
                 {
@@ -409,7 +451,7 @@ public class patientInfoForDoctor : IHttpHandler {
                     }
                     backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"state\":\"" + reader["treatstate"].ToString() +
                          "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + groupname
-                         + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\"}");
+                         + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\",\"hasfirst\":\"" + "" + "\"}");
 
                     if (i < Count)
                     {
@@ -457,7 +499,7 @@ public class patientInfoForDoctor : IHttpHandler {
                 }
                 backText.Append("{\"Name\":\"" + reader3["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"state\":\"" + reader3["treatstate"].ToString() +
                      "\",\"Radiotherapy_ID\":\"" + reader3["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader3["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + ""
-                     + "\",\"Progress\":\"" + reader3["Progress"].ToString() + "\",\"doctor\":\"" + reader3["doctor"].ToString() + "\",\"treatID\":\"" + reader3["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader3["iscommon"].ToString() + "\"}");
+                     + "\",\"Progress\":\"" + reader3["Progress"].ToString() + "\",\"doctor\":\"" + reader3["doctor"].ToString() + "\",\"treatID\":\"" + reader3["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader3["iscommon"].ToString() + "\",\"hasfirst\":\"" + "" + "\"}");
 
                 if (temp < count2 - 1)
                 {

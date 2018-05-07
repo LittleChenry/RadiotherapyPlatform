@@ -237,7 +237,7 @@ function Paging(patient, role, userID) {
         switch (role) {
             case "医师":
                 $("#legend-patientselect").show();
-                var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
+                var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname,hasfirst;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
@@ -249,6 +249,7 @@ function Paging(patient, role, userID) {
                     treat = patient.PatientInfo[i].treat;
                     diagnosisresult = (patient.PatientInfo[i].diagnosisresult == "") ? "无" : patient.PatientInfo[i].diagnosisresult;
                     Progress = (patient.PatientInfo[i].state == 2) ? "" : ProgressToString(patient.PatientInfo[i].Progress.split(","));
+                    hasfirst = (patient.PatientInfo[i].hasfirst == "1") ? "(首次)" : "";
                     doctor = patient.PatientInfo[i].doctor;
                     groupname = (patient.PatientInfo[i].groupname == "") ? "未分组" : patient.PatientInfo[i].groupname;
                     iscommon = patient.PatientInfo[i].iscommon;
@@ -260,7 +261,7 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td style='max-width:160px;overflow:hidden;text-overflow:ellipsis;'>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress + state
+                    trtemp = "'><td><i></i></td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td style='max-width:160px;overflow:hidden;text-overflow:ellipsis;'>" + diagnosisresult + "</td><td>" + treat + "</td><td>" + Progress + state + hasfirst
                         + "</td><td>" + doctor + "</td><td>" + groupname + "</td></tr>";
                     tr += trtemp;
                     tbody += tr;
@@ -1782,7 +1783,8 @@ function filterFunctionForYS(element, index, array) {
     var stateStr = new Array("", "(暂停中)", "已结束");
     var state = stateStr[parseInt(element.state)];
     var progress = (element.state == 2) ? "" : ProgressToString(element.Progress.split(","));
-    var finalProgress = progress + state;
+    var hasfirst = (element.hasfirst == "1") ? "(首次)" : "";
+    var finalProgress = progress + state + hasfirst;
 
     if (text1.indexOf(this) >= 0 || text2.indexOf(this) >= 0 || text3.indexOf(this) >= 0) {
         return true;

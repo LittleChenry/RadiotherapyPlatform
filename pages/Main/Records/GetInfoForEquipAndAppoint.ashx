@@ -3,7 +3,7 @@
 using System;
 using System.Web;
 using System.Text;
-
+using System.Collections;
 public class GetInfoForEquipAndAppoint : IHttpHandler {
     DataLayer sqlOperation = new DataLayer("sqlStr");
     DataLayer sqlOperation2 = new DataLayer("sqlStr");
@@ -56,9 +56,10 @@ public class GetInfoForEquipAndAppoint : IHttpHandler {
         int i=0;
         string appointinfocommand = "select ID,Task,Patient_ID,Date,Begin,End from appointment_accelerate where Equipment_ID=@equipid and Date>=@date and Date<=@date1 order by Begin,Date asc";
         reader = sqlOperation.ExecuteReader(appointinfocommand);
+        MySql.Data.MySqlClient.MySqlDataReader reader1 = null;
+        ArrayList todaylist = new ArrayList();
         while (reader.Read())
         {
-            
             string pnamecommand="select Name from patient where ID=@pid";
             sqlOperation2.AddParameterWithValue("@pid",reader["Patient_ID"].ToString());
             string pname=sqlOperation2.ExecuteScalar(pnamecommand);
@@ -80,7 +81,77 @@ public class GetInfoForEquipAndAppoint : IHttpHandler {
             {
                 completed = "true";
             }
-            backString.Append("{\"appointid\":\"" + reader["ID"].ToString() + "\",\"Task\":\"" + reader["Task"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Begin\":\"" + begin + "\",\"End\":\"" + reader["End"].ToString() + "\"");
+            string firstcounrcommand = "select count(*) from treatmentrecord where Appointment_ID=@appoint and isfirst=1";
+            sqlOperation2.AddParameterWithValue("@appoint", reader["ID"].ToString());
+            int firstocc = int.Parse(sqlOperation2.ExecuteScalar(firstcounrcommand));
+            string rank = "";
+            string treatmentrecordid = "";
+            if (firstocc != 0)
+            {
+                string treatmentrecoridcommand = "select ID from treatmentrecord where Appointment_ID=@appoint and isfirst=1";
+                sqlOperation2.AddParameterWithValue("@appoint", reader["ID"].ToString());
+                treatmentrecordid = sqlOperation2.ExecuteScalar(treatmentrecoridcommand);
+            }
+            int countrank = 0;
+            if (treatmentrecordid != "")
+            {
+                countrank = 0;
+                Boolean boolfax = false;
+                for (int step = 0; step < todaylist.Count; step++)
+                {
+                    countrank++;
+                    if (todaylist[step] == reader1["treatid"].ToString())
+                    {
+                        boolfax = true;
+                        break;
+                    }
+
+                }
+                if (boolfax == false)
+                {
+                    countrank = 0;
+                    todaylist.Clear();
+                    if (int.Parse(reader["Begin"].ToString()) < 720)
+                    {
+
+                        string askforall = "select treatmentrecord.ID as treatid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and appointment_accelerate.Date=@date and appointment_accelerate.Equipment_ID=@equipid and appointment_accelerate.Begin<720 and treatmentrecord.isfirst=1 order by treatmentrecord.ApplyTime";
+                        sqlOperation2.AddParameterWithValue("@date", reader["Date"].ToString());
+                        sqlOperation2.AddParameterWithValue("@equipid", equipid);
+                        reader1 = sqlOperation2.ExecuteReader(askforall);
+                        while (reader1.Read())
+                        {
+                            countrank++;
+                            if (treatmentrecordid == reader1["treatid"].ToString())
+                            {
+                                break;
+                            }
+                        }
+                        reader1.Close();
+
+                    }
+                    else
+                    {
+                        countrank = 0;
+                        string askforall = "select treatmentrecord.ID as treatid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and appointment_accelerate.Date=@date and appointment_accelerate.Equipment_ID=@equipid and appointment_accelerate.Begin>720 and treatmentrecord.isfirst=1 order by treatmentrecord.ApplyTime";
+                        sqlOperation2.AddParameterWithValue("@date", reader["Date"].ToString());
+                        sqlOperation2.AddParameterWithValue("@equipid", equipid);
+                        reader1 = sqlOperation2.ExecuteReader(askforall);
+                        while (reader1.Read())
+                        {
+                            countrank++;
+                            if (treatmentrecordid == reader1["treatid"].ToString())
+                            {
+                                break;
+                            }
+                        }
+                        reader1.Close();
+
+                    }
+                }
+
+            }
+            rank=countrank==0?"":(countrank+"");  
+            backString.Append("{\"appointid\":\"" + reader["ID"].ToString() + "\",\"Task\":\"" + reader["Task"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Begin\":\"" + begin + "\",\"End\":\"" + reader["End"].ToString() + "\",\"rank\":\"" + rank + "\"");
             backString.Append(",\"Completed\":\"" + completed + "\",\"patientid\":\"" + reader["Patient_ID"].ToString() + "\",\"patientname\":\"" + pname + "\"}");
             if (i < count - 1)
             {
