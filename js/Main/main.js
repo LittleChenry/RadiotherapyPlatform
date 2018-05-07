@@ -1841,7 +1841,7 @@ function completeWarning(patient) {
     }
 
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "../../pages/Main/Records/getCompleteWarning.ashx",
         data: {patientidlist: patientidlist},
         async: true,
