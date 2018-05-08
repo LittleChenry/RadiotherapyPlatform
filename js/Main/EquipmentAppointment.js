@@ -156,7 +156,7 @@ function createAccelerateTable(nowDate) {
         if (appointments[i].rank == "") {
             $("#" + tdid).html(appointments[i].patientname);
         } else {
-            $("#" + tdid).html(appointments[i].patientname + "(" + appointments[i].rank+"）");
+            $("#" + tdid).html(appointments[i].patientname + "(" + appointments[i].rank+")");
         }
         $("#" + tdid).parent().attr("id", appointments[i].patientid + "_" + i);
         var DateDetail = date.Format("M月d日") + " " + num2week(date.getDay());
