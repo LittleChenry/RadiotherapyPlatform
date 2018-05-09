@@ -83,6 +83,27 @@ $(document).ready(function () {
         $('#third_but').addClass("btn btn-info");
     });
 
+    //治疗技师选择病人
+    $('#firstbb').unbind("click").click(function () {
+        var session = getSession();
+        RolesToPatients(session, 0);
+        adjustTable();
+        $('#secondbb').removeClass();
+        $("#firstbb").removeClass();
+        $('#firstbb').addClass("btn btn-info");
+        $('#secondbb').addClass("btn btn-success");
+    });
+    $('#secondbb').unbind("click").click(function () {
+        var session = getSession();
+        RolesToPatients(session, 1);
+        adjustTable();
+        $('#secondbb').removeClass();
+        $("#firstbb").removeClass();
+        $('#secondbb').addClass("btn btn-info");
+        $('#firstbb').addClass("btn btn-success");
+    });
+
+
     //编辑键
     $('#edit').unbind("click").click(function () {
         $("#record-iframe")[0].contentWindow.remove();
@@ -137,6 +158,7 @@ function RolesToPatients(session,type) {
             parameters[0] = session.equipmentID;
             parameters[1] = session.beginTime;
             parameters[2] = session.endTime;
+            parameters[3] = type;
             patient = getPatient(session.userID, session.role, parameters);
             if (patient) {
                 sortPatient = patientSort(patient);
@@ -382,7 +404,7 @@ function Paging(patient, role, userID) {
                 trAddClickforJS(patient, userID);
                 break;
             case "治疗技师":
-                $("#legend-waiting").show();
+                $("#legend-zljs").show();
                 var TreatmentID, Name, Gender, patientid, doctor, begin, end, Age, doctor, groupname;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>类型</th></tr></thead>';
                 table.append(thead);
@@ -2076,7 +2098,7 @@ function getPatient(userID, role, parameters) {
             var url = "Records/patientInfoForMNJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
             break;
         case "治疗技师":
-            var url = "Records/patientInfoForZLJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2];
+            var url = "Records/patientInfoForZLJS.ashx?equipmentid=" + parameters[0] + "&date1=" + parameters[1] + "&date2=" + parameters[2] + "&type=" + parameters[3];
             break;
         case "登记处人员":
             var url = "Records/GetPatientInfo.ashx?type="+ parameters[0];

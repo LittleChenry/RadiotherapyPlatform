@@ -755,9 +755,14 @@ function remove() {
     });
     var today = new Date(new Date().getFullYear() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getDate());
     var appoint = new Date(dataappoint.time[0].Date.split(" ")[0].replace(/-/g, "\/"));
-    if (appoint < today) {
+    
+    if (appoint == today.setDate(today.getDate()-1) && new Date().getHours()>=5) {
         return;
     }
+    if (appoint < today.setDate(today.getDate() - 1)) {
+        return;
+    }
+
     for (var i = 0; i < childdesigns.length; i++) {
         if (contains(childdesigns[i].chid, appointchilddesign)) {
             document.getElementById("treatmentedit"+i).removeAttribute("disabled");

@@ -289,6 +289,14 @@
                                治疗结束
                         </button>
                     </span>
+                      <span id="legend-zljs" style="display:none;margin-left:30%;">
+                        <button id="firstbb" type="button" class="btn btn-info">
+                              正在治疗
+                        </button>
+                        <button id="secondbb" type="button" class="btn btn-success">
+                               治疗完成
+                        </button>
+                    </span>
                 </div>
                 <div class="col-sm-3 pull-right">
                     <div class="dataTables_info" id="patient_info" role="status" aria-live="polite"></div>
