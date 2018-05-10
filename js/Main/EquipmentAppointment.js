@@ -117,6 +117,14 @@ function createAccelerateTable(nowDate) {
         //DateDetailArray[i] = firstDate.Format("M-d") + num2week(firstDate.getDay());
         firstDate = new Date(firstDate.setDate(firstDate.getDate() + 1));
     }
+    //第一行放人数
+    var tr = '<tr class="' + trclass + '"><td>每天预约人数</td>';
+    for (var i = 0; i < DateArray.length; i++) {
+        var td = '<td></td>';
+        tr += td;
+    }
+    tr += '</tr>';
+    table.find("tbody").append(tr);
     var temptime = begin;
     while(temptime < end){
         var trclass = "";
@@ -137,6 +145,8 @@ function createAccelerateTable(nowDate) {
         table.find("tbody").append(tr);
         temptime += timelength;
     }
+
+
     var AppointmentsURL = "Records/GetInfoForEquipAndAppoint.ashx";
     firstDate = new Date(nowDate);
     var data = {
@@ -162,6 +172,23 @@ function createAccelerateTable(nowDate) {
         var DateDetail = date.Format("M月d日") + " " + num2week(date.getDay());
         $("#" + tdid).parent().attr("title", DateDetail);
     }
+    //记录每天预约人数
+    var counttemp = 0;
+    for (var col = 1; col <= 7; col++) {
+        counttemp = 0;
+        var trgroup = table.find("tbody").eq(0).find("tr");
+        for (var j = 1; j < trgroup.length; j++) {
+            if ($(trgroup[j]).find("td").eq(col).find("span").eq(0).html() != "") {
+                counttemp++;
+            }
+
+        }
+        var lasttr = table.find("tbody").eq(0).find("tr:first");
+        lasttr.find("td").eq(col).html(counttemp + "人");
+    }
+
+
+
     table.find("td").each(function(){
         if ($(this).find("span").html() != "") {
             $(this).unbind("click").bind("click", function(){

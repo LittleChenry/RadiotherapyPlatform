@@ -27,6 +27,7 @@ public class saveChildDesign : IHttpHandler {
         string tianchongnumber = context.Request["tianchongnumber"];
         string username = context.Request["username"];
         string splitway = context.Request["splitway"];
+        string user = context.Request["user"];
         string remarks=context.Request["remarks"];
         string checktreatedtotalnumber = "select count(*) from treatmentrecord where Treat_User_ID is not null  and ChildDesign_ID=@chid";
         sqlOperation.AddParameterWithValue("@chid", chid);
@@ -39,10 +40,31 @@ public class saveChildDesign : IHttpHandler {
         string totalnumbercommand = "select Totalnumber from childdesign where ID=@chid";
         sqlOperation.AddParameterWithValue("@chid", chid);
         string total = sqlOperation.ExecuteScalar(totalnumbercommand);
+        string fillnumbercommand = "select fillNumber from childdesign where ID=@chid";
+        sqlOperation.AddParameterWithValue("@chid", chid);
+        string fillnum = sqlOperation.ExecuteScalar(fillnumbercommand);
+        
         int newtotal = 0;
         if (total != "")
         {
             newtotal=Convert.ToInt16(total);
+            if (int.Parse(totalnumber) != int.Parse(total) + int.Parse(fillnum))
+            {
+                string childnamecommand = "SELECT DesignName from childdesign where ID=@chid";
+                sqlOperation.AddParameterWithValue("@chid", chid);
+                string childname = sqlOperation.ExecuteScalar(childnamecommand);
+                string treatnamecommand = "SELECT treatment.Treatmentdescribe as treatname from childdesign,treatment where childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
+                string tretmentname = sqlOperation.ExecuteScalar(treatnamecommand);
+                string patientnamecommand = "SELECT patient.Name as patientname from patient,treatment,childdesign where treatment.Patient_ID=patient.ID and childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
+                string patientname = sqlOperation.ExecuteScalar(patientnamecommand);
+                string logininfo = "修改病人" + patientname + "的计划，" + tretmentname + "," + childname + "，总次数从" + (int.Parse(total) + int.Parse(fillnum)) + "改为" + int.Parse(totalnumber);
+                string insertcommand = "INSERT into loginfo(userID,logInformation,Date) VALUES(@userid,@login,@date)";
+                sqlOperation.AddParameterWithValue("@userid", user);
+                sqlOperation.AddParameterWithValue("@login", logininfo);
+                sqlOperation.AddParameterWithValue("@date", DateTime.Now);
+                sqlOperation.ExecuteNonQuery(insertcommand);
+
+            }
         }
         if (newtotal != totalnum)
         {
@@ -84,7 +106,10 @@ public class saveChildDesign : IHttpHandler {
                 sqlOperation.ExecuteNonQuery(deletecommand2);
             }
 
+          
         }
+
+        
         string select = "select ChangeLog from childdesign where ID=@chid";
         sqlOperation.AddParameterWithValue("@chid", chid);
         string log = sqlOperation.ExecuteScalar(select);

@@ -64,7 +64,7 @@ public class patientInfoForZLJS : IHttpHandler {
             while (reader.Read())
             {
                 string treatmentID = "";
-                string treatidcommand = "select ID from treatment where Patient_ID=@pid and Progress not LIKE '%14%' and Progress like '%12%' and State=0";
+                string treatidcommand = "select ID from treatment where Patient_ID=@pid and Progress not LIKE '%14%' and Progress like '%12%'";
                 sqlOperation1.AddParameterWithValue("@pid", reader["Patient_ID"].ToString());
                 MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(treatidcommand);
                 if (reader1.Read())

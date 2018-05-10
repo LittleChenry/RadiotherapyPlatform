@@ -1356,6 +1356,27 @@ function changeState(e){
         //    state = 0;
         //    break;
     }
+    var session = getSession();
+    var userid = session.userID;
+    $.ajax({
+        type: "POST",
+        url: "../changeLog.ashx",
+        async: false,
+        data: {
+            user: userid,
+            treatid: document.getElementById("treatID").value,
+            state: state,
+            logactor:1
+        },
+        dateType: "json",
+        success: function (data) {
+           
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+
     $.ajax({
         type: "GET",
         url: "changeTreatmentState.ashx?state=" + state +"&treatID=" + document.getElementById("treatID").value,
@@ -1363,10 +1384,11 @@ function changeState(e){
         dateType: "text",
         success: function (data) {
             alert("修改成功！");
-            var session = getSession();
-            window.parent.RolesToPatients(session);
-            window.parent.adjustTable();
-            window.parent.Recover();
+            //var session = getSession();
+            //window.parent.RolesToPatients(session);
+            //window.parent.adjustTable();
+            //window.parent.Recover();
+            window.parent.location.reload();
         },
         error: function () {
             alert("error");

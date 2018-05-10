@@ -549,6 +549,7 @@ function Paging(patient, role, userID) {
         table.html("");
         switch (role) {
             case "医师":
+                $("#legend-patientselect").show();
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
@@ -577,12 +578,14 @@ function Paging(patient, role, userID) {
                 table.append(tbody);
                 break;
             case "治疗技师":
+                $("#legend-zljs").show();
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>类型</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "科主任":
+                $("#legend-patientselect").show();
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
@@ -590,6 +593,7 @@ function Paging(patient, role, userID) {
                 table.append(tbody);
                 break;
             case "登记处人员":
+                $("#legend-patientselect").show();
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
@@ -597,6 +601,7 @@ function Paging(patient, role, userID) {
                 table.append(tbody);
                 break;
             default:
+                $("#legend-patientselect").show();
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
                     + '<th>主治医生</th><th>医疗组</th></tr></thead>';
                 table.append(thead);

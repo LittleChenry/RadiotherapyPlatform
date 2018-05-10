@@ -61,6 +61,8 @@ public class TreatmentRecord : IHttpHandler {
         sqlOperation.AddParameterWithValue("@remarks", remark);
         int success = sqlOperation.ExecuteNonQuery(insert);
 
+        
+        
         //计算此病人是否结束治疗
         string sqlcommand3 = "select max(treatmentrecord.Rest) from treatmentrecord,childdesign,treatment where treatmentrecord.ChildDesign_ID=childdesign.ID and childdesign.Treatment_ID=treatment.ID  and treatment.ID=(select Treatment_ID from childdesign where ID=@chid) and treatmentrecord.Treat_User_ID is not NULL";
         sqlOperation.AddParameterWithValue("@chid",chid);
