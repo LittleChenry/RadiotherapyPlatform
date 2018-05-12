@@ -18,6 +18,7 @@ var times = 20;
 var allpagenumber=0;
 var childdesigns;
 var appointchilddesign;
+var appointnum;
 var appointid;
 function Init(evt) {
     var treatmentgroup = window.location.search.split("&")[0];//?后第一个变量信息
@@ -39,7 +40,8 @@ function Init(evt) {
         }
     }
     //var special= getsplitandyizhu(treatmentID);
-   appointchilddesign = getappointgroupdesign(appointid);
+    appointchilddesign = getappointgroupdesign(appointid);
+    appointnum = appointchilddesign.length;
     //var flag;
     //if (appointid!= "undefined") {
     //    flag = judge(appointid, treatmentID);
@@ -91,13 +93,13 @@ function Init(evt) {
                var tab = '<li class="active" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + "," + childdesigns[j].DesignName + '</a></li>';
                var content = '<div class="active tab-pane" id="tab' + j + '">' +
                                '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
-                               '<div class="single-row"> <div class="col-xs-12"> <button style="margin-left:41%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record(' + j + ')"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
+                               '<div class="single-row"><div class="item  col-xs-6" style="padding-left:16%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div> <div class="col-xs-6"> <button style="margin-left:15%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record(' + j + ')"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
                                '<button style="margin-left:5%"  id="finishigrt' + j + '"  onclick="igrtrecord(' + j + ')" disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
                               '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
                                '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
                                '</table></div></div>' +
                                 '<div class="single-row"><div class="item col-xs-4">分割方式：<span id="split' + j + '" class="underline"></span></div><div class="item col-xs-4">总次数：<span id="total' + j + '" class="underline"></span></div><div class="item col-xs-4">已经治疗次数：<span id="treatedtimes' + j + '" class="underline"></span></div></div>' +
-                               '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin' + j + '" disabled="disabled" name="enjoin" class="form-area col-xs-5" ></textarea><div class="item  col-xs-5" style="padding-left:1%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div></div>' +
+                               '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin' + j + '" disabled="disabled" name="enjoin" class="form-area col-xs-5" ></textarea></div>' +
                                '<div class="content-title"><span>放射治疗记录:</span> </div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;"><thead><tr>' +
                                '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
                                '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
@@ -111,13 +113,13 @@ function Init(evt) {
                var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + "," + childdesigns[j].DesignName + '</a></li>';
                var content = '<div class="tab-pane" id="tab' + j + '">' +
                                '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
-                               '<div class="single-row"> <div class="col-xs-12"> <button style="margin-left:41%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record(' + j + ')"    data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
+                               '<div class="single-row"> <div class="item  col-xs-6" style="padding-left:16%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div><div class="col-xs-6"> <button style="margin-left:15%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record(' + j + ')"    data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
                                '<button style="margin-left:5%" id="finishigrt' + j + '" onclick="igrtrecord(' + j + ')"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
                                '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
                                '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
                                '</table></div></div>' +
                                '<div class="single-row"><div class="item col-xs-4">分割方式：<span id="split' + j + '" class="underline"></span></div><div class="item col-xs-4">总次数：<span id="total' + j + '" class="underline"></span></div><div class="item col-xs-4">已经治疗次数：<span id="treatedtimes' + j + '" class="underline"></span></div></div>' +
-                               '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin' + j + '" disabled="disabled" name="enjoin' + j + '" class="form-area col-xs-5" ></textarea><div class="item  col-xs-5" style="padding-left:1%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div></div>' +
+                               '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin' + j + '" disabled="disabled" name="enjoin' + j + '" class="form-area col-xs-5" ></textarea></div>' +
                                 '<div class="content-title"><span>放射治疗记录:</span> </div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;"><thead><tr>' +
                                '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
                                '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
@@ -133,49 +135,99 @@ function Init(evt) {
 
     for (var j = 0; j < childdesigns.length; j++) {
         if (!contains(childdesigns[j].chid, appointchilddesign)) {
-            if (firstbool == false) {
-                var tab = '<li class="active" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + "," + childdesigns[j].DesignName + '</a></li>';
-                var content = '<div class="active tab-pane" id="tab' + j + '">' +
-                                '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
-                                '<div class="single-row"> <div class="col-xs-12"> <button style="margin-left:41%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record(' + j + ')"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
-                                '<button style="margin-left:5%"  id="finishigrt' + j + '"  onclick="igrtrecord(' + j + ')" disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
-                               '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
-                                '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
-                                '</table></div></div>' +
-                                 '<div class="single-row"><div class="item col-xs-4">分割方式：<span id="split' + j + '" class="underline"></span></div><div class="item col-xs-4">总次数：<span id="total' + j + '" class="underline"></span></div><div class="item col-xs-4">已经治疗次数：<span id="treatedtimes' + j + '" class="underline"></span></div></div>' +
-                                '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin' + j + '" disabled="disabled" name="enjoin" class="form-area col-xs-5" ></textarea><div class="item  col-xs-5" style="padding-left:1%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div></div>' +
-                                '<div class="content-title"><span>放射治疗记录:</span> </div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;"><thead><tr>' +
-                                '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
-                                '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
-                                '<div class="content-title"><span>IGRT记录：</span></div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">' +
-                                '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>主操作</th><th>副操作</th></tr> </thead>' +
-                                '<tbody id="IGRT' + j + '" style="text-align:center;"></tbody></table></div></div></div>';
-                $("#tabs").append(tab);
-                $("#tab-content").append(content);
-                firstbool = true;
-            } else {
-                var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + "," + childdesigns[j].DesignName + '</a></li>';
-                var content = '<div class="tab-pane" id="tab' + j + '">' +
-                                '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
-                                '<div class="single-row"> <div class="col-xs-12"> <button style="margin-left:41%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record(' + j + ')"    data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
-                                '<button style="margin-left:5%" id="finishigrt' + j + '" onclick="igrtrecord(' + j + ')"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
-                                '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
-                                '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
-                                '</table></div></div>' +
-                                '<div class="single-row"><div class="item col-xs-4">分割方式：<span id="split' + j + '" class="underline"></span></div><div class="item col-xs-4">总次数：<span id="total' + j + '" class="underline"></span></div><div class="item col-xs-4">已经治疗次数：<span id="treatedtimes' + j + '" class="underline"></span></div></div>' +
-                                '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin' + j + '" disabled="disabled" name="enjoin' + j + '" class="form-area col-xs-5" ></textarea><div class="item  col-xs-5" style="padding-left:1%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div></div>' +
-                                 '<div class="content-title"><span>放射治疗记录:</span> </div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;"><thead><tr>' +
-                                '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
-                                '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
-                               '<div class="content-title"><span>IGRT记录：</span></div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">' +
-                                '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>主操作</th><th>副操作</th></tr> </thead>' +
-                                '<tbody id="IGRT' + j + '" style="text-align:center;"></tbody></table></div></div></div>';
-                $("#tabs").append(tab);
-                $("#tab-content").append(content);
+            if (childdesigns[j].treatstate == "0") {
+                if (firstbool == false) {
+                    var tab = '<li class="active" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + "," + childdesigns[j].DesignName + '</a></li>';
+                    var content = '<div class="active tab-pane" id="tab' + j + '">' +
+                                    '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
+                                    '<div class="single-row"><div class="item  col-xs-6" style="padding-left:16%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div> <div class="col-xs-6"> <button style="margin-left:15%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record(' + j + ')"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
+                                    '<button style="margin-left:5%"  id="finishigrt' + j + '"  onclick="igrtrecord(' + j + ')" disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
+                                   '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
+                                    '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
+                                    '</table></div></div>' +
+                                     '<div class="single-row"><div class="item col-xs-4">分割方式：<span id="split' + j + '" class="underline"></span></div><div class="item col-xs-4">总次数：<span id="total' + j + '" class="underline"></span></div><div class="item col-xs-4">已经治疗次数：<span id="treatedtimes' + j + '" class="underline"></span></div></div>' +
+                                    '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin' + j + '" disabled="disabled" name="enjoin" class="form-area col-xs-5" ></textarea></div>' +
+                                    '<div class="content-title"><span>放射治疗记录:</span> </div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;"><thead><tr>' +
+                                    '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
+                                    '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
+                                    '<div class="content-title"><span>IGRT记录：</span></div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">' +
+                                    '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>主操作</th><th>副操作</th></tr> </thead>' +
+                                    '<tbody id="IGRT' + j + '" style="text-align:center;"></tbody></table></div></div></div>';
+                    $("#tabs").append(tab);
+                    $("#tab-content").append(content);
+                    firstbool = true;
+                } else {
+                    var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + "," + childdesigns[j].DesignName + '</a></li>';
+                    var content = '<div class="tab-pane" id="tab' + j + '">' +
+                                    '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
+                                    '<div class="single-row"><div class="item  col-xs-6" style="padding-left:16%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div> <div class="col-xs-6"> <button style="margin-left:15%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record(' + j + ')"    data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
+                                    '<button style="margin-left:5%" id="finishigrt' + j + '" onclick="igrtrecord(' + j + ')"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
+                                    '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
+                                    '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
+                                    '</table></div></div>' +
+                                    '<div class="single-row"><div class="item col-xs-4">分割方式：<span id="split' + j + '" class="underline"></span></div><div class="item col-xs-4">总次数：<span id="total' + j + '" class="underline"></span></div><div class="item col-xs-4">已经治疗次数：<span id="treatedtimes' + j + '" class="underline"></span></div></div>' +
+                                    '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin' + j + '" disabled="disabled" name="enjoin' + j + '" class="form-area col-xs-5" ></textarea></div>' +
+                                     '<div class="content-title"><span>放射治疗记录:</span> </div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;"><thead><tr>' +
+                                    '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
+                                    '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
+                                   '<div class="content-title"><span>IGRT记录：</span></div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">' +
+                                    '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>主操作</th><th>副操作</th></tr> </thead>' +
+                                    '<tbody id="IGRT' + j + '" style="text-align:center;"></tbody></table></div></div></div>';
+                    $("#tabs").append(tab);
+                    $("#tab-content").append(content);
+                }
             }
+
 
         }
     }
+    for (var j = 0; j < childdesigns.length; j++) {
+        if (!contains(childdesigns[j].chid, appointchilddesign)) {
+            if (childdesigns[j].treatstate != "0") {
+                if (firstbool == false) {
+                    var tab = '<li class="active" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + "," + childdesigns[j].DesignName + '</a></li>';
+                    var content = '<div class="active tab-pane" id="tab' + j + '">' +
+                                    '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
+                                    '<div class="single-row"><div class="item  col-xs-6" style="padding-left:16%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div> <div class="col-xs-6"> <button style="margin-left:15%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record(' + j + ')"   data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
+                                    '<button style="margin-left:5%"  id="finishigrt' + j + '"  onclick="igrtrecord(' + j + ')" disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
+                                   '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
+                                    '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
+                                    '</table></div></div>' +
+                                     '<div class="single-row"><div class="item col-xs-4">分割方式：<span id="split' + j + '" class="underline"></span></div><div class="item col-xs-4">总次数：<span id="total' + j + '" class="underline"></span></div><div class="item col-xs-4">已经治疗次数：<span id="treatedtimes' + j + '" class="underline"></span></div></div>' +
+                                    '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin' + j + '" disabled="disabled" name="enjoin" class="form-area col-xs-5" ></textarea></div>' +
+                                    '<div class="content-title"><span>放射治疗记录:</span> </div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;"><thead><tr>' +
+                                    '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
+                                    '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
+                                    '<div class="content-title"><span>IGRT记录：</span></div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">' +
+                                    '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>主操作</th><th>副操作</th></tr> </thead>' +
+                                    '<tbody id="IGRT' + j + '" style="text-align:center;"></tbody></table></div></div></div>';
+                    $("#tabs").append(tab);
+                    $("#tab-content").append(content);
+                    firstbool = true;
+                } else {
+                    var tab = '<li class="" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + "," + childdesigns[j].DesignName + '</a></li>';
+                    var content = '<div class="tab-pane" id="tab' + j + '">' +
+                                    '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
+                                    '<div class="single-row"><div class="item  col-xs-6" style="padding-left:16%;" ><a href="javascript:;"   id="viewpdf' + j + '"  target="_blank"   class="btn btn-default">查看计划PDF文档</a><a href="javascript:;"   id="viewpdf2' + j + '"  target="_blank"   class="btn btn-default">查看复核PDF文档</a></div> <div class="col-xs-6"> <button style="margin-left:15%" id="treatmentedit' + j + '" disabled="disabled" type="button" onclick="record(' + j + ')"    data-toggle="modal" data-target="#treatmentview" class="btn btn-success" >记载放疗记录</button>' +
+                                    '<button style="margin-left:5%" id="finishigrt' + j + '" onclick="igrtrecord(' + j + ')"  disabled="disabled" type="button" data-toggle="modal" data-target="#igrt" class="btn btn-info" >记载IGRT记录</button></div></div>' +
+                                    '<div id="fieldinfo' + j + '" class="single-row"><div class="col-xs-6" style="padding-left:0px;"><span class="form-text col-xs-4">射野信息：</span></div></div>' +
+                                    '<div id="fieldinfotable' + j + '"class="single-row"><div class="item area-group col-xs-12"><table id="Field' + j + '" class="table table-bordered"><thead><tr><th>射野ID</th><th>MU</th><th>放疗设备</th><th>照射技术</th><th>射野类型</th><th>能量</th><th>源皮距</th><th>机架角</th> <th>机头角</th><th>床转交</th><th>子野数</th></tr></thead>' +
+                                    '</table></div></div>' +
+                                    '<div class="single-row"><div class="item col-xs-4">分割方式：<span id="split' + j + '" class="underline"></span></div><div class="item col-xs-4">总次数：<span id="total' + j + '" class="underline"></span></div><div class="item col-xs-4">已经治疗次数：<span id="treatedtimes' + j + '" class="underline"></span></div></div>' +
+                                    '<div class="single-row"><div class="item area-group col-xs-12"><span class="col-xs-2" style="padding-left:0px;">特殊医嘱：</span><textarea id="enjoin' + j + '" disabled="disabled" name="enjoin' + j + '" class="form-area col-xs-5" ></textarea></div>' +
+                                     '<div class="content-title"><span>放射治疗记录:</span> </div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;"><thead><tr>' +
+                                    '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
+                                    '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
+                                   '<div class="content-title"><span>IGRT记录：</span></div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">' +
+                                    '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>主操作</th><th>副操作</th></tr> </thead>' +
+                                    '<tbody id="IGRT' + j + '" style="text-align:center;"></tbody></table></div></div></div>';
+                    $("#tabs").append(tab);
+                    $("#tab-content").append(content);
+                }
+            }
+        }
+    }
+
     var flag = true;
 
     //对每一个子计划进行填写信息
@@ -214,9 +266,12 @@ function Init(evt) {
         $("#treatedtimes" + i).html(parseInt(childdesigns[i].treattimes) + parseInt(childdesigns[i].fillnum));
 
         //如果这个病人有子计划还差剩余次数就需要提醒技师这个病人可以预约(如果疗程计划已经结束不要提醒)
-        if (childdesigns[i].childstate=="3" && parseInt(childdesigns[i].rest) > 0 && flag == true) {
-            alert("此病人还有计划需要进行加速器预约，请进行预约");
-            flag = false;
+        var session = getSession();
+        if (session.role == "治疗技师") {
+            if (childdesigns[i].childstate == "3" && parseInt(childdesigns[i].rest) > 0 && flag == true) {
+                alert("此病人还有计划需要进行加速器预约，请进行预约");
+                flag = false;
+            }
         }
 
         if (i<appointchilddesign.length) {
@@ -301,6 +356,7 @@ function Init(evt) {
                 success: function (data) {
                     if (data == "success") {
                         alert("记录成功！");
+                        appointnum = appointnum - 1;
                         document.getElementById("treatmentedit" + allpagenumber).disabled = "disabled";
                         var count = 0;
                         for (var temp = 0; temp <= allpagenumber; temp++) {
@@ -314,7 +370,7 @@ function Init(evt) {
                         if (parseInt($("#total" + allpagenumber).html()) - parseInt($("#treatedtimes" + allpagenumber).html())+1 <= 3) {
                             alert("剩余治疗次数不足3次，如需增加治疗次数请通知主治医师！");
                         }
-                        if (appointchilddesign.length == 0) {
+                        if (appointnum == 0) {
                             top.location.reload();
                         }
 
@@ -811,13 +867,14 @@ function remove() {
             alert("error");
         }
     });
+ 
     var today = new Date(new Date().getFullYear() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getDate());
     var appoint = new Date(dataappoint.time[0].Date.split(" ")[0].replace(/-/g, "\/"));
-    
-    if (appoint == today.setDate(today.getDate()-1) && new Date().getHours()>=5) {
+    var yesterday = new Date(today.setDate(today.getDate() - 1));
+    if (appoint-yesterday==0 && new Date().getHours() >= 5) {
         return;
     }
-    if (appoint < today.setDate(today.getDate() - 1)) {
+    if (appoint < yesterday) {
         return;
     }
 

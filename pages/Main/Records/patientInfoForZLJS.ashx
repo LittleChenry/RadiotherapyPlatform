@@ -58,7 +58,7 @@ public class patientInfoForZLJS : IHttpHandler {
                 return "{\"PatientInfo\":false}";
             }
             StringBuilder info = new StringBuilder("{\"PatientInfo\":[");
-            string achievecommand = "select Patient_ID,ID,Begin,End,Date from appointment_accelerate where Date>=@date1 and Date<=@date2 and Equipment_ID=@Equipment order by Date asc,Begin asc";
+            string achievecommand = "select DISTINCT(appointment_accelerate.ID) as appid,appointment_accelerate.Patient_ID as Patient_ID,Begin,End,Date,treatmentrecord.TreatTime as treattime from appointment_accelerate,treatmentrecord where appointment_accelerate.ID=treatmentrecord.Appointment_ID and Date>=@date1 and Date<=@date2 and Equipment_ID=@Equipment order by treatmentrecord.TreatTime";
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(achievecommand);
             int temp = 1;
             while (reader.Read())
@@ -78,7 +78,7 @@ public class patientInfoForZLJS : IHttpHandler {
                 if (reader1.Read())
                 {
                     string coutcommand = "select count(*) from treatmentrecord where Appointment_ID=@app and Treat_User_ID  is null";
-                    sqlOperation2.AddParameterWithValue("@app", reader["ID"].ToString());
+                    sqlOperation2.AddParameterWithValue("@app", reader["appid"].ToString());
                     int countthis = int.Parse(sqlOperation2.ExecuteScalar(coutcommand));
                     string completed = "";
                     if (countthis > 0)
@@ -106,16 +106,16 @@ public class patientInfoForZLJS : IHttpHandler {
                         MySql.Data.MySqlClient.MySqlDataReader reader2 = sqlOperation2.ExecuteReader(groupcommand);
                         if (reader2.Read())
                         {
-                            info.Append(reader2["groupname"].ToString() + "\",\"doctor\":\"" + reader2["doctor"].ToString() + "\",\"treatID\":\"" + treatmentID + "\",\"appointid\":\"" + reader["ID"].ToString() + "\",\"Progress\":\"" + progress + "\",\"state\":\"" + state + "\"");
+                            info.Append(reader2["groupname"].ToString() + "\",\"doctor\":\"" + reader2["doctor"].ToString() + "\",\"treatID\":\"" + treatmentID + "\",\"appointid\":\"" + reader["appid"].ToString() + "\",\"Progress\":\"" + progress + "\",\"state\":\"" + state + "\"");
                         }
                         else
                         {
-                            info.Append("\",\"doctor\":\"" + "\",\"treatID\":\"" + treatmentID + "\",\"appointid\":\"" + reader["ID"].ToString() + "\",\"Progress\":\"" + progress + "\",\"state\":\"" + state + "\"");
+                            info.Append("\",\"doctor\":\"" + "\",\"treatID\":\"" + treatmentID + "\",\"appointid\":\"" + reader["appid"].ToString() + "\",\"Progress\":\"" + progress + "\",\"state\":\"" + state + "\"");
                         }
                         reader2.Close();
 
 
-                        info.Append(",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
+                        info.Append(",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"treattime\":\"" + reader["treattime"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
                         if (temp < count)
                         {
                             info.Append(",");
@@ -210,7 +210,7 @@ public class patientInfoForZLJS : IHttpHandler {
                         reader2.Close();
 
 
-                        info.Append(",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
+                        info.Append(",\"begin\":\"" + reader["Begin"].ToString() + "\",\"end\":\"" + reader["End"].ToString() + "\",\"treattime\":\"" + "" + "\",\"Date\":\"" + reader["Date"].ToString() + "\",\"Completed\":\"" + completed + "\"}");
                         if (temp < count)
                         {
                             info.Append(",");

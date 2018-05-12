@@ -406,7 +406,7 @@ function Paging(patient, role, userID) {
             case "治疗技师":
                 $("#legend-zljs").show();
                 var TreatmentID, Name, Gender, patientid, doctor, begin, end, Age, doctor, groupname;
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>类型</th></tr></thead>';
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>时间</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>类型</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
@@ -433,8 +433,14 @@ function Paging(patient, role, userID) {
                     }else{
                         tr += "Parent";
                     }
-                    trtemp = "'><td><i></i></td><td>" + Num2Time(begin, end) +"</td><td>" + Radiotherapy_ID + "</td><td>"+ Name +"</td><td>" + Gender + "</td>" +
-                             "<td>" + Age + "</td><td>" + doctor + "</td><td>"+ Ishospital +"</td></tr>";
+                    if (patient.PatientInfo[i].treattime == "") {
+                        trtemp = "'><td><i></i></td><td>" + Num2Time(begin, end) + "</td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Gender + "</td>" +
+                                 "<td>" + Age + "</td><td>" + doctor + "</td><td>" + Ishospital + "</td></tr>";
+                    } else {
+
+                        trtemp = "'><td><i></i></td><td>" + patient.PatientInfo[i].treattime + "</td><td>" + Radiotherapy_ID + "</td><td>" + Name + "</td><td>" + Gender + "</td>" +
+                                "<td>" + Age + "</td><td>" + doctor + "</td><td>" + Ishospital + "</td></tr>";
+                    }
                     tr += trtemp;
                     tbody += tr;
                 }
@@ -579,7 +585,7 @@ function Paging(patient, role, userID) {
                 break;
             case "治疗技师":
                 $("#legend-zljs").show();
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>预约时间</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>类型</th></tr></thead>';
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>时间</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>类型</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
@@ -1711,7 +1717,13 @@ function filterFunctionForKZR(element, index, array) {
 
 //治疗技师json过滤
 function filterFunctionForZLJS(element, index, array) {
-    var text1 = Num2Time(element.begin, element.end);
+    var text1;
+    if (element.treattime == "") {
+        text1 = Num2Time(element.begin, element.end);
+    }else
+    {
+        text1=element.treattime;
+    }
     var text2 = element.Radiotherapy_ID;
     var text3 = element.name;
     var text4 = element.Gender;
