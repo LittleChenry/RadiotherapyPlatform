@@ -59,7 +59,7 @@ public class DesignReviewInfo : IHttpHandler {
         sqlOperation.AddParameterWithValue("@patient", patientid);
         int count = Convert.ToInt32(sqlOperation.ExecuteScalar(sqlcommand5));
         int i = 1;
-        string sqlCommand = "select design.ID as designid,Treatmentname,technology.name as tname,equipmenttype.type as eqname,raytype.Name as raytypename,plansystem.Name as planname,DosagePriority,childdesign.ID as childID,childdesign.* from technology,equipmenttype,design,childdesign,treatment,plansystem,raytype where raytype.ID=design.Raytype_ID and plansystem.ID=design.PlanSystem_ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and treatment.ID=childdesign.treatment_ID and treatment.ID=@treatid";
+        string sqlCommand = "select design.ID as designid,Treatmentname,technology.name as tname,equipmenttype.type as eqname,raytype.Name as raytypename,plansystem.Name as planname,DosagePriority,childdesign.ID as childID,childdesign.* from technology,equipmenttype,design,childdesign,treatment,plansystem,raytype where raytype.ID=design.Raytype_ID and plansystem.ID=design.PlanSystem_ID and technology.ID=design.Technology_ID and equipmenttype.ID=design.Equipment_ID and design.ID=treatment.Design_ID and treatment.ID=childdesign.treatment_ID and treatment.ID=@treatid order by childdesign.ID desc";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
 
         StringBuilder backText = new StringBuilder("{\"designInfo\":[");

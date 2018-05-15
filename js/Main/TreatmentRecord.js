@@ -90,6 +90,7 @@ function Init(evt) {
     for (var j = 0; j < childdesigns.length; j++) {
        if (contains(childdesigns[j].chid,appointchilddesign)) {
            if (firstbool == false) {
+               allpagenumber = j;
                var tab = '<li class="active" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + "," + childdesigns[j].DesignName + '</a></li>';
                var content = '<div class="active tab-pane" id="tab' + j + '">' +
                                '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
@@ -137,6 +138,7 @@ function Init(evt) {
         if (!contains(childdesigns[j].chid, appointchilddesign)) {
             if (childdesigns[j].treatstate == "0") {
                 if (firstbool == false) {
+                    allpagenumber = j;
                     var tab = '<li class="active" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + "," + childdesigns[j].DesignName + '</a></li>';
                     var content = '<div class="active tab-pane" id="tab' + j + '">' +
                                     '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
@@ -185,6 +187,7 @@ function Init(evt) {
         if (!contains(childdesigns[j].chid, appointchilddesign)) {
             if (childdesigns[j].treatstate != "0") {
                 if (firstbool == false) {
+                    allpagenumber = j;
                     var tab = '<li class="active" onclick="handleli(' + j + ')"><a href="#tab' + j + '" data-toggle="tab" aria-expanded="false">' + childdesigns[j].Treatmentdescribe + "," + childdesigns[j].DesignName + '</a></li>';
                     var content = '<div class="active tab-pane" id="tab' + j + '">' +
                                     '<input type="hidden" id="childdesinid' + j + '" value="' + childdesigns[j].chid + '">' +
@@ -1372,6 +1375,7 @@ function getAllChildDesign(patientID) {
 //点击标签触发子页面标识函数
 function handleli(number) {
     allpagenumber = number;
+
     $.ajax({
     type: "POST",
             url: "patientforprint.ashx",

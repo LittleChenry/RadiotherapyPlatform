@@ -58,7 +58,7 @@ public class patientInfoForZLJS : IHttpHandler {
                 return "{\"PatientInfo\":false}";
             }
             StringBuilder info = new StringBuilder("{\"PatientInfo\":[");
-            string achievecommand = "select DISTINCT(appointment_accelerate.ID) as appid,appointment_accelerate.Patient_ID as Patient_ID,Begin,End,Date,treatmentrecord.TreatTime as treattime from appointment_accelerate,treatmentrecord where appointment_accelerate.ID=treatmentrecord.Appointment_ID and Date>=@date1 and Date<=@date2 and Equipment_ID=@Equipment order by treatmentrecord.TreatTime";
+            string achievecommand = "select DISTINCT(appointment_accelerate.ID) as appid,appointment_accelerate.Patient_ID as Patient_ID,Begin,End,Date,treatmentrecord.TreatTime as treattime from appointment_accelerate,treatmentrecord where appointment_accelerate.ID=treatmentrecord.Appointment_ID and Date>=@date1 and Date<=@date2 and Equipment_ID=@Equipment GROUP BY appointment_accelerate.ID order by treatmentrecord.TreatTime";
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(achievecommand);
             int temp = 1;
             while (reader.Read())
