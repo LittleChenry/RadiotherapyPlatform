@@ -168,6 +168,9 @@ function createAccelerateTable(nowDate) {
         } else {
             $("#" + tdid).html(appointments[i].patientname + "(" + appointments[i].rank+")");
         }
+        if (appointments[i].Completed == "false") {
+            $("#" + tdid).addClass("waiting");
+        }
         $("#" + tdid).parent().attr("id", appointments[i].patientid + "_" + i);
         var DateDetail = date.Format("M月d日") + " " + num2week(date.getDay());
         $("#" + tdid).parent().attr("title", DateDetail);
