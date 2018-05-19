@@ -1095,7 +1095,8 @@ function handlebutton(e, number) {
             data: {
                 state: $("#totalnumber" + number).val() != "",
                 type: "0",
-                childdesignid: childdesigns[number].chid
+                childdesignid: childdesigns[number].chid,
+                userid:userID
             },
             dateType: "json",
             success: function (data) {
@@ -1121,7 +1122,8 @@ function handlebutton(e, number) {
             data: {
                 state: $("#totalnumber" + number).val() != "",
                 type: "1",
-                childdesignid: childdesigns[number].chid
+                childdesignid: childdesigns[number].chid,
+                userid: userID
             },
             dateType: "json",
             success: function (data) {

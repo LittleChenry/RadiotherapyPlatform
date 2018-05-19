@@ -143,7 +143,22 @@ public class getPatientInfoNew : IHttpHandler {
             reader = sqlOperation.ExecuteReader(patientinfocommand);
             if (reader.Read())
             {
-                info.Append("{\"name\":\"" + reader["Name"].ToString() + "\",\"Gender\":\"" + sex(reader["Gender"].ToString()) + "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"patientid\":\"" + reader["ID"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"groupname\":\"");
+               // string commandforfirstjudge = "select count(*) from treatment,childdesign,treatmentrecord where treatment.ID=childdesign.Treatment_ID and childdesign.ID=treatmentrecord.ChildDesign_ID and treatment.Patient_ID=@pid and childdesign.ID not in (select DISTINCT(ChildDesign_ID)  from treatmentrecord WHERE isfirst<>1) and childdesign.ID in (select DISTINCT(ChildDesign_ID) from treatmentrecord,appointment_accelerate WHERE treatmentrecord.Appointment_ID=appointment_accelerate.ID and ((appointment_accelerate.Date>=@date and treatmentrecord.isfirst=1) or (appointment_accelerate.Date<@date and treatmentrecord.isfirst=1 and treatmentrecord.Treat_User_ID is not null))) and childdesign.State=3";
+                string commandforfirstjudge = "select count(*) from treatment,childdesign,treatmentrecord where treatment.ID=childdesign.Treatment_ID and childdesign.ID=treatmentrecord.ChildDesign_ID and treatment.Patient_ID=@pid and childdesign.ID not in (select DISTINCT(ChildDesign_ID)  from treatmentrecord WHERE isfirst<>1) and childdesign.ID in (select DISTINCT(ChildDesign_ID) from treatmentrecord,appointment_accelerate WHERE treatmentrecord.Appointment_ID=appointment_accelerate.ID and appointment_accelerate.Date>=@date and treatmentrecord.isfirst=1) and childdesign.State=3";
+                sqlOperation2.AddParameterWithValue("@pid", element);
+                sqlOperation2.AddParameterWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd"));
+                int firstresult=int.Parse(sqlOperation2.ExecuteScalar(commandforfirstjudge));
+                string isfirst = "";
+                if (firstresult >= 1)
+                {
+                    isfirst = "1";
+                }
+                else
+                {
+                    isfirst = "0";
+                }
+
+                info.Append("{\"name\":\"" + reader["Name"].ToString() + "\",\"Gender\":\"" + sex(reader["Gender"].ToString()) + "\",\"isfirst\":\"" + isfirst + "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"patientid\":\"" + reader["ID"].ToString() + "\",\"Age\":\"" + reader["Age"].ToString() + "\",\"groupname\":\"");
                 string groupcommand = "select user.Name as doctor,groups.groupName as groupname from groups,treatment,user,groups2user where groups2user.Group_ID=groups.ID and treatment.Group_ID=groups2user.ID and treatment.Patient_ID=@pid and treatment.Belongingdoctor=user.ID";
                 sqlOperation1.AddParameterWithValue("@pid", element);
                 MySql.Data.MySqlClient.MySqlDataReader reader2 = sqlOperation1.ExecuteReader(groupcommand);

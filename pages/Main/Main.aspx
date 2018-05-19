@@ -224,7 +224,7 @@
                     </ul>
                 </li>
                  <li class="treeview">
-                    <a href="Logcheck.aspx" target="_blank">
+                    <a id="checklog" href="Logcheck.aspx" target="_blank">
                         <i class="fa fa-tablet"></i>
                         <span>日志查询</span>
                     </a>

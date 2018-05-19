@@ -24,6 +24,7 @@ public class changeChdesignState : IHttpHandler {
         string type = context.Request["type"];
         string state = context.Request["state"];
         string chid = context.Request["childdesignid"];
+        string user = context.Request["userid"];
         if (type == "0")
         {
             string command = "update childdesign set State=0 where ID=@chid";
@@ -67,8 +68,19 @@ public class changeChdesignState : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@tretmentid", treatmentarray[i]);
                 sqlOperation.ExecuteNonQuery(deletecommand2);
             }
-
-            
+            string childnamecommand = "SELECT DesignName from childdesign where ID=@chid";
+            sqlOperation.AddParameterWithValue("@chid", chid);
+            string childname = sqlOperation.ExecuteScalar(childnamecommand);
+            string treatnamecommand = "SELECT treatment.Treatmentdescribe as treatname from childdesign,treatment where childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
+            string tretmentname = sqlOperation.ExecuteScalar(treatnamecommand);
+            string patientnamecommand = "SELECT patient.Name as patientname from patient,treatment,childdesign where treatment.Patient_ID=patient.ID and childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
+            string patientname = sqlOperation.ExecuteScalar(patientnamecommand);
+            string logininfo = "暂停病人" + patientname + "的计划" + tretmentname + "," + childname;
+            string insertcommand = "INSERT into loginfo(userID,logInformation,Date) VALUES(@userid,@login,@date)";
+            sqlOperation.AddParameterWithValue("@userid", user);
+            sqlOperation.AddParameterWithValue("@login", logininfo);
+            sqlOperation.AddParameterWithValue("@date", DateTime.Now);
+            sqlOperation.ExecuteNonQuery(insertcommand);
         }
         if (type == "1")
         {
@@ -84,6 +96,19 @@ public class changeChdesignState : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@state", 2);
             }
             sqlOperation.ExecuteNonQuery(command);
+            string childnamecommand = "SELECT DesignName from childdesign where ID=@chid";
+            sqlOperation.AddParameterWithValue("@chid", chid);
+            string childname = sqlOperation.ExecuteScalar(childnamecommand);
+            string treatnamecommand = "SELECT treatment.Treatmentdescribe as treatname from childdesign,treatment where childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
+            string tretmentname = sqlOperation.ExecuteScalar(treatnamecommand);
+            string patientnamecommand = "SELECT patient.Name as patientname from patient,treatment,childdesign where treatment.Patient_ID=patient.ID and childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
+            string patientname = sqlOperation.ExecuteScalar(patientnamecommand);
+            string logininfo = "恢复病人" + patientname + "的计划" + tretmentname + "," + childname;
+            string insertcommand = "INSERT into loginfo(userID,logInformation,Date) VALUES(@userid,@login,@date)";
+            sqlOperation.AddParameterWithValue("@userid", user);
+            sqlOperation.AddParameterWithValue("@login", logininfo);
+            sqlOperation.AddParameterWithValue("@date", DateTime.Now);
+            sqlOperation.ExecuteNonQuery(insertcommand);
             
         }
     }

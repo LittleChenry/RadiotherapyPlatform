@@ -81,7 +81,7 @@ function Paging(patients, worktime) {
         var table = $("#patient-table");
         table.html("");
         $("#patient_info").text("一共" + patients.length + "条记录");
-        var Name, Gender, patientid, Age, doctor, groupname,Radiotherapy_ID;
+        var Name, Gender, patientid, Age, doctor, groupname,Radiotherapy_ID,isfirst;
         var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
         table.append(thead);
         var tbody = '<tbody>';
@@ -93,8 +93,18 @@ function Paging(patients, worktime) {
             Age = patients[i].Age;
             groupname = patients[i].groupname;
             Radiotherapy_ID = patients[i].Radiotherapy_ID;
-            var tr = '<tr id="'+ patientid +'" class="pointer"><td>'+Radiotherapy_ID+'</td><td>'+ Name +'</td><td>'+ Gender +'</td>'+
+            isfirst = patients[i].isfirst;
+            var tr;
+            if(isfirst=="1")
+            {
+                 tr = '<tr id="'+ patientid +'" class="pointer"  style="background-color:wheat;"><td>'+Radiotherapy_ID+'</td><td>'+ Name +'</td><td>'+ Gender +'</td>'+
             		 '<td>'+ Age +'</td><td>'+ doctor +'</td><td>'+ groupname +'</td></tr>';
+            }else
+            {
+                 tr = '<tr id="'+ patientid +'" class="pointer" ><td>'+Radiotherapy_ID+'</td><td>'+ Name +'</td><td>'+ Gender +'</td>'+
+                   '<td>'+ Age +'</td><td>'+ doctor +'</td><td>'+ groupname +'</td></tr>';
+            }
+            
             tbody += tr;
         }
         tbody += '</tbody>';
@@ -155,8 +165,10 @@ function Search(str, patients) {
         Age = patients[i].Age;
         groupname = patients[i].groupname;
         Radiotherapy_ID=patients[i].Radiotherapy_ID;
-        if (Radiotherapy_ID.search(str)>=0||Name.search(str) >= 0 || Gender.search(str) >= 0 || doctor.search(str) >= 0 || Age.search(str) >= 0 || groupname.search(str) >= 0) {
-            var singlepatient = {Radiotherapy_ID:patients[i].Radiotherapy_ID,name: patients[i].name,Gender:patients[i].Gender,patientid:patients[i].patientid, doctor:patients[i].doctor, Age:patients[i].Age, groupname:patients[i].groupname, Radiotherapy_ID: patients[i].Radiotherapy_ID};
+        isfirst=patients[i].isfirst;
+        isfirst2=patients[i].isfirst=="1"?"首次":"";
+        if (Radiotherapy_ID.search(str)>=0||Name.search(str) >= 0 || Gender.search(str) >= 0 || isfirst2.search(str) >= 0) {
+            var singlepatient = {Radiotherapy_ID:patients[i].Radiotherapy_ID,name: patients[i].name,Gender:patients[i].Gender,patientid:patients[i].patientid, doctor:patients[i].doctor, Age:patients[i].Age, groupname:patients[i].groupname, Radiotherapy_ID: patients[i].Radiotherapy_ID,isfirst: patients[i].isfirst};
             Searchedpatient[count++] = singlepatient;
         }
     }
@@ -187,11 +199,23 @@ function drawPlanInfoTable(planinfo, timeduan) {
 		for (var i = 0; i < planinfo.length; i++) {
 			var firstday = planinfo[i].firstday == "" ? "无" : planinfo[i].firstday.replace(/\//g, "-") + " , " + Num2Time(planinfo[i].firstbegin, planinfo[i].firstend);
 			var checked = planinfo[i].rest == "0" ? "disabled" : "checked";
-			var tr = '<tr id="'+ planinfo[i].chid +'"><td class="hide">'+ planinfo[i].Interal +'</td><td class="hide">'+ planinfo[i].Times +
-					 '</td><td>'+ planinfo[i].DesignName +'</td><td>'+ planinfo[i].Treatmentdescribe +
-					 '</td><td>'+ planinfo[i].Totalnumber +'</td><td>'+ planinfo[i].rest + '</td><td>'+
-					 planinfo[i].Ways +'</td><td data-date="'+ planinfo[i].firstday +'">'+ firstday +
-					 '</td><td class="choose-appoint"><input type="checkbox" class="flat-red" '+ checked +'></td></tr>';
+			var isfirst= planinfo[i].isfirst;
+			var tr;
+			if(isfirst=="1")
+			{
+			    tr = '<tr id="'+ planinfo[i].chid +'" style="background-color:wheat;"><td class="hide">'+ planinfo[i].Interal +'</td><td class="hide">'+ planinfo[i].Times +
+                        '</td><td>'+ planinfo[i].DesignName +'</td><td>'+ planinfo[i].Treatmentdescribe +
+                        '</td><td>'+ planinfo[i].Totalnumber +'</td><td>'+ planinfo[i].rest + '</td><td>'+
+                        planinfo[i].Ways +'</td><td data-date="'+ planinfo[i].firstday +'">'+ firstday +
+                        '</td><td class="choose-appoint"><input type="checkbox" class="flat-red" '+ checked +'></td></tr>';
+			}else
+			{
+			    tr = '<tr id="'+ planinfo[i].chid +'"><td class="hide">'+ planinfo[i].Interal +'</td><td class="hide">'+ planinfo[i].Times +
+                        '</td><td>'+ planinfo[i].DesignName +'</td><td>'+ planinfo[i].Treatmentdescribe +
+                        '</td><td>'+ planinfo[i].Totalnumber +'</td><td>'+ planinfo[i].rest + '</td><td>'+
+                        planinfo[i].Ways +'</td><td data-date="'+ planinfo[i].firstday +'">'+ firstday +
+                        '</td><td class="choose-appoint"><input type="checkbox" class="flat-red" '+ checked +'></td></tr>';
+			}
 			tbody += tr;
 		}
 		table.append(tbody);

@@ -1,5 +1,10 @@
 ﻿$(document).ready(function () {
-	var session = getSession();
+    var session = getSession();
+    if ((typeof (session) == "undefined")) {
+        if (confirm("用户身份已经失效,是否选择重新登录?")) {
+            parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
+        }
+    }
     Notice(session.roleName);
     $("#signOut").bind("click", function () {
         removeSession();//ajax 注销用户Session
@@ -34,6 +39,13 @@
          $("#Menu-Appointment").bind("click", function(){
             alert("权限不够！");
          });
+    }
+    if (session.role != "物理师" && session.role != "科主任") {
+        $("#checklog").attr("href", "javascript:;");
+        $("#checklog").bind("click", function () {
+            alert("权限不够！");
+        });
+
     }
 })
 

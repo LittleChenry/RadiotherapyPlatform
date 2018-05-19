@@ -59,8 +59,23 @@ public class getPInfoAndEquipAppInfo : IHttpHandler {
         reader = sqlOperation.ExecuteReader(designcommand);
         while (reader.Read())
         {
-            
-            info.Append("{\"chid\":\"" + reader["chid"].ToString() + "\",\"DesignName\":\"" + reader["DesignName"].ToString() + "\",\"Totalnumber\":\"" + reader["total"].ToString() + "\",\"childstate\":\"" + reader["childstate"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"treatid\":\"" + reader["treatid"].ToString() + "\"");
+            string hasfirstcommand = "select count(*) from treatmentrecord where ChildDesign_ID=@chid and isfirst<>1";
+            sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+            int hasfirstcount = int.Parse(sqlOperation1.ExecuteScalar(hasfirstcommand));
+            string hasfirstcommand1 = "select count(*) from treatmentrecord,appointment_accelerate where appointment_accelerate.ID=treatmentrecord.Appointment_ID and appointment_accelerate.Date>=@date and ChildDesign_ID=@chid and isfirst=1";
+            sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+            sqlOperation1.AddParameterWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd"));
+            int hasfirstcount1 = int.Parse(sqlOperation1.ExecuteScalar(hasfirstcommand1));
+            string isfirst = "";
+            if (hasfirstcount == 0 && hasfirstcount1>0)
+            {
+                isfirst = "1";
+            }
+            else
+            {
+                isfirst = "0";
+            }
+            info.Append("{\"chid\":\"" + reader["chid"].ToString() + "\",\"DesignName\":\"" + reader["DesignName"].ToString() + "\",\"isfirst\":\"" + isfirst + "\",\"Totalnumber\":\"" + reader["total"].ToString() + "\",\"childstate\":\"" + reader["childstate"].ToString() + "\",\"Treatmentdescribe\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"treatid\":\"" + reader["treatid"].ToString() + "\"");
             string splitcommand = "select Ways,Interal,Times,TimeInteral from splitway where ID=@split";
             sqlOperation1.AddParameterWithValue("@split", reader["splitway"].ToString());
             MySql.Data.MySqlClient.MySqlDataReader reader1 = sqlOperation1.ExecuteReader(splitcommand);

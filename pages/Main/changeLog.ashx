@@ -48,9 +48,13 @@ public class changeLog : IHttpHandler {
                 {
                     loginfo = loginfo + "恢复病人" + reader["pname"].ToString() + "疗程,疗程名称:" + reader["treatname"].ToString();
                 }
-                else
+                if (state == "1")
                 {
                     loginfo = loginfo + "暂停病人" + reader["pname"].ToString() + "疗程,疗程名称:" + reader["treatname"].ToString();
+                }
+                else
+                {
+                    loginfo = loginfo + "结束病人" + reader["pname"].ToString() + "疗程,疗程名称:" + reader["treatname"].ToString();
                 }
             }
             reader.Close();
