@@ -43,7 +43,7 @@
                 </div>
                 <div class="single-row">
                      <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
-                    <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
+                    <div class="item col-xs-4">主管医师：<span id="Reguser" class="underline"></span></div>
                 </div>
             </div>
             
@@ -131,7 +131,7 @@
             </div>
             <div class="paper-footer">
                 <div class="single-row">
-                    <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
+                    <div class="item col-xs-6">医师签字：<span id="operator" class="underline"></span></div>
                     <div class="item col-xs-6">诊断时间：<span id="date" class="underline"></span></div>
                      <button type="button" name="test" id="test" style="display:none" class="btn btn-flat"> </button>
                 </div>

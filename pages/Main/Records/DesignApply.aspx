@@ -217,7 +217,7 @@
             </div>
             <div class="paper-footer">
                 <div class="single-row">
-                    <div class="item col-xs-6">医生签字：<span id="applyuser" class="underline"></span></div>
+                    <div class="item col-xs-6">医师签字：<span id="applyuser" class="underline"></span></div>
                     <div class="item col-xs-6">申请时间：<span  id="time" class="underline"></span></div>
                 </div>
             </div>

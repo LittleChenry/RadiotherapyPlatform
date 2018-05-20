@@ -143,7 +143,7 @@
                         </div>
                     <div class="single-row">              
                         <div class="item col-xs-6">
-                            主管医生：
+                            主管医师：
                             <select id="doctor" name="doctor" class="form-item" disabled="disabled"></select>
                         </div>
                         <div class="item col-xs-6">
@@ -210,7 +210,7 @@
                 </div>
                 <div class="paper-footer">
                     <div class="single-row">
-                        <div class="item col-xs-6">医生签字：<span id="operator" class="underline">王医生</span></div>
+                        <div class="item col-xs-6">医师签字：<span id="operator" class="underline">王医生</span></div>
                         <div class="item col-xs-6">登记时间：<span id="date" class="underline">2017年6月28日</span></div>
                     </div>
                 </div>

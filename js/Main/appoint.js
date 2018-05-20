@@ -82,7 +82,7 @@ function Paging(patients, worktime) {
         table.html("");
         $("#patient_info").text("一共" + patients.length + "条记录");
         var Name, Gender, patientid, Age, doctor, groupname,Radiotherapy_ID,isfirst;
-        var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
+        var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医师</th><th>医疗组</th></tr></thead>';
         table.append(thead);
         var tbody = '<tbody>';
         for (var i = 0; i < patients.length; i++) {
@@ -113,7 +113,7 @@ function Paging(patients, worktime) {
     } else {
         var table = $("#patient-table");
         table.html("");
-        var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>医疗组</th></tr></thead>';
+        var thead = '<thead><tr><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医师</th><th>医疗组</th></tr></thead>';
         table.append(thead);
         var tbody = '<tbody><tr><td colspan="5" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
         table.append(tbody);

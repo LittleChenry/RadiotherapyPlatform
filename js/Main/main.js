@@ -13,6 +13,7 @@ var username;
 var rolename;
 var flag = true;
 var patientALL;
+var askstate=0;
 //如果其他账号登录只承认一个session
 window.onfocus = function () {
     var session = getSession2();
@@ -43,7 +44,7 @@ $(document).ready(function () {
         $('#save').attr("disabled", "disabled");
         $('#saveTemplate-list').attr("disabled", "disabled");
         var session = getSession();
-        RolesToPatients(session,0);
+        RolesToPatients(session, askstate);
         adjustTable();
         Recover();
     });
@@ -51,6 +52,7 @@ $(document).ready(function () {
     //三个病人筛选按钮
     $('#first_but').unbind("click").click(function () {
         var session = getSession();
+        askstate = 0;
         RolesToPatients(session, 0);
         adjustTable();
         $('#first_but').removeClass();
@@ -63,6 +65,7 @@ $(document).ready(function () {
     $('#sec_but').unbind("click").click(function () {
         var session = getSession();
         RolesToPatients(session, 1);
+        askstate = 1;
         adjustTable();
         $('#first_but').removeClass();
         $("#sec_but").removeClass();
@@ -74,6 +77,7 @@ $(document).ready(function () {
     $('#third_but').unbind("click").click(function () {
         var session = getSession();
         RolesToPatients(session, 2);
+        askstate = 2;
         adjustTable();
         $('#first_but').removeClass();
         $("#sec_but").removeClass();
@@ -87,6 +91,7 @@ $(document).ready(function () {
     $('#firstbb').unbind("click").click(function () {
         var session = getSession();
         RolesToPatients(session, 0);
+        askstate = 0;
         adjustTable();
         $('#secondbb').removeClass();
         $("#firstbb").removeClass();
@@ -95,6 +100,7 @@ $(document).ready(function () {
     });
     $('#secondbb').unbind("click").click(function () {
         var session = getSession();
+        askstate = 1;
         RolesToPatients(session, 1);
         adjustTable();
         $('#secondbb').removeClass();
@@ -261,7 +267,7 @@ function Paging(patient, role, userID) {
                 $("#legend-patientselect").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname,hasfirst;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
-                    + '<th>主治医生</th><th>医疗组</th></tr></thead>';
+                    + '<th>主治医师</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
@@ -295,7 +301,7 @@ function Paging(patient, role, userID) {
             case "剂量师":
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
-                    + '<th>主治医生</th></tr></thead>';
+                    + '<th>主治医师</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
@@ -328,7 +334,7 @@ function Paging(patient, role, userID) {
             case "物理师":
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
-                    + '<th>主治医生</th></tr></thead>';
+                    + '<th>主治医师</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
@@ -363,7 +369,7 @@ function Paging(patient, role, userID) {
                 $("#legend-enhance").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Task, date, begin, end, Completed, doctor;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th>'
-                    + '<th>患者姓名</th><th>状态</th><th>诊断结果</th><th>疗程</th><th>主治医生</th></tr></thead>';
+                    + '<th>患者姓名</th><th>状态</th><th>诊断结果</th><th>疗程</th><th>主治医师</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
@@ -406,7 +412,7 @@ function Paging(patient, role, userID) {
             case "治疗技师":
                 $("#legend-zljs").show();
                 var TreatmentID, Name, Gender, patientid, doctor, begin, end, Age, doctor, groupname;
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>时间</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>类型</th></tr></thead>';
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>时间</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医师</th><th>类型</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
@@ -452,7 +458,7 @@ function Paging(patient, role, userID) {
                 $("#legend-patientselect").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
-                    + '<th>主治医生</th><th>医疗组</th></tr></thead>';
+                    + '<th>主治医师</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
@@ -486,7 +492,7 @@ function Paging(patient, role, userID) {
                 $("#legend-patientselect").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
-                    + '<th>主治医生</th><th>医疗组</th></tr></thead>';
+                    + '<th>主治医师</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
@@ -520,7 +526,7 @@ function Paging(patient, role, userID) {
                 $("#legend-patientselect").show();
                 var TreatmentID, Radiotherapy_ID, Name, treat, diagnosisresult, Progress, doctor, groupname;
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
-                    + '<th>主治医生</th><th>医疗组</th></tr></thead>';
+                    + '<th>主治医师</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody>';
                 for (var i = 0; i < patient.PatientInfo.length; i++) {
@@ -557,35 +563,35 @@ function Paging(patient, role, userID) {
             case "医师":
                 $("#legend-patientselect").show();
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
-                    + '<th>主治医生</th><th>医疗组</th></tr></thead>';
+                    + '<th>主治医师</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "剂量师":
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
-                    + '<th>主治医生</th></tr></thead>';
+                    + '<th>主治医师</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "物理师":
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
-                    + '<th>主治医生</th></tr></thead>';
+                    + '<th>主治医师</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "模拟技师":
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>状态</th><th>诊断结果</th><th>疗程</th>'
-                    + '<th>主治医生</th></tr></thead>';
+                    + '<th>主治医师</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="9" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
                 break;
             case "治疗技师":
                 $("#legend-zljs").show();
-                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>时间</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医生</th><th>类型</th></tr></thead>';
+                var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>时间</th><th>放疗号</th><th>患者姓名</th><th>性别</th><th>年龄</th><th>主治医师</th><th>类型</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="7" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
@@ -593,7 +599,7 @@ function Paging(patient, role, userID) {
             case "科主任":
                 $("#legend-patientselect").show();
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
-                    + '<th>主治医生</th><th>医疗组</th></tr></thead>';
+                    + '<th>主治医师</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
@@ -601,7 +607,7 @@ function Paging(patient, role, userID) {
             case "登记处人员":
                 $("#legend-patientselect").show();
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
-                    + '<th>主治医生</th><th>医疗组</th></tr></thead>';
+                    + '<th>主治医师</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);
@@ -609,7 +615,7 @@ function Paging(patient, role, userID) {
             default:
                 $("#legend-patientselect").show();
                 var thead = '<thead><tr><th id="CollapseSwitch"><i class="fa fa-fw fa-toggle-off"></i></th><th>放疗号</th><th>患者姓名</th><th>诊断结果</th><th>疗程</th><th>当前进度</th>'
-                    + '<th>主治医生</th><th>医疗组</th></tr></thead>';
+                    + '<th>主治医师</th><th>医疗组</th></tr></thead>';
                 table.append(thead);
                 var tbody = '<tbody><tr><td colspan="8" style="text-align:left;padding-left:45%;">没有病人信息</td></tr></tbody>';
                 table.append(tbody);

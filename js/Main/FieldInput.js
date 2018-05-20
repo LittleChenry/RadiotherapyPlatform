@@ -19,6 +19,7 @@ function Init(evt) {
     //获得当前执行人姓名与ID
     getUserName();
     getUserID();
+    var session = getSession();
     if ((typeof (userID) == "undefined")) {
         if (confirm("用户身份已经失效,是否选择重新登录?")) {
             parent.window.location.href = "/RadiotherapyPlatform/pages/Login/Login.aspx";
@@ -52,7 +53,7 @@ function Init(evt) {
         var fildinfo = getfieldinfo();
         //填写信息
         fillData(fildinfo);
-        if (fildinfo[0].userID == userID) {
+        if (fildinfo[0].userID == userID || session.role=="物理师") {
             window.parent.document.getElementById("edit").removeAttribute("disabled");
         }
     } else {
@@ -503,6 +504,26 @@ function getUserID() {
     }
     xmlHttp.send();
 }
+
+//getssion
+function getSession() {
+    var Session;
+    $.ajax({
+        type: "GET",
+        url: "getSession.ashx",
+        async: false,
+        dateType: "text",
+        success: function (data) {
+            //alert(data);
+            Session = $.parseJSON(data);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+    return Session;
+}
+
 function sex(evt) {
     if (evt == "F")
         return "女";
@@ -568,8 +589,12 @@ function hosttext(str) {
 // }
 //消除disabled
 function remove() {
-    $("input").attr("disabled",false);
-    $("input[name*='filename']").attr("disabled",true);
+    var patient = getPatientInfo(treatID);
+    if (patient.treatstate == "0") {
+        $("input").attr("disabled", false);
+        $("input[name*='filename']").attr("disabled", true);
+    }
+    
 }
 //--------------------------------------------------------------------------------------------
 //子计划
@@ -595,19 +620,45 @@ $(function(){
         }else{
             var panelId = parseInt(lastLi.substring(4))+1;
         }
-        
+        $("#applyuser").html(userName);
+        $("#time").html(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate());
         createLi(panelId);
         $("#subdesignname").val("子计划" + (panelId + 2));
+
+
     });
 });
 function createLi(panelId) {
     $("#designTab li").removeClass("active");
     $("#designTab li").removeClass("active");
         
-    var $tab = $('<li class="active"><a href="#tab' + panelId + '" data-toggle="tab" aria-expanded="false">' + $("#subdesignname").val() +'</a></li>');
+    var $tab = $('<li onclick="clickli('+panelId+')" class="active"><a href="#tab' + panelId + '" data-toggle="tab" aria-expanded="false">' + $("#subdesignname").val() +'</a></li>');
     $("#designTab").append($tab);
     createTabPanel(panelId);
     $("#subdesignname").val("子计划"+(panelId+2));
+}
+//标签点击事件
+function clickli(panelId) {
+    var data = getfieldinfo();
+    var tabNum = 0;
+    var dataFinal = new Array();
+    for (var i = 0; i < data.length; i++) {
+        if (parseInt(data[i].item) > tabNum) {
+            tabNum = parseInt(data[i].item);
+        }
+    }
+    for (var i = 0; i <= tabNum; i++) {
+        var temp = new Array();
+        dataFinal.push(temp);
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        dataFinal[parseInt(data[i].item)].push(data[i]);
+    }
+
+    $("#applyuser").html(dataFinal[panelId][0].Name);
+    $("#time").html(dataFinal[panelId][0].time);
+
 }
 //子计划创建
 function createTabPanel(panelId) {
@@ -1402,7 +1453,7 @@ function fillData(data) {
         $("#Graded" + i).val(dataFinal[i][0].Singledose);
         $("#xianLeft" + i).val(dataFinal[i][0].xianleft);
         $("#xianRight" + i).val(dataFinal[i][0].xianright);
-        $("#total"+i).val(dataFinal[i][0].Totaldose);
+        $("#total" + i).val(dataFinal[i][0].Totaldose);
         $("#applyuser").html(dataFinal[i][0].Name);
         $("#time").html(dataFinal[i][0].time);
         readField(dataFinal[i],dataFinal[i][0].item);

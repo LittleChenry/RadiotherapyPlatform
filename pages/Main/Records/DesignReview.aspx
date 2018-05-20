@@ -50,7 +50,7 @@
                      <div class="single-row">
                             <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
                            <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
-                           <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
+                           <div class="item col-xs-4">主管医师：<span id="Reguser" class="underline"></span></div>
                     </div>
                       <div class="single-row">
                             <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="single-row tab-row">
                         <ul id="tabs" class="nav nav-tabs">
-                            <li class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
+                            <li onclick="clickli(0)" class="active"><a id="current-tab" href="#tab" data-toggle="tab" aria-expanded="true"></a></li>
                         </ul>
                     </div>
                     <div id="tab-content" class="tab-content">
@@ -310,7 +310,7 @@
                     </div>
                 <div class="paper-footer">
                     <div class="single-row">
-                        <div class="item col-xs-6">医生签字：<span id="applyuser" class="underline"></span></div>
+                        <div class="item col-xs-6">物理师签字：<span id="applyuser" class="underline"></span></div>
                         <div class="item col-xs-6">复核时间：<span  id="time" class="underline"></span></div>
                     </div>
                 </div>

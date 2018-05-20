@@ -12,6 +12,7 @@ window.addEventListener("load", Init, false);
 
 var userName;
 var userID;
+var treatID;
 var signal = new Array();
 var role;
 var item11 = new Array();
@@ -29,7 +30,7 @@ if ((typeof (userID) == "undefined")) {
     }
 }
 
-var treatID = window.location.search.split("=")[1];
+treatID = window.location.search.split("=")[1];
 
 
 var patient = getPatientInfo(treatID);
@@ -112,7 +113,7 @@ if (isInArray(progress, '11')) {
     if (designInfo.length > 1) {
         for (var i = 1; i < designInfo.length; i++) {
             //分计划复核
-            var tab = '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].DesignName + '</a></li>';
+            var tab = '<li onclick="clickli('+i+')" class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + designInfo[i].DesignName + '</a></li>';
             var content = '<div class="tab-pane" id="tab' + i + '"><div class="single-row"><input type="hidden"  id="TechnologyConfirm1_' + i + '" name="TechnologyConfirm1_' + i + '" value="0"/>' +
                           '<input type="hidden"  id="confirmPlanSystem1_' + i + '" name="confirmPlanSystem1_' + i + '" value="0"/><input type="hidden"  id="EquipmentConfirm1_' + i + '" name="EquipmentConfirm1_' + i + '" value="0"/>' +
                           '<input type="hidden"  id="childdesign_' + i + '" name="childdesign_' + i + '" value="' + designInfo[i].childDesign_ID + '"/><div class="col-xs-12"><div class="pull-right">' +
@@ -170,6 +171,7 @@ if (isInArray(progress, '11')) {
     document.getElementById("time").innerHTML = getNowFormatDate();
     document.getElementById("hidetreatID").value = treatID;
     for (var i = 0; i < designInfo.length; i++) {
+        $("#tabs li:eq(" + i+ ")").find("a").addClass("appointdesign");
         var gggg = "";
         if (i != 0) {
             gggg = "_" + i;
@@ -199,52 +201,53 @@ if (isInArray(progress, '11')) {
                     var gg = "_" + j;
                 }
                 if (document.getElementById("childdesign" + gg).value == reviewInfo[i].childdesign) {
+                    $("#tabs li:eq(" + j + ")").find("a").removeClass("appointdesign");
                     item11[j] = 1;
                     var objSelect = document.getElementById("designdose" + gg);
-                    var objItemText=reviewInfo[i].SelectDose;
+                    var objItemText = reviewInfo[i].SelectDose;
                     jsSelectItemByValue(objSelect, objItemText);
                     document.getElementById(plan(reviewInfo[i].PlanQA)).checked = true;
-                    document.getElementById("degree"+gg).value = reviewInfo[i].degree;
-                    document.getElementById("remark"+gg).value = reviewInfo[i].Remark;
+                    document.getElementById("degree" + gg).value = reviewInfo[i].degree;
+                    document.getElementById("remark" + gg).value = reviewInfo[i].Remark;
                     if (reviewInfo[i].sum == "1") {
                         signal[j] = 1;
-                        document.getElementById("TechnologyConfirm1"+gg).value = 1;
-                        document.getElementById("confirmPlanSystem1"+gg).value = 1;
-                        document.getElementById("EquipmentConfirm1"+gg).value = 1;
-                        document.getElementById("check1"+gg).innerHTML = "通过";
-                        document.getElementById("check1"+gg).style.color = "#0000ff";
-                        document.getElementById("check2"+gg).innerHTML = "通过";
-                        document.getElementById("check2"+gg).style.color = "#0000ff";
-                        document.getElementById("check3"+gg).innerHTML = "通过";
-                        document.getElementById("check4"+gg).innerHTML = "通过";
-                        document.getElementById("check5"+gg).innerHTML = "通过";
-                        document.getElementById("check6"+gg).innerHTML = "通过";
-                        document.getElementById("check7"+gg).innerHTML = "通过";
-                        document.getElementById("check8"+gg).innerHTML = "通过";
-                        document.getElementById("check9"+gg).innerHTML = "通过";
-                        document.getElementById("check10"+gg).innerHTML = "通过";
-                        document.getElementById("check11"+gg).innerHTML = "通过";
-                        document.getElementById("check12"+gg).innerHTML = "通过";
-                        document.getElementById("check13"+gg).innerHTML = "通过";
-                        document.getElementById("check14"+gg).innerHTML = "通过";
-                        document.getElementById("check97"+gg).innerHTML = "通过";
-                        document.getElementById("check97"+gg).style.color = "#0000ff";
-                        document.getElementById("check98"+gg).innerHTML = "通过";
-                        document.getElementById("check98"+gg).style.color = "#0000ff";
-                        document.getElementById("check99"+gg).innerHTML = "通过";
-                        document.getElementById("check99"+gg).style.color = "#0000ff";
-                        document.getElementById("check3"+gg).style.color = "#0000ff";
-                        document.getElementById("check4"+gg).style.color = "#0000ff";
-                        document.getElementById("check5"+gg).style.color = "#0000ff";
-                        document.getElementById("check6"+gg).style.color = "#0000ff";
-                        document.getElementById("check7"+gg).style.color = "#0000ff";
-                        document.getElementById("check8"+gg).style.color = "#0000ff";
-                        document.getElementById("check9"+gg).style.color = "#0000ff";
-                        document.getElementById("check10"+gg).style.color = "#0000ff";
-                        document.getElementById("check11"+gg).style.color = "#0000ff";
-                        document.getElementById("check12"+gg).style.color = "#0000ff";
-                        document.getElementById("check13"+gg).style.color = "#0000ff";
-                        document.getElementById("check14"+gg).style.color = "#0000ff";
+                        document.getElementById("TechnologyConfirm1" + gg).value = 1;
+                        document.getElementById("confirmPlanSystem1" + gg).value = 1;
+                        document.getElementById("EquipmentConfirm1" + gg).value = 1;
+                        document.getElementById("check1" + gg).innerHTML = "通过";
+                        document.getElementById("check1" + gg).style.color = "#0000ff";
+                        document.getElementById("check2" + gg).innerHTML = "通过";
+                        document.getElementById("check2" + gg).style.color = "#0000ff";
+                        document.getElementById("check3" + gg).innerHTML = "通过";
+                        document.getElementById("check4" + gg).innerHTML = "通过";
+                        document.getElementById("check5" + gg).innerHTML = "通过";
+                        document.getElementById("check6" + gg).innerHTML = "通过";
+                        document.getElementById("check7" + gg).innerHTML = "通过";
+                        document.getElementById("check8" + gg).innerHTML = "通过";
+                        document.getElementById("check9" + gg).innerHTML = "通过";
+                        document.getElementById("check10" + gg).innerHTML = "通过";
+                        document.getElementById("check11" + gg).innerHTML = "通过";
+                        document.getElementById("check12" + gg).innerHTML = "通过";
+                        document.getElementById("check13" + gg).innerHTML = "通过";
+                        document.getElementById("check14" + gg).innerHTML = "通过";
+                        document.getElementById("check97" + gg).innerHTML = "通过";
+                        document.getElementById("check97" + gg).style.color = "#0000ff";
+                        document.getElementById("check98" + gg).innerHTML = "通过";
+                        document.getElementById("check98" + gg).style.color = "#0000ff";
+                        document.getElementById("check99" + gg).innerHTML = "通过";
+                        document.getElementById("check99" + gg).style.color = "#0000ff";
+                        document.getElementById("check3" + gg).style.color = "#0000ff";
+                        document.getElementById("check4" + gg).style.color = "#0000ff";
+                        document.getElementById("check5" + gg).style.color = "#0000ff";
+                        document.getElementById("check6" + gg).style.color = "#0000ff";
+                        document.getElementById("check7" + gg).style.color = "#0000ff";
+                        document.getElementById("check8" + gg).style.color = "#0000ff";
+                        document.getElementById("check9" + gg).style.color = "#0000ff";
+                        document.getElementById("check10" + gg).style.color = "#0000ff";
+                        document.getElementById("check11" + gg).style.color = "#0000ff";
+                        document.getElementById("check12" + gg).style.color = "#0000ff";
+                        document.getElementById("check13" + gg).style.color = "#0000ff";
+                        document.getElementById("check14" + gg).style.color = "#0000ff";
                         document.getElementById("applyuser").innerHTML = reviewInfo[i].name;
                         document.getElementById("time").innerHTML = reviewInfo[i].ReviewTime;
                         if (reviewInfo[i].PDF1 != "") {
@@ -259,17 +262,37 @@ if (isInArray(progress, '11')) {
                         }
                     }
                 }
+
             }
         }
                 
-        if (reviewInfo[0].userID == userID) {
-            window.parent.document.getElementById("edit").removeAttribute("disabled");
-        }
-
-        }
+    }
+    //只要物理师都可以复核
+    if (session.role == "物理师") {
+        window.parent.document.getElementById("edit").removeAttribute("disabled");
+    }
     }
 }
+//标签切换
+function clickli(tabnum) {
+    var designInfo = getDesignInfo(treatID);
+    var reviewInfo = getReviewInfo(treatID);
+    for (var i = 0; i < reviewInfo.length; i++) {
+         if (tabnum == 0) {
+                var gg = "";
+            } else {
+                var gg = "_" + tabnum;
+            }
+            if (document.getElementById("childdesign" + gg).value == reviewInfo[i].childdesign) {
+                document.getElementById("applyuser").innerHTML = reviewInfo[i].name;
+                document.getElementById("time").innerHTML = reviewInfo[i].ReviewTime;
+                return;
+            }
 
+    }
+    $("#applyuser").html(userName);
+    $("#time").html(new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate());
+}
 function numSub(num1, num2) {
     var baseNum, baseNum1, baseNum2;
     try {
@@ -903,6 +926,7 @@ function savereview(gg) {
         contentType: false,
         success: function (data) {
             if (data == "success") {
+                $("#tabs li:eq(" + gg + ")").find("a").removeClass("appointdesign");
                 alert("保存成功");
             } else {
                 alert("保存失败");
@@ -920,30 +944,33 @@ function savereview(gg) {
 }
 //编辑移除disabled
 function remove() {
-    for (var i = 0; i < howmany; i++) {
-        var gg = "";
-        if (i != 0) {
-            gg = '_' + i;
+    var patient = getPatientInfo(treatID);
+    if (patient.treatstate == "0") {
+        for (var i = 0; i < howmany; i++) {
+            var gg = "";
+            if (i != 0) {
+                gg = '_' + i;
+            }
+            document.getElementById("designdose" + gg).removeAttribute("disabled");
+            document.getElementById("confirm" + gg).removeAttribute("disabled");
+            document.getElementById("save" + gg).removeAttribute("disabled");
+            if (role == "科主任") {
+                document.getElementById("Forced" + gg).removeAttribute("disabled");
+            }
+            if (item11[i] == 0) {
+                document.getElementById("confirmCoplanar" + gg).removeAttribute("disabled");
+                document.getElementById("Button1" + gg).removeAttribute("disabled");
+                document.getElementById("Button3" + gg).removeAttribute("disabled");
+            }
+            document.getElementById("degree" + gg).removeAttribute("disabled");
+            document.getElementById("degree" + gg).removeAttribute("disabled");
+            document.getElementById("remark" + gg).removeAttribute("disabled");
+            var add = document.getElementsByName("planQA" + gg);
+            add[0].removeAttribute("disabled");
+            add[1].removeAttribute("disabled");
+            document.getElementById("fp_upload1" + gg).removeAttribute("disabled");
+            document.getElementById("fp_upload" + gg).removeAttribute("disabled");
         }
-        document.getElementById("designdose" + gg).removeAttribute("disabled");
-        document.getElementById("confirm" + gg).removeAttribute("disabled");
-        document.getElementById("save" + gg).removeAttribute("disabled");
-        if (role == "科主任") {
-            document.getElementById("Forced"+gg).removeAttribute("disabled");
-        }
-        if (item11[i] == 0) {
-            document.getElementById("confirmCoplanar"+gg).removeAttribute("disabled");
-            document.getElementById("Button1"+gg).removeAttribute("disabled");
-            document.getElementById("Button3"+gg).removeAttribute("disabled");
-        }
-        document.getElementById("degree"+gg).removeAttribute("disabled");
-        document.getElementById("degree"+gg).removeAttribute("disabled");
-        document.getElementById("remark"+gg).removeAttribute("disabled");
-        var add = document.getElementsByName("planQA" + gg);
-        add[0].removeAttribute("disabled");
-        add[1].removeAttribute("disabled");
-        document.getElementById("fp_upload1"+gg).removeAttribute("disabled");
-        document.getElementById("fp_upload"+gg).removeAttribute("disabled");
     }
 }
 function plan(evt) {

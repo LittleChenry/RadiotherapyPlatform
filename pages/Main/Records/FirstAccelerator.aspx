@@ -43,7 +43,7 @@
                  <div class="single-row">
                         <div class="item col-xs-4">放疗号：<span id="radiotherapy" class="underline"></span></div>
                        <div class="item col-xs-4">疗程：<span id="treatID" class="underline"></span></div>
-                       <div class="item col-xs-4">主管医生：<span id="Reguser" class="underline"></span></div>
+                       <div class="item col-xs-4">主管医师：<span id="Reguser" class="underline"></span></div>
                 </div>
                   <div class="single-row">
                         <div class="item col-xs-4">诊断结果：<span id="diagnosisresult"  class="underline"></span></div>
@@ -106,7 +106,7 @@
             </div>
             <div class="paper-footer">
                 <div class="single-row">
-                    <div class="item col-xs-6">医生签字：<span id="operator" class="underline"></span></div>
+                    <div class="item col-xs-6">医师签字：<span id="operator" class="underline"></span></div>
                     <div class="item col-xs-6">管理时间：<span id="date" class="underline"></span></div>
                 </div>
             </div>

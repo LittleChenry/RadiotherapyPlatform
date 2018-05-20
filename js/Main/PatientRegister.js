@@ -1384,11 +1384,10 @@ function changeState(e){
         dateType: "text",
         success: function (data) {
             alert("修改成功！");
-            //var session = getSession();
-            //window.parent.RolesToPatients(session);
-            //window.parent.adjustTable();
-            //window.parent.Recover();
-            window.parent.location.reload();
+            var session = getSession();
+            window.parent.RolesToPatients(session, window.parent.askstate);
+            window.parent.adjustTable();
+            window.parent.Recover();
         },
         error: function () {
             alert("error");
