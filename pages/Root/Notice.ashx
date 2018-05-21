@@ -36,7 +36,7 @@ public class Notice : IHttpHandler {
         int count = int.Parse(sqlOperation.ExecuteScalar(countNotice));
         if (count == 0)
         {
-            return "{\"Notice\":[{\"Title\":\"false\"}]";
+            return "{\"Notice\":[]}";
         }
         int i = 1;
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlCommand);
