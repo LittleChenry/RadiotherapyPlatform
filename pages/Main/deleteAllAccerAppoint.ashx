@@ -31,6 +31,7 @@ public class deleteAllAccerAppoint : IHttpHandler {
 
         string patientid = context.Request["patientid"];
         string equipid = context.Request["equipid"];
+        string role = context.Request["role"];
         string command = "select equipmenttype.Type as equiptype from equipment,equipmenttype where equipment.ID=@equipid and equipment.EquipmentType=equipmenttype.ID";
         sqlOperation.AddParameterWithValue("@equipid", equipid);
         string equiptype = sqlOperation.ExecuteScalar(command);
@@ -44,48 +45,96 @@ public class deleteAllAccerAppoint : IHttpHandler {
             childdesignlist.Add(reader["chid"].ToString());
         }
         reader.Close();
-        for (int k = 0; k < childdesignlist.Count; k++)
+        if (role == "医师")
         {
-            string chid = childdesignlist[k].ToString();
-            string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and Date>=@nowdate";
-            sqlOperation.AddParameterWithValue("@chid", chid);
-            sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
-            sqlOperation.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
-            reader = sqlOperation.ExecuteReader(selectcommand);
-            ArrayList arrayforapp = new ArrayList();
-            ArrayList arrayforapp2 = new ArrayList();
-            ArrayList treatmentarray = new ArrayList();
-            while (reader.Read())
+            for (int k = 0; k < childdesignlist.Count; k++)
             {
-                arrayforapp.Add(reader["appointid"].ToString());
-                treatmentarray.Add(reader["treatmentrecordid"].ToString());
-            }
-            reader.Close();
-            for (int i = 0; i < arrayforapp.Count; i++)
-            {
-                string isexists = "select count(*) from treatmentrecord where ChildDesign_ID<>@chid and Appointment_ID=@appoint";
+                string chid = childdesignlist[k].ToString();
+                string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and isfirst=1 and Date>=@nowdate";
                 sqlOperation.AddParameterWithValue("@chid", chid);
-                sqlOperation.AddParameterWithValue("@appoint", arrayforapp[i]);
-                int count = int.Parse(sqlOperation.ExecuteScalar(isexists));
-                if (count == 0)
+                sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
+                sqlOperation.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
+                reader = sqlOperation.ExecuteReader(selectcommand);
+                ArrayList arrayforapp = new ArrayList();
+                ArrayList arrayforapp2 = new ArrayList();
+                ArrayList treatmentarray = new ArrayList();
+                while (reader.Read())
                 {
-                    arrayforapp2.Add(arrayforapp[i]);
+                    arrayforapp.Add(reader["appointid"].ToString());
+                    treatmentarray.Add(reader["treatmentrecordid"].ToString());
+                }
+                reader.Close();
+                for (int i = 0; i < arrayforapp.Count; i++)
+                {
+                    string isexists = "select count(*) from treatmentrecord where ChildDesign_ID<>@chid and Appointment_ID=@appoint";
+                    sqlOperation.AddParameterWithValue("@chid", chid);
+                    sqlOperation.AddParameterWithValue("@appoint", arrayforapp[i]);
+                    int count = int.Parse(sqlOperation.ExecuteScalar(isexists));
+                    if (count == 0)
+                    {
+                        arrayforapp2.Add(arrayforapp[i]);
+                    }
+                }
+                for (int i = 0; i < arrayforapp2.Count; i++)
+                {
+                    string deletecommand = "delete from appointment_accelerate where ID=@appoint";
+                    sqlOperation.AddParameterWithValue("@appoint", arrayforapp2[i]);
+                    sqlOperation.ExecuteNonQuery(deletecommand);
+                }
+                for (int i = 0; i < treatmentarray.Count; i++)
+                {
+                    string deletecommand2 = "delete from treatmentrecord where ID=@tretmentid";
+                    sqlOperation.AddParameterWithValue("@tretmentid", treatmentarray[i]);
+                    sqlOperation.ExecuteNonQuery(deletecommand2);
                 }
             }
-            for (int i = 0; i < arrayforapp2.Count; i++)
+            return "success";
+        }else
+        {
+            for (int k = 0; k < childdesignlist.Count; k++)
             {
-                string deletecommand = "delete from appointment_accelerate where ID=@appoint";
-                sqlOperation.AddParameterWithValue("@appoint", arrayforapp2[i]);
-                sqlOperation.ExecuteNonQuery(deletecommand);
+                string chid = childdesignlist[k].ToString();
+                string selectcommand = "select treatmentrecord.Appointment_ID as appointid,treatmentrecord.ID as treatmentrecordid from treatmentrecord,appointment_accelerate where treatmentrecord.Appointment_ID=appointment_accelerate.ID and ChildDesign_ID=@chid and Treat_User_ID is NULL and isfirst<>1 and Date>=@nowdate";
+                sqlOperation.AddParameterWithValue("@chid", chid);
+                sqlOperation.AddParameterWithValue("@nowdate", DateTime.Now.Date.ToString());
+                sqlOperation.AddParameterWithValue("@nowbegin", DateTime.Now.Hour * 60 + DateTime.Now.Minute);
+                reader = sqlOperation.ExecuteReader(selectcommand);
+                ArrayList arrayforapp = new ArrayList();
+                ArrayList arrayforapp2 = new ArrayList();
+                ArrayList treatmentarray = new ArrayList();
+                while (reader.Read())
+                {
+                    arrayforapp.Add(reader["appointid"].ToString());
+                    treatmentarray.Add(reader["treatmentrecordid"].ToString());
+                }
+                reader.Close();
+                for (int i = 0; i < arrayforapp.Count; i++)
+                {
+                    string isexists = "select count(*) from treatmentrecord where ChildDesign_ID<>@chid and Appointment_ID=@appoint";
+                    sqlOperation.AddParameterWithValue("@chid", chid);
+                    sqlOperation.AddParameterWithValue("@appoint", arrayforapp[i]);
+                    int count = int.Parse(sqlOperation.ExecuteScalar(isexists));
+                    if (count == 0)
+                    {
+                        arrayforapp2.Add(arrayforapp[i]);
+                    }
+                }
+                for (int i = 0; i < arrayforapp2.Count; i++)
+                {
+                    string deletecommand = "delete from appointment_accelerate where ID=@appoint";
+                    sqlOperation.AddParameterWithValue("@appoint", arrayforapp2[i]);
+                    sqlOperation.ExecuteNonQuery(deletecommand);
+                }
+                for (int i = 0; i < treatmentarray.Count; i++)
+                {
+                    string deletecommand2 = "delete from treatmentrecord where ID=@tretmentid";
+                    sqlOperation.AddParameterWithValue("@tretmentid", treatmentarray[i]);
+                    sqlOperation.ExecuteNonQuery(deletecommand2);
+                }
             }
-            for (int i = 0; i < treatmentarray.Count; i++)
-            {
-                string deletecommand2 = "delete from treatmentrecord where ID=@tretmentid";
-                sqlOperation.AddParameterWithValue("@tretmentid", treatmentarray[i]);
-                sqlOperation.ExecuteNonQuery(deletecommand2);
-            }
+            return "success";
         }
-        return "success";
+    
     
     
     }

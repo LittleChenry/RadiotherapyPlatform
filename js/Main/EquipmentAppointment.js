@@ -196,11 +196,23 @@ function createAccelerateTable(nowDate) {
         if ($(this).find("span").html() != "") {
             $(this).unbind("click").bind("click", function(){
                 var tdid = $(this).attr("id").split("_")[0];
+                var session = getSession();
+                var judgedata = {
+                    patientid: tdid,
+                    userid: session.userID
+                };
+                var judgeURL = "judgedoctor.ashx";
+                var isdoctor;
+                if (session.role == "医师") {
+                    var returnData1 = postData(judgeURL, judgedata, false);
+                    isdoctor = returnData1;
+                }
                 var equipid = $("#equipment").val();
                 var patientAppointURL = "getAllAppointInfoChildesign.ashx";
                 var data = {
                     patientid:tdid,
-                    equipid:equipid
+                    equipid: equipid,
+                    role: session.role
                 };
                 var returnData = postData(patientAppointURL, data, false);
                 var alldate = $.parseJSON(returnData);
@@ -211,7 +223,12 @@ function createAccelerateTable(nowDate) {
                 table.find("tbody").html("");
                 table.prev().remove();
                 var thead = '<tr><th>姓名</th><th>日期</th><th>时间</th><th>计划</th></tr>';
-                var btn = '<button id="deleteAllAppoints" class="btn btn-warning btn-flat pull-right" type="button" style="margin-bottom:20px;">删除预约</button>';
+                var btn;
+                if ((session.role != "医师" && session.role != "治疗技师") || (session.role == "医师" && isdoctor == "failure")) {
+                    btn = '<button id="deleteAllAppoints" class="btn btn-warning btn-flat pull-right" disabled="disabled" type="button" style="margin-bottom:20px;">删除预约</button>';
+                } else {
+                    btn = '<button id="deleteAllAppoints" class="btn btn-warning btn-flat pull-right" type="button" style="margin-bottom:20px;">删除预约</button>';
+                }
                 table.find("thead").append(thead);
                 table.before(btn);
                 for (var i = 0; i < patientAppointments.length; i++) {

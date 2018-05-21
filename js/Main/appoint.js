@@ -480,7 +480,7 @@ function DateAddClick(planinfo, worktime) {
 				var data = {
 					begindate:beginDate,
 					enddate:endDate,
-					equipmentid,equipmentid
+					equipmentid:equipmentid
 				};
 				var getAppointsURL = '../../pages/Main/getAllappointInfoFromDate.ashx';
 				var returnData = postData(getAppointsURL, data, false);

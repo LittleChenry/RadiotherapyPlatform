@@ -2049,22 +2049,30 @@ function CalculateWeekDay(beginDate,endDate){
         }*/
         temp.setDate(temp.getDate() + 1);
     }
-    if (beginDate.getDay() != 0 && beginDate.getDay() != 6) {
-        var tempend = new Date(beginDate);
-        tempend.setDate(tempend.getDate() + 1);
-        tempend.setHours(0);
-        tempend.setMinutes(0);
-        tempend.setSeconds(0);
-        tempend.setMilliseconds(0);
-        prevtime = (tempend.getTime() - beginDate.getTime())/3600000;
-    }
-    if (endDate.getDay() != 0 && endDate.getDay() != 6) {
-        var tempstart = new Date(endDate);
-        tempstart.setHours(0);
-        tempstart.setMinutes(0);
-        tempstart.setSeconds(0);
-        tempstart.setMilliseconds(0);
-        nexttime = (endDate.getTime() - tempstart.getTime())/3600000;
+    if (countdays > 0) {
+        if (beginDate.getDay() != 0 && beginDate.getDay() != 6) {
+            var tempend = new Date(beginDate);
+            tempend.setDate(tempend.getDate() + 1);
+            tempend.setHours(0);
+            tempend.setMinutes(0);
+            tempend.setSeconds(0);
+            tempend.setMilliseconds(0);
+            prevtime = (tempend.getTime() - beginDate.getTime()) / 3600000;
+        }
+        if (endDate.getDay() != 0 && endDate.getDay() != 6) {
+            var tempstart = new Date(endDate);
+            tempstart.setHours(0);
+            tempstart.setMinutes(0);
+            tempstart.setSeconds(0);
+            tempstart.setMilliseconds(0);
+            nexttime = (endDate.getTime() - tempstart.getTime()) / 3600000;
+        }
+    } else {
+        var tempstart = new Date(beginDate);
+        var tempend = new Date(endDate);
+        prevtime = 0;
+        nexttime = (tempend.getTime() - tempstart.getTime()) / 3600000;
+
     }
     return countdays * 24 + prevtime + nexttime;
 }
