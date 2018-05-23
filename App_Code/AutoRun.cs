@@ -840,7 +840,7 @@ public class AutoRun
         {
 
             //查询那天有哪些病人的子计划预约
-            string childdesignCom = "select treatmentrecord_copy.ChildDesign_ID as chid,treatmentrecord_copy.isfirst as isfirst,appointment_accelerate_copy.Equipment_ID as equipid,treatmentrecord_copy.ApplyUser as userid,appointment_accelerate_copy.Begin as begin,appointment_accelerate_copy.End as end  from appointment_accelerate_copy,treatmentrecord_copy where treatmentrecord_copy.Appointment_ID=appointment_accelerate_copy.ID and appointment_accelerate_copy.Date=@today ORDER BY appointment_accelerate_copy.Begin";
+            string childdesignCom = "select treatmentrecord_copy.ChildDesign_ID as chid,treatmentrecord_copy.isfirst as isfirst,appointment_accelerate_copy.Equipment_ID as equipid,treatmentrecord_copy.ApplyUser as userid,appointment_accelerate_copy.Begin as begin,appointment_accelerate_copy.End as end,treatmentrecord_copy.ApplyTime as applytime  from appointment_accelerate_copy,treatmentrecord_copy where treatmentrecord_copy.Appointment_ID=appointment_accelerate_copy.ID and appointment_accelerate_copy.Date=@today ORDER BY appointment_accelerate_copy.Begin";
             sqlOperation.AddParameterWithValue("@today", tempDateTime);
             MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(childdesignCom);
             while (reader.Read())
@@ -857,6 +857,26 @@ public class AutoRun
                 //如果这是一条友善的首次预约，那就不处理
                 if (reader["isfirst"].ToString() == "1")
                 {
+                    string pidcommand = "select treatment.Patient_ID as pid from treatment,childdesign where childdesign.Treatment_ID=treatment.ID and childdesign.ID=@chid";
+                    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                    string pid = sqlOperation1.ExecuteScalar(pidcommand);
+                    string insertappoint = "insert into appointment_accelerate(Task,Patient_ID,Date,Equipment_ID,Begin,End,State,Completed) values(@task,@pid,@date,@equipid,@begin,@end,0,0);select @@IDENTITY";
+                    sqlOperation1.AddParameterWithValue("@task", "加速器");
+                    sqlOperation1.AddParameterWithValue("@pid", pid);
+                    sqlOperation1.AddParameterWithValue("@date", tempDateTime.ToString("yyyy-MM-dd"));
+                    sqlOperation1.AddParameterWithValue("@equipid", reader["equipid"].ToString());
+                    sqlOperation1.AddParameterWithValue("@begin", reader["begin"].ToString());
+                    sqlOperation1.AddParameterWithValue("@end", reader["end"].ToString());
+                    string insertid = sqlOperation1.ExecuteScalar(insertappoint);
+
+                    string insertcommand = "insert into treatmentrecord(Appointment_ID,ApplyUser,ApplyTime,IsFirst,ChildDesign_ID) values(@appoint,@applyuser,@applytime,1,@chid);select @@IDENTITY";
+                    sqlOperation1.AddParameterWithValue("@appoint", insertid);
+                    sqlOperation1.AddParameterWithValue("@applyuser", reader["userid"].ToString());
+                    sqlOperation1.AddParameterWithValue("@applytime", reader["applytime"].ToString());
+                    sqlOperation1.AddParameterWithValue("@chid", reader["chid"].ToString());
+                    string treatmentrecordid = sqlOperation1.ExecuteScalar(insertcommand);
+
+
                     ////从那天开始往后查到一个非节假日
                     //Boolean BigFlag = true;
                     //DateTime suitTime = tempDateTime;
