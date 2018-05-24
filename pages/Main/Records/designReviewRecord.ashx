@@ -186,10 +186,28 @@ public class designReviewRecord : IHttpHandler {
                 sqlOperation.AddParameterWithValue("@PDF2", savepath3);
                 sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);
                 intSuccess = sqlOperation.ExecuteNonQuery(strSqlCommand);
-                string update111 = "update childdesign set state=2 where ID=@childdesign_ID";
+                string doseselect = context.Request.Form["selectdose"];
+                string[] dosegroup = doseselect.Split(new char[] { '/' });
+                string single="";
+                string total="";
+                int totalnum=0;
+                if (dosegroup.Length == 2)
+                {
+
+                    single = dosegroup[0];
+                    total = dosegroup[1];
+                }
+                if (single != "" && total != "")
+                {
+                    int count1 = int.Parse(single);
+                    int count2 = int.Parse(total);
+                    totalnum = count2 / count1;
+                }
+                string update111 = "update childdesign set state=3,Totalnumber=@total where ID=@childdesign_ID";
                 //sqlOperation2.AddParameterWithValue("@Design_ID", Count);
                 sqlOperation2.AddParameterWithValue("@childdesign_ID", context.Request.Form["childdesign" + ggg]);
-                sqlOperation2.ExecuteNonQuery(update111);   
+                sqlOperation2.AddParameterWithValue("@total", totalnum);
+                sqlOperation2.ExecuteNonQuery(update111);    
             }
             int Success = 0;
                   
