@@ -31,13 +31,13 @@ public class AutoRun
     //查看当前时间是否满足进行个别续约与整体续约
     public static void objTimer_Elapsed(object sender, ElapsedEventArgs e)
     {
-        DataLayer sqlOperation4 = new DataLayer("sqlStr");
-        string testinsert = "insert into test(content) values(@date)";
-        sqlOperation4.AddParameterWithValue("@date", DateTime.Now.Hour + ":" + DateTime.Now.Minute);
-        sqlOperation4.ExecuteNonQuery(testinsert);
-        sqlOperation4.Close();
-        sqlOperation4.Dispose();
-        sqlOperation4 = null;
+        //DataLayer sqlOperation4 = new DataLayer("sqlStr");
+        //string testinsert = "insert into test(content) values(@date)";
+        //sqlOperation4.AddParameterWithValue("@date", DateTime.Now.Hour + ":" + DateTime.Now.Minute);
+        //sqlOperation4.ExecuteNonQuery(testinsert);
+        //sqlOperation4.Close();
+        //sqlOperation4.Dispose();
+        //sqlOperation4 = null;
         //如果现在时间是凌晨4点半到5点，则判断是否可以执行个体体续
         if (int.Parse(DateTime.Now.Hour.ToString()) >= 4 && int.Parse(DateTime.Now.Hour.ToString()) <= 5)
         {

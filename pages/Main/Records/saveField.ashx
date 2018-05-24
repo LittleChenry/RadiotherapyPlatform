@@ -266,12 +266,13 @@ public class saveField : IHttpHandler {
                 }
                 else
                 {
-                    string insert = "insert into childdesign (state,DesignName,Treatment_ID,item,parameters)values(@state,@DesignName,@Treatment_ID,@item,@parameters)";
+                    string insert = "insert into childdesign (state,DesignName,Treatment_ID,item,parameters,Totalnumber)values(@state,@DesignName,@Treatment_ID,@item,@parameters,@total)";
                     sqlOperation1.AddParameterWithValue("@Treatment_ID", treatID);
                     sqlOperation1.AddParameterWithValue("@item", item1);
-                    sqlOperation1.AddParameterWithValue("@state", 2);
+                    sqlOperation1.AddParameterWithValue("@state", 3);
                     sqlOperation1.AddParameterWithValue("@parameters", para);
                     sqlOperation1.AddParameterWithValue("@DesignName", context.Request.Form["DesignName" + item]);
+                    sqlOperation1.AddParameterWithValue("@total", Convert.ToInt32(context.Request.Form["total" + item]) / Convert.ToInt32(context.Request.Form["Graded" + item]));
                     successs = sqlOperation1.ExecuteNonQuery(insert);
                     string childid2 = "select ID from childdesign where Treatment_ID=@Treatment_ID and item=@item";
                     sqlOperation.AddParameterWithValue("@Treatment_ID", treatID);

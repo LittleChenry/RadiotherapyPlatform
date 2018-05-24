@@ -177,17 +177,32 @@ function createAccelerateTable(nowDate) {
     }
     //记录每天预约人数
     var counttemp = 0;
+    var hastreatCount=0;
+    var newPatientNum=0;
+    var hastreatNewPatientCount=0;
     for (var col = 1; col <= 7; col++) {
         counttemp = 0;
+        hastreatCount=0;
+        newPatientNum=0;
+        hastreatNewPatientCount=0;
         var trgroup = table.find("tbody").eq(0).find("tr");
         for (var j = 1; j < trgroup.length; j++) {
             if ($(trgroup[j]).find("td").eq(col).find("span").eq(0).html() != "") {
                 counttemp++;
             }
-
+            if(($(trgroup[j]).find("td").eq(col).find("span").eq(0).html() != "") &&(!($(trgroup[j]).find("td").eq(col).find("span").eq(0).hasClass("waiting"))))
+            {
+                hastreatCount++;
+            }
+            if (($(trgroup[j]).hasClass("occupied")) && ($(trgroup[j]).find("td").eq(col).find("span").eq(0).html() != "")) {
+                newPatientNum++;
+            }
+            if (($(trgroup[j]).hasClass("occupied")) && ($(trgroup[j]).find("td").eq(col).find("span").eq(0).html() != "") && (!($(trgroup[j]).find("td").eq(col).find("span").eq(0).hasClass("waiting")))) {
+                hastreatNewPatientCount++;
+            }
         }
         var lasttr = table.find("tbody").eq(0).find("tr:first");
-        lasttr.find("td").eq(col).html(counttemp + "人");
+        lasttr.find("td").eq(col).html("新:" + hastreatNewPatientCount + "/" + newPatientNum + " ，总:" + hastreatCount + "/" + counttemp );
     }
 
 

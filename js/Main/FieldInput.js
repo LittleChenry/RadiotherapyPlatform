@@ -1174,16 +1174,16 @@ function dosageData(panelId) {
             var max = 0;
             var len = dose.length;
             if (len = 1) {
-                $("#total"+panelId).val(lists[0].split(",")[3]);
-                $("#Graded" + panelId).val(lists[0].split(",")[5]);
+                $("#total"+panelId).val(lists[0].split(",")[5]);
+                $("#Graded" + panelId).val(lists[0].split(",")[3]);
             } else {
                 for (var i = 1; i < len; i++) {
                     if (dose[i] > max) {
                         max = i;
                     }
                 }
-                $("#total" + panelId).val(lists[0].split(",")[3]);
-                $("#Graded" + panelId).val(lists[0].split(",")[5]);
+                $("#total" + panelId).val(lists[0].split(",")[5]);
+                $("#Graded" + panelId).val(lists[0].split(",")[3]);
             }
         }
     });
