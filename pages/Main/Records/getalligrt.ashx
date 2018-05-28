@@ -33,7 +33,7 @@ public class getalligrt : IHttpHandler {
         string sqlcommand1 = "select count(*) from igrt where ChildDesign_ID=@chid";
         sqlOperation.AddParameterWithValue("@chid", chid);
         int count = int.Parse(sqlOperation.ExecuteScalar(sqlcommand1));
-        string sqlcommand = "select Operate_User_ID,OperateTime,X_System,Y_System,Z_System,Assist from igrt where ChildDesign_ID=@chid";
+        string sqlcommand = "select Operate_User_ID,OperateTime,X_System,Y_System,Z_System,Assist,way from igrt where ChildDesign_ID=@chid";
         MySql.Data.MySqlClient.MySqlDataReader reader = sqlOperation.ExecuteReader(sqlcommand);
         int temp = 0;
         StringBuilder backText = new StringBuilder("{\"Item\":[");
@@ -43,7 +43,7 @@ public class getalligrt : IHttpHandler {
             sqlOperation1.AddParameterWithValue("@id", Convert.ToInt32(reader["Operate_User_ID"].ToString()));
             string treatusername = sqlOperation1.ExecuteScalar(treatuser);
 
-            backText.Append("{\"OperateTime\":\"" + reader["OperateTime"].ToString() + "\",\"X_System\":\"" + reader["X_System"].ToString() + "\",\"treatusername\":\"" + treatusername + "\",\"Y_System\":\"" + reader["Y_System"].ToString() + "\",\"Z_System\":\"" + reader["Z_System"].ToString() + "\",\"Assist\":\"" + reader["Assist"].ToString() + "\"}");
+            backText.Append("{\"OperateTime\":\"" + reader["OperateTime"].ToString() + "\",\"X_System\":\"" + reader["X_System"].ToString() + "\",\"way\":\"" + reader["way"].ToString() + "\",\"treatusername\":\"" + treatusername + "\",\"Y_System\":\"" + reader["Y_System"].ToString() + "\",\"Z_System\":\"" + reader["Z_System"].ToString() + "\",\"Assist\":\"" + reader["Assist"].ToString() + "\"}");
             if (temp < count - 1)
             {
 

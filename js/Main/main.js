@@ -1991,7 +1991,22 @@ function SingleTask(light, serious, singlepatient, currentProgress){
                 completedTime = new Date(singlepatient.confirmTime);
                 break;
         }
-        var TimeDifference = CalculateWeekDay(completedTime,currentTime);
+        var TimeDifference = CalculateWeekDay(completedTime, currentTime);
+        var otherdays = 0;
+        $.ajax({
+            type: "POST",
+            url: "../../pages/Main/Records/computeOtherDays.ashx",
+            async: false,
+            data: {
+                starttime: completedTime.getFullYear() + "-" + (completedTime.getMonth() + 1) + "-" + completedTime.getDate(),
+                endtime: currentTime.getFullYear() + "-" + (currentTime.getMonth() + 1) + "-" + currentTime.getDate(),
+
+            },
+            dateType: "json",
+            success: function (data) {
+                otherdays = data;
+            }
+        });
         if (TimeDifference > light) {
             $.ajax({
                 type: "POST",
@@ -2014,7 +2029,7 @@ function SingleTask(light, serious, singlepatient, currentProgress){
                             stoplength += CalculateWeekDay(stoptime,restarttime);
                         }
                     }
-                    TimeDifference = TimeDifference - stoplength;
+                    TimeDifference = TimeDifference - stoplength - otherdays*24;
                 }
             });
             if (TimeDifference > light) {
@@ -2022,6 +2037,7 @@ function SingleTask(light, serious, singlepatient, currentProgress){
                     singletask = '<li><a href="javascript:;"><i class="fa fa-warning text-yellow"></i>'
                         + singlepatient.Name + '，' + singlepatient.treat + '，' + ProgressNumToName(currentProgress + 1) + '，已搁置' + TimeDifference.toFixed(1) + '小时'
                         + '</a></li>';
+                 
                 }else{
                     singletask = '<li><a href="javascript:;"><i class="fa fa-warning text-red"></i>'
                         + singlepatient.Name + '，' + singlepatient.treat + '，' + ProgressNumToName(currentProgress + 1) + '，已搁置' + TimeDifference.toFixed(1) + '小时'
@@ -2040,9 +2056,7 @@ function CalculateWeekDay(beginDate,endDate){
     var nexttime = 0;
     temp.setDate(temp.getDate() + 1);
     while((temp.getDate() < endDate.getDate() && temp.getMonth() == endDate.getMonth()) || temp.getMonth() < endDate.getMonth()){
-        if (temp.getDay() != 0 && temp.getDay() != 6) {
-            countdays ++;
-        }
+         countdays ++;
         /*if (temp≠后台配置日期) {
             countdays++;
             //该函数增加参数：后台配置日期数组

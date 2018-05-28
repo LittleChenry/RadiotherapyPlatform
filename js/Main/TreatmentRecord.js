@@ -105,7 +105,7 @@ function Init(evt) {
                                '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
                                '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
                                '<div class="content-title"><span>IGRT记录：</span></div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">' +
-                               '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>主操作</th><th>副操作</th></tr> </thead>' +
+                               '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>方式</th><th>主操作</th><th>副操作</th></tr> </thead>' +
                                '<tbody id="IGRT' + j + '" style="text-align:center;"></tbody></table></div></div></div>';
                $("#tabs").append(tab);
                $("#tab-content").append(content);
@@ -125,7 +125,7 @@ function Init(evt) {
                                '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
                                '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
                               '<div class="content-title"><span>IGRT记录：</span></div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">' +
-                               '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>主操作</th><th>副操作</th></tr> </thead>' +
+                               '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>方式</th><th>主操作</th><th>副操作</th></tr> </thead>' +
                                '<tbody id="IGRT' + j + '" style="text-align:center;"></tbody></table></div></div></div>';
                $("#tabs").append(tab);
                $("#tab-content").append(content);
@@ -153,7 +153,7 @@ function Init(evt) {
                                     '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
                                     '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
                                     '<div class="content-title"><span>IGRT记录：</span></div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">' +
-                                    '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>主操作</th><th>副操作</th></tr> </thead>' +
+                                    '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>方式</th><th>主操作</th><th>副操作</th></tr> </thead>' +
                                     '<tbody id="IGRT' + j + '" style="text-align:center;"></tbody></table></div></div></div>';
                     $("#tabs").append(tab);
                     $("#tab-content").append(content);
@@ -173,7 +173,7 @@ function Init(evt) {
                                     '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
                                     '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
                                    '<div class="content-title"><span>IGRT记录：</span></div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">' +
-                                    '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>主操作</th><th>副操作</th></tr> </thead>' +
+                                    '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>方式</th><th>主操作</th><th>副操作</th></tr> </thead>' +
                                     '<tbody id="IGRT' + j + '" style="text-align:center;"></tbody></table></div></div></div>';
                     $("#tabs").append(tab);
                     $("#tab-content").append(content);
@@ -202,7 +202,7 @@ function Init(evt) {
                                     '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
                                     '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
                                     '<div class="content-title"><span>IGRT记录：</span></div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">' +
-                                    '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>主操作</th><th>副操作</th></tr> </thead>' +
+                                    '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>方式</th><th>主操作</th><th>副操作</th></tr> </thead>' +
                                     '<tbody id="IGRT' + j + '" style="text-align:center;"></tbody></table></div></div></div>';
                     $("#tabs").append(tab);
                     $("#tab-content").append(content);
@@ -222,7 +222,7 @@ function Init(evt) {
                                     '<th>日期</th><th>放疗天数</th><th>放疗次数</th><th>射野数(V)</th><th>机器跳数</th><th>单次剂量(cGy)</th><th>累计剂量(cGy)</th><th>主操作</th><th>副操作</th><th>备注</th><th>周剂量核对</th></tr></thead>' +
                                     '<tbody id="treatment' + j + '" style="text-align:center"></tbody></table></div></div>' +
                                    '<div class="content-title"><span>IGRT记录：</span></div><div class="single-row"><div class="item area-group col-xs-12"><table id="" class="table table-bordered" style="table-layout:fixed;word-wrap:break-word;">' +
-                                    '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>主操作</th><th>副操作</th></tr> </thead>' +
+                                    '<thead><tr><th>日期</th><th>X(cm)</th><th>Y(cm)</th><th>Z(cm)</th><th>方式</th><th>主操作</th><th>副操作</th></tr> </thead>' +
                                     '<tbody id="IGRT' + j + '" style="text-align:center;"></tbody></table></div></div></div>';
                     $("#tabs").append(tab);
                     $("#tab-content").append(content);
@@ -406,6 +406,7 @@ function Init(evt) {
                     yvalue: document.getElementById("yvalue").value,
                     zvalue: document.getElementById("zvalue").value,
                     chid: childdesigns[allpagenumber].chid,
+                    way:document.getElementById("igrtWay").value
                 },
                 dateType: "json",
                 success: function (data) {
@@ -676,7 +677,7 @@ function refresh1(number) {
     for (var i = 0; i <= data.length - 1; i++) {
         content = content + '<tr>';
         content = content + '<td>' + data[i].OperateTime.split(" ")[0].split("/")[1] +"-"+data[i].OperateTime.split(" ")[0].split("/")[2]+ '</td><td>' + data[i].X_System + '</td><td>' + data[i].Y_System + '</td><td>' + data[i].Z_System
-                  + '</td><td>' + data[i].treatusername + '</td><td>' + data[i].Assist + '</td>';
+                  +'</td><td>' + data[i].way + '</td><td>' + data[i].treatusername + '</td><td>' + data[i].Assist + '</td>';
          content = content + "</tr>";
     }
        $("#IGRT"+number).append(content);

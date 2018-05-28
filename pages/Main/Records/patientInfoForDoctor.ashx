@@ -134,17 +134,18 @@ public class patientInfoForDoctor : IHttpHandler {
                         string sqlCommand6 = "select ct.OperateTime  from location,treatment,ct where location.ID=treatment.Location_ID and treatment.ID =@treatID and location.CT_ID=ct.ID";
                         sqlOperation1.AddParameterWithValue("@treatID", reader["treatid"].ToString());
                         LoadCTTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+                       
                     }
                     if (Array.LastIndexOf(strArray, "9") > 0 && Array.LastIndexOf(strArray, "10") < 0)
                     {
                         string sqlCommand6 = "select design.SubmitTime  from design,treatment where design.ID=treatment.Design_ID and treatment.ID =@treatID ";
                         sqlOperation1.AddParameterWithValue("@treatID", reader["treatid"].ToString());
                         designSubmitTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+                       
                     }
                     backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"state\":\"" + reader["treatstate"].ToString() +
                          "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + groupname
                          + "\",\"Progress\":\"" + reader["Progress"].ToString() + "\",\"doctor\":\"" + reader["doctor"].ToString() + "\",\"treatID\":\"" + reader["treatid"].ToString() + "\",\"LoadCTTime\":\"" + LoadCTTime + "\",\"designSubmitTime\":\"" + designSubmitTime + "\",\"iscommon\":\"" + reader["iscommon"].ToString() + "\",\"hasfirst\":\"" + hasfirst + "\"}");
-
                     if (i < Count)
                     {
                         backText.Append(",");
@@ -207,12 +208,14 @@ public class patientInfoForDoctor : IHttpHandler {
                     string sqlCommand6 = "select ct.OperateTime  from location,treatment,ct where location.ID=treatment.Location_ID and treatment.ID =@treatID and location.CT_ID=ct.ID";
                     sqlOperation1.AddParameterWithValue("@treatID", reader3["treatid"].ToString());
                     LoadCTTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+                   
                 }
                 if (Array.LastIndexOf(strArray, "9") > 0 && Array.LastIndexOf(strArray, "10") < 0)
                 {
                     string sqlCommand6 = "select design.SubmitTime  from design,treatment where design.ID=treatment.Design_ID and treatment.ID =@treatID ";
                     sqlOperation1.AddParameterWithValue("@treatID", reader3["treatid"].ToString());
                     designSubmitTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+                   
                 }
                 backText.Append("{\"Name\":\"" + reader3["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"state\":\"" + reader3["treatstate"].ToString() +
                      "\",\"Radiotherapy_ID\":\"" + reader3["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader3["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + ""
@@ -350,6 +353,7 @@ public class patientInfoForDoctor : IHttpHandler {
                     string sqlCommand6 = "select ct.OperateTime  from location,treatment,ct where location.ID=treatment.Location_ID and treatment.ID =@treatID and location.CT_ID=ct.ID";
                     sqlOperation1.AddParameterWithValue("@treatID", reader3["treatid"].ToString());
                     LoadCTTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+                    
                 }
                 if (Array.LastIndexOf(strArray, "9") > 0 && Array.LastIndexOf(strArray, "10") < 0)
                 {
@@ -442,12 +446,145 @@ public class patientInfoForDoctor : IHttpHandler {
                         string sqlCommand6 = "select ct.OperateTime  from location,treatment,ct where location.ID=treatment.Location_ID and treatment.ID =@treatID and location.CT_ID=ct.ID";
                         sqlOperation1.AddParameterWithValue("@treatID", reader["treatid"].ToString());
                         LoadCTTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+                        double differ = computeDay(Convert.ToDateTime(LoadCTTime), DateTime.Now);
+                        string command = "select count(*) from worktimetable where Date>@begindate and  Date<@enddate and IsUsed =1";
+                        sqlOperation1.AddParameterWithValue("@enddate", DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"));
+                        sqlOperation1.AddParameterWithValue("@begindate", Convert.ToDateTime(LoadCTTime).ToString("yyyy-MM-dd"));
+                        int result2 = int.Parse(sqlOperation1.ExecuteScalar(command));
+                        string comm = "select warningcase.* from warningcase where TreatID=@treatID and progress=@progress and (Type=0 or Type=2)";
+                        sqlOperation1.AddParameterWithValue("@treatID", reader["treatid"].ToString());
+                        sqlOperation1.AddParameterWithValue("@progress", 6);
+                        reader1 = sqlOperation1.ExecuteReader(comm);
+                        double stoplength = 0;
+                        while (reader1.Read())
+                        {
+                            if (reader1["StopTime"].ToString() != "")
+                            {
+                                stoplength = stoplength + computeDay(Convert.ToDateTime(reader1["StopTime"]), Convert.ToDateTime(reader1["RestartTime"]));
+
+                            }
+
+                        }
+                        reader1.Close();
+                        double finaltime = differ - stoplength - result2 * 24;
+                        string timetask = "SELECT WarningLightTime,WarningSeriousTime FROM warning where Progress=6";
+                        reader1 = sqlOperation1.ExecuteReader(timetask);
+                        double light = 0;
+                        double serious = 0;
+                        if (reader1.Read())
+                        {
+                            light = double.Parse(reader1["WarningLightTime"].ToString());
+                            serious = double.Parse(reader1["WarningSeriousTime"].ToString());
+
+                        }
+                        reader1.Close();
+
+                        if (finaltime > light)
+                        {
+                            if (finaltime < serious)
+                            {
+                                string recordcommand = "delete from taskWarning where TreatID=@treat and CurrentProgress=@progress";
+                                sqlOperation1.AddParameterWithValue("@treat", reader["treatid"].ToString());
+                                sqlOperation1.AddParameterWithValue("@currentprogress", 6);
+                                sqlOperation1.ExecuteNonQuery(recordcommand);
+
+                                string recordcommand2 = "insert into taskWarning(TreatID,CurrentProgress,Type,Time) VALUES(@treat,@currentprogress,@type,@time)";
+                                sqlOperation1.AddParameterWithValue("@treat", reader["treatid"].ToString());
+                                sqlOperation1.AddParameterWithValue("@currentprogress", 6);
+                                sqlOperation1.AddParameterWithValue("@type", "黄色预警");
+                                sqlOperation1.AddParameterWithValue("@time", finaltime);
+                                sqlOperation1.ExecuteNonQuery(recordcommand2);
+                            }
+                            else
+                            {
+                                string recordcommand = "delete from taskWarning where TreatID=@treat and CurrentProgress=@progress";
+                                sqlOperation1.AddParameterWithValue("@treat", reader["treatid"].ToString());
+                                sqlOperation1.AddParameterWithValue("@currentprogress", 6);
+                                sqlOperation1.ExecuteNonQuery(recordcommand);
+
+                                string recordcommand2 = "insert into taskWarning(TreatID,CurrentProgress,Type,Time) VALUES(@treat,@currentprogress,@type,@time)";
+                                sqlOperation1.AddParameterWithValue("@treat", reader["treatid"].ToString());
+                                sqlOperation1.AddParameterWithValue("@currentprogress", 6);
+                                sqlOperation1.AddParameterWithValue("@type", "红色预警");
+                                sqlOperation1.AddParameterWithValue("@time", finaltime);
+                                sqlOperation1.ExecuteNonQuery(recordcommand2);
+
+                            }
+
+                        }
+                        
                     }
                     if (Array.LastIndexOf(strArray, "9") > 0 && Array.LastIndexOf(strArray, "10") < 0)
                     {
                         string sqlCommand6 = "select design.SubmitTime  from design,treatment where design.ID=treatment.Design_ID and treatment.ID =@treatID ";
                         sqlOperation1.AddParameterWithValue("@treatID", reader["treatid"].ToString());
                         designSubmitTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+                        double differ = computeDay(Convert.ToDateTime(designSubmitTime), DateTime.Now);
+                        string command = "select count(*) from worktimetable where Date>@begindate and  Date<@enddate and IsUsed =1";
+                        sqlOperation1.AddParameterWithValue("@enddate", DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"));
+                        sqlOperation1.AddParameterWithValue("@begindate", Convert.ToDateTime(designSubmitTime).ToString("yyyy-MM-dd"));
+                        int result2 = int.Parse(sqlOperation1.ExecuteScalar(command));
+                        string comm = "select warningcase.* from warningcase where TreatID=@treatID and progress=@progress and (Type=0 or Type=2)";
+                        sqlOperation1.AddParameterWithValue("@treatID", reader["treatid"].ToString());
+                        sqlOperation1.AddParameterWithValue("@progress", 9);
+                        reader1 = sqlOperation1.ExecuteReader(comm);
+                        double stoplength = 0;
+                        while (reader1.Read())
+                        {
+                            if (reader1["StopTime"].ToString() != "")
+                            {
+                                stoplength = stoplength + computeDay(Convert.ToDateTime(reader1["StopTime"]), Convert.ToDateTime(reader1["RestartTime"]));
+
+                            }
+
+                        }
+                        reader1.Close();
+                        double finaltime = differ - stoplength - result2 * 24;
+                        string timetask = "SELECT WarningLightTime,WarningSeriousTime FROM warning where Progress=9";
+                        reader1 = sqlOperation1.ExecuteReader(timetask);
+                        double light = 0;
+                        double serious = 0;
+                        if (reader1.Read())
+                        {
+                            light = double.Parse(reader1["WarningLightTime"].ToString());
+                            serious = double.Parse(reader1["WarningSeriousTime"].ToString());
+
+                        }
+                        reader1.Close();
+
+                        if (finaltime > light)
+                        {
+                            if (finaltime < serious)
+                            {
+                                string recordcommand = "delete from taskWarning where TreatID=@treat and CurrentProgress=@progress";
+                                sqlOperation1.AddParameterWithValue("@treat", reader["treatid"].ToString());
+                                sqlOperation1.AddParameterWithValue("@currentprogress", 9);
+                                sqlOperation1.ExecuteNonQuery(recordcommand);
+
+                                string recordcommand2 = "insert into taskWarning(TreatID,CurrentProgress,Type,Time) VALUES(@treat,@currentprogress,@type,@time)";
+                                sqlOperation1.AddParameterWithValue("@treat", reader["treatid"].ToString());
+                                sqlOperation1.AddParameterWithValue("@currentprogress", 9);
+                                sqlOperation1.AddParameterWithValue("@type", "黄色预警");
+                                sqlOperation1.AddParameterWithValue("@time", finaltime);
+                                sqlOperation1.ExecuteNonQuery(recordcommand2);
+                            }
+                            else
+                            {
+                                string recordcommand = "delete from taskWarning where TreatID=@treat and CurrentProgress=@progress";
+                                sqlOperation1.AddParameterWithValue("@treat", reader["treatid"].ToString());
+                                sqlOperation1.AddParameterWithValue("@currentprogress", 9);
+                                sqlOperation1.ExecuteNonQuery(recordcommand);
+
+                                string recordcommand2 = "insert into taskWarning(TreatID,CurrentProgress,Type,Time) VALUES(@treat,@currentprogress,@type,@time)";
+                                sqlOperation1.AddParameterWithValue("@treat", reader["treatid"].ToString());
+                                sqlOperation1.AddParameterWithValue("@currentprogress", 9);
+                                sqlOperation1.AddParameterWithValue("@type", "红色预警");
+                                sqlOperation1.AddParameterWithValue("@time", finaltime);
+                                sqlOperation1.ExecuteNonQuery(recordcommand2);
+
+                            }
+
+                        }
                     }
                     backText.Append("{\"Name\":\"" + reader["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"state\":\"" + reader["treatstate"].ToString() +
                          "\",\"Radiotherapy_ID\":\"" + reader["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + groupname
@@ -490,12 +627,144 @@ public class patientInfoForDoctor : IHttpHandler {
                     string sqlCommand6 = "select ct.OperateTime  from location,treatment,ct where location.ID=treatment.Location_ID and treatment.ID =@treatID and location.CT_ID=ct.ID";
                     sqlOperation1.AddParameterWithValue("@treatID", reader3["treatid"].ToString());
                     LoadCTTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+                    double differ = computeDay(Convert.ToDateTime(LoadCTTime), DateTime.Now);
+                    string command = "select count(*) from worktimetable where Date>@begindate and  Date<@enddate and IsUsed =1";
+                    sqlOperation1.AddParameterWithValue("@enddate", DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"));
+                    sqlOperation1.AddParameterWithValue("@begindate", Convert.ToDateTime(LoadCTTime).ToString("yyyy-MM-dd"));
+                    int result2 = int.Parse(sqlOperation1.ExecuteScalar(command));
+                    string comm = "select warningcase.* from warningcase where TreatID=@treatID and progress=@progress and (Type=0 or Type=2)";
+                    sqlOperation1.AddParameterWithValue("@treatID", reader3["treatid"].ToString());
+                    sqlOperation1.AddParameterWithValue("@progress", 6);
+                    reader1 = sqlOperation1.ExecuteReader(comm);
+                    double stoplength = 0;
+                    while (reader1.Read())
+                    {
+                        if (reader1["StopTime"].ToString() != "")
+                        {
+                            stoplength = stoplength + computeDay(Convert.ToDateTime(reader1["StopTime"]), Convert.ToDateTime(reader1["RestartTime"]));
+
+                        }
+
+                    }
+                    reader1.Close();
+                    double finaltime = differ - stoplength - result2 * 24;
+                    string timetask = "SELECT WarningLightTime,WarningSeriousTime FROM warning where Progress=6";
+                    reader1 = sqlOperation1.ExecuteReader(timetask);
+                    double light = 0;
+                    double serious = 0;
+                    if (reader1.Read())
+                    {
+                        light = double.Parse(reader1["WarningLightTime"].ToString());
+                        serious = double.Parse(reader1["WarningSeriousTime"].ToString());
+
+                    }
+                    reader1.Close();
+
+                    if (finaltime > light)
+                    {
+                        if (finaltime < serious)
+                        {
+                            string recordcommand = "delete from taskWarning where TreatID=@treat and CurrentProgress=@progress";
+                            sqlOperation1.AddParameterWithValue("@treat", reader3["treatid"].ToString());
+                            sqlOperation1.AddParameterWithValue("@currentprogress", 6);
+                            sqlOperation1.ExecuteNonQuery(recordcommand);
+
+                            string recordcommand2 = "insert into taskWarning(TreatID,CurrentProgress,Type,Time) VALUES(@treat,@currentprogress,@type,@time)";
+                            sqlOperation1.AddParameterWithValue("@treat", reader3["treatid"].ToString());
+                            sqlOperation1.AddParameterWithValue("@currentprogress", 6);
+                            sqlOperation1.AddParameterWithValue("@type", "黄色预警");
+                            sqlOperation1.AddParameterWithValue("@time", finaltime);
+                            sqlOperation1.ExecuteNonQuery(recordcommand2);
+                        }
+                        else
+                        {
+                            string recordcommand = "delete from taskWarning where TreatID=@treat and CurrentProgress=@progress";
+                            sqlOperation1.AddParameterWithValue("@treat", reader3["treatid"].ToString());
+                            sqlOperation1.AddParameterWithValue("@currentprogress", 6);
+                            sqlOperation1.ExecuteNonQuery(recordcommand);
+
+                            string recordcommand2 = "insert into taskWarning(TreatID,CurrentProgress,Type,Time) VALUES(@treat,@currentprogress,@type,@time)";
+                            sqlOperation1.AddParameterWithValue("@treat", reader3["treatid"].ToString());
+                            sqlOperation1.AddParameterWithValue("@currentprogress", 6);
+                            sqlOperation1.AddParameterWithValue("@type", "红色预警");
+                            sqlOperation1.AddParameterWithValue("@time", finaltime);
+                            sqlOperation1.ExecuteNonQuery(recordcommand2);
+
+                        }
+
+                    }
                 }
                 if (Array.LastIndexOf(strArray, "9") > 0 && Array.LastIndexOf(strArray, "10") < 0)
                 {
                     string sqlCommand6 = "select design.SubmitTime  from design,treatment where design.ID=treatment.Design_ID and treatment.ID =@treatID ";
                     sqlOperation1.AddParameterWithValue("@treatID", reader3["treatid"].ToString());
                     designSubmitTime = sqlOperation1.ExecuteScalar(sqlCommand6);
+                    double differ = computeDay(Convert.ToDateTime(designSubmitTime), DateTime.Now);
+                    string command = "select count(*) from worktimetable where Date>@begindate and  Date<@enddate and IsUsed =1";
+                    sqlOperation1.AddParameterWithValue("@enddate", DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"));
+                    sqlOperation1.AddParameterWithValue("@begindate", Convert.ToDateTime(designSubmitTime).ToString("yyyy-MM-dd"));
+                    int result2 = int.Parse(sqlOperation1.ExecuteScalar(command));
+                    string comm = "select warningcase.* from warningcase where TreatID=@treatID and progress=@progress and (Type=0 or Type=2)";
+                    sqlOperation1.AddParameterWithValue("@treatID", reader3["treatid"].ToString());
+                    sqlOperation1.AddParameterWithValue("@progress", 9);
+                    reader1 = sqlOperation1.ExecuteReader(comm);
+                    double stoplength = 0;
+                    while (reader1.Read())
+                    {
+                        if (reader1["StopTime"].ToString() != "")
+                        {
+                            stoplength = stoplength + computeDay(Convert.ToDateTime(reader1["StopTime"]), Convert.ToDateTime(reader1["RestartTime"]));
+
+                        }
+
+                    }
+                    reader1.Close();
+                    double finaltime = differ - stoplength - result2 * 24;
+                    string timetask = "SELECT WarningLightTime,WarningSeriousTime FROM warning where Progress=9";
+                    reader1 = sqlOperation1.ExecuteReader(timetask);
+                    double light = 0;
+                    double serious = 0;
+                    if (reader1.Read())
+                    {
+                        light = double.Parse(reader1["WarningLightTime"].ToString());
+                        serious = double.Parse(reader1["WarningSeriousTime"].ToString());
+
+                    }
+                    reader1.Close();
+
+                    if (finaltime > light)
+                    {
+                        if (finaltime < serious)
+                        {
+                            string recordcommand = "delete from taskWarning where TreatID=@treat and CurrentProgress=@progress";
+                            sqlOperation1.AddParameterWithValue("@treat", reader3["treatid"].ToString());
+                            sqlOperation1.AddParameterWithValue("@currentprogress", 9);
+                            sqlOperation1.ExecuteNonQuery(recordcommand);
+
+                            string recordcommand2 = "insert into taskWarning(TreatID,CurrentProgress,Type,Time) VALUES(@treat,@currentprogress,@type,@time)";
+                            sqlOperation1.AddParameterWithValue("@treat", reader3["treatid"].ToString());
+                            sqlOperation1.AddParameterWithValue("@currentprogress", 9);
+                            sqlOperation1.AddParameterWithValue("@type", "黄色预警");
+                            sqlOperation1.AddParameterWithValue("@time", finaltime);
+                            sqlOperation1.ExecuteNonQuery(recordcommand2);
+                        }
+                        else
+                        {
+                            string recordcommand = "delete from taskWarning where TreatID=@treat and CurrentProgress=@progress";
+                            sqlOperation1.AddParameterWithValue("@treat", reader3["treatid"].ToString());
+                            sqlOperation1.AddParameterWithValue("@currentprogress", 9);
+                            sqlOperation1.ExecuteNonQuery(recordcommand);
+
+                            string recordcommand2 = "insert into taskWarning(TreatID,CurrentProgress,Type,Time) VALUES(@treat,@currentprogress,@type,@time)";
+                            sqlOperation1.AddParameterWithValue("@treat", reader3["treatid"].ToString());
+                            sqlOperation1.AddParameterWithValue("@currentprogress", 9);
+                            sqlOperation1.AddParameterWithValue("@type", "红色预警");
+                            sqlOperation1.AddParameterWithValue("@time", finaltime);
+                            sqlOperation1.ExecuteNonQuery(recordcommand2);
+
+                        }
+
+                    }
                 }
                 backText.Append("{\"Name\":\"" + reader3["Name"].ToString() + "\",\"diagnosisresult\":\"" + result + "\",\"state\":\"" + reader3["treatstate"].ToString() +
                      "\",\"Radiotherapy_ID\":\"" + reader3["Radiotherapy_ID"].ToString() + "\",\"treat\":\"" + reader3["Treatmentdescribe"].ToString() + "\",\"groupname\":\"" + ""
@@ -522,5 +791,62 @@ public class patientInfoForDoctor : IHttpHandler {
         
         
         
+        
     }
+    private double computeDay(DateTime date1, DateTime date2)
+    {
+        int countdays = 0;
+        double prevtime = 0;
+        double nexttime = 0;
+        DateTime temp = date1.AddDays(1);
+        while ((temp.Day < date2.Day && temp.Month == date2.Month) || temp.Month < date2.Month)
+        {
+            countdays++;
+            /*if (temp≠后台配置日期) {
+                countdays++;
+                //该函数增加参数：后台配置日期数组
+            }*/
+            temp = temp.AddDays(1);
+        }
+        if (countdays > 0)
+        {
+            if (date1.DayOfWeek.ToString() != "Saturday" && date1.DayOfWeek.ToString() != "Sunday")
+            {
+                int hour = date1.Hour;
+                int min = date1.Minute;
+                int rest = 24 - hour - 1;
+                prevtime = Math.Round((rest * 60 + (60 - min)) / 60.0, 1);
+
+            }
+            if (date2.DayOfWeek.ToString() != "Saturday" && date2.DayOfWeek.ToString() != "Sunday")
+            {
+                int hour = date2.Hour;
+                int min = date2.Minute;
+                nexttime = Math.Round((hour * 60 + min) / 60.0, 1);
+            }
+        }
+        else
+        {
+            if (date2.Day != date1.Day)
+            {
+                int hour = date1.Hour;
+                int min = date1.Minute;
+                int rest = 24 - hour - 1;
+                int hour2 = date2.Hour;
+                int min2 = date2.Minute;
+                nexttime = Math.Round((hour2 * 60 + min2) / 60.0, 1) + Math.Round((rest * 60 + (60 - min)) / 60.0, 1);
+            }
+            else
+            {
+                int hour = date1.Hour;
+                int min = date1.Minute;
+                int hour2 = date2.Hour;
+                int min2 = date2.Minute;
+                nexttime = Math.Round(((hour2 - hour - 1) * 60.0 + (60 - min) + min2) / 60.0, 1);
+            }
+
+        }
+        return countdays * 24 + prevtime + nexttime;
+    }
+    
 }

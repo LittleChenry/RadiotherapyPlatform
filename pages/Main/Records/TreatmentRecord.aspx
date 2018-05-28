@@ -158,25 +158,34 @@
                     </div>
                     <div class="modal-body" style="overflow:hidden;">
                         <div class="col-xs-12">
-                            <div class="item col-xs-4">
-                                x方向：
+                            <div class="item col-xs-3">
+                                x：
                                 <div class="group-item">
-                                    <input id="xvalue" type="number" onmousewheel="return false;" class="form-group-input" />
+                                    <input id="xvalue" type="number" style="width:58px" onmousewheel="return false;" class="form-group-input" />
                                     <span class="input-group-addon">cm</span>
                                 </div>
                             </div>
-                            <div class="item col-xs-4">
-                                y方向：
+                            <div class="item col-xs-3">
+                                y：
                                 <div class="group-item">
-                                    <input id="yvalue" type="number" onmousewheel="return false;" class="form-group-input" />
+                                    <input id="yvalue" type="number" style="width:58px" onmousewheel="return false;" class="form-group-input" />
                                     <span class="input-group-addon">cm</span>
                                 </div>
                             </div>
-                            <div class="item col-xs-4">
-                                z方向：
+                            <div class="item col-xs-3">
+                                z：
                                 <div class="group-item">
-                                    <input id="zvalue" type="number" onmousewheel="return false;" class="form-group-input" />
+                                    <input id="zvalue" type="number" style="width:58px" onmousewheel="return false;" class="form-group-input" />
                                     <span class="input-group-addon">cm</span>
+                                </div>
+                            </div>
+                            <div class="item col-xs-3">
+                                方式：
+                                <div class="group-item">
+                                    <select id="igrtWay" class="form-group-input" >
+                                        <option value="EPID">EPID</option>
+                                        <option value="CBCT">CBCT</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
